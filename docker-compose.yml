@@ -1,0 +1,50 @@
+version: '3'
+services:
+  # Client
+  client_packages:
+    build:
+      context: './'
+      dockerfile: 'Dockerfile.packages'
+      args:
+        image_tag: ${IMAGE_TAG}
+    image: libero/reviewer_client_packages:${IMAGE_TAG}
+    networks:
+        - 'reviewer_build'
+
+  client_build:
+    build:
+      context: './'
+      dockerfile: 'Dockerfile.build'
+      args:
+        image_tag: ${IMAGE_TAG}
+    image: libero/reviewer_client_build:${IMAGE_TAG}
+    depends_on:
+      - client_packages
+    networks:
+        - 'reviewer_build'
+
+  client_application:
+    build:
+      context: './'
+      dockerfile: "Dockerfile.application"
+      args:
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_client:${IMAGE_TAG}
+    command: >
+      /bin/sh -c
+      "envsubst '
+      $${CLIENT_PORT}
+      $${SERVER_PORT}
+      $${CLIENT_API_PROXY_URL}
+      '< /etc/nginx/nginx.conf.template
+      > /etc/nginx/nginx.conf
+      && nginx -g 'daemon off;'"
+    depends_on:
+      - client_build
+    networks:
+        - 'reviewer_build'
+
+networks:
+  reviewer_build:
+    external:
+      name: reviewer_build
