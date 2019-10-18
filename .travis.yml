@@ -1,0 +1,17 @@
+language: minimal
+env:
+  global:
+    - IMAGE_TAG=$TRAVIS_COMMIT
+
+services:
+  - docker
+
+cache: yarn
+
+script:
+  - make -j 4 ci
+
+if: |
+    branch = master OR \
+    tag IS present OR \
+    type = pull_request
