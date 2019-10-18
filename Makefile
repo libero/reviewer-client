@@ -20,5 +20,5 @@ test: build_source
 build_application: build_source
 	${DOCKER_COMPOSE} build client_application
 
-push_application: lint test build_app
+push_application: lint test build_application
 	${PUSH_COMMAND} client_application
