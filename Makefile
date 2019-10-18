@@ -1,7 +1,7 @@
 
 DOCKER_COMPOSE = IMAGE_TAG=local docker-compose -f docker-compose.build.yml
 
-ci:
+local_ci:
 	make build lint test push
 
 build:
