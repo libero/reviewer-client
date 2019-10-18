@@ -14,6 +14,7 @@ describe('Pod', (): void => {
                     </Pod>,
                 ),
         ).not.toThrow();
+        expect(true).toBe(false);
     });
 
     it('should have the "pod__error" class if invalid passed in', (): void => {
