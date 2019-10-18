@@ -1,13 +1,15 @@
 ARG image_tag=latest
 
-FROM libero/reviewer_client_build:${image_tag} AS built
+FROM libero/reviewer_client_source:${image_tag} AS source
+RUN yarn build
+
 FROM nginx:1-alpine
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 WORKDIR /app
 
 COPY deployment/nginx.conf.template /etc/nginx/nginx.conf
-COPY --from=built /app/dist/ /usr/share/nginx/html
+COPY --from=source /app/dist/ /usr/share/nginx/html
 
 EXPOSE 80
 

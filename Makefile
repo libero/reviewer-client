@@ -6,16 +6,22 @@ DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.y
 PUSH_COMMAND = IMAGE_TAG=${IMAGE_TAG} .scripts/travis/push-image.sh
 
 local_ci:
-	make build lint test push
+	make build_source lint test build_app push
 
-build:
-	${DOCKER_COMPOSE} build
+build_source:
+	${DOCKER_COMPOSE} build client_source
 
-lint: build
-	${DOCKER_COMPOSE} run client_build yarn lint
+lint: build_source
+	${DOCKER_COMPOSE} run client_source yarn lint
 
-test: build
-	${DOCKER_COMPOSE} run client_build yarn test
+test: build_source
+	${DOCKER_COMPOSE} run client_source yarn test
 
-push: lint test
-	${PUSH_COMMAND} reviewer_application
+build_app: build_source
+	${DOCKER_COMPOSE} build client_application
+
+build_storybook: build_source
+	@echo "build storybook container"
+
+push: lint test build_app
+	${PUSH_COMMAND} client_application
