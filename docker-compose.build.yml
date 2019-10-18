@@ -8,8 +8,6 @@ services:
       args:
         image_tag: ${IMAGE_TAG}
     image: libero/reviewer_client_packages:${IMAGE_TAG}
-    networks:
-        - 'reviewer_build'
 
   client_build:
     build:
@@ -20,8 +18,6 @@ services:
     image: libero/reviewer_client_build:${IMAGE_TAG}
     depends_on:
       - client_packages
-    networks:
-        - 'reviewer_build'
 
   client_application:
     build:
@@ -41,10 +37,3 @@ services:
       && nginx -g 'daemon off;'"
     depends_on:
       - client_build
-    networks:
-        - 'reviewer_build'
-
-networks:
-  reviewer_build:
-    external:
-      name: reviewer_build

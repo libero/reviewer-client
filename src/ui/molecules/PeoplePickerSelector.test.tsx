@@ -289,7 +289,7 @@ describe('PeoplePickerSelector', (): void => {
         expect(searchMock).toBeCalledWith('someSearch');
     });
 
-    it('should add SelectedOption blocks for each selected person', async () : Promise<void> => {
+    it('should add SelectedOption blocks for each selected person', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector
                 initialySelected={[]}

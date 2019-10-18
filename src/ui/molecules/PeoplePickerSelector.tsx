@@ -91,21 +91,19 @@ const PeoplePickerSelector = ({
                     </span>
                 </div>
                 <div className="people-picker__selected-tabs">
-                    {
-                        locallySelected.map(selectedPersonId => {
-                            const selectedPerson = people.find(person => person.id === selectedPersonId);
-                            return (
-                                <div className="people-picker__selected-tab" key={selectedPersonId}>
-                                    <SelectedOption
-                                        text={selectedPerson.name}
-                                        onClose={() => {
-                                            togglePerson(selectedPersonId, false);
-                                        }}
-                                    />
-                                </div>
-                            );
-                        })
-                    }
+                    {locallySelected.map(selectedPersonId => {
+                        const selectedPerson = people.find(person => person.id === selectedPersonId);
+                        return (
+                            <div className="people-picker__selected-tab" key={selectedPersonId}>
+                                <SelectedOption
+                                    text={selectedPerson.name}
+                                    onClose={() => {
+                                        togglePerson(selectedPersonId, false);
+                                    }}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className="people-picker__modal_list">
                     {people.map(
