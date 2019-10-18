@@ -1,5 +1,9 @@
 
-DOCKER_COMPOSE = IMAGE_TAG=local docker-compose -f docker-compose.build.yml
+IMAGE_TAG ?= "local"
+
+DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
+
+PUSH_COMMAND = IMAGE_TAG=${IMAGE_TAG} .scripts/travis/push-image.sh
 
 local_ci:
 	make build lint test push
@@ -14,4 +18,4 @@ test: build
 	${DOCKER_COMPOSE} run client_build yarn test
 
 push: lint test
-	@echo "Pushing client image"
+	${PUSH_COMMAND} reviewer_application
