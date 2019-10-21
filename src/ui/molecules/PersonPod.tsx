@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pod, Modal } from '../atoms';
 import PersonInfo from './PersonInfo';
 import { Add, CheckCircle, Info } from '@material-ui/icons';

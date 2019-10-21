@@ -3,21 +3,26 @@ import { render, RenderResult, fireEvent, cleanup, act, queryByText } from '@tes
 import flushPromises from '../../../test-utils/flushPromises';
 import ManuscriptUpload from './ManuscriptUpload';
 
-function dispatchEvt(node: Document | Element | Window, type: string, data: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function dispatchEvt(node: Document | Element | Window, type: string, data: any): void {
     const event = new Event(type, { bubbles: true });
     Object.assign(event, data);
     fireEvent(node, event);
 }
 
-function mockData(files: File[]) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mockData(files: File[]): Record<string, any> {
     return {
         dataTransfer: {
             files,
-            items: files.map(file => ({
-                kind: 'file',
-                type: file.type,
-                getAsFile: () => file,
-            })),
+            items: files.map(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (file): Record<string, any> => ({
+                    kind: 'file',
+                    type: file.type,
+                    getAsFile: (): File => file,
+                }),
+            ),
             types: ['Files'],
         },
     };
@@ -44,10 +49,12 @@ describe('ManuscriptUpload', (): void => {
         const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
         const data = mockData([file]);
 
-        await act(async () => {
-            dispatchEvt(dropzone, 'dragenter', data);
-            await flushPromises();
-        });
+        await act(
+            async (): Promise<void> => {
+                dispatchEvt(dropzone, 'dragenter', data);
+                await flushPromises();
+            },
+        );
 
         expect(queryByText(container, 'manuscript-upload.active-content')).not.toBeNull();
         expect(queryByText(container, 'manuscript-upload.inactive-content')).toBeNull();
@@ -67,10 +74,12 @@ describe('ManuscriptUpload', (): void => {
         const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
         const data = mockData([file]);
 
-        await act(async () => {
-            dispatchEvt(dropzone, 'dragenter', data);
-            await flushPromises();
-        });
+        await act(
+            async (): Promise<void> => {
+                dispatchEvt(dropzone, 'dragenter', data);
+                await flushPromises();
+            },
+        );
 
         expect(queryByText(container, 'custom active content')).not.toBeNull();
         expect(queryByText(container, 'manuscript-upload.inactive-content')).toBeNull();
