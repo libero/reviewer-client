@@ -14,7 +14,7 @@ const useElementSize = (): ReturnObject => {
     const elementRef = useRef(null);
     const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
-    function handleResize() {
+    function handleResize(): void {
         const width = elementRef.current ? elementRef.current.offsetWidth : 0;
         const height = elementRef.current
             ? elementRef.current.offsetHeight -
@@ -23,9 +23,9 @@ const useElementSize = (): ReturnObject => {
         setSize({ height, width });
     }
 
-    useEffect(() => {
+    useEffect((): (() => void) => {
         window.addEventListener('resize', handleResize);
-        return () => {
+        return (): void => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);

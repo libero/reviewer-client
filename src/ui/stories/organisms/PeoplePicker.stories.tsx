@@ -53,9 +53,9 @@ const PeoplePickerStory = (): JSX.Element => {
         action(`Removed person ${id}`)();
     };
 
-    const onSearch = (value: string) => {
+    const onSearch = (value: string): void => {
         setFilteredPeople(
-            people.filter(person =>
+            people.filter((person): boolean =>
                 `${person.name} ${person.institution} ${person.expertises} ${person.focuses}`.includes(value),
             ),
         );

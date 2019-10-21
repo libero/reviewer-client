@@ -9,7 +9,7 @@ interface Props {
 
 const ManuscriptUpload: React.FC<Props> = ({ inactiveContent, activeContent }: Props): JSX.Element => {
     const { t } = useTranslation();
-    const onDrop = useCallback(acceptedFiles => {
+    const onDrop = useCallback((acceptedFiles): void => {
         console.log(acceptedFiles);
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

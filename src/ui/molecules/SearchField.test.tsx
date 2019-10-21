@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent, waitForElement } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import SearchField from './SearchField';
 
 describe('TextField', (): void => {

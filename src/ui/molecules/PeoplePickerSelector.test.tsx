@@ -285,7 +285,9 @@ describe('PeoplePickerSelector', (): void => {
             />,
         );
         await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
-        act(() => jest.advanceTimersByTime(510));
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
         expect(searchMock).toBeCalledWith('someSearch');
     });
 
@@ -307,7 +309,7 @@ describe('PeoplePickerSelector', (): void => {
     });
 
     it('should remove a selected person when SelectOption block button clicked', async (): Promise<void> => {
-        const { baseElement, debug } = render(
+        const { baseElement } = render(
             <PeoplePickerSelector
                 initialySelected={['1']}
                 people={people}

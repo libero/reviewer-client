@@ -32,7 +32,7 @@ const PeoplePicker = ({
         <div className="people-picker">
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
             <SelectedPeopleList
-                people={people.filter(person => selectedPeople.includes(person.id))}
+                people={people.filter((person): boolean => selectedPeople.includes(person.id))}
                 required={required}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}

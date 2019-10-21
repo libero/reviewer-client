@@ -9,7 +9,7 @@ import '../../../core/styles/index.scss';
 let options: string[] = ['Jeff Goldblum', 'Sam Neill'];
 
 const onClose = (removeIndex: number): void => {
-    options = options.filter((option, index) => index !== removeIndex);
+    options = options.filter((_option, index): boolean => index !== removeIndex);
     forceReRender();
 };
 
@@ -23,11 +23,13 @@ storiesOf('ui | molecules/SelectedOption', module)
 
             return (
                 <div>
-                    {items.map((text, index) => (
-                        <div key={index} style={{ display: 'inline-flex', margin: '8px' }}>
-                            <SelectedOption text={text} />
-                        </div>
-                    ))}
+                    {items.map(
+                        (text, index): JSX.Element => (
+                            <div key={index} style={{ display: 'inline-flex', margin: '8px' }}>
+                                <SelectedOption text={text} />
+                            </div>
+                        ),
+                    )}
                 </div>
             );
         },
@@ -37,16 +39,18 @@ storiesOf('ui | molecules/SelectedOption', module)
         (): JSX.Element => {
             return (
                 <div>
-                    {options.map((text, index) => (
-                        <div style={{ display: 'inline-flex', margin: '8px' }} key={index}>
-                            <SelectedOption
-                                text={text}
-                                onClose={() => {
-                                    onClose(index);
-                                }}
-                            />
-                        </div>
-                    ))}
+                    {options.map(
+                        (text, index): JSX.Element => (
+                            <div style={{ display: 'inline-flex', margin: '8px' }} key={index}>
+                                <SelectedOption
+                                    text={text}
+                                    onClose={(): void => {
+                                        onClose(index);
+                                    }}
+                                />
+                            </div>
+                        ),
+                    )}
                 </div>
             );
         },
