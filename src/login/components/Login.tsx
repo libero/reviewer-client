@@ -59,7 +59,7 @@ const Login = (): JSX.Element => {
             <Paragraph type="footer">
                 {t('login:footer-text-1')}
                 <a
-                    className="typography typography__body--link"
+                    className="typography typography__small--link"
                     href="https://elifesciences.org/terms"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -68,7 +68,7 @@ const Login = (): JSX.Element => {
                 </a>
                 {t('login:footer-text-2')}
                 <a
-                    className="typography typography__body--link"
+                    className="typography typography__small--link"
                     href="https://elifesciences.org/privacy"
                     rel="noopener noreferrer"
                     target="_blank"

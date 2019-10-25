@@ -17,6 +17,9 @@
   @include forSize('desktopUp') {
     max-width: 52.5rem;
   }
+  h1.typography__heading.typography__heading--h1 {
+    margin-top: 0;
+  }
 }
 
 .login-page__text {

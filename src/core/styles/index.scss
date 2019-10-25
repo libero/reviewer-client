@@ -21,13 +21,13 @@
 
 .site-content__centered {
     width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
     margin-left: auto;
     margin-right: auto;
     min-width: 0;
 
     @include forSize('desktopUp') {
-        width: 1272px;
+      width: 1272px;
+      padding-left: 24px;
+      padding-right: 24px;
     }
 }
