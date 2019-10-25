@@ -11,22 +11,22 @@ const Paragraph = ({ children, type, secondary, className, ...rest }: Props): JS
     let classes = className || '';
     switch (type) {
         case 'small':
-            classes = `${classes} typography__small ${
+            classes = `${classes} paragraph typography__small ${
                 secondary ? 'typography__small--secondary' : 'typography__small--primary'
             }`;
             break;
         case 'writing':
-            classes = `${classes} typography__body ${
+            classes = `${classes} paragraph typography__body ${
                 secondary ? 'typography__body--secondary' : 'typography__body--primary'
             }`;
             break;
         case 'reading':
-            classes = `${classes} typography__serif ${
+            classes = `${classes} paragraph typography__serif ${
                 secondary ? 'typography__serif--secondary' : 'typography__serif--primary'
             }`;
             break;
         case 'footer':
-            classes = `${classes} typography__small typography__small--secondary paragraph--footer`;
+            classes = `${classes} paragraph typography__small typography__small--secondary paragraph--footer`;
             break;
     }
 
