@@ -21,11 +21,16 @@ describe('Paragraph', (): void => {
                 </Paragraph>
             </div>,
         );
-        expect(getByText('writing')).toHaveClass('paragraph', 'paragraph--writing');
-        expect(getByText('reading')).toHaveClass('paragraph', 'paragraph--reading');
-        expect(getByText('small')).toHaveClass('paragraph', 'paragraph--small');
-        expect(getByText('footer')).toHaveClass('paragraph', 'paragraph--footer', 'paragraph--secondary');
-        expect(getByText('secondary')).toHaveClass('paragraph', 'paragraph--small', 'paragraph--secondary');
+        expect(getByText('writing')).toHaveClass('paragraph', 'typography__body', 'typography__body--primary');
+        expect(getByText('reading')).toHaveClass('paragraph', 'typography__serif', 'typography__serif--primary');
+        expect(getByText('small')).toHaveClass('paragraph', 'typography__small', 'typography__small--primary');
+        expect(getByText('footer')).toHaveClass(
+            'paragraph',
+            'typography__small',
+            'typography__small--secondary',
+            'paragraph--footer',
+        );
+        expect(getByText('secondary')).toHaveClass('paragraph', 'typography__small', 'typography__small--secondary');
     });
 
     it('should render the children', (): void => {

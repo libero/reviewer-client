@@ -1,7 +1,4 @@
 .paragraph {
-  font-family: $fontWriting;
-  line-height: $lineHeightBase;
-
   margin-top: 0;
   margin-bottom: 1.5rem;
 
@@ -10,25 +7,11 @@
   }
 }
 
-.paragraph--secondary {
-  color: $colourTextLarge;
-}
-
-.paragraph--small {
-  font-size: $fontSizeSmall;
-  line-height: $lineHeightBaseSmall;
-}
-
-.paragraph--reading {
-  font-family: $fontReading;
-}
-
 .paragraph--footer {
-  font-size: 12px;
-  font-weight: 400;
-  text-align: center;
-  .footer__link {
-    color: $colourPrimary;
-    text-decoration: none;
+  margin-left: -0.75rem;
+
+  @include forSize('tabletLandscapeUp') {
+    margin-left: 0.75;
+    text-align: center;
   }
 }

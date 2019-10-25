@@ -7,15 +7,34 @@ interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
     secondary?: boolean;
     type: ParagraphType;
 }
-const Paragraph = ({ children, type, secondary, className, ...rest }: Props): JSX.Element => (
-    <p
-        {...rest}
-        className={`${className} paragraph paragraph--${type} ${
-            secondary || type === 'footer' ? 'paragraph--secondary' : ''
-        }`}
-    >
-        {children}
-    </p>
-);
+const Paragraph = ({ children, type, secondary, className, ...rest }: Props): JSX.Element => {
+    let classes = className || '';
+    switch (type) {
+        case 'small':
+            classes = `${classes} paragraph typography__small ${
+                secondary ? 'typography__small--secondary' : 'typography__small--primary'
+            }`;
+            break;
+        case 'writing':
+            classes = `${classes} paragraph typography__body ${
+                secondary ? 'typography__body--secondary' : 'typography__body--primary'
+            }`;
+            break;
+        case 'reading':
+            classes = `${classes} paragraph typography__serif ${
+                secondary ? 'typography__serif--secondary' : 'typography__serif--primary'
+            }`;
+            break;
+        case 'footer':
+            classes = `${classes} paragraph typography__small typography__small--secondary paragraph--footer`;
+            break;
+    }
+
+    return (
+        <p {...rest} className={classes}>
+            {children}
+        </p>
+    );
+};
 
 export default Paragraph;
