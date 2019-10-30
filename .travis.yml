@@ -7,8 +7,8 @@ services:
   - docker
 
 stages:
-  - name: Test
-  - name: Deploy Storybook
+  - name: test
+  - name: storybook
 cache: yarn
 
 script:
@@ -16,7 +16,7 @@ script:
 
 jobs:
   include:
-    - stage: Deploy Storybook
+    - stage: storybook
       name: "Deploy Storybook"
       if: type = pull_request
       script:
