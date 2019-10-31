@@ -7,15 +7,16 @@ services:
   - docker
 
 stages:
-  - name: test
+  - name: build and test
   - name: storybook
 cache: yarn
 
-script:
-  - make -j 4 ci
-
 jobs:
   include:
+    - stage: build and test
+      name: "Build and Test"
+      script:
+        - make -j 4 ci
     - stage: storybook
       name: "Deploy Storybook"
       if: type = pull_request
