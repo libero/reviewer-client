@@ -1,6 +1,4 @@
-ARG image_tag=latest
-
-FROM libero/reviewer_client_packages:${image_tag}
+FROM node:10-alpine
 
 WORKDIR /app
 
@@ -10,5 +8,8 @@ COPY test-utils/ test-utils/
 COPY webpack/ webpack/
 COPY src/ ./src/
 COPY .storybook/ ./.storybook
+COPY package.json .
+COPY yarn.lock .
 
-RUN yarn build && yarn build-storybook
+RUN yarn
+
