@@ -7,14 +7,14 @@ services:
   - docker
 
 stages:
-  - name: build and test
+  - name: tests
   - name: storybook
 cache: yarn
 
 jobs:
   include:
-    - stage: build and test
-      name: "Build and Test"
+    - stage: tests
+      name: "Tests"
       script:
         - make -j 4 ci
     - stage: storybook
