@@ -7,10 +7,15 @@ describe('Pod', (): void => {
 
     it('should render correctly', (): void => {
         expect(
+            (): RenderResult => render(<Pod buttonIcon={<div />} buttonText="B" onClick={jest.fn()} />),
+        ).not.toThrow();
+    });
+    it('should render correctly with all props', (): void => {
+        expect(
             (): RenderResult =>
                 render(
-                    <Pod buttonIcon={<div />} buttonText="B" onClick={(): void => {}}>
-                        A
+                    <Pod buttonIcon={<div />} buttonText="B" onClick={jest.fn()} invalid={true}>
+                        Pod
                     </Pod>,
                 ),
         ).not.toThrow();

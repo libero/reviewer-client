@@ -6,21 +6,38 @@ describe('TextField', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
+        expect((): RenderResult => render(<SelectField values={[]} id="test" labelText="some label" />)).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
         expect(
-            (): RenderResult => render(<SelectField values={[]} id="test" invalid={false} labelText="some label" />),
+            (): RenderResult =>
+                render(
+                    <SelectField
+                        values={[]}
+                        id="test"
+                        invalid={true}
+                        labelText="some label"
+                        helperText="helper text"
+                        multi={true}
+                        searchable={true}
+                        placeholder="placeholder"
+                        onChange={jest.fn()}
+                    />,
+                ),
         ).not.toThrow();
     });
 
     it('should render the label text', (): void => {
         const labelText = 'some label text';
-        const { getByText } = render(<SelectField values={[]} id="test" invalid={false} labelText={labelText} />);
+        const { getByText } = render(<SelectField values={[]} id="test" labelText={labelText} />);
         expect(getByText(labelText)).toBeInTheDocument();
     });
 
     it('should render the helper text when it is passed in', (): void => {
         const helperText = 'some helper text';
         const { getByText } = render(
-            <SelectField values={[]} id="test" invalid={false} labelText="some label" helperText={helperText} />,
+            <SelectField values={[]} id="test" labelText="some label" helperText={helperText} />,
         );
         expect(getByText(helperText)).toBeInTheDocument();
     });

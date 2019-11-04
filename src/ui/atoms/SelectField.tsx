@@ -12,7 +12,7 @@ interface Value {
 interface Props {
     helperText?: string;
     id: string;
-    invalid: boolean;
+    invalid?: boolean;
     labelText: string;
     values: Value[];
     multi?: boolean;
@@ -28,7 +28,7 @@ const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
 const SelectField = ({
     helperText,
     id,
-    invalid,
+    invalid = false,
     labelText,
     values,
     multi = false,

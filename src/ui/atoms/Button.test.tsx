@@ -9,6 +9,17 @@ describe('Button', (): void => {
         expect((): RenderResult => render(<Button />)).not.toThrow();
     });
 
+    it('should render correctly when passed all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <Button type="primary" className="some-class">
+                        test
+                    </Button>,
+                ),
+        ).not.toThrow();
+    });
+
     it('should append the type string passed to a button-- class', (): void => {
         const { getByText } = render(<Button type="primary">test</Button>);
         expect(getByText('test')).toHaveClass('button--primary');

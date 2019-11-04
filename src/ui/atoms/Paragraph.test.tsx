@@ -9,6 +9,17 @@ describe('Paragraph', (): void => {
         expect((): RenderResult => render(<Paragraph type="writing" />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <Paragraph type="writing" secondary={true}>
+                        Paragraph
+                    </Paragraph>,
+                ),
+        ).not.toThrow();
+    });
+
     it('should render with the correct classes', (): void => {
         const { getByText } = render(
             <div>

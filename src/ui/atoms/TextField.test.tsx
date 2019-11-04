@@ -6,8 +6,15 @@ describe('TextField', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
+        expect((): RenderResult => render(<TextField id="test" />)).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
         expect(
-            (): RenderResult => render(<TextField id="test" invalid={false} labelText="some label" />),
+            (): RenderResult =>
+                render(
+                    <TextField id="test" helperText="helper text" invalid={true} labelText="label" icon={<div />} />,
+                ),
         ).not.toThrow();
     });
 
