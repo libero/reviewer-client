@@ -5,5 +5,4 @@ import '@storybook/addon-centered/react';
 import '@storybook/addon-viewport/register';
 import '@storybook/addon-a11y/register';
 import '@storybook/addon-notes/register-panel';
-import '@storybook/addon-storysource/register';
 import 'storybook-dark-mode/register';

@@ -14,6 +14,9 @@ module.exports = ({ config }) => {
                 {
                     loader: require.resolve('awesome-typescript-loader'),
                 },
+                {
+                    loader: require.resolve('react-docgen-typescript-loader'),
+                },
             ],
         },
     );
