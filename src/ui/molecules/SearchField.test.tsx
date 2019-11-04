@@ -9,6 +9,13 @@ describe('TextField', (): void => {
         expect((): RenderResult => render(<SearchField id="test" />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(<SearchField id="test" onChange={jest.fn()} showHelpText={true} placeholder="test" />),
+        ).not.toThrow();
+    });
+
     it('should render the helper text when it is passed in', (): void => {
         const { getByText } = render(<SearchField showHelpText id="test" />);
         expect(getByText('search-box--helper')).toBeInTheDocument();

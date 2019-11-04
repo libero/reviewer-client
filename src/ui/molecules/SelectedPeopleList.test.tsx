@@ -8,7 +8,22 @@ describe('SelectedPeopleList', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<SelectedPeopleList people={[]} openSelectorText=" " onRemove={jest.fn()} onOpen={jest.fn()} />),
+                render(<SelectedPeopleList openSelectorText=" " onRemove={jest.fn()} onOpen={jest.fn()} />),
+        ).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <SelectedPeopleList
+                        people={[{ id: '1' }]}
+                        required={true}
+                        openSelectorText=" "
+                        onRemove={jest.fn()}
+                        onOpen={jest.fn()}
+                    />,
+                ),
         ).not.toThrow();
     });
 

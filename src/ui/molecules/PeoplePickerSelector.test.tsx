@@ -55,12 +55,30 @@ describe('PeoplePickerSelector', (): void => {
             (): RenderResult =>
                 render(
                     <PeoplePickerSelector
-                        initialySelected={[]}
                         onDone={jest.fn()}
                         onSearch={jest.fn()}
                         label=" "
                         toggle={jest.fn()}
                         isShowing={true}
+                    />,
+                ),
+        ).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <PeoplePickerSelector
+                        people={people}
+                        initialySelected={['1']}
+                        onDone={jest.fn()}
+                        onSearch={jest.fn()}
+                        label=" "
+                        toggle={jest.fn()}
+                        isShowing={true}
+                        min={0}
+                        max={6}
                     />,
                 ),
         ).not.toThrow();

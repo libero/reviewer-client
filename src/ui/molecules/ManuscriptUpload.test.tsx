@@ -3,21 +3,18 @@ import { render, RenderResult, fireEvent, cleanup, act, queryByText } from '@tes
 import flushPromises from '../../../test-utils/flushPromises';
 import ManuscriptUpload from './ManuscriptUpload';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function dispatchEvt(node: Document | Element | Window, type: string, data: any): void {
+function dispatchEvt(node: Document | Element | Window, type: string, data: unknown): void {
     const event = new Event(type, { bubbles: true });
     Object.assign(event, data);
     fireEvent(node, event);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mockData(files: File[]): Record<string, any> {
+function mockData(files: File[]): Record<string, unknown> {
     return {
         dataTransfer: {
             files,
             items: files.map(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (file): Record<string, any> => ({
+                (file): Record<string, unknown> => ({
                     kind: 'file',
                     type: file.type,
                     getAsFile: (): File => file,
@@ -33,6 +30,12 @@ describe('ManuscriptUpload', (): void => {
 
     it('should render correctly', (): void => {
         expect((): RenderResult => render(<ManuscriptUpload />)).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult => render(<ManuscriptUpload inactiveContent={<div />} activeContent={<div />} />),
+        ).not.toThrow();
     });
 
     it('should render default inactive content when inactive', (): void => {

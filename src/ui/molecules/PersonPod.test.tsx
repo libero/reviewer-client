@@ -9,6 +9,22 @@ describe('Button', (): void => {
         expect((): RenderResult => render(<PersonPod toggleHandler={jest.fn()} />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <PersonPod
+                        toggleHandler={jest.fn()}
+                        name="name"
+                        institution="inst"
+                        focuses={['focus']}
+                        expertises={['expertises']}
+                        id="id"
+                    />,
+                ),
+        ).not.toThrow();
+    });
+
     it('should toggle the check if preselected is passed in', async (): Promise<void> => {
         const { container } = render(<PersonPod toggleHandler={jest.fn()} initialySelected={true} />);
         expect(container.querySelectorAll('[data-selected]').length).toBe(1);

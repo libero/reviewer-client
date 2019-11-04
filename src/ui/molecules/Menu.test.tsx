@@ -26,6 +26,15 @@ describe('NavMenu', (): void => {
         expect((): RenderResult => render(<Menu />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(<Menu items={items} rootClassName="test" onLinkClick={jest.fn()} />, {
+                    wrapper: routerWrapper(['/']),
+                }),
+        ).not.toThrow();
+    });
+
     it('uses "menu" as a root className prefix if no rootClassName passed', (): void => {
         const { container } = render(<Menu items={items} />, {
             wrapper: routerWrapper(['/link-1']),
