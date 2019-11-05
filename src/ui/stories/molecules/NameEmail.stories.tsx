@@ -7,6 +7,6 @@ storiesOf('ui | molecules/NameEmail', module)
     .add(
         'NameEmail',
         (): JSX.Element => {
-            return <div>Email and Name component</div>;
+            return <div>Name and Email component</div>;
         },
     );
