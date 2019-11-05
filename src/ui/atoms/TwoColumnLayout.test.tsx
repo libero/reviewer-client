@@ -5,7 +5,10 @@ import TwoColumnLayout from './TwoColumnLayout';
 describe('Paragraph', (): void => {
     afterEach(cleanup);
 
-    it('should render correctly', (): void => {
+    it('should render correctly ', (): void => {
+        expect((): RenderResult => render(<TwoColumnLayout />)).not.toThrow();
+    });
+    it('should render correctly with all props', (): void => {
         expect(
             (): RenderResult =>
                 render(

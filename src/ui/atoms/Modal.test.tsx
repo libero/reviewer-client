@@ -9,6 +9,26 @@ describe('Modal', (): void => {
         expect((): RenderResult => render(<Modal isShowing={false} hide={(): void => {}} />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <Modal
+                        isShowing={true}
+                        hide={(): void => {}}
+                        onAccept={jest.fn()}
+                        onCancel={jest.fn()}
+                        buttonText="ButtonText"
+                        fullscreen={true}
+                        buttonType="primary"
+                        buttonDisabled={true}
+                    >
+                        <span>Some content</span>
+                    </Modal>,
+                ),
+        ).not.toThrow();
+    });
+
     it('should render visible if isVisible is true', (): void => {
         const { baseElement } = render(<Modal isShowing={true} hide={(): void => {}} />);
         expect(baseElement.querySelector('.modal')).toBeInTheDocument();

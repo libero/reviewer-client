@@ -7,6 +7,10 @@ describe('SelectedOption', (): void => {
         expect((): RenderResult => render(<SelectedOption text="Ian Malcolm" />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect((): RenderResult => render(<SelectedOption text="Ian Malcolm" onClose={jest.fn()} />)).not.toThrow();
+    });
+
     it('should render the option text', (): void => {
         const { container } = render(<SelectedOption text="Ian Malcolm" />);
 

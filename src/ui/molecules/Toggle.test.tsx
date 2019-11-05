@@ -9,6 +9,17 @@ describe('Toggle', (): void => {
         expect((): RenderResult => render(<Toggle id="testId" toggleLabel="label" />)).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <Toggle id="testId" toggleLabel="label" open={true}>
+                        test
+                    </Toggle>,
+                ),
+        ).not.toThrow();
+    });
+
     it('should display toggleLabel text', (): void => {
         const { getByText } = render(<Toggle id="testId" toggleLabel="Toggle Label Text" />);
         expect(getByText('Toggle Label Text')).toBeInTheDocument();

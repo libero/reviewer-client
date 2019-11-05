@@ -25,6 +25,13 @@ describe('Button', (): void => {
     ];
 
     it('should render correctly', (): void => {
+        expect(
+            (): RenderResult =>
+                render(<ProgressBar steps={ProgressBarSteps} currentStep="a" fixedWidthCentered={true} />),
+        ).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
         expect((): RenderResult => render(<ProgressBar />)).not.toThrow();
     });
 

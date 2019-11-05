@@ -11,6 +11,22 @@ describe('ExcludedToggle', (): void => {
         ).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <ExcludedToggle
+                        open={true}
+                        togglePrefixText="Do an "
+                        toggleActionText="action"
+                        panelHeading="heading"
+                    >
+                        content
+                    </ExcludedToggle>,
+                ),
+        ).not.toThrow();
+    });
+
     it('should display its prefix and action text together', (): void => {
         const { container } = render(<ExcludedToggle togglePrefixText="Do an " toggleActionText="action" />);
         expect(container.querySelector('.excluded-toggle__label').textContent).toContain('Do an action');

@@ -6,7 +6,22 @@ describe('Checkbox', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<Checkbox id="test" invalid={false} labelText="some label" />)).not.toThrow();
+        expect((): RenderResult => render(<Checkbox id="test" labelText="some label" />)).not.toThrow();
+    });
+
+    it('should render correctly when passed all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <Checkbox
+                        helperText="some helper text"
+                        invalid={true}
+                        initialValue={true}
+                        id="test"
+                        labelText="some label"
+                    />,
+                ),
+        ).not.toThrow();
     });
 
     it('should render the label text', (): void => {

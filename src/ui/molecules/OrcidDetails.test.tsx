@@ -12,7 +12,11 @@ describe('Button', (): void => {
     });
 
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<OrcidDetails getOrcidDetails={mockORCIDDetails} />)).not.toThrow();
+        expect((): RenderResult => render(<OrcidDetails />)).not.toThrow();
+    });
+
+    it('should render correctly wiuth all props', (): void => {
+        expect((): RenderResult => render(<OrcidDetails getOrcidDetails={jest.fn()} />)).not.toThrow();
     });
 
     it('should hide the prefill text link when no function specified', async (): Promise<void> => {

@@ -13,6 +13,25 @@ describe('PeoplePicker', (): void => {
         ).not.toThrow();
     });
 
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <PeoplePicker
+                        people={[{ id: '1' }]}
+                        selectedPeople={['1']}
+                        required={true}
+                        min={1}
+                        max={2}
+                        onRemove={jest.fn()}
+                        onSearch={jest.fn()}
+                        label=""
+                        setSelectedPeople={jest.fn()}
+                    />,
+                ),
+        ).not.toThrow();
+    });
+
     it('SelectedPeopleList button toggles the PeoplePickerSelector', async (): Promise<void> => {
         const { getByText, baseElement } = render(
             <PeoplePicker onRemove={jest.fn()} onSearch={jest.fn()} label="" setSelectedPeople={jest.fn()} />,

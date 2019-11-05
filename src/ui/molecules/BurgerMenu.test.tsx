@@ -15,6 +15,14 @@ describe('NavMenu', (): void => {
     it('should render correctly', (): void => {
         expect((): RenderResult => render(<BurgerMenu />)).not.toThrow();
     });
+    it('should render correctly with all props', (): void => {
+        expect(
+            (): RenderResult =>
+                render(<BurgerMenu items={[{ url: '/', display: '' }]} />, {
+                    wrapper: routerWrapper(['/']),
+                }),
+        ).not.toThrow();
+    });
     it('should not show menu on mount', (): void => {
         const { container } = renderBurgerMenu();
         expect(container.querySelector('.burger_menu__overlay')).not.toBeInTheDocument();

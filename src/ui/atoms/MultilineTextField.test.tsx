@@ -6,8 +6,20 @@ describe('MultilineTextField', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
+        expect((): RenderResult => render(<MultilineTextField id="test" labelText="Some label" />)).not.toThrow();
+    });
+
+    it('should render correctly with all props', (): void => {
         expect(
-            (): RenderResult => render(<MultilineTextField id="test" invalid={false} labelText="Some label" />),
+            (): RenderResult =>
+                render(
+                    <MultilineTextField
+                        id="test"
+                        invalid={true}
+                        helperText="some helper text"
+                        labelText="Some label"
+                    />,
+                ),
         ).not.toThrow();
     });
 
