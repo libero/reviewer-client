@@ -21,4 +21,4 @@ build_application: build_source
 	${DOCKER_COMPOSE} build client_application
 
 push_application: lint test build_application
-	${PUSH_COMMAND} client_application
+	${PUSH_COMMAND} reviewer_client
