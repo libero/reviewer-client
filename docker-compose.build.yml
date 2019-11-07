@@ -9,7 +9,7 @@ services:
         image_tag: ${IMAGE_TAG}
     image: libero/reviewer_client_source:${IMAGE_TAG}
 
-  client_application:
+  reviewer_client:
     build:
       context: './'
       dockerfile: "Dockerfile.application"

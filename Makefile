@@ -18,7 +18,7 @@ test: build_source
 	${DOCKER_COMPOSE} run client_source yarn test
 
 build_application: build_source
-	${DOCKER_COMPOSE} build client_application
+	${DOCKER_COMPOSE} build reviewer_client
 
 push_application: lint test build_application
 	${PUSH_COMMAND} reviewer_client
