@@ -16,14 +16,5 @@ services:
       args:
         image_tag: "${IMAGE_TAG}"
     image: libero/reviewer-client:${IMAGE_TAG}
-    command: >
-      /bin/sh -c
-      "envsubst '
-      $${CLIENT_PORT}
-      $${SERVER_PORT}
-      $${CLIENT_API_PROXY_URL}
-      '< /etc/nginx/nginx.conf.template
-      > /etc/nginx/nginx.conf
-      && nginx -g 'daemon off;'"
     depends_on:
       - client_source
