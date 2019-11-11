@@ -7,7 +7,7 @@ services:
       dockerfile: 'Dockerfile.source'
       args:
         image_tag: ${IMAGE_TAG}
-    image: libero/reviewer_client_source:${IMAGE_TAG}
+    image: libero/reviewer-client_source:${IMAGE_TAG}
 
   reviewer_client:
     build:
@@ -15,7 +15,7 @@ services:
       dockerfile: "Dockerfile.application"
       args:
         image_tag: "${IMAGE_TAG}"
-    image: libero/reviewer_client:${IMAGE_TAG}
+    image: libero/reviewer-client:${IMAGE_TAG}
     command: >
       /bin/sh -c
       "envsubst '
