@@ -10,8 +10,6 @@ import { getToken } from '../../login/utils/tokenUtils';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
 
-declare var CONFIG: { API_HOST: string };
-
 const authToken = getToken();
 
 const Loader = (): JSX.Element => <div>Loading...</div>;

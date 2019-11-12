@@ -5,8 +5,6 @@ import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../
 import Image from '../../core/assets/welcome.jpg';
 import * as Auth from '../../core/utils/auth';
 
-declare var CONFIG: { LOGIN_URL: string };
-
 const Login = (): JSX.Element => {
     const { t } = useTranslation();
 
