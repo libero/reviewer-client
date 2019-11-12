@@ -15,10 +15,6 @@ const commonConfig = merge([
                 template: 'index.html',
                 filename: 'index.html',
             }),
-            new webpack.DefinePlugin({
-                API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}:${process.env.CLIENT_PORT}`),
-                LOGIN_URL: JSON.stringify(`${process.env.CONTINUUM_LOGIN_URL}:${process.env.CONTINUUM_LOGIN_PORT}/submit`),
-            })
         ],
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -28,6 +24,7 @@ const commonConfig = merge([
 
 const developmentConfig = merge([
     parts.output({ filename: 'bundle.js' }),
+    parts.configVars(),
     parts.devServer(),
     parts.loaders(),
     parts.copyFiles(),

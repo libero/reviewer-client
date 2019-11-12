@@ -9,6 +9,7 @@ MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 WORKDIR /app
 
 COPY deployment/nginx.conf.template /etc/nginx/nginx.conf.template
+COPY deployment/config-template.js /usr/share/nginx/html
 COPY --from=source /app/dist/ /usr/share/nginx/html
 COPY scripts/build-config.sh /app
 
