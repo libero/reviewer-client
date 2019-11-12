@@ -10,7 +10,7 @@ import { getToken } from '../../login/utils/tokenUtils';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
 
-declare var API_HOST: string;
+declare var CONFIG: { API_HOST: string };
 
 const authToken = getToken();
 
@@ -18,7 +18,7 @@ const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => (
     <div>
-        <ApolloProvider client={createApolloClient(API_HOST, authToken)}>
+        <ApolloProvider client={createApolloClient(CONFIG.API_HOST, authToken)}>
             <Router>
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />

@@ -5,7 +5,7 @@ import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../
 import Image from '../../core/assets/welcome.jpg';
 import * as Auth from '../../core/utils/auth';
 
-declare var LOGIN_URL: string;
+declare var CONFIG: { LOGIN_URL: string };
 
 const Login = (): JSX.Element => {
     const { t } = useTranslation();
@@ -38,7 +38,7 @@ const Login = (): JSX.Element => {
                     </div>
 
                     <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href={LOGIN_URL}>
+                        <a className="login-page__buttons--orcid" href={CONFIG.LOGIN_URL}>
                             <Button type="orcid">{t('login:login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">
