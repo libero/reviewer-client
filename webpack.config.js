@@ -9,11 +9,22 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const commonConfig = merge([
     {
-        entry: './index.tsx',
+        entry: {
+            main: './index.tsx',
+            config: './config.ts',
+        },
         plugins: [
             new HtmlWebPackPlugin({
                 template: 'index.html',
                 filename: 'index.html',
+                chunksSortMode: 'manual',
+                chunks: ['config', 'main'],
+                // options: {
+                //     chunksSortMode: function(a, b) {
+                //         const order = ['config', 'main'];
+                //         return order.indexOf(a.names[0]) - order.indexOf(b.names[0])
+                //     }
+                // }
             }),
         ],
         resolve: {
@@ -23,7 +34,7 @@ const commonConfig = merge([
 ]);
 
 const developmentConfig = merge([
-    parts.output({ filename: 'bundle.js' }),
+    parts.output({ filename: '[name].bundle.js' }),
     parts.configVars(),
     parts.devServer(),
     parts.loaders(),
