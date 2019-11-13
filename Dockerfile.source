@@ -2,7 +2,7 @@ FROM node:10-alpine
 
 WORKDIR /app
 
-COPY globals.d.ts index.html index.tsx .babelrc .eslintrc.js .eslintignore .prettierrc.js webpack.parts.js jest.config.js tsconfig.json webpack.config.js ./
+COPY globals.d.ts index.ejs index.tsx .babelrc .eslintrc.js .eslintignore .prettierrc.js webpack.parts.js jest.config.js tsconfig.json webpack.config.js ./
 
 COPY test-utils/ test-utils/
 COPY webpack/ webpack/

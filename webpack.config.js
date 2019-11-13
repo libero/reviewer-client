@@ -13,10 +13,9 @@ const commonConfig = merge([
         },
         plugins: [
             new HtmlWebPackPlugin({
-                template: 'index.html',
+                template: 'index.ejs',
                 filename: 'index.html',
-                chunksSortMode: 'manual',
-                chunks: ['config', 'main'],
+                inject: false
             }),
         ],
         resolve: {
