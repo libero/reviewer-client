@@ -6,7 +6,7 @@ import centered from '@storybook/addon-centered/react';
 import { PeoplePickerSelector } from '../../molecules';
 import '../../../core/styles/index.scss';
 
-let people = [
+const people = [
     {
         id: '1',
         name: 'Name 1',
