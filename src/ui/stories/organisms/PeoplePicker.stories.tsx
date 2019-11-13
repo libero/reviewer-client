@@ -5,7 +5,7 @@ import { boolean, button, number, text, withKnobs } from '@storybook/addon-knobs
 import { PeoplePicker } from '../../organisms';
 import '../../../core/styles/index.scss';
 
-let people = [
+const people = [
     {
         id: '1',
         name: 'Name 1',

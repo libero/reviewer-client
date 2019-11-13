@@ -10,8 +10,7 @@
         "lint": "eslint --ext .js,.ts,.tsx src/",
         "prettier": "prettier --write 'src/**/*ts?'",
         "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook",
-        "update:internal": "yarn upgrade -P @libero"
+        "build-storybook": "build-storybook"
     },
     "husky": {
         "hooks": {
