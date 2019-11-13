@@ -5,8 +5,6 @@ const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
-
 const commonConfig = merge([
     {
         entry: {
@@ -19,12 +17,6 @@ const commonConfig = merge([
                 filename: 'index.html',
                 chunksSortMode: 'manual',
                 chunks: ['config', 'main'],
-                // options: {
-                //     chunksSortMode: function(a, b) {
-                //         const order = ['config', 'main'];
-                //         return order.indexOf(a.names[0]) - order.indexOf(b.names[0])
-                //     }
-                // }
             }),
         ],
         resolve: {
