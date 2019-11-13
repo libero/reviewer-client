@@ -23,9 +23,3 @@ declare namespace jest {
         toHaveClass(...classNames: string[]): CustomMatcherResult;
     }
 }
-
-// CONFIG type declaration 
-declare var CONFIG: {
-    API_HOST: string;
-    LOGIN_URL: string;
-}
