@@ -3,7 +3,7 @@ import Routes from './Routes';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 
-const renderRoutesWithPath = (route: string = ''): RenderResult =>
+const renderRoutesWithPath = (route = ''): RenderResult =>
     render(<Routes />, {
         wrapper: routerWrapper([route]),
     });

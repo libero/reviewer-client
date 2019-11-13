@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-xhr-backend';
 
 export default function(options = {}): void {
-    let i18nOptions: InitOptions = {
+    const i18nOptions: InitOptions = {
         lng: 'en',
         load: 'currentOnly',
         keySeparator: '.',

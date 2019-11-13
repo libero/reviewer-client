@@ -3,7 +3,7 @@ import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
 
-let people = [
+const people = [
     {
         id: '1',
         name: 'Name 1',

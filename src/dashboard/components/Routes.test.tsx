@@ -21,7 +21,7 @@ const mockQueryResponse = [
     },
 ];
 
-const renderRoutesWithPath = (route: string = ''): RenderResult =>
+const renderRoutesWithPath = (route = ''): RenderResult =>
     render(<Routes />, {
         wrapper: combineWrappers(apolloWrapper(mockQueryResponse), routerWrapper([route])),
     });
