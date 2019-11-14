@@ -1,4 +1,4 @@
-declare var CONFIG: {
+declare let CONFIG: {
   API_HOST: string;
   LOGIN_URL: string;
 } 
