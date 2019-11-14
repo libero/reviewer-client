@@ -29,7 +29,7 @@ describe('NavBar', (): void => {
 
     it('should render a menu with expected items', (): void => {
         const { container } = render(<NavBar />, { wrapper: routerWrapper() });
-        for (let item of expectedMenuItems) {
+        for (const item of expectedMenuItems) {
             const element = container.querySelector('.menu__link[href="' + item.url + '"]');
             expect(element).toBeInTheDocument();
             expect(element.textContent).toBe(item.display);
@@ -39,7 +39,7 @@ describe('NavBar', (): void => {
         const { container } = render(<NavBar />, { wrapper: routerWrapper() });
         fireEvent.click(container.querySelector('.burger_menu button'));
 
-        for (let item of expectedMenuItems) {
+        for (const item of expectedMenuItems) {
             const element = container.querySelector('.burger_menu__link[href="' + item.url + '"]');
             expect(element).toBeInTheDocument();
             expect(element.textContent).toBe(item.display);
