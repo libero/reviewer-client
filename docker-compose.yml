@@ -1,14 +1,21 @@
 version: '3'
 services: 
   client:
-      image: libero/reviewer-client:local
-      ports:
-        - "${CLIENT_PORT}:9000"
-      environment:
-        CLIENT_PORT: ${CLIENT_PORT}
-        CLIENT_API_URL: ${CLIENT_API_URL}
-        CLIENT_API_PROXY_URL: "http://localhost"
-        CLIENT_API_PROXY_ENDPOINT: ${CLIENT_API_PROXY_ENDPOINT}
-        SERVER_PORT: ${SERVER_PORT}
-        CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
-        CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
+    image: libero/reviewer-client:local
+    ports:
+      - "${CLIENT_PORT}:9000"
+    environment:
+      CLIENT_PORT: ${CLIENT_PORT}
+      CLIENT_API_URL: ${CLIENT_API_URL}
+      CLIENT_API_PROXY_URL: "http://server"
+      CLIENT_API_PROXY_ENDPOINT: ${CLIENT_API_PROXY_ENDPOINT}
+      SERVER_PORT: ${SERVER_PORT}
+      CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
+      CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
+    networks:
+      - "infra_api"
+
+networks:
+  infra_api:
+    external:
+      name: "infra_api"

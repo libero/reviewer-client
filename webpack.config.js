@@ -5,15 +5,17 @@ const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
-
 const commonConfig = merge([
     {
-        entry: './index.tsx',
+        entry: {
+            main: './index.tsx',
+            config: './config.ts',
+        },
         plugins: [
             new HtmlWebPackPlugin({
-                template: 'index.html',
+                template: 'index.ejs',
                 filename: 'index.html',
+                inject: false
             }),
         ],
         resolve: {
@@ -23,7 +25,7 @@ const commonConfig = merge([
 ]);
 
 const developmentConfig = merge([
-    parts.output({ filename: 'bundle.js' }),
+    parts.output({ filename: '[name].bundle.js' }),
     parts.configVars(),
     parts.devServer(),
     parts.loaders(),
