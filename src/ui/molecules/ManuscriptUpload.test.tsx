@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, RenderResult, fireEvent, cleanup, act, queryByText } from '@testing-library/react';
-import flushPromises from '../../../test-utils/flushPromises';
+import { render, RenderResult, fireEvent, cleanup, act } from '@testing-library/react';
 import ManuscriptUpload from './ManuscriptUpload';
 
 function dispatchEvt(node: Document | Element | Window, type: string, data: unknown): void {
@@ -39,15 +38,15 @@ describe('ManuscriptUpload', (): void => {
     });
 
     it('should render default inactive content when inactive', (): void => {
-        const { container } = render(<ManuscriptUpload />);
+        const { getByText, queryByText } = render(<ManuscriptUpload />);
 
-        expect(queryByText(container, 'manuscript-upload.inactive-content')).not.toBeNull();
-        expect(queryByText(container, 'manuscript-upload.active-content')).toBeNull();
+        expect(getByText('manuscript-upload.inactive-content')).not.toBeNull();
+        expect(queryByText('manuscript-upload.active-content')).toBeNull();
     });
 
     it('should render default active content when active', async (): Promise<void> => {
         const ui = <ManuscriptUpload />;
-        const { container } = render(ui);
+        const { container, getByText, queryByText } = render(ui);
         const dropzone = container.querySelector('.manuscript-upload__dropzone');
         const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
         const data = mockData([file]);
@@ -55,24 +54,23 @@ describe('ManuscriptUpload', (): void => {
         await act(
             async (): Promise<void> => {
                 dispatchEvt(dropzone, 'dragenter', data);
-                await flushPromises();
             },
         );
 
-        expect(queryByText(container, 'manuscript-upload.active-content')).not.toBeNull();
-        expect(queryByText(container, 'manuscript-upload.inactive-content')).toBeNull();
+        expect(getByText('manuscript-upload.active-content')).not.toBeNull();
+        expect(queryByText('manuscript-upload.inactive-content')).toBeNull();
     });
 
     it('should render custom inactive content when inactive', (): void => {
-        const { container } = render(<ManuscriptUpload inactiveContent="custom inactive content" />);
+        const { getByText, queryByText } = render(<ManuscriptUpload inactiveContent="custom inactive content" />);
 
-        expect(queryByText(container, 'custom inactive content')).not.toBeNull();
-        expect(queryByText(container, 'manuscript-upload.active-content')).toBeNull();
+        expect(getByText('custom inactive content')).not.toBeNull();
+        expect(queryByText('manuscript-upload.active-content')).toBeNull();
     });
 
     it('should render custom active content when active', async (): Promise<void> => {
         const ui = <ManuscriptUpload activeContent="custom active content" />;
-        const { container } = render(ui);
+        const { container, getByText, queryByText } = render(ui);
         const dropzone = container.querySelector('.manuscript-upload__dropzone');
         const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
         const data = mockData([file]);
@@ -80,11 +78,10 @@ describe('ManuscriptUpload', (): void => {
         await act(
             async (): Promise<void> => {
                 dispatchEvt(dropzone, 'dragenter', data);
-                await flushPromises();
             },
         );
 
-        expect(queryByText(container, 'custom active content')).not.toBeNull();
-        expect(queryByText(container, 'manuscript-upload.inactive-content')).toBeNull();
+        expect(getByText('custom active content')).not.toBeNull();
+        expect(queryByText('manuscript-upload.inactive-content')).toBeNull();
     });
 });
