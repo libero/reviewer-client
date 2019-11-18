@@ -23,4 +23,4 @@ To add or edit a config variable you will need to change:
 - `/scripts/build-config.sh` - edit the string argument being passed to the `envsubst` that outputs to `$CONFIG_FILENAME`. This should be in the format `$${CLIENT_PORT}`
 - `docker-compose.yml` - here we need to map our `.env` file variables to the containers environment. 
 
-- Once the new config makes it into master, the reviewer repo's `dockr-compose.yml` will need updating as it uses the latest tagged image 
+- Once the new config makes it into master, the reviewer repo's `docker-compose.yml` will need updating as it uses the latest tagged image 

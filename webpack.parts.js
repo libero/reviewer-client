@@ -17,8 +17,8 @@ exports.devServer = () => ({
         overlay: true,
         hot: true,
         proxy: {
-            [process.env.CLIENT_API_PROXY_ENDPOINT]: {
-                target: `${process.env.CLIENT_API_PROXY_URL}:${process.env.SERVER_PORT}`,
+            '/graphql': {
+                target: `${process.env.CLIENT_API_PROXY_URL}`,
                 changeOrigin: true,
             },
         },

@@ -7,7 +7,7 @@ http {
     listen ${CLIENT_PORT};
 
     location /graphql {
-      proxy_pass ${CLIENT_API_PROXY_URL}:${SERVER_PORT};
+      proxy_pass ${CLIENT_API_PROXY_URL};
     }
 
     location / {

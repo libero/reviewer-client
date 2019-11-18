@@ -11,8 +11,8 @@ const webpack = require('webpack');
 module.exports = {
     plugins: [
         new webpack.DefinePlugin({
-            API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}:${process.env.CLIENT_PORT}`),
-            LOGIN_URL: JSON.stringify(`${process.env.CONTINUUM_LOGIN_URL}:${process.env.CONTINUUM_LOGIN_PORT}/submit`),
+            API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}`),
+            LOGIN_URL: JSON.stringify(`${process.env.CONTINUUM_LOGIN_URL}`),
         }),
         // your custom plugins
     ],
