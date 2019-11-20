@@ -8,6 +8,7 @@ services:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_URL: ${CLIENT_API_URL}
       CLIENT_API_PROXY_URL: "http://server:3000"
+      CLIENT_AUTH_PROXY_URL: "http://continuum-auth:3001"
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
     networks:
       - "infra_api"
