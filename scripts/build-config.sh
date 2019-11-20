@@ -2,7 +2,7 @@
 
 CONFIG_FILENAME=$(find /usr/share/nginx/html/ -name "config.*.js")
 
-envsubst ' $${CLIENT_PORT} $${CLIENT_API_PROXY_URL} ' \
+envsubst ' $${CLIENT_PORT} $${CLIENT_API_PROXY_URL} $${CLIENT_AUTH_PROXY_URL}' \
   < /etc/nginx/nginx.conf.template \
   > /etc/nginx/nginx.conf \
   && cp $CONFIG_FILENAME config-temp.js \

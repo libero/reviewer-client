@@ -21,6 +21,11 @@ exports.devServer = () => ({
                 target: `${process.env.CLIENT_API_PROXY_URL}`,
                 changeOrigin: true,
             },
+            '/auth': {
+                target: `${process.env.CLIENT_AUTH_PROXY_URL}`,
+                pathRewrite: {'^/auth': ''},
+                changeOrigin: true
+            }
         },
     },
 });
