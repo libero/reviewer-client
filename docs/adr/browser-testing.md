@@ -103,6 +103,50 @@ describe("form", () => {
 ```
 As stated above this test was not run due to browser version issues so no timings took place, it should also be noted that while Nightwatch and Testcafe include all of their dependencies Intern requires Java to run which is another complexity to add to the CI.
 
+### Codeceptjs
+Codecept appears to be able to use a wide variety of libraries to do the actual testing and provides wrappers around these with a nicely named api. The code executes pretty quicky and the following test took only 5 seconds on the local dev machine.
+```js
+Feature("Form.test.js");
+
+Scenario("test something", I => {
+  I.amOnPage("http:localhost:3000");
+  I.seeElement("form");
+  I.fillField("name", "Sparkles");
+  I.fillField("age", 42);
+  I.selectOption("favouriteColour", "glitter");
+  I.click("Submit");
+  I.see(
+    "Recieved Sparkles who is 42 years old and their favourite colour is glitter"
+  );
+});
+```
+This test was written using the webdriver api and requires the use of selenium to run.
+
+### WebdriverIO
+The webdriverio testing library is very lightweight but that also means its a very barebones, when testing it the tests were not as simple to write and the output for failing tests was not very clear.
+```js
+const assert = require("assert");
+
+describe("Frorm.tsx", () => {
+  it("should allow a person to be added", () => {
+    browser.url("http://localhost:3000");
+    const form = $("form");
+    assert(form.isDisplayed(), true);
+    $("input[name=name]").setValue("Sparkles");
+    $("input[name=age]").setValue(42);
+    $("select").selectByAttribute("value", "glitter");
+    $("button").click();
+    const response = $("h2");
+    response.waitForExist(5000);
+    debugger;
+    assert(
+      response.getText(),
+      "Recieved Sparkles who is 42 years old and their favourite colour is glitter"
+    );
+  });
+});
+```
+
 ### Cucubmer
 This is a strange testing framework that uses its own declarative style of writing tests. In a perfect world this would be fine however it would make later switching to another library a lot more expensive as the tests are that different. See example below:
 ```
