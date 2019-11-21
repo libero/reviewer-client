@@ -104,7 +104,7 @@ describe("form", () => {
 As stated above this test was not run due to browser version issues so no timings took place, it should also be noted that while Nightwatch and Testcafe include all of their dependencies Intern requires Java to run which is another complexity to add to the CI.
 
 ### Codeceptjs
-Codecept apears to be able to use a wide variety of libraries to do the actual testing and provides wrappers around these with a nicely named api. The code executes pretty quicky and the following test took only 5 seconds on the local dev machine.
+Codecept appears to be able to use a wide variety of libraries to do the actual testing and provides wrappers around these with a nicely named api. The code executes pretty quicky and the following test took only 5 seconds on the local dev machine.
 ```js
 Feature("Form.test.js");
 
@@ -123,7 +123,7 @@ Scenario("test something", I => {
 This test was written using the webdriver api and requires the use of selenium to run.
 
 ### WebdriverIO
-The webdeiverio testing library is very lightweight but that also means its a very barebones, when testing it the tests were not as simple to write and the output for failing tests was not nvery clear.
+The webdriverio testing library is very lightweight but that also means its a very barebones, when testing it the tests were not as simple to write and the output for failing tests was not very clear.
 ```js
 const assert = require("assert");
 
