@@ -7,13 +7,13 @@ services:
     environment:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://server:3000"
-      CLIENT_AUTH_PROXY_URL: "http://continuum-auth:3001"
+      CLIENT_API_PROXY_URL: "http://localhost:3000"
+      CLIENT_AUTH_PROXY_URL: "http://localhost:3003"
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
-    networks:
-      - "infra_api"
 
-networks:
-  infra_api:
-    external:
-      name: "infra_api"
+  mock-continuum-login:
+    image: liberoadmin/mock-continuum-login:latest
+    environment:
+      CONTINUUM_LOGIN_URL: "http://localhost:9000/submit"
+      CONTINUUM_LOGIN_PORT: 3003
+      CONTINUUM_LOGIN_JWT_SECRET: "some_secret_from_journal"
