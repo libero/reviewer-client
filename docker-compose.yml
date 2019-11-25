@@ -7,12 +7,12 @@ services:
     environment:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://localhost:3000"
-      CLIENT_AUTH_PROXY_URL: "http://localhost:3000"
+      CLIENT_API_PROXY_URL: "http://localhost:3003"
+      CLIENT_AUTH_PROXY_URL: "http://localhost:3003"
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
 
   reviewer-mock:
-    image: liberoadmin/mock-continuum-login:latest
+    image: liberoadmin/reviewer-mock:local
     ports:
       - "3003:3003"
     environment:

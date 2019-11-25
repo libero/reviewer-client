@@ -1,20 +1,30 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
-import { getSubmissionsQuery } from '../graphql';
+import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
+import { ExecutionResult } from 'graphql';
 
 const Dashboard = withRouter(
     (): JSX.Element => {
         const { loading, data } = useQuery(getSubmissionsQuery);
+        const [startSubmission] = useMutation(startSubmissionMutation, {
+            update(cache, { data: { startSubmission } }) {
+                const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
+                cache.writeQuery({
+                    query: getSubmissionsQuery,
+                    data: { getSubmissions: getSubmissions.concat([startSubmission]) },
+                });
+            },
+        });
         const { t } = useTranslation();
 
         return (
             <div className="dashboard main-content--centered">
                 <div className="dashboard__button_container">
-                    <Button type="primary" onClick={(): void => {}}>
+                    <Button type="primary" onClick={(): Promise<void | ExecutionResult> => startSubmission()}>
                         {t('dashboard:new-submission')}
                     </Button>
                 </div>

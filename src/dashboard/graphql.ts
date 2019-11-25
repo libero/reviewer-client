@@ -9,3 +9,13 @@ export const getSubmissionsQuery = gql`
         }
     }
 `;
+
+export const startSubmissionMutation = gql`
+    mutation StartSubmision {
+        startSubmission {
+            id
+            title
+            updated
+        }
+    }
+`;
