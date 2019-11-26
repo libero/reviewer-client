@@ -11,8 +11,8 @@ services:
       CLIENT_AUTH_PROXY_URL: "http://localhost:3003"
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
 
-  reviewer-mock:
-    image: liberoadmin/reviewer-mock:local
+  reviewer-mocks:
+    image: liberoadmin/reviewer-mocks
     ports:
       - "3003:3003"
     environment:
