@@ -24,7 +24,7 @@ const Dashboard = withRouter(
         return (
             <div className="dashboard main-content--centered">
                 <div className="dashboard__button_container">
-                    <Button type="primary" onClick={(): Promise<void | ExecutionResult> => startSubmission()}>
+                    <Button type="primary" onClick={(): Promise<ExecutionResult> => startSubmission()}>
                         {t('dashboard:new-submission')}
                     </Button>
                 </div>
