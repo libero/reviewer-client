@@ -1,7 +1,7 @@
 version: '3'
 services: 
   client:
-    image: libero/reviewer-client:local
+    image: liberoadmin/reviewer-client
     ports:
       - "${CLIENT_PORT}:9000"
     environment:
