@@ -1,8 +1,7 @@
-
 Feature('Login');
 
-Scenario('test something', (I) => {
-  I.amOnPage('/login');
-  I.see('Welcome!');
-  I.click('Login with ORCID');
+Scenario('test something', (I, loginPage, dashboardPage) => {
+    loginPage.onPage();
+    loginPage.login();
+    dashboardPage.onPage();
 });
