@@ -10,7 +10,7 @@ http {
       proxy_pass ${CLIENT_API_PROXY_URL};
     }
 
-    location /auth {
+    location /auth/ {
       proxy_pass ${CLIENT_AUTH_PROXY_URL};
     }
 
