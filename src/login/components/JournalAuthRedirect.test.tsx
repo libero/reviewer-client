@@ -28,7 +28,6 @@ describe('JournalAuthRedirect', (): void => {
 
     it('should redirect to auth url with token', (): void => {
         jest.spyOn(TokenUtils, 'getTokenFromUrl').mockImplementationOnce((): string => 'token');
-        
 
         render(
             <MemoryRouter initialEntries={['/auth-redirect#token']}>
