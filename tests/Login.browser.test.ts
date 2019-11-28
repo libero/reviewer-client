@@ -1,6 +1,6 @@
 Feature('Login');
 
-Scenario('test something', (I, loginPage, dashboardPage) => {
+Scenario('Redirect to Dashboard on Login', (I, loginPage, dashboardPage) => {
     loginPage.onPage();
     loginPage.login();
     dashboardPage.onPage();
