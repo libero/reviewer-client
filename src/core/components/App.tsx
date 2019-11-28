@@ -6,6 +6,7 @@ import { default as InitialSubmissionRoutes } from '../../initial-submission/com
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
+import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import { getToken } from '../../login/utils/tokenUtils';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
@@ -21,6 +22,7 @@ const App: React.FC = (): JSX.Element => (
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
                     <Route component={Login} exact path="/login"></Route>
+                    <Route component={JournalAuthRedirect} exact path="/auth-redirect"></Route>
                     <div className="site-content">
                         <InitialSubmissionRoutes />
                         <DashboardRoutes />
