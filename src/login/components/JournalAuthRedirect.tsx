@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import { getTokenFromUrl } from '../utils/tokenUtils';
 
 /**
@@ -8,7 +7,6 @@ import { getTokenFromUrl } from '../utils/tokenUtils';
  * as part of the url. This is then proxied to the authentication service which then
  * performs the token exchange.
  */
-
 const JournalAuthRedirect = (): JSX.Element => {
     const token = getTokenFromUrl();
 
