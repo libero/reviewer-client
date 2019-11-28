@@ -4,20 +4,19 @@ import { cleanup, render, RenderResult } from '@testing-library/react';
 import * as TokenUtils from '../utils/tokenUtils';
 import JournalAuthRedirect from './JournalAuthRedirect';
 
-jest.mock;
-
 describe('JournalAuthRedirect', (): void => {
     const originalLocation = window.location;
 
-    beforeEach(() => {
+    beforeEach((): void => {
         delete window.location;
 
+        // prettier-ignore
         window.location = {
             href: '',
-        } as Location;
+        } as unknown as Location;
     });
 
-    afterEach(() => {
+    afterEach((): void => {
         window.location = originalLocation;
         cleanup();
     });
