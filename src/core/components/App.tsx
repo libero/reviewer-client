@@ -10,6 +10,7 @@ import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import { getToken } from '../../login/utils/tokenUtils';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
+import Logout from '../../login/components/Logout';
 
 const authToken = getToken();
 
@@ -22,6 +23,7 @@ const App: React.FC = (): JSX.Element => (
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
                     <Route component={Login} exact path="/login"></Route>
+                    <Route component={Logout} exact path="/logout"></Route>
                     <Route component={JournalAuthRedirect} exact path="/auth-redirect"></Route>
                     <div className="site-content">
                         <InitialSubmissionRoutes />

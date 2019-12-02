@@ -6,6 +6,10 @@ export const setToken = (token: string): void => {
     window.localStorage.setItem('token', token);
 };
 
+export const clearToken = (): void => {
+    window.localStorage.removeItem('token');
+};
+
 export const decodeToken = (token: string): {} => {
     const [, payload] = token.split('.');
     return JSON.parse(atob(payload));
