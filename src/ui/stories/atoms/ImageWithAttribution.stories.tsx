@@ -15,6 +15,7 @@ storiesOf('ui | atoms/ImageWithAttribution', module)
                     image={Image}
                     artistName="Bob Ross"
                     artistUrl="http://www.happylittletrees.elifesciences.org"
+                    align={'left'}
                 />
             );
         },

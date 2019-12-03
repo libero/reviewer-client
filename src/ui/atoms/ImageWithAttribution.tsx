@@ -5,13 +5,14 @@ interface Props {
     image: string;
     artistName: string;
     artistUrl: string;
+    align: 'left' | 'right';
 }
 
-const ImageWithAttribution = ({ image, artistName, artistUrl }: Props): JSX.Element => {
+const ImageWithAttribution = ({ image, artistName, artistUrl, align }: Props): JSX.Element => {
     const { t } = useTranslation();
 
     return (
-        <div className="image-attributed__image">
+        <div className={`image-attributed__image image-attributed__image--${align}`}>
             <img className="image-attributed__image--image" alt="Login Page Art" src={image} />
             <p className="image-attributed__image--credit">
                 {t('ui:image-attribution')}
