@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import Login from '../src/core/locales/en/login.json';
 import UI from '../src/core/locales/en/ui.json';
 import Dashboard from '../src/core/locales/en/dashboard.json';
+import NoSubmission from '../src/core/locales/en/no-submission.json';
 import Orcid from '../src/core/locales/en/orcid-details.json';
 import Common from '../src/core/locales/en/common.json';
 import Translation from '../src/core/locales/en/translation.json';
@@ -13,7 +14,7 @@ export default function(options = {}): void {
         lng: 'en',
         load: 'currentOnly',
         keySeparator: '.',
-        ns: ['common', 'dashboard', 'login', 'orcid-details', 'ui'],
+        ns: ['common', 'dashboard', 'login', 'no-submission', 'orcid-details', 'ui'],
         fallbackLng: 'en',
         debug: process.env.NODE_ENV !== 'production',
         react: {
@@ -24,6 +25,7 @@ export default function(options = {}): void {
                 common: Common,
                 dashboard: Dashboard,
                 login: Login,
+                'no-submission': NoSubmission,
                 'orcid-details': Orcid,
                 translation: Translation,
                 ui: UI,

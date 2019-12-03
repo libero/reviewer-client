@@ -2,10 +2,19 @@
   width: 75%;
   height: 100%;
   display: none;
-  margin-left: auto;
   @include forSize('tabletLandscapeUp') {
     display: block;
   }
+}
+
+.image-attributed__image--right {
+  margin-right: auto;
+  text-align: left;
+}
+
+.image-attributed__image--left {
+  margin-left: auto;
+  text-align: right;
 }
 
 .image-attributed__image--image {
@@ -16,7 +25,6 @@
 .image-attributed__image--credit {
   color: $colourTextLarge;
   font-size: 12px;
-  text-align: right;
 
   a {
     color: inherit;

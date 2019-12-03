@@ -21,13 +21,18 @@ const notes = `
 storiesOf('Dashboard | Components/Dashboard', module).add(
     'With Components',
     (): JSX.Element => {
+        const sampleSub = {
+            id: '1234',
+            title: 'Effects of Caffeine on Software Developers',
+            updated: Date.now(),
+        };
         const getSubmissions: MockedResponse = {
             request: {
                 query: getSubmissionsQuery,
             },
             result: {
                 data: {
-                    getSubmissions: [],
+                    getSubmissions: [sampleSub],
                 },
             },
         };

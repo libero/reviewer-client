@@ -52,6 +52,7 @@ const Login = (): JSX.Element => {
                     image={Image}
                     artistName={t('login:image-artist')}
                     artistUrl="http://www.davidebonazzi.com/"
+                    align="left"
                 />
             </TwoColumnLayout>
             <Paragraph type="footer">
