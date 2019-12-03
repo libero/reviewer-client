@@ -7,5 +7,6 @@ export = {
         await login.login();
         const dashboard = browser.page.DashboardPage();
         await dashboard.onPage();
+        browser.end();
     },
 };

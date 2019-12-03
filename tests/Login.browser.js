@@ -13,8 +13,6 @@ module.exports = {
             const login = browser.page.LoginPage();
             yield login.navigate();
             yield login.login();
-            const dashboard = browser.page.DashboardPage();
-            yield dashboard.onPage();
         });
     },
 };
