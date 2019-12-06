@@ -4,10 +4,6 @@ addons:
 env:
   global:
     - IMAGE_TAG=$TRAVIS_COMMIT
-    - CLIENT_PORT=9000
-    - CLIENT_API_URL=http://localhost:3003
-    - CONTINUUM_LOGIN_URL=http://localhost:3003/submit
-    - CLIENT_API_PROXY_URL=http://localhost:3003/graphql
 services:
   - docker
 
