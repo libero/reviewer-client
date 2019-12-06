@@ -21,7 +21,7 @@ build:
 test_browser:
 	docker-compose up -d
 	yarn wait-port localhost:9000
-	yarn test:browser
+	yarn test:browser-headless
 
 push:
 	${PUSH_COMMAND} reviewer-client
