@@ -1,5 +1,5 @@
 const loginCommands = {
-    login: function(): void {
+    login: async function(): Promise<void> {
         return this.waitForElementVisible('@loginButton', 10000).click('@loginButton');
     },
 };
