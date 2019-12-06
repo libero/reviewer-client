@@ -15,6 +15,7 @@ test: get_deps
 	yarn test
 
 build:
+	cp .env.example .env
 	yarn build
 	${DOCKER_COMPOSE} build reviewer-client
 
