@@ -8,7 +8,6 @@ const dashboardCommands = {
 
 export = {
     commands: [dashboardCommands],
-    url: 'http://localhost:9000',
     elements: {
         newSubmissionsButton: {
             selector: '.dashboard__button_container',
