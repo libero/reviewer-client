@@ -8,26 +8,21 @@ services:
 
 stages:
   - name: tests
-  - name: build
-#  - name: storybook
-cache: yarn
-
+cache:
+    yarn: true
 jobs:
   include:
     - stage: tests
       name: "Unit Tests"
       language: node_js
+      name: Test
       node_js:
         - 10.16.3
       script:
         - make lint
         - make test
-
-    - stage: build
-      name: Build
-      script:
-          - make build
-          - make test_browser
+        - make build
+        - make test_browser
       deploy:
         provider: script
         script: make push
