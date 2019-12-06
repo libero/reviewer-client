@@ -15,6 +15,7 @@ test: get_deps
 	yarn test
 
 build:
+	yarn build
 	${DOCKER_COMPOSE} build reviewer-client
 
 test_browser:

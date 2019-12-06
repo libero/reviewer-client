@@ -1,8 +1,5 @@
-ARG image_tag=latest
-
-RUN yarn build
-
 FROM nginx:1-alpine
+ARG image_tag=latest
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 WORKDIR /app
