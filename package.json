@@ -91,6 +91,7 @@
         "ts-jest": "^24.0.2",
         "typescript": "^3.5.3",
         "url-loader": "^2.1.0",
+        "wait-port": "^0.2.6",
         "webpack": "^4.35.3",
         "webpack-cli": "^3.3.6",
         "webpack-dev-server": "^3.7.2",
