@@ -1,8 +1,8 @@
 const dashboardCommands = {
     onPage: async function(): Promise<void> {
-        return this.waitForElementVisible('@newSubmissionsButton', 10000)
-            .assert.containsText('@newSubmissionsButton', 'NEW SUBMISSION')
-            .assert.containsText('@menuLink', 'Dashboard');
+        await this.waitForElementVisible('@newSubmissionsButton', 10000);
+        await this.assert.containsText('@newSubmissionsButton', 'NEW SUBMISSION');
+        await this.assert.containsText('@menuLink', 'Dashboard');
     },
 };
 
