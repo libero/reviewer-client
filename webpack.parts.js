@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -7,24 +8,33 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
+const infraConfigPath = process.env.INFRA_CONFIG_PATH ? process.env.INFRA_CONFIG_PATH : '/etc/reviewer/config.infra.json';
+const publicConfigPath = process.env.PUBLIC_CONFIG_PATH ? process.env.PUBLIC_CONFIG_PATH : '/etc/reviewer/config.public.json';
+const infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
+
 exports.devServer = () => ({
     devServer: {
         stats: 'errors-only',
         host: process.env.HOST,
         historyApiFallback: true,
-        port: process.env.CLIENT_PORT,
+        port: infraConfig.port,
         open: true,
         overlay: true,
         hot: true,
         proxy: {
             '/graphql': {
-                target: `${process.env.CLIENT_API_PROXY_URL}`,
+                target: infraConfig.client_api_proxy_url,
                 changeOrigin: true,
             },
             '/auth/': {
-                target: `${process.env.CLIENT_AUTH_PROXY_URL}`,
+                target: infraConfig.client_auth_proxy_url,
                 pathRewrite: {'^/auth': ''},
                 changeOrigin: true
+            },
+            '/config': {
+                bypass: function () {
+                    return publicConfigPath;
+                }
             }
         },
     },
@@ -166,19 +176,8 @@ exports.generateSourceMaps = ({ type }) => ({
 exports.newRelic = () => ({
     plugins: [
         new HtmlInjectNewRelicPlugin({
-            license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
-            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID,
+            license: infraConfig.new_relic_client_license_key,
+            applicationID: infraConfig.new_relic_client_app_id,
         }),
     ],
-})
-
-exports.configVars= () => ({
-    module: {
-        rules: [
-            {
-                test: path.resolve(__dirname, './config.ts'),
-                use: [{loader: path.resolve(__dirname, './webpack/env-to-config-loader.js')}]
-            },
-        ],
-    },
 })
