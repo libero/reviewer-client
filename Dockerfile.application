@@ -2,8 +2,8 @@ ARG image_tag=latest
 
 FROM libero/reviewer-client_source:${image_tag} AS source
 
-COPY config/config.infra.json /etc/reviewer/config.infra.json
-COPY config/config.public.json /etc/reviewer/config.public.json
+# COPY config/config.infra.json /etc/reviewer/config.infra.json
+# COPY config/config.public.json /etc/reviewer/config.public.json
 
 RUN yarn build
 

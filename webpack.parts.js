@@ -10,7 +10,19 @@ const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
 const infraConfigPath = process.env.INFRA_CONFIG_PATH ? process.env.INFRA_CONFIG_PATH : '/etc/reviewer/config.infra.json';
 const publicConfigPath = process.env.PUBLIC_CONFIG_PATH ? process.env.PUBLIC_CONFIG_PATH : '/etc/reviewer/config.public.json';
-const infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
+let infraConfig;
+
+if (fs.existsSync(infraConfigPath)) {
+    infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
+} else {
+    infraConfig = {
+        "port": 9000,
+        "client_api_proxy_url": "http://localhost:3003/graphql",
+        "client_token_exchange_proxy_url": "http://localhost:3003/authenticate/",
+        "new_relic_client_license_key": "",
+        "new_relic_client_app_id": ""
+    };
+}
 
 exports.devServer = () => ({
     devServer: {
