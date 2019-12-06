@@ -1,4 +1,6 @@
 language: minimal
+addons:
+  chrome: stable
 env:
   global:
     - IMAGE_TAG=$TRAVIS_COMMIT
