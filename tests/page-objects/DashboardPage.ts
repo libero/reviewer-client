@@ -1,8 +1,8 @@
 const dashboardCommands = {
     onPage: function(): void {
-        this.assert
-            .containsText('.dashboard__button_container', 'NEW SUBMISSION')
-            .assert.containsText('.menu__link--active', 'Dashboard');
+        return this.waitForElementVisible('@newSubmissionsButton', 10000)
+            .assert.containsText('@newSubmissionsButton', 'NEW SUBMISSION')
+            .assert.containsText('@menuLink', 'Dashboard');
     },
 };
 
