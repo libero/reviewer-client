@@ -12,7 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
       - name: Lint
         run: make lint
       - name: Unit test
