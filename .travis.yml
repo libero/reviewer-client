@@ -1,36 +1,49 @@
 language: minimal
+addons:
+  chrome: stable
 env:
   global:
     - IMAGE_TAG=$TRAVIS_COMMIT
-
 services:
   - docker
 
 stages:
   - name: tests
-  - name: storybook
-cache: yarn
-
+cache:
+    yarn: true
 jobs:
   include:
     - stage: tests
-      name: "Tests"
+      name: "Unit Tests"
+      language: node_js
+      name: Test
+      node_js:
+        - 10.16.3
       script:
-        - make -j 4 ci
-    - stage: storybook
-      name: "Deploy Storybook"
-      if: type = pull_request
-      script:
-        - make build_source
-        - mkdir storybook-static
-        - docker run --name client_storybook__$IMAGE_TAG libero/reviewer-client_source:$IMAGE_TAG yarn build-storybook
-        - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
-        - docker rm client_storybook__$IMAGE_TAG
-        - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync /aws s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_BRANCH
-        - target_url="https://unstable-reviewer-storybook.s3.amazonaws.com/$TRAVIS_PULL_REQUEST_BRANCH/index.html" repository="libero/reviewer-client" description='Deployed storybook' context='storybook' commit=$(git rev-parse HEAD^2) ./notify-github.sh
+        - make lint
+        - make test
+        - make setup
+        - make build
+        - make test_browser
+      deploy:
+        provider: script
+        script: make push
+        on:
+          branch: master
+#    - stage: storybook
+#      name: "Deploy Storybook"
+#      if: type = pull_request
+#      script:
+#        - make build_source
+#        - mkdir storybook-static
+#        - docker run --name client_storybook__$IMAGE_TAG libero/reviewer-client_source:$IMAGE_TAG yarn build-storybook
+#        - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
+#        - docker rm client_storybook__$IMAGE_TAG
+#        - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync /aws s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_BRANCH
+#        - target_url="https://unstable-reviewer-storybook.s3.amazonaws.com/$TRAVIS_PULL_REQUEST_BRANCH/index.html" repository="libero/reviewer-client" description='Deployed storybook' context='storybook' commit=$(git rev-parse HEAD^2) ./notify-github.sh
 
 
-if: |
-    branch = master OR \
-    tag IS present OR \
-    type = pull_request
+#if: |
+#    branch = master OR \
+#    tag IS present OR \
+#    type = pull_request

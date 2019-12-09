@@ -1,10 +1,5 @@
-ARG image_tag=latest
-
-FROM libero/reviewer-client_source:${image_tag} AS source
-
-RUN yarn build
-
 FROM nginx:1-alpine
+ARG image_tag=latest
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 WORKDIR /app
@@ -12,7 +7,7 @@ WORKDIR /app
 RUN apk add jq
 
 COPY deployment/nginx.conf.template /etc/nginx/nginx.conf.template
-COPY --from=source /app/dist/ /usr/share/nginx/html
+COPY dist/ /usr/share/nginx/html
 COPY scripts/build-config.sh /app
 
 EXPOSE 80
