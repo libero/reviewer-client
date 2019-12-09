@@ -4,8 +4,9 @@ ARG image_tag=latest
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 WORKDIR /app
 
+RUN apk add jq
+
 COPY deployment/nginx.conf.template /etc/nginx/nginx.conf.template
-COPY deployment/config-template.js /usr/share/nginx/html
 COPY dist/ /usr/share/nginx/html
 COPY scripts/build-config.sh /app
 
@@ -15,4 +16,3 @@ HEALTHCHECK --interval=1m --timeout=1s \
 	CMD curl -f http://localhost/index.html || exit 1
 
 CMD ["/bin/sh", "/app/build-config.sh"]
-

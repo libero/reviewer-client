@@ -4,12 +4,8 @@ services:
     image: liberoadmin/reviewer-client:latest
     ports:
       - "${CLIENT_PORT}:9000"
-    environment:
-      CLIENT_PORT: ${CLIENT_PORT}
-      CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://reviewer-mocks:3003/graphql"
-      CLIENT_AUTH_PROXY_URL: "http://reviewer-mocks:3003/authenticate/"
-      CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
+    volumes:
+      - ./config/:/etc/reviewer/:z
 
   reviewer-mocks:
     image: liberoadmin/reviewer-mocks
