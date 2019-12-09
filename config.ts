@@ -4,6 +4,6 @@ declare let CONFIG: {
 } 
 
 CONFIG = {
-  "API_HOST": "${CLIENT_API_URL}",
-  "LOGIN_URL": "${CONTINUUM_LOGIN_URL}",
+  "API_HOST": "",
+  "LOGIN_URL": "",
 }

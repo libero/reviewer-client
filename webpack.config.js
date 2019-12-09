@@ -26,7 +26,6 @@ const commonConfig = merge([
 
 const developmentConfig = merge([
     parts.output({ filename: '[name].bundle.js' }),
-    parts.configVars(),
     parts.devServer(),
     parts.loaders(),
     parts.copyFiles(),

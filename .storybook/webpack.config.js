@@ -9,13 +9,6 @@ const webpack = require('webpack');
 
 // noinspection DuplicatedCode
 module.exports = {
-    plugins: [
-        new webpack.DefinePlugin({
-            API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}`),
-            LOGIN_URL: JSON.stringify(`${process.env.CONTINUUM_LOGIN_URL}`),
-        }),
-        // your custom plugins
-    ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.woff2', '.png'],
     },
