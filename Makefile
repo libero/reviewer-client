@@ -14,8 +14,11 @@ lint: get_deps
 test: get_deps
 	yarn test
 
-build:
+setup: get_deps
 	cp .env.example .env
+	cp config/config.infra.docker.example.json config/config.infra.json
+
+build:
 	yarn build
 	${DOCKER_COMPOSE} build reviewer-client
 
