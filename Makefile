@@ -17,6 +17,7 @@ test: get_deps
 setup: get_deps
 	cp .env.example .env
 	cp config/config.infra.docker.example.json config/config.infra.json
+	cp config/config.public.example.json config/config.public.json
 
 build:
 	yarn build
