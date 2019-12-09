@@ -22,6 +22,7 @@ jobs:
       script:
         - make lint
         - make test
+        - make setup
         - make build
         - make test_browser
       deploy:
