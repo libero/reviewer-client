@@ -31,21 +31,3 @@ test_browser:
 push:
 	${PUSH_COMMAND} reviewer-client
 
-
-#ci:
-#	make build_source lint test build_application push_application
-
-#build_source:
-#	${DOCKER_COMPOSE} build client_source
-
-#lint: build_source
-#	${DOCKER_COMPOSE} run client_source yarn lint
-
-#test: build_source
-#	${DOCKER_COMPOSE} run client_source yarn test
-
-#build_application: build_source
-#	${DOCKER_COMPOSE} build reviewer-client
-
-#push_application: lint test build_application
-#	${PUSH_COMMAND} reviewer-client
