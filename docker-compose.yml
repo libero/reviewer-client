@@ -8,12 +8,8 @@ services:
       - ./config/:/etc/reviewer/:z
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks
+    image: liberoadmin/reviewer-mocks:latest
     ports:
       - "3003:3003"
-    environment:
-      PORT: "3003"
-      CONTINUUM_LOGIN_JWT_SECRET: "some_secret_from_journal"
-      CONTINUUM_LOGIN_REDIRECT_URL: "http://localhost:9000/auth-redirect"
-      CONTINUUM_AUTH_JWT_SECRET: "some_secret_from_auth_service"
-      CONTINUUM_AUTH_REDIRECT_URL: "http://localhost:9000/login"
+    volumes:
+      - ./config/reviewer-mocks:/etc/reviewer/:z
