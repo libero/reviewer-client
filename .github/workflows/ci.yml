@@ -14,7 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-client-
+      - name: yarn
+        run: yarn
       - name: Lint
         run: yarn lint
       - name: Unit Test
@@ -24,7 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-client-
+      - name: yarn
+        run: yarn
       - name: Build
         run: make build
       - name: Save Docker images
@@ -43,7 +57,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v1
-        - uses: bahmutov/npm-install@v1
+        - uses: actions/cache@v1
+          with:
+            path: node_modules
+            key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
+            restore-keys: |
+              ${{ runner.os }}-yarn-client-
+        - name: yarn
+          run: yarn
         - name: Download Docker image artifact
           uses: actions/download-artifact@v1
           with:
