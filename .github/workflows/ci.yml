@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Fetch Dependencies
-        run: yarn
+      - uses: bahmutov/npm-install@v1
       - name: Lint
         run: yarn lint
       - name: Unit Test
@@ -23,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1
       - name: Setup
         run: make setup
       - name: Build
