@@ -18,7 +18,6 @@ jobs:
         run: yarn test
 
   build:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
