@@ -25,8 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1
-      - name: Setup
-        run: make setup
       - name: Build
         run: make build
       - name: Save Docker images
@@ -54,6 +52,8 @@ jobs:
           run: |
             gunzip docker-image/reviewer-client.tar.gz
             docker load -i docker-image/reviewer-client.tar
+        - name: Create Config
+          run: make setup
         - name: Browser Test
           run: make test_browser
 
