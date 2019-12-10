@@ -9,11 +9,26 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v1
+      - name: Fetch Dependencies
+        run: yarn
       - name: Lint
-        run: make lint
-      - name: Unit test
-        run: make test
+        run: yarn lint
+      - name: Unit Test
+        run: yarn test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup
+        run: make setup
+      - name: Build
+        run: make build
+      - name: Browser Test
+        run: make test_browser
+
+
   
