@@ -77,6 +77,3 @@ jobs:
           run: make setup
         - name: Browser Test
           run: make test_browser
-
-
-  
