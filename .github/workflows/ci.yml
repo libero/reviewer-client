@@ -46,6 +46,10 @@ jobs:
     steps:
         - uses: actions/checkout@v1
         - uses: bahmutov/npm-install@v1
+        - name: Download Docker image artifact
+          uses: actions/download-artifact@v1
+          with:
+            name: docker-image
         - name: Load Docker image
           run: |
             gunzip docker-image/reviewer-client.tar.gz
