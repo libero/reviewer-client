@@ -15,7 +15,7 @@ services:
       dockerfile: "Dockerfile.application"
       args:
         image_tag: "${IMAGE_TAG}"
-    image: liberoadmin/reviewer-client:${IMAGE_TAG}
+    image: libero/reviewer-client:${IMAGE_TAG}
     environment:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_PROXY_URL: ${CLIENT_API_PROXY_URL}
