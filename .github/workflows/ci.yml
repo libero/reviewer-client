@@ -76,7 +76,7 @@ jobs:
   deploy-image:
     runs-on: ubuntu-latest
     needs: browser-test
-    # if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Download Docker image artifact
         uses: actions/download-artifact@v1
