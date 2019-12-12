@@ -1,0 +1,94 @@
+name: CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
+env:
+  IMAGE_TAG: ${{ github.sha }}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-client-
+      - name: yarn
+        run: yarn
+      - name: Lint
+        run: yarn lint
+      - name: Unit Test
+        run: yarn test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-client-
+      - name: yarn
+        run: yarn
+      - name: Build
+        run: make build
+      - name: Save Docker images
+        run: |
+          mkdir -p docker-image
+          docker save -o docker-image/reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
+          gzip docker-image/reviewer-client.tar
+      - name: Upload prod Docker image
+        uses: actions/upload-artifact@v1
+        with:
+          name: docker-image
+          path: docker-image
+  browser-test:
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-client-
+      - name: yarn
+        run: yarn
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: docker-image
+      - name: Load Docker image
+        run: |
+          gunzip docker-image/reviewer-client.tar.gz
+          docker load -i docker-image/reviewer-client.tar
+      - name: Create Config
+        run: make setup
+      - name: Browser Test
+        run: make test_browser
+  deploy-image:
+    runs-on: ubuntu-latest
+    needs: browser-test
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: docker-image
+      - name: Load Docker image
+        run: |
+          gunzip docker-image/reviewer-client.tar.gz
+          docker load -i docker-image/reviewer-client.tar
+      - name: Push image
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin 
+          docker tag "libero/reviewer-client:${IMAGE_TAG}" "liberoadmin/reviewer-client:${IMAGE_TAG}"
+          docker push "liberoadmin/reviewer-client:${IMAGE_TAG}"
+          
