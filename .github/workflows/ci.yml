@@ -18,12 +18,10 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - name: yarn
-        run: yarn
       - name: Lint
-        run: yarn lint
+        run: make lint
       - name: Unit Test
-        run: yarn test
+        run: make test
   build:
     runs-on: ubuntu-latest
     steps:
@@ -34,8 +32,6 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - name: yarn
-        run: yarn
       - name: Build
         run: make build
       - name: Save Docker images
@@ -71,6 +67,8 @@ jobs:
           docker load -i docker-image/reviewer-client.tar
       - name: Create Config
         run: make setup
+      - name: Start services
+        run: make start
       - name: Browser Test
         run: make test_browser
   deploy-image:
@@ -91,4 +89,4 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin 
           docker tag "libero/reviewer-client:${IMAGE_TAG}" "liberoadmin/reviewer-client:${IMAGE_TAG}"
           docker push "liberoadmin/reviewer-client:${IMAGE_TAG}"
-          
+
