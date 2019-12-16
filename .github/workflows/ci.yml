@@ -67,6 +67,8 @@ jobs:
           docker load -i docker-image/reviewer-client.tar
       - name: Create Config
         run: make setup
+      - name: Start services
+        run: make start
       - name: Browser Test
         run: make test_browser
   deploy-image:
