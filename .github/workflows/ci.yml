@@ -91,4 +91,4 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin 
           docker tag "libero/reviewer-client:${IMAGE_TAG}" "liberoadmin/reviewer-client:${IMAGE_TAG}"
           docker push "liberoadmin/reviewer-client:${IMAGE_TAG}"
-          
+
