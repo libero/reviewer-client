@@ -2,10 +2,10 @@ IMAGE_TAG ?= "local"
 
 DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
-get_deps:
+yarn:
 	yarn
 
-build:
+build: yarn
 	yarn build
 	${DOCKER_COMPOSE} build reviewer-client
 
@@ -15,10 +15,10 @@ start:
 stop:
 	docker-compose down
 
-lint:
+lint: yarn
 	yarn lint
 
-test:
+test: yarn
 	yarn test
 
 setup:
@@ -32,7 +32,6 @@ test_browser:
 	yarn test:browser-headless
 
 run_ci:
-	make get_deps
 	make lint
 	make test
 	make build

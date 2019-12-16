@@ -5,7 +5,6 @@ The client for "libero reviewer".
 ## Running
 To run the application in the testing environment use the following commands.
 ```
-make get_dependencies
 make build
 make setup
 make start

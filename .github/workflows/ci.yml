@@ -18,8 +18,6 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - name: yarn
-        run: yarn
       - name: Lint
         run: yarn lint
       - name: Unit Test
@@ -34,8 +32,6 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - name: yarn
-        run: yarn
       - name: Build
         run: make build
       - name: Save Docker images
