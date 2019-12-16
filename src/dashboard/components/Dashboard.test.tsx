@@ -39,6 +39,8 @@ describe('Dashboard', (): void => {
         const { findByText } = render(<Dashboard />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([])), routerWrapper(['/link-1'])),
         });
+        // flush graphql fetch promise
+        await setTimeout(() => {});
         const testElement = await findByText('new-system-1');
         expect(testElement).toBeInTheDocument();
     });
@@ -52,6 +54,8 @@ describe('Dashboard', (): void => {
         const { findByText } = render(<Dashboard />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([sampleSub])), routerWrapper(['/link-1'])),
         });
+        // flush graphql fetch promise
+        await setTimeout(() => {});
         const testElement = await findByText('Submissions');
         expect(testElement).toBeInTheDocument();
     });
