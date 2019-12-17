@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { useTranslation } from 'react-i18next';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
 import { ExecutionResult } from 'graphql';
-import NoSubmissions from './NoSubmissions';
 
 const Dashboard = withRouter(
     (): JSX.Element => {
@@ -20,16 +18,15 @@ const Dashboard = withRouter(
                 });
             },
         });
-        const { t } = useTranslation();
 
         if (!loading && data.getSubmissions.length === 0) {
-            return <NoSubmissions />;
+            return <div>testdiv</div>;
         } else {
             return (
                 <div className="dashboard main-content--centered">
                     <div className="dashboard__button_container">
                         <Button type="primary" onClick={(): Promise<ExecutionResult> => startSubmission()}>
-                            {t('dashboard:new-submission')}
+                            new-submission
                         </Button>
                     </div>
                     {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}

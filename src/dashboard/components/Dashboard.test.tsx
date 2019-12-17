@@ -23,7 +23,7 @@ const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
     ];
 };
 
-describe.skip('Dashboard', (): void => {
+describe('Dashboard', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
@@ -41,7 +41,7 @@ describe.skip('Dashboard', (): void => {
         });
         // flush graphql fetch promise
         await setTimeout(() => {});
-        const testElement = await findByText('new-system-1');
+        const testElement = await findByText('testdiv');
         expect(testElement).toBeInTheDocument();
     });
 
