@@ -41,7 +41,7 @@ describe('Dashboard', (): void => {
         });
         // flush graphql fetch promise
         await setTimeout(() => {});
-        const testElement = await findByText('testdiv');
+        const testElement = await findByText('new-system-1');
         expect(testElement).toBeInTheDocument();
     });
 
