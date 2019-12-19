@@ -8,7 +8,6 @@ import apolloWrapper from '../../../test-utils/apolloWrapper';
 import Dashboard from './Dashboard';
 import { getSubmissionsQuery } from '../graphql';
 import { MockedResponse } from '@apollo/react-testing';
-import { debug } from 'webpack';
 const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
     return [
         {
@@ -29,7 +28,7 @@ describe('Dashboard', (): void => {
     const originalError = console.error;
     beforeAll(() => {
         // This is horrible but necessary to prevent console error output which isn't to do with the test scenarios see: https://github.com/libero/reviewer-client/issues/69
-        console.error = (...args: unknown[]) => {
+        console.error = (...args: unknown[]): void => {
             if (/Warning.*not wrapped in act/.test(args[0] as string)) {
                 return;
             }
@@ -51,7 +50,7 @@ describe('Dashboard', (): void => {
     });
 
     it('should render the no-submissions page if there are no submissions', async (): Promise<void> => {
-        const { container, debug } = render(<Dashboard />, {
+        const { container } = render(<Dashboard />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([])), routerWrapper(['/link-1'])),
         });
         // flush graphql fetch promise
