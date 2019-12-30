@@ -25,7 +25,23 @@ const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
 
 describe('Dashboard', (): void => {
     afterEach(cleanup);
+    const originalError = console.error;
+    beforeAll(() => {
+        // This is horrible but necessary to prevent console error output which isn't to do with the test scenarios see: https://github.com/libero/reviewer-client/issues/69
+        console.error = (...args: unknown[]): void => {
+            if (/connect ECONNREFUSED 127.0.0.1:80/.test(args[0] as string)) {
+                console.warn(
+                    'Suppressed connection refused console error see https://github.com/libero/reviewer-client/issues/69 for context.',
+                );
+                return;
+            }
+            originalError.call(console, ...args);
+        };
+    });
 
+    afterAll(() => {
+        console.error = originalError;
+    });
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
