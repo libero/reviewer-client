@@ -82,6 +82,9 @@ jobs:
     needs: browser-test
     if: github.ref == 'refs/heads/master'
     steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
       - name: Download Docker image artifact
         uses: actions/download-artifact@v1
         with:
