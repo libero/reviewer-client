@@ -21,7 +21,7 @@ const dashboardDateText = (date: number): string => {
     }
 
     if (diffDays < 14) {
-        return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
+        return `${diffDays} days ago`;
     }
 
     if (diffDays < 30) {

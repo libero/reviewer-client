@@ -5,7 +5,7 @@ export const isAuthenticated = (): boolean => getToken() !== null;
 export const importToken = (): void => {
     const token: string = getTokenFromUrl();
 
-    if (token && token !== '') {
+    if (token) {
         setToken(token);
     }
 };
