@@ -85,8 +85,7 @@ jobs:
           gunzip docker-image/reviewer-client.tar.gz
           docker load -i docker-image/reviewer-client.tar
       - name: Push image
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin 
-          docker tag "libero/reviewer-client:${IMAGE_TAG}" "liberoadmin/reviewer-client:${IMAGE_TAG}"
-          docker push "liberoadmin/reviewer-client:${IMAGE_TAG}"
-
+        run: .scripts/github/push-image.sh reviewer-client
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
