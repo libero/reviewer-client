@@ -17,7 +17,7 @@ const ProgressBar: React.FC<Props> = ({ steps = [], currentStep, fixedWidthCente
     const currentStepIndex: number = currentStep
         ? steps.findIndex((step: Step): boolean => step.id === currentStep)
         : 0;
-    const getStepState = (step: Step, index: number): StepState => {
+    const getStepState = (index: number): StepState => {
         if (index === currentStepIndex) {
             return 'current';
         }
@@ -31,7 +31,7 @@ const ProgressBar: React.FC<Props> = ({ steps = [], currentStep, fixedWidthCente
         <div className={`progress_bar ${fixedWidthCentered ? 'progress_bar--fixed_width_centered' : ''}`}>
             {steps.map(
                 (step: Step, index: number): JSX.Element => (
-                    <ProgressStep key={step.id} {...step} state={getStepState(step, index)} firstItem={index === 0} />
+                    <ProgressStep key={step.id} {...step} state={getStepState(index)} firstItem={index === 0} />
                 ),
             )}
         </div>

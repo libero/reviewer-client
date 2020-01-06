@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
