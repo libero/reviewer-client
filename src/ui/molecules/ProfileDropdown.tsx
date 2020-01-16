@@ -6,9 +6,10 @@ import useOnClickOutside from '../hooks/useOnClickOutside';
 
 interface Props {
     name: string;
+    role: string;
 }
 
-const ProfileDropdown: React.FC<Props> = ({ name }: Props): JSX.Element => {
+const ProfileDropdown: React.FC<Props> = ({ name, role }: Props): JSX.Element => {
     const [expanded, setExpanded]: [boolean, Function] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>();
     useOnClickOutside(dropdownRef, (): void => setExpanded(false));
@@ -25,7 +26,9 @@ const ProfileDropdown: React.FC<Props> = ({ name }: Props): JSX.Element => {
             </button>
             {expanded && (
                 <div className="profile_dropdown__panel">
-                    <div className="profile_dropdown__item profile_dropdown__panel_heading">{name}</div>
+                    <div className="profile_dropdown__item profile_dropdown__panel_heading">
+                        {`${name}${role ? ` (${role})` : ''}`}
+                    </div>
                     <ul className="profile_dropdown__list">
                         <li className="profile_dropdown__list_item">
                             <a

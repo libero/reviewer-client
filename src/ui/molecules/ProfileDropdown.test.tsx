@@ -4,7 +4,7 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 
 const renderDropDown = (): RenderResult =>
-    render(<ProfileDropdown name="Name" />, {
+    render(<ProfileDropdown name="Name" role="Role" />, {
         wrapper: routerWrapper(['/']),
     });
 
@@ -48,10 +48,10 @@ describe('ProfileDropDown', (): void => {
         expect(container.querySelector('.profile_dropdown__panel')).not.toBeInTheDocument();
     });
 
-    it('displays name in the profile menu', (): void => {
+    it('displays name and role in the profile menu', (): void => {
         const { getByText, container } = renderDropDown();
         fireEvent.click(container.querySelector('.profile_dropdown__button'));
-        expect(getByText('Name')).toBeInTheDocument();
+        expect(getByText('Name (Role)')).toBeInTheDocument();
     });
 
     it('displays the ORCID and logout links in profile menu', (): void => {
@@ -64,7 +64,7 @@ describe('ProfileDropDown', (): void => {
     it('closes when clicking off the menu', (): void => {
         const { container, getByText } = render(
             <div>
-                <ProfileDropdown name="Name" />
+                <ProfileDropdown name="Name" role="Role" />
                 <span>test</span>
             </div>,
             {
