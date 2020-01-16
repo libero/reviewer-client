@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AppBar, AppBarIcon } from '../../ui/atoms';
 import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import { useQuery } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../graphql';
 import Logo from '../assets/elife-logo.png';
+import { useAppContext } from '../providers/AppProvider';
 
 const menuItems = [
     {
@@ -24,11 +25,8 @@ const menuItems = [
     },
 ];
 
-interface Props {
-    isAuthenticated: boolean;
-}
-
-const NavBar = ({ isAuthenticated }: Props): JSX.Element => {
+const NavBar = (): JSX.Element => {
+    const { isAuthenticated } = useAppContext();
     if (!isAuthenticated) {
         return (
             <AppBar>

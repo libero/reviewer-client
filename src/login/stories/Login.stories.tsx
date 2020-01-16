@@ -6,6 +6,6 @@ import '../../core/styles/index.scss';
 storiesOf('Login | Components/Login', module).add(
     'Login Page',
     (): JSX.Element => {
-        return <Login isAuthenticated={true} />;
+        return <Login />;
     },
 );

@@ -12,7 +12,7 @@ describe('Login', (): void => {
             (): RenderResult =>
                 render(
                     <MemoryRouter initialEntries={['/login']}>
-                        <Login isAuthenticated={true} />
+                        <Login />
                     </MemoryRouter>,
                 ),
         ).not.toThrow();
@@ -24,7 +24,7 @@ describe('Login', (): void => {
 
         const { container } = render(
             <MemoryRouter initialEntries={['/login']}>
-                <Route exact path="/login" render={(): JSX.Element => <Login isAuthenticated={true}></Login>} />
+                <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
                 <Route path="/" render={(): string => 'Root'} />
             </MemoryRouter>,
         );
@@ -36,7 +36,7 @@ describe('Login', (): void => {
     it('should render login page if not authenticated', (): void => {
         const { container } = render(
             <MemoryRouter initialEntries={['/login']}>
-                <Route exact path="/login" render={(): JSX.Element => <Login isAuthenticated={false}></Login>} />
+                <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
                 <Route path="/" render={(): string => 'Root'} />
             </MemoryRouter>,
         );

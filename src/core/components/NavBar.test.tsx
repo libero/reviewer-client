@@ -6,6 +6,8 @@ import combineWrappers from '../../../test-utils/combineWrappers';
 import apolloWrapper from '../../../test-utils/apolloWrapper';
 import { MockedResponse } from '@apollo/react-testing';
 import { getCurrentUserQuery } from '../graphql';
+import * as AppContext from '../providers/AppProvider';
+import { isAuthenticated } from '../utils/auth';
 
 const expectedMenuItems = [
     {
@@ -48,14 +50,17 @@ describe('NavBar', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<NavBar isAuthenticated={true} />, {
+                render(<NavBar />, {
                     wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
                 }),
         ).not.toThrow();
     });
 
     it('should render a menu with expected items', (): void => {
-        const { container } = render(<NavBar isAuthenticated={true} />, {
+        jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
+            isAuthenticated: true,
+        }));
+        const { container } = render(<NavBar />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
         });
         for (const item of expectedMenuItems) {
@@ -65,7 +70,10 @@ describe('NavBar', (): void => {
         }
     });
     it('should render a burger menu with expected items', (): void => {
-        const { container } = render(<NavBar isAuthenticated={true} />, {
+        jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
+            isAuthenticated: true,
+        }));
+        const { container } = render(<NavBar />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
         });
         fireEvent.click(container.querySelector('.burger_menu button'));

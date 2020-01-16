@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { default as DashboardRoutes } from '../../dashboard/components/Routes';
@@ -7,34 +7,21 @@ import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
-import { getToken } from '../../login/utils/tokenUtils';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
-import * as Auth from '../utils/auth';
-
-const authToken = getToken();
+import { AppProvider } from '../providers/AppProvider';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    useEffect(() => {
-        Auth.importToken();
-        setIsAuthenticated(Auth.isAuthenticated);
-    }, []);
     return (
-        <div>
-            <ApolloProvider client={createApolloClient(CONFIG.API_HOST, authToken)}>
+        <AppProvider>
+            <ApolloProvider client={createApolloClient(CONFIG.API_HOST, '')}>
                 <Router>
                     <React.Suspense fallback={<Loader />}>
-                        <NavBar isAuthenticated={isAuthenticated} />
-                        <Route
-                            component={(): JSX.Element => <Login isAuthenticated={isAuthenticated} />}
-                            exact
-                            path="/login"
-                        />
+                        <NavBar />
+                        <Route component={Login} exact path="/login" />
                         <Route component={Logout} exact path="/logout" />
                         <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
                         <div className="site-content">
@@ -44,7 +31,7 @@ const App: React.FC = (): JSX.Element => {
                     </React.Suspense>
                 </Router>
             </ApolloProvider>
-        </div>
+        </AppProvider>
     );
 };
 
