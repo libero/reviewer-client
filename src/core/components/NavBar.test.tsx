@@ -48,14 +48,14 @@ describe('NavBar', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<NavBar />, {
+                render(<NavBar isAuthenticated={true} />, {
                     wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
                 }),
         ).not.toThrow();
     });
 
     it('should render a menu with expected items', (): void => {
-        const { container } = render(<NavBar />, {
+        const { container } = render(<NavBar isAuthenticated={true} />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
         });
         for (const item of expectedMenuItems) {
@@ -65,7 +65,7 @@ describe('NavBar', (): void => {
         }
     });
     it('should render a burger menu with expected items', (): void => {
-        const { container } = render(<NavBar />, {
+        const { container } = render(<NavBar isAuthenticated={true} />, {
             wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
         });
         fireEvent.click(container.querySelector('.burger_menu button'));

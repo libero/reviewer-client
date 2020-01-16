@@ -4,7 +4,6 @@ import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import { useQuery } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../graphql';
 import Logo from '../assets/elife-logo.png';
-import * as Auth from '../utils/auth';
 
 const menuItems = [
     {
@@ -25,8 +24,12 @@ const menuItems = [
     },
 ];
 
-const NavBar: React.FC = (): JSX.Element => {
-    if (!Auth.isAuthenticated()) {
+interface Props {
+    isAuthenticated: boolean;
+}
+
+const NavBar = ({ isAuthenticated }: Props): JSX.Element => {
+    if (!isAuthenticated) {
         return (
             <AppBar>
                 <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
