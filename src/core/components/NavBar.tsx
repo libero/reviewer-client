@@ -5,6 +5,11 @@ import { useQuery } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../graphql';
 import Logo from '../assets/elife-logo.png';
 import { useAppContext } from '../providers/AppProvider';
+import { User } from '../types';
+
+interface GetCurrentUser {
+    getCurrentUser: User;
+}
 
 const menuItems = [
     {
@@ -34,16 +39,13 @@ const NavBar = (): JSX.Element => {
             </AppBar>
         );
     }
-    const { loading, data } = useQuery(getCurrentUserQuery);
+    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery);
     return (
         <AppBar>
             <BurgerMenu items={menuItems} />
             <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
             <Menu items={menuItems} />
-            <ProfileDropdown
-                name={loading ? 'Loading' : data.getCurrentUser.name}
-                role={loading ? 'Loading' : data.getCurrentUser.role}
-            />
+            <ProfileDropdown user={loading ? null : data.getCurrentUser} />
         </AppBar>
     );
 };

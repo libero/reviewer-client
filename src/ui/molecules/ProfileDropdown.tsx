@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import AccountBox from '@material-ui/icons/AccountBox';
 
 import useOnClickOutside from '../hooks/useOnClickOutside';
+import { User } from '../../core/types';
 
 interface Props {
-    name: string;
-    role: string;
+    user: User;
 }
 
-const ProfileDropdown: React.FC<Props> = ({ name, role }: Props): JSX.Element => {
+const ProfileDropdown: React.FC<Props> = ({ user }: Props): JSX.Element => {
     const [expanded, setExpanded]: [boolean, Function] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>();
     useOnClickOutside(dropdownRef, (): void => setExpanded(false));
@@ -27,7 +27,7 @@ const ProfileDropdown: React.FC<Props> = ({ name, role }: Props): JSX.Element =>
             {expanded && (
                 <div className="profile_dropdown__panel">
                     <div className="profile_dropdown__item profile_dropdown__panel_heading">
-                        {`${name}${role ? ` (${role})` : ''}`}
+                        {`${user.name}${user.role ? ` (${user.role})` : ''}`}
                     </div>
                     <ul className="profile_dropdown__list">
                         <li className="profile_dropdown__list_item">
