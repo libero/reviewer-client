@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/welcome.jpg';
-import { AppContext } from '../../core/providers/AppProvider';
+import { useAppContext } from '../../core/providers/AppProvider';
 
 const Login = (): JSX.Element => {
     const { t } = useTranslation();
-    const { isAuthenticated } = useContext(AppContext);
+    const { isAuthenticated } = useAppContext();
 
     if (isAuthenticated) {
         return <Redirect to="/" />;

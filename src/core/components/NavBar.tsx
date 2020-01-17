@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { AppBar, AppBarIcon } from '../../ui/atoms';
 import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import { useQuery } from '@apollo/react-hooks';

@@ -7,7 +7,6 @@ import apolloWrapper from '../../../test-utils/apolloWrapper';
 import { MockedResponse } from '@apollo/react-testing';
 import { getCurrentUserQuery } from '../graphql';
 import * as AppContext from '../providers/AppProvider';
-import { isAuthenticated } from '../utils/auth';
 
 const expectedMenuItems = [
     {
