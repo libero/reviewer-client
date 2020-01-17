@@ -11,7 +11,7 @@ interface AppState {
 
 const AppContext = createContext<AppState>({ isAuthenticated: false });
 const useAppContext = (): AppState => useContext(AppContext);
-const { Consumer } = AppContext;
+const { Provider } = AppContext;
 
 function AppProvider({ children }: Props): JSX.Element {
     // useEffect to check for authentication
@@ -22,14 +22,14 @@ function AppProvider({ children }: Props): JSX.Element {
         // need to consider how to unmount.
     }, []);
     return (
-        <AppContext.Provider
+        <Provider
             value={{
                 isAuthenticated,
             }}
         >
             {children}
-        </AppContext.Provider>
+        </Provider>
     );
 }
 
-export { AppProvider, Consumer as AppConsumer, AppContext, useAppContext };
+export { AppProvider, useAppContext };
