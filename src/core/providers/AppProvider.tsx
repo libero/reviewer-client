@@ -5,8 +5,12 @@ interface Props {
     children: JSX.Element[] | JSX.Element;
 }
 
-const AppContext = createContext({ isAuthenticated: false });
-const useAppContext = () => useContext(AppContext);
+interface AppState {
+    isAuthenticated: boolean;
+}
+
+const AppContext = createContext<AppState>({ isAuthenticated: false });
+const useAppContext = (): AppState => useContext(AppContext);
 const { Consumer } = AppContext;
 
 function AppProvider({ children }: Props): JSX.Element {
