@@ -8,7 +8,7 @@ export = {
         const dashboard = browser.page.DashboardPage();
         await dashboard.onPage();
         const appPage = browser.page.AppPage();
-        await appPage.testUserName('Tamlyn Rhodes');
+        await appPage.testUserName('Tamlyn Rhodes (author)');
         browser.end();
     },
 };

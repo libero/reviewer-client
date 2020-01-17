@@ -1,6 +1,6 @@
 const appPageCommands = {
     testUserName: async function(name: string): Promise<void> {
-        await this.waitForElementVisible('@profileDropdown', 10000);
+        await this.waitForElementVisible('@profileDropdown', 10000).click('@profileDropdown', 1000);
         await this.assert.containsText('@userName', name);
     },
 };
