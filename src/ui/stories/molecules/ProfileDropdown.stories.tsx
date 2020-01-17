@@ -16,9 +16,10 @@ storiesOf('ui | molecules/ProfileDropdown', module)
         'ProfileDropdown',
         (): JSX.Element => {
             const name = text('Name', 'Jeff Goldblum');
+            const role = text('Role', 'Actor');
             return (
                 <MemoryRouter initialEntries={historyLocation}>
-                    <ProfileDropdown name={name} />
+                    <ProfileDropdown user={{ name, role, id: 'abc' }} />
                 </MemoryRouter>
             );
         },
