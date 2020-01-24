@@ -19,6 +19,7 @@ interface Props {
     multi?: boolean;
     searchable?: boolean;
     placeholder?: string;
+    defaultValue?: Value;
     onChange?(value: ValueType<Value>): void;
 }
 const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
@@ -34,6 +35,7 @@ const SelectField = ({
     values,
     multi = false,
     placeholder,
+    defaultValue,
     onChange,
 }: Props): JSX.Element => {
     return (
@@ -50,6 +52,7 @@ const SelectField = ({
                 placeholder={placeholder}
                 onChange={onChange}
                 isMulti={multi}
+                defaultValue={defaultValue}
             />
             <span
                 className={`typography__label typography__label--helper-text ${

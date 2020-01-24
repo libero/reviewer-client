@@ -96,6 +96,7 @@ export const ArticleType = (): JSX.Element => {
                 id="articleType"
                 values={articleTypes}
                 onChange={changeArticleType}
+                defaultValue={articleTypes[0]}
             />
             {description}
         </div>
