@@ -11,16 +11,16 @@ describe('SubmissonWizard', (): void => {
 
     it('should render the default Research Article', (): void => {
         const { container, getByText } = render(<ArticleType />);
-        expect(container.querySelector('.select-field__single-value').textContent).toBe('Research Article');
+        expect(container.querySelector('.select-field__single-value').textContent).toBe('research-article.label');
         expect(getByText('research-article.paragraph-1')).toBeInTheDocument();
     });
 
     it('should switch to the correct copy', async (): Promise<void> => {
         const { container, getByText } = render(<ArticleType />);
-        await fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
-        await waitForElement((): Element => getByText('Feature Article'));
-        await fireEvent.click(getByText('Feature Article'));
-        expect(container.querySelector('.select-field__single-value').textContent).toBe('Feature Article');
+        fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
+        await waitForElement((): Element => getByText('feature-article.label'));
+        fireEvent.click(getByText('feature-article.label'));
+        expect(container.querySelector('.select-field__single-value').textContent).toBe('feature-article.label');
         expect(getByText('feature-article.paragraph-1')).toBeInTheDocument();
     });
 });

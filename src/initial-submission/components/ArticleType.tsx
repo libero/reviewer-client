@@ -8,15 +8,15 @@ const ArticleType = (): JSX.Element => {
     const { t } = useTranslation();
     const articleTypes = [
         {
-            label: 'Research Article',
+            label: t('article-types:research-article.label'),
             value: 'researchArticle',
         },
         {
-            label: 'Feature Article',
+            label: t('article-types:feature-article.label'),
             value: 'featureArticle',
         },
         {
-            label: 'Research Advance',
+            label: t('article-types:research-advance.label'),
             value: 'researchAdvance',
         },
     ];
@@ -90,7 +90,7 @@ const ArticleType = (): JSX.Element => {
     };
     return (
         <div>
-            <h1 className="typography__heading typography__heading--h1">What would you like to submit?</h1>
+            <h1 className="typography__heading typography__heading--h1">{t('article-types:heading')}</h1>
             <SelectField
                 labelText="Choose and article type"
                 id="articleType"
