@@ -66,4 +66,18 @@ describe('TextField', (): void => {
         await fireEvent.click(getByText('test-option'));
         expect(onChangeFn).toHaveBeenCalled();
     });
+
+    it('should render default selected value', (): void => {
+        const { getByText } = render(
+            <SelectField
+                values={[{ label: 'test-option', value: 'test' }]}
+                id="test"
+                invalid={true}
+                labelText="some label"
+                helperText="helper text"
+                defaultValue={{ label: 'test-option', value: 'test' }}
+            />,
+        );
+        expect(getByText('test-option')).toBeInTheDocument();
+    });
 });

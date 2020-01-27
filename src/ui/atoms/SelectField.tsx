@@ -3,8 +3,9 @@ import Close from '@material-ui/icons/Close';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import Select, { components } from 'react-select';
 import { IndicatorProps } from 'react-select/src/components/indicators';
+import { ValueType } from 'react-select/src/types';
 
-interface Value {
+export interface Value {
     label: string;
     value: string;
 }
@@ -18,7 +19,8 @@ interface Props {
     multi?: boolean;
     searchable?: boolean;
     placeholder?: string;
-    onChange?(): void;
+    defaultValue?: Value;
+    onChange?(value: ValueType<Value>): void;
 }
 const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     <components.DropdownIndicator {...props}>
@@ -33,6 +35,7 @@ const SelectField = ({
     values,
     multi = false,
     placeholder,
+    defaultValue,
     onChange,
 }: Props): JSX.Element => {
     return (
@@ -49,6 +52,7 @@ const SelectField = ({
                 placeholder={placeholder}
                 onChange={onChange}
                 isMulti={multi}
+                defaultValue={defaultValue}
             />
             <span
                 className={`typography__label typography__label--helper-text ${

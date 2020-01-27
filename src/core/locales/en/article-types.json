@@ -1,0 +1,20 @@
+{
+    "author-guide": "Author Guide",
+    "heading": "What would you like to submit?",
+    "research-article": {
+        "label": "Research Article",
+        "paragraph-1": "Research Articles published by eLife are full-length studies that present important breakthroughs across the life sciences and biomedicine.",
+        "paragraph-2": "There is no maximum length and no limits on the number of display items, and is our most submitted type of article. For more information on our article types please read our "
+    },
+    "feature-article": {
+        "label": "Feature Article",
+        "paragraph-1": "Feature Articles should offer fresh insights into topics of broad interest to readers working in the life and biomedical sciences and should be written in an active/engaging style.",
+        "paragraph-2": "There are no strict limits on length, but authors are advised to stay below 2000 words, two display items (figures, tables etc) and 20 references if possible.",
+        "paragraph-3": "For more information on our article types please read our "
+    },
+    "research-advance": {
+        "label": "Research Advance",
+        "paragraph-1": "This format is for substantial developments that directly build upon a Research Article, Short Report or Tools and Resources article published previously by eLife.",
+        "paragraph-2": "For more information on our article types please read our "
+    }
+}

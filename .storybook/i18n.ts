@@ -1,6 +1,7 @@
 import i18n, { InitOptions } from 'i18next';
 import merge from 'lodash/merge';
 import { initReactI18next } from 'react-i18next';
+import ArticleTypes from '../src/core/locales/en/article-types.json';
 import Login from '../src/core/locales/en/login.json';
 import UI from '../src/core/locales/en/ui.json';
 import Dashboard from '../src/core/locales/en/dashboard.json';
@@ -14,7 +15,7 @@ export default function(options = {}): void {
         lng: 'en',
         load: 'currentOnly',
         keySeparator: '.',
-        ns: ['common', 'dashboard', 'login', 'no-submission', 'orcid-details', 'ui'],
+        ns: ['article-types', 'common', 'dashboard', 'login', 'no-submission', 'orcid-details', 'ui'],
         fallbackLng: 'en',
         debug: process.env.NODE_ENV !== 'production',
         react: {
@@ -22,6 +23,7 @@ export default function(options = {}): void {
         },
         resources: {
             en: {
+                'article-types': ArticleTypes,
                 common: Common,
                 dashboard: Dashboard,
                 login: Login,
