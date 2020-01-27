@@ -4,7 +4,7 @@ import { ValueType } from 'react-select/src/types';
 import { SelectField, Paragraph } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
-export const ArticleType = (): JSX.Element => {
+const ArticleType = (): JSX.Element => {
     const { t } = useTranslation();
     const articleTypes = [
         {
@@ -102,3 +102,5 @@ export const ArticleType = (): JSX.Element => {
         </div>
     );
 };
+
+export default ArticleType;
