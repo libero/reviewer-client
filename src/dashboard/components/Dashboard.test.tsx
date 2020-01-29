@@ -1,13 +1,14 @@
 import React from 'react';
-import { cleanup, render, RenderResult } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent, wait } from '@testing-library/react';
 import { Submission } from '../../initial-submission/types';
 import combineWrappers from '../../../test-utils/combineWrappers';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import apolloWrapper from '../../../test-utils/apolloWrapper';
 
 import Dashboard from './Dashboard';
-import { getSubmissionsQuery } from '../graphql';
+import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
 import { MockedResponse } from '@apollo/react-testing';
+
 const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
     return [
         {
@@ -17,6 +18,20 @@ const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
             result: {
                 data: {
                     getSubmissions: subs,
+                },
+            },
+        },
+        {
+            request: {
+                query: startSubmissionMutation,
+            },
+            result: {
+                data: {
+                    startSubmission: {
+                        id: 'testid',
+                        title: '',
+                        updated: '2020-01-01T00:00:00.000Z',
+                    },
                 },
             },
         },
@@ -51,24 +66,58 @@ describe('Dashboard', (): void => {
         ).not.toThrow();
     });
 
-    it('should render the no-submissions page if there are no submissions', async (): Promise<void> => {
-        const { findByText } = render(<Dashboard />, {
-            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([])), routerWrapper(['/link-1'])),
+    describe('No Submissions', () => {
+        it('should render the no-submissions page if there are no submissions', async (): Promise<void> => {
+            const { container } = render(<Dashboard />, {
+                wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([])), routerWrapper(['/link-1'])),
+            });
+            await wait();
+            expect(container.querySelector('.no-submissions')).toBeInTheDocument();
         });
-        const testElement = await findByText('new-system-1');
-        expect(testElement).toBeInTheDocument();
+        it('should add a submission then display the full dashboard when start submission button clicked', async (): Promise<
+            void
+        > => {
+            const { container } = render(<Dashboard />, {
+                wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([])), routerWrapper(['/link-1'])),
+            });
+            await wait();
+            const startSubmissionButton = container.querySelector('.no-submissions__buttons button');
+            fireEvent.click(startSubmissionButton);
+            await wait();
+            expect(container.querySelector('.dashboard')).toBeInTheDocument();
+            expect(container.querySelectorAll('.submission-entry')).toHaveLength(1);
+        });
     });
 
-    it('should render the standard dashboard page if there are submissions', async (): Promise<void> => {
+    describe('Dashboard with submissions', () => {
         const sampleSub = {
             id: '1234',
             title: 'Effects of Caffeine on Software Developers',
             updated: Date.now(),
         };
-        const { findByText } = render(<Dashboard />, {
-            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse([sampleSub])), routerWrapper(['/link-1'])),
+        it('should render the standard dashboard page if there are submissions', async (): Promise<void> => {
+            const { container } = render(<Dashboard />, {
+                wrapper: combineWrappers(
+                    apolloWrapper(generateMockQueryResponse([sampleSub])),
+                    routerWrapper(['/link-1']),
+                ),
+            });
+            await wait();
+            expect(container.querySelector('.dashboard')).toBeInTheDocument();
         });
-        const testElement = await findByText('Submissions');
-        expect(testElement).toBeInTheDocument();
+        it('should add a submission when start submission button clicked', async (): Promise<void> => {
+            const { container } = render(<Dashboard />, {
+                wrapper: combineWrappers(
+                    apolloWrapper(generateMockQueryResponse([sampleSub])),
+                    routerWrapper(['/link-1']),
+                ),
+            });
+            await wait();
+            expect(container.querySelectorAll('.submission-entry')).toHaveLength(1);
+            const startSubmissionButton = container.querySelector('.dashboard__button_container button');
+            fireEvent.click(startSubmissionButton);
+            await wait();
+            expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
+        });
     });
 });
