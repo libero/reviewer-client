@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 
-export default function FeatureArticleCopy(): JSX.Element {
+const FeatureArticleCopy = (): JSX.Element => {
     const { t } = useTranslation();
     return (
         <Fragment>
@@ -24,4 +24,6 @@ export default function FeatureArticleCopy(): JSX.Element {
             </Paragraph>
         </Fragment>
     );
-}
+};
+
+export default FeatureArticleCopy;

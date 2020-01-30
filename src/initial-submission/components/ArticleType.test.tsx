@@ -23,4 +23,15 @@ describe('SubmissonWizard', (): void => {
         expect(container.querySelector('.select-field__single-value').textContent).toBe('feature-article.label');
         expect(getByText('feature-article.paragraph-1')).toBeInTheDocument();
     });
+
+    it('it should call on handlechange prop on type change', async (): Promise<void> => {
+        const handleChangeMock = jest.fn(() => true);
+        const { container, getByText } = render(<ArticleType handleChange={handleChangeMock} />);
+        fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
+        await waitForElement((): Element => getByText('feature-article.label'));
+        fireEvent.click(getByText('feature-article.label'));
+        expect(container.querySelector('.select-field__single-value').textContent).toBe('feature-article.label');
+        expect(getByText('feature-article.paragraph-1')).toBeInTheDocument();
+        expect(handleChangeMock).toHaveBeenCalled();
+    });
 });
