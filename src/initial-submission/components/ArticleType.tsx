@@ -1,10 +1,15 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValueType } from 'react-select/src/types';
 import { SelectField, Paragraph } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
-const ArticleType = (): JSX.Element => {
+interface Props {
+    handleChange?: (articleType: string) => void;
+}
+
+const ArticleType = ({ handleChange }: Props): JSX.Element => {
+
     const { t } = useTranslation();
     const articleTypes = [
         {
@@ -80,14 +85,20 @@ const ArticleType = (): JSX.Element => {
         featureArticle: featureArticleCopy,
         researchAdvance: researchAdvanceCopy,
     };
-    const [description, setDescription] = useState(researchArticleCopy());
-    const changeArticleType = (value: ValueType<Value>): void => {
-        const newArticleType: string = (value as Value).value;
 
-        if (descriptionTypeMap[newArticleType]) {
-            setDescription(descriptionTypeMap[newArticleType]());
-        }
+    const [description, setDescription] = useState<JSX.Element>(<Fragment />);
+    const [currentArticleType, setCurrentArticleType] = useState<string>(articleTypes[0].value);
+    const changeArticleType = (value: ValueType<Value>): void => {
+        setCurrentArticleType((value as Value).value);
     };
+
+    useEffect(() => {
+        typeof handleChange !== 'undefined' && handleChange(currentArticleType);
+        if (descriptionTypeMap[currentArticleType]) {
+            setDescription(descriptionTypeMap[currentArticleType]());
+        }
+    }, [currentArticleType]);
+
     return (
         <div>
             <h1 className="typography__heading typography__heading--h1">{t('article-types:heading')}</h1>
