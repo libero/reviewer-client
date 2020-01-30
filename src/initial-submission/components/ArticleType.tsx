@@ -9,7 +9,6 @@ interface Props {
 }
 
 const ArticleType = ({ handleChange }: Props): JSX.Element => {
-
     const { t } = useTranslation();
     const articleTypes = [
         {

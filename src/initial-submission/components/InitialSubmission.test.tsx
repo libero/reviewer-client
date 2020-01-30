@@ -1,4 +1,4 @@
-import { cleanup, render, fireEvent, RenderResult, waitForElement } from '@testing-library/react';
+import { cleanup, render, RenderResult } from '@testing-library/react';
 import InitialSubmission from './InitialSubmission';
 import React from 'react';
 
