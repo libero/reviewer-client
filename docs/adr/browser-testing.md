@@ -1,4 +1,4 @@
-# Browser testing
+# 1. Browser testing
 
 ## Pupose of this document
 We need a copmprehensive strategy for dealing with the browser / e2e tests. This should include what technologies to use and how they should be implemented. This document is the first pass on the investigations on libraries, more may be suggested and can be added to the repo (mentioned in the Libraries section) and discussed here. The document will also outline some remaining questions and decisions that need to be made by the team.
