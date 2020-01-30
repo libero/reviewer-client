@@ -1,8 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValueType } from 'react-select/src/types';
-import { SelectField, Paragraph } from '../../ui/atoms';
+import { SelectField } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
+import ResearchArticleCopy from './ResearchArticleCopy';
+import FeatureArticleCopy from './FeatureArticleCopy';
+import ResearchAdvanceCopy from './ResearchAdvanceCopy';
 
 interface Props {
     handleChange?: (articleType: string) => void;
@@ -24,79 +27,24 @@ const ArticleType = ({ handleChange }: Props): JSX.Element => {
             value: 'researchAdvance',
         },
     ];
-    const researchArticleCopy = (): JSX.Element => (
-        <Fragment>
-            <Paragraph type="writing" secondary>
-                {t('article-types:research-article.paragraph-1')}
-            </Paragraph>
-            <Paragraph type="writing" secondary>
-                {t('article-types:research-article.paragraph-2')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
-                    {t('article-types:author-guide')}
-                </a>
-                .
-            </Paragraph>
-        </Fragment>
-    );
-    const featureArticleCopy = (): JSX.Element => (
-        <Fragment>
-            <Paragraph type="writing" secondary>
-                {t('article-types:feature-article.paragraph-1')}
-            </Paragraph>
-            <Paragraph type="writing" secondary>
-                {t('article-types:feature-article.paragraph-2')}
-            </Paragraph>
-            <Paragraph type="writing" secondary>
-                {t('article-types:feature-article.paragraph-3')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
-                    {t('article-types:author-guide')}
-                </a>
-            </Paragraph>
-        </Fragment>
-    );
-    const researchAdvanceCopy = (): JSX.Element => (
-        <Fragment>
-            <Paragraph type="writing" secondary>
-                {t('article-types:research-advance.paragraph-1')}
-            </Paragraph>
-            <Paragraph type="writing" secondary>
-                {t('article-types:research-advance.paragraph-2')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
-                    {t('article-types:author-guide')}
-                </a>
-            </Paragraph>
-        </Fragment>
-    );
+
     const descriptionTypeMap: Record<string, () => JSX.Element> = {
-        researchArticle: researchArticleCopy,
-        featureArticle: featureArticleCopy,
-        researchAdvance: researchAdvanceCopy,
+        researchArticle: ResearchArticleCopy,
+        featureArticle: FeatureArticleCopy,
+        researchAdvance: ResearchAdvanceCopy,
     };
 
-    const [description, setDescription] = useState<JSX.Element>(<Fragment />);
     const [currentArticleType, setCurrentArticleType] = useState<string>(articleTypes[0].value);
-    const changeArticleType = (value: ValueType<Value>): void => {
-        setCurrentArticleType((value as Value).value);
-    };
 
     useEffect(() => {
         typeof handleChange !== 'undefined' && handleChange(currentArticleType);
-        if (descriptionTypeMap[currentArticleType]) {
-            setDescription(descriptionTypeMap[currentArticleType]());
-        }
     }, [currentArticleType]);
+
+    const getCopy = (a: string): JSX.Element => (descriptionTypeMap[a] ? descriptionTypeMap[a]() : null);
+
+    const changeArticleType = (value: ValueType<Value>): void => {
+        setCurrentArticleType((value as Value).value);
+    };
 
     return (
         <div>
@@ -108,7 +56,7 @@ const ArticleType = ({ handleChange }: Props): JSX.Element => {
                 onChange={changeArticleType}
                 defaultValue={articleTypes[0]}
             />
-            {description}
+            {getCopy(currentArticleType)}
         </div>
     );
 };
