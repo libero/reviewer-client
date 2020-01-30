@@ -23,7 +23,7 @@ const Dashboard = withRouter(
         const { t } = useTranslation();
 
         if (!loading && data.getSubmissions.length === 0) {
-            return <NoSubmissions />;
+            return <NoSubmissions startSubmission={startSubmission} />;
         } else {
             return (
                 <div className="dashboard main-content--centered">

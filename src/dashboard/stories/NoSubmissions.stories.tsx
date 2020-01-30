@@ -6,6 +6,6 @@ import '../../core/styles/index.scss';
 storiesOf('Dashboard | Components/NoSubmission', module).add(
     'NoSubmissions',
     (): JSX.Element => {
-        return <NoSubmissions />;
+        return <NoSubmissions startSubmission={(): void => {}} />;
     },
 );

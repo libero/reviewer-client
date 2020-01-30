@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/before-you-start.jpg';
 
-const NoSubmissions = (): JSX.Element => {
+interface Props {
+    startSubmission: () => void;
+}
+
+const NoSubmissions = ({ startSubmission }: Props): JSX.Element => {
     const { t } = useTranslation();
 
     return (
@@ -39,7 +43,9 @@ const NoSubmissions = (): JSX.Element => {
                         </Paragraph>
                     </div>
                     <div className="no-submissions__buttons">
-                        <Button type="primary">{t('no-submission:new-submission')}</Button>
+                        <Button type="primary" onClick={startSubmission}>
+                            {t('no-submission:new-submission')}
+                        </Button>
                     </div>
                 </div>
             </TwoColumnLayout>

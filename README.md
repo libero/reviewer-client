@@ -13,6 +13,7 @@ this will start the application in a docker container with a mocked backend and 
 
 To run localy run these commands:
 ```
+docker-compose up -d reviewer-mocks
 yarn
 yarn start
 ```
