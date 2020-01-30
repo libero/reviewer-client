@@ -23,9 +23,9 @@ test: yarn
 
 setup:
 	- cp .env.example .env
-	- cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json
-	- cp config/config.infra.docker.example.json config/config.infra.json
-	- cp config/config.public.example.json config/config.public.json
+	- if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
+	- if [ ! -e ./config/config.infra.json ] ; then cp config/config.infra.docker.example.json config/config.infra.json ; fi
+	- if [ ! -e ./config/config.public.json ] ; then cp config/config.public.example.json config/config.public.json ; fi
 
 test_browser:
 	yarn wait-port localhost:9000
