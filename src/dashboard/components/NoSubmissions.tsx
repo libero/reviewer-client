@@ -11,7 +11,7 @@ const NoSubmissions = ({ startSubmission }: Props): JSX.Element => {
     const { t } = useTranslation();
 
     return (
-        <div className="no-submissions site-content__centered">
+        <div className="no-submissions">
             <TwoColumnLayout>
                 <ImageWithAttribution
                     image={Image}
@@ -49,27 +49,6 @@ const NoSubmissions = ({ startSubmission }: Props): JSX.Element => {
                     </div>
                 </div>
             </TwoColumnLayout>
-            <Paragraph type="footer">
-                {t('login:footer-text-1')}
-                <a
-                    className="typography typography__small--link"
-                    href="https://elifesciences.org/terms"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                    {t('login:footer-link-1')}
-                </a>
-                {t('login:footer-text-2')}
-                <a
-                    className="typography typography__small--link"
-                    href="https://elifesciences.org/privacy"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                    {t('login:footer-link-2')}
-                </a>
-                .
-            </Paragraph>
         </div>
     );
 };

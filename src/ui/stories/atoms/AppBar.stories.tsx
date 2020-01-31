@@ -15,7 +15,11 @@ storiesOf('ui | atoms/AppBar', module)
     .add(
         'AppBar',
         (): JSX.Element => {
-            return <AppBar />;
+            return (
+                <div className="app">
+                    <AppBar />
+                </div>
+            );
         },
     )
     .add(
@@ -40,13 +44,15 @@ storiesOf('ui | atoms/AppBar', module)
                 },
             ]);
             return (
-                <MemoryRouter initialEntries={historyLocation}>
-                    <AppBar>
-                        <BurgerMenu items={menuItems} />
-                        <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
-                        <Menu items={menuItems} />
-                    </AppBar>
-                </MemoryRouter>
+                <div id="app">
+                    <MemoryRouter initialEntries={historyLocation}>
+                        <AppBar>
+                            <BurgerMenu items={menuItems} />
+                            <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
+                            <Menu items={menuItems} />
+                        </AppBar>
+                    </MemoryRouter>
+                </div>
             );
         },
     );

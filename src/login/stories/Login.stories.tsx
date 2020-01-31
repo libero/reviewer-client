@@ -6,6 +6,10 @@ import '../../core/styles/index.scss';
 storiesOf('Login | Components/Login', module).add(
     'Login Page',
     (): JSX.Element => {
-        return <Login />;
+        return (
+            <div id="app">
+                <Login />
+            </div>
+        );
     },
 );
