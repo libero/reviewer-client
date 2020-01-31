@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { Button, Paragraph } from '../../ui/atoms';
+import { Button } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
 import { ExecutionResult } from 'graphql';
