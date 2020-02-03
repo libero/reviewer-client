@@ -77,9 +77,9 @@ const Modal = (
                           <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
                               <div className={`modal__content ${contentClass}`}>
                                   {children}
-                                  {!fixedPositionButtons && controls}
+                                  {fullscreen && !fixedPositionButtons && controls}
                               </div>
-                              {fixedPositionButtons && controls}
+                              {(!fullscreen || fixedPositionButtons) && controls}
                           </div>
                       </div>
                   </div>

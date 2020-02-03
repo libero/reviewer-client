@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent, within } from '@testing-library/react';
 import Modal from './Modal';
 import appContainer from '../../../test-utils/appContainer';
 
@@ -23,6 +23,9 @@ describe('Modal', (): void => {
                         fullscreen={true}
                         buttonType="primary"
                         buttonDisabled={true}
+                        fixedPositionButtons={false}
+                        wrapperClass="testWrapper"
+                        contentClass="testContent"
                     >
                         <span>Some content</span>
                     </Modal>,
@@ -67,7 +70,7 @@ describe('Modal', (): void => {
         expect(getByText('Accept')).toHaveClass('button--primary');
     });
 
-    it('should change be rendered fullscreen when fullscreen=true', (): void => {
+    it('should be rendered fullscreen when fullscreen=true', (): void => {
         const { baseElement } = render(
             <Modal isShowing={true} hide={(): void => {}} buttonText="Accept" fullscreen={true} />,
             { container: appContainer() },
@@ -126,5 +129,38 @@ describe('Modal', (): void => {
         fireEvent.click(getByText('Cancel'));
         expect(mockFn).toHaveBeenCalledTimes(1);
         expect(mockFn2).not.toHaveBeenCalled();
+    });
+
+    it('should move the buttons inside content container when fixedPositionButtons is set to false', () => {
+        const { baseElement } = render(
+            <Modal isShowing={true} hide={(): void => {}} fixedPositionButtons={false} fullscreen={true} />,
+            {
+                container: appContainer(),
+            },
+        );
+        const contentEl = baseElement.querySelector('.modal__buttons_container') as HTMLElement;
+        expect(contentEl.parentElement.classList).toContain('modal__content');
+    });
+
+    it('should not move the buttons inside content container when fixedPositionButtons and fullscreen are set to false', () => {
+        const { baseElement } = render(<Modal isShowing={true} hide={(): void => {}} fixedPositionButtons={false} />, {
+            container: appContainer(),
+        });
+        const contentEl = baseElement.querySelector('.modal__buttons_container') as HTMLElement;
+        expect(contentEl.parentElement.classList).toContain('modal');
+    });
+
+    it('should add the custom wrapper class when supplied', (): void => {
+        const { baseElement } = render(<Modal isShowing={true} hide={(): void => {}} wrapperClass="testClass42" />, {
+            container: appContainer(),
+        });
+        expect(baseElement.querySelector('.testClass42')).toBeInTheDocument();
+    });
+
+    it('should add the custom content class when supplied', (): void => {
+        const { baseElement } = render(<Modal isShowing={true} hide={(): void => {}} contentClass="testClass42" />, {
+            container: appContainer(),
+        });
+        expect(baseElement.querySelector('.testClass42')).toBeInTheDocument();
     });
 });
