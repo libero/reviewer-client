@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -10,6 +10,7 @@ const ModalWithButton = (): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const modalMessage = text('Modal Message', 'This is a modal');
     const fullscreen = boolean('Fullscreen', false);
+    const fixedPositionButtons = boolean('Fixed position buttons', true);
     const buttonType = select('Button Type', ['primary', 'danger'], 'primary');
     const buttonText = text('Button Text', 'Accept');
     return (
@@ -21,6 +22,7 @@ const ModalWithButton = (): JSX.Element => {
                 onAccept={action('accept')}
                 onCancel={action('cancel')}
                 fullscreen={fullscreen}
+                fixedPositionButtons={fixedPositionButtons}
                 buttonType={buttonType}
                 buttonText={buttonText}
             >
@@ -37,6 +39,7 @@ storiesOf('ui | atoms/Modal', module)
         (): JSX.Element => {
             const isShowing = boolean('isShowing', false);
             const fullscreen = boolean('Fullscreen', false);
+            const fixedPositionButtons = boolean('Fixed position buttons', true);
             const modalMessage = text('Modal Message', 'This is a modal');
             const buttonType = select('Button Type', ['primary', 'danger'], 'primary');
             const buttonText = text('Button Text', 'Accept');
@@ -49,6 +52,7 @@ storiesOf('ui | atoms/Modal', module)
                         onCancel={action('cancel')}
                         buttonType={buttonType}
                         fullscreen={fullscreen}
+                        fixedPositionButtons={fixedPositionButtons}
                         buttonText={buttonText}
                     >
                         <p>{modalMessage}</p>

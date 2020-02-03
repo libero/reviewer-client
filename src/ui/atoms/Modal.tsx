@@ -6,11 +6,12 @@ import { useTranslation } from 'react-i18next';
 interface Props {
     isShowing: boolean;
     hide: Function;
-    children?: JSX.Element[] | JSX.Element;
-    onAccept?: Function;
-    onCancel?: Function;
+    children?: React.ReactNode;
+    onAccept?: () => void;
+    onCancel?: () => void;
     buttonText?: string;
     fullscreen?: boolean;
+    fixedPositionButtons?: boolean;
     buttonType?: string;
     buttonDisabled?: boolean;
 }
@@ -23,6 +24,7 @@ const Modal = (
         onAccept,
         onCancel,
         fullscreen = false,
+        fixedPositionButtons = true,
         buttonType = 'danger',
         buttonText,
         buttonDisabled = false,
@@ -42,33 +44,32 @@ const Modal = (
         }
         hide();
     };
+    const controls = (
+        <div
+            className={`modal__buttons_container ${
+                fullscreen && fixedPositionButtons ? 'modal__buttons_container--fullscreen' : ''
+            }`}
+        >
+            <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen main-content--centered' : ''}`}>
+                <Button onClick={(): void => cancel()}>Cancel</Button>
+                <Button onClick={(): void => accept()} type={buttonType} disabled={buttonDisabled}>
+                    {buttonText || t('ui:modal--default-button')}
+                </Button>
+            </div>
+        </div>
+    );
+
     return isShowing
         ? ReactDOM.createPortal(
               <React.Fragment>
                   <div className="modal__overlay">
                       <div className="modal__wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
                           <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
-                              <div className="modal__content">{children}</div>
-                              <div
-                                  className={`modal__buttons_container ${
-                                      fullscreen ? 'modal__buttons_container--fullscreen' : ''
-                                  }`}
-                              >
-                                  <div
-                                      className={`modal__buttons ${
-                                          fullscreen ? 'modal__buttons--fullscreen main-content--centered' : ''
-                                      }`}
-                                  >
-                                      <Button onClick={(): void => cancel()}>Cancel</Button>
-                                      <Button
-                                          onClick={(): void => accept()}
-                                          type={buttonType}
-                                          disabled={buttonDisabled}
-                                      >
-                                          {buttonText || t('ui:modal--default-button')}
-                                      </Button>
-                                  </div>
+                              <div className="modal__content">
+                                  {children}
+                                  {!fixedPositionButtons && controls}
                               </div>
+                              {fixedPositionButtons && controls}
                           </div>
                       </div>
                   </div>
