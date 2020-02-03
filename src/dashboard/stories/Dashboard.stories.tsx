@@ -5,7 +5,7 @@ import '../../core/styles/index.scss';
 import { MemoryRouter } from 'react-router';
 import { LocationDescriptor } from 'history';
 import { MockedProvider, MockedResponse } from '@apollo/react-testing';
-import { getSubmissionsQuery } from '../graphql';
+import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
 
 const historyLocation: LocationDescriptor[] = ['/'];
 
@@ -36,10 +36,20 @@ storiesOf('Dashboard | Components/Dashboard', module).add(
                 },
             },
         };
+        const startSubmission: MockedResponse = {
+            request: {
+                query: startSubmissionMutation,
+            },
+            result: {
+                data: {
+                    startSubmission: [sampleSub],
+                },
+            },
+        };
 
         return (
             <div id="app">
-                <MockedProvider mocks={[getSubmissions]} addTypename={false}>
+                <MockedProvider mocks={[getSubmissions, startSubmission]} addTypename={false}>
                     <MemoryRouter initialEntries={historyLocation}>
                         <Dashboard />
                     </MemoryRouter>

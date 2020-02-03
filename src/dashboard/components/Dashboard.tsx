@@ -2,11 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
-import { ExecutionResult } from 'graphql';
 import NoSubmissions from './NoSubmissions';
+import StartSubmission from './StartSubmission';
 
 const Dashboard = withRouter(
     (): JSX.Element => {
@@ -28,9 +27,7 @@ const Dashboard = withRouter(
             return (
                 <div className="dashboard">
                     <div className="dashboard__button_container">
-                        <Button type="primary" onClick={(): Promise<ExecutionResult> => startSubmission()}>
-                            {t('dashboard:new-submission')}
-                        </Button>
+                        <StartSubmission buttonText={t('dashboard:new-submission')} />
                     </div>
                     {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}
                 </div>
