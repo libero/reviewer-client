@@ -39,3 +39,8 @@ run_ci:
 	make start
 	make test_browser
 	make stop
+
+start_dev:
+	docker-compose up -d reviewer-mocks
+	yarn
+	yarn start

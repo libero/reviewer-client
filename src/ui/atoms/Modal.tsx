@@ -14,6 +14,8 @@ interface Props {
     fixedPositionButtons?: boolean;
     buttonType?: string;
     buttonDisabled?: boolean;
+    wrapperClass?: string;
+    contentClass?: string;
 }
 
 const Modal = (
@@ -28,6 +30,8 @@ const Modal = (
         buttonType = 'danger',
         buttonText,
         buttonDisabled = false,
+        wrapperClass,
+        contentClass,
     }: Props,
     ref: React.Ref<HTMLDivElement>,
 ): JSX.Element => {
@@ -63,9 +67,15 @@ const Modal = (
         ? ReactDOM.createPortal(
               <React.Fragment>
                   <div className="modal__overlay">
-                      <div className="modal__wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
+                      <div
+                          className={`modal__wrapper ${wrapperClass}`}
+                          aria-modal
+                          aria-hidden
+                          tabIndex={-1}
+                          role="dialog"
+                      >
                           <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
-                              <div className="modal__content">
+                              <div className={`modal__content ${contentClass}`}>
                                   {children}
                                   {!fixedPositionButtons && controls}
                               </div>
