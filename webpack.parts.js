@@ -28,7 +28,9 @@ exports.devServer = () => ({
     devServer: {
         stats: 'errors-only',
         host: process.env.HOST,
-        historyApiFallback: true,
+        historyApiFallback: {
+            disableDotRule: true
+        },
         port: infraConfig.port,
         open: true,
         overlay: true,
@@ -38,10 +40,10 @@ exports.devServer = () => ({
                 target: infraConfig.client_api_proxy_url,
                 changeOrigin: true,
             },
-            '/auth/': {
-                target: infraConfig.client_auth_proxy_url,
+            '/auth': {
+                target: infraConfig.client_token_exchange_proxy_url,
                 pathRewrite: {'^/auth': ''},
-                changeOrigin: true
+                changeOrigin: true, 
             },
             '/config': {
                 bypass: function (req) {
