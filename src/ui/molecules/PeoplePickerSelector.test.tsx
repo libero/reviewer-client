@@ -2,6 +2,7 @@ import React, { CSSProperties } from 'react';
 import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
+import appContainer from '../../../test-utils/appContainer';
 
 const people = [
     {
@@ -61,6 +62,9 @@ describe('PeoplePickerSelector', (): void => {
                         toggle={jest.fn()}
                         isShowing={true}
                     />,
+                    {
+                        container: appContainer(),
+                    },
                 ),
         ).not.toThrow();
     });
@@ -80,6 +84,9 @@ describe('PeoplePickerSelector', (): void => {
                         min={0}
                         max={6}
                     />,
+                    {
+                        container: appContainer(),
+                    },
                 ),
         ).not.toThrow();
     });
@@ -95,6 +102,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         await waitForElement(
             (): NodeListOf<Element> => baseElement.querySelectorAll('.people-picker__modal_list--item'),
@@ -113,6 +123,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
 
         expect(getByText('SomeTestLabel')).toBeInTheDocument();
@@ -129,6 +142,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(2);
     });
@@ -145,6 +161,9 @@ describe('PeoplePickerSelector', (): void => {
                 min={min}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe(
             'validation--peoplepicker_guidance-prefix ' + min + ' validation--peoplepicker_guidance-suffix',
@@ -163,6 +182,9 @@ describe('PeoplePickerSelector', (): void => {
                 min={min}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
     });
@@ -177,6 +199,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
     });
@@ -192,6 +217,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
 
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
@@ -213,6 +241,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
         fireEvent.click(baseElement.querySelector('.pod__button'));
@@ -232,6 +263,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
         fireEvent.click(baseElement.querySelector('.pod__button'));
@@ -251,6 +285,9 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
                 max={4}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(4);
         expect(baseElement.querySelector('.banner')).toBeInTheDocument();
@@ -268,6 +305,9 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
                 min={2}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.button--primary')).not.toBeEnabled();
         rerender(
@@ -301,6 +341,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
         act((): void => {
@@ -320,6 +363,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.selected-option')).not.toBeInTheDocument();
         await fireEvent.click(baseElement.querySelectorAll('.pod__button')[0]);
@@ -337,6 +383,9 @@ describe('PeoplePickerSelector', (): void => {
                 toggle={jest.fn()}
                 isShowing={true}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(1);
         expect(baseElement.querySelectorAll('.selected-option')).toHaveLength(1);

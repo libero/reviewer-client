@@ -3,6 +3,7 @@ import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react
 import SubmissionEntry from './SubmissionEntry';
 import { Submission } from '../../initial-submission/types';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import appContainer from '../../../test-utils/appContainer';
 
 describe('SubmissionEntry', (): void => {
     afterEach(cleanup);
@@ -158,6 +159,7 @@ describe('SubmissionEntry', (): void => {
     it('should render the modal on delete click', (): void => {
         const { baseElement } = render(<SubmissionEntry submission={mockSubmission} />, {
             wrapper: routerWrapper(['/link-1']),
+            container: appContainer(),
         });
         fireEvent.click(baseElement.querySelector('.submission-entry__icon'));
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
