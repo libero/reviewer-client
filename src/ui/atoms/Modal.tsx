@@ -73,7 +73,7 @@ const Modal = (
                       </div>
                   </div>
               </React.Fragment>,
-              document.body,
+              document.getElementById('app'),
           )
         : null;
 };

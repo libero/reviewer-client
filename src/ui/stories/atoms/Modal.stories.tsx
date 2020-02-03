@@ -13,7 +13,7 @@ const ModalWithButton = (): JSX.Element => {
     const buttonType = select('Button Type', ['primary', 'danger'], 'primary');
     const buttonText = text('Button Text', 'Accept');
     return (
-        <Fragment>
+        <div id="app">
             <Button onClick={(): void => toggle()}>Show Modal</Button>
             <Modal
                 hide={toggle}
@@ -26,7 +26,7 @@ const ModalWithButton = (): JSX.Element => {
             >
                 <p>{modalMessage}</p>
             </Modal>
-        </Fragment>
+        </div>
     );
 };
 
@@ -41,17 +41,19 @@ storiesOf('ui | atoms/Modal', module)
             const buttonType = select('Button Type', ['primary', 'danger'], 'primary');
             const buttonText = text('Button Text', 'Accept');
             return (
-                <Modal
-                    hide={action('hide')}
-                    isShowing={isShowing}
-                    onAccept={action('accept')}
-                    onCancel={action('cancel')}
-                    buttonType={buttonType}
-                    fullscreen={fullscreen}
-                    buttonText={buttonText}
-                >
-                    <p>{modalMessage}</p>
-                </Modal>
+                <div id="app">
+                    <Modal
+                        hide={action('hide')}
+                        isShowing={isShowing}
+                        onAccept={action('accept')}
+                        onCancel={action('cancel')}
+                        buttonType={buttonType}
+                        fullscreen={fullscreen}
+                        buttonText={buttonText}
+                    >
+                        <p>{modalMessage}</p>
+                    </Modal>
+                </div>
             );
         },
     )
