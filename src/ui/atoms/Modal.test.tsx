@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent, within } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import Modal from './Modal';
 import appContainer from '../../../test-utils/appContainer';
 
