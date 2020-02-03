@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
-import appWrapper from '../../../test-utils/appWrapper';
+import appContainer from '../../../test-utils/appContainer';
 
 const people = [
     {
@@ -63,7 +63,7 @@ describe('PeoplePickerSelector', (): void => {
                         isShowing={true}
                     />,
                     {
-                        wrapper: appWrapper(),
+                        container: appContainer(),
                     },
                 ),
         ).not.toThrow();
@@ -85,7 +85,7 @@ describe('PeoplePickerSelector', (): void => {
                         max={6}
                     />,
                     {
-                        wrapper: appWrapper(),
+                        container: appContainer(),
                     },
                 ),
         ).not.toThrow();
@@ -103,7 +103,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         await waitForElement(
@@ -124,7 +124,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
 
@@ -143,7 +143,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(2);
@@ -162,7 +162,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe(
@@ -183,7 +183,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
@@ -200,7 +200,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
@@ -218,7 +218,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
 
@@ -242,7 +242,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
@@ -264,7 +264,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
@@ -286,7 +286,7 @@ describe('PeoplePickerSelector', (): void => {
                 max={4}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(4);
@@ -306,7 +306,7 @@ describe('PeoplePickerSelector', (): void => {
                 min={2}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelector('.button--primary')).not.toBeEnabled();
@@ -342,7 +342,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
@@ -364,7 +364,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelector('.selected-option')).not.toBeInTheDocument();
@@ -384,7 +384,7 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
             {
-                wrapper: appWrapper(),
+                container: appContainer(),
             },
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(1);

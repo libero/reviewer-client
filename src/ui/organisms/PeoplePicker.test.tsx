@@ -1,6 +1,7 @@
 import React from 'react';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import PeoplePicker from './PeoplePicker';
+import appContainer from '../../../test-utils/appContainer';
 
 describe('PeoplePicker', (): void => {
     afterEach(cleanup);
@@ -35,6 +36,9 @@ describe('PeoplePicker', (): void => {
     it('SelectedPeopleList button toggles the PeoplePickerSelector', async (): Promise<void> => {
         const { getByText, baseElement } = render(
             <PeoplePicker onRemove={jest.fn()} onSearch={jest.fn()} label="" setSelectedPeople={jest.fn()} />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
         await fireEvent.click(getByText('selected_people_list--open'));
