@@ -14,7 +14,7 @@ const Login = (): JSX.Element => {
     }
 
     return (
-        <div className="login-page site-content__centered">
+        <div className="login-page">
             <TwoColumnLayout>
                 <div>
                     <h1 className="typography__heading typography__heading--h1">{t('login:welcome')}</h1>
@@ -54,27 +54,6 @@ const Login = (): JSX.Element => {
                     align="left"
                 />
             </TwoColumnLayout>
-            <Paragraph type="footer">
-                {t('login:footer-text-1')}
-                <a
-                    className="typography typography__small--link"
-                    href="https://elifesciences.org/terms"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                    {t('login:footer-link-1')}
-                </a>
-                {t('login:footer-text-2')}
-                <a
-                    className="typography typography__small--link"
-                    href="https://elifesciences.org/privacy"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                    {t('login:footer-link-2')}
-                </a>
-                .
-            </Paragraph>
         </div>
     );
 };

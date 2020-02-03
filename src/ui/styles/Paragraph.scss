@@ -9,9 +9,10 @@
 
 .paragraph--footer {
   margin-left: -0.75rem;
-
+  grid-area: footer;
+  align-self: center;
   @include forSize('tabletLandscapeUp') {
-    margin-left: 0.75;
+    margin-left: 0.75rem;
     text-align: center;
   }
 }

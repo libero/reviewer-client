@@ -1,11 +1,25 @@
-.main-content--centered {
-  padding-left: $gutterSize;
-  padding-right: $gutterSize;
+#app {
+  display: grid;
+  grid-template-columns: 16.666% auto 16.666%;
+  grid-template-rows: 4.5rem 4.5rem 1fr 4.5rem 4.5rem;
+  min-height: 100vh;
+  grid-template-areas:
+          "header header header"
+          ". . ."
+          ". main ."
+          ". . ."
+          "footer footer footer";
+
+  @include forSize('phoneOnly') {
+    grid-template-columns: 0 auto 0;
+  }
+  @include forSize('tabletPortraitUp') {
+    grid-template-columns: auto 28.375rem auto;
+  }
   @include forSize('tabletLandscapeUp') {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    margin-left: 16.666%;
-    margin-right: 16.666%;
+    grid-template-columns: auto 49.125rem auto;
+  }
+  @include forSize('desktopUp') {
+    grid-template-columns: auto 52.5rem auto;
   }
 }
