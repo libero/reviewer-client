@@ -44,8 +44,12 @@ exports.devServer = () => ({
                 changeOrigin: true
             },
             '/config': {
-                bypass: function () {
-                    return publicConfigPath;
+                bypass: function (req) {
+                    // we need to check the url here again as it seems this is called
+                    // on every path
+                    if (req.url.startsWith('/config')) {
+                        return publicConfigPath;
+                    }
                 }
             }
         },
