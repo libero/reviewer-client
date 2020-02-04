@@ -4,10 +4,10 @@ import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../
 import Image from '../../core/assets/before-you-start.jpg';
 
 interface Props {
-    startSubmission: () => void;
+    onStartClick: () => void;
 }
 
-const NoSubmissions = ({ startSubmission }: Props): JSX.Element => {
+const NoSubmissions = ({ onStartClick }: Props): JSX.Element => {
     const { t } = useTranslation();
 
     return (
@@ -43,7 +43,7 @@ const NoSubmissions = ({ startSubmission }: Props): JSX.Element => {
                         </Paragraph>
                     </div>
                     <div className="no-submissions__buttons">
-                        <Button type="primary" onClick={startSubmission}>
+                        <Button type="primary" onClick={(): void => onStartClick()}>
                             {t('no-submission:new-submission')}
                         </Button>
                     </div>

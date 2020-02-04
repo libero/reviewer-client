@@ -36,6 +36,7 @@ const SelectField = ({
     multi = false,
     placeholder,
     defaultValue,
+    searchable,
     onChange,
 }: Props): JSX.Element => {
     return (
@@ -53,6 +54,7 @@ const SelectField = ({
                 onChange={onChange}
                 isMulti={multi}
                 defaultValue={defaultValue}
+                isSearchable={searchable}
             />
             <span
                 className={`typography__label typography__label--helper-text ${

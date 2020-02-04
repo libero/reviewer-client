@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 interface HookReturn {
     isShowing: boolean;
-    toggle: Function;
+    toggle: () => void;
 }
 
 const useModal = (): HookReturn => {

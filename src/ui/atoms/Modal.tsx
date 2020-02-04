@@ -65,25 +65,17 @@ const Modal = (
 
     return isShowing
         ? ReactDOM.createPortal(
-              <React.Fragment>
-                  <div className="modal__overlay">
-                      <div
-                          className={`modal__wrapper ${wrapperClass}`}
-                          aria-modal
-                          aria-hidden
-                          tabIndex={-1}
-                          role="dialog"
-                      >
-                          <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
-                              <div className={`modal__content ${contentClass}`}>
-                                  {children}
-                                  {fullscreen && !fixedPositionButtons && controls}
-                              </div>
-                              {(!fullscreen || fixedPositionButtons) && controls}
+              <div className="modal__overlay">
+                  <div className={`modal__wrapper ${wrapperClass}`} aria-modal aria-hidden tabIndex={-1} role="dialog">
+                      <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
+                          <div className={`modal__content ${contentClass}`}>
+                              {children}
+                              {fullscreen && !fixedPositionButtons && controls}
                           </div>
+                          {(!fullscreen || fixedPositionButtons) && controls}
                       </div>
                   </div>
-              </React.Fragment>,
+              </div>,
               document.getElementById('app'),
           )
         : null;
