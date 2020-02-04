@@ -5,10 +5,13 @@ import { useTranslation } from 'react-i18next';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
 import NoSubmissions from './NoSubmissions';
-import StartSubmission from './StartSubmission';
+import { Button } from '../../ui/atoms';
+import useModal from '../../ui/hooks/useModal';
+import ArticleType from './ArticleType';
 
 const Dashboard = withRouter(
     (): JSX.Element => {
+        const { isShowing, toggle } = useModal();
         const { loading, data } = useQuery(getSubmissionsQuery);
         const [startSubmission] = useMutation(startSubmissionMutation, {
             update(cache, { data: { startSubmission } }) {
@@ -20,14 +23,18 @@ const Dashboard = withRouter(
             },
         });
         const { t } = useTranslation();
-
+        if (isShowing) {
+            return <ArticleType />;
+        }
         if (!loading && data.getSubmissions.length === 0) {
-            return <NoSubmissions startSubmission={startSubmission} />;
+            return <NoSubmissions onStartClick={toggle} />;
         } else {
             return (
                 <div className="dashboard">
                     <div className="dashboard__button_container">
-                        <StartSubmission buttonText={t('dashboard:new-submission')} />
+                        <Button onClick={(): void => toggle()} type="primary">
+                            {t('dashboard:new-submission')}
+                        </Button>
                     </div>
                     {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}
                 </div>

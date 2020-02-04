@@ -89,7 +89,7 @@ const ArticleType = (): JSX.Element => {
         }
     };
     return (
-        <div>
+        <div className="article-type">
             <h1 className="typography__heading typography__heading--h1">{t('article-types:heading')}</h1>
             <SelectField
                 labelText="Choose and article type"

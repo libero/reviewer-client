@@ -4,6 +4,7 @@ import { Submission } from '../../initial-submission/types';
 import combineWrappers from '../../../test-utils/combineWrappers';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import apolloWrapper from '../../../test-utils/apolloWrapper';
+import appContainer from '../../../test-utils/appContainer';
 
 import Dashboard from './Dashboard';
 import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
@@ -107,6 +108,7 @@ describe('Dashboard', (): void => {
         });
         it('should add a submission when start submission button clicked', async (): Promise<void> => {
             const { container } = render(<Dashboard />, {
+                container: appContainer(),
                 wrapper: combineWrappers(
                     apolloWrapper(generateMockQueryResponse([sampleSub])),
                     routerWrapper(['/link-1']),
