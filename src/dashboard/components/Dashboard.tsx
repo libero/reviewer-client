@@ -24,7 +24,7 @@ const Dashboard = withRouter(
         });
         const { t } = useTranslation();
         if (isShowing) {
-            return <ArticleType />;
+            return <ArticleType onCancel={toggle} onConfirm={startSubmission} />;
         }
         if (!loading && data.getSubmissions.length === 0) {
             return <NoSubmissions onStartClick={toggle} />;

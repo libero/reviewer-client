@@ -4,7 +4,12 @@ import { ValueType } from 'react-select/src/types';
 import { SelectField, Paragraph, Button } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
-const ArticleType = (): JSX.Element => {
+interface Props {
+    onCancel: () => void;
+    onConfirm: () => void;
+}
+
+const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
     const { t } = useTranslation();
     const articleTypes = [
         {
@@ -103,8 +108,10 @@ const ArticleType = (): JSX.Element => {
                 {description}
             </div>
             <div className="article-type__buttons">
-                <Button>{t('article-type:cancel-button')}</Button>
-                <Button type="primary">{t('article-type:confirm-button')}</Button>
+                <Button onClick={onCancel}>{t('article-type:cancel-button')}</Button>
+                <Button onClick={onConfirm} type="primary">
+                    {t('article-type:confirm-button')}
+                </Button>
             </div>
         </div>
     );
