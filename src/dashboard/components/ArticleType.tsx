@@ -91,17 +91,20 @@ const ArticleType = (): JSX.Element => {
     return (
         <div className="article-type">
             <h1 className="typography__heading typography__heading--h1">{t('article-type:heading')}</h1>
-            <SelectField
-                labelText="Choose and article type"
-                id="articleType"
-                values={articleTypes}
-                onChange={changeArticleType}
-                defaultValue={articleTypes[0]}
-            />
-            {description}
+            <div className="article-type__content">
+                <SelectField
+                    labelText="Choose and article type"
+                    id="articleType"
+                    values={articleTypes}
+                    onChange={changeArticleType}
+                    defaultValue={articleTypes[0]}
+                    searchable={false}
+                />
+                {description}
+            </div>
             <div className="article-type__buttons">
-                <Button>{`close`}</Button>
-                <Button type="primary">{`next`}</Button>
+                <Button>{t('article-type:cancel-button')}</Button>
+                <Button type="primary">{t('article-type:confirm-button')}</Button>
             </div>
         </div>
     );
