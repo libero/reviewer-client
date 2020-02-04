@@ -1,38 +1,38 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValueType } from 'react-select/src/types';
-import { SelectField, Paragraph } from '../../ui/atoms';
+import { SelectField, Paragraph, Button } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
 const ArticleType = (): JSX.Element => {
     const { t } = useTranslation();
     const articleTypes = [
         {
-            label: t('article-types:research-article.label'),
+            label: t('article-type:research-article.label'),
             value: 'researchArticle',
         },
         {
-            label: t('article-types:feature-article.label'),
+            label: t('article-type:feature-article.label'),
             value: 'featureArticle',
         },
         {
-            label: t('article-types:research-advance.label'),
+            label: t('article-type:research-advance.label'),
             value: 'researchAdvance',
         },
     ];
     const researchArticleCopy = (): JSX.Element => (
         <Fragment>
             <Paragraph type="writing" secondary>
-                {t('article-types:research-article.paragraph-1')}
+                {t('article-type:research-article.paragraph-1')}
             </Paragraph>
             <Paragraph type="writing" secondary>
-                {t('article-types:research-article.paragraph-2')}
+                {t('article-type:research-article.paragraph-2')}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://reviewer.elifesciences.org/author-guide/editorial-process"
                 >
-                    {t('article-types:author-guide')}
+                    {t('article-type:author-guide')}
                 </a>
                 .
             </Paragraph>
@@ -41,19 +41,19 @@ const ArticleType = (): JSX.Element => {
     const featureArticleCopy = (): JSX.Element => (
         <Fragment>
             <Paragraph type="writing" secondary>
-                {t('article-types:feature-article.paragraph-1')}
+                {t('article-type:feature-article.paragraph-1')}
             </Paragraph>
             <Paragraph type="writing" secondary>
-                {t('article-types:feature-article.paragraph-2')}
+                {t('article-type:feature-article.paragraph-2')}
             </Paragraph>
             <Paragraph type="writing" secondary>
-                {t('article-types:feature-article.paragraph-3')}
+                {t('article-type:feature-article.paragraph-3')}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://reviewer.elifesciences.org/author-guide/editorial-process"
                 >
-                    {t('article-types:author-guide')}
+                    {t('article-type:author-guide')}
                 </a>
             </Paragraph>
         </Fragment>
@@ -61,16 +61,16 @@ const ArticleType = (): JSX.Element => {
     const researchAdvanceCopy = (): JSX.Element => (
         <Fragment>
             <Paragraph type="writing" secondary>
-                {t('article-types:research-advance.paragraph-1')}
+                {t('article-type:research-advance.paragraph-1')}
             </Paragraph>
             <Paragraph type="writing" secondary>
-                {t('article-types:research-advance.paragraph-2')}
+                {t('article-type:research-advance.paragraph-2')}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://reviewer.elifesciences.org/author-guide/editorial-process"
                 >
-                    {t('article-types:author-guide')}
+                    {t('article-type:author-guide')}
                 </a>
             </Paragraph>
         </Fragment>
@@ -90,7 +90,7 @@ const ArticleType = (): JSX.Element => {
     };
     return (
         <div className="article-type">
-            <h1 className="typography__heading typography__heading--h1">{t('article-types:heading')}</h1>
+            <h1 className="typography__heading typography__heading--h1">{t('article-type:heading')}</h1>
             <SelectField
                 labelText="Choose and article type"
                 id="articleType"
@@ -99,6 +99,10 @@ const ArticleType = (): JSX.Element => {
                 defaultValue={articleTypes[0]}
             />
             {description}
+            <div className="article-type__buttons">
+                <Button>{`close`}</Button>
+                <Button type="primary">{`next`}</Button>
+            </div>
         </div>
     );
 };

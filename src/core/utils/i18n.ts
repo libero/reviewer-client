@@ -8,7 +8,7 @@ export default function(options = {}): void {
         lng: 'en',
         load: 'currentOnly',
         keySeparator: '.',
-        ns: ['article-types', 'common', 'dashboard', 'login', 'no-submission', 'orcid-details', 'ui'],
+        ns: ['article-type', 'common', 'dashboard', 'login', 'no-submission', 'orcid-details', 'ui'],
         fallbackLng: 'en',
         debug: process.env.NODE_ENV !== 'production',
         react: {
