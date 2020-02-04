@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ValueType } from 'react-select/src/types';
 import { SelectField, Paragraph, Button } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
 interface Props {
     onCancel: () => void;
-    onConfirm: () => void;
+    onConfirm: (articleType: string) => void;
 }
 
 const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
@@ -25,7 +24,7 @@ const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
             value: 'researchAdvance',
         },
     ];
-    const researchArticleCopy = (): JSX.Element => (
+    const researchArticleCopy = (
         <Fragment>
             <Paragraph type="writing" secondary>
                 {t('article-type:research-article.paragraph-1')}
@@ -43,7 +42,7 @@ const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
         </Fragment>
     );
-    const featureArticleCopy = (): JSX.Element => (
+    const featureArticleCopy = (
         <Fragment>
             <Paragraph type="writing" secondary>
                 {t('article-type:feature-article.paragraph-1')}
@@ -63,7 +62,7 @@ const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
         </Fragment>
     );
-    const researchAdvanceCopy = (): JSX.Element => (
+    const researchAdvanceCopy = (
         <Fragment>
             <Paragraph type="writing" secondary>
                 {t('article-type:research-advance.paragraph-1')}
@@ -80,19 +79,13 @@ const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
         </Fragment>
     );
-    const descriptionTypeMap: Record<string, () => JSX.Element> = {
+    const descriptionTypeMap: Record<string, JSX.Element> = {
         researchArticle: researchArticleCopy,
         featureArticle: featureArticleCopy,
         researchAdvance: researchAdvanceCopy,
     };
-    const [description, setDescription] = useState(researchArticleCopy());
-    const changeArticleType = (value: ValueType<Value>): void => {
-        const newArticleType: string = (value as Value).value;
+    const [selectedArticleType, setSelectedArticleType] = useState<Value>(articleTypes[0]);
 
-        if (descriptionTypeMap[newArticleType]) {
-            setDescription(descriptionTypeMap[newArticleType]());
-        }
-    };
     return (
         <div className="article-type">
             <h1 className="typography__heading typography__heading--h1">{t('article-type:heading')}</h1>
@@ -101,15 +94,15 @@ const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
                     labelText="Choose and article type"
                     id="articleType"
                     values={articleTypes}
-                    onChange={changeArticleType}
+                    onChange={(value: Value): void => setSelectedArticleType(value)}
                     defaultValue={articleTypes[0]}
                     searchable={false}
                 />
-                {description}
+                {descriptionTypeMap[selectedArticleType.value]}
             </div>
             <div className="article-type__buttons">
                 <Button onClick={onCancel}>{t('article-type:cancel-button')}</Button>
-                <Button onClick={onConfirm} type="primary">
+                <Button onClick={(): void => onConfirm(selectedArticleType.value)} type="primary">
                     {t('article-type:confirm-button')}
                 </Button>
             </div>

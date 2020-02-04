@@ -22,9 +22,16 @@ const Dashboard = withRouter(
                 });
             },
         });
+
+        const onArticleTypeConfirm = (articleType: string): void => {
+            startSubmission({ variables: { articleType } }).then(() => {
+                // this should be replaced with redirect to wizard eventually
+                toggle();
+            });
+        };
         const { t } = useTranslation();
         if (isShowing) {
-            return <ArticleType onCancel={toggle} onConfirm={startSubmission} />;
+            return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} />;
         }
         if (!loading && data.getSubmissions.length === 0) {
             return <NoSubmissions onStartClick={toggle} />;
