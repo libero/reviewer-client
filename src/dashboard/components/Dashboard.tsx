@@ -13,7 +13,7 @@ const Dashboard = withRouter(
     (): JSX.Element => {
         const { isShowing, toggle } = useModal();
         const { loading, data } = useQuery(getSubmissionsQuery);
-        const [startSubmission] = useMutation(startSubmissionMutation, {
+        const [startSubmission, { loading: loadingStartSubmission }] = useMutation(startSubmissionMutation, {
             update(cache, { data: { startSubmission } }) {
                 const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
                 cache.writeQuery({
@@ -31,7 +31,7 @@ const Dashboard = withRouter(
         };
         const { t } = useTranslation();
         if (isShowing) {
-            return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} />;
+            return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
         if (!loading && data.getSubmissions.length === 0) {
             return <NoSubmissions onStartClick={toggle} />;

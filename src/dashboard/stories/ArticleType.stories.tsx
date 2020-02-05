@@ -6,6 +6,6 @@ import '../../core/styles/index.scss';
 storiesOf('Initial Submission | Components/ArticleType', module).add(
     'With Components',
     (): JSX.Element => {
-        return <ArticleType onCancel={(): void => {}} onConfirm={(): void => {}} />;
+        return <ArticleType onCancel={(): void => {}} onConfirm={(): void => {}} loading={false} />;
     },
 );
