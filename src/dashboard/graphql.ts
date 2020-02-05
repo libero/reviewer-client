@@ -16,6 +16,7 @@ export const startSubmissionMutation = gql`
             id
             title
             updated
+            articleType
         }
     }
 `;

@@ -1,6 +1,8 @@
 import React from 'react';
 import Delete from '@material-ui/icons/Delete';
 import moment from 'moment';
+import { useMutation } from '@apollo/react-hooks';
+import { deleteSubmissionMutation, getSubmissionsQuery } from '../graphql';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
 import { Submission } from '../../initial-submission/types';
@@ -13,6 +15,20 @@ interface Props {
 
 const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
+    const [deleteSubmission] = useMutation(deleteSubmissionMutation, {
+        update(cache, { data: { deleteSubmission } }) {
+            const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
+            const cloneSubmission = [...getSubmissions];
+            const indexToDelete = getSubmissions.findIndex(
+                (cacheSubmission: { id: string }) => cacheSubmission.id === deleteSubmission,
+            );
+            cloneSubmission.splice(indexToDelete, 1);
+            cache.writeQuery({
+                query: getSubmissionsQuery,
+                data: { getSubmissions: cloneSubmission },
+            });
+        },
+    });
     const status = submission.status ? submission.status.toLowerCase() : '';
     return (
         <div className="submission-entry">
@@ -36,11 +52,17 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 </div>
             </Link>
             <div className="submission-entry__icon_container">
-                <Modal hide={toggle} isShowing={isShowing} onAccept={(): void => {}}>
+                <Modal
+                    hide={toggle}
+                    isShowing={isShowing}
+                    onAccept={(): void => {
+                        deleteSubmission({ variables: { id: submission.id } });
+                    }}
+                >
                     <h2>Confirm delete submission?</h2>
                     <p>
                         Your submission &quot;
-                        {submission.title}
+                        {submission.title.length !== 0 ? submission.title : '(no title)'}
                         &quot; will be deleted permanently
                     </p>
                 </Modal>

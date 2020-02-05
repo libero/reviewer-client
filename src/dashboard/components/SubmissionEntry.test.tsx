@@ -107,46 +107,15 @@ describe('SubmissionEntry', (): void => {
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent('(no title)');
     });
 
-    it('should render the correct Date string for a date today', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} />, {
+    it('should render the submissions updated time as a readable string', (): void => {
+        const { container, rerender } = render(<SubmissionEntry submission={mockSubmissionNoTitle} />, {
             wrapper: routerWrapper(['/link-1']),
         });
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Today');
-    });
-
-    it('should render the correct Date string for a date yesterday', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(1)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(1)} />);
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Yesterday');
-    });
-
-    it('should render the correct Date string for a date last week', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(7)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('7 days ago');
-    });
-
-    it('should render the correct Date string for a date three weeks ago', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(18)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('3 weeks ago');
-    });
-
-    it('should render the correct Date string for a date 1 month ago', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(31)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('1 month ago');
-    });
-
-    it('should render the correct Date string for a date 1 year ago', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(730)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('2 years ago');
+        rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(14)} />);
+        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('2 weeks ago');
     });
 
     it('should not render the modal on first render', (): void => {
