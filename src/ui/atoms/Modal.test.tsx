@@ -63,11 +63,11 @@ describe('Modal', (): void => {
     });
 
     it('should change the type of button depending on what is passed in', (): void => {
-        const { getByText } = render(
+        const { container } = render(
             <Modal isShowing={true} hide={(): void => {}} buttonText="Accept" buttonType="primary" />,
             { container: appContainer() },
         );
-        expect(getByText('Accept')).toHaveClass('button--primary');
+        expect(container.querySelector('.button--primary')).toBeInTheDocument();
     });
 
     it('should be rendered fullscreen when fullscreen=true', (): void => {
