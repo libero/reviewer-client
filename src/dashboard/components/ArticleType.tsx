@@ -4,11 +4,12 @@ import { SelectField, Paragraph, Button } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
 interface Props {
+    loading: boolean;
     onCancel: () => void;
     onConfirm: (articleType: string) => void;
 }
 
-const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
+const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
     const { t } = useTranslation();
     const articleTypes = [
         {
@@ -102,7 +103,7 @@ const ArticleType = ({ onCancel, onConfirm }: Props): JSX.Element => {
             </div>
             <div className="article-type__buttons">
                 <Button onClick={onCancel}>{t('article-type:cancel-button')}</Button>
-                <Button onClick={(): void => onConfirm(selectedArticleType.value)} type="primary">
+                <Button onClick={(): void => onConfirm(selectedArticleType.value)} type="primary" loading={loading}>
                     {t('article-type:confirm-button')}
                 </Button>
             </div>

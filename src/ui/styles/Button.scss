@@ -35,6 +35,28 @@
   height: 48px;
 }
 
+.button--loading {
+    margin: auto;
+    animation: full-rotation 1.1s infinite linear;
+    border: 0.313rem solid rgb(129, 196, 232);
+    border-left: 0.313rem solid rgb(255, 255, 255);
+    border-radius: 50%;
+    display: block;
+    height: 1.375rem;
+    overflow: hidden;
+    text-indent: -9999em;
+    transform: translateZ(0);
+    width: 1.375rem;
+    @keyframes full-rotation {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+}
+
 .button--primary {
   background: $colourPrimary;
   color: $colourTextReverse;

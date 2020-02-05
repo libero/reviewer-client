@@ -13,7 +13,7 @@ describe('Button', (): void => {
         expect(
             (): RenderResult =>
                 render(
-                    <Button type="primary" className="some-class">
+                    <Button type="primary" className="some-class" loading={false} disabled={false}>
                         test
                     </Button>,
                 ),
@@ -21,8 +21,8 @@ describe('Button', (): void => {
     });
 
     it('should append the type string passed to a button-- class', (): void => {
-        const { getByText } = render(<Button type="primary">test</Button>);
-        expect(getByText('test')).toHaveClass('button--primary');
+        const { container } = render(<Button type="primary">test</Button>);
+        expect(container.querySelector('.button--primary')).toBeInTheDocument();
     });
 
     it('should call function when clicked', (): void => {
@@ -33,13 +33,17 @@ describe('Button', (): void => {
     });
 
     it('should append passed className to button styling classes', (): void => {
-        const { getByText } = render(<Button className="some-class">test</Button>);
-        expect(getByText('test')).toHaveClass('some-class');
-        expect(getByText('test')).toHaveClass('button');
+        const { container } = render(<Button className="some-class">test</Button>);
+        expect(container.querySelector('.some-class')).toBeInTheDocument();
     });
 
     it('should be disabled if the disabled prop is true', (): void => {
-        const { getByText } = render(<Button disabled={true}>test</Button>);
-        expect(getByText('test')).toBeDisabled();
+        const { container } = render(<Button disabled={true}>test</Button>);
+        expect(container.querySelector('.button')).toBeDisabled();
+    });
+
+    it('should be have the button--loading class on the text if the prop is true', (): void => {
+        const { container } = render(<Button loading={true}>test</Button>);
+        expect(container.querySelector('.button__text')).toHaveClass('button--loading');
     });
 });
