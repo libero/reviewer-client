@@ -56,4 +56,11 @@ describe('SubmissonWizard', (): void => {
         fireEvent.click(getByText('confirm-button'));
         expect(callback).toHaveBeenCalledWith('featureArticle');
     });
+
+    it('should show the loading spinner when loading is set to true', (): void => {
+        const { container } = render(
+            <ArticleType onCancel={(): void => {}} onConfirm={(): void => {}} loading={true} />,
+        );
+        expect(container.querySelector('.button--primary .button__text')).toHaveClass('button--loading');
+    });
 });
