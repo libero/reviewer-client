@@ -2,8 +2,28 @@ import React from 'react';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import SubmissionEntry from './SubmissionEntry';
 import { Submission } from '../../initial-submission/types';
+import combineWrappers from '../../../test-utils/combineWrappers';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import apolloWrapper from '../../../test-utils/apolloWrapper';
 import appContainer from '../../../test-utils/appContainer';
+import { deleteSubmissionMutation } from '../graphql';
+import { MockedResponse } from '@apollo/react-testing';
+
+const generateMockQueryResponse = (id: string): MockedResponse[] => {
+    return [
+        {
+            request: {
+                query: deleteSubmissionMutation,
+                variables: { id },
+            },
+            result: {
+                data: {
+                    deleteSubmission: id,
+                },
+            },
+        },
+    ];
+};
 
 describe('SubmissionEntry', (): void => {
     afterEach(cleanup);
@@ -48,7 +68,10 @@ describe('SubmissionEntry', (): void => {
         expect(
             (): RenderResult =>
                 render(<SubmissionEntry submission={mockSubmission} />, {
-                    wrapper: routerWrapper(['/link-1']),
+                    wrapper: combineWrappers(
+                        apolloWrapper(generateMockQueryResponse('someId')),
+                        routerWrapper(['/link-1']),
+                    ),
                 }),
         ).not.toThrow();
     });
@@ -57,7 +80,10 @@ describe('SubmissionEntry', (): void => {
         const { container } = render(
             <SubmissionEntry submission={getMockSubmissionForStatus('CONTINUE_SUBMISSION')} />,
             {
-                wrapper: routerWrapper(['/link-1']),
+                wrapper: combineWrappers(
+                    apolloWrapper(generateMockQueryResponse('someId')),
+                    routerWrapper(['/link-1']),
+                ),
             },
         );
         expect(container.querySelector('.submission-entry__link--continue_submission')).toBeInTheDocument();
@@ -67,7 +93,7 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct classes for submitted submissions', (): void => {
         const { container } = render(<SubmissionEntry submission={getMockSubmissionForStatus('SUBMITTED')} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(container.querySelector('.submission-entry__link--submitted')).toBeInTheDocument();
         expect(container.querySelector('.submission-entry__title--submitted')).toBeInTheDocument();
@@ -76,7 +102,7 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct classes for rejected submissions', (): void => {
         const { container } = render(<SubmissionEntry submission={getMockSubmissionForStatus('REJECTED')} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(container.querySelector('.submission-entry__link--rejected')).toBeInTheDocument();
         expect(container.querySelector('.submission-entry__title--rejected')).toBeInTheDocument();
@@ -85,7 +111,7 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct route for the submission', (): void => {
         const { container } = render(<SubmissionEntry submission={mockSubmission} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(container.querySelector('a.submission-entry__link')).toHaveAttribute(
             'href',
@@ -95,21 +121,21 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct title for the submission', (): void => {
         const { container } = render(<SubmissionEntry submission={mockSubmission} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent(mockSubmission.title);
     });
 
     it('should render the correct title if the submission has none', (): void => {
         const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent('(no title)');
     });
 
     it('should render the submissions updated time as a readable string', (): void => {
         const { container, rerender } = render(<SubmissionEntry submission={mockSubmissionNoTitle} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Today');
         rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(1)} />);
@@ -120,14 +146,14 @@ describe('SubmissionEntry', (): void => {
 
     it('should not render the modal on first render', (): void => {
         const { baseElement } = render(<SubmissionEntry submission={mockSubmission} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
         });
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
     });
 
     it('should render the modal on delete click', (): void => {
         const { baseElement } = render(<SubmissionEntry submission={mockSubmission} />, {
-            wrapper: routerWrapper(['/link-1']),
+            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse('someId')), routerWrapper(['/link-1'])),
             container: appContainer(),
         });
         fireEvent.click(baseElement.querySelector('.submission-entry__icon'));
