@@ -8,7 +8,7 @@ import appContainer from '../../../test-utils/appContainer';
 
 import Dashboard from './Dashboard';
 import { getSubmissionsQuery, startSubmissionMutation, deleteSubmissionMutation } from '../graphql';
-import { MockedResponse, mockObservableLink } from '@apollo/react-testing';
+import { MockedResponse } from '@apollo/react-testing';
 
 const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
     const mock = subs.map(sub => ({
