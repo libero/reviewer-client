@@ -2,7 +2,10 @@ import React from 'react';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import SubmissionList from './SubmissionList';
 import { Submission } from '../../initial-submission/types';
+import { deleteSubmissionMutation } from '../graphql';
+import combineWrappers from '../../../test-utils/combineWrappers';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import apolloWrapper from '../../../test-utils/apolloWrapper';
 
 describe('SubmissionList', (): void => {
     afterEach(cleanup);
@@ -19,7 +22,17 @@ describe('SubmissionList', (): void => {
         expect(
             (): RenderResult =>
                 render(<SubmissionList submissions={[mockSubmission]} />, {
-                    wrapper: routerWrapper(['/link-1']),
+                    wrapper: combineWrappers(
+                        routerWrapper(['/link-1']),
+                        apolloWrapper([
+                            {
+                                request: {
+                                    query: deleteSubmissionMutation,
+                                    variables: { id: 'someId' },
+                                },
+                            },
+                        ]),
+                    ),
                 }),
         ).not.toThrow();
     });
