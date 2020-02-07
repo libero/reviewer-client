@@ -1,8 +1,6 @@
 import React from 'react';
 import Delete from '@material-ui/icons/Delete';
 import moment from 'moment';
-import { useMutation } from '@apollo/react-hooks';
-import { deleteSubmissionMutation, getSubmissionsQuery } from '../graphql';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
 import { Submission } from '../../initial-submission/types';
@@ -11,24 +9,12 @@ import dateTimeDiffToText from '../utils/dateTimeDiffToText';
 
 interface Props {
     submission: Submission;
+    onDelete: () => void;
 }
 
-const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element => {
+const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-    const [deleteSubmission] = useMutation(deleteSubmissionMutation, {
-        update(cache, { data: { deleteSubmission } }) {
-            const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
-            const cloneSubmission = [...getSubmissions];
-            const indexToDelete = getSubmissions.findIndex(
-                (cacheSubmission: { id: string }) => cacheSubmission.id === deleteSubmission,
-            );
-            cloneSubmission.splice(indexToDelete, 1);
-            cache.writeQuery({
-                query: getSubmissionsQuery,
-                data: { getSubmissions: cloneSubmission },
-            });
-        },
-    });
+
     const status = submission.status ? submission.status.toLowerCase() : '';
     return (
         <div className="submission-entry">
@@ -52,13 +38,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 </div>
             </Link>
             <div className="submission-entry__icon_container">
-                <Modal
-                    hide={toggle}
-                    isShowing={isShowing}
-                    onAccept={(): void => {
-                        deleteSubmission({ variables: { id: submission.id } });
-                    }}
-                >
+                <Modal hide={toggle} isShowing={isShowing} onAccept={onDelete}>
                     <h2>Confirm delete submission?</h2>
                     <p>
                         Your submission &quot;
