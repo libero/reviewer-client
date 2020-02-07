@@ -7,11 +7,23 @@ import apolloWrapper from '../../../test-utils/apolloWrapper';
 import appContainer from '../../../test-utils/appContainer';
 
 import Dashboard from './Dashboard';
-import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
+import { getSubmissionsQuery, startSubmissionMutation, deleteSubmissionMutation } from '../graphql';
 import { MockedResponse } from '@apollo/react-testing';
 
 const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
+    const mock = subs.map(sub => ({
+        request: {
+            query: deleteSubmissionMutation,
+            variables: { id: sub.id },
+        },
+        result: {
+            data: {
+                deleteSubmission: sub.id,
+            },
+        },
+    }));
     return [
+        ...mock,
         {
             request: {
                 query: getSubmissionsQuery,
@@ -33,6 +45,7 @@ const generateMockQueryResponse = (subs: Submission[]): MockedResponse[] => {
                         id: 'testid',
                         title: '',
                         updated: '2020-01-01T00:00:00.000Z',
+                        articleType: 'researchArticle',
                     },
                 },
             },
@@ -184,6 +197,35 @@ describe('Dashboard', (): void => {
             fireEvent.click(getByText('cancel-button'));
             await wait();
             expect(container.querySelectorAll('.submission-entry')).toHaveLength(1);
+        });
+
+        it('should remove a submission when delete button clicked through modal', async (): Promise<void> => {
+            const { container, getByText } = render(<Dashboard />, {
+                container: appContainer(),
+                wrapper: combineWrappers(
+                    apolloWrapper(
+                        generateMockQueryResponse([
+                            { id: 'A', title: 'Submission - A', updated: Date.now() },
+                            { id: 'B', title: 'Submission - B', updated: Date.now() },
+                        ]),
+                    ),
+                    routerWrapper(['/link-1']),
+                ),
+            });
+            await wait();
+            expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
+            expect(getByText('Submission - A')).toBeInTheDocument();
+            expect(getByText('Submission - B')).toBeInTheDocument();
+            const submissions = container.querySelectorAll('.submission-entry');
+            submissions.forEach(entry => {
+                if (entry.textContent.includes('Submission - A')) {
+                    fireEvent.click(entry.querySelector('.submission-entry__icon'));
+                    fireEvent.click(getByText('modal--default-button'));
+                }
+            });
+            await wait();
+            expect(container.querySelectorAll('.submission-entry')).toHaveLength(1);
+            expect(getByText('Submission - B')).toBeInTheDocument();
         });
     });
 });

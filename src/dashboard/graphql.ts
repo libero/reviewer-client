@@ -11,11 +11,18 @@ export const getSubmissionsQuery = gql`
 `;
 
 export const startSubmissionMutation = gql`
-    mutation StartSubmision {
-        startSubmission {
+    mutation StartSubmision($articleType: String!) {
+        startSubmission(articleType: $articleType) {
             id
             title
             updated
+            articleType
         }
+    }
+`;
+
+export const deleteSubmissionMutation = gql`
+    mutation DeleteSubmission($id: ID!) {
+        deleteSubmission(id: $id)
     }
 `;

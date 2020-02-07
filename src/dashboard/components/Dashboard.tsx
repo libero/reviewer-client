@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import SubmissionList from './SubmissionList';
-import { getSubmissionsQuery, startSubmissionMutation } from '../graphql';
+import { getSubmissionsQuery, startSubmissionMutation, deleteSubmissionMutation } from '../graphql';
 import NoSubmissions from './NoSubmissions';
 import { Button } from '../../ui/atoms';
 import useModal from '../../ui/hooks/useModal';
@@ -19,6 +19,20 @@ const Dashboard = withRouter(
                 cache.writeQuery({
                     query: getSubmissionsQuery,
                     data: { getSubmissions: getSubmissions.concat([startSubmission]) },
+                });
+            },
+        });
+        const [deleteSubmission] = useMutation(deleteSubmissionMutation, {
+            update(cache, { data: { deleteSubmission } }) {
+                const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
+                const cloneSubmission = [...getSubmissions];
+                const indexToDelete = getSubmissions.findIndex(
+                    (cacheSubmission: { id: string }) => cacheSubmission.id === deleteSubmission,
+                );
+                cloneSubmission.splice(indexToDelete, 1);
+                cache.writeQuery({
+                    query: getSubmissionsQuery,
+                    data: { getSubmissions: cloneSubmission },
                 });
             },
         });
@@ -43,7 +57,11 @@ const Dashboard = withRouter(
                             {t('dashboard:new-submission')}
                         </Button>
                     </div>
-                    {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}
+                    {loading ? (
+                        'loading'
+                    ) : (
+                        <SubmissionList submissions={data.getSubmissions} onDelete={deleteSubmission} />
+                    )}
                 </div>
             );
         }

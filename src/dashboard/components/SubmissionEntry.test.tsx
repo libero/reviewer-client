@@ -47,7 +47,7 @@ describe('SubmissionEntry', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<SubmissionEntry submission={mockSubmission} />, {
+                render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
                     wrapper: routerWrapper(['/link-1']),
                 }),
         ).not.toThrow();
@@ -55,7 +55,7 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct classes for unfinished submissions', (): void => {
         const { container } = render(
-            <SubmissionEntry submission={getMockSubmissionForStatus('CONTINUE_SUBMISSION')} />,
+            <SubmissionEntry submission={getMockSubmissionForStatus('CONTINUE_SUBMISSION')} onDelete={jest.fn} />,
             {
                 wrapper: routerWrapper(['/link-1']),
             },
@@ -66,25 +66,31 @@ describe('SubmissionEntry', (): void => {
     });
 
     it('should render the correct classes for submitted submissions', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForStatus('SUBMITTED')} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { container } = render(
+            <SubmissionEntry submission={getMockSubmissionForStatus('SUBMITTED')} onDelete={jest.fn} />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(container.querySelector('.submission-entry__link--submitted')).toBeInTheDocument();
         expect(container.querySelector('.submission-entry__title--submitted')).toBeInTheDocument();
         expect(container.querySelector('.submission-entry__link_text--submitted')).toBeInTheDocument();
     });
 
     it('should render the correct classes for rejected submissions', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForStatus('REJECTED')} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { container } = render(
+            <SubmissionEntry submission={getMockSubmissionForStatus('REJECTED')} onDelete={jest.fn} />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(container.querySelector('.submission-entry__link--rejected')).toBeInTheDocument();
         expect(container.querySelector('.submission-entry__title--rejected')).toBeInTheDocument();
         expect(container.querySelector('.submission-entry__link_text--rejected')).toBeInTheDocument();
     });
 
     it('should render the correct route for the submission', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmission} />, {
+        const { container } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
         expect(container.querySelector('a.submission-entry__link')).toHaveAttribute(
@@ -94,74 +100,58 @@ describe('SubmissionEntry', (): void => {
     });
 
     it('should render the correct title for the submission', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmission} />, {
+        const { container } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent(mockSubmission.title);
     });
 
     it('should render the correct title if the submission has none', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} />, {
+        const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent('(no title)');
     });
 
-    it('should render the correct Date string for a date today', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+    it('should render the submissions updated time as a readable string', (): void => {
+        const { container, rerender } = render(
+            <SubmissionEntry submission={mockSubmissionNoTitle} onDelete={jest.fn} />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Today');
-    });
-
-    it('should render the correct Date string for a date yesterday', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(1)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(1)} onDelete={jest.fn} />);
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Yesterday');
-    });
-
-    it('should render the correct Date string for a date last week', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(7)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('7 days ago');
-    });
-
-    it('should render the correct Date string for a date three weeks ago', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(18)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('3 weeks ago');
-    });
-
-    it('should render the correct Date string for a date 1 month ago', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(31)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('1 month ago');
-    });
-
-    it('should render the correct Date string for a date 1 year ago', (): void => {
-        const { container } = render(<SubmissionEntry submission={getMockSubmissionForDaysAgo(730)} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
-        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('2 years ago');
+        rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(14)} onDelete={jest.fn} />);
+        expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('2 weeks ago');
     });
 
     it('should not render the modal on first render', (): void => {
-        const { baseElement } = render(<SubmissionEntry submission={mockSubmission} />, {
+        const { baseElement } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
     });
 
     it('should render the modal on delete click', (): void => {
-        const { baseElement } = render(<SubmissionEntry submission={mockSubmission} />, {
+        const { baseElement } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
             container: appContainer(),
         });
         fireEvent.click(baseElement.querySelector('.submission-entry__icon'));
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+    });
+
+    it('should call onDelete function on modal button click', (): void => {
+        const onDelete = jest.fn();
+        const { baseElement, getByText } = render(<SubmissionEntry submission={mockSubmission} onDelete={onDelete} />, {
+            wrapper: routerWrapper(['/link-1']),
+            container: appContainer(),
+        });
+        fireEvent.click(baseElement.querySelector('.submission-entry__icon'));
+        expect(onDelete).not.toBeCalled();
+        fireEvent.click(getByText('modal--default-button'));
+        expect(onDelete).toBeCalled();
     });
 });

@@ -40,7 +40,7 @@ storiesOf('Dashboard | Components/SubmissionEntry', module)
             };
             return (
                 <MemoryRouter initialEntries={historyLocation}>
-                    <SubmissionEntry submission={submission} />
+                    <SubmissionEntry submission={submission} onDelete={(): void => {}} />
                 </MemoryRouter>
             );
         },
