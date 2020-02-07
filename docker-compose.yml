@@ -8,7 +8,7 @@ services:
       - ./config/:/etc/reviewer/:z
 
   reviewer-mocks:
-    image: libero/reviewer-mocks:local
+    image: liberoadmin/reviewer-mocks:latest
     ports:
       - "3003:3003"
     volumes:
