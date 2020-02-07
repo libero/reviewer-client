@@ -5,9 +5,13 @@ import SubmissionEntry from './SubmissionEntry';
 
 interface SubmissionListProps {
     submissions: Submission[];
+    onDelete: (options: {}) => void;
 }
 
-const SubmissionList: React.FC<SubmissionListProps> = ({ submissions = [] }: SubmissionListProps): JSX.Element => {
+const SubmissionList: React.FC<SubmissionListProps> = ({
+    submissions = [],
+    onDelete,
+}: SubmissionListProps): JSX.Element => {
     return (
         <Tabs className="dashboard__tabs">
             <TabList className="dashboard__tabs_list">
@@ -26,7 +30,11 @@ const SubmissionList: React.FC<SubmissionListProps> = ({ submissions = [] }: Sub
                         .reverse()
                         .map(
                             (sub: Submission, index: number): JSX.Element => (
-                                <SubmissionEntry key={index} submission={sub} />
+                                <SubmissionEntry
+                                    key={index}
+                                    submission={sub}
+                                    onDelete={(): void => onDelete({ variables: { id: sub.id } })}
+                                />
                             ),
                         )
                 )}
