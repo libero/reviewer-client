@@ -37,6 +37,7 @@ storiesOf('Dashboard | Components/SubmissionEntry', module)
                 lastStepVisited: 'author',
                 status: select('Status', ['CONTINUE_SUBMISSION', 'SUBMITTED', 'REJECTED'], 'CONTINUE_SUBMISSION'),
                 updated: new Date().getTime(),
+                author: undefined,
             };
             return (
                 <MemoryRouter initialEntries={historyLocation}>

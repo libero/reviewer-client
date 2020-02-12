@@ -33,6 +33,7 @@ storiesOf('Dashboard | Components/SubmissionList', module)
                     lastStepVisited: 'author',
                     status: 'CONTINUE_SUBMISSION',
                     updated: new Date().getTime(),
+                    author: undefined,
                 },
                 {
                     id: 'id2',
@@ -40,6 +41,7 @@ storiesOf('Dashboard | Components/SubmissionList', module)
                     lastStepVisited: 'files',
                     status: 'SUBMITTED',
                     updated: getMockSubmissionForDaysAgo(7),
+                    author: undefined,
                 },
             ];
             const submissions = object('Submissions', submissionsTyped);
