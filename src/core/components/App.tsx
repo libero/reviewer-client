@@ -12,13 +12,14 @@ import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { AppProvider } from '../providers/AppProvider';
 import { Footer } from '../../ui/atoms';
+import { getToken } from '../../login/utils/tokenUtils';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
     return (
         <AppProvider>
-            <ApolloProvider client={createApolloClient(CONFIG.API_HOST, '')}>
+            <ApolloProvider client={createApolloClient(CONFIG.API_HOST, getToken())}>
                 <Router>
                     <React.Suspense fallback={<Loader />}>
                         <NavBar />
