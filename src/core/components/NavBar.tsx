@@ -31,6 +31,7 @@ const menuItems = [
 ];
 
 const NavBar = (): JSX.Element => {
+    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery);
     const { isAuthenticated } = useAppContext();
     if (!isAuthenticated) {
         return (
@@ -39,7 +40,6 @@ const NavBar = (): JSX.Element => {
             </AppBar>
         );
     }
-    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery);
     return (
         <AppBar>
             <BurgerMenu items={menuItems} />
