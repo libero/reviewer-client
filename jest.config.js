@@ -13,6 +13,6 @@ module.exports = {
         CONFIG: {
             API_HOST: '',
             LOGIN_URL: '',
-        }
+        },
     },
 };
