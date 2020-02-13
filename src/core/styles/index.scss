@@ -14,6 +14,10 @@
 //login
 @import '../../login/styles/login';
 
+//submission-wizard
+@import '../../initial-submission/styles/SubmissionWizard';
+@import '../../initial-submission/styles/AuthorDetails';
+
 .site-content {
     padding-left: 3rem;
     padding-right: 3rem;

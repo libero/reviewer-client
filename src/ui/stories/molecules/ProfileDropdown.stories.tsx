@@ -19,7 +19,7 @@ storiesOf('ui | molecules/ProfileDropdown', module)
             const role = text('Role', 'Actor');
             return (
                 <MemoryRouter initialEntries={historyLocation}>
-                    <ProfileDropdown user={{ name, role, id: 'abc' }} />
+                    <ProfileDropdown user={{ name, role, id: 'abc', email: 'email@test.com', aff: 'somewhere' }} />
                 </MemoryRouter>
             );
         },

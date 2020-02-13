@@ -14,6 +14,7 @@ describe('SubmissionList', (): void => {
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
+        author: undefined,
     };
 
     it('should render correctly', (): void => {
