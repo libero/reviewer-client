@@ -2,8 +2,26 @@ import { cleanup, render, fireEvent, RenderResult } from '@testing-library/react
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
+import 'mutationobserver-shim';
 
-describe('SubmissonWizard', (): void => {
+// erroneously picked up as an unused dependency
+/*eslint-disable @typescript-eslint/no-unused-vars*/
+import { useQuery } from '@apollo/react-hooks';
+jest.mock('@apollo/react-hooks', () => ({
+    useQuery: (): object => {
+        return {
+            data: {
+                getCurrentUser: {
+                    name: 'Blogs, Joe',
+                    email: 'joe@blogs.com',
+                    aff: 'somewhere',
+                },
+            },
+        };
+    },
+}));
+
+describe('SubmissionWizard', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {

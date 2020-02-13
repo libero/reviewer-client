@@ -9,6 +9,7 @@ describe('SubmissionEntry', (): void => {
     afterEach(cleanup);
 
     const mockSubmission: Submission = {
+        author: undefined,
         id: 'someId',
         title: 'testSubmission',
         lastStepVisited: 'someStep',
@@ -22,6 +23,7 @@ describe('SubmissionEntry', (): void => {
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
+        author: undefined,
     };
 
     const getMockSubmissionForStatus = (status: string): Submission => ({
@@ -30,6 +32,7 @@ describe('SubmissionEntry', (): void => {
         lastStepVisited: 'someStep',
         status: status,
         updated: new Date().getTime(),
+        author: undefined,
     });
 
     const getMockSubmissionForDaysAgo = (daysAgo: number): Submission => {
@@ -41,6 +44,7 @@ describe('SubmissionEntry', (): void => {
             lastStepVisited: 'someStep',
             status: 'CONTINUE_SUBMISSION',
             updated: date.getTime(),
+            author: undefined,
         };
     };
 
@@ -95,7 +99,7 @@ describe('SubmissionEntry', (): void => {
         });
         expect(container.querySelector('a.submission-entry__link')).toHaveAttribute(
             'href',
-            `/submission/${mockSubmission.id}/${mockSubmission.lastStepVisited}`,
+            `/submit/${mockSubmission.id}/${mockSubmission.lastStepVisited}`,
         );
     });
 

@@ -8,6 +8,8 @@ const user: User = {
     id: 'abc',
     name: 'Name',
     role: 'Role',
+    email: 'email@test.com',
+    aff: 'somewhere',
 };
 
 const renderDropDown = (): RenderResult =>
