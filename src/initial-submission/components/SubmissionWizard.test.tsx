@@ -4,6 +4,7 @@ import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
 import 'mutationobserver-shim';
 
+// erroneously picked up as an unused dependency
 /*eslint-disable @typescript-eslint/no-unused-vars*/
 import { useQuery } from '@apollo/react-hooks';
 jest.mock('@apollo/react-hooks', () => ({
