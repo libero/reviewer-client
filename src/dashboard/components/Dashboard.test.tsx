@@ -20,9 +20,6 @@ const mockMutation = jest.fn().mockImplementation(
         }),
 );
 
-// erroneously picked up as an unused dependency
-/*eslint-disable @typescript-eslint/no-unused-vars*/
-import { useQuery, useMutation } from '@apollo/react-hooks';
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
         return {
