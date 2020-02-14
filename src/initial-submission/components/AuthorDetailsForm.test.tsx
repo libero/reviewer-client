@@ -6,7 +6,7 @@ import { Submission } from '../types';
 
 // erroneously picked up as an unused dependency
 /*eslint-disable @typescript-eslint/no-unused-vars*/
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
@@ -19,6 +19,14 @@ jest.mock('@apollo/react-hooks', () => ({
                 },
             },
         };
+    },
+    useMutation: (): object[] => {
+        return [
+            jest.fn(),
+            {
+                loading: false,
+            },
+        ];
     },
 }));
 
