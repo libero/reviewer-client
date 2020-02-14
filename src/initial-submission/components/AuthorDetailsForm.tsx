@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -7,6 +7,7 @@ import { Submission, AuthorDetails } from '../types';
 import { useQuery } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../../core/graphql';
 import { User } from '../../core/types';
+import { throttle } from 'lodash';
 
 interface GetCurrentUser {
     getCurrentUser: User;
@@ -15,6 +16,12 @@ interface GetCurrentUser {
 interface Props {
     initialValues?: Submission;
 }
+
+// This is outside of the component because of the throttle being recreated on each render if its inside.
+const save = (values: AuthorDetails): void => {
+    console.log('saved', new Date(), values);
+};
+const throttledSave = throttle(save, 5000, { leading: false });
 
 const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
@@ -27,7 +34,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
             .required(),
         institution: yup.string().required(),
     });
-    const { register, handleSubmit, errors } = useForm<AuthorDetails>({ validationSchema: schema });
+    const { register, handleSubmit, errors, getValues } = useForm<AuthorDetails>({ validationSchema: schema });
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
     };
@@ -44,6 +51,10 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const [institution, setInstitution] = useState(
         initialValues && initialValues.author ? initialValues.author.institution : '',
     );
+
+    useEffect(() => {
+        throttledSave(getValues());
+    }, [authorFirstName, authorLastName, authorEmail, institution]);
     const { t } = useTranslation();
 
     const getDetails = (): void => {
