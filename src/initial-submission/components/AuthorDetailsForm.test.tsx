@@ -4,10 +4,6 @@ import AuthorDetailsForm from './AuthorDetailsForm';
 import 'mutationobserver-shim';
 import { Submission } from '../types';
 
-// erroneously picked up as an unused dependency
-/*eslint-disable @typescript-eslint/no-unused-vars*/
-import { useQuery, useMutation } from '@apollo/react-hooks';
-
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
         return {
