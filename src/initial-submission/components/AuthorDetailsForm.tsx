@@ -54,6 +54,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     useEffect(() => {
         throttledSave(getValues());
+        // Warning: returning throttlesSave.cancel() will cause the throttle to be recreated on each render breaking it.
     }, [authorFirstName, authorLastName, authorEmail, institution]);
     const { t } = useTranslation();
 
