@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
 import * as yup from 'yup';
 import { Submission, AuthorDetails } from '../types';
-import { useQuery } from '@apollo/react-hooks';
-import { getCurrentUserQuery } from '../../core/graphql';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { getCurrentUserQuery, saveDetailsPageMutation } from '../../core/graphql';
 import { User } from '../../core/types';
-import { throttle } from 'lodash';
+import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
 interface GetCurrentUser {
     getCurrentUser: User;
@@ -17,14 +17,10 @@ interface Props {
     initialValues?: Submission;
 }
 
-// This is outside of the component because of the throttle being recreated on each render if its inside.
-const save = (values: AuthorDetails): void => {
-    console.log('saved', new Date(), values);
-};
-const throttledSave = throttle(save, 5000, { leading: false });
-
 const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
+    const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
+
     const schema = yup.object().shape({
         authorFirstName: yup.string().required(),
         authorLastName: yup.string().required(),
@@ -35,6 +31,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
         institution: yup.string().required(),
     });
     const { register, handleSubmit, errors, getValues } = useForm<AuthorDetails>({ validationSchema: schema });
+
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
     };
@@ -52,10 +49,21 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
         initialValues && initialValues.author ? initialValues.author.institution : '',
     );
 
+    const onSave = (): void => {
+        const vars = {
+            variables: {
+                id: initialValues.id,
+                details: getValues(),
+            },
+        };
+        saveCallback(vars);
+    };
+
     useEffect(() => {
-        throttledSave(getValues());
+        AutoSaveDecorator(onSave);
         // Warning: returning throttlesSave.cancel() will cause the throttle to be recreated on each render breaking it.
     }, [authorFirstName, authorLastName, authorEmail, institution]);
+
     const { t } = useTranslation();
 
     const getDetails = (): void => {
