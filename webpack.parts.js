@@ -40,7 +40,7 @@ exports.devServer = () => ({
                 target: infraConfig.client_api_proxy_url,
                 changeOrigin: true,
             },
-            '/auth': {
+            '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
                 target: infraConfig.client_token_exchange_proxy_url,
                 pathRewrite: {'^/auth': ''},
                 changeOrigin: true, 
