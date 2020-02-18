@@ -23,13 +23,29 @@ describe('auth', (): void => {
     describe('importToken', (): void => {
         it('sets token if token present in url', (): void => {
             jest.spyOn(tokenUtils, 'getTokenFromUrl').mockImplementation((): string => 'token_from_url');
+            jest.spyOn(tokenUtils, 'decodeToken').mockImplementation(() => ({ issuer: 'libero' }));
             jest.spyOn(tokenUtils, 'setToken').mockImplementation(jest.fn());
 
             Auth.importToken();
 
             expect(tokenUtils.getTokenFromUrl).toHaveBeenCalledTimes(1);
+            expect(tokenUtils.decodeToken).toHaveBeenCalledTimes(1);
+            expect(tokenUtils.decodeToken).toHaveBeenCalledWith('token_from_url');
             expect(tokenUtils.setToken).toHaveBeenCalledTimes(1);
             expect(tokenUtils.setToken).toHaveBeenCalledWith('token_from_url');
+        });
+
+        it('doesnt set token if token present in url', (): void => {
+            jest.spyOn(tokenUtils, 'getTokenFromUrl').mockImplementation((): string => 'token_from_url');
+            jest.spyOn(tokenUtils, 'decodeToken').mockImplementation(() => ({ issuer: 'acme' }));
+            jest.spyOn(tokenUtils, 'setToken').mockImplementation(jest.fn());
+
+            Auth.importToken();
+
+            expect(tokenUtils.getTokenFromUrl).toHaveBeenCalledTimes(1);
+            expect(tokenUtils.decodeToken).toHaveBeenCalledTimes(1);
+            expect(tokenUtils.decodeToken).toHaveBeenCalledWith('token_from_url');
+            expect(tokenUtils.setToken).toHaveBeenCalledTimes(0);
         });
 
         it("doesn't set token if token not present in url", (): void => {

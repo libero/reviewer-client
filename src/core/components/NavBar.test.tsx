@@ -2,10 +2,6 @@ import React from 'react';
 import { render, RenderResult, fireEvent } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import NavBar from './NavBar';
-import combineWrappers from '../../../test-utils/combineWrappers';
-import apolloWrapper from '../../../test-utils/apolloWrapper';
-import { MockedResponse } from '@apollo/react-testing';
-import { getCurrentUserQuery } from '../graphql';
 import * as AppContext from '../providers/AppProvider';
 
 const expectedMenuItems = [
@@ -27,30 +23,26 @@ const expectedMenuItems = [
     },
 ];
 
-const generateMockQueryResponse = (): MockedResponse[] => {
-    return [
-        {
-            request: {
-                query: getCurrentUserQuery,
-            },
-            result: {
-                data: {
-                    getCurrentUser: {
-                        name: 'Bob',
-                        role: 'author',
-                    },
+jest.mock('@apollo/react-hooks', () => ({
+    useQuery: (): object => {
+        return {
+            data: {
+                getCurrentUser: {
+                    name: 'Blogs, Joe',
+                    email: 'joe@blogs.com',
+                    aff: 'somewhere',
                 },
             },
-        },
-    ];
-};
+        };
+    },
+}));
 
 describe('NavBar', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
                 render(<NavBar />, {
-                    wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
+                    wrapper: routerWrapper(),
                 }),
         ).not.toThrow();
     });
@@ -60,7 +52,7 @@ describe('NavBar', (): void => {
             isAuthenticated: true,
         }));
         const { container } = render(<NavBar />, {
-            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
+            wrapper: routerWrapper(),
         });
         for (const item of expectedMenuItems) {
             const element = container.querySelector('.menu__link[href="' + item.url + '"]');
@@ -73,7 +65,7 @@ describe('NavBar', (): void => {
             isAuthenticated: true,
         }));
         const { container } = render(<NavBar />, {
-            wrapper: combineWrappers(apolloWrapper(generateMockQueryResponse()), routerWrapper()),
+            wrapper: routerWrapper(),
         });
         fireEvent.click(container.querySelector('.burger_menu button'));
 
