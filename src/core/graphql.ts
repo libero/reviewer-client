@@ -25,3 +25,9 @@ export const getCurrentUserQuery = gql`
         }
     }
 `;
+
+export const isUserAuthenticatedQuery = gql`
+    query isUserAuthenticated {
+        isAuthenticated @client(always: true)
+    }
+`;

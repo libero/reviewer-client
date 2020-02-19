@@ -2,7 +2,6 @@ import React from 'react';
 import { render, RenderResult, fireEvent } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import NavBar from './NavBar';
-import * as AppContext from '../providers/AppProvider';
 
 const expectedMenuItems = [
     {
@@ -48,9 +47,9 @@ describe('NavBar', (): void => {
     });
 
     it('should render a menu with expected items', (): void => {
-        jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
-            isAuthenticated: true,
-        }));
+        // jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
+        //     isAuthenticated: true,
+        // }));
         const { container } = render(<NavBar />, {
             wrapper: routerWrapper(),
         });
@@ -61,9 +60,9 @@ describe('NavBar', (): void => {
         }
     });
     it('should render a burger menu with expected items', (): void => {
-        jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
-            isAuthenticated: true,
-        }));
+        // jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
+        //     isAuthenticated: true,
+        // }));
         const { container } = render(<NavBar />, {
             wrapper: routerWrapper(),
         });

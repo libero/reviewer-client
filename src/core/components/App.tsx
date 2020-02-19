@@ -10,28 +10,25 @@ import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
-import { AppProvider } from '../providers/AppProvider';
 import { Footer } from '../../ui/atoms';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
     return (
-        <AppProvider>
-            <ApolloProvider client={createApolloClient(CONFIG.API_HOST)}>
-                <Router>
-                    <React.Suspense fallback={<Loader />}>
-                        <NavBar />
-                        <Route component={Login} exact path="/login" />
-                        <Route component={Logout} exact path="/logout" />
-                        <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
-                        <InitialSubmissionRoutes />
-                        <DashboardRoutes />
-                        <Footer />
-                    </React.Suspense>
-                </Router>
-            </ApolloProvider>
-        </AppProvider>
+        <ApolloProvider client={createApolloClient(CONFIG.API_HOST)}>
+            <Router>
+                <React.Suspense fallback={<Loader />}>
+                    <NavBar />
+                    <Route component={Login} exact path="/login" />
+                    <Route component={Logout} exact path="/logout" />
+                    <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
+                    <InitialSubmissionRoutes />
+                    <DashboardRoutes />
+                    <Footer />
+                </React.Suspense>
+            </Router>
+        </ApolloProvider>
     );
 };
 

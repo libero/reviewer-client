@@ -4,8 +4,8 @@ import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import { useQuery } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../graphql';
 import Logo from '../assets/elife-logo.png';
-import { useAppContext } from '../providers/AppProvider';
 import { User } from '../types';
+import { isUserAuthenticatedQuery } from '../../core/graphql';
 
 interface GetCurrentUser {
     getCurrentUser: User;
@@ -31,8 +31,8 @@ const menuItems = [
 ];
 
 const NavBar = (): JSX.Element => {
-    const { isAuthenticated } = useAppContext();
-    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !isAuthenticated });
+    const { data: authQuery = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
+    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !authQuery.isAuthenticated });
 
     if (!data) {
         return (

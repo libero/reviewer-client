@@ -1,50 +1,102 @@
 import React from 'react';
-import { cleanup, render, RenderResult } from '@testing-library/react';
+import { cleanup, render, RenderResult, act } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
+import { MockedProvider } from '@apollo/react-testing';
+
 import Login from './Login';
-import * as AppContext from '../../core/providers/AppProvider';
+import { isUserAuthenticatedQuery } from '../../core/graphql';
 
 describe('Login', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
+        const mocks = [
+            {
+                request: {
+                    query: isUserAuthenticatedQuery,
+                },
+                result: {
+                    data: {
+                        isAuthenticated: true,
+                    },
+                },
+            },
+        ];
         expect(
             (): RenderResult =>
                 render(
-                    <MemoryRouter initialEntries={['/login']}>
-                        <Login />
-                    </MemoryRouter>,
+                    <MockedProvider mocks={mocks} addTypename={false} resolvers={{}}>
+                        <MemoryRouter initialEntries={['/login']}>
+                            <Login />
+                        </MemoryRouter>
+                    </MockedProvider>,
                 ),
         ).not.toThrow();
     });
 
-    it('should redirect if authenticated', (): void => {
-        jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
-            isAuthenticated: true,
-        }));
+    it.only('should redirect if authenticated', async done => {
+        const mocks = [
+            {
+                request: {
+                    query: isUserAuthenticatedQuery,
+                },
+                result: {
+                    data: {
+                        isAuthenticated: true,
+                    },
+                },
+            },
+        ];
 
+        /* 
+            The warning message below can be ignore as per https://github.com/apollographql/react-apollo/commit/1d289635badd99dcea455b6cf4bd5ad1bfe92627
+            Found @client directives in a query but no ApolloClient resolvers were specified.
+            This means ApolloClient local resolver handling has been disabled, and @client directives will be passed through to your link chain.
+         */
         const { container } = render(
-            <MemoryRouter initialEntries={['/login']}>
-                <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
-                <Route path="/" render={(): string => 'Root'} />
-            </MemoryRouter>,
+            <MockedProvider mocks={mocks} addTypename={false}>
+                <MemoryRouter initialEntries={['/login']}>
+                    <Route exact path="/login" render={(): JSX.Element => <Login />} />
+                    <Route path="/" render={(): string => 'Root'} />
+                </MemoryRouter>
+            </MockedProvider>,
         );
+
+        // Apollo queries need timeout, despite mock...
+        // https://github.com/airbnb/enzyme/issues/2153
+        await act(async () => await new Promise(resolve => setTimeout(resolve, 50)));
 
         expect(container.querySelector('.login-page')).toBe(null);
         expect(container.textContent).toBe('Root');
+        done();
     });
 
-    it('should render login page if not authenticated', (): void => {
-        jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
-            isAuthenticated: false,
-        }));
+    it('should render login page if not authenticated', async done => {
+        const mocks = [
+            {
+                request: {
+                    query: isUserAuthenticatedQuery,
+                },
+                result: {
+                    data: {
+                        isAuthenticated: false,
+                    },
+                },
+            },
+        ];
         const { container } = render(
-            <MemoryRouter initialEntries={['/login']}>
-                <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
-                <Route path="/" render={(): string => 'Root'} />
-            </MemoryRouter>,
+            <MockedProvider mocks={mocks} addTypename={false}>
+                <MemoryRouter initialEntries={['/login']}>
+                    <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
+                    <Route path="/" render={(): string => 'Root'} />
+                </MemoryRouter>
+            </MockedProvider>,
         );
 
+        // Apollo queries need timeout, despite mock...
+        // https://github.com/airbnb/enzyme/issues/2153
+        await act(async () => await new Promise(resolve => setTimeout(resolve, 50)));
         expect(container.querySelector('.login-page')).not.toBe(null);
+        done();
     });
 });

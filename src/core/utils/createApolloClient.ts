@@ -1,4 +1,4 @@
-import ApolloClient from 'apollo-boost';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { getToken } from '../../login/utils/tokenUtils';
 
 interface Headers {
@@ -10,10 +10,19 @@ const getHeaders = (authenticationToken?: string): Record<string, Headers> => ({
     },
 });
 
-export default (host: string): ApolloClient<unknown> =>
-    new ApolloClient({
+export default (host: string): ApolloClient<unknown> => {
+    return new ApolloClient({
+        cache: new InMemoryCache(),
         uri: `${host}/graphql`,
+        resolvers: {
+            Query: {
+                isAuthenticated(): boolean {
+                    return getToken() !== null;
+                },
+            },
+        },
         request: async (operation): Promise<void> => {
             await operation.setContext(getHeaders(getToken()));
         },
     });
+};
