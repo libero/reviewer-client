@@ -47,9 +47,6 @@ describe('NavBar', (): void => {
     });
 
     it('should render a menu with expected items', (): void => {
-        // jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
-        //     isAuthenticated: true,
-        // }));
         const { container } = render(<NavBar />, {
             wrapper: routerWrapper(),
         });
@@ -60,9 +57,6 @@ describe('NavBar', (): void => {
         }
     });
     it('should render a burger menu with expected items', (): void => {
-        // jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => ({
-        //     isAuthenticated: true,
-        // }));
         const { container } = render(<NavBar />, {
             wrapper: routerWrapper(),
         });
