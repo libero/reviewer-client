@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { default as DashboardRoutes } from '../../dashboard/components/Routes';
@@ -11,10 +11,14 @@ import '@khanacademy/tota11y';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { Footer } from '../../ui/atoms';
+import * as Auth from '../utils/auth';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
+    useEffect(() => {
+        Auth.importToken();
+    }, []);
     return (
         <ApolloProvider client={createApolloClient(CONFIG.API_HOST)}>
             <Router>
