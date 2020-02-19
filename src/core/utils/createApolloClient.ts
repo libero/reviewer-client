@@ -1,4 +1,5 @@
 import ApolloClient from 'apollo-boost';
+import { getToken } from '../../login/utils/tokenUtils';
 
 interface Headers {
     authorization: string;
@@ -9,10 +10,10 @@ const getHeaders = (authenticationToken?: string): Record<string, Headers> => ({
     },
 });
 
-export default (host: string, authenticationToken?: string): ApolloClient<unknown> =>
+export default (host: string): ApolloClient<unknown> =>
     new ApolloClient({
         uri: `${host}/graphql`,
         request: async (operation): Promise<void> => {
-            await operation.setContext(getHeaders(authenticationToken));
+            await operation.setContext(getHeaders(getToken()));
         },
     });

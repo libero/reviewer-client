@@ -31,9 +31,10 @@ const menuItems = [
 ];
 
 const NavBar = (): JSX.Element => {
-    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery);
     const { isAuthenticated } = useAppContext();
-    if (!isAuthenticated) {
+    const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !isAuthenticated });
+
+    if (!data) {
         return (
             <AppBar>
                 <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />

@@ -82,6 +82,8 @@ jobs:
           docker load -i docker-image/reviewer-client.tar
       - name: Create Config
         run: make setup
+      - name: Chrome version
+        run: google-chrome --version
       - name: Start services
         run: make start
       - name: Browser Test
