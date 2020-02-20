@@ -34,7 +34,7 @@ describe('Login', (): void => {
         ).not.toThrow();
     });
 
-    it.only('should redirect if authenticated', async done => {
+    it('should redirect if authenticated', async done => {
         const mocks = [
             {
                 request: {
@@ -47,14 +47,15 @@ describe('Login', (): void => {
                 },
             },
         ];
-
-        /* 
-            The warning message below can be ignore as per https://github.com/apollographql/react-apollo/commit/1d289635badd99dcea455b6cf4bd5ad1bfe92627
-            Found @client directives in a query but no ApolloClient resolvers were specified.
-            This means ApolloClient local resolver handling has been disabled, and @client directives will be passed through to your link chain.
-         */
+        const resolvers = {
+            Query: {
+                isAuthenticated(): boolean {
+                    return true;
+                },
+            },
+        };
         const { container } = render(
-            <MockedProvider mocks={mocks} addTypename={false}>
+            <MockedProvider mocks={mocks} addTypename={false} resolvers={resolvers}>
                 <MemoryRouter initialEntries={['/login']}>
                     <Route exact path="/login" render={(): JSX.Element => <Login />} />
                     <Route path="/" render={(): string => 'Root'} />
@@ -84,8 +85,15 @@ describe('Login', (): void => {
                 },
             },
         ];
+        const resolvers = {
+            Query: {
+                isAuthenticated(): boolean {
+                    return false;
+                },
+            },
+        };
         const { container } = render(
-            <MockedProvider mocks={mocks} addTypename={false}>
+            <MockedProvider mocks={mocks} addTypename={false} resolvers={resolvers}>
                 <MemoryRouter initialEntries={['/login']}>
                     <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
                     <Route path="/" render={(): string => 'Root'} />
