@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, RenderResult, act } from '@testing-library/react';
+import { render, RenderResult, act, wait } from '@testing-library/react';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 import { ApolloProviderProps } from '@apollo/react-common/lib/context/ApolloProvider';
 import apolloWrapper from '../../../test-utils/apolloWrapper';
@@ -27,7 +27,7 @@ describe('App', (): void => {
         );
         // Apollo queries need timeout, despite mock...
         // https://github.com/airbnb/enzyme/issues/2153
-        await act(async () => await new Promise(resolve => setTimeout(resolve, 10)));
+        await wait();
         expect((): RenderResult => render(<App />)).not.toThrow();
         done();
     });

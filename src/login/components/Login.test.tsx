@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, act } from '@testing-library/react';
+import { cleanup, render, RenderResult, act, wait } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/react-testing';
 
@@ -95,7 +95,7 @@ describe('Login', (): void => {
 
         // Apollo queries need timeout, despite mock...
         // https://github.com/airbnb/enzyme/issues/2153
-        await act(async () => await new Promise(resolve => setTimeout(resolve, 50)));
+        await wait();
         expect(container.querySelector('.login-page')).not.toBe(null);
         done();
     });
