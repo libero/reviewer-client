@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, RenderResult, act, wait } from '@testing-library/react';
+import { render, RenderResult, wait } from '@testing-library/react';
 import * as ApolloReactHooks from '@apollo/react-hooks';
 import { ApolloProviderProps } from '@apollo/react-common/lib/context/ApolloProvider';
 import apolloWrapper from '../../../test-utils/apolloWrapper';

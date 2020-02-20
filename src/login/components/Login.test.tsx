@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, act, wait } from '@testing-library/react';
+import { cleanup, render, RenderResult, wait } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/react-testing';
 
