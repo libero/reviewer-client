@@ -3,13 +3,14 @@ import { Redirect } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/welcome.jpg';
-import { useAppContext } from '../../core/providers/AppProvider';
+import { isUserAuthenticatedQuery } from '../../core/graphql';
+import { useQuery } from '@apollo/react-hooks';
 
 const Login = (): JSX.Element => {
     const { t } = useTranslation();
-    const { isAuthenticated } = useAppContext();
+    const { data = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
 
-    if (isAuthenticated) {
+    if (data.isAuthenticated) {
         return <Redirect to="/" />;
     }
 

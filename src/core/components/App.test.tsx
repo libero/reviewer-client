@@ -1,39 +1,22 @@
 import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
-import * as ApolloReactHooks from '@apollo/react-hooks';
-import { ApolloProviderProps } from '@apollo/react-common/lib/context/ApolloProvider';
-import apolloWrapper from '../../../test-utils/apolloWrapper';
+import { render, wait } from '@testing-library/react';
 import App from './App';
-import { getSubmissionsQuery } from '../../dashboard/graphql';
 import * as createApolloClient from '../utils/createApolloClient';
 
 describe('App', (): void => {
-    it('should render correctly', (): void => {
-        const mockQueryResponse = [
-            {
-                request: {
-                    query: getSubmissionsQuery,
-                },
-                result: {
-                    data: {
-                        getSubmissions: {},
-                    },
-                },
-            },
-        ];
-        // Mock out instance of ApolloProvider so we can use a mocked provider instead
-        jest.spyOn(ApolloReactHooks, 'ApolloProvider').mockImplementation(
-            ({ children }: ApolloProviderProps<unknown>): JSX.Element => apolloWrapper(mockQueryResponse)({ children }),
-        );
-        expect((): RenderResult => render(<App />)).not.toThrow();
+    it('should render correctly', async done => {
+        const { container } = render(<App />);
+        await wait();
+        expect(container).toBeDefined();
+        done();
     });
 
-    it('should set token when creating apollo client', (): void => {
+    it('should set token when creating apollo client', async done => {
         jest.spyOn(createApolloClient, 'default');
-
         render(<App />);
-
+        await wait();
         expect(createApolloClient.default).toHaveBeenCalledTimes(1);
         expect(createApolloClient.default).toHaveBeenCalledWith('');
+        done();
     });
 });
