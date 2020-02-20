@@ -64,7 +64,7 @@ describe('Login', (): void => {
 
         // Apollo queries need timeout, despite mock...
         // https://github.com/airbnb/enzyme/issues/2153
-        await act(async () => await new Promise(resolve => setTimeout(resolve, 50)));
+        await wait();
 
         expect(container.querySelector('.login-page')).toBe(null);
         expect(container.textContent).toBe('Root');
