@@ -11,7 +11,7 @@ module.exports = {
     'storybook-dark-mode',
   ],
   webpackFinal: config => {
-    config.module.rules.push(
+    config.module.rules= [
       {
           test: /\.scss$/,
           use: [
@@ -77,7 +77,7 @@ module.exports = {
           ],
           enforce: 'pre',
       },
-    );
+    ];
 
     config.resolve.extensions.push('.ts', '.tsx');
     return config;
