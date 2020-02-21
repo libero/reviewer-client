@@ -1,0 +1,31 @@
+progress {
+  --color: red;
+  --background: lightblue;
+  --size: 100;
+  --width: 10;
+  width: calc(var(--size) * 1px);
+  height: calc(var(--size) * 1px);
+  border-radius: 100%;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  background: transparent;
+  margin: 30px 30px;
+  float: left;
+}
+progress:before {
+  content: "";
+  background: white;
+  position:absolute;
+  z-index:100;
+  width: calc((var(--size) - (var(--width) * 2)) * 1px);
+  height: calc((var(--size) - (var(--width) * 2)) * 1px);
+  border-radius:50%;
+  margin:auto auto;
+}
+progress::-webkit-progress-value { background: transparent; }
+progress::-webkit-progress-bar { background: conic-gradient(var(--color) 0% calc(var(--progress) * 1%), var(--background) calc(var(--progress) * 1%) 100%); }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderResult, fireEvent, cleanup, act } from '@testing-library/react';
-import ManuscriptUpload from './ManuscriptUpload';
+import FileUpload from './FileUpload';
 
 function dispatchEvt(node: Document | Element | Window, type: string, data: unknown): void {
     const event = new Event(type, { bubbles: true });
@@ -24,28 +24,28 @@ function mockData(files: File[]): Record<string, unknown> {
     };
 }
 
-describe('ManuscriptUpload', (): void => {
+describe('FileUpload', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<ManuscriptUpload />)).not.toThrow();
+        expect((): RenderResult => render(<FileUpload />)).not.toThrow();
     });
 
     it('should render correctly with all props', (): void => {
         expect(
-            (): RenderResult => render(<ManuscriptUpload inactiveContent={<div />} activeContent={<div />} />),
+            (): RenderResult => render(<FileUpload inactiveContent={<div />} activeContent={<div />} />),
         ).not.toThrow();
     });
 
     it('should render default inactive content when inactive', (): void => {
-        const { getByText, queryByText } = render(<ManuscriptUpload />);
+        const { getByText, queryByText } = render(<FileUpload />);
 
         expect(getByText('manuscript-upload.inactive-content')).not.toBeNull();
         expect(queryByText('manuscript-upload.active-content')).toBeNull();
     });
 
     it('should render default active content when active', async (): Promise<void> => {
-        const ui = <ManuscriptUpload />;
+        const ui = <FileUpload />;
         const { container, getByText, queryByText } = render(ui);
         const dropzone = container.querySelector('.manuscript-upload__dropzone');
         const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
@@ -62,14 +62,14 @@ describe('ManuscriptUpload', (): void => {
     });
 
     it('should render custom inactive content when inactive', (): void => {
-        const { getByText, queryByText } = render(<ManuscriptUpload inactiveContent="custom inactive content" />);
+        const { getByText, queryByText } = render(<FileUpload inactiveContent="custom inactive content" />);
 
         expect(getByText('custom inactive content')).not.toBeNull();
         expect(queryByText('manuscript-upload.active-content')).toBeNull();
     });
 
     it('should render custom active content when active', async (): Promise<void> => {
-        const ui = <ManuscriptUpload activeContent="custom active content" />;
+        const ui = <FileUpload activeContent="custom active content" />;
         const { container, getByText, queryByText } = render(ui);
         const dropzone = container.querySelector('.manuscript-upload__dropzone');
         const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });

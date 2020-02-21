@@ -1,6 +1,6 @@
 export { default as BurgerMenu } from './BurgerMenu';
 export { default as ExcludedToggle } from './ExcludedToggle';
-export { default as ManuscriptUpload } from './ManuscriptUpload';
+export { default as FileUpload } from './FileUpload';
 export { default as Menu } from './Menu';
 export { default as PersonPod, PersonProps } from './PersonPod';
 export { default as PersonInfo } from './PersonInfo';
@@ -11,3 +11,4 @@ export { default as SearchField } from './SearchField';
 export { default as SelectedPeopleList } from './SelectedPeopleList';
 export { default as SelectedOption } from './SelectedOption';
 export { default as Toggle } from './Toggle';
+export { default as UploadProgress } from './UploadProgress';
