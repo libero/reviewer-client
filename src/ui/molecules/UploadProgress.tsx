@@ -7,7 +7,7 @@ interface Props {
     progress?: number;
     status?: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
 }
-const UploadProgress = ({ progress = 0, status }: Props): JSX.Element => {
+const UploadProgress = ({ progress = 0, status = 'IDLE' }: Props): JSX.Element => {
     const iconRenderer = (): JSX.Element => {
         switch (status) {
             case 'COMPLETE':
