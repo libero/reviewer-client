@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, number } from '@storybook/addon-knobs';
+import { withKnobs, number, select } from '@storybook/addon-knobs';
 import { UploadProgress } from '../../molecules';
 
 storiesOf('ui | molecules/UploadProgress', module)
@@ -9,6 +9,7 @@ storiesOf('ui | molecules/UploadProgress', module)
         'UploadProgress',
         (): JSX.Element => {
             const progress = number('progress', 60);
-            return <UploadProgress progress={progress} />;
+            const status = select('Status', ['IDLE', 'COMPLETE', 'ERROR'], 'IDLE');
+            return <UploadProgress progress={progress} status={status} />;
         },
     );

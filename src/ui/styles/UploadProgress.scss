@@ -2,7 +2,7 @@ $centerColour: $white;
 $circleColour: $borderColour;
 $progressColour: $colourPrimary;
 $circlecircumference: 3rem;
-$circleThickness: 0.4rem;
+$circleThickness: 0.2rem;
 
 .upload-progress {
   position: relative;
@@ -39,6 +39,7 @@ $circleThickness: 0.4rem;
   line-height: 1;
   align-items: center;
   justify-content: center;
+  color: $colourPrimary;
 }
 
 @for $i from 0 through 100 {
