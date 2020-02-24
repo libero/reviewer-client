@@ -48,13 +48,11 @@ storiesOf('Dashboard | Components/Dashboard', module).add(
         };
 
         return (
-            <div id="app">
-                <MockedProvider mocks={[getSubmissions, startSubmission]} addTypename={false}>
-                    <MemoryRouter initialEntries={historyLocation}>
-                        <Dashboard />
-                    </MemoryRouter>
-                </MockedProvider>
-            </div>
+            <MockedProvider mocks={[getSubmissions, startSubmission]} addTypename={false}>
+                <MemoryRouter initialEntries={historyLocation}>
+                    <Dashboard />
+                </MemoryRouter>
+            </MockedProvider>
         );
     },
     {

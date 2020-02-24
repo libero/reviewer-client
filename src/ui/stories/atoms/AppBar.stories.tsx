@@ -44,15 +44,13 @@ storiesOf('ui | atoms/AppBar', module)
                 },
             ]);
             return (
-                <div id="app">
-                    <MemoryRouter initialEntries={historyLocation}>
-                        <AppBar>
-                            <BurgerMenu items={menuItems} />
-                            <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
-                            <Menu items={menuItems} />
-                        </AppBar>
-                    </MemoryRouter>
-                </div>
+                <MemoryRouter initialEntries={historyLocation}>
+                    <AppBar>
+                        <BurgerMenu items={menuItems} />
+                        <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
+                        <Menu items={menuItems} />
+                    </AppBar>
+                </MemoryRouter>
             );
         },
     );
