@@ -1,31 +1,55 @@
-progress {
-  --color: red;
-  --background: lightblue;
-  --size: 100;
-  --width: 10;
-  width: calc(var(--size) * 1px);
-  height: calc(var(--size) * 1px);
-  border-radius: 100%;
-  overflow: hidden;
-  padding: 0;
+$centerColour: $white;
+$circleColour: $borderColour;
+$progressColour: $colourPrimary;
+$circlecircumference: 3rem;
+$circleThickness: 0.4rem;
+
+.upload-progress {
   position: relative;
-  display: flex;
+  display: inline-block;
+  width: $circlecircumference;
+  height: $circlecircumference;
+  border-radius: 50%;
+  background-color: $circleColour;
+  &:before {
+    content: '';
+    position: absolute;
+    top: $circleThickness;
+    left: $circleThickness;
+    width: $circlecircumference - (2 * $circleThickness);
+    height: $circlecircumference - (2 * $circleThickness);
+    border-radius: 50%;
+    background-color: white;
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; 
+    background-color: $progressColour;
+  }
+}
+
+.upload-progress__content {
+  position: absolute;
+  display:flex;
+  width: 100%;
+  height: $circlecircumference;
+  line-height: 1;
   align-items: center;
   justify-content: center;
-  color: transparent;
-  background: transparent;
-  margin: 30px 30px;
-  float: left;
 }
-progress:before {
-  content: "";
-  background: white;
-  position:absolute;
-  z-index:100;
-  width: calc((var(--size) - (var(--width) * 2)) * 1px);
-  height: calc((var(--size) - (var(--width) * 2)) * 1px);
-  border-radius:50%;
-  margin:auto auto;
+
+@for $i from 0 through 100 {
+  .progress--#{$i}:after {
+    @if $i < 50 {
+      $nextDeg: 90deg + (3.6 * $i);
+      background-image: linear-gradient(90deg, $circleColour 50%, transparent 50%, transparent), linear-gradient($nextDeg, $progressColour 50%, $circleColour 50%, $circleColour);
+    }
+    @else {
+      $nextDeg: -90deg + (3.6 * ($i - 50));
+      background-image: linear-gradient($nextDeg, $progressColour 50%, transparent 50%, transparent), linear-gradient(270deg, $progressColour 50%, $circleColour 50%, $circleColour);
+    }
+  }
 }
-progress::-webkit-progress-value { background: transparent; }
-progress::-webkit-progress-bar { background: conic-gradient(var(--color) 0% calc(var(--progress) * 1%), var(--background) calc(var(--progress) * 1%) 100%); }

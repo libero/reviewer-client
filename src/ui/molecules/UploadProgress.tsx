@@ -4,11 +4,18 @@ import { default as UploadIcon } from '../atoms/UploadIcon';
 interface Props {
     progress?: number;
 }
-const UploadProgress = ({ progress = 50 }: Props): JSX.Element => {
-    document.documentElement.style.setProperty('--progress', progress.toString());
+const UploadProgress = ({ progress = 0 }: Props): JSX.Element => {
     return (
-        <div>
-            <progress className="upload-progress" value={progress} max={100} />
+        <div
+            className={`upload-progress progress--${progress}`}
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={progress}
+        >
+            <div className="upload-progress__content">
+                <UploadIcon />
+            </div>
         </div>
     );
 };
