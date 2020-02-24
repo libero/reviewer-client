@@ -11,9 +11,17 @@ describe('UploadProgress', (): void => {
     });
 
     it('adds a class of progress--${progress}', () => {
-        const { container, rerender } = render(<UploadProgress progress={100} />);
+        const { container, rerender } = render(<UploadProgress progress={100} status="UPLOADING" />);
         expect(container.querySelector('.progress--100')).toBeInTheDocument();
-        rerender(<UploadProgress progress={50} />);
+        rerender(<UploadProgress progress={50} status="UPLOADING" />);
         expect(container.querySelector('.progress--50')).toBeInTheDocument();
+    });
+    it('renders a check when in COMPLETE state', (): void => {
+        const { container } = render(<UploadProgress progress={100} status="COMPLETE" />);
+        expect(container.querySelector('svg.upload-progress__icon--success')).toBeInTheDocument();
+    });
+    it('renders a cross when in COMPLETE state', (): void => {
+        const { container } = render(<UploadProgress progress={100} status="ERROR" />);
+        expect(container.querySelector('svg.upload-progress__icon--error')).toBeInTheDocument();
     });
 });
