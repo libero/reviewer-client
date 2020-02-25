@@ -12,13 +12,9 @@ storiesOf('ui | molecules/FileUpload', module)
             const progress = number('progress', 60);
             const status = select('Status', ['IDLE', 'UPLOADING', 'COMPLETE', 'ERROR'], 'IDLE');
             return (
-                <FileUpload
-                    progress={progress}
-                    status={status}
-                    onUpload={(files): void => {
-                        action('File Uploaded');
-                    }}
-                />
+                <div style={{ maxWidth: '700px', width: '100vw', padding: '20px' }}>
+                    <FileUpload progress={progress} status={status} onUpload={action('File Uploaded')} />
+                </div>
             );
         },
     );

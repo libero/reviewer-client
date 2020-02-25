@@ -12,15 +12,23 @@ interface Props {
 const FileUpload: React.FC<Props> = ({ onUpload, progress, status }: Props): JSX.Element => {
     const { t } = useTranslation();
     const onDrop = useCallback(onUpload, []);
-    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
     return (
-        <div className="manuscript-upload">
-            <div className="manuscript-upload__dropzone" {...getRootProps()}>
+        <div className="file-upload">
+            <div
+                className={`file-upload__dropzone ${isDragActive ? 'file-upload__dropzone--drag-active' : ''}`}
+                {...getRootProps()}
+            >
                 <input {...getInputProps()} />
                 <UploadProgress progress={progress} status={status} />
-                <div className="manuscript-upload__content manuscript-upload__content--inactive">
-                    <p> {t('ui:manuscript-upload.inactive-content')}</p>
+                <div className="file-upload__content">
+                    <p>
+                        <button onClick={open} className="typography typography__body--button-link">
+                            {t('ui:file-upload.idle-upload')}
+                        </button>
+                        {t('ui:file-upload.idle-content')}
+                    </p>
                 </div>
             </div>
         </div>

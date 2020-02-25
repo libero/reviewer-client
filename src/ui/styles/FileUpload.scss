@@ -1,0 +1,21 @@
+$idleBorderColour: $borderColour;
+$activeBorderColour: $colourPrimary;
+
+.file-upload {
+    width: 100%;
+}
+
+.file-upload__dropzone {
+    border: 0.125rem dashed $idleBorderColour;
+    padding: 2.25rem;
+    text-align: center;
+    &:focus {
+        outline: none;
+    }
+}
+
+.file-upload__dropzone--drag-active {
+    &:hover {
+        border: 0.063rem solid $activeBorderColour;
+    }
+}
