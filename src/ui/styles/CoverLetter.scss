@@ -1,0 +1,15 @@
+.cover-letter__input {
+    border: none;
+    font-family: $fontWriting;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 0.75rem;
+    border: $border;
+    border-radius: 0.188rem;
+    width: 100%;
+  
+    &::placeholder {
+      color: $colourTextPlaceholder;
+    }
+  }
+  
