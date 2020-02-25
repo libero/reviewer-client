@@ -85,3 +85,9 @@
 //         expect(queryByText('manuscript-upload.inactive-content')).toBeNull();
 //     });
 // });
+
+describe('FileUpload', (): void => {
+    it('is true', () => {
+        expect(true).toBeTruthy();
+    });
+});
