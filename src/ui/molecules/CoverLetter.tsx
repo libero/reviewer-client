@@ -9,7 +9,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     className?: string;
 }
 
-const CoverLetter = ({ id, className, value, invalid, register, helperText, ...rest }: Props): JSX.Element => {
+const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: Props): JSX.Element => {
     return (
         <div className={`cover-letter${className ? ' ' + className : ''}`}>
             <textarea className="cover-letter__input" id={id} name={id} ref={register} {...rest}></textarea>
