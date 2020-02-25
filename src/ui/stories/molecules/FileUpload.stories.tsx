@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, select, number } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { FileUpload } from '../../molecules';
 
 storiesOf('ui | molecules/FileUpload', module)
@@ -8,10 +9,14 @@ storiesOf('ui | molecules/FileUpload', module)
     .add(
         'FileUpload',
         (): JSX.Element => {
+            const progress = number('progress', 60);
+            const status = select('Status', ['IDLE', 'UPLOADING', 'COMPLETE', 'ERROR'], 'IDLE');
             return (
                 <FileUpload
-                    onUpload={files => {
-                        console.log(files);
+                    progress={progress}
+                    status={status}
+                    onUpload={(files): void => {
+                        action('File Uploaded');
                     }}
                 />
             );
