@@ -23,12 +23,15 @@ const FileUpload: React.FC<Props> = ({ onUpload, progress, status }: Props): JSX
                 <input {...getInputProps()} />
                 <UploadProgress progress={progress} status={status} />
                 <div className="file-upload__content">
-                    <p>
-                        <button onClick={open} className="typography typography__body--button-link">
+                    <span className="typography__body">
+                        <button onClick={open} className="typography__body--button-link">
                             {t('ui:file-upload.idle-upload')}
                         </button>
                         {t('ui:file-upload.idle-content')}
-                    </p>
+                    </span>
+                    <span className="typography__small typography__small--secondary">
+                        {t('ui:file-upload.idle-description')}
+                    </span>
                 </div>
             </div>
         </div>
