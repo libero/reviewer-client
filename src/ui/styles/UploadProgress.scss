@@ -1,0 +1,72 @@
+$centerColour: $white;
+$circleColour: $borderColour;
+$progressColour: $colourPrimary;
+$circlecircumference: 3rem;
+$circleThickness: 0.2rem;
+
+.upload-progress {
+  --progressColour: #{$progressColour};
+  position: relative;
+  display: inline-block;
+  width: $circlecircumference;
+  height: $circlecircumference;
+  border-radius: 50%;
+  background-color: $circleColour;
+  &:before {
+    content: '';
+    position: absolute;
+    top: $circleThickness;
+    left: $circleThickness;
+    width: $circlecircumference - (2 * $circleThickness);
+    height: $circlecircumference - (2 * $circleThickness);
+    border-radius: 50%;
+    background-color: white;
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; 
+    background-color: var(--progressColour);
+  }
+}
+
+.upload-progress__content {
+  position: absolute;
+  display:flex;
+  width: 100%;
+  height: $circlecircumference;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-progress--error {
+  --progressColour: #{$colourError};
+}
+
+.upload-progress__icon--error {
+  stroke: $colourError;
+  color: $colourError;
+  stroke-width: $circleThickness / 2;
+}
+
+.upload-progress__icon--success {
+  stroke: $colourPrimary;
+  color: $colourPrimary;
+  stroke-width: $circleThickness / 2;
+}
+
+@for $i from 0 through 100 {
+  .progress--#{$i}:after {
+    @if $i < 50 {
+      $nextDeg: 90deg + (3.6 * $i);
+      background-image: linear-gradient(90deg, $circleColour 50%, transparent 50%, transparent), linear-gradient($nextDeg, var(--progressColour) 50%, $circleColour 50%, $circleColour);
+    }
+    @else {
+      $nextDeg: -90deg + (3.6 * ($i - 50));
+      background-image: linear-gradient($nextDeg, var(--progressColour) 50%, transparent 50%, transparent), linear-gradient(270deg, var(--progressColour) 50%, $circleColour 50%, $circleColour);
+    }
+  }
+}
