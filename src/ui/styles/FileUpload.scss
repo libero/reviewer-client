@@ -19,3 +19,19 @@ $activeBorderColour: $colourPrimary;
         border: 0.063rem solid $activeBorderColour;
     }
 }
+
+.file-upload__dropzone--error {
+    border-color: $colourError;
+}
+
+.file-upload__error-prefix {
+    color: $colourError;
+}
+
+.file-upload__description {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.file-upload__extra {
+    display: block;
+}

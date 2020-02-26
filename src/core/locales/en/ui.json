@@ -3,7 +3,9 @@
     "file-upload": {
         "idle-upload": "Upload",
         "idle-content": " your manuscript or drag it here.",
-        "idle-description": "Please note that files larger than 10MB may result in review delays."
+        "idle-description": "Please note that files larger than 10MB may result in review delays.",
+        "error-pre-content": " Oops! ",
+        "error-upload": "try again"
     },
     "search-box--label": "Search",
     "search-box--helper": "Search...",
