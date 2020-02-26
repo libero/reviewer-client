@@ -14,8 +14,16 @@
         "error-extra": {
             "multiple" : "Files should be in .docx or .pdf format and no larger than 100MB.",
             "size": "Files should be in .docx or .pdf format and no larger than 100MB.",
-            "server": "If the problem continues please contact us."
-        }
+            "server": "If the problem continues please ",
+            "contact-us": "contact us"
+
+        },
+        "uploading-message": "Upload manuscript ",
+        "complete-prefix": "Done! ",
+        "complete-preview": "Preview",
+        "complete-message": " or ",
+        "complete-replace": "Replace",
+        "complete-suffix": " your manuscript file."
     },
     "search-box--label": "Search",
     "search-box--helper": "Search...",

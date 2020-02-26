@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { useDropzone, DropEvent } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
@@ -53,7 +54,6 @@ const FileUpload: React.FC<Props> = ({ onUpload, state }: Props): JSX.Element =>
                     {status === 'ERROR' ? (
                         <Fragment>
                             <span className="typography__body file-upload__description">
-                                {' '}
                                 <span className="file-upload__error-prefix">
                                     {t('ui:file-upload.error-pre-content')}
                                 </span>
@@ -65,13 +65,42 @@ const FileUpload: React.FC<Props> = ({ onUpload, state }: Props): JSX.Element =>
                             </span>
                             <span className="typography__small typography__small--secondary file-upload__extra">
                                 {t('ui:file-upload.error-extra.' + state.error)}
+                                {state.error === 'server' ? (
+                                    <Link to="/contact-us" className="typography__body--link">
+                                        {t('ui:file-upload.error-extra.contact-us') + '.'}
+                                    </Link>
+                                ) : null}
                             </span>
                         </Fragment>
                     ) : status === 'UPLOADING' ? (
-                        <span className="typography__body file-upload__description">
-                            <span className="typography__small">{state.uploadInProgress.fileName}</span>
-                            <span className="typography__body file-upload__extra">Uploading Manuscript 26%</span>
-                        </span>
+                        <Fragment>
+                            <span className="typography__body file-upload__description">
+                                {t('ui:file-upload.uploading-message')}
+                                <span className="file-upload__progress-percentage">
+                                    {state.uploadInProgress ? state.uploadInProgress.progress : 0}%
+                                </span>
+                            </span>
+                            <span className="typography__small typography__small--secondary file-upload__extra">
+                                {state.uploadInProgress.fileName}
+                            </span>
+                        </Fragment>
+                    ) : status === 'COMPLETE' ? (
+                        <Fragment>
+                            <span className="typography__body file-upload__description">
+                                {t('ui:file-upload.complete-prefix')}
+                                <a className="typography__body--link" href={state.fileStored.previewLink}>
+                                    {t('ui:file-upload.complete-preview')}
+                                </a>
+                                {t('ui:file-upload.complete-message')}
+                                <button onClick={open} className="typography__body--button-link">
+                                    {t('ui:file-upload.complete-replace')}
+                                </button>
+                                {t('ui:file-upload.complete-suffix')}
+                            </span>
+                            <span className="typography__small typography__small--secondary file-upload__extra">
+                                {state.fileStored.fileName}
+                            </span>
+                        </Fragment>
                     ) : (
                         <Fragment>
                             <span className="typography__body file-upload__description">
