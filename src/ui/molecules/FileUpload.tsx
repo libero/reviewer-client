@@ -4,34 +4,24 @@ import { useDropzone, DropEvent } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
 
-interface Props {
-    onUpload<T extends File>(acceptedFiles: T[], rejectedFiles: T[], event: DropEvent): void;
-    state?: {
-        uploadInProgress?: {
-            progress: number;
-            fileName: string;
-        };
-        error?: 'multiple' | 'size' | 'server';
-        fileStored?: {
-            fileName: string;
-            previewLink: string;
-        };
-    };
-}
+type UploadErrors = 'multiple' | 'size' | 'server';
+type UploadInProgress = {
+    progress?: number;
+    fileName?: string;
+};
+type FileStored = {
+    fileName?: string;
+    previewLink?: string;
+};
 
 interface FileUploadContentProps {
     status: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
     open: () => void;
-    error?: 'multiple' | 'size' | 'server';
-    uploadInProgress?: {
-        progress?: number;
-        fileName?: string;
-    };
-    fileStored?: {
-        fileName?: string;
-        previewLink?: string;
-    };
+    error?: UploadErrors;
+    uploadInProgress?: UploadInProgress;
+    fileStored?: FileStored;
 }
+
 const FileUploadContent = ({
     status,
     open,
@@ -109,6 +99,15 @@ const FileUploadContent = ({
             );
     }
 };
+
+interface Props {
+    onUpload<T extends File>(acceptedFiles: T[], rejectedFiles: T[], event: DropEvent): void;
+    state?: {
+        uploadInProgress?: UploadInProgress;
+        error?: UploadErrors;
+        fileStored?: FileStored;
+    };
+}
 
 const FileUpload: React.FC<Props> = ({ onUpload, state }: Props): JSX.Element => {
     const onDrop = useCallback(onUpload, []);
