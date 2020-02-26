@@ -1,6 +1,6 @@
-// import React from 'react';
-// import { render, RenderResult, fireEvent, cleanup, act } from '@testing-library/react';
-// import FileUpload from './FileUpload';
+import React from 'react';
+import { render, RenderResult, cleanup } from '@testing-library/react';
+import FileUpload from './FileUpload';
 
 // function dispatchEvt(node: Document | Element | Window, type: string, data: unknown): void {
 //     const event = new Event(type, { bubbles: true });
@@ -24,8 +24,13 @@
 //     };
 // }
 
-// describe.skip('FileUpload', (): void => {
-//     afterEach(cleanup);
+describe.skip('FileUpload', (): void => {
+    afterEach(cleanup);
+
+    it('should render correctly', (): void => {
+        expect((): RenderResult => render(<FileUpload onUpload={(): void => {}} />)).not.toThrow();
+    });
+});
 
 //     it('should render correctly', (): void => {
 //         expect((): RenderResult => render(<FileUpload />)).not.toThrow();
