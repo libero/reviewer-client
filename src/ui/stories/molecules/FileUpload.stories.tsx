@@ -9,11 +9,24 @@ storiesOf('ui | molecules/FileUpload', module)
     .add(
         'FileUpload',
         (): JSX.Element => {
-            const progress = number('progress', 60);
-            const status = select('Status', ['IDLE', 'UPLOADING', 'COMPLETE', 'ERROR'], 'IDLE');
+            const errorState = select(
+                'Error State',
+                {
+                    'No Error': null,
+                    'Multiple files': 'MULTIPLE',
+                    'File size': 'SIZE',
+                    'Server error': 'SERVER_ERROR',
+                },
+                null,
+            );
             return (
                 <div style={{ maxWidth: '700px', width: '100vw', padding: '20px' }}>
-                    <FileUpload progress={progress} status={status} onUpload={action('File Uploaded')} />
+                    <FileUpload
+                        state={{
+                            error: errorState,
+                        }}
+                        onUpload={action('File Uploaded')}
+                    />
                 </div>
             );
         },

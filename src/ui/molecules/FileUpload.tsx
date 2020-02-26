@@ -1,18 +1,38 @@
-import React, { useCallback, Fragment } from 'react';
+import React, { useCallback, useMemo, Fragment } from 'react';
 import { useDropzone, DropEvent } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
 
 interface Props {
     onUpload<T extends File>(acceptedFiles: T[], rejectedFiles: T[], event: DropEvent): void;
-    progress?: number;
-    status?: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
+    state?: {
+        uploadInProgress?: boolean;
+        uploadProgress?: number;
+        error?: 'MULTIPLE' | 'SIZE' | 'SERVER_ERROR';
+        fileStored?: {};
+        // todo: update fileStored as object with filename and preview link
+    };
 }
 
-const FileUpload: React.FC<Props> = ({ onUpload, progress, status }: Props): JSX.Element => {
+const FileUpload: React.FC<Props> = ({ onUpload, state }: Props): JSX.Element => {
     const { t } = useTranslation();
     const onDrop = useCallback(onUpload, []);
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
+
+    const status = useMemo(() => {
+        if (state.error && status !== 'ERROR') {
+            return 'ERROR';
+        }
+        if (state.uploadInProgress && status !== 'UPLOADING') {
+            return 'UPLOADING';
+        }
+        if (state.fileStored && status !== 'COMPLETE') {
+            return 'COMPLETE';
+        }
+        if (status !== 'IDLE') {
+            return 'IDLE';
+        }
+    }, [state]);
 
     return (
         <div className="file-upload">
@@ -23,7 +43,7 @@ const FileUpload: React.FC<Props> = ({ onUpload, progress, status }: Props): JSX
                 {...getRootProps()}
             >
                 <input {...getInputProps()} />
-                <UploadProgress progress={progress} status={status} />
+                <UploadProgress progress={state.uploadProgress} status={status} />
                 <div className="file-upload__content">
                     <span className="typography__body file-upload__description">
                         {status === 'ERROR' ? (
@@ -31,7 +51,7 @@ const FileUpload: React.FC<Props> = ({ onUpload, progress, status }: Props): JSX
                                 <span className="file-upload__error-prefix">
                                     {t('ui:file-upload.error-pre-content')}
                                 </span>
-                                Some dynamic message relating to error state. Please{' '}
+                                {state.error} Please{' '}
                                 <button onClick={open} className="typography__body--button-link">
                                     {t('ui:file-upload.error-upload')}
                                 </button>
