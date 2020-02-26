@@ -16,7 +16,6 @@ interface Props {
             fileName: string;
             previewLink: string;
         };
-        // todo: update fileStored as object with filename and preview link
     };
 }
 
