@@ -109,7 +109,7 @@ interface Props {
     };
 }
 
-const FileUpload: React.FC<Props> = ({ onUpload, state }: Props): JSX.Element => {
+const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Element => {
     const onDrop = useCallback(onUpload, []);
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
