@@ -1,13 +1,12 @@
 $idleBorderColour: $borderColour;
 $activeBorderColour: $colourPrimary;
-$solidBorderStyle:  0.063rem solid $activeBorderColour;
 
 .file-upload {
     width: 100%;
 }
 
 .file-upload__dropzone {
-    border: 0.125rem dashed $idleBorderColour;
+    border: 0.063rem solid $borderColour;
     padding: 2.5rem;
     text-align: center;
     &:focus {
@@ -19,13 +18,12 @@ $solidBorderStyle:  0.063rem solid $activeBorderColour;
     margin-top: 1rem;
 }
 
-.file-upload__dropzone--drag-active {
-    &:hover {
-        border: $solidBorderStyle;
-    }
+.file-upload__dropzone.file-upload__dropzone--drag-active {
+        border: 0.063rem solid $activeBorderColour;
 }
-.file-upload__dropzone--complete { 
-    border: $solidBorderStyle;
+
+.file-upload__dropzone--idle { 
+    border: 0.125rem dashed $idleBorderColour;
 }
 
 .file-upload__dropzone--error {
