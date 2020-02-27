@@ -29,7 +29,15 @@
   text-decoration: none;
   &:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
+}
+
+.typography__body--button-link {
+  @extend .typography__body--link;
+  font-size: 1rem;
+  border: none;
+  padding : 0;
 }
 
 //small text

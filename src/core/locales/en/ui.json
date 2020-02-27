@@ -1,8 +1,29 @@
 {
     "image-attribution": "Illustration by ",
-    "manuscript-upload": {
-        "active-content": "Drop the files here ...",
-        "inactive-content": "Upload your manuscript or drag it here."
+    "file-upload": {
+        "idle-upload": "Upload",
+        "idle-message": " your manuscript or drag it here.",
+        "idle-extra": "Please note that files larger than 10MB may result in review delays.",
+        "error-pre-content": " Oops! ",
+        "error-upload": "try again",
+        "error-message": {
+            "multiple" : "Only one manuscript file can be uploaded.",
+            "size": "That file is not supported.",
+            "server": "There was a problem uploading your file."
+        },
+        "error-extra": {
+            "multiple" : "Files should be in .docx or .pdf format and no larger than 100MB.",
+            "size": "Files should be in .docx or .pdf format and no larger than 100MB.",
+            "server": "If the problem continues please ",
+            "contact-us": "contact us"
+
+        },
+        "uploading-message": "Upload manuscript ",
+        "complete-prefix": "Done! ",
+        "complete-preview": "Preview",
+        "complete-message": " or ",
+        "complete-replace": "Replace",
+        "complete-suffix": " your manuscript file."
     },
     "search-box--label": "Search",
     "search-box--helper": "Search...",

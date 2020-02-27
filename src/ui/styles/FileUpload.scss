@@ -1,0 +1,48 @@
+$idleBorderColour: $borderColour;
+$activeBorderColour: $colourPrimary;
+
+.file-upload {
+    width: 100%;
+}
+
+.file-upload__dropzone {
+    border: 0.063rem solid $borderColour;
+    padding: 2.5rem;
+    text-align: center;
+    &:focus {
+        outline: none;
+    }
+}
+
+.file-upload__content {
+    margin-top: 1rem;
+}
+
+.file-upload__dropzone.file-upload__dropzone--drag-active {
+    border: 0.063rem solid $activeBorderColour;
+}
+
+.file-upload__dropzone--idle { 
+    border: 0.125rem dashed $idleBorderColour;
+}
+
+.file-upload__dropzone--error {
+    border-color: $colourError;
+}
+
+.file-upload__error-prefix {
+    color: $colourError;
+}
+
+.file-upload__description {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.file-upload__extra {
+    display: block;
+    margin-bottom: 0;
+}
+
+.file-upload__progress-percentage {
+    color: $colourPrimary;
+}
