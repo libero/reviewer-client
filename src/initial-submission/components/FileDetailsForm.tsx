@@ -1,12 +1,7 @@
 import React from 'react';
-import { Submission } from '../types';
 import { CoverLetter, FileUpload } from '../../ui/molecules';
 
-interface Props {
-    initialValues?: Submission;
-}
-
-const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+const FileDetailsForm = (): JSX.Element => {
     return (
         <div>
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
