@@ -2,23 +2,27 @@ $centerColour: $white;
 $circleColour: $borderColour;
 $progressColour: $colourPrimary;
 $circlecircumference: 3rem;
+$circlecircumferenceSmall: 1.5rem;
 $circleThickness: 0.2rem;
+$circleThicknessSmall: 0.1rem;
 
 .upload-progress {
   --progressColour: #{$progressColour};
+  --circleCircumference: #{$circlecircumference};
+  --circleThickness: #{$circleThickness};
   position: relative;
   display: inline-block;
-  width: $circlecircumference;
-  height: $circlecircumference;
+  width: var(--circleCircumference);
+  height: var(--circleCircumference);
   border-radius: 50%;
   background-color: $circleColour;
   &:before {
     content: '';
     position: absolute;
-    top: $circleThickness;
-    left: $circleThickness;
-    width: $circlecircumference - (2 * $circleThickness);
-    height: $circlecircumference - (2 * $circleThickness);
+    top: var(--circleThickness);
+    left: var(--circleThickness);
+    width: calc(var(--circleCircumference) - (2 * var(--circleThickness)));
+    height: calc(var(--circleCircumference) - (2 * var(--circleThickness)));
     border-radius: 50%;
     background-color: white;
   }
@@ -31,12 +35,19 @@ $circleThickness: 0.2rem;
     background-color: var(--progressColour);
   }
 }
+.upload-progress--small {
+  --circleCircumference: #{$circlecircumferenceSmall};
+  --circleThickness: #{$circleThicknessSmall};
+  .MuiSvgIcon-root {
+    font-size: 0.75rem;
+  }
+}
 
 .upload-progress__content {
   position: absolute;
   display:flex;
   width: 100%;
-  height: $circlecircumference;
+  height: var(--circleCircumference);
   line-height: 1;
   align-items: center;
   justify-content: center;
@@ -49,13 +60,13 @@ $circleThickness: 0.2rem;
 .upload-progress__icon--error {
   stroke: $colourError;
   color: $colourError;
-  stroke-width: $circleThickness / 2;
+  stroke-width: var(--circleThickness) / 2;
 }
 
 .upload-progress__icon--success {
   stroke: $colourPrimary;
   color: $colourPrimary;
-  stroke-width: $circleThickness / 2;
+  stroke-width: var(--circleThickness) / 2;
 }
 
 @for $i from 0 through 100 {

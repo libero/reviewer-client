@@ -6,8 +6,9 @@ import Close from '@material-ui/icons/Close';
 interface Props {
     progress?: number;
     status?: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
+    small?: boolean;
 }
-const UploadProgress = ({ progress = 0, status = 'IDLE' }: Props): JSX.Element => {
+const UploadProgress = ({ progress = 0, status = 'IDLE', small }: Props): JSX.Element => {
     const iconRenderer = (): JSX.Element => {
         switch (status) {
             case 'COMPLETE':
@@ -22,7 +23,7 @@ const UploadProgress = ({ progress = 0, status = 'IDLE' }: Props): JSX.Element =
         <div
             className={`upload-progress upload-progress--${status.toLowerCase()} progress--${
                 status === 'UPLOADING' ? progress : status === 'IDLE' ? 0 : 100
-            }`}
+            } ${small ? 'upload-progress--small' : ''}`}
             role="progressbar"
             aria-busy={status === 'UPLOADING'}
             aria-valuemin={0}

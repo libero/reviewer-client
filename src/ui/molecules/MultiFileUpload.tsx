@@ -19,7 +19,7 @@ const MultiFileUpload = ({ files = [] }: Props): JSX.Element => {
                     return (
                         <div key={file.fileName} className="multifile-upload__upload-list-item">
                             <div className="multifile-upload__progress">
-                                <UploadProgress status="COMPLETE" />
+                                <UploadProgress status="COMPLETE" small />
                             </div>
                             <div>{file.fileName}</div>
                             <div>
