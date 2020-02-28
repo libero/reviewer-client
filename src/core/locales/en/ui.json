@@ -25,6 +25,10 @@
         "complete-replace": "Replace",
         "complete-suffix": " your manuscript file."
     },
+    "multifile-upload": {
+        "label-files": "Add more supporting files",
+        "label-no-files": "Add supporting files"
+    },
     "search-box--label": "Search",
     "search-box--helper": "Search...",
     "modal--default-button": "Accept",
