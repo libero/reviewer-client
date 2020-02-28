@@ -4,6 +4,7 @@ import { Button } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
+import FileDetailsStep from './FileDetailsForm';
 
 interface Props {
     id: string;
@@ -21,7 +22,7 @@ interface StepConfig {
 /*eslint-disable react/display-name*/
 const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
-    { id: 'files', label: 'Files', component: (): JSX.Element => <div>File Step</div> },
+    { id: 'files', label: 'Files', component: FileDetailsStep },
     { id: 'details', label: 'Details', component: (): JSX.Element => <div>Detail Step</div> },
     { id: 'editors', label: 'Editors', component: (): JSX.Element => <div>Editors Step</div> },
     { id: 'disclosure', label: 'Disclosure', component: (): JSX.Element => <div>Disclosure Step</div> },
