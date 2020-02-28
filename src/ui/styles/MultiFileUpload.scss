@@ -1,3 +1,31 @@
 .multifile-upload__input {
     visibility: hidden;
 }
+
+.multifile-upload__upload-list {
+  border: 0.063rem solid $borderColour;
+}
+
+.multifile-upload__upload-list-item {
+  border-bottom: 0.063rem solid $borderColour;
+  display: grid;
+  padding-left: 0.625rem;
+  grid-template-columns: 3.25rem 1fr 3.25rem;
+  grid-template-rows: 4.5rem;
+  align-items: center;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.multifile-upload__progress {
+  place-self: center;
+}
+
+.multifile-upload__delete {
+  color: $colourTextSecondary;
+}
+
+
+
+
