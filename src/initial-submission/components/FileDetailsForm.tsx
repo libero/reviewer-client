@@ -6,7 +6,7 @@ interface Props {
     initialValues?: Submission;
 }
 
-const FileDetailsStep = ({ initialValues }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     return (
         <div>
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
@@ -42,6 +42,6 @@ const FileDetailsStep = ({ initialValues }: Props): JSX.Element => {
             </div>
         </div>
     );
-};
+}; //TODO add supporting files component
 
-export default FileDetailsStep;
+export default FileDetailsForm;
