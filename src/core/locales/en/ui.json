@@ -27,7 +27,10 @@
     },
     "multifile-upload": {
         "label-files": "Add more supporting files",
-        "label-no-files": "Add supporting files"
+        "label-no-files": "Add supporting files",
+        "status-error": "Error",
+        "status-queued": "queued",
+        "status-uploading": "uploading"
     },
     "search-box--label": "Search",
     "search-box--helper": "Search...",

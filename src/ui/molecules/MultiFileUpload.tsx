@@ -9,11 +9,11 @@ type UploadInProgress = {
     fileName?: string;
 };
 type FileStored = {
-    fileName?: string;
-    previewLink?: string;
+    fileName: string;
+    id: string;
 };
 
-type FileState = {
+export type FileState = {
     uploadInProgress?: UploadInProgress;
     error?: UploadErrors;
     fileStored?: FileStored;
@@ -21,9 +21,16 @@ type FileState = {
 
 interface Props {
     files?: FileState[];
+    onUpload: (event: React.FormEvent<HTMLInputElement>) => void;
+    onDelete: (index: number) => void;
 }
 
-const FileItem = ({ uploadInProgress, error, fileStored }: FileState) => {
+interface FileItemProps extends FileState {
+    onDelete: () => void;
+}
+
+const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemProps): JSX.Element => {
+    const { t } = useTranslation('ui');
     const status = useMemo(() => {
         if (error && status !== 'ERROR') {
             return 'ERROR';
@@ -44,41 +51,57 @@ const FileItem = ({ uploadInProgress, error, fileStored }: FileState) => {
             <div className="multifile-upload__progress">
                 <UploadProgress status={status} progress={uploadInProgress && uploadInProgress.progress} small />
             </div>
-            <span className={`multfile-upload__file-name--${status.toLowerCase()}`}>
+            <span
+                className={`typography__body multifile-upload__file-name multifile-upload__file-name--${status.toLowerCase()}`}
+            >
                 {status === 'COMPLETE' ? fileStored.fileName : uploadInProgress.fileName}
                 {status !== 'COMPLETE' ? (
                     <span
-                        className={`multfile-upload__file-status typography__small typography__small--secondary multfile-upload__file-status--${status.toLowerCase()}`}
+                        className={`multifile-upload__file-status multifile-upload__file-status--${status.toLowerCase()}`}
                     >
                         {' '}
-                        - {status === 'UPLOADING' ? `uploading ${uploadInProgress.progress}%` : 'Error.'}
+                        {status === 'UPLOADING'
+                            ? uploadInProgress.progress === 0
+                                ? t('multifile-upload.status-queued')
+                                : `${t('multifile-upload.status-uploading')} ${uploadInProgress.progress}%`
+                            : `${t('multifile-upload.status-error')} ${error}.`}
                     </span>
                 ) : null}
             </span>
-            <div>
-                <Delete className="multifile-upload__delete" />
-            </div>
+            {status === 'COMPLETE' || status === 'ERROR' ? (
+                <div>
+                    <Delete className="multifile-upload__delete" onClick={onDelete} />
+                </div>
+            ) : null}
         </div>
     );
 };
 
-const MultiFileUpload = ({ files = [] }: Props): JSX.Element => {
-    const { t } = useTranslation();
+const MultiFileUpload = ({ files = [], onUpload, onDelete }: Props): JSX.Element => {
+    const { t } = useTranslation('ui');
     return (
         <div className="multifile-upload">
-            <div className="multifile-upload__upload-list">
-                {files.map((file, index) => {
-                    return <FileItem key={index} {...file} />;
-                })}
-            </div>
+            {files.length ? (
+                <div className="multifile-upload__upload-list">
+                    {files.map((file, index) => {
+                        return <FileItem key={index} {...file} onDelete={(): void => onDelete(index)} />;
+                    })}
+                </div>
+            ) : null}
             <label
                 id="add-computer-button"
                 htmlFor="multiFileUpload"
                 className="multifile-upload__label typography__body--link"
             >
-                {files.length ? t('ui:multifile-upload:label-files') : t('ui:multifile-upload:label-no-files')}
+                {files.length ? t('multifile-upload.label-files') : t('multifile-upload.label-no-files')}
             </label>
-            <input id="multiFileUpload" type="file" multiple={true} className="multifile-upload__input" />
+            <input
+                id="multiFileUpload"
+                type="file"
+                multiple={true}
+                className="multifile-upload__input"
+                onChange={onUpload}
+            />
         </div>
     );
 };

@@ -4,6 +4,6 @@ import MultiFileUpload from './MultiFileUpload';
 
 describe('MultiFileUpload', () => {
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<MultiFileUpload />)).not.toThrow();
+        expect((): RenderResult => render(<MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} />)).not.toThrow();
     });
 });

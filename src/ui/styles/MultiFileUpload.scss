@@ -1,3 +1,5 @@
+@import '../../core/styles/typography';
+
 .multifile-upload__input {
     visibility: hidden;
 }
@@ -32,14 +34,31 @@
   display: inline-block;
 }
 
-.multfile-upload__file-name--error {
-  color: $colourError;
-}
-
-.multfile-upload__file-status {
+.multifile-upload__file-name {
   margin-bottom: 0;
 }
 
-.multfile-upload__file-status--error {
+.multifile-upload__file-name--error {
+  color: $colourError;
+}
+
+.multifile-upload__file-status {
+  &:before {
+    content: '-';
+  }
+  @include typography__body--secondary;
+  @include forSize('phoneOnly') {
+    @include typography__small;
+    @include typography__small--secondary;
+    display: block;
+    margin-bottom: 0;
+
+    &:before {
+      content: '';
+    }
+  }
+}
+
+.multifile-upload__file-status--error {
   color: $colourError;
 }

@@ -1,5 +1,5 @@
 //body text
-.typography__body {
+@mixin typography__body {
   font-family: $defaultFontFamily;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -7,24 +7,24 @@
   margin-bottom: 1.5rem;
 }
 
-.typography__body--no-margin {
+@mixin typography__body--no-margin {
   margin: 0;
 };
 
-.typography__body--primary {
+@mixin typography__body--primary {
   color: $colourText;
 }
 
-.typography__body--secondary {
+@mixin typography__body--secondary {
   color: $colourTextSecondary;
 }
 
-.typography__body--strong {
+@mixin typography__body--strong {
   color: $colourText;
   font-family: $fontStrong;
 }
 
-.typography__body--link {
+@mixin typography__body--link {
   color: $colourPrimary;
   text-decoration: none;
   &:hover {
@@ -33,15 +33,15 @@
   }
 }
 
-.typography__body--button-link {
-  @extend .typography__body--link;
+@mixin typography__body--button-link {
+  @include typography__body--link;
   font-size: 1rem;
   border: none;
   padding : 0;
 }
 
 //small text
-.typography__small {
+@mixin typography__small {
   font-family: $defaultFontFamily;
   font-size: 0.875rem;
   line-height: 1.5rem;
@@ -50,25 +50,25 @@
   display: inline-block;
 }
 
-.typography__small--no-margin {
+@mixin typography__small--no-margin {
   margin: 0;
 };
 
-.typography__small--primary {
+@mixin typography__small--primary {
 
   color: $colourText;
 }
 
-.typography__small--secondary {
+@mixin typography__small--secondary {
   color: $colourTextSecondary;
 }
 
-.typography__small--strong {
+@mixin typography__small--strong {
   color: $colourText;
   font-family: $fontStrong;
 }
 
-.typography__small--link {
+@mixin typography__small--link {
   color: $colourPrimary;
   text-decoration: none;
   &:hover {
@@ -77,7 +77,7 @@
 }
 
 //serif text
-.typography__serif {
+@mixin typography__serif {
   font-family: $altFontFamily;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -85,11 +85,11 @@
   margin-bottom: 1.5rem;
 }
 
-.typography__serif--primary {
+@mixin typography__serif--primary {
   color: $colourText;
 }
 
-.typography__serif--link {
+@mixin typography__serif--link {
   color: $colourPrimary;
   text-decoration: none;
   &:hover {
@@ -98,34 +98,34 @@
 }
 
 //headings
-.typography__heading {
+@mixin typography__heading {
   color: $colourText;
   font-weight: 600;
   font-family: $fontStrong;
 }
 
-.typography__heading--h1 {
+@mixin typography__heading--h1 {
   font-size: 1.875rem;
   line-height: 2.25rem;
   margin-top: 1.125rem;
   margin-bottom: 1.125rem;
 }
 
-.typography__heading--h2 {
+@mixin typography__heading--h2 {
   font-size: 1.375rem;
   line-height: 1.875rem;
   margin-top: 0.563rem;
   margin-bottom: 0.563rem;
 }
 
-.typography__heading--h3 {
+@mixin typography__heading--h3 {
   font-size: 1.125rem;
   line-height: 1.5rem;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
-.typography__heading--h4 {
+@mixin typography__heading--h4 {
   font-size: 1rem;
   line-height: 1.5rem;
   margin-top: 0.75rem;
@@ -133,7 +133,7 @@
 }
 
 //label text
-.typography__label {
+@mixin typography__label {
   font-family: $defaultFontFamily;
   font-size: 0.875rem;
   line-height: 1.125rem;
@@ -146,19 +146,19 @@
   }
 }
 
-.typography__label--primary {
+@mixin typography__label--primary {
   color: $colourText;
 }
 
-.typography__label--secondary {
+@mixin typography__label--secondary {
   color: $colourTextSecondary;
 }
 
-.typography__label--error {
+@mixin typography__label--error {
   color: $colourError;
 }
 
-.typography__label--helper-text {
+@mixin typography__label--helper-text {
   margin-top: 0.375rem;
   min-height: 1.125rem;
   display: flex;
@@ -166,7 +166,7 @@
 }
 
 //xsmall
-.typography__xsmall {
+@mixin typography__xsmall {
   font-family: $defaultFontFamily;
   font-size: 0.75rem;
   line-height: 1.5rem;
@@ -177,10 +177,129 @@
   letter-spacing: 0.4px;
 }
 
-.typography__xsmall--link {
+@mixin typography__xsmall--link {
   text-decoration: none;
   color: $colourPrimary;
   &:hover {
     text-decoration: underline;
   }
+}
+
+
+//body text
+.typography__body {
+  @include typography__body;
+}
+
+.typography__body--no-margin {
+  @include typography__body--no-margin;
+};
+
+.typography__body--primary {
+  @include typography__body--primary;
+}
+
+.typography__body--secondary {
+  @include typography__body--secondary;
+}
+
+.typography__body--strong {
+  @include typography__body--strong;
+}
+
+.typography__body--link {
+  @include typography__body--link;
+}
+
+.typography__body--button-link {
+  @include typography__body--button-link
+}
+
+//small text
+.typography__small {
+  @include typography__small;
+}
+
+.typography__small--no-margin {
+  @include typography__small--no-margin;
+};
+
+.typography__small--primary {
+  @include typography__small--primary;
+}
+
+.typography__small--secondary {
+  @include typography__small--secondary;
+}
+
+.typography__small--strong {
+  @include typography__small--strong;
+}
+
+.typography__small--link {
+  @include typography__small--link;
+}
+
+//serif text
+.typography__serif {
+  @include typography__serif;
+}
+
+.typography__serif--primary {
+  @include typography__serif--primary;
+}
+
+.typography__serif--link {
+  @include typography__serif--link;
+}
+
+//headings
+.typography__heading {
+  @include typography__heading;
+}
+
+.typography__heading--h1 {
+  @include typography__heading--h1;
+}
+
+.typography__heading--h2 {
+  @include typography__heading--h2;
+}
+
+.typography__heading--h3 {
+  @include typography__heading--h3;
+}
+
+.typography__heading--h4 {
+  @include typography__heading--h4;
+}
+
+//label text
+.typography__label {
+  @include typography__label;
+}
+
+.typography__label--primary {
+  @include typography__label--primary;
+}
+
+.typography__label--secondary {
+  @include typography__label--secondary;
+}
+
+.typography__label--error {
+  @include typography__label--error;
+}
+
+.typography__label--helper-text {
+  @include typography__label--helper-text;
+}
+
+//xsmall
+.typography__xsmall {
+  @include typography__xsmall;
+}
+
+.typography__xsmall--link {
+  @include typography__xsmall--link;
 }
