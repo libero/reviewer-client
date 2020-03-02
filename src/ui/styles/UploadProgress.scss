@@ -3,8 +3,8 @@ $circleColour: $borderColour;
 $progressColour: $colourPrimary;
 $circlecircumference: 3rem;
 $circlecircumferenceSmall: 1.5rem;
-$circleThickness: 0.2rem;
-$circleThicknessSmall: 0.1rem;
+$circleThickness: 0.1875rem;
+$circleThicknessSmall: 0.125rem;
 
 .upload-progress {
   --progressColour: #{$progressColour};
