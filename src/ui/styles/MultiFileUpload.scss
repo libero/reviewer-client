@@ -20,12 +20,26 @@
 
 .multifile-upload__progress {
   place-self: center;
+  display: grid; 
 }
 
 .multifile-upload__delete {
   color: $colourTextSecondary;
 }
 
+.multifile-upload__label {
+  margin-top: 1.5rem;
+  display: inline-block;
+}
 
+.multfile-upload__file-name--error {
+  color: $colourError;
+}
 
+.multfile-upload__file-status {
+  margin-bottom: 0;
+}
 
+.multfile-upload__file-status--error {
+  color: $colourError;
+}
