@@ -48,7 +48,9 @@ describe('UploadProgress', (): void => {
     });
 
     it('adds a upload-progress--small class when small prop passed', () => {
-        const { container } = render(<UploadProgress small={true} />);
+        const { container, rerender } = render(<UploadProgress />);
+        expect(container.querySelector('.upload-progress--small')).not.toBeInTheDocument();
+        rerender(<UploadProgress small />);
         expect(container.querySelector('.upload-progress--small')).toBeInTheDocument();
     });
 });
