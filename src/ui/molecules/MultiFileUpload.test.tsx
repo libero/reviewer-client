@@ -1,7 +1,6 @@
 import React from 'react';
 import { RenderResult, render, cleanup, fireEvent } from '@testing-library/react';
 import MultiFileUpload from './MultiFileUpload';
-import { isTerminating } from 'apollo-link/lib/linkUtils';
 
 describe('MultiFileUpload', () => {
     afterEach(cleanup);
