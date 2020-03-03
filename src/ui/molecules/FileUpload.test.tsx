@@ -4,8 +4,6 @@ import FileUpload from './FileUpload';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import { act } from 'react-dom/test-utils';
 
-Error.stackTraceLimit = 100;
-
 describe('FileUpload', (): void => {
     afterEach(cleanup);
     describe('Idle state', () => {
