@@ -1,5 +1,5 @@
 import React from 'react';
-import { RenderResult, render, cleanup } from '@testing-library/react';
+import { RenderResult, render, cleanup, fireEvent } from '@testing-library/react';
 import MultiFileUpload from './MultiFileUpload';
 
 describe('MultiFileUpload', () => {
@@ -52,5 +52,39 @@ describe('MultiFileUpload', () => {
     it('should not display a files list if there are no files', () => {
         const { container } = render(<MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} />);
         expect(container.querySelector('.multifile-upload__upload-list')).not.toBeInTheDocument();
+    });
+
+    it('should pass an array of 1 file to onUpload', async (): Promise<void> => {
+        const onUploadMock = jest.fn();
+        const { container } = render(<MultiFileUpload onUpload={onUploadMock} onDelete={jest.fn()} />);
+        const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
+        const fileInput = container.querySelector('.multifile-upload__input');
+        expect(onUploadMock).toBeCalledTimes(0);
+        Object.defineProperty(fileInput, 'files', {
+            value: [file],
+        });
+
+        await fireEvent.change(fileInput);
+        expect(onUploadMock).toBeCalledTimes(1);
+        expect(onUploadMock.mock.calls[0][0]).toHaveLength(1);
+        expect(onUploadMock.mock.calls[0][0][0].name).toBe('supercoolfile.png');
+    });
+
+    it('should pass an array of multiple files to onUpload', async (): Promise<void> => {
+        const onUploadMock = jest.fn();
+        const { container } = render(<MultiFileUpload onUpload={onUploadMock} onDelete={jest.fn()} />);
+        const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
+        const file2 = new File(['-'], 'supercoolfile2.png', { type: 'image/png' });
+        const fileInput = container.querySelector('.multifile-upload__input');
+        expect(onUploadMock).toBeCalledTimes(0);
+        Object.defineProperty(fileInput, 'files', {
+            value: [file, file2],
+        });
+
+        await fireEvent.change(fileInput);
+        expect(onUploadMock).toBeCalledTimes(1);
+        expect(onUploadMock.mock.calls[0][0]).toHaveLength(2);
+        expect(onUploadMock.mock.calls[0][0][0].name).toBe('supercoolfile.png');
+        expect(onUploadMock.mock.calls[0][0][1].name).toBe('supercoolfile2.png');
     });
 });

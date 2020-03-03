@@ -10,8 +10,8 @@ storiesOf('ui | molecules/MultiFileUpload', module)
     .add(
         'MultiFileUpload',
         (): JSX.Element => {
-            const onUpload = (event: React.FormEvent<HTMLInputElement>): void => {
-                action('uploaded ' + event.currentTarget.files[0].name)();
+            const onUpload = (files: FileList): void => {
+                action('uploaded ' + files[0].name)();
             };
 
             const onDelete = (index: number): void => {

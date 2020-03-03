@@ -21,7 +21,7 @@ export type FileState = {
 
 interface Props {
     files?: FileState[];
-    onUpload: (event: React.FormEvent<HTMLInputElement>) => void;
+    onUpload: (files: FileList) => void;
     onDelete: (index: number) => void;
 }
 
@@ -100,7 +100,7 @@ const MultiFileUpload = ({ files = [], onUpload, onDelete }: Props): JSX.Element
                 type="file"
                 multiple={true}
                 className="multifile-upload__input"
-                onChange={onUpload}
+                onChange={(event: React.FormEvent<HTMLInputElement>): void => onUpload(event.currentTarget.files)}
             />
         </div>
     );
