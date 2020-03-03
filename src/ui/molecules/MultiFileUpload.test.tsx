@@ -1,6 +1,7 @@
 import React from 'react';
 import { RenderResult, render, cleanup, fireEvent } from '@testing-library/react';
 import MultiFileUpload from './MultiFileUpload';
+import { isTerminating } from 'apollo-link/lib/linkUtils';
 
 describe('MultiFileUpload', () => {
     afterEach(cleanup);
@@ -109,5 +110,44 @@ describe('MultiFileUpload', () => {
             />,
         );
         expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(3);
+    });
+
+    describe('FileItem', (): void => {
+        it('shows the correct UploadProgress for each item', () => {
+            const { container } = render(
+                <MultiFileUpload
+                    files={[
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
+                        { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
+                    ]}
+                    onUpload={jest.fn()}
+                    onDelete={jest.fn()}
+                />,
+            );
+
+            const items = container.querySelectorAll('.multifile-upload__upload-list-item');
+            expect(items[0].querySelector('.upload-progress--uploading')).toBeInTheDocument();
+            expect(items[1].querySelector('.upload-progress--complete')).toBeInTheDocument();
+            expect(items[2].querySelector('.upload-progress--error')).toBeInTheDocument();
+        });
+
+        it('gives the correct multifile-upload__file-name--${status}', () => {
+            const { container } = render(
+                <MultiFileUpload
+                    files={[
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
+                        { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
+                    ]}
+                    onUpload={jest.fn()}
+                    onDelete={jest.fn()}
+                />,
+            );
+            const items = container.querySelectorAll('.multifile-upload__upload-list-item');
+            expect(items[0].querySelector('.multifile-upload__file-name--uploading')).toBeInTheDocument();
+            expect(items[1].querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
+            expect(items[2].querySelector('.multifile-upload__file-name--error')).toBeInTheDocument();
+        });
     });
 });
