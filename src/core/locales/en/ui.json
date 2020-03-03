@@ -28,7 +28,10 @@
     "multifile-upload": {
         "label-files": "Add more supporting files",
         "label-no-files": "Add supporting files",
-        "status-error": "Error",
+        "status-error": {
+            "server": "There was a problem uploading your file.",
+            "size": "Must be less than 100MB."
+        },
         "status-queued": "queued",
         "status-uploading": "uploading"
     },
