@@ -87,4 +87,27 @@ describe('MultiFileUpload', () => {
         expect(onUploadMock.mock.calls[0][0][0].name).toBe('supercoolfile.png');
         expect(onUploadMock.mock.calls[0][0][1].name).toBe('supercoolfile2.png');
     });
+
+    it('should display a FileItem per file passed', (): void => {
+        const { container, rerender } = render(
+            <MultiFileUpload
+                files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } }]}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(1);
+        rerender(
+            <MultiFileUpload
+                files={[
+                    { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 } },
+                    { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                    { fileStored: { fileName: 'File 3.pdf', id: '2' } },
+                ]}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(3);
+    });
 });
