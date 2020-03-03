@@ -25,6 +25,16 @@
         "complete-replace": "Replace",
         "complete-suffix": " your manuscript file."
     },
+    "multifile-upload": {
+        "label-files": "Add more supporting files",
+        "label-no-files": "Add supporting files",
+        "status-error": {
+            "server": "There was a problem uploading your file.",
+            "size": "Must be less than 100MB."
+        },
+        "status-queued": "queued",
+        "status-uploading": "uploading"
+    },
     "search-box--label": "Search",
     "search-box--helper": "Search...",
     "modal--default-button": "Accept",

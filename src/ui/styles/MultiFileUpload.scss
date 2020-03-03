@@ -1,0 +1,64 @@
+@import '../../core/styles/typography';
+
+.multifile-upload__input {
+    visibility: hidden;
+}
+
+.multifile-upload__upload-list {
+  border: 0.063rem solid $borderColour;
+}
+
+.multifile-upload__upload-list-item {
+  border-bottom: 0.063rem solid $borderColour;
+  display: grid;
+  padding-left: 0.625rem;
+  grid-template-columns: 3.25rem 1fr 3.25rem;
+  grid-template-rows: 4.5rem;
+  align-items: center;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.multifile-upload__progress {
+  place-self: center;
+  display: grid; 
+}
+
+.multifile-upload__delete {
+  color: $colourTextSecondary;
+}
+
+.multifile-upload__label {
+  margin-top: 1.5rem;
+  display: inline-block;
+}
+
+.multifile-upload__file-name {
+  margin-bottom: 0;
+}
+
+.multifile-upload__file-name--error {
+  color: $colourError;
+}
+
+.multifile-upload__file-status {
+  &:before {
+    content: '-';
+  }
+  @include typography__body--secondary;
+  @include forSize('phoneOnly') {
+    @include typography__small;
+    @include typography__small--secondary;
+    display: block;
+    margin-bottom: 0;
+
+    &:before {
+      content: '';
+    }
+  }
+}
+
+.multifile-upload__file-status--error {
+  color: $colourError;
+}

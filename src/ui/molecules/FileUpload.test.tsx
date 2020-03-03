@@ -122,10 +122,10 @@ describe('FileUpload', (): void => {
     });
 
     describe('Drag and Drop', () => {
-        function dispatchEvt(node: Document | Element | Window, type: string, data: unknown): void {
+        async function dispatchEvt(node: Document | Element | Window, type: string, data: unknown): Promise<void> {
             const event = new Event(type, { bubbles: true });
             Object.assign(event, data);
-            fireEvent(node, event);
+            await fireEvent(node, event);
         }
 
         function mockData(files: File[]): Record<string, unknown> {
@@ -152,7 +152,7 @@ describe('FileUpload', (): void => {
 
             await act(
                 async (): Promise<void> => {
-                    dispatchEvt(dropzone, 'dragenter', data);
+                    await dispatchEvt(dropzone, 'dragenter', data);
                 },
             );
 
@@ -167,7 +167,7 @@ describe('FileUpload', (): void => {
 
             await act(
                 async (): Promise<void> => {
-                    dispatchEvt(dropzone, 'dragenter', data);
+                    await dispatchEvt(dropzone, 'dragenter', data);
                 },
             );
 
@@ -175,7 +175,7 @@ describe('FileUpload', (): void => {
 
             await act(
                 async (): Promise<void> => {
-                    dispatchEvt(dropzone, 'dragleave', data);
+                    await dispatchEvt(dropzone, 'dragleave', data);
                 },
             );
 
@@ -191,7 +191,7 @@ describe('FileUpload', (): void => {
 
             await act(
                 async (): Promise<void> => {
-                    dispatchEvt(dropzone, 'drop', data);
+                    await dispatchEvt(dropzone, 'drop', data);
                 },
             );
 

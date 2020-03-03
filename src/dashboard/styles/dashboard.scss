@@ -123,7 +123,7 @@
 }
 
 .dashboard__button_container {
-  @include forSize('phoneOnly') {
+  @include forSize('phoneUp') {
     position: fixed;
     bottom: 0;
     left: 0;

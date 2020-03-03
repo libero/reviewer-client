@@ -26,7 +26,7 @@
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     width: 50%;
-    @include forSize('phoneOnly') {
+    @include forSize('phoneUp') {
       width: 100%;
     }
   }
@@ -45,7 +45,7 @@
   padding-right: 0.75rem;
   width: 50%;
   text-align: right;
-  @include forSize('phoneOnly') {
+  @include forSize('phoneUp') {
     width: 100%;
   }
 }

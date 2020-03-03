@@ -3,6 +3,7 @@ export { default as CoverLetter } from './CoverLetter';
 export { default as ExcludedToggle } from './ExcludedToggle';
 export { default as FileUpload } from './FileUpload';
 export { default as Menu } from './Menu';
+export { default as MultiFileUpload } from './MultiFileUpload';
 export { default as PersonPod, PersonProps } from './PersonPod';
 export { default as PersonInfo } from './PersonInfo';
 export { default as PeoplePickerSelector } from './PeoplePickerSelector';

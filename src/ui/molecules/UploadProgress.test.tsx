@@ -9,7 +9,9 @@ describe('UploadProgress', (): void => {
         expect((): RenderResult => render(<UploadProgress />)).not.toThrow();
     });
     it('should render correctly with all props', () => {
-        expect((): RenderResult => render(<UploadProgress progress={100} />)).not.toThrow();
+        expect(
+            (): RenderResult => render(<UploadProgress progress={100} status="COMPLETE" small={true} />),
+        ).not.toThrow();
     });
 
     it('adds a class of progress--${progress} when in the UPLOADING state', () => {
@@ -43,5 +45,12 @@ describe('UploadProgress', (): void => {
         expect(container.querySelector('.progress--0')).toBeInTheDocument();
         rerender(<UploadProgress progress={0} status="IDLE" />);
         expect(container.querySelector('.progress--0')).toBeInTheDocument();
+    });
+
+    it('adds a upload-progress--small class when small prop passed', () => {
+        const { container, rerender } = render(<UploadProgress />);
+        expect(container.querySelector('.upload-progress--small')).not.toBeInTheDocument();
+        rerender(<UploadProgress small />);
+        expect(container.querySelector('.upload-progress--small')).toBeInTheDocument();
     });
 });
