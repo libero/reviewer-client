@@ -16,19 +16,8 @@ this will start the application in a docker container with a mocked backend and 
 
 ### Run client locally on host
 
-To run localy, first change the `config/config.infra.json` file to have the following settings:
-```json
-{
-    "client_api_proxy_url": "http://localhost:3003/graphql",
-    "client_token_exchange_proxy_url": "http://localhost:3003/authenticate/",
-}
 ```
-Then run the following commands:
-
-```
-docker-compose up -d reviewer-mocks
-yarn
-yarn start
+make start_dev
 ```
 this will start the client using the webpack dev server with no other services running.
 
@@ -40,3 +29,10 @@ make run_ci
 ```
 command which will run all of the build and test steps and tear down the serves afterwards.
 
+
+### Stopping services
+
+To stop any docker services running, run
+```
+make stop
+```
