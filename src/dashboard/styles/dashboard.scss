@@ -136,10 +136,14 @@
   }
 
   @include forSize('tabletPortraitUp') {
+    position: static;
     text-align: right;
     margin-bottom: 0.375rem;
     margin-top: 1.5rem;
     display: block;
+    width: 100%;
+    border-top: none;
+    padding: 0;
   }
 }
 
