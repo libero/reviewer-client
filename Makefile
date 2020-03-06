@@ -51,4 +51,4 @@ run_ci:
 start_dev:
 	docker-compose up -d reviewer-mocks
 	yarn
-	PUBLIC_CONFIG_PATH=config/config.public.json INFRA_CONFIG_PATH=config/config.infra.local.local.json yarn start
+	PUBLIC_CONFIG_PATH=config/config.public.json INFRA_CONFIG_PATH=config/config.infra.local.json yarn start
