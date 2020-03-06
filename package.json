@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "build": "webpack --env production",
-        "start": "webpack-dev-server --env development",
+        "start": "PUBLIC_CONFIG_PATH=config/config.public.json INFRA_CONFIG_PATH=config/config.infra.json webpack-dev-server --env development",
         "test": "jest",
         "lint": "eslint --ext .js,.ts,.tsx src/",
         "prettier": "prettier --write 'src/**/*ts?'",
@@ -43,7 +43,7 @@
         "@types/nightwatch": "^1.1.3",
         "@types/react": "^16.9.1",
         "@types/react-dom": "^16.8.5",
-        "@types/react-router-dom": "5.1.3",
+        "@types/react-router-dom": "^4.3.4",
         "@types/react-select": "^3.0.4",
         "@types/react-tabs": "^2.3.1",
         "@types/react-virtualized-auto-sizer": "^1.0.0",
