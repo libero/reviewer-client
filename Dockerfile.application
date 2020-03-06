@@ -13,6 +13,6 @@ COPY scripts/build-config.sh /app
 EXPOSE 80
 
 HEALTHCHECK --interval=1m --timeout=1s \
-	CMD curl -f http://localhost/index.html || exit 1
+	CMD echo -e "GET /health\n\n" | nc localhost:9000
 
 CMD ["/bin/sh", "/app/build-config.sh"]
