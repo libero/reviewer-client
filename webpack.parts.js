@@ -8,19 +8,23 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
-const infraConfigPath = process.env.INFRA_CONFIG_PATH ? process.env.INFRA_CONFIG_PATH : '/etc/reviewer/config.infra.json';
-const publicConfigPath = process.env.PUBLIC_CONFIG_PATH ? process.env.PUBLIC_CONFIG_PATH : '/etc/reviewer/config.public.json';
+const infraConfigPath = process.env.INFRA_CONFIG_PATH
+    ? process.env.INFRA_CONFIG_PATH
+    : '/etc/reviewer/config.infra.json';
+const publicConfigPath = process.env.PUBLIC_CONFIG_PATH
+    ? process.env.PUBLIC_CONFIG_PATH
+    : '/etc/reviewer/config.public.json';
 let infraConfig;
 
 if (fs.existsSync(infraConfigPath)) {
     infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
 } else {
     infraConfig = {
-        "port": 9000,
-        "client_api_proxy_url": "http://localhost:3003/graphql",
-        "client_token_exchange_proxy_url": "http://localhost:3003/authenticate/",
-        "new_relic_client_license_key": "",
-        "new_relic_client_app_id": ""
+        port: 9000,
+        client_api_proxy_url: 'http://localhost:3003/graphql',
+        client_token_exchange_proxy_url: 'http://localhost:3003/authenticate/',
+        new_relic_client_license_key: '',
+        new_relic_client_app_id: '',
     };
 }
 
@@ -29,7 +33,7 @@ exports.devServer = () => ({
         stats: 'errors-only',
         host: process.env.HOST,
         historyApiFallback: {
-            disableDotRule: true
+            disableDotRule: true,
         },
         port: infraConfig.port,
         open: true,
@@ -40,20 +44,21 @@ exports.devServer = () => ({
                 target: infraConfig.client_api_proxy_url,
                 changeOrigin: true,
             },
-            '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
+            '/auth/': {
+                // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
                 target: infraConfig.client_token_exchange_proxy_url,
-                pathRewrite: {'^/auth': ''},
-                changeOrigin: true, 
+                pathRewrite: { '^/auth': '' },
+                changeOrigin: true,
             },
             '/config': {
-                bypass: function (req) {
+                bypass: function(req) {
                     // we need to check the url here again as it seems this is called
                     // on every path
                     if (req.url.startsWith('/config')) {
                         return publicConfigPath;
                     }
-                }
-            }
+                },
+            },
         },
     },
 });
@@ -64,10 +69,10 @@ exports.loaders = () => ({
             {
                 test: /\.scss$/,
                 use: [
-                    {loader: 'style-loader', options: {sourceMap: true}},
-                    {loader: 'css-loader', options: {sourceMap: true}},
-                    {loader: 'sass-loader', options: {sourceMap: true}},
-                ]
+                    { loader: 'style-loader', options: { sourceMap: true } },
+                    { loader: 'css-loader', options: { sourceMap: true } },
+                    { loader: 'sass-loader', options: { sourceMap: true } },
+                ],
             },
             {
                 test: /\.ts(x?)$/,
@@ -85,28 +90,26 @@ exports.loaders = () => ({
             },
             {
                 test: /\.(png|jpg|gif)$/,
-                use: [
-                    { loader: 'file-loader' },
-                ],
+                use: [{ loader: 'file-loader' }],
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
-                {
-                    loader: 'url-loader',
-                    options: {
-                    limit: 10000,
-                    mimetype: 'image/svg+xml'
-                    }
-                }
-                ]
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/svg+xml',
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(ttf|eot|woff|woff2)$/,
                 use: {
-                    loader: "file-loader",
+                    loader: 'file-loader',
                     options: {
-                        name: "assets/fonts/[name].[ext]",
+                        name: 'assets/fonts/[name].[ext]',
                     },
                 },
             },
@@ -139,13 +142,13 @@ exports.minifyCSS = () => ({
             canPrint: false,
         }),
     ],
-})
+});
 
 exports.minifyJS = () => ({
     optimization: {
         minimizer: [new TerserPlugin({ sourceMap: true })],
-    }
-})
+    },
+});
 
 exports.splitBundles = () => ({
     plugins: [
@@ -168,28 +171,24 @@ exports.splitBundles = () => ({
                 },
             },
         },
-    }
-})
+    },
+});
 
 exports.output = ({ filename }) => ({
     output: {
         publicPath: '/',
         path: path.resolve(__dirname, 'dist'),
         filename,
-    }
-})
+    },
+});
 
 exports.copyFiles = () => ({
-    plugins: [
-        new CopyPlugin([
-            { from: './src/core/locales', to: path.resolve(__dirname, 'dist', 'locales') }
-        ])
-    ]
-})
+    plugins: [new CopyPlugin([{ from: './src/core/locales', to: path.resolve(__dirname, 'dist', 'locales') }])],
+});
 
 exports.generateSourceMaps = ({ type }) => ({
-    devtool: type
-})
+    devtool: type,
+});
 
 exports.newRelic = () => ({
     plugins: [
@@ -198,4 +197,4 @@ exports.newRelic = () => ({
             applicationID: infraConfig.new_relic_client_app_id,
         }),
     ],
-})
+});
