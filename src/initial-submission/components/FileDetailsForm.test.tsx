@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import React from 'react';
 import FileDetailsForm from './FileDetailsForm';
 const mutationMock = jest.fn();
