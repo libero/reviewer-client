@@ -2,7 +2,6 @@ import { cleanup, render, fireEvent, RenderResult } from '@testing-library/react
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
-import 'mutationobserver-shim';
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
