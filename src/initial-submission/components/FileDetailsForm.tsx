@@ -13,7 +13,11 @@ interface Props {
 }
 
 const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
-    const { register, watch } = useForm();
+    const { register, watch } = useForm({
+        defaultValues: {
+            coverLetter: initialValues.coverLetter,
+        },
+    });
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const coverLetter = watch('coverLetter');
     const onSave = (): void => {
