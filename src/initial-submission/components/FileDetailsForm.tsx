@@ -12,12 +12,14 @@ interface Props {
     };
 }
 
-const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+// TODO: remove default initialValues object once we enforce fetching of submission in SubmissionWizard see https://github.com/libero/reviewer-client/issues/138
+const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => {
     const { register, watch } = useForm({
         defaultValues: {
             coverLetter: initialValues.coverLetter,
         },
     });
+
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const coverLetter = watch('coverLetter');
     const onSave = (): void => {
