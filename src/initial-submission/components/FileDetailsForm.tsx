@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
-import { Submission } from '../types';
 import { CoverLetter, FileUpload } from '../../ui/molecules';
 import { saveFilesPageMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
 interface Props {
-    initialValues?: Submission;
+    initialValues?: {
+        id: string;
+        coverLetter?: string;
+    };
 }
 
 const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
