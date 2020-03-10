@@ -6,7 +6,7 @@ import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import FileDetailsStep from './FileDetailsForm';
 import { useQuery } from '@apollo/react-hooks';
-import { getSubmissionQuery } from '../../dashboard/graphql';
+import { getSubmissionQuery } from '../graphql';
 
 interface Props {
     id: string;

@@ -10,22 +10,6 @@ export const getSubmissionsQuery = gql`
     }
 `;
 
-export const getSubmissionQuery = gql`
-    query GetSubmission($id: ID!) {
-        getSubmission(id: $id) {
-            id
-            title
-            updated
-            author {
-                firstName
-                lastName
-                email
-                institution
-            }
-        }
-    }
-`;
-
 export const startSubmissionMutation = gql`
     mutation StartSubmision($articleType: String!) {
         startSubmission(articleType: $articleType) {
