@@ -61,7 +61,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
                     (config): JSX.Element => (
                         <Route
                             key={config.id}
-                            path={match.url}
+                            path={`/submit/${id}/${config.id}`}
                             component={(): JSX.Element =>
                                 loading ? (
                                     <span>loading... </span>
