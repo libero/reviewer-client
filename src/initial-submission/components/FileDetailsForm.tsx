@@ -1,7 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload } from '../../ui/molecules';
+import { saveFilesPageMutation } from '../graphql';
+import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
-const FileDetailsForm = (): JSX.Element => {
+interface Props {
+    initialValues?: {
+        id: string;
+        coverLetter?: string;
+    };
+}
+
+// TODO: remove default initialValues object once we enforce fetching of submission in SubmissionWizard see https://github.com/libero/reviewer-client/issues/138
+const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => {
+    const { register, watch } = useForm({
+        defaultValues: {
+            coverLetter: initialValues.coverLetter,
+        },
+    });
+
+    const [saveCallback] = useMutation(saveFilesPageMutation);
+    const coverLetter = watch('coverLetter');
+    const onSave = (): void => {
+        const vars = {
+            variables: {
+                id: initialValues.id,
+                coverLetter,
+            },
+        };
+        saveCallback(vars);
+    };
+
+    useEffect(() => {
+        AutoSaveDecorator(onSave);
+    }, [coverLetter]);
+
     return (
         <div>
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
@@ -14,7 +48,7 @@ const FileDetailsForm = (): JSX.Element => {
                 <li>Who do you consider to be the most relevant audience for this work?</li>
                 <li>What do you think the work has achieved or not achieved?</li>
             </ul>
-            <CoverLetter id="coverLetter" />
+            <CoverLetter id="coverLetter" register={register} />
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your manuscript file</h2>
             <span className="typography__small typography__small--secondary">
                 Please include figures in your manuscript file. You do not need to upload figures separately.{' '}

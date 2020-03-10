@@ -4,6 +4,8 @@ events {
 
 http {
   server {
+    include /etc/nginx/mime.types;
+
     listen ${CLIENT_PORT};
 
     location /graphql {
