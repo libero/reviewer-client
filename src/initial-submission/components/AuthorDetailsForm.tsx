@@ -88,7 +88,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
                 <TextField
                     className="orcid-details__firstName"
-                    id="authorFirstName"
+                    id="firstName"
                     invalid={errors && errors.firstName !== undefined}
                     helperText={errors && errors.firstName ? errors.firstName.message : null}
                     labelText={t('orcid-details:author-first-name')}
@@ -100,7 +100,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 />
                 <TextField
                     className="orcid-details__lastName"
-                    id="authorLastName"
+                    id="lastName"
                     invalid={errors && errors.lastName !== undefined}
                     helperText={errors && errors.lastName ? errors.lastName.message : null}
                     labelText={t('orcid-details:author-last-name')}
@@ -112,7 +112,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 />
                 <TextField
                     className="orcid-details__email"
-                    id="authorEmail"
+                    id="email"
                     invalid={errors && errors.email !== undefined}
                     helperText={errors && errors.email ? errors.email.message : null}
                     labelText={t('orcid-details:author-email')}

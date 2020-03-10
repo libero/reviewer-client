@@ -10,7 +10,7 @@ import useModal from '../../ui/hooks/useModal';
 import ArticleType from './ArticleType';
 
 const Dashboard = withRouter(
-    (): JSX.Element => {
+    ({ history }): JSX.Element => {
         const { isShowing, toggle } = useModal();
         const { loading, data } = useQuery(getSubmissionsQuery);
         const [startSubmission, { loading: loadingStartSubmission }] = useMutation(startSubmissionMutation, {
@@ -38,9 +38,10 @@ const Dashboard = withRouter(
         });
 
         const onArticleTypeConfirm = (articleType: string): void => {
-            startSubmission({ variables: { articleType } }).then(() => {
-                // this should be replaced with redirect to wizard eventually
-                toggle();
+            startSubmission({ variables: { articleType } }).then(data => {
+                history.push(
+                    `/submit/${data.data.startSubmission.id}/${data.data.startSubmission.lastStepVisited || 'author'}`,
+                );
             });
         };
         const { t } = useTranslation();
