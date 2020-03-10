@@ -3,6 +3,7 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
 
+let loading = false;
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
         return {
@@ -17,6 +18,7 @@ jest.mock('@apollo/react-hooks', () => ({
                     updated: 42,
                 },
             },
+            loading: loading,
         };
     },
     useMutation: (): object[] => {
@@ -31,21 +33,31 @@ jest.mock('@apollo/react-hooks', () => ({
 
 describe('SubmissionWizard', (): void => {
     afterEach(cleanup);
+    beforeEach(() => {
+        loading = false;
+    });
 
     it('should render correctly', (): void => {
         const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id' });
         expect((): RenderResult => render(component, { wrapper: routerWrapper() })).not.toThrow();
     });
 
+    it('should display loading text when the query is still loading', (): void => {
+        loading = true;
+        const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+        const { getByText } = render(component, { wrapper: routerWrapper(['/submit/id/author']) });
+        expect(getByText('loading...')).toBeInTheDocument();
+    });
+
     describe('Step navigation', (): void => {
         it('should redirect to author step if no step path given', (): void => {
-            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id' });
-            render(component, { wrapper: routerWrapper(['/submit/id']) });
+            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            render(component, { wrapper: routerWrapper(['/submit/id/author']) });
             expect(getProps().location.pathname).toBe('/submit/id/author');
         });
         // when we introduce form validation we should inject the schema at the Routes.tsx level this will allow these tests to work by passing an empty validation schema
         const testNavigationButtons = (buttonText: string, currentStep: string, expectedNextStep: string): void => {
-            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id' });
+            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
             const { getByText } = render(component, { wrapper: routerWrapper([`/submit/id/${currentStep}`]) });
             expect(getProps().location.pathname).toBe(`/submit/id/${currentStep}`);
             fireEvent.click(getByText(buttonText));
