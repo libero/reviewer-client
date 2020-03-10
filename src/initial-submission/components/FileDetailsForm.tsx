@@ -43,17 +43,6 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     }, []);
 
     const onManuscriptUpload = (files: File[]): void => {
-        /*
-            File : 
-            name: "disclosure.pdf"
-            lastModified: 1557301126000
-            lastModifiedDate: Wed May 08 2019 08:38:46 GMT+0100 (British Summer Time) {}
-            webkitRelativePath: ""
-            size: 2446
-            type: "application/pdf"
-            path: "disclosure.pdf"
-        */
-        console.log('calling');
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
             uploadInProgress: {
