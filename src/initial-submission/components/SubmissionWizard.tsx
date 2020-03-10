@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
+import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
@@ -39,12 +39,12 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
     match,
     history,
 }: RouteComponentProps<Props>): JSX.Element => {
-    const getCurrentStepPath = (): string =>
-        history.location.pathname.split('/')[3] && history.location.pathname.split('/')[3].toLowerCase();
+    const { id, step } = useParams();
     const getCurrentStepPathIndex = (): number =>
-        stepConfig.findIndex((config): boolean => config.id === getCurrentStepPath());
+        stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
+
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
-        variables: { id: history.location.pathname.split('/')[3] && history.location.pathname.split('/')[2] },
+        variables: { id },
     });
     return (
         <div className="submission-wizard">
@@ -54,14 +54,14 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
                     id: step.id,
                     label: step.label,
                 }))}
-                currentStep={getCurrentStepPath()}
+                currentStep={step.toLocaleLowerCase()}
             />
             <Switch>
                 {stepConfig.map(
                     (config): JSX.Element => (
                         <Route
                             key={config.id}
-                            path={match.url + '/' + config.id}
+                            path={match.url}
                             component={(): JSX.Element =>
                                 loading ? (
                                     <span>loading... </span>
@@ -72,12 +72,12 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
                         />
                     ),
                 )}
-                <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />
+                <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
             {getCurrentStepPathIndex() > 0 && (
                 <Button
                     onClick={(): void => {
-                        history.push(`/submit/${match.params.id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
+                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
                     }}
                 >
                     back
@@ -86,7 +86,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
             {getCurrentStepPathIndex() < stepConfig.length - 1 && (
                 <Button
                     onClick={(): void => {
-                        history.push(`/submit/${match.params.id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
                     }}
                     type="primary"
                 >
