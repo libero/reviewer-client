@@ -5,6 +5,8 @@ import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import FileDetailsStep from './FileDetailsForm';
+import { useQuery } from '@apollo/react-hooks';
+import { getSubmissionQuery } from '../../dashboard/graphql';
 
 interface Props {
     id: string;
@@ -19,6 +21,11 @@ interface StepConfig {
     label: string;
     component: (props: StepProps) => JSX.Element;
 }
+
+interface GetSubmission {
+    getSubmission: Submission;
+}
+
 /*eslint-disable react/display-name*/
 const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
@@ -36,6 +43,9 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
         history.location.pathname.split('/')[3] && history.location.pathname.split('/')[3].toLowerCase();
     const getCurrentStepPathIndex = (): number =>
         stepConfig.findIndex((config): boolean => config.id === getCurrentStepPath());
+    const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
+        variables: { id: history.location.pathname.split('/')[3] && history.location.pathname.split('/')[2] },
+    });
     return (
         <div className="submission-wizard">
             <ProgressBar
@@ -49,7 +59,17 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
             <Switch>
                 {stepConfig.map(
                     (config): JSX.Element => (
-                        <Route key={config.id} path={match.url + '/' + config.id} component={config.component} />
+                        <Route
+                            key={config.id}
+                            path={match.url + '/' + config.id}
+                            component={(): JSX.Element =>
+                                loading ? (
+                                    <span>loading... </span>
+                                ) : (
+                                    <config.component initialValues={data.getSubmission} />
+                                )
+                            }
+                        />
                     ),
                 )}
                 <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />

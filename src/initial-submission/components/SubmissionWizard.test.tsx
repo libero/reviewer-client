@@ -13,6 +13,10 @@ jest.mock('@apollo/react-hooks', () => ({
                     email: 'joe@blogs.com',
                     aff: 'somewhere',
                 },
+                getSubmission: {
+                    id: 'some-id',
+                    updated: 42,
+                },
             },
         };
     },

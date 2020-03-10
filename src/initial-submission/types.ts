@@ -1,10 +1,10 @@
 export interface Submission {
     id: string;
-    title: string;
+    title?: string;
     lastStepVisited?: string;
     updated: number;
     status?: string;
-    author: AuthorDetails;
+    author?: AuthorDetails;
 }
 
 export interface AuthorDetails {
