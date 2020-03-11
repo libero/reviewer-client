@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { Submission, AuthorDetails } from '../types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../../core/graphql';
-import { saveDetailsPageMutation } from '../graphql';
+import { saveAuthorPageMutation } from '../graphql';
 import { User } from '../../core/types';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
@@ -20,7 +20,7 @@ interface Props {
 
 const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
-    const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
+    const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
         authorFirstName: yup.string().required(),
         authorLastName: yup.string().required(),
