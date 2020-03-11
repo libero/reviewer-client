@@ -87,7 +87,7 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container, debug } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
