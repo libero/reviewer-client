@@ -35,10 +35,7 @@ const stepConfig: StepConfig[] = [
     { id: 'disclosure', label: 'Disclosure', component: (): JSX.Element => <div>Disclosure Step</div> },
 ];
 
-const SubmissionWizard: React.FC<RouteComponentProps> = ({
-    match,
-    history,
-}: RouteComponentProps<Props>): JSX.Element => {
+const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
     const getCurrentStepPathIndex = (): number =>
         stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
@@ -61,7 +58,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
                     (config): JSX.Element => (
                         <Route
                             key={config.id}
-                            path={match.url}
+                            path={`/submit/${id}/${config.id}`}
                             component={(): JSX.Element =>
                                 loading ? (
                                     <span>loading... </span>

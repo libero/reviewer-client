@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload } from '../../ui/molecules';
-import { saveFilesPageMutation } from '../graphql';
+import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
 interface Props {
     initialValues?: {
         id: string;
         coverLetter?: string;
+        manuscriptFile?: {
+            filename: string;
+            url: string;
+        };
     };
 }
 
@@ -21,6 +25,50 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
+
+    const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
+
+    // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
+    const [manuscriptStatus, setManuscriptStatus] = useState<{ fileStored?: {}; uploadInProgress?: {} }>({});
+
+    useEffect(() => {
+        if (initialValues.manuscriptFile) {
+            setManuscriptStatus({
+                fileStored: {
+                    fileName: initialValues.manuscriptFile.filename,
+                    previewLink: initialValues.manuscriptFile.url,
+                },
+            });
+        }
+    }, []);
+
+    const onManuscriptUpload = (files: File[]): void => {
+        setManuscriptStatus({
+            fileStored: manuscriptStatus.fileStored,
+            uploadInProgress: {
+                progress: 0,
+                fileName: files[0].name,
+            },
+        });
+
+        uploadManuscriptFile({
+            variables: {
+                id: initialValues.id,
+                file: files[0],
+                fileSize: files[0].size,
+            },
+        }).then(({ data }) => {
+            const { filename: fileName, url: previewLink } = data.uploadManuscript.manuscriptFile;
+
+            setManuscriptStatus({
+                fileStored: {
+                    fileName,
+                    previewLink,
+                },
+            });
+        });
+    };
+
     const coverLetter = watch('coverLetter');
     const onSave = (): void => {
         const vars = {
@@ -54,7 +102,7 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
                 Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
                 <a className="typography__small typography__small--link files-step__link--nested">Learn more</a>
             </span>
-            <FileUpload onUpload={(): void => {}} />
+            <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 Supporting files (optional)
             </h2>
