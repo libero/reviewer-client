@@ -57,7 +57,7 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
                 file: files[0],
                 fileSize: files[0].size,
             },
-        }).then(data => {
+        }).then(({ data }) => {
             const { filename: fileName, url: previewLink } = data.data.uploadManuscript.manuscriptFile;
 
             setManuscriptStatus({
