@@ -114,10 +114,8 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
             mutationResolve({
                 data: {
-                    data: {
-                        uploadManuscript: {
-                            manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
-                        },
+                    uploadManuscript: {
+                        manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
                     },
                 },
             });
