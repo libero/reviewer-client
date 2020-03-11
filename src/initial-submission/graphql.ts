@@ -16,9 +16,9 @@ export const getSubmissionQuery = gql`
     }
 `;
 
-export const saveDetailsPageMutation = gql`
-    mutation SaveDetailsPage($id: ID!, $details: AuthorDetailsInput!) {
-        saveDetailsPage(id: $id, details: $details) {
+export const saveAuthorPageMutation = gql`
+    mutation SaveAuthorPage($id: ID!, $details: AuthorDetailsInput!) {
+        saveAuthorPage(id: $id, details: $details) {
             id
             author {
                 firstName
