@@ -29,7 +29,11 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
 
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
-    const [manuscriptStatus, setManuscriptStatus] = useState<{ fileStored?: {}; uploadInProgress?: {} }>({});
+    const [manuscriptStatus, setManuscriptStatus] = useState<{
+        fileStored?: {};
+        uploadInProgress?: {};
+        error?: 'multiple' | 'size' | 'server';
+    }>({});
 
     useEffect(() => {
         if (initialValues.manuscriptFile) {
@@ -57,16 +61,20 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
                 file: files[0],
                 fileSize: files[0].size,
             },
-        }).then(({ data }) => {
-            const { filename: fileName, url: previewLink } = data.uploadManuscript.manuscriptFile;
+        })
+            .then(({ data }) => {
+                const { filename: fileName, url: previewLink } = data.uploadManuscript.manuscriptFile;
 
-            setManuscriptStatus({
-                fileStored: {
-                    fileName,
-                    previewLink,
-                },
+                setManuscriptStatus({
+                    fileStored: {
+                        fileName,
+                        previewLink,
+                    },
+                });
+            })
+            .catch(() => {
+                setManuscriptStatus({ error: 'server' });
             });
-        });
     };
 
     const coverLetter = watch('coverLetter');

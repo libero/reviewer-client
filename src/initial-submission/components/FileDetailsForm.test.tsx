@@ -1,6 +1,8 @@
 import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
 import React, { TextareaHTMLAttributes } from 'react';
 import FileDetailsForm from './FileDetailsForm';
+import routerWrapper from '../../../test-utils/routerWrapper';
+
 const mutationMock = jest.fn();
 
 jest.mock('../utils/autosave-decorator', () => ({
@@ -64,6 +66,27 @@ describe('File Details Form', (): void => {
     });
 
     describe('Manuscript Upload', () => {
+        const dropFileEvent = async (file: File, element: Element): Promise<void> => {
+            await act(
+                async (): Promise<void> => {
+                    const event = new Event('drop', { bubbles: true });
+                    Object.assign(event, {
+                        dataTransfer: {
+                            files: [file],
+                            items: [
+                                {
+                                    kind: 'file',
+                                    type: file.type,
+                                    getAsFile: (): File => file,
+                                },
+                            ],
+                            types: ['Files'],
+                        },
+                    });
+                    fireEvent(element, event);
+                },
+            );
+        };
         it('should display an idle file upload if no file stored', () => {
             const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
             expect(container.querySelector('.file-upload__dropzone--idle')).toBeInTheDocument();
@@ -92,25 +115,8 @@ describe('File Details Form', (): void => {
             const dropzone = container.querySelector('.file-upload__dropzone');
             const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
 
-            await act(
-                async (): Promise<void> => {
-                    const event = new Event('drop', { bubbles: true });
-                    Object.assign(event, {
-                        dataTransfer: {
-                            files: [file],
-                            items: [
-                                {
-                                    kind: 'file',
-                                    type: file.type,
-                                    getAsFile: (): File => file,
-                                },
-                            ],
-                            types: ['Files'],
-                        },
-                    });
-                    fireEvent(dropzone, event);
-                },
-            );
+            await dropFileEvent(file, dropzone);
+
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
             mutationResolve({
                 data: {
@@ -123,6 +129,29 @@ describe('File Details Form', (): void => {
             await wait();
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             expect(container.querySelector('.file-upload__extra').textContent).toBe('testfile.pdf');
+        });
+
+        it('Should display a server error message if the upload request fails', async (): Promise<void> => {
+            let mutationReject: (error?: unknown) => void;
+            const mutationPromise = new Promise((_, reject) => {
+                mutationReject = reject;
+            });
+            mutationMock.mockImplementation(() => mutationPromise);
+
+            const { container, getByText } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
+                wrapper: routerWrapper(),
+            });
+
+            const dropzone = container.querySelector('.file-upload__dropzone');
+            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
+
+            await dropFileEvent(file, dropzone);
+            expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
+            mutationReject();
+            // need to wait to flush mutation resolve through
+            await wait();
+            expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
+            expect(getByText('file-upload.error-extra.server')).toBeInTheDocument();
         });
     });
 });
