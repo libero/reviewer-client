@@ -5,6 +5,15 @@ import { CoverLetter, FileUpload } from '../../ui/molecules';
 import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
+//TODO: these should live in config
+const allowedManuscriptFileTypes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/msword',
+];
+
+const maxFileSize = 104857600;
+
 interface Props {
     initialValues?: {
         id: string;
@@ -29,7 +38,11 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
 
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
-    const [manuscriptStatus, setManuscriptStatus] = useState<{ fileStored?: {}; uploadInProgress?: {} }>({});
+    const [manuscriptStatus, setManuscriptStatus] = useState<{
+        fileStored?: {};
+        uploadInProgress?: {};
+        error?: 'multiple' | 'validation' | 'server';
+    }>({});
 
     useEffect(() => {
         if (initialValues.manuscriptFile) {
@@ -43,6 +56,11 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     }, []);
 
     const onManuscriptUpload = (files: File[]): void => {
+        if (!allowedManuscriptFileTypes.includes(files[0].type) || files[0].size > maxFileSize) {
+            setManuscriptStatus({ error: 'validation' });
+            return;
+        }
+
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
             uploadInProgress: {
@@ -57,16 +75,20 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
                 file: files[0],
                 fileSize: files[0].size,
             },
-        }).then(({ data }) => {
-            const { filename: fileName, url: previewLink } = data.uploadManuscript.manuscriptFile;
+        })
+            .then(({ data }) => {
+                const { filename: fileName, url: previewLink } = data.uploadManuscript.manuscriptFile;
 
-            setManuscriptStatus({
-                fileStored: {
-                    fileName,
-                    previewLink,
-                },
+                setManuscriptStatus({
+                    fileStored: {
+                        fileName,
+                        previewLink,
+                    },
+                });
+            })
+            .catch(() => {
+                setManuscriptStatus({ error: 'server' });
             });
-        });
     };
 
     const coverLetter = watch('coverLetter');
