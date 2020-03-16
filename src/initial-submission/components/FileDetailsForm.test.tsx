@@ -130,9 +130,7 @@ describe('File Details Form', (): void => {
             const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
 
             const dropzone = container.querySelector('.file-upload__dropzone');
-            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/pdf' });
-
-            await dropFileEvent(file, dropzone);
+            await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
 
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
             mutationResolve({
@@ -160,9 +158,7 @@ describe('File Details Form', (): void => {
             });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
-            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/pdf' });
-
-            await dropFileEvent(file, dropzone);
+            await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
             mutationReject();
             // need to wait to flush mutation resolve through
