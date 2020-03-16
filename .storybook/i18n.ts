@@ -6,7 +6,7 @@ import Login from '../src/core/locales/en/login.json';
 import UI from '../src/core/locales/en/ui.json';
 import Dashboard from '../src/core/locales/en/dashboard.json';
 import NoSubmission from '../src/core/locales/en/no-submission.json';
-import Orcid from '../src/core/locales/en/orcid-details.json';
+import WizardForm from '../src/core/locales/en/wizard-form.json';
 import Common from '../src/core/locales/en/common.json';
 import Translation from '../src/core/locales/en/translation.json';
 
@@ -15,7 +15,7 @@ export default function(options = {}): void {
         lng: 'en',
         load: 'currentOnly',
         keySeparator: '.',
-        ns: ['article-type', 'common', 'dashboard', 'login', 'no-submission', 'orcid-details', 'ui'],
+        ns: ['article-type', 'common', 'dashboard', 'login', 'no-submission', 'wizard-form', 'ui'],
         fallbackLng: 'en',
         debug: process.env.NODE_ENV !== 'production',
         react: {
@@ -28,7 +28,7 @@ export default function(options = {}): void {
                 dashboard: Dashboard,
                 login: Login,
                 'no-submission': NoSubmission,
-                'orcid-details': Orcid,
+                'wizard-form': WizardForm,
                 translation: Translation,
                 ui: UI,
             },

@@ -12,15 +12,15 @@ const Toggle = ({ children, toggleLabel, id, open = false }: Props): JSX.Element
     const [opened, setOpened] = useState(open);
 
     return (
-        <Fragment>
+        <div className="toggle">
             <Checkbox
                 id={`${id}.toggle`}
                 labelText={toggleLabel}
                 onChange={(event): void => setOpened(event.target.checked)}
                 initialValue={opened}
             />
-            {opened && <div className="toggle-field__panel">{children}</div>}
-        </Fragment>
+            {opened && <div className="toggle__panel">{children}</div>}
+        </div>
     );
 };
 

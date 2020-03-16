@@ -1,4 +1,9 @@
-.toggle-field__panel {
+.toggle {
+  display: block;
+  margin-bottom: 2.125rem; 
+}
+
+.toggle__panel {
   box-sizing: border-box;
   padding: 1.5rem;
   border-radius: 0.188rem;

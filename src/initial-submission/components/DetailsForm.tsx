@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { SelectField } from '../../ui/atoms';
+import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
 import { Submission } from '../types';
-import { ExcludedToggle, Toggle } from '../../ui/molecules';
+import { Toggle } from '../../ui/molecules';
 
 interface Props {
     initialValues?: Submission;
@@ -41,17 +41,14 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     //     // Warning: returning throttlesSave.cancel() will cause the throttle to be recreated on each render breaking it.
     // }, [authorFirstName, authorLastName, authorEmail, institution]);
 
-    const { t } = useTranslation();
+    const { t } = useTranslation('wizard-form');
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="typography__heading typography__heading--h2">
                 Help us get your work seen by the right people
             </h2>
-            <label htmlFor="title" className="typography__label typography__label--primary">
-                Manuscript title
-            </label>
-            <textarea name="title" className="details__title" ref={register()} />
+            <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
                 id="subjectArea"
                 labelText="Subject area(s)"
@@ -61,19 +58,26 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                 formComponent={true}
                 helperText="Choose up to 2 subject areas"
             />
-            <Toggle
-                id="previouslyDiscussedContainer"
-                toggleLabel="This manuscript has been discussed with an eLife editor"
-            >
-                <label htmlFor="previouslyDiscussed" className="typography__label typography__label--primary" />
-                <textarea name="previouslyDiscussed" ref={register()} />
+            <Toggle id="previouslyDiscussedContainer" toggleLabel={t('details.previously-discussed-toggle')}>
+                <MultilineTextField
+                    id="previouslyDiscussed"
+                    register={register}
+                    labelText={t('details.previously-discussed-label')}
+                />
             </Toggle>
-            <Toggle
-                id="previouslyConsideredContainer"
-                toggleLabel="This manuscript has been previously considered by eLife"
-            >
-                <label htmlFor="previouslyConsidered" className="typography__label typography__label--primary" />
-                <textarea name="previouslyConsidered" ref={register()} />
+            <Toggle id="previouslyConsideredContainer" toggleLabel={t('details.previously-discussed-toggle')}>
+                <MultilineTextField
+                    id="previouslyConsidered"
+                    register={register}
+                    labelText={t('details.previously-considered-label')}
+                />
+            </Toggle>
+            <Toggle id="cosubmission" toggleLabel={t('details.cosubmission-toggle')}>
+                <TextField
+                    id="firstCosubmissionTitle"
+                    register={register}
+                    labelText={t('details.cosubmission-title-label')}
+                />
             </Toggle>
         </form>
     );
