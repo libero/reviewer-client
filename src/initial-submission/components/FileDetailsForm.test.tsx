@@ -20,6 +20,20 @@ jest.mock('@apollo/react-hooks', () => ({
 }));
 
 describe('File Details Form', (): void => {
+    beforeEach(() => {
+        mutationMock.mockImplementation(
+            () =>
+                new Promise(resolve =>
+                    resolve({
+                        data: {
+                            uploadManuscript: {
+                                manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                            },
+                        },
+                    }),
+                ),
+        );
+    });
     afterEach(() => {
         cleanup();
         mutationMock.mockReset();
@@ -113,7 +127,7 @@ describe('File Details Form', (): void => {
             const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
 
             const dropzone = container.querySelector('.file-upload__dropzone');
-            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
+            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/pdf' });
 
             await dropFileEvent(file, dropzone);
 
@@ -143,7 +157,7 @@ describe('File Details Form', (): void => {
             });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
-            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
+            const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/pdf' });
 
             await dropFileEvent(file, dropzone);
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
@@ -152,6 +166,36 @@ describe('File Details Form', (): void => {
             await wait();
             expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
             expect(getByText('file-upload.error-extra.server')).toBeInTheDocument();
+        });
+
+        it('Should display a validation error if the upload file is of the wrong file type', async (): Promise<
+            void
+        > => {
+            const { container, getByText } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
+                wrapper: routerWrapper(),
+            });
+
+            const dropzone = container.querySelector('.file-upload__dropzone');
+            const createFile = (type: string): File =>
+                new File([JSON.stringify({ ping: true })], 'ping.json', { type });
+
+            // .pdf
+            await dropFileEvent(createFile('application/pdf'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+            // .docx
+            await dropFileEvent(
+                createFile('application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+                dropzone,
+            );
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+            // .doc
+            await dropFileEvent(createFile('application/msword'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+
+            // .png
+            await dropFileEvent(createFile('image/png'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
+            expect(getByText('file-upload.error-extra.validation')).toBeInTheDocument();
         });
     });
 });

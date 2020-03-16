@@ -5,6 +5,15 @@ import { CoverLetter, FileUpload } from '../../ui/molecules';
 import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 
+//TODO: these should live in config
+const allowedManuscriptFileTypes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/msword',
+];
+
+const maxFileSize = 104857600;
+
 interface Props {
     initialValues?: {
         id: string;
@@ -32,7 +41,7 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     const [manuscriptStatus, setManuscriptStatus] = useState<{
         fileStored?: {};
         uploadInProgress?: {};
-        error?: 'multiple' | 'size' | 'server';
+        error?: 'multiple' | 'validation' | 'server';
     }>({});
 
     useEffect(() => {
@@ -47,6 +56,11 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     }, []);
 
     const onManuscriptUpload = (files: File[]): void => {
+        if (!allowedManuscriptFileTypes.includes(files[0].type) || files[0].size > maxFileSize) {
+            setManuscriptStatus({ error: 'validation' });
+            return;
+        }
+
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
             uploadInProgress: {

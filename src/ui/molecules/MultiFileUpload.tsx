@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
 import Delete from '@material-ui/icons/Delete';
 
-type UploadErrors = 'multiple' | 'size' | 'server';
+type UploadErrors = 'multiple' | 'validation' | 'server';
 type UploadInProgress = {
     progress?: number;
     fileName?: string;

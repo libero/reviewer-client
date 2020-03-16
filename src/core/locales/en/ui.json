@@ -8,12 +8,12 @@
         "error-upload": "try again",
         "error-message": {
             "multiple" : "Only one manuscript file can be uploaded.",
-            "size": "That file is not supported.",
+            "validation": "That file is not supported.",
             "server": "There was a problem uploading your file."
         },
         "error-extra": {
             "multiple" : "Files should be in .docx or .pdf format and no larger than 100MB.",
-            "size": "Files should be in .docx or .pdf format and no larger than 100MB.",
+            "validation": "Files should be in .docx or .pdf format and no larger than 100MB.",
             "server": "If the problem continues please ",
             "contact-us": "contact us"
 
@@ -30,7 +30,7 @@
         "label-no-files": "Add supporting files",
         "status-error": {
             "server": "There was a problem uploading your file.",
-            "size": "Must be less than 100MB."
+            "validation": "Must be less than 100MB."
         },
         "status-queued": "queued",
         "status-uploading": "uploading"
