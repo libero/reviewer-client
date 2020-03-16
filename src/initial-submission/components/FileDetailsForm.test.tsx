@@ -19,6 +19,9 @@ jest.mock('@apollo/react-hooks', () => ({
     },
 }));
 
+const createFile = (type: string, fileName: string): File =>
+    new File([JSON.stringify({ ping: true })], fileName, { type });
+
 describe('File Details Form', (): void => {
     beforeEach(() => {
         mutationMock.mockImplementation(
@@ -176,26 +179,53 @@ describe('File Details Form', (): void => {
             });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
-            const createFile = (type: string): File =>
-                new File([JSON.stringify({ ping: true })], 'ping.json', { type });
 
             // .pdf
-            await dropFileEvent(createFile('application/pdf'), dropzone);
+            await dropFileEvent(createFile('application/pdf', 'ping.pdf'), dropzone);
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             // .docx
             await dropFileEvent(
-                createFile('application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+                createFile('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'ping.docx'),
                 dropzone,
             );
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             // .doc
-            await dropFileEvent(createFile('application/msword'), dropzone);
+            await dropFileEvent(createFile('application/msword', 'ping.doc'), dropzone);
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
 
             // .png
-            await dropFileEvent(createFile('image/png'), dropzone);
+            await dropFileEvent(createFile('image/png', 'ping.png'), dropzone);
             expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
             expect(getByText('file-upload.error-extra.validation')).toBeInTheDocument();
+        });
+
+        it('Should allow a new file to be uploaded', async (): Promise<void> => {
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
+                wrapper: routerWrapper(),
+            });
+
+            const dropzone = container.querySelector('.file-upload__dropzone');
+
+            await dropFileEvent(createFile('application/pdf', 'file1.pdf'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+
+            await dropFileEvent(createFile('application/pdf', 'file2.pdf'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+        });
+
+        it('Should clear status when a new file is dropped', async (): Promise<void> => {
+            const { container, getByText } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
+                wrapper: routerWrapper(),
+            });
+
+            const dropzone = container.querySelector('.file-upload__dropzone');
+
+            await dropFileEvent(createFile('image/png', 'file1.png'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
+            expect(getByText('file-upload.error-extra.validation')).toBeInTheDocument();
+
+            await dropFileEvent(createFile('application/pdf', 'file2.pdf'), dropzone);
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
         });
     });
 });
