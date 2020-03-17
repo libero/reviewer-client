@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 
 describe('DetailsForm', (): void => {
@@ -9,9 +9,13 @@ describe('DetailsForm', (): void => {
             render(<DetailsForm />);
         }).not.toThrow();
     });
+
     it('toggles display of second cosubmission text input when text link is clicked', () => {
-        // Click toggle cosubmission
-        // Click findByText('details.second-cosubmission-toggle-link')
-        // assert name=[secondCosubmissionTitle] is in doc
+        const { container, getByText, getByLabelText } = render(<DetailsForm />);
+        expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
+        fireEvent.click(getByLabelText('details.cosubmission-toggle'));
+        expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
+        fireEvent.click(getByText('details.second-cosubmission-toggle-link'));
+        expect(container.querySelector('#secondCosubmissionTitle')).toBeInTheDocument();
     });
 });
