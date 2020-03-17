@@ -10,8 +10,8 @@ describe('DetailsForm', (): void => {
         }).not.toThrow();
     });
     it('toggles display of second cosubmission text input when text link is clicked', () => {
-      // Click toggle cosubmission
-      // Click findByText('details.second-cosubmission-toggle-link')
-      // assert name=[secondCosubmissionTitle] is in doc 
+        // Click toggle cosubmission
+        // Click findByText('details.second-cosubmission-toggle-link')
+        // assert name=[secondCosubmissionTitle] is in doc
     });
 });
