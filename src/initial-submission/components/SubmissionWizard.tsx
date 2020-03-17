@@ -5,6 +5,7 @@ import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import FileDetailsStep from './FileDetailsForm';
+import DetailsForm from './DetailsForm';
 import { useQuery } from '@apollo/react-hooks';
 import { getSubmissionQuery } from '../graphql';
 
@@ -30,7 +31,7 @@ interface GetSubmission {
 const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
     { id: 'files', label: 'Files', component: FileDetailsStep },
-    { id: 'details', label: 'Details', component: (): JSX.Element => <div>Detail Step</div> },
+    { id: 'details', label: 'Details', component: DetailsForm },
     { id: 'editors', label: 'Editors', component: (): JSX.Element => <div>Editors Step</div> },
     { id: 'disclosure', label: 'Disclosure', component: (): JSX.Element => <div>Disclosure Step</div> },
 ];

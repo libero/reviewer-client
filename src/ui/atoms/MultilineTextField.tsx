@@ -6,9 +6,10 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     id: string;
     invalid?: boolean;
     labelText: string;
+    register?: () => void;
 }
 
-const MultilineTextField = ({ id, labelText, helperText, invalid, ...rest }: Props): JSX.Element => (
+const MultilineTextField = ({ id, labelText, helperText, invalid, register, ...rest }: Props): JSX.Element => (
     <div className="multiline-text-field">
         <label htmlFor={id} className="typography__label typography__label--primary">
             {labelText}
@@ -17,6 +18,7 @@ const MultilineTextField = ({ id, labelText, helperText, invalid, ...rest }: Pro
             id={id}
             name={id}
             className={`multiline-text-field__input ${invalid ? 'multiline-text-field__input--invalid' : ''}`}
+            ref={register}
             {...rest}
         />
         <span

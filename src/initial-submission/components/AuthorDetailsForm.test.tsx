@@ -1,7 +1,6 @@
 import React from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import AuthorDetailsForm from './AuthorDetailsForm';
-import 'mutationobserver-shim';
 import { Submission } from '../types';
 
 jest.mock('@apollo/react-hooks', () => ({
@@ -56,7 +55,7 @@ describe('Author Details Form', (): void => {
     it('should fill the correct boxes with author information when the text is clicked', async (): Promise<void> => {
         const { container, getByLabelText } = render(<AuthorDetailsForm />);
         await fireEvent.click(container.querySelector('.typography__body--link'));
-        expect((getByLabelText('author-first-name') as HTMLInputElement).value).toBe('Joe');
+        expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
     });
 
     it('should display the correct values when an existing submission is passed in', async (): Promise<void> => {
@@ -72,9 +71,9 @@ describe('Author Details Form', (): void => {
             updated: 0,
         };
         const { getByLabelText } = render(<AuthorDetailsForm initialValues={initialValues} />);
-        expect((getByLabelText('author-first-name') as HTMLInputElement).value).toBe('Joe');
-        expect((getByLabelText('author-last-name') as HTMLInputElement).value).toBe('Blogs');
-        expect((getByLabelText('author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
-        expect((getByLabelText('institution') as HTMLInputElement).value).toBe('somewhere');
+        expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
+        expect((getByLabelText('author.author-last-name') as HTMLInputElement).value).toBe('Blogs');
+        expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
+        expect((getByLabelText('author.institution') as HTMLInputElement).value).toBe('somewhere');
     });
 });

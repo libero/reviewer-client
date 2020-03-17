@@ -64,7 +64,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
         // Warning: returning throttlesSave.cancel() will cause the throttle to be recreated on each render breaking it.
     }, [authorFirstName, authorLastName, authorEmail, institution]);
 
-    const { t } = useTranslation();
+    const { t } = useTranslation('wizard-form');
 
     const getDetails = (): void => {
         const [lastName, firstName] = data.getCurrentUser.name.split(', ', 2);
@@ -79,11 +79,9 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
             <div className="orcid-details">
                 <div className="orcid-details__link_text">
                     <span onClick={getDetails} className="typography__body typography__body--link">
-                        {t('orcid-details:prefill--link')}{' '}
+                        {t('author.prefill--link')}{' '}
                     </span>
-                    <span className="typography__body typography__body--primary">
-                        {t('orcid-details:prefill--text')}
-                    </span>
+                    <span className="typography__body typography__body--primary">{t('author.prefill--text')}</span>
                 </div>
 
                 <TextField
@@ -91,7 +89,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     id="firstName"
                     invalid={errors && errors.firstName !== undefined}
                     helperText={errors && errors.firstName ? errors.firstName.message : null}
-                    labelText={t('orcid-details:author-first-name')}
+                    labelText={t('author.author-first-name')}
                     value={authorFirstName}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setAuthorFirstName(event.currentTarget.value)
@@ -103,7 +101,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     id="lastName"
                     invalid={errors && errors.lastName !== undefined}
                     helperText={errors && errors.lastName ? errors.lastName.message : null}
-                    labelText={t('orcid-details:author-last-name')}
+                    labelText={t('author.author-last-name')}
                     value={authorLastName}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setAuthorLastName(event.currentTarget.value)
@@ -115,7 +113,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     id="email"
                     invalid={errors && errors.email !== undefined}
                     helperText={errors && errors.email ? errors.email.message : null}
-                    labelText={t('orcid-details:author-email')}
+                    labelText={t('author.author-email')}
                     value={authorEmail}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setAuthorEmail(event.currentTarget.value)
@@ -127,7 +125,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     id="institution"
                     invalid={errors && errors.institution !== undefined}
                     helperText={errors && errors.institution ? errors.institution.message : null}
-                    labelText={t('orcid-details:institution')}
+                    labelText={t('author.institution')}
                     value={institution}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setInstitution(event.currentTarget.value)

@@ -4,6 +4,8 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import Select, { components } from 'react-select';
 import { IndicatorProps } from 'react-select/src/components/indicators';
 import { ValueType } from 'react-select/src/types';
+import { RHFInput } from 'react-hook-form-input';
+import { ValidationOptions } from 'react-hook-form-input/dist/types';
 
 export interface Value {
     label: string;
@@ -21,6 +23,10 @@ interface Props {
     placeholder?: string;
     defaultValue?: Value;
     onChange?(value: ValueType<Value>): void;
+    formComponent?: boolean;
+    register?: (ref: unknown, rules: ValidationOptions) => (name: string) => void;
+    setValue?: (name: string, value: unknown, trigger?: boolean) => void;
+    className?: string;
 }
 const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     <components.DropdownIndicator {...props}>
@@ -38,24 +44,31 @@ const SelectField = ({
     defaultValue,
     searchable,
     onChange,
+    formComponent = false,
+    register,
+    setValue,
+    className,
 }: Props): JSX.Element => {
+    const select = (
+        <Select
+            aria-labelledby={`${id}-label`}
+            className={`select-field__input ${invalid ? 'select-field--error' : ''}`}
+            classNamePrefix="select-field"
+            options={values}
+            components={{ DropdownIndicator }}
+            placeholder={placeholder}
+            onChange={onChange}
+            isMulti={multi}
+            defaultValue={defaultValue}
+            isSearchable={searchable}
+        />
+    );
     return (
-        <div className="select-field">
+        <div className={`select-field${className ? ' ' + className : ''}`}>
             <label id={`${id}-label`} className="typography__label typography__label--primary">
                 {labelText}
             </label>
-            <Select
-                aria-labelledby={`${id}-label`}
-                className={`select-field__input ${invalid ? 'select-field--error' : ''}`}
-                classNamePrefix="select-field"
-                options={values}
-                components={{ DropdownIndicator }}
-                placeholder={placeholder}
-                onChange={onChange}
-                isMulti={multi}
-                defaultValue={defaultValue}
-                isSearchable={searchable}
-            />
+            {formComponent ? <RHFInput as={select} name={id} register={register} setValue={setValue} /> : select}
             <span
                 className={`typography__label typography__label--helper-text ${
                     invalid ? 'typography__label--error' : 'typography__label--secondary'
