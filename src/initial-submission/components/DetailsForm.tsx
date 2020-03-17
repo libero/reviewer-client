@@ -20,9 +20,7 @@ const DetailsForm = ({  }: Props): JSX.Element => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="typography__heading typography__heading--h2">
-                Help us get your work seen by the right people
-            </h2>
+            <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
             <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
                 id="subjectArea"
