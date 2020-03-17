@@ -1,7 +1,6 @@
 import React from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import AuthorDetailsForm from './AuthorDetailsForm';
-import 'mutationobserver-shim';
 import { Submission } from '../types';
 
 jest.mock('@apollo/react-hooks', () => ({

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
@@ -10,16 +10,11 @@ interface Props {
 }
 
 const DetailsForm = ({  }: Props): JSX.Element => {
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, setValue } = useForm();
     const [hasSecondCosubmission, setCosubmissionState] = useState();
-    const onSubmit = (data: Record<string, object>): void => {
-        console.log(JSON.stringify(data, null, 4));
-    };
-
     const { t } = useTranslation('wizard-form');
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
             <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
