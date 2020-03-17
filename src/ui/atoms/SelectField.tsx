@@ -50,7 +50,7 @@ const SelectField = ({
     const select = (
         <Select
             aria-labelledby={`${id}-label`}
-            className={`select-field ${invalid ? 'select-field--error' : ''}`}
+            className={`select-field__input ${invalid ? 'select-field--error' : ''}`}
             classNamePrefix="select-field"
             options={values}
             components={{ DropdownIndicator }}
@@ -62,10 +62,10 @@ const SelectField = ({
         />
     );
     return (
-        <React.Fragment>
-            <span id={`${id}-label`} className="typography__label typography__label--primary">
+        <div className="select-field">
+            <label id={`${id}-label`} className="typography__label typography__label--primary">
                 {labelText}
-            </span>
+            </label>
             {formComponent ? <RHFInput as={select} name={id} register={register} setValue={setValue} /> : select}
             <span
                 className={`typography__label typography__label--helper-text ${
@@ -75,7 +75,7 @@ const SelectField = ({
                 {invalid && <Close fontSize="small" />}
                 {helperText}
             </span>
-        </React.Fragment>
+        </div>
     );
 };
 

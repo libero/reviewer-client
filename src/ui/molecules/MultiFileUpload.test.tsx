@@ -237,12 +237,12 @@ describe('MultiFileUpload', () => {
         it('shows server error status text when ERROR and value is size', () => {
             const { getByText } = render(
                 <MultiFileUpload
-                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'size' }]}
+                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'validation' }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
             );
-            expect(getByText('multifile-upload.status-error.size')).toBeInTheDocument();
+            expect(getByText('multifile-upload.status-error.validation')).toBeInTheDocument();
         });
 
         it('does not displays delete icon for UPLOADING items', () => {
@@ -273,7 +273,7 @@ describe('MultiFileUpload', () => {
         it('displays delete icon for ERROR items', () => {
             const { container } = render(
                 <MultiFileUpload
-                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'size' }]}
+                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'validation' }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
@@ -286,7 +286,7 @@ describe('MultiFileUpload', () => {
             const { container } = render(
                 <MultiFileUpload
                     files={[
-                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'size' },
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'validation' },
                         { fileStored: { fileName: 'File 2.pdf', id: '1' } },
                     ]}
                     onUpload={jest.fn()}

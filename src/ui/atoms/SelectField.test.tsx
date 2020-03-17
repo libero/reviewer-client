@@ -61,7 +61,7 @@ describe('TextField', (): void => {
                 onChange={onChangeFn}
             />,
         );
-        await fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
+        await fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
         await waitForElement((): Element => getByText('test-option'));
         await fireEvent.click(getByText('test-option'));
         expect(onChangeFn).toHaveBeenCalled();

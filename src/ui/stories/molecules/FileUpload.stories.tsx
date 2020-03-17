@@ -20,7 +20,7 @@ storiesOf('ui | molecules/FileUpload', module)
                 {
                     'No Error': null,
                     'Multiple files': 'multiple',
-                    'File size': 'size',
+                    'File size': 'validation',
                     'Server error': 'server',
                 },
                 null,
