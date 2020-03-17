@@ -1,8 +1,11 @@
-.select-field {
+.select-field{
   display: flex;
   flex-flow: column;
   width: 100%;
+  margin-bottom: 0.75rem;
+}
 
+.select-field__input {
   &.select-field--error {
     .select-field__control {
       border: $borderError;
