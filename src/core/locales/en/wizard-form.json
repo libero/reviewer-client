@@ -15,6 +15,10 @@
     "previously-considered-toggle": "This manuscript has been previously considered by eLife",
     "previously-considered-label": "Please give details (including previous article title and tracking number)",
     "cosubmission-toggle": "This manuscript is part of a co-submission",
-    "cosubmission-title-label": "Co-submission article title"
+    "cosubmission-title-label": "Co-submission article title",
+    "second-cosubmission-title-label": "Second co-submission article title (optional)",
+    "second-cosubmission-toggle-prefix": "Would you like to ",
+    "second-cosubmission-toggle-link": "add another",
+    "second-cosubmission-toggle-suffix": " co-submission?"
   }
 }

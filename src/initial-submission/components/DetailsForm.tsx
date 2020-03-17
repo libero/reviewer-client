@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
@@ -11,7 +11,7 @@ interface Props {
 
 const DetailsForm = ({  }: Props): JSX.Element => {
     const { register, handleSubmit, setValue } = useForm();
-
+    const [hasSecondCosubmission, setCosubmissionState] = useState();
     const onSubmit = (data: Record<string, object>): void => {
         console.log(JSON.stringify(data, null, 4));
     };
@@ -25,10 +25,15 @@ const DetailsForm = ({  }: Props): JSX.Element => {
             <SelectField
                 id="subjectArea"
                 labelText="Subject area(s)"
-                values={[{ label: 'a', value: 'a' }]}
+                values={[
+                    { label: 'Neuroscience', value: 'neuroscience' },
+                    { label: 'Developmental Biology and Stem Cells', value: 'developmentalbiologyandstemcells' },
+                    { label: 'I am not a config list', value: 'foo' },
+                ]}
                 setValue={setValue}
                 register={register}
                 formComponent={true}
+                multi
                 helperText="Choose up to 2 subject areas"
                 className="subject-area"
             />
@@ -52,6 +57,21 @@ const DetailsForm = ({  }: Props): JSX.Element => {
                     register={register}
                     labelText={t('details.cosubmission-title-label')}
                 />
+                {hasSecondCosubmission ? (
+                    <TextField
+                        id="secondCosubmissionTitle"
+                        register={register}
+                        labelText={t('details.second-cosubmission-title-label')}
+                    />
+                ) : (
+                    <span className="typography__small">
+                        {t('details.second-cosubmission-toggle-prefix')}
+                        <span className="typography__body--link" onClick={(): void => setCosubmissionState(true)}>
+                            {t('details.second-cosubmission-toggle-link')}
+                        </span>
+                        {t('details.second-cosubmission-toggle-suffix')}
+                    </span>
+                )}
             </Toggle>
         </form>
     );
