@@ -80,4 +80,17 @@ describe('TextField', (): void => {
         );
         expect(getByText('test-option')).toBeInTheDocument();
     });
+
+    it('should forward className to the select-field wrapper', () => {
+        const { container } = render(
+            <SelectField
+                className="someTestClass"
+                values={[{ label: 'test-option', value: 'test' }]}
+                id="test"
+                labelText="some label"
+            />,
+        );
+
+        expect(container.querySelector('.someTestClass')).toBeInTheDocument();
+    });
 });

@@ -26,6 +26,7 @@ interface Props {
     formComponent?: boolean;
     register?: (ref: unknown, rules: ValidationOptions) => (name: string) => void;
     setValue?: (name: string, value: unknown, trigger?: boolean) => void;
+    className?: string;
 }
 const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     <components.DropdownIndicator {...props}>
@@ -46,6 +47,7 @@ const SelectField = ({
     formComponent = false,
     register,
     setValue,
+    className,
 }: Props): JSX.Element => {
     const select = (
         <Select
@@ -62,7 +64,7 @@ const SelectField = ({
         />
     );
     return (
-        <div className="select-field">
+        <div className={`select-field${className ? ' ' + className : ''}`}>
             <label id={`${id}-label`} className="typography__label typography__label--primary">
                 {labelText}
             </label>
