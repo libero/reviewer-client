@@ -57,6 +57,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                 register={register}
                 formComponent={true}
                 helperText="Choose up to 2 subject areas"
+                className="subject-area"
             />
             <Toggle id="previouslyDiscussedContainer" toggleLabel={t('details.previously-discussed-toggle')}>
                 <MultilineTextField
