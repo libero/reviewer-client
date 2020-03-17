@@ -1,4 +1,4 @@
-import React, { useState, Fragment, ReactNode } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { Checkbox } from '../atoms';
 
 interface Props {

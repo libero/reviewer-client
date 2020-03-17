@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
@@ -9,37 +9,12 @@ interface Props {
     initialValues?: Submission;
 }
 
-const DetailsForm = ({ initialValues }: Props): JSX.Element => {
-    // const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
-    // const schema = yup.object().shape({
-    //     authorFirstName: yup.string().required(),
-    //     authorLastName: yup.string().required(),
-    //     authorEmail: yup
-    //         .string()
-    //         .email()
-    //         .required(),
-    //     institution: yup.string().required(),
-    // });
+const DetailsForm = ({  }: Props): JSX.Element => {
     const { register, handleSubmit, setValue } = useForm();
-    //
+
     const onSubmit = (data: Record<string, object>): void => {
         console.log(JSON.stringify(data, null, 4));
     };
-
-    // const onSave = (): void => {
-    // const vars = {
-    //     variables: {
-    //         id: initialValues.id,
-    //         details: getValues(),
-    //     },
-    // };
-    // saveCallback(vars);
-    // };
-
-    // useEffect(() => {
-    //     AutoSaveDecorator(onSave);
-    //     // Warning: returning throttlesSave.cancel() will cause the throttle to be recreated on each render breaking it.
-    // }, [authorFirstName, authorLastName, authorEmail, institution]);
 
     const { t } = useTranslation('wizard-form');
 
