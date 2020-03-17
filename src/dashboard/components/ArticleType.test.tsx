@@ -24,7 +24,7 @@ describe('SubmissonWizard', (): void => {
         const { container, getByText } = render(
             <ArticleType onCancel={(): void => {}} onConfirm={(): void => {}} loading={false} />,
         );
-        fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
+        fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
         await waitForElement((): Element => getByText('feature-article.label'));
         fireEvent.click(getByText('feature-article.label'));
         expect(container.querySelector('.select-field__single-value').textContent).toBe('feature-article.label');
@@ -50,7 +50,7 @@ describe('SubmissonWizard', (): void => {
         const { container, getByText } = render(
             <ArticleType onConfirm={callback} onCancel={(): void => {}} loading={false} />,
         );
-        fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
+        fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
         await waitForElement((): Element => getByText('feature-article.label'));
         fireEvent.click(getByText('feature-article.label'));
         fireEvent.click(getByText('confirm-button'));
