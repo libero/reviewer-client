@@ -73,10 +73,10 @@ describe('DetailsForm', (): void => {
             variables: {
                 id: 'blah',
                 details: {
-                    cosubmission: null,
-                    previouslyDiscussed: undefined,
-                    previouslySubmitted: undefined,
-                    subjects: null,
+                    cosubmission: [],
+                    previouslyDiscussed: '',
+                    previouslySubmitted: '',
+                    subjects: [],
                     title: 'test title',
                 },
             },
@@ -100,9 +100,9 @@ describe('DetailsForm', (): void => {
             variables: {
                 id: 'blah',
                 details: {
-                    cosubmission: null,
-                    previouslyDiscussed: undefined,
-                    previouslySubmitted: undefined,
+                    cosubmission: [],
+                    previouslyDiscussed: '',
+                    previouslySubmitted: '',
                     subjects: ['neuroscience'],
                     title: '',
                 },
@@ -129,10 +129,10 @@ describe('DetailsForm', (): void => {
             variables: {
                 id: 'blah',
                 details: {
-                    cosubmission: null,
+                    cosubmission: [],
                     previouslyDiscussed: 'test discussion',
-                    previouslySubmitted: undefined,
-                    subjects: null,
+                    previouslySubmitted: '',
+                    subjects: [],
                     title: '',
                 },
             },
@@ -158,10 +158,10 @@ describe('DetailsForm', (): void => {
             variables: {
                 id: 'blah',
                 details: {
-                    cosubmission: null,
-                    previouslyDiscussed: undefined,
+                    cosubmission: [],
+                    previouslyDiscussed: '',
                     previouslySubmitted: 'test submitted',
-                    subjects: null,
+                    subjects: [],
                     title: '',
                 },
             },
@@ -190,9 +190,9 @@ describe('DetailsForm', (): void => {
                 id: 'blah',
                 details: {
                     cosubmission: ['test cosubmission'],
-                    previouslyDiscussed: undefined,
-                    previouslySubmitted: undefined,
-                    subjects: null,
+                    previouslyDiscussed: '',
+                    previouslySubmitted: '',
+                    subjects: [],
                     title: '',
                 },
             },
@@ -226,9 +226,9 @@ describe('DetailsForm', (): void => {
                 id: 'blah',
                 details: {
                     cosubmission: ['test cosubmission', 'test second cosubmission'],
-                    previouslyDiscussed: undefined,
-                    previouslySubmitted: undefined,
-                    subjects: null,
+                    previouslyDiscussed: '',
+                    previouslySubmitted: '',
+                    subjects: [],
                     title: '',
                 },
             },

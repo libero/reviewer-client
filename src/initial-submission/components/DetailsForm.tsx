@@ -22,9 +22,9 @@ interface Props {
 
 const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     const {
-        title,
-        previouslyDiscussed,
-        previouslySubmitted,
+        title = '',
+        previouslyDiscussed = '',
+        previouslySubmitted = '',
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = [],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
@@ -56,7 +56,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                 ? [firstCosubmissionWatch, secondCosubmissionWatch]
                 : firstCosubmissionWatch && !secondCosubmissionWatch
                 ? [firstCosubmissionWatch]
-                : null;
+                : [];
         const subjectsWatch = unmappedSubjectsWatch
             ? (unmappedSubjectsWatch as []).map((subject: Value) => subject.value)
             : null;
