@@ -50,3 +50,18 @@ export const uploadManuscriptMutation = gql`
         }
     }
 `;
+
+export const saveDetailsPageMutation = gql`
+    mutation SaveDetailsPage($id: ID!, $details: ManuscriptDetailsInput!) {
+        saveDetailsPage(id: $id, details: $details) {
+            id
+            manuscriptDetails {
+                title
+                subjects
+                previouslyDiscussed
+                previouslySubmitted
+                cosubmission
+            }
+        }
+    }
+`;
