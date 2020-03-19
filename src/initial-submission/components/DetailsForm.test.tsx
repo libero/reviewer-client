@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, fireEvent, waitForElement } from '@testing-library/react';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 
 const mutationMock = jest.fn();
