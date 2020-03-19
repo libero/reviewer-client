@@ -23,7 +23,8 @@ interface Props {
     defaultValue?: Value;
     onChange?(value: ValueType<Value>): void;
     formComponent?: boolean;
-    control?: Control<Record<string, unknown>>;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    control?: Control<Record<string, any>>;
     setValue?: (name: string, value: unknown, trigger?: boolean) => void;
     className?: string;
 }

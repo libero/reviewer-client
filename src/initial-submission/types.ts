@@ -1,6 +1,7 @@
 export interface Submission {
     id: string;
     title?: string;
+    articleType?: string;
     lastStepVisited?: string;
     updated: number;
     status?: string;

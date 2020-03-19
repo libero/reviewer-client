@@ -2,47 +2,72 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
-import { Submission } from '../types';
+import { Submission, ManuscriptDetails } from '../types';
 import { Toggle } from '../../ui/molecules';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDetailsPageMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Value } from '../../ui/atoms/SelectField';
 
+// TODO: this should be pulled from config
+const selectOptions = [
+    { label: 'Neuroscience', value: 'neuroscience' },
+    { label: 'Developmental Biology and Stem Cells', value: 'developmentalbiologyandstemcells' },
+    { label: 'I am not a config list', value: 'foo' },
+];
+
 interface Props {
     initialValues?: Submission;
 }
 
 const DetailsForm = ({ initialValues }: Props): JSX.Element => {
-    const { register, setValue, watch, control } = useForm();
-    const [hasSecondCosubmission, setCosubmissionState] = useState(
-        initialValues.manuscriptDetails && initialValues.manuscriptDetails.cosubmission.length > 1,
+    const {
+        title,
+        previouslyDiscussed,
+        previouslySubmitted,
+        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = [],
+        subjects = [],
+    } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
+    const { register, setValue, watch, control } = useForm({
+        defaultValues: {
+            title,
+            subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
+            previouslyDiscussed,
+            previouslySubmitted,
+            firstCosubmissionTitle,
+            secondCosubmissionTitle,
+        },
+    });
+    const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(
+        !!firstCosubmissionTitle && !!secondCosubmissionTitle,
     );
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
 
-    const title = watch('title');
-    const unmappedSubjects = watch('subjects');
-    const previouslyDiscussed = watch('previouslyDiscussed');
-    const previouslySubmitted = watch('previouslySubmitted');
-    const firstCosubmission = watch('firstCosubmissionTitle');
-    const secondCosubmission = watch('secondCosubmissionTitle');
+    const titleWatch = watch('title');
+    const unmappedSubjectsWatch = watch('subjects');
+    const previouslyDiscussedWatch = watch('previouslyDiscussed');
+    const previouslySubmittedWatch = watch('previouslySubmitted');
+    const firstCosubmissionWatch = watch('firstCosubmissionTitle');
+    const secondCosubmissionWatch = watch('secondCosubmissionTitle');
     const onSave = (): void => {
         const cosubmission =
-            firstCosubmission && secondCosubmission
-                ? [firstCosubmission, secondCosubmission]
-                : firstCosubmission && !secondCosubmission
-                ? [firstCosubmission]
+            firstCosubmissionWatch && secondCosubmissionWatch
+                ? [firstCosubmissionWatch, secondCosubmissionWatch]
+                : firstCosubmissionWatch && !secondCosubmissionWatch
+                ? [firstCosubmissionWatch]
                 : null;
-        const subjects = unmappedSubjects ? unmappedSubjects.map((subject: Value) => subject.value) : null;
+        const subjectsWatch = unmappedSubjectsWatch
+            ? (unmappedSubjectsWatch as []).map((subject: Value) => subject.value)
+            : null;
         const vars = {
             variables: {
                 id: initialValues.id,
                 details: {
-                    title,
-                    subjects,
-                    previouslyDiscussed,
-                    previouslySubmitted,
+                    title: titleWatch,
+                    subjects: subjectsWatch,
+                    previouslyDiscussed: previouslyDiscussedWatch,
+                    previouslySubmitted: previouslySubmittedWatch,
                     cosubmission,
                 },
             },
@@ -51,7 +76,14 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     };
     useEffect(() => {
         AutoSaveDecorator(onSave);
-    }, [title, unmappedSubjects, previouslyDiscussed, previouslySubmitted, firstCosubmission, secondCosubmission]);
+    }, [
+        titleWatch,
+        unmappedSubjectsWatch,
+        previouslyDiscussedWatch,
+        previouslySubmittedWatch,
+        firstCosubmissionWatch,
+        secondCosubmissionWatch,
+    ]);
     return (
         <form>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
@@ -59,11 +91,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
             <SelectField
                 id="subjects"
                 labelText="Subject area(s)"
-                values={[
-                    { label: 'Neuroscience', value: 'neuroscience' },
-                    { label: 'Developmental Biology and Stem Cells', value: 'developmentalbiologyandstemcells' },
-                    { label: 'I am not a config list', value: 'foo' },
-                ]}
+                values={selectOptions}
                 setValue={setValue}
                 control={control}
                 formComponent={true}
@@ -71,21 +99,33 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                 helperText="Choose up to 2 subject areas"
                 className="subject-area"
             />
-            <Toggle id="previouslyDiscussedContainer" toggleLabel={t('details.previously-discussed-toggle')}>
+            <Toggle
+                id="previouslyDiscussedContainer"
+                toggleLabel={t('details.previously-discussed-toggle')}
+                open={!!previouslyDiscussed}
+            >
                 <MultilineTextField
                     id="previouslyDiscussed"
                     register={register}
                     labelText={t('details.previously-discussed-label')}
                 />
             </Toggle>
-            <Toggle id="previouslyConsideredContainer" toggleLabel={t('details.previously-submitted-toggle')}>
+            <Toggle
+                id="previouslyConsideredContainer"
+                toggleLabel={t('details.previously-submitted-toggle')}
+                open={!!previouslySubmitted}
+            >
                 <MultilineTextField
                     id="previouslySubmitted"
                     register={register}
                     labelText={t('details.previously-submitted-label')}
                 />
             </Toggle>
-            <Toggle id="cosubmission" toggleLabel={t('details.cosubmission-toggle')}>
+            <Toggle
+                id="cosubmission"
+                toggleLabel={t('details.cosubmission-toggle')}
+                open={!!firstCosubmissionTitle || !!secondCosubmissionTitle}
+            >
                 <TextField
                     id="firstCosubmissionTitle"
                     register={register}
