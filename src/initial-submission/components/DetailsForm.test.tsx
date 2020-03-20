@@ -190,7 +190,7 @@ describe('DetailsForm', (): void => {
                 variables: {
                     id: 'blah',
                     details: {
-                        cosubmission: ['test cosubmission'],
+                        cosubmission: ['test cosubmission', ''],
                         previouslyDiscussed: '',
                         previouslySubmitted: '',
                         subjects: [],
@@ -333,7 +333,7 @@ describe('DetailsForm', (): void => {
                         id: 'blah',
                         updated: 0,
                         manuscriptDetails: {
-                            cosubmission: [null, 'second test value'],
+                            cosubmission: ['', 'second test value'],
                         },
                     }}
                 />,
@@ -377,7 +377,7 @@ describe('DetailsForm', (): void => {
                         id: 'blah',
                         updated: 0,
                         manuscriptDetails: {
-                            cosubmission: [null, 'second test value'],
+                            cosubmission: ['', 'second test value'],
                         },
                     }}
                 />,

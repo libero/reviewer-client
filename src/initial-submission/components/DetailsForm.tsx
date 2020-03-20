@@ -50,10 +50,8 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
     const onSave = (): void => {
         const cosubmission =
-            firstCosubmissionWatch && secondCosubmissionWatch
-                ? [firstCosubmissionWatch, secondCosubmissionWatch]
-                : firstCosubmissionWatch && !secondCosubmissionWatch
-                ? [firstCosubmissionWatch]
+            firstCosubmissionWatch || secondCosubmissionWatch
+                ? [firstCosubmissionWatch, secondCosubmissionWatch || '']
                 : [];
         const subjectsWatch = unmappedSubjectsWatch
             ? (unmappedSubjectsWatch as []).map((subject: Value) => subject.value)
