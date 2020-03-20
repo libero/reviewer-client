@@ -269,6 +269,120 @@ describe('DetailsForm', (): void => {
             });
         });
 
-        // TODO: add tests for Toggle open when initalValues are set.
+        it('collapses all toggles by default', () => {
+            const { container } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                    }}
+                />,
+            );
+            expect(container.querySelectorAll('.toggle__panel')).toHaveLength(0);
+        });
+
+        it('toggles the previously discussed panel if there is a value for previouslyDiscussed', () => {
+            const { container, getByLabelText } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            previouslyDiscussed: 'test value',
+                        },
+                    }}
+                />,
+            );
+            expect(container.querySelectorAll('.toggle__panel')).toHaveLength(1);
+            expect(getByLabelText('details.previously-discussed-label')).toBeInTheDocument();
+        });
+
+        it('toggles the previously submitted panel if there is a value for previouslySubmitted', () => {
+            const { container, getByLabelText } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            previouslySubmitted: 'test value',
+                        },
+                    }}
+                />,
+            );
+            expect(container.querySelectorAll('.toggle__panel')).toHaveLength(1);
+            expect(getByLabelText('details.previously-submitted-label')).toBeInTheDocument();
+        });
+
+        it('toggles the cosubmission panel if cosubmission has a length > 0', () => {
+            const { rerender, container, getByLabelText } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            cosubmission: ['test value'],
+                        },
+                    }}
+                />,
+            );
+            expect(container.querySelectorAll('.toggle__panel')).toHaveLength(1);
+            expect(getByLabelText('details.cosubmission-title-label')).toBeInTheDocument();
+            rerender(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            cosubmission: [null, 'second test value'],
+                        },
+                    }}
+                />,
+            );
+            expect(container.querySelectorAll('.toggle__panel')).toHaveLength(1);
+            expect(getByLabelText('details.cosubmission-title-label')).toBeInTheDocument();
+            rerender(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            cosubmission: ['first test value', 'second test value'],
+                        },
+                    }}
+                />,
+            );
+            expect(container.querySelectorAll('.toggle__panel')).toHaveLength(1);
+            expect(getByLabelText('details.cosubmission-title-label')).toBeInTheDocument();
+        });
+
+        it('does not displays the second cosubmission input if there is no initial value for cosubmission[1]', () => {
+            const { getByLabelText } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            cosubmission: ['some value'],
+                        },
+                    }}
+                />,
+            );
+            expect(() => getByLabelText('details.second-cosubmission-title-label')).toThrow();
+        });
+
+        it('displays the second cosubmission input if there is an initial value for cosubmission[1]', () => {
+            const { getByLabelText } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: 0,
+                        manuscriptDetails: {
+                            cosubmission: [null, 'second test value'],
+                        },
+                    }}
+                />,
+            );
+            expect(getByLabelText('details.second-cosubmission-title-label')).toBeInTheDocument();
+        });
     });
 });

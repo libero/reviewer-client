@@ -38,9 +38,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
             secondCosubmissionTitle,
         },
     });
-    const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(
-        !!firstCosubmissionTitle && !!secondCosubmissionTitle,
-    );
+    const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
 
