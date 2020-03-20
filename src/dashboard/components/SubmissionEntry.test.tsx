@@ -11,7 +11,9 @@ describe('SubmissionEntry', (): void => {
     const mockSubmission: Submission = {
         author: undefined,
         id: 'someId',
-        title: 'testSubmission',
+        manuscriptDetails: {
+            title: 'testSubmission',
+        },
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
@@ -19,7 +21,9 @@ describe('SubmissionEntry', (): void => {
 
     const mockSubmissionNoTitle: Submission = {
         id: 'someId',
-        title: '',
+        manuscriptDetails: {
+            title: '',
+        },
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
@@ -28,7 +32,9 @@ describe('SubmissionEntry', (): void => {
 
     const getMockSubmissionForStatus = (status: string): Submission => ({
         id: 'someId',
-        title: '',
+        manuscriptDetails: {
+            title: '',
+        },
         lastStepVisited: 'someStep',
         status: status,
         updated: new Date().getTime(),
@@ -40,7 +46,9 @@ describe('SubmissionEntry', (): void => {
         date.setDate(new Date().getDate() - daysAgo);
         return {
             id: 'someId',
-            title: '',
+            manuscriptDetails: {
+                title: '',
+            },
             lastStepVisited: 'someStep',
             status: 'CONTINUE_SUBMISSION',
             updated: date.getTime(),
@@ -107,7 +115,9 @@ describe('SubmissionEntry', (): void => {
         const { container } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
-        expect(container.querySelector('span.submission-entry__title')).toHaveTextContent(mockSubmission.title);
+        expect(container.querySelector('span.submission-entry__title')).toHaveTextContent(
+            mockSubmission.manuscriptDetails.title,
+        );
     });
 
     it('should render the correct title if the submission has none', (): void => {
