@@ -4,7 +4,9 @@ export const getSubmissionQuery = gql`
     query GetSubmission($id: ID!) {
         getSubmission(id: $id) {
             id
-            title
+            manuscriptDetails {
+                title
+            }
             updated
             author {
                 firstName
@@ -46,6 +48,21 @@ export const uploadManuscriptMutation = gql`
             manuscriptFile {
                 filename
                 url
+            }
+        }
+    }
+`;
+
+export const saveDetailsPageMutation = gql`
+    mutation SaveDetailsPage($id: ID!, $details: ManuscriptDetailsInput!) {
+        saveDetailsPage(id: $id, details: $details) {
+            id
+            manuscriptDetails {
+                title
+                subjects
+                previouslyDiscussed
+                previouslySubmitted
+                cosubmission
             }
         }
     }

@@ -24,7 +24,9 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
             >
                 <div className="submission-entry__content">
                     <span className={`submission-entry__title submission-entry__title--${status}`}>
-                        {submission.title.length !== 0 ? submission.title : '(no title)'}
+                        {submission.manuscriptDetails && submission.manuscriptDetails.title.length !== 0
+                            ? submission.manuscriptDetails.title
+                            : '(no title)'}
                     </span>
                     <div className={`submission-entry__link_text submission-entry__link_text--${status}`}>
                         <span>Continue Submission</span>
@@ -42,7 +44,9 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                     <h2>Confirm delete submission?</h2>
                     <p>
                         Your submission &quot;
-                        {submission.title.length !== 0 ? submission.title : '(no title)'}
+                        {submission.manuscriptDetails && submission.manuscriptDetails.title.length !== 0
+                            ? submission.manuscriptDetails.title
+                            : '(no title)'}
                         &quot; will be deleted permanently
                     </p>
                 </Modal>

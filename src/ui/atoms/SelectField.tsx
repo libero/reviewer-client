@@ -4,8 +4,7 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import Select, { components } from 'react-select';
 import { IndicatorProps } from 'react-select/src/components/indicators';
 import { ValueType } from 'react-select/src/types';
-import { RHFInput } from 'react-hook-form-input';
-import { ValidationOptions } from 'react-hook-form-input/dist/types';
+import { Control, Controller } from 'react-hook-form';
 
 export interface Value {
     label: string;
@@ -24,7 +23,8 @@ interface Props {
     defaultValue?: Value;
     onChange?(value: ValueType<Value>): void;
     formComponent?: boolean;
-    register?: (ref: unknown, rules: ValidationOptions) => (name: string) => void;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    control?: Control<Record<string, any>>;
     setValue?: (name: string, value: unknown, trigger?: boolean) => void;
     className?: string;
 }
@@ -45,7 +45,7 @@ const SelectField = ({
     searchable,
     onChange,
     formComponent = false,
-    register,
+    control,
     setValue,
     className,
 }: Props): JSX.Element => {
@@ -68,7 +68,7 @@ const SelectField = ({
             <label id={`${id}-label`} className="typography__label typography__label--primary">
                 {labelText}
             </label>
-            {formComponent ? <RHFInput as={select} name={id} register={register} setValue={setValue} /> : select}
+            {formComponent ? <Controller as={select} name={id} control={control} setValue={setValue} /> : select}
             <span
                 className={`typography__label typography__label--helper-text ${
                     invalid ? 'typography__label--error' : 'typography__label--secondary'

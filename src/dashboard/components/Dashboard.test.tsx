@@ -12,7 +12,9 @@ const mockMutation = jest.fn().mockImplementation(
             data: {
                 startSubmission: {
                     id: 'testid',
-                    title: '',
+                    manuscriptDetails: {
+                        title: '',
+                    },
                     updated: '2020-01-01T00:00:00.000Z',
                     articleType: 'researchArticle',
                 },
@@ -105,8 +107,20 @@ describe('Dashboard', (): void => {
     describe('Dashboard with submissions', () => {
         beforeEach((): void => {
             submissions = [
-                { id: 'A', title: 'Submission - A', updated: Date.now() },
-                { id: 'B', title: 'Submission - B', updated: Date.now() },
+                {
+                    id: 'A',
+                    manuscriptDetails: {
+                        title: 'Submission - A',
+                    },
+                    updated: Date.now(),
+                },
+                {
+                    id: 'B',
+                    manuscriptDetails: {
+                        title: 'Submission - B',
+                    },
+                    updated: Date.now(),
+                },
             ];
         });
         it('should render the standard dashboard page if there are submissions', async (): Promise<void> => {

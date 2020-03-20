@@ -4,7 +4,9 @@ export const getSubmissionsQuery = gql`
     query GetSubmissions {
         getSubmissions {
             id
-            title
+            manuscriptDetails {
+                title
+            }
             updated
         }
     }
@@ -14,7 +16,9 @@ export const startSubmissionMutation = gql`
     mutation StartSubmision($articleType: String!) {
         startSubmission(articleType: $articleType) {
             id
-            title
+            manuscriptDetails {
+                title
+            }
             updated
             articleType
         }
