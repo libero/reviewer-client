@@ -5,7 +5,8 @@
     "license": "MIT",
     "scripts": {
         "build": "webpack --env production",
-        "start": "webpack-dev-server --env development",
+        "start": "echo \"There is no start command as we use nginx.\" ",
+        "start:dev": "PUBLIC_CONFIG_PATH=config/config.public.json INFRA_CONFIG_PATH=config/config.infra.local.json webpack-dev-server --env development",
         "test": "jest",
         "lint": "eslint --ext .js,.ts,.tsx src/",
         "prettier": "prettier --write 'src/**/*ts?'",
