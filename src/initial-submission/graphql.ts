@@ -6,6 +6,10 @@ export const getSubmissionQuery = gql`
             id
             manuscriptDetails {
                 title
+                subjects
+                previouslyDiscussed
+                previouslySubmitted
+                cosubmission
             }
             updated
             author {
@@ -16,6 +20,13 @@ export const getSubmissionQuery = gql`
             }
             files {
                 coverLetter
+                manuscriptFile {
+                    filename
+                    url
+                }
+                supportingFiles {
+                    filename
+                }
             }
         }
     }

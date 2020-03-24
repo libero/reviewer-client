@@ -44,13 +44,15 @@ describe('File Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<FileDetailsForm initialValues={{ id: 'test' }} />);
+            render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
         }).not.toThrow();
     });
     describe('coverLetter', () => {
         it('sets coverletter initial value to initialValues.coverLetter on load', async (): Promise<void> => {
             const { container } = render(
-                <FileDetailsForm initialValues={{ id: 'test', coverLetter: 'some default value' }} />,
+                <FileDetailsForm
+                    initialValues={{ id: 'test', files: { coverLetter: 'some default value' }, updated: Date.now() }}
+                />,
             );
             expect(
                 (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
@@ -60,7 +62,7 @@ describe('File Details Form', (): void => {
         it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
             expect(
                 (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
             ).toBe('');
@@ -69,7 +71,7 @@ describe('File Details Form', (): void => {
         it('should call the save mutation with correct variables when cover letter is changed', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
             fireEvent.input(container.querySelector('.cover-letter__input'), {
                 target: { value: 'test cover letter input' },
             });
@@ -105,7 +107,7 @@ describe('File Details Form', (): void => {
             );
         };
         it('should display an idle file upload if no file stored', () => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
             expect(container.querySelector('.file-upload__dropzone--idle')).toBeInTheDocument();
         });
         it('should display a complete file upload if a file is stored', () => {
@@ -113,7 +115,10 @@ describe('File Details Form', (): void => {
                 <FileDetailsForm
                     initialValues={{
                         id: 'test',
-                        manuscriptFile: { filename: 'testfile.pdf', url: 'http://localhost/file.pdf' },
+                        updated: Date.now(),
+                        files: {
+                            manuscriptFile: { filename: 'testfile.pdf', url: 'http://localhost/file.pdf' },
+                        },
                     }}
                 />,
             );
@@ -127,7 +132,7 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -153,9 +158,12 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container, getByText } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -170,9 +178,12 @@ describe('File Details Form', (): void => {
         it('Should display a validation error if the upload file is of the wrong file type', async (): Promise<
             void
         > => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -196,7 +207,7 @@ describe('File Details Form', (): void => {
         });
 
         it('Should allow a new file to be uploaded', async (): Promise<void> => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -210,9 +221,12 @@ describe('File Details Form', (): void => {
         });
 
         it('Should clear status when a new file is dropped', async (): Promise<void> => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={{ id: 'test' }} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
