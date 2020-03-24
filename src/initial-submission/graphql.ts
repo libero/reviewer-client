@@ -6,6 +6,10 @@ export const getSubmissionQuery = gql`
             id
             manuscriptDetails {
                 title
+                subjects
+                previouslyDiscussed
+                previouslySubmitted
+                cosubmission
             }
             updated
             author {
@@ -13,6 +17,16 @@ export const getSubmissionQuery = gql`
                 lastName
                 email
                 institution
+            }
+            files {
+                coverLetter
+                manuscriptFile {
+                    filename
+                    url
+                }
+                supportingFiles {
+                    filename
+                }
             }
         }
     }
@@ -33,10 +47,12 @@ export const saveAuthorPageMutation = gql`
 `;
 
 export const saveFilesPageMutation = gql`
-    mutation SaveFilesPage($id: ID!, $coverLetter: String!) {
+    mutation SaveFilesPage($id: ID!, $coverLetter: String) {
         saveFilesPage(id: $id, coverLetter: $coverLetter) {
             id
-            coverLetter
+            files {
+                coverLetter
+            }
         }
     }
 `;

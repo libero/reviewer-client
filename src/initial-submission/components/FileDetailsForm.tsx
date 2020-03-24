@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload } from '../../ui/molecules';
 import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
+import { Submission } from '../types';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -15,21 +16,13 @@ const allowedManuscriptFileTypes = [
 const maxFileSize = 104857600;
 
 interface Props {
-    initialValues?: {
-        id: string;
-        coverLetter?: string;
-        manuscriptFile?: {
-            filename: string;
-            url: string;
-        };
-    };
+    initialValues?: Submission;
 }
 
-// TODO: remove default initialValues object once we enforce fetching of submission in SubmissionWizard see https://github.com/libero/reviewer-client/issues/138
-const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const { register, watch } = useForm({
         defaultValues: {
-            coverLetter: initialValues.coverLetter,
+            coverLetter: initialValues.files ? initialValues.files.coverLetter : '',
         },
     });
 
@@ -45,11 +38,11 @@ const FileDetailsForm = ({ initialValues = { id: '' } }: Props): JSX.Element => 
     }>({});
 
     useEffect(() => {
-        if (initialValues.manuscriptFile) {
+        if (initialValues.files && initialValues.files.manuscriptFile) {
             setManuscriptStatus({
                 fileStored: {
-                    fileName: initialValues.manuscriptFile.filename,
-                    previewLink: initialValues.manuscriptFile.url,
+                    fileName: initialValues.files.manuscriptFile.filename,
+                    previewLink: initialValues.files.manuscriptFile.url,
                 },
             });
         }

@@ -7,6 +7,18 @@ export interface Submission {
     status?: string;
     author?: AuthorDetails;
     manuscriptDetails?: ManuscriptDetails;
+    files?: FileDetails;
+}
+
+export interface File {
+    filename: string;
+    url?: string;
+}
+
+export interface FileDetails {
+    coverLetter?: string;
+    manuscriptFile?: File | null;
+    supportingFiles?: Array<File>;
 }
 
 export interface AuthorDetails {
