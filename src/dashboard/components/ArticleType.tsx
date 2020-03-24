@@ -14,15 +14,15 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
     const articleTypes = [
         {
             label: t('article-type:research-article.label'),
-            value: 'researchArticle',
+            value: 'research-article',
         },
         {
-            label: t('article-type:feature-article.label'),
-            value: 'featureArticle',
+            label: t('article-type:feature.label'),
+            value: 'feature',
         },
         {
             label: t('article-type:research-advance.label'),
-            value: 'researchAdvance',
+            value: 'research-advance',
         },
     ];
     const researchArticleCopy = (
@@ -46,13 +46,13 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
     const featureArticleCopy = (
         <Fragment>
             <Paragraph type="writing" secondary>
-                {t('article-type:feature-article.paragraph-1')}
+                {t('article-type:feature.paragraph-1')}
             </Paragraph>
             <Paragraph type="writing" secondary>
-                {t('article-type:feature-article.paragraph-2')}
+                {t('article-type:feature.paragraph-2')}
             </Paragraph>
             <Paragraph type="writing" secondary>
-                {t('article-type:feature-article.paragraph-3')}
+                {t('article-type:feature.paragraph-3')}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
@@ -81,9 +81,9 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
         </Fragment>
     );
     const descriptionTypeMap: Record<string, JSX.Element> = {
-        researchArticle: researchArticleCopy,
-        featureArticle: featureArticleCopy,
-        researchAdvance: researchAdvanceCopy,
+        'research-article': researchArticleCopy,
+        feature: featureArticleCopy,
+        'research-advance': researchAdvanceCopy,
     };
     const [selectedArticleType, setSelectedArticleType] = useState<Value>(articleTypes[0]);
 
