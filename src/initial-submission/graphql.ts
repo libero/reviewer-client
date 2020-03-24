@@ -14,6 +14,9 @@ export const getSubmissionQuery = gql`
                 email
                 institution
             }
+            files {
+                coverLetter
+            }
         }
     }
 `;
@@ -33,10 +36,12 @@ export const saveAuthorPageMutation = gql`
 `;
 
 export const saveFilesPageMutation = gql`
-    mutation SaveFilesPage($id: ID!, $coverLetter: String!) {
+    mutation SaveFilesPage($id: ID!, $coverLetter: String) {
         saveFilesPage(id: $id, coverLetter: $coverLetter) {
             id
-            coverLetter
+            files {
+                coverLetter
+            }
         }
     }
 `;
