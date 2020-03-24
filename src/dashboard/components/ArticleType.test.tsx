@@ -2,7 +2,7 @@ import { cleanup, render, fireEvent, RenderResult, waitForElement } from '@testi
 import ArticleType from './ArticleType';
 import React from 'react';
 
-describe('SubmissonWizard', (): void => {
+describe('SubmissionWizard', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
@@ -25,10 +25,10 @@ describe('SubmissonWizard', (): void => {
             <ArticleType onCancel={(): void => {}} onConfirm={(): void => {}} loading={false} />,
         );
         fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
-        await waitForElement((): Element => getByText('feature-article.label'));
-        fireEvent.click(getByText('feature-article.label'));
-        expect(container.querySelector('.select-field__single-value').textContent).toBe('feature-article.label');
-        expect(getByText('feature-article.paragraph-1')).toBeInTheDocument();
+        await waitForElement((): Element => getByText('feature.label'));
+        fireEvent.click(getByText('feature.label'));
+        expect(container.querySelector('.select-field__single-value').textContent).toBe('feature.label');
+        expect(getByText('feature.paragraph-1')).toBeInTheDocument();
     });
 
     it('should call the cancel callback', (): void => {
@@ -42,7 +42,7 @@ describe('SubmissonWizard', (): void => {
         const callback = jest.fn();
         const { getByText } = render(<ArticleType onConfirm={callback} onCancel={(): void => {}} loading={false} />);
         fireEvent.click(getByText('confirm-button'));
-        expect(callback).toHaveBeenCalledWith('researchArticle');
+        expect(callback).toHaveBeenCalledWith('research-article');
     });
 
     it('should call the callback with the selected article type as the argument', async (): Promise<void> => {
@@ -51,10 +51,10 @@ describe('SubmissonWizard', (): void => {
             <ArticleType onConfirm={callback} onCancel={(): void => {}} loading={false} />,
         );
         fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
-        await waitForElement((): Element => getByText('feature-article.label'));
-        fireEvent.click(getByText('feature-article.label'));
+        await waitForElement((): Element => getByText('feature.label'));
+        fireEvent.click(getByText('feature.label'));
         fireEvent.click(getByText('confirm-button'));
-        expect(callback).toHaveBeenCalledWith('featureArticle');
+        expect(callback).toHaveBeenCalledWith('feature');
     });
 
     it('should show the loading spinner when loading is set to true', (): void => {

@@ -16,7 +16,7 @@ const mockMutation = jest.fn().mockImplementation(
                         title: '',
                     },
                     updated: '2020-01-01T00:00:00.000Z',
-                    articleType: 'researchArticle',
+                    articleType: 'research-article',
                 },
             },
         }),
