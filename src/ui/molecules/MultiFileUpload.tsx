@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
 import Delete from '@material-ui/icons/Delete';
@@ -23,6 +23,7 @@ interface Props {
     files?: FileState[];
     onUpload: (files: FileList) => void;
     onDelete: (index: number) => void;
+    disableUpload?: boolean;
 }
 
 interface FileItemProps extends FileState {
@@ -77,7 +78,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
     );
 };
 
-const MultiFileUpload = ({ files = [], onUpload, onDelete }: Props): JSX.Element => {
+const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
         <div className="multifile-upload">
@@ -88,20 +89,28 @@ const MultiFileUpload = ({ files = [], onUpload, onDelete }: Props): JSX.Element
                     })}
                 </div>
             ) : null}
-            <label
-                id="add-computer-button"
-                htmlFor="multiFileUpload"
-                className="multifile-upload__label typography__body--link"
-            >
-                {files.length ? t('multifile-upload.label-files') : t('multifile-upload.label-no-files')}
-            </label>
-            <input
-                id="multiFileUpload"
-                type="file"
-                multiple={true}
-                className="multifile-upload__input"
-                onChange={(event: React.FormEvent<HTMLInputElement>): void => onUpload(event.currentTarget.files)}
-            />
+            {disableUpload ? null : (
+                <Fragment>
+                    <label
+                        id="add-computer-button"
+                        htmlFor="multiFileUpload"
+                        className={`multifile-upload__label ${
+                            files.length ? '' : 'multifile-upload__label--no-files '
+                        }typography__body--link`}
+                    >
+                        {files.length ? t('multifile-upload.label-files') : t('multifile-upload.label-no-files')}
+                    </label>
+                    <input
+                        id="multiFileUpload"
+                        type="file"
+                        multiple={true}
+                        className="multifile-upload__input"
+                        onChange={(event: React.FormEvent<HTMLInputElement>): void =>
+                            onUpload(event.currentTarget.files)
+                        }
+                    />
+                </Fragment>
+            )}
         </div>
     );
 };

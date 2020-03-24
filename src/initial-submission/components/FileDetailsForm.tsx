@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
-import { CoverLetter, FileUpload } from '../../ui/molecules';
+import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
@@ -12,6 +12,7 @@ const allowedManuscriptFileTypes = [
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/msword',
 ];
+const maxSupportingFiles = 10;
 
 const maxFileSize = 104857600;
 
@@ -37,6 +38,14 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         error?: 'multiple' | 'validation' | 'server';
     }>({});
 
+    const [supportingFilesStatus, setSupportingFilesStatus] = useState<
+        Array<{
+            fileStored?: {};
+            uploadInProgress?: {};
+            error?: 'multiple' | 'validation' | 'server';
+        }>
+    >();
+
     useEffect(() => {
         if (initialValues.files && initialValues.files.manuscriptFile) {
             setManuscriptStatus({
@@ -47,6 +56,18 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             });
         }
     }, []);
+
+    const onSupportingFileUpload = (files: File[]): void => {
+        // validate (are there 10 successfully uploaded supporting files?)
+        if (files.length + supportingFilesStatus.filter(fileStatus => !fileStatus.error).length > maxSupportingFiles) {
+            // trim files and upload first n files up to total 10
+            //
+        }
+        // set passed files to uploading state
+        // call upload mutation
+        // .then set files to returned successful files
+        // .catch set files to error state
+    };
 
     const onManuscriptUpload = (files: File[]): void => {
         if (!allowedManuscriptFileTypes.includes(files[0].type) || files[0].size > maxFileSize) {
@@ -127,13 +148,10 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 full submission stage if necessary.
             </span>
             <div className="supporting-files">
-                <label className="typography__small typography__small--link" htmlFor="supporting-files">
-                    Add supporting files
-                </label>
-                <input id="supporting-files" className="supporting-files__input" type="file" />
+                <MultiFileUpload onUpload={() => {}} onDelete={() => {}} />
             </div>
         </div>
     );
-}; //TODO add supporting files component
+};
 
 export default FileDetailsForm;

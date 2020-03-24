@@ -111,6 +111,28 @@ describe('MultiFileUpload', () => {
         expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(3);
     });
 
+    it('adds multifile-upload__label--no-files when there are no files', (): void => {
+        const { container, rerender } = render(
+            <MultiFileUpload
+                files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } }]}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelector('.multifile-upload__label--no-files')).toBeNull();
+        rerender(<MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} />);
+        expect(container.querySelector('.multifile-upload__label--no-files')).toBeInTheDocument();
+    });
+
+    it('does not render the label or input if disableUpload is true', (): void => {
+        const { container, rerender } = render(<MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} />);
+        expect(container.querySelector('.multifile-upload__label')).toBeInTheDocument();
+        expect(container.querySelector('.multifile-upload__input')).toBeInTheDocument();
+        rerender(<MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} disableUpload={true} />);
+        expect(container.querySelector('.multifile-upload__label')).toBeNull();
+        expect(container.querySelector('.multifile-upload__input')).toBeNull();
+    });
+
     describe('FileItem', (): void => {
         it('shows the correct UploadProgress for each item', () => {
             const { container } = render(
