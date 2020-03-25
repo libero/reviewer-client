@@ -3,6 +3,9 @@ import React, { TextareaHTMLAttributes } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 
+//TODO: put this in config
+const maxSupportingFiles = 10;
+
 const mutationMock = jest.fn();
 
 jest.mock('../utils/autosave-decorator', () => ({
@@ -236,6 +239,112 @@ describe('File Details Form', (): void => {
 
             await dropFileEvent(createFile('application/pdf', 'file2.pdf'), dropzone);
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+        });
+    });
+
+    describe('SupportingFiles upload', () => {
+        it('displays initialValues supporting files on load', () => {
+            const { container, getByText } = render(
+                <FileDetailsForm
+                    initialValues={{
+                        id: 'test',
+                        updated: Date.now(),
+                        files: {
+                            supportingFiles: [
+                                {
+                                    filename: 'File1.png',
+                                },
+                                {
+                                    filename: 'File2.png',
+                                },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+            expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(2);
+            expect(getByText('File1.png')).toBeInTheDocument();
+            expect(getByText('File2.png')).toBeInTheDocument();
+        });
+        it('queues a selected file for upload', async (): Promise<void> => {
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+
+            const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
+            const fileInput = container.querySelector('.multifile-upload__input');
+            Object.defineProperty(fileInput, 'files', {
+                value: [file],
+            });
+            await fireEvent.change(fileInput);
+            expect(getByText('supercoolfile.png')).toBeInTheDocument();
+        });
+        describe('only allows for ${maxSupportingFiles}', () => {
+            it('when there are no existing supporting files', async (): Promise<void> => {
+                const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+                    wrapper: routerWrapper(),
+                });
+
+                const fileList = [];
+                for (let fileCount = 0; fileCount < maxSupportingFiles + 1; fileCount++) {
+                    fileList.push(new File(['§§§'], `supercoolfile_${fileCount}.png`, { type: 'image/png' }));
+                }
+                expect(fileList.length).toBeGreaterThan(maxSupportingFiles);
+
+                const fileInput = container.querySelector('.multifile-upload__input');
+                Object.defineProperty(fileInput, 'files', {
+                    value: fileList,
+                });
+                await fireEvent.change(fileInput);
+                expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
+                    maxSupportingFiles,
+                );
+            });
+            it('when there are existing supporting files', async (): Promise<void> => {
+                const { container } = render(
+                    <FileDetailsForm
+                        initialValues={{
+                            id: 'test',
+                            updated: Date.now(),
+                            files: {
+                                supportingFiles: [
+                                    {
+                                        filename: 'File1.png',
+                                    },
+                                    {
+                                        filename: 'File2.png',
+                                    },
+                                ],
+                            },
+                        }}
+                    />,
+                    {
+                        wrapper: routerWrapper(),
+                    },
+                );
+                expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(2);
+
+                const fileList = [];
+                for (let fileCount = 0; fileCount < maxSupportingFiles; fileCount++) {
+                    fileList.push(new File(['§§§'], `supercoolfile_${fileCount}.png`, { type: 'image/png' }));
+                }
+                expect(fileList).toHaveLength(maxSupportingFiles);
+
+                const fileInput = container.querySelector('.multifile-upload__input');
+                Object.defineProperty(fileInput, 'files', {
+                    value: fileList,
+                });
+                await fireEvent.change(fileInput);
+                expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
+                    maxSupportingFiles,
+                );
+            });
         });
     });
 });

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
-import { CoverLetter, FileUpload } from '../../ui/molecules';
+import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
+import { FileState } from '../../ui/molecules/MultiFileUpload';
 import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
@@ -12,6 +13,7 @@ const allowedManuscriptFileTypes = [
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/msword',
 ];
+const maxSupportingFiles = 10;
 
 const maxFileSize = 104857600;
 
@@ -36,6 +38,19 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         uploadInProgress?: {};
         error?: 'multiple' | 'validation' | 'server';
     }>({});
+    //TODO: We should set initialValueshere, not in useEffect.
+
+    const getInitialSupportigFiles = (): FileState[] => {
+        if (!initialValues.files || !initialValues.files.supportingFiles) return [];
+        return initialValues.files.supportingFiles.map(file => ({
+            fileStored: {
+                fileName: file.filename,
+            },
+        }));
+    };
+    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportigFiles());
+
+    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
     useEffect(() => {
         if (initialValues.files && initialValues.files.manuscriptFile) {
@@ -47,6 +62,33 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             });
         }
     }, []);
+
+    const onSupportingFileUpload = (files: FileList): void => {
+        const filesListArray = Array.prototype.slice.call(files);
+        const filesStoredCount = supportingFilesStatus.filter(fileStatus => !fileStatus.error).length;
+        // disable upload while uploading
+        setSupportingUploadDisabled(true);
+
+        let filesToStore = filesListArray;
+        if (filesListArray.length + filesStoredCount > maxSupportingFiles) {
+            filesToStore = filesListArray.slice(0, maxSupportingFiles - filesStoredCount);
+        }
+
+        setSupportingFilesStatus([
+            ...supportingFilesStatus,
+            ...filesToStore.map((file: File) => ({
+                uploadInProgress: {
+                    progress: 0,
+                    fileName: file.name,
+                },
+            })),
+        ]);
+
+        // create a queue of individual uploadSupportingFile requests to be exectuted syncronously
+        // call upload mutation
+        // .then set files to returned successful files
+        // .catch set files to error state
+    };
 
     const onManuscriptUpload = (files: File[]): void => {
         if (!allowedManuscriptFileTypes.includes(files[0].type) || files[0].size > maxFileSize) {
@@ -127,13 +169,15 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 full submission stage if necessary.
             </span>
             <div className="supporting-files">
-                <label className="typography__small typography__small--link" htmlFor="supporting-files">
-                    Add supporting files
-                </label>
-                <input id="supporting-files" className="supporting-files__input" type="file" />
+                <MultiFileUpload
+                    onUpload={onSupportingFileUpload}
+                    onDelete={(): void => {}}
+                    files={supportingFilesStatus}
+                    disableUpload={supportingUploadDisabled}
+                />
             </div>
         </div>
     );
-}; //TODO add supporting files component
+};
 
 export default FileDetailsForm;
