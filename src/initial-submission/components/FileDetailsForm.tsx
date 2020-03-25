@@ -162,7 +162,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             <div className="supporting-files">
                 <MultiFileUpload
                     onUpload={onSupportingFileUpload}
-                    onDelete={() => {}}
+                    onDelete={(): void => {}}
                     files={supportingFilesStatus}
                     disableUpload={supportingUploadDisabled}
                 />
