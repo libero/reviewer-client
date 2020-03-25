@@ -2,7 +2,6 @@ import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
 import React, { TextareaHTMLAttributes } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
-import { debug } from 'webpack';
 
 //TODO: put this in config
 const maxSupportingFiles = 10;

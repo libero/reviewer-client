@@ -84,6 +84,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             })),
         ]);
 
+        // create a queue of individual uploadSupportingFile requests to be exectuted syncronously
         // call upload mutation
         // .then set files to returned successful files
         // .catch set files to error state
