@@ -10,7 +10,6 @@ type UploadInProgress = {
 };
 type FileStored = {
     fileName: string;
-    id: string;
 };
 
 export type FileState = {

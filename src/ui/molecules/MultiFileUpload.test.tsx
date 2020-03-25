@@ -101,8 +101,8 @@ describe('MultiFileUpload', () => {
             <MultiFileUpload
                 files={[
                     { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 } },
-                    { fileStored: { fileName: 'File 2.pdf', id: '1' } },
-                    { fileStored: { fileName: 'File 3.pdf', id: '2' } },
+                    { fileStored: { fileName: 'File 2.pdf' } },
+                    { fileStored: { fileName: 'File 3.pdf' } },
                 ]}
                 onUpload={jest.fn()}
                 onDelete={jest.fn()}
@@ -139,7 +139,7 @@ describe('MultiFileUpload', () => {
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
-                        { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                        { fileStored: { fileName: 'File 2.pdf' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
                     ]}
                     onUpload={jest.fn()}
@@ -158,7 +158,7 @@ describe('MultiFileUpload', () => {
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
-                        { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                        { fileStored: { fileName: 'File 2.pdf' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
                     ]}
                     onUpload={jest.fn()}
@@ -174,7 +174,7 @@ describe('MultiFileUpload', () => {
         it('uses fileStored name when FileItem is in COMPLETE state', () => {
             const { container } = render(
                 <MultiFileUpload
-                    files={[{ fileStored: { fileName: 'File 2.pdf', id: '1' } }]}
+                    files={[{ fileStored: { fileName: 'File 2.pdf' } }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
@@ -209,7 +209,7 @@ describe('MultiFileUpload', () => {
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
-                        { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                        { fileStored: { fileName: 'File 2.pdf' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
                     ]}
                     onUpload={jest.fn()}
@@ -284,7 +284,7 @@ describe('MultiFileUpload', () => {
         it('displays delete icon for COMPLETE items', () => {
             const { container } = render(
                 <MultiFileUpload
-                    files={[{ fileStored: { fileName: 'File 2.pdf', id: '1' } }]}
+                    files={[{ fileStored: { fileName: 'File 2.pdf' } }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
@@ -309,7 +309,7 @@ describe('MultiFileUpload', () => {
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'validation' },
-                        { fileStored: { fileName: 'File 2.pdf', id: '1' } },
+                        { fileStored: { fileName: 'File 2.pdf' } },
                     ]}
                     onUpload={jest.fn()}
                     onDelete={mockOnDelete}
