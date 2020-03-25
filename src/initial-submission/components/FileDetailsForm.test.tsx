@@ -286,7 +286,7 @@ describe('File Details Form', (): void => {
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
         describe('only allows for ${maxSupportingFiles}', () => {
-            it('when there areno existing supporting files', async (): Promise<void> => {
+            it('when there are no existing supporting files', async (): Promise<void> => {
                 const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
                     wrapper: routerWrapper(),
                 });
