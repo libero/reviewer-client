@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
+import { saveFilesPageMutation, uploadManuscriptMutation, uploadSupportingFileMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
 
@@ -31,16 +31,22 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const [saveCallback] = useMutation(saveFilesPageMutation);
 
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
+    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
 
-    // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
+    // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
+    // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
     const [manuscriptStatus, setManuscriptStatus] = useState<{
         fileStored?: {};
         uploadInProgress?: {};
         error?: 'multiple' | 'validation' | 'server';
-    }>({});
-    //TODO: We should set initialValueshere, not in useEffect.
+    }>({
+        fileStored: {
+            fileName: initialValues.files.manuscriptFile.filename,
+            previewLink: initialValues.files.manuscriptFile.url,
+        },
+    });
 
-    const getInitialSupportigFiles = (): FileState[] => {
+    const getInitialSupportingFiles = (): FileState[] => {
         if (!initialValues.files || !initialValues.files.supportingFiles) return [];
         return initialValues.files.supportingFiles.map(file => ({
             fileStored: {
@@ -48,22 +54,83 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             },
         }));
     };
-    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportigFiles());
+    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (initialValues.files && initialValues.files.manuscriptFile) {
-            setManuscriptStatus({
-                fileStored: {
-                    fileName: initialValues.files.manuscriptFile.filename,
-                    previewLink: initialValues.files.manuscriptFile.url,
+    /*
+interface FileList {
+    readonly length: number;
+    item(index: number): File | null;
+    [index: number]: File;
+} */
+    function* fileUploadInitializer(files: File[]): Generator<{ uploadPromise: Promise<File>; fileIndex: number }> {
+        for (let fileIndex = 0; fileIndex < files.length; ) {
+            const value = uploadSupportingFileMutation({
+                variables: {
+                    id: initialValues.id,
+                    file: files[fileIndex],
+                    fileSize: files[fileIndex].size,
                 },
             });
+            yield {
+                uploadPromise: value,
+                fileIndex: fileIndex,
+            };
+            fileIndex += 1;
         }
-    }, []);
+    }
 
-    const onSupportingFileUpload = (files: FileList): void => {
+    // fileUploadInitializer - Generator function that iterates over the file list - starting the upload process.
+    // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
+    //                           maintaining the state of the files.
+
+    const uploadSupportingFiles = (files: Array<File>): void => {
+        const iterator = fileUploadInitializer(files);
+
+        const loop = (result: IteratorResult<{ uploadPromise: Promise<File>; index: number }>): void => {
+            if (result.done) {
+                setSupportingUploadDisabled(false);
+            } else {
+                result.value.uploadPromise
+                    .then(data => {
+                        // update state of the file
+                        const filename = files[result.value.fileIndex].name;
+
+                        // Cory - we are here
+                        // look this up in the FileState array
+                        const state = supportingFilesStatus.find(
+                            state, index => state.uploadInProgress.fileName == filename,
+                        );
+
+                        setSupportingFilesStatus(newState);
+
+                        // old code
+                        const updatedFile = data.uploadSupportingFile.files.filter(
+                            file => file.filename === result.value.filename,
+                        )[0];
+                        this.updateFileState(
+                            result.value.fileId,
+                            {
+                                success: true,
+                                loading: false,
+                            },
+                            updatedFile.id,
+                        );
+                    })
+                    .catch(() => {
+                        this.updateFileState(result.value.fileId, {
+                            error: true,
+                            loading: false,
+                        });
+                    })
+                    .finally(() => loop(iterator.next()));
+            }
+        };
+        loop(iterator.next());
+    };
+
+    const onSupportingFilesUpload = (files: FileList): void => {
         const filesListArray = Array.prototype.slice.call(files);
         const filesStoredCount = supportingFilesStatus.filter(fileStatus => !fileStatus.error).length;
         // disable upload while uploading
@@ -84,7 +151,8 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             })),
         ]);
 
-        // create a queue of individual uploadSupportingFile requests to be exectuted syncronously
+        uploadSupportingFiles(filesToStore);
+        // create a queue of individual uploadSupportingFile requests to be executed synchronously.
         // call upload mutation
         // .then set files to returned successful files
         // .catch set files to error state
