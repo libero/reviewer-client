@@ -3,6 +3,7 @@ import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
+import { onError } from 'apollo-link-error';
 import { split, ApolloLink, Observable } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
@@ -28,24 +29,25 @@ export default (host: string): ApolloClient<unknown> => {
         };
     });
 
-    // TODO: figure out generic handler for errors
-    // const onError = ({ graphQLErrors = [], networkError }): void => {
-    //     graphQLErrors.forEach(({ message, locations, path }) =>
-    //         console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
-    //     );
-    //     if (networkError) console.log(`[Network error]: ${networkError}`);
+    const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors) {
+            graphQLErrors.forEach(({ message, locations, path }) =>
+                console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
+            );
+        }
+        if (networkError) {
+            console.log(`[Network error]: ${networkError}`);
+        }
+        const authenticationError = graphQLErrors.some(
+            error => error.extensions.code && error.extensions.code == 'UNAUTHENTICATED',
+        );
+        if (authenticationError) {
+            clearToken();
+            window.location.reload();
+        }
+    });
 
-    //     const authenticationError = graphQLErrors.some(
-    //         error => error.extensions.code && error.extensions.code == 'UNAUTHENTICATED',
-    //     );
-
-    //     if (authenticationError) {
-    //         clearToken();
-    //         window.location.reload();
-    //     }
-    // };
-
-    const httpLink = ApolloLink.from([apiLink, authLink]);
+    const httpLink = ApolloLink.from([onErrorLink, apiLink, authLink]);
 
     console.log(`${host}/graphql`.replace('http', 'ws'));
     const wsLink = new WebSocketLink({
