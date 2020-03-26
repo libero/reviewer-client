@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
+import { saveFilesPageMutation, uploadManuscriptMutation, fileUploadProgressSubscription } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
 
@@ -29,8 +29,14 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
-
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
+    const fileUploadProgress = useSubscription(fileUploadProgressSubscription, {
+        variables: { submissionId: initialValues.id },
+    });
+
+    if (fileUploadProgress.data && fileUploadProgress.data.progress !== null) {
+        console.log(fileUploadProgress);
+    }
 
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
     const [manuscriptStatus, setManuscriptStatus] = useState<{

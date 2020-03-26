@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export const getSubmissionQuery = gql`
     query GetSubmission($id: ID!) {
@@ -82,6 +82,14 @@ export const saveDetailsPageMutation = gql`
                 previouslySubmitted
                 cosubmission
             }
+        }
+    }
+`;
+
+export const fileUploadProgressSubscription = gql`
+    subscription FileUploadProgress($submissionId: ID!) {
+        fileUploadProgress(submissionId: $submissionId) {
+            percentage
         }
     }
 `;
