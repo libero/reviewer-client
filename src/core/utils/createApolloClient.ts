@@ -4,7 +4,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
 import { onError } from 'apollo-link-error';
-import { split, ApolloLink, Observable } from 'apollo-link';
+import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 
