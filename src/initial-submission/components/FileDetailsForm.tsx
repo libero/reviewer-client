@@ -40,7 +40,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     }>({});
     //TODO: We should set initialValueshere, not in useEffect.
 
-    const getInitialSupportigFiles = (): FileState[] => {
+    const getInitialSupportingFiles = (): FileState[] => {
         if (!initialValues.files || !initialValues.files.supportingFiles) return [];
         return initialValues.files.supportingFiles.map(file => ({
             fileStored: {
@@ -48,7 +48,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             },
         }));
     };
-    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportigFiles());
+    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
