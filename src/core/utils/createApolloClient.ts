@@ -47,9 +47,8 @@ export default (host: string): ApolloClient<unknown> => {
         }
     });
 
-    const httpLink = ApolloLink.from([onErrorLink, apiLink, authLink]);
+    const httpLink = ApolloLink.from([onErrorLink, authLink, apiLink]);
 
-    console.log(`${host}/graphql`.replace('http', 'ws'));
     const wsLink = new WebSocketLink({
         uri: `${host}/graphql`.replace('http', 'ws'),
         options: {
