@@ -6,6 +6,7 @@ import { FileState } from '../../ui/molecules/MultiFileUpload';
 import { saveFilesPageMutation, uploadManuscriptMutation, uploadSupportingFileMutation } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
+import { ExecutionResult } from 'graphql';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -22,9 +23,10 @@ interface Props {
 }
 
 const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+    const { files } = initialValues;
     const { register, watch } = useForm({
         defaultValues: {
-            coverLetter: initialValues.files ? initialValues.files.coverLetter : '',
+            coverLetter: files ? files.coverLetter : '',
         },
     });
 
@@ -41,14 +43,14 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         error?: 'multiple' | 'validation' | 'server';
     }>({
         fileStored: {
-            fileName: initialValues.files.manuscriptFile.filename,
-            previewLink: initialValues.files.manuscriptFile.url,
+            fileName: files && files.manuscriptFile ? files.manuscriptFile.filename : undefined,
+            previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
         },
     });
 
     const getInitialSupportingFiles = (): FileState[] => {
-        if (!initialValues.files || !initialValues.files.supportingFiles) return [];
-        return initialValues.files.supportingFiles.map(file => ({
+        if (!files || !files.supportingFiles) return [];
+        return files.supportingFiles.map(file => ({
             fileStored: {
                 fileName: file.filename,
             },
@@ -64,18 +66,20 @@ interface FileList {
     item(index: number): File | null;
     [index: number]: File;
 } */
-    function* fileUploadInitializer(files: File[]): Generator<{ uploadPromise: Promise<File>; fileIndex: number }> {
-        for (let fileIndex = 0; fileIndex < files.length; ) {
-            const value = uploadSupportingFileMutation({
-                variables: {
-                    id: initialValues.id,
-                    file: files[fileIndex],
-                    fileSize: files[fileIndex].size,
-                },
-            });
+    function* fileUploadInitializer(
+        fileToStore: { file: File; id: string }[],
+    ): Generator<{ uploadPromise: Promise<ExecutionResult>; itemId: string }> {
+        for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
+            console.log(fileToStore[fileIndex].file);
             yield {
-                uploadPromise: value,
-                fileIndex: fileIndex,
+                uploadPromise: uploadSupportingFile({
+                    variables: {
+                        id: initialValues.id,
+                        file: fileToStore[fileIndex].file,
+                        fileSize: fileToStore[fileIndex].file.size,
+                    },
+                }),
+                itemId: fileToStore[fileIndex].id,
             };
             fileIndex += 1;
         }
@@ -85,81 +89,71 @@ interface FileList {
     // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
     //                           maintaining the state of the files.
 
-    const uploadSupportingFiles = (files: Array<File>): void => {
-        const iterator = fileUploadInitializer(files);
+    const uploadSupportingFiles = (filesToStore: { file: File; id: string }[], localFilesStatus: FileState[]): void => {
+        const iterator = fileUploadInitializer(filesToStore);
 
-        const loop = (result: IteratorResult<{ uploadPromise: Promise<File>; index: number }>): void => {
+        const loop = (result: IteratorResult<{ uploadPromise: Promise<ExecutionResult>; itemId: string }>): void => {
             if (result.done) {
                 setSupportingUploadDisabled(false);
             } else {
-                result.value.uploadPromise
-                    .then(data => {
-                        // update state of the file
-                        const filename = files[result.value.fileIndex].name;
+                result.value.uploadPromise.then(() => {
+                    const stateClone = [...localFilesStatus];
 
-                        // Cory - we are here
-                        // look this up in the FileState array
-                        const state = supportingFilesStatus.find(
-                            state, index => state.uploadInProgress.fileName == filename,
-                        );
+                    const thisFilesIndex = localFilesStatus.findIndex(
+                        (state: FileState) =>
+                            state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
+                    );
 
-                        setSupportingFilesStatus(newState);
-
-                        // old code
-                        const updatedFile = data.uploadSupportingFile.files.filter(
-                            file => file.filename === result.value.filename,
-                        )[0];
-                        this.updateFileState(
-                            result.value.fileId,
-                            {
-                                success: true,
-                                loading: false,
-                            },
-                            updatedFile.id,
-                        );
-                    })
-                    .catch(() => {
-                        this.updateFileState(result.value.fileId, {
-                            error: true,
-                            loading: false,
-                        });
-                    })
-                    .finally(() => loop(iterator.next()));
+                    stateClone[thisFilesIndex] = {
+                        fileStored: {
+                            fileName: stateClone[thisFilesIndex].uploadInProgress.fileName,
+                        },
+                    };
+                    setSupportingFilesStatus(stateClone);
+                    loop(iterator.next());
+                });
             }
         };
         loop(iterator.next());
     };
 
-    const onSupportingFilesUpload = (files: FileList): void => {
-        const filesListArray = Array.prototype.slice.call(files);
+    const onSupportingFilesUpload = (filesList: FileList): void => {
+        const filesListArray = Array.prototype.slice.call(filesList);
         const filesStoredCount = supportingFilesStatus.filter(fileStatus => !fileStatus.error).length;
         // disable upload while uploading
         setSupportingUploadDisabled(true);
 
-        let filesToStore = filesListArray;
+        let trimmedFilesArray = filesListArray;
         if (filesListArray.length + filesStoredCount > maxSupportingFiles) {
-            filesToStore = filesListArray.slice(0, maxSupportingFiles - filesStoredCount);
+            trimmedFilesArray = filesListArray.slice(0, maxSupportingFiles - filesStoredCount);
         }
 
-        setSupportingFilesStatus([
+        const filesToStore = trimmedFilesArray.map((file: File) => ({
+            file,
+            id: new Date().toISOString(),
+        }));
+
+        const newSupportingFilesStatus = [
             ...supportingFilesStatus,
-            ...filesToStore.map((file: File) => ({
+            ...filesToStore.map((fileToStore: { file: File; id: string }) => ({
                 uploadInProgress: {
                     progress: 0,
-                    fileName: file.name,
+                    fileName: fileToStore.file.name,
+                    id: fileToStore.id,
                 },
             })),
-        ]);
+        ];
+        setSupportingFilesStatus(newSupportingFilesStatus);
 
-        uploadSupportingFiles(filesToStore);
+        uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
         // create a queue of individual uploadSupportingFile requests to be executed synchronously.
         // call upload mutation
         // .then set files to returned successful files
         // .catch set files to error state
     };
 
-    const onManuscriptUpload = (files: File[]): void => {
-        if (!allowedManuscriptFileTypes.includes(files[0].type) || files[0].size > maxFileSize) {
+    const onManuscriptUpload = (filesList: File[]): void => {
+        if (!allowedManuscriptFileTypes.includes(filesList[0].type) || filesList[0].size > maxFileSize) {
             setManuscriptStatus({ error: 'validation' });
             return;
         }
@@ -168,15 +162,15 @@ interface FileList {
             fileStored: manuscriptStatus.fileStored,
             uploadInProgress: {
                 progress: 0,
-                fileName: files[0].name,
+                fileName: filesList[0].name,
             },
         });
 
         uploadManuscriptFile({
             variables: {
                 id: initialValues.id,
-                file: files[0],
-                fileSize: files[0].size,
+                file: filesList[0],
+                fileSize: filesList[0].size,
             },
         })
             .then(({ data }) => {
@@ -238,7 +232,7 @@ interface FileList {
             </span>
             <div className="supporting-files">
                 <MultiFileUpload
-                    onUpload={onSupportingFileUpload}
+                    onUpload={onSupportingFilesUpload}
                     onDelete={(): void => {}}
                     files={supportingFilesStatus}
                     disableUpload={supportingUploadDisabled}
