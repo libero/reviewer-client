@@ -34,16 +34,19 @@ export default (host: string): ApolloClient<unknown> => {
             graphQLErrors.forEach(({ message, locations, path }) =>
                 console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
             );
+
+            const authenticationError = graphQLErrors.some(
+                error => error.extensions.code && error.extensions.code == 'UNAUTHENTICATED',
+            );
+
+            if (authenticationError) {
+                clearToken();
+                window.location.reload();
+            }
         }
+
         if (networkError) {
             console.log(`[Network error]: ${networkError}`);
-        }
-        const authenticationError = graphQLErrors.some(
-            error => error.extensions.code && error.extensions.code == 'UNAUTHENTICATED',
-        );
-        if (authenticationError) {
-            clearToken();
-            window.location.reload();
         }
     });
 
