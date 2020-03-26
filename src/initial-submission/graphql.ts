@@ -61,9 +61,11 @@ export const uploadManuscriptMutation = gql`
     mutation UploadManuscript($id: ID!, $file: Upload!, $fileSize: Int!) {
         uploadManuscript(id: $id, file: $file, fileSize: $fileSize) {
             id
-            manuscriptFile {
-                filename
-                url
+            files {
+                manuscriptFile {
+                    filename
+                    url
+                }
             }
         }
     }
