@@ -18,7 +18,7 @@ export default (host: string): ApolloClient<unknown> => {
 
     const authLink = setContext((_, { headers }) => {
         // get the authentication token from local storage if it exists
-        const token = localStorage.getItem('token');
+        const token = getToken();
         // return the headers to the context so httpLink can read them
         return {
             headers: {
@@ -47,6 +47,7 @@ export default (host: string): ApolloClient<unknown> => {
 
     const httpLink = ApolloLink.from([apiLink, authLink]);
 
+    console.log(`${host}/graphql`.replace('http', 'ws'));
     const wsLink = new WebSocketLink({
         uri: `${host}/graphql`.replace('http', 'ws'),
         options: {
