@@ -58,6 +58,19 @@ $circleThicknessSmall: 0.125rem;
   --progressColour: #{$colourError};
 }
 
+.upload-progress--processing {
+  animation: spin 0.75s infinite linear;
+  transform: rotate(360deg);
+  @keyframes spin {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
 .upload-progress__icon--error {
   stroke: $colourError;
   color: $colourError;
