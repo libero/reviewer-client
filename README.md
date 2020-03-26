@@ -16,6 +16,12 @@ this will start the application in a docker container with a mocked backend and 
 
 ### Run client locally on host
 
+In config.public.json, set the `client_api_url` to:
+```json
+"client_api_url": "http://localhost:3003"
+```
+this will connect the client directly to the reviewer-mocks for api requests
+
 ```
 make start_dev
 ```
