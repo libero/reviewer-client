@@ -9,7 +9,7 @@ storiesOf('ui | molecules/UploadProgress', module)
         'UploadProgress',
         (): JSX.Element => {
             const progress = number('progress', 60);
-            const status = select('Status', ['IDLE', 'UPLOADING', 'COMPLETE', 'ERROR'], 'IDLE');
+            const status = select('Status', ['IDLE', 'UPLOADING', 'PROCESSING', 'COMPLETE', 'ERROR'], 'IDLE');
             const small = boolean('Small', false);
             return <UploadProgress progress={progress} status={status} small={small} />;
         },
