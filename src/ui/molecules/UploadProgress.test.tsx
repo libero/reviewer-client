@@ -47,6 +47,12 @@ describe('UploadProgress', (): void => {
         expect(container.querySelector('.progress--0')).toBeInTheDocument();
     });
 
+    it('applies the animation class when processing', () => {
+        const { container } = render(<UploadProgress progress={0} status="PROCESSING" />);
+        expect(container.querySelector('.progress--25')).toBeInTheDocument();
+        expect(container.querySelector('.upload-progress--processing')).toBeInTheDocument();
+    });
+
     it('adds a upload-progress--small class when small prop passed', () => {
         const { container, rerender } = render(<UploadProgress />);
         expect(container.querySelector('.upload-progress--small')).not.toBeInTheDocument();

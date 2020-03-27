@@ -36,15 +36,6 @@ exports.devServer = () => ({
         overlay: true,
         hot: true,
         proxy: {
-            '/graphql': {
-                target: infraConfig.client_api_proxy_url,
-                changeOrigin: true,
-            },
-            '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
-                target: infraConfig.client_token_exchange_proxy_url,
-                pathRewrite: {'^/auth': ''},
-                changeOrigin: true, 
-            },
             '/config': {
                 bypass: function (req) {
                     // we need to check the url here again as it seems this is called

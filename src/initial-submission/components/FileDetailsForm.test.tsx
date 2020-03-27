@@ -7,6 +7,7 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 const maxSupportingFiles = 10;
 
 const mutationMock = jest.fn();
+const subscriptionMock = jest.fn();
 
 jest.mock('../utils/autosave-decorator', () => ({
     AutoSaveDecorator: (cb: () => void): void => cb(),
@@ -20,12 +21,33 @@ jest.mock('@apollo/react-hooks', () => ({
             },
         ];
     },
+    useSubscription: (): object[] => {
+        return [
+            subscriptionMock,
+            {
+                loading: false,
+            },
+        ];
+    },
 }));
 
 const createFile = (type: string, fileName: string): File =>
     new File([JSON.stringify({ ping: true })], fileName, { type });
 
 describe('File Details Form', (): void => {
+    const originalError = console.error;
+    beforeAll(() => {
+        // This is horrible but necessary to prevent console error output which isn't to do with the test scenarios see: https://github.com/libero/reviewer-client/issues/69
+        console.error = (...args: unknown[]): void => {
+            if (/connect ECONNREFUSED 127.0.0.1:80/.test(args[0] as string)) {
+                console.warn(
+                    'Suppressed connection refused console error see https://github.com/libero/reviewer-client/issues/69 for context.',
+                );
+                return;
+            }
+            originalError.call(console, ...args);
+        };
+    });
     beforeEach(() => {
         mutationMock.mockImplementation(
             () =>
