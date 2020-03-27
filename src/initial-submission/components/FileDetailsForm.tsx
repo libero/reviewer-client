@@ -174,7 +174,8 @@ interface FileList {
             },
         })
             .then(({ data }) => {
-                const { filename: fileName, url: previewLink } = data.uploadManuscript.manuscriptFile;
+                console.log(data);
+                const { filename: fileName, url: previewLink } = data.uploadManuscript.files.manuscriptFile;
 
                 setManuscriptStatus({
                     fileStored: {
@@ -183,7 +184,8 @@ interface FileList {
                     },
                 });
             })
-            .catch(() => {
+            .catch(error => {
+                console.log(error);
                 setManuscriptStatus({ error: 'server' });
             });
     };

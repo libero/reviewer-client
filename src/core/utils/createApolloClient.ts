@@ -8,10 +8,6 @@ import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 
-interface Headers {
-    authorization: string;
-}
-
 export default (host: string): ApolloClient<unknown> => {
     const apiLink = new HttpLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
