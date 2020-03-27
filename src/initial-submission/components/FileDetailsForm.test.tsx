@@ -55,7 +55,9 @@ describe('File Details Form', (): void => {
                     resolve({
                         data: {
                             uploadManuscript: {
-                                manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                                files: {
+                                    manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                                },
                             },
                         },
                     }),
@@ -157,7 +159,9 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+                wrapper: routerWrapper(),
+            });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -166,7 +170,9 @@ describe('File Details Form', (): void => {
             mutationResolve({
                 data: {
                     uploadManuscript: {
-                        manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                        files: {
+                            manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                        },
                     },
                 },
             });

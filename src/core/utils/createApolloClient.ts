@@ -7,6 +7,7 @@ import { onError } from 'apollo-link-error';
 import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
+import { createUploadLink } from 'apollo-upload-client';
 
 export default (host: string): ApolloClient<unknown> => {
     const apiLink = new HttpLink({
@@ -46,7 +47,7 @@ export default (host: string): ApolloClient<unknown> => {
         }
     });
 
-    const httpLink = ApolloLink.from([onErrorLink, authLink, apiLink]);
+    const httpLink = ApolloLink.from([onErrorLink, authLink, apiLink, createUploadLink()]);
 
     const wsLink = new WebSocketLink({
         uri: `${host}/graphql`.replace('http', 'ws'),
