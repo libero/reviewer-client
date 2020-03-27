@@ -29,6 +29,14 @@ jest.mock('@apollo/react-hooks', () => ({
             },
         ];
     },
+    useSubscription: (): object[] => {
+        return [
+            jest.fn(),
+            {
+                loading: false,
+            },
+        ];
+    },
 }));
 
 describe('SubmissionWizard', (): void => {
