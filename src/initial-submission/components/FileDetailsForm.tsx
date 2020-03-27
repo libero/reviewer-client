@@ -17,6 +17,10 @@ const maxSupportingFiles = 10;
 
 const maxFileSize = 104857600;
 
+type UploadInProgress = {
+    progress?: number;
+    fileName?: string;
+};
 interface Props {
     initialValues?: Submission;
 }
@@ -30,21 +34,31 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
-    const fileUploadProgress = useSubscription(fileUploadProgressSubscription, {
+    const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
         variables: { submissionId: initialValues.id },
     });
-
-    if (fileUploadProgress.data && fileUploadProgress.data.progress !== null) {
-        console.log(fileUploadProgress);
-    }
 
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
     const [manuscriptStatus, setManuscriptStatus] = useState<{
         fileStored?: {};
-        uploadInProgress?: {};
+        uploadInProgress?: UploadInProgress;
         error?: 'multiple' | 'validation' | 'server';
     }>({});
     //TODO: We should set initialValueshere, not in useEffect.
+
+    useEffect(() => {
+        if (!loading && uploadProgressData && uploadProgressData.fileUploadProgress !== null) {
+            if (manuscriptStatus.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename) {
+                setManuscriptStatus({
+                    fileStored: manuscriptStatus.fileStored,
+                    uploadInProgress: {
+                        ...manuscriptStatus.uploadInProgress,
+                        progress: parseInt(uploadProgressData.fileUploadProgress.percentage),
+                    },
+                });
+            }
+        }
+    }, [uploadProgressData, loading]);
 
     const getInitialSupportingFiles = (): FileState[] => {
         if (!initialValues.files || !initialValues.files.supportingFiles) return [];
