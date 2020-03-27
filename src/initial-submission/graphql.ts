@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export const getSubmissionQuery = gql`
     query GetSubmission($id: ID!) {
@@ -61,9 +61,11 @@ export const uploadManuscriptMutation = gql`
     mutation UploadManuscript($id: ID!, $file: Upload!, $fileSize: Int!) {
         uploadManuscript(id: $id, file: $file, fileSize: $fileSize) {
             id
-            manuscriptFile {
-                filename
-                url
+            files {
+                manuscriptFile {
+                    filename
+                    url
+                }
             }
         }
     }
