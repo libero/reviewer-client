@@ -70,7 +70,6 @@ interface FileList {
         fileToStore: { file: File; id: string }[],
     ): Generator<{ uploadPromise: Promise<ExecutionResult>; itemId: string }> {
         for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
-            console.log(fileToStore[fileIndex].file);
             yield {
                 uploadPromise: uploadSupportingFile({
                     variables: {
@@ -174,7 +173,6 @@ interface FileList {
             },
         })
             .then(({ data }) => {
-                console.log(data);
                 const { filename: fileName, url: previewLink } = data.uploadManuscript.files.manuscriptFile;
 
                 setManuscriptStatus({
@@ -184,8 +182,7 @@ interface FileList {
                     },
                 });
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
                 setManuscriptStatus({ error: 'server' });
             });
     };
