@@ -5,7 +5,7 @@ import Close from '@material-ui/icons/Close';
 
 interface Props {
     progress?: number;
-    status?: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
+    status?: 'IDLE' | 'UPLOADING' | 'PROCESSING' | 'COMPLETE' | 'ERROR';
     small?: boolean;
 }
 const UploadProgress = ({ progress = 0, status = 'IDLE', small }: Props): JSX.Element => {
@@ -15,15 +15,19 @@ const UploadProgress = ({ progress = 0, status = 'IDLE', small }: Props): JSX.El
                 return <Check className="upload-progress__icon--success" />;
             case 'ERROR':
                 return <Close className="upload-progress__icon--error" />;
+            case 'PROCESSING':
+                return null;
             default:
                 return <UploadIcon />;
         }
     };
+    const className = `upload-progress upload-progress--${status.toLowerCase()} progress--${
+        status === 'PROCESSING' ? 25 : status === 'UPLOADING' ? progress : status === 'IDLE' ? 0 : 100
+    } ${small ? 'upload-progress--small' : ''}`;
+
     return (
         <div
-            className={`upload-progress upload-progress--${status.toLowerCase()} progress--${
-                status === 'UPLOADING' ? progress : status === 'IDLE' ? 0 : 100
-            } ${small ? 'upload-progress--small' : ''}`}
+            className={className}
             role="progressbar"
             aria-busy={status === 'UPLOADING'}
             aria-valuemin={0}

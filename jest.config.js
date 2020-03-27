@@ -11,7 +11,7 @@ module.exports = {
     },
     globals: {
         CONFIG: {
-            API_HOST: '',
+            API_HOST: 'http://localhost',
             LOGIN_URL: '',
         },
     },
