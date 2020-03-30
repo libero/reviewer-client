@@ -46,20 +46,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     }>({});
     //TODO: We should set initialValueshere, not in useEffect.
 
-    useEffect(() => {
-        if (!loading && uploadProgressData && uploadProgressData.fileUploadProgress !== null) {
-            if (manuscriptStatus.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename) {
-                setManuscriptStatus({
-                    fileStored: manuscriptStatus.fileStored,
-                    uploadInProgress: {
-                        ...manuscriptStatus.uploadInProgress,
-                        progress: parseInt(uploadProgressData.fileUploadProgress.percentage),
-                    },
-                });
-            }
-        }
-    }, [uploadProgressData, loading]);
-
     const getInitialSupportingFiles = (): FileState[] => {
         if (!initialValues.files || !initialValues.files.supportingFiles) return [];
         return initialValues.files.supportingFiles.map(file => ({
@@ -82,6 +68,28 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             });
         }
     }, []);
+
+    useEffect(() => {
+        if (
+            !loading &&
+            uploadProgressData &&
+            uploadProgressData.fileUploadProgress !== null &&
+            typeof manuscriptStatus.uploadInProgress !== 'undefined'
+        ) {
+            if (
+                manuscriptStatus.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename &&
+                uploadProgressData.fileUploadProgress.type === 'MANUSCRIPT_SOURCE'
+            ) {
+                setManuscriptStatus({
+                    fileStored: manuscriptStatus.fileStored,
+                    uploadInProgress: {
+                        ...manuscriptStatus.uploadInProgress,
+                        progress: parseInt(uploadProgressData.fileUploadProgress.percentage),
+                    },
+                });
+            }
+        }
+    }, [uploadProgressData, loading]);
 
     const onSupportingFileUpload = (files: FileList): void => {
         const filesListArray = Array.prototype.slice.call(files);

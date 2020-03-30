@@ -91,6 +91,7 @@ export const fileUploadProgressSubscription = gql`
         fileUploadProgress(submissionId: $submissionId) {
             filename
             fileId
+            type
             percentage
         }
     }

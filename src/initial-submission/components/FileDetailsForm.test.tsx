@@ -7,7 +7,7 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 const maxSupportingFiles = 10;
 
 const mutationMock = jest.fn();
-const subscriptionMock = jest.fn();
+let subscriptionData: {};
 
 jest.mock('../utils/autosave-decorator', () => ({
     AutoSaveDecorator: (cb: () => void): void => cb(),
@@ -21,13 +21,11 @@ jest.mock('@apollo/react-hooks', () => ({
             },
         ];
     },
-    useSubscription: (): object[] => {
-        return [
-            subscriptionMock,
-            {
-                loading: false,
-            },
-        ];
+    useSubscription: (): object => {
+        return {
+            data: subscriptionData,
+            loading: false,
+        };
     },
 }));
 
@@ -61,6 +59,7 @@ describe('File Details Form', (): void => {
                     }),
                 ),
         );
+        subscriptionData = { data: null, loading: false };
     });
     afterEach(() => {
         cleanup();
@@ -150,7 +149,7 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             expect(container.querySelector('.file-upload__extra').textContent).toBe('testfile.pdf');
         });
-        it('should display inprogress upload when file dropped', async (): Promise<void> => {
+        it('should display in progress upload when file dropped', async (): Promise<void> => {
             let mutationResolve: (value?: unknown) => void;
             const mutationPromise = new Promise(resolve => {
                 mutationResolve = resolve;
@@ -261,6 +260,39 @@ describe('File Details Form', (): void => {
 
             await dropFileEvent(createFile('application/pdf', 'file2.pdf'), dropzone);
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+        });
+
+        it('should display upload progress for manuscript file', async (): Promise<void> => {
+            let mutationResolve: (value?: unknown) => void;
+            const mutationPromise = new Promise(resolve => {
+                mutationResolve = resolve;
+            });
+
+            mutationMock.mockImplementation(() => mutationPromise);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+
+            subscriptionData = {
+                fileUploadProgress: {
+                    type: 'MANUSCRIPT_SOURCE',
+                    filename: 'file.pdf',
+                    percentage: '45',
+                },
+            };
+
+            const dropzone = container.querySelector('.file-upload__dropzone');
+            await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
+
+            mutationResolve({
+                data: {
+                    uploadManuscript: {
+                        manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                    },
+                },
+            });
+
+            // check before mutation resolves, otherwise percentage will have disapeared
+            expect(container.querySelector('.file-upload__progress-percentage').textContent).toBe('45%');
+            await wait();
         });
     });
 
