@@ -71,6 +71,20 @@ export const uploadManuscriptMutation = gql`
     }
 `;
 
+export const uploadSupportingFileMutation = gql`
+    mutation UploadSupportingFile($id: ID!, $file: Upload!, $fileSize: Int!) {
+        uploadSupportingFile(id: $id, file: $file, fileSize: $fileSize) {
+            id
+            files {
+                supportingFiles {
+                    filename
+                    url
+                }
+            }
+        }
+    }
+`;
+
 export const saveDetailsPageMutation = gql`
     mutation SaveDetailsPage($id: ID!, $details: ManuscriptDetailsInput!) {
         saveDetailsPage(id: $id, details: $details) {

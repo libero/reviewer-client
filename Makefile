@@ -49,6 +49,7 @@ run_ci:
 	make stop
 
 start_dev:
+	docker pull liberoadmin/reviewer-mocks:latest
 	docker-compose up -d reviewer-mocks
 	yarn
 	yarn start:dev

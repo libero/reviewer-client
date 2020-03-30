@@ -1,5 +1,4 @@
 import ApolloClient from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
@@ -7,9 +6,10 @@ import { onError } from 'apollo-link-error';
 import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
+import { createUploadLink } from 'apollo-upload-client';
 
 export default (host: string): ApolloClient<unknown> => {
-    const apiLink = new HttpLink({
+    const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
     });
 
