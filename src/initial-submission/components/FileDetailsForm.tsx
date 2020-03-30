@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { saveFilesPageMutation, uploadManuscriptMutation, uploadSupportingFileMutation } from '../graphql';
+import { saveFilesPageMutation, uploadManuscriptMutation, uploadSupportingFileMutation, fileUploadProgressSubscription } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
 import { ExecutionResult } from 'graphql';
@@ -18,6 +18,10 @@ const maxSupportingFiles = 10;
 
 const maxFileSize = 104857600;
 
+type UploadInProgress = {
+    progress?: number;
+    fileName?: string;
+};
 interface Props {
     initialValues?: Submission;
 }
@@ -31,15 +35,18 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
-
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
     const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
+
+    const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
+        variables: { submissionId: initialValues.id },
+    });
 
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
     // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
     const [manuscriptStatus, setManuscriptStatus] = useState<{
         fileStored?: {};
-        uploadInProgress?: {};
+        uploadInProgress?: UploadInProgress;
         error?: 'multiple' | 'validation' | 'server';
     }>({
         fileStored: {
@@ -115,6 +122,28 @@ interface FileList {
         };
         loop(iterator.next());
     };
+
+    useEffect(() => {
+        if (
+            !loading &&
+            uploadProgressData &&
+            uploadProgressData.fileUploadProgress !== null &&
+            typeof manuscriptStatus.uploadInProgress !== 'undefined'
+        ) {
+            if (
+                manuscriptStatus.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename &&
+                uploadProgressData.fileUploadProgress.type === 'MANUSCRIPT_SOURCE'
+            ) {
+                setManuscriptStatus({
+                    fileStored: manuscriptStatus.fileStored,
+                    uploadInProgress: {
+                        ...manuscriptStatus.uploadInProgress,
+                        progress: parseInt(uploadProgressData.fileUploadProgress.percentage),
+                    },
+                });
+            }
+        }
+    }, [uploadProgressData, loading]);
 
     const onSupportingFilesUpload = (filesList: FileList): void => {
         const filesListArray = Array.prototype.slice.call(filesList);

@@ -99,3 +99,14 @@ export const saveDetailsPageMutation = gql`
         }
     }
 `;
+
+export const fileUploadProgressSubscription = gql`
+    subscription FileUploadProgress($submissionId: ID!) {
+        fileUploadProgress(submissionId: $submissionId) {
+            filename
+            fileId
+            type
+            percentage
+        }
+    }
+`;
