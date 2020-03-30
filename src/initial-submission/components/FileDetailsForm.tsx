@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
+import { saveFilesPageMutation, uploadManuscriptMutation, fileUploadProgressSubscription } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
 
@@ -17,6 +17,10 @@ const maxSupportingFiles = 10;
 
 const maxFileSize = 104857600;
 
+type UploadInProgress = {
+    progress?: number;
+    fileName?: string;
+};
 interface Props {
     initialValues?: Submission;
 }
@@ -29,18 +33,20 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
-
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
+    const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
+        variables: { submissionId: initialValues.id },
+    });
 
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page rerender
     const [manuscriptStatus, setManuscriptStatus] = useState<{
         fileStored?: {};
-        uploadInProgress?: {};
+        uploadInProgress?: UploadInProgress;
         error?: 'multiple' | 'validation' | 'server';
     }>({});
     //TODO: We should set initialValueshere, not in useEffect.
 
-    const getInitialSupportigFiles = (): FileState[] => {
+    const getInitialSupportingFiles = (): FileState[] => {
         if (!initialValues.files || !initialValues.files.supportingFiles) return [];
         return initialValues.files.supportingFiles.map(file => ({
             fileStored: {
@@ -48,7 +54,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             },
         }));
     };
-    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportigFiles());
+    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
@@ -62,6 +68,28 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             });
         }
     }, []);
+
+    useEffect(() => {
+        if (
+            !loading &&
+            uploadProgressData &&
+            uploadProgressData.fileUploadProgress !== null &&
+            typeof manuscriptStatus.uploadInProgress !== 'undefined'
+        ) {
+            if (
+                manuscriptStatus.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename &&
+                uploadProgressData.fileUploadProgress.type === 'MANUSCRIPT_SOURCE'
+            ) {
+                setManuscriptStatus({
+                    fileStored: manuscriptStatus.fileStored,
+                    uploadInProgress: {
+                        ...manuscriptStatus.uploadInProgress,
+                        progress: parseInt(uploadProgressData.fileUploadProgress.percentage),
+                    },
+                });
+            }
+        }
+    }, [uploadProgressData, loading]);
 
     const onSupportingFileUpload = (files: FileList): void => {
         const filesListArray = Array.prototype.slice.call(files);
