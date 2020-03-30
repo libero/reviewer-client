@@ -144,7 +144,7 @@ interface FileList {
         ];
         setSupportingFilesStatus(newSupportingFilesStatus);
 
-        // uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
+        uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
         // create a queue of individual uploadSupportingFile requests to be executed synchronously.
         // call upload mutation
         // .then set files to returned successful files
