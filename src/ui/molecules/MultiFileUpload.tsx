@@ -5,6 +5,7 @@ import Delete from '@material-ui/icons/Delete';
 
 type UploadErrors = 'multiple' | 'validation' | 'server';
 type UploadInProgress = {
+    id?: string;
     progress?: number;
     fileName?: string;
 };
