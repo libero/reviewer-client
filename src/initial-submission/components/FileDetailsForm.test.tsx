@@ -275,7 +275,9 @@ describe('File Details Form', (): void => {
             });
 
             mutationMock.mockImplementation(() => mutationPromise);
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+                wrapper: routerWrapper(),
+            });
 
             subscriptionData = {
                 fileUploadProgress: {
