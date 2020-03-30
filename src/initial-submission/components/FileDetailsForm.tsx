@@ -72,12 +72,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
-    /*
-interface FileList {
-    readonly length: number;
-    item(index: number): File | null;
-    [index: number]: File;
-} */
     function* fileUploadInitializer(
         fileToStore: { file: File; id: string }[],
     ): Generator<{ uploadPromise: Promise<ExecutionResult>; itemId: string }> {
@@ -179,10 +173,6 @@ interface FileList {
         setSupportingFilesStatus(newSupportingFilesStatus);
 
         uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
-        // create a queue of individual uploadSupportingFile requests to be executed synchronously.
-        // call upload mutation
-        // .then set files to returned successful files
-        // .catch set files to error state
     };
 
     const onManuscriptUpload = (filesList: File[]): void => {
