@@ -17,3 +17,9 @@ export const isUserAuthenticatedQuery = gql`
         isAuthenticated @client(always: true)
     }
 `;
+
+export const configQuery = gql`
+    query getConfig {
+        config @client(always: true)
+    }
+`;
