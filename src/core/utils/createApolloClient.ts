@@ -8,41 +8,7 @@ import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 
-interface Config {
-    client: {
-        majorSubjectAreas: { [key: string]: string };
-    };
-
-    login: {
-        url: string;
-        enableMock: boolean;
-        signupUrl: string;
-        legacySubmissionUrl: string;
-    };
-
-    fileUpload: {
-        maxSizeMB: number;
-    };
-
-    newrelic: {
-        licenseKey: string;
-        applicationId: string;
-    };
-
-    googleAnalytics: {
-        trackingId: string;
-    };
-
-    hotJar: {
-        enabled: boolean;
-        snippetVersion: number;
-    };
-
-    titles: { [key: string]: string };
-}
-
 export default (host: string): ApolloClient<unknown> => {
-    let config: Config;
     const apiLink = new HttpLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
     });
@@ -108,13 +74,6 @@ export default (host: string): ApolloClient<unknown> => {
             Query: {
                 isAuthenticated(): boolean {
                     return getToken() !== null;
-                },
-                async getConfig(): Promise<Config> {
-                    if (typeof config === 'undefined') {
-                        const response = await fetch(`${CONFIG.API_HOST}/config`);
-                        config = await response.json();
-                    }
-                    return config;
                 },
             },
         },
