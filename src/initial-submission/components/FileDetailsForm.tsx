@@ -3,7 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { saveFilesPageMutation, uploadManuscriptMutation, uploadSupportingFileMutation, fileUploadProgressSubscription } from '../graphql';
+import {
+    saveFilesPageMutation,
+    uploadManuscriptMutation,
+    uploadSupportingFileMutation,
+    fileUploadProgressSubscription,
+} from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
 import { ExecutionResult } from 'graphql';
