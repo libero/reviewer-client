@@ -3,13 +3,6 @@ export interface Config {
         majorSubjectAreas: { [key: string]: string };
     };
 
-    login: {
-        url: string;
-        enableMock: boolean;
-        signupUrl: string;
-        legacySubmissionUrl: string;
-    };
-
     fileUpload: {
         maxSizeMB: number;
     };
@@ -32,10 +25,11 @@ export interface Config {
 }
 
 // not throwing because error should be handled by consumer.
-export const fetchAndSetConfig = async (): Promise<void> => {
+export const fetchAndSetConfig = async (): Promise<Config> => {
     const response = await fetch(`${CONFIG.API_HOST}/config`);
     const config: Config = await response.json();
     window.localStorage.setItem('config', JSON.stringify(config));
+    return config;
 };
 
 // The assumption is we should always have the config
