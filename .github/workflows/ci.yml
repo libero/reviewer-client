@@ -105,7 +105,7 @@ jobs:
           gunzip docker-image/reviewer-client.tar.gz
           docker load -i docker-image/reviewer-client.tar
       - name: Push image
-        run: .scripts/github/push-image.sh reviewer-client
+        run: .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
