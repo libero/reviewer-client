@@ -1,0 +1,20 @@
+name: semver Tagging
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  tag-master-with-semver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: 'true'
+      - run: |
+          docker pull liberoadmin/reviewer-client:master-${{ github.sha }}
+          ./scripts/github/retag-and-push.sh reviewer-client master-${{ github.sha }}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
