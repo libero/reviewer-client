@@ -13,9 +13,10 @@ export default (host: string): ApolloClient<unknown> => {
         uri: `${host}/graphql`, // use https for secure endpoint,
     });
 
+    // get the authentication token from local storage if it exists
+    const token = getToken();
+
     const authLink = setContext((_, { headers }) => {
-        // get the authentication token from local storage if it exists
-        const token = getToken();
         // return the headers to the context so httpLink can read them
         return {
             headers: {
@@ -52,6 +53,11 @@ export default (host: string): ApolloClient<unknown> => {
         uri: `${host}/graphql`.replace('http', 'ws'),
         options: {
             reconnect: true,
+            connectionParams: {
+                headers: {
+                    Authorization: token ? `Bearer ${token}` : '',
+                },
+            },
         },
     });
 
