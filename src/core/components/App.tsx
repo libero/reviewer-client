@@ -12,11 +12,13 @@ import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { Footer } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
+import * as config from '../utils/config';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
     useEffect(() => {
+        config.fetchAndSetConfig();
         Auth.importToken();
     }, []);
     return (
