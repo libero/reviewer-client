@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
@@ -155,9 +155,13 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         }
     }, [uploadProgressData, loading]);
 
+    const filesStoredCount = useMemo(() => supportingFilesStatus.filter(fileStatus => !fileStatus.error).length, [
+        supportingFilesStatus,
+    ]);
+
     const onSupportingFilesUpload = (filesList: FileList): void => {
         const filesListArray = Array.prototype.slice.call(filesList);
-        const filesStoredCount = supportingFilesStatus.filter(fileStatus => !fileStatus.error).length;
+
         // disable upload while uploading
         setSupportingUploadDisabled(true);
 
@@ -235,7 +239,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     useEffect(() => {
         AutoSaveDecorator(onSave);
     }, [coverLetter]);
-
     return (
         <div>
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
@@ -268,7 +271,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     onUpload={onSupportingFilesUpload}
                     onDelete={(): void => {}}
                     files={supportingFilesStatus}
-                    disableUpload={supportingUploadDisabled}
+                    disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                 />
             </div>
         </div>
