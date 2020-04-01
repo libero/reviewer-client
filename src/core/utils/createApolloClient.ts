@@ -11,6 +11,7 @@ import { createUploadLink } from 'apollo-upload-client';
 export default (host: string): ApolloClient<unknown> => {
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
+        credentials: 'include',
     });
     const token = getToken();
     const authLink = setContext((_, { headers }) => {
