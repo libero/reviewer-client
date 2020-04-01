@@ -12,13 +12,13 @@ export default (host: string): ApolloClient<unknown> => {
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
     });
-
+    const token = getToken();
     const authLink = setContext((_, { headers }) => {
         // return the headers to the context so httpLink can read them
         return {
             headers: {
                 ...headers,
-                authorization: `Bearer ${getToken() || ''}`,
+                authorization: token ? `Bearer ${token}` : '',
             },
         };
     });
@@ -52,7 +52,7 @@ export default (host: string): ApolloClient<unknown> => {
             reconnect: true,
             connectionParams: {
                 headers: {
-                    Authorization: `Bearer ${getToken() || ''}`,
+                    authorization: token ? `Bearer ${token}` : '',
                 },
             },
         },
