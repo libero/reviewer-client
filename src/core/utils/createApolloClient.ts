@@ -18,13 +18,12 @@ export default (host: string): ApolloClient<unknown> => {
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
         // credentials: 'include',
     });
-    const token = getToken();
     const authLink = setContext((_, { headers }) => {
         // return the headers to the context so httpLink can read them
         return {
             headers: {
                 ...headers,
-                authorization: token ? `Bearer ${token}` : '',
+                authorization: getToken() ? `Bearer ${getToken()}` : '',
             },
         };
     });
@@ -58,7 +57,7 @@ export default (host: string): ApolloClient<unknown> => {
             reconnect: true,
             connectionParams: {
                 headers: {
-                    authorization: token ? `Bearer ${token}` : '',
+                    authorization: getToken() ? `Bearer ${getToken()}` : '',
                 },
             },
         },
