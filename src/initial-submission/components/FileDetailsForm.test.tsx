@@ -46,23 +46,7 @@ describe('File Details Form', (): void => {
             originalError.call(console, ...args);
         };
     });
-    beforeEach(() => {
-        mutationMock.mockImplementation(
-            () =>
-                new Promise(resolve =>
-                    resolve({
-                        data: {
-                            uploadManuscript: {
-                                files: {
-                                    manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
-                                },
-                            },
-                        },
-                    }),
-                ),
-        );
-        subscriptionData = { data: null, loading: false };
-    });
+    beforeEach(() => (subscriptionData = { data: null, loading: false }));
     afterEach(() => {
         cleanup();
         mutationMock.mockReset();
@@ -111,6 +95,25 @@ describe('File Details Form', (): void => {
     });
 
     describe('Manuscript Upload', () => {
+        beforeEach(() => {
+            mutationMock.mockImplementation(
+                () =>
+                    new Promise(resolve =>
+                        resolve({
+                            data: {
+                                uploadManuscript: {
+                                    files: {
+                                        manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                                    },
+                                },
+                            },
+                        }),
+                    ),
+            );
+        });
+        afterEach(() => {
+            mutationMock.mockReset();
+        });
         const dropFileEvent = async (file: File, element: Element): Promise<void> => {
             await act(
                 async (): Promise<void> => {
@@ -290,6 +293,9 @@ describe('File Details Form', (): void => {
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
 
+            // check before mutation resolves, otherwise percentage will have disapeared
+            expect(container.querySelector('.file-upload__progress-percentage').textContent).toBe('45%');
+
             mutationResolve({
                 data: {
                     uploadManuscript: {
@@ -297,14 +303,32 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-
-            // check before mutation resolves, otherwise percentage will have disapeared
-            expect(container.querySelector('.file-upload__progress-percentage').textContent).toBe('45%');
             await wait();
         });
     });
 
     describe('SupportingFiles upload', () => {
+        beforeEach(() => {
+            mutationMock.mockImplementation(
+                () =>
+                    new Promise(resolve => {
+                        resolve({
+                            data: {
+                                uploadSupportingFile: {
+                                    files: {
+                                        supportingFiles: [
+                                            { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                                        ],
+                                    },
+                                },
+                            },
+                        });
+                    }),
+            );
+        });
+        afterEach(() => {
+            mutationMock.mockReset();
+        });
         it('displays initialValues supporting files on load', () => {
             const { container, getByText } = render(
                 <FileDetailsForm
@@ -346,6 +370,108 @@ describe('File Details Form', (): void => {
             });
             await fireEvent.change(fileInput);
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
+        });
+
+        it('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
+            let mutationResolve: (value?: unknown) => void;
+            const mutationPromise = new Promise(resolve => {
+                mutationResolve = resolve;
+            });
+
+            mutationMock.mockImplementation(() => mutationPromise);
+            const { container, debug } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+
+            const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
+            const fileInput = container.querySelector('.multifile-upload__input');
+            Object.defineProperty(fileInput, 'files', {
+                value: [file],
+            });
+            await fireEvent.change(fileInput);
+            expect(container.querySelector('.multifile-upload__file-name--complete')).toBeNull();
+            expect(container.querySelector('.multifile-upload__file-status--uploading')).toBeInTheDocument();
+            mutationResolve({
+                data: {
+                    uploadSupportingFile: {
+                        files: {
+                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
+                        },
+                    },
+                },
+            });
+            await wait();
+            expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
+        });
+
+        it.only('syncronously sends upload requests when multiple files are selected', async (): Promise<void> => {
+            let mutationResolve: (value?: unknown) => void;
+
+            // This does not work currently as the first call of mutationMock is the autosave.
+            // This is a bug which causes the page to call autosave on load. We're pausing this branch until the auto save
+            // bug is fixed so we have control of the mutation promises resolving.
+            mutationMock.mockImplementation(jest.fn(() => new Promise(() => {})));
+            mutationMock.mockImplementationOnce(
+                () =>
+                    new Promise(resolve => {
+                        mutationResolve = resolve;
+                    }),
+            );
+            const { container, debug } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+
+            const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
+            const fileInput = container.querySelector('.multifile-upload__input');
+            Object.defineProperty(fileInput, 'files', {
+                value: [file, file, file],
+            });
+            await fireEvent.change(fileInput);
+            expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
+            expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(3);
+            mutationResolve({
+                data: {
+                    uploadSupportingFile: {
+                        files: {
+                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
+                        },
+                    },
+                },
+            });
+            await wait();
+            debug();
+            expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
+            expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
+            // mutationResolve({
+            //     data: {
+            //         uploadSupportingFile: {
+            //             files: {
+            //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
+            //             },
+            //         },
+            //     },
+            // });
+            // await wait();
+            // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
+            // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
+            // mutationResolve({
+            //     data: {
+            //         uploadSupportingFile: {
+            //             files: {
+            //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
+            //             },
+            //         },
+            //     },
+            // });
+            // await wait();
+            // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
+            // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
         });
         describe('only allows for ${maxSupportingFiles}', () => {
             it('when there are no existing supporting files', async (): Promise<void> => {

@@ -11,7 +11,6 @@ import {
 } from '../graphql';
 import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Submission } from '../types';
-import { ExecutionResult } from 'graphql';
 import { v4 } from 'uuid';
 
 //TODO: these should live in config
@@ -75,16 +74,16 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     function* fileUploadInitializer(
         fileToStore: { file: File; id: string }[],
-    ): Generator<{ uploadPromise: Promise<ExecutionResult>; itemId: string }> {
+    ): Generator<{ uploadPromise: {}; itemId: string }> {
         for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
             yield {
-                uploadPromise: uploadSupportingFile({
+                uploadPromise: {
                     variables: {
                         id: initialValues.id,
                         file: fileToStore[fileIndex].file,
                         fileSize: fileToStore[fileIndex].file.size,
                     },
-                }),
+                },
                 itemId: fileToStore[fileIndex].id,
             };
             fileIndex += 1;
@@ -96,7 +95,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     //                           maintaining the state of the files.
 
     function setSupportingFileState(
-        result: IteratorResult<{ uploadPromise: Promise<ExecutionResult>; itemId: string }>,
+        result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
         fileStates: FileState[],
     ) {
         return (): void => {
@@ -118,14 +117,12 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     ): void => {
         const iterator = fileUploadInitializer(filesToStore);
 
-        const loop = (
-            result: IteratorResult<{ uploadPromise: Promise<ExecutionResult>; itemId: string }>,
-            fileStates: FileState[],
-        ): void => {
+        const loop = (result: IteratorResult<{ uploadPromise: {}; itemId: string }>, fileStates: FileState[]): void => {
             if (result.done) {
                 setSupportingUploadDisabled(false);
             } else {
-                result.value.uploadPromise
+                console.log(result.value);
+                uploadSupportingFile(result.value.uploadPromise)
                     .then(setSupportingFileState(result, fileStates))
                     .then(() => loop(iterator.next(), fileStates));
             }
