@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 
 const mutationMock = jest.fn();
-jest.mock('../utils/autosave-decorator', () => ({
-    AutoSaveDecorator: (cb: () => void): void => cb(),
-}));
+
+jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
+    const initialRender = useRef(true);
+
+    useEffect(() => {
+        if (!initialRender.current) {
+            cb();
+        } else {
+            initialRender.current = false;
+        }
+    }, deps);
+});
 
 jest.mock('@apollo/react-hooks', () => ({
     useMutation: (): object[] => {
@@ -240,7 +249,7 @@ describe('DetailsForm', (): void => {
     describe('initialValues', () => {
         it('sets default values to initialValues passed', (): void => {
             const updated = Date.now();
-            render(
+            const { container } = render(
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
@@ -249,24 +258,28 @@ describe('DetailsForm', (): void => {
                             title: 'Test title',
                             previouslyDiscussed: 'Previously discussed',
                             previouslySubmitted: 'Previously submitted',
-                            cosubmission: ['Coosub1', 'Coosub2'],
+                            cosubmission: ['Cosub1', 'Cosub2'],
                             subjects: ['neuroscience'],
                         },
                     }}
                 />,
             );
-            expect(mutationMock).toBeCalledWith({
-                variables: {
-                    id: 'blah',
-                    details: {
-                        title: 'Test title',
-                        previouslyDiscussed: 'Previously discussed',
-                        previouslySubmitted: 'Previously submitted',
-                        cosubmission: ['Coosub1', 'Coosub2'],
-                        subjects: ['neuroscience'],
-                    },
-                },
-            });
+            expect((container.querySelector('input[name=title]') as HTMLInputElement).value).toBe('Test title');
+            expect((container.querySelector('textarea[name=previouslyDiscussed]') as HTMLTextAreaElement).value).toBe(
+                'Previously discussed',
+            );
+            expect((container.querySelector('textarea[name=previouslySubmitted]') as HTMLTextAreaElement).value).toBe(
+                'Previously submitted',
+            );
+            expect((container.querySelector('input[name=firstCosubmissionTitle]') as HTMLInputElement).value).toBe(
+                'Cosub1',
+            );
+            expect((container.querySelector('input[name=secondCosubmissionTitle]') as HTMLInputElement).value).toBe(
+                'Cosub2',
+            );
+            expect((container.querySelector('.select-field__multi-value__label') as HTMLInputElement).textContent).toBe(
+                'Neuroscience',
+            );
         });
 
         it('collapses all toggles by default', () => {

@@ -213,7 +213,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     const coverLetter = watch('coverLetter');
     const onSave = (): void => {
-        console.log('Saving!');
         const vars = {
             variables: {
                 id: initialValues.id,
@@ -224,8 +223,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     };
 
     useAutoSave(onSave, [coverLetter]);
-
-    useEffect(() => console.log('initialRender'), []);
 
     return (
         <div>
