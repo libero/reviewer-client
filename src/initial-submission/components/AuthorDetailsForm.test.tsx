@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import { Submission } from '../types';
+
+const mutationMock = jest.fn();
+
+jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
+    const initialRender = useRef(true);
+
+    useEffect(() => {
+        if (!initialRender.current) {
+            cb();
+        } else {
+            initialRender.current = false;
+        }
+    }, deps);
+});
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
@@ -17,7 +31,7 @@ jest.mock('@apollo/react-hooks', () => ({
     },
     useMutation: (): object[] => {
         return [
-            jest.fn(),
+            mutationMock,
             {
                 loading: false,
             },
@@ -26,7 +40,11 @@ jest.mock('@apollo/react-hooks', () => ({
 }));
 
 describe('Author Details Form', (): void => {
-    afterEach(cleanup);
+    afterEach(() => {
+        cleanup();
+        mutationMock.mockReset();
+    });
+
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
             render(<AuthorDetailsForm />);
@@ -41,8 +59,7 @@ describe('Author Details Form', (): void => {
                 email: 'joe@blogs.com',
                 institution: 'somewhere',
             },
-            id: '',
-            title: '',
+            id: 'foo',
             updated: 0,
         };
         expect(
@@ -53,7 +70,7 @@ describe('Author Details Form', (): void => {
     });
 
     it('should fill the correct boxes with author information when the text is clicked', async (): Promise<void> => {
-        const { container, getByLabelText } = render(<AuthorDetailsForm />);
+        const { container, getByLabelText } = render(<AuthorDetailsForm initialValues={{ id: 'foo', updated: 0 }} />);
         await fireEvent.click(container.querySelector('.typography__body--link'));
         expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
     });
@@ -75,5 +92,115 @@ describe('Author Details Form', (): void => {
         expect((getByLabelText('author.author-last-name') as HTMLInputElement).value).toBe('Blogs');
         expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
         expect((getByLabelText('author.institution') as HTMLInputElement).value).toBe('somewhere');
+    });
+    describe('autosave', () => {
+        it('when a first name is entered it triggers the autosave', () => {
+            const updated = Date.now();
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated,
+                    }}
+                />,
+            );
+
+            fireEvent.input(getByLabelText('author.author-first-name'), {
+                target: { value: 'test firstname' },
+            });
+
+            expect(mutationMock).toBeCalledWith({
+                variables: {
+                    id: 'blah',
+                    details: {
+                        email: '',
+                        firstName: 'test firstname',
+                        institution: '',
+                        lastName: '',
+                    },
+                },
+            });
+        });
+        it('when a last name is entered it triggers the autosave', () => {
+            const updated = Date.now();
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated,
+                    }}
+                />,
+            );
+
+            fireEvent.input(getByLabelText('author.author-last-name'), {
+                target: { value: 'test lastname' },
+            });
+
+            expect(mutationMock).toBeCalledWith({
+                variables: {
+                    id: 'blah',
+                    details: {
+                        email: '',
+                        firstName: '',
+                        institution: '',
+                        lastName: 'test lastname',
+                    },
+                },
+            });
+        });
+        it('when a email is entered it triggers the autosave', () => {
+            const updated = Date.now();
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated,
+                    }}
+                />,
+            );
+
+            fireEvent.input(getByLabelText('author.author-email'), {
+                target: { value: 'test@example.com' },
+            });
+
+            expect(mutationMock).toBeCalledWith({
+                variables: {
+                    id: 'blah',
+                    details: {
+                        email: 'test@example.com',
+                        firstName: '',
+                        institution: '',
+                        lastName: '',
+                    },
+                },
+            });
+        });
+        it('when a email is entered it triggers the autosave', () => {
+            const updated = Date.now();
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated,
+                    }}
+                />,
+            );
+
+            fireEvent.input(getByLabelText('author.institution'), {
+                target: { value: 'test institution' },
+            });
+
+            expect(mutationMock).toBeCalledWith({
+                variables: {
+                    id: 'blah',
+                    details: {
+                        email: '',
+                        firstName: '',
+                        institution: 'test institution',
+                        lastName: '',
+                    },
+                },
+            });
+        });
     });
 });

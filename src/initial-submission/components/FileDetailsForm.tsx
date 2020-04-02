@@ -9,7 +9,7 @@ import {
     uploadSupportingFileMutation,
     fileUploadProgressSubscription,
 } from '../graphql';
-import { AutoSaveDecorator } from '../utils/autosave-decorator';
+import useAutoSave from '../hooks/useAutoSave';
 import { Submission } from '../types';
 import { v4 } from 'uuid';
 
@@ -233,9 +233,8 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         saveCallback(vars);
     };
 
-    useEffect(() => {
-        AutoSaveDecorator(onSave);
-    }, [coverLetter]);
+    useAutoSave(onSave, [coverLetter]);
+
     return (
         <div>
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>

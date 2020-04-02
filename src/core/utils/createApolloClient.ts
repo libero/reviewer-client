@@ -11,14 +11,19 @@ import { createUploadLink } from 'apollo-upload-client';
 export default (host: string): ApolloClient<unknown> => {
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
+        // Adding the line below causes logs of CORS issues which prevents
+        // the dashboard from being rendered. This needs reinstating along
+        // with adding headers for Access-Control-Allow-Origin
+        //
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSNotSupportingCredentials
+        // credentials: 'include',
     });
-
     const authLink = setContext((_, { headers }) => {
         // return the headers to the context so httpLink can read them
         return {
             headers: {
                 ...headers,
-                authorization: `Bearer ${getToken() || ''}`,
+                authorization: getToken() ? `Bearer ${getToken()}` : '',
             },
         };
     });
@@ -52,7 +57,7 @@ export default (host: string): ApolloClient<unknown> => {
             reconnect: true,
             connectionParams: {
                 headers: {
-                    Authorization: `Bearer ${getToken() || ''}`,
+                    authorization: getToken() ? `Bearer ${getToken()}` : '',
                 },
             },
         },

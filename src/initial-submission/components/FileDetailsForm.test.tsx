@@ -1,5 +1,5 @@
 import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
-import React, { TextareaHTMLAttributes } from 'react';
+import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 
@@ -9,9 +9,18 @@ const maxSupportingFiles = 10;
 const mutationMock = jest.fn();
 let subscriptionData: {};
 
-jest.mock('../utils/autosave-decorator', () => ({
-    AutoSaveDecorator: (cb: () => void): void => cb(),
-}));
+jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
+    const initialRender = useRef(true);
+
+    useEffect(() => {
+        if (!initialRender.current) {
+            cb();
+        } else {
+            initialRender.current = false;
+        }
+    }, deps);
+});
+
 jest.mock('@apollo/react-hooks', () => ({
     useMutation: (): object[] => {
         return [
