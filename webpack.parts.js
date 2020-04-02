@@ -39,7 +39,7 @@ exports.devServer = () => ({
             '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
                 target: infraConfig.client_token_exchange_proxy_url,
                 pathRewrite: {'^/auth': ''},
-                changeOrigin: true, 
+                changeOrigin: true,
             },
             '/config': {
                 bypass: function (req) {
