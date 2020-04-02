@@ -6,8 +6,8 @@ import { Submission, ManuscriptDetails } from '../types';
 import { Toggle } from '../../ui/molecules';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDetailsPageMutation } from '../graphql';
-import { AutoSaveDecorator } from '../utils/autosave-decorator';
 import { Value } from '../../ui/atoms/SelectField';
+import useAutoSave from '../hooks/useAutoSave';
 
 // TODO: this should be pulled from config
 const selectOptions = [
@@ -70,9 +70,8 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
         };
         saveCallback(vars);
     };
-    useEffect(() => {
-        AutoSaveDecorator(onSave);
-    }, [
+
+    useAutoSave(onSave, [
         titleWatch,
         unmappedSubjectsWatch,
         previouslyDiscussedWatch,
@@ -80,6 +79,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
         firstCosubmissionWatch,
         secondCosubmissionWatch,
     ]);
+
     return (
         <form>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>

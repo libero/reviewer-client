@@ -9,7 +9,7 @@ import {
     uploadSupportingFileMutation,
     fileUploadProgressSubscription,
 } from '../graphql';
-import { AutoSaveDecorator } from '../utils/autosave-decorator';
+import useAutoSave from '../hooks/useAutoSave';
 import { Submission } from '../types';
 import { ExecutionResult } from 'graphql';
 
@@ -213,6 +213,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     const coverLetter = watch('coverLetter');
     const onSave = (): void => {
+        console.log('Saving!');
         const vars = {
             variables: {
                 id: initialValues.id,
@@ -222,9 +223,9 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         saveCallback(vars);
     };
 
-    useEffect(() => {
-        AutoSaveDecorator(onSave);
-    }, [coverLetter]);
+    useAutoSave(onSave, [coverLetter]);
+
+    useEffect(() => console.log('initialRender'), []);
 
     return (
         <div>
