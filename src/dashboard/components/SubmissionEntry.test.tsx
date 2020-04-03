@@ -11,6 +11,7 @@ describe('SubmissionEntry', (): void => {
     const mockSubmission: Submission = {
         author: undefined,
         id: 'someId',
+        articleType: 'research-article',
         manuscriptDetails: {
             title: 'testSubmission',
         },
@@ -24,6 +25,7 @@ describe('SubmissionEntry', (): void => {
         manuscriptDetails: {
             title: '',
         },
+        articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
@@ -35,6 +37,7 @@ describe('SubmissionEntry', (): void => {
         manuscriptDetails: {
             title: '',
         },
+        articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: status,
         updated: new Date().getTime(),
@@ -49,6 +52,7 @@ describe('SubmissionEntry', (): void => {
             manuscriptDetails: {
                 title: '',
             },
+            articleType: 'research-article',
             lastStepVisited: 'someStep',
             status: 'CONTINUE_SUBMISSION',
             updated: date.getTime(),
