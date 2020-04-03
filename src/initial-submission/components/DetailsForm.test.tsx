@@ -1,8 +1,14 @@
 import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
+import { Submission } from '../types';
 
 const mutationMock = jest.fn();
+const testInitialValues: Submission = {
+    id: 'blah',
+    articleType: '',
+    updated: Date.now(),
+};
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -34,29 +40,13 @@ describe('DetailsForm', (): void => {
     });
 
     it('should render correctly', async (): Promise<void> => {
-        const updated = Date.now();
         expect(async () => {
-            render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            render(<DetailsForm initialValues={testInitialValues} />);
         }).not.toThrow();
     });
 
     it('toggles display of second cosubmission text input when text link is clicked', () => {
-        const updated = Date.now();
-        const { container, getByText, getByLabelText } = render(
-            <DetailsForm
-                initialValues={{
-                    id: 'blah',
-                    updated,
-                }}
-            />,
-        );
+        const { container, getByText, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
         expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
         fireEvent.click(getByLabelText('details.cosubmission-toggle'));
         expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
@@ -66,15 +56,7 @@ describe('DetailsForm', (): void => {
 
     describe('autosave', () => {
         it('when a title is entered it triggers the autosave', () => {
-            const updated = Date.now();
-            const { container } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { container } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.input(container.querySelector('#title'), {
                 target: { value: 'test title' },
             });
@@ -94,15 +76,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the subjects are set it should trigger an autosave', () => {
-            const updated = Date.now();
-            const { container, getByText } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { container, getByText } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
             fireEvent.click(getByText('Neuroscience'));
 
@@ -121,15 +95,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the previously discussed box is filled it triggers the autosave', () => {
-            const updated = Date.now();
-            const { container, getByLabelText } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { container, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.click(getByLabelText('details.previously-discussed-toggle'));
             fireEvent.input(container.querySelector('#previouslyDiscussed'), {
                 target: { value: 'test discussion' },
@@ -150,15 +116,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the previously submitted box is filled it triggers the autosave', () => {
-            const updated = Date.now();
-            const { container, getByLabelText } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { container, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.click(getByLabelText('details.previously-submitted-toggle'));
             fireEvent.input(container.querySelector('#previouslySubmitted'), {
                 target: { value: 'test submitted' },
@@ -179,15 +137,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the first cosubmission box is filled it triggers the autosave', () => {
-            const updated = Date.now();
-            const { container, getByText, getByLabelText } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { container, getByText, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
             fireEvent.click(getByLabelText('details.cosubmission-toggle'));
             expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
@@ -210,15 +160,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when both of the cosubmission boxes are filled it triggers the autosave', () => {
-            const updated = Date.now();
-            const { container, getByText, getByLabelText } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { container, getByText, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
             fireEvent.click(getByLabelText('details.cosubmission-toggle'));
             expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
@@ -248,12 +190,12 @@ describe('DetailsForm', (): void => {
 
     describe('initialValues', () => {
         it('sets default values to initialValues passed', (): void => {
-            const updated = Date.now();
             const { container } = render(
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             title: 'Test title',
                             previouslyDiscussed: 'Previously discussed',
@@ -283,14 +225,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('collapses all toggles by default', () => {
-            const { container } = render(
-                <DetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated: 0,
-                    }}
-                />,
-            );
+            const { container } = render(<DetailsForm initialValues={testInitialValues} />);
             expect(container.querySelectorAll('.toggle__panel')).toHaveLength(0);
         });
 
@@ -299,7 +234,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             previouslyDiscussed: 'test value',
                         },
@@ -315,7 +251,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             previouslySubmitted: 'test value',
                         },
@@ -331,7 +268,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['test value'],
                         },
@@ -344,7 +282,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['', 'second test value'],
                         },
@@ -357,7 +296,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['first test value', 'second test value'],
                         },
@@ -373,7 +313,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['some value'],
                         },
@@ -388,7 +329,8 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: 0,
+                        updated: Date.now(),
+                        articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['', 'second test value'],
                         },

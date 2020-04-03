@@ -14,7 +14,7 @@ const notes = `
    # SubmissionList
    ## Styling
    | ClassName | Description |
-   | -----------| -------------| 
+   | -----------| -------------|
    | .dashboard__tabs | The outer container for the tabs container |
    | .dashboard__tabs_list | The container for the tabs |
    | .dashboard__tab | Styling for the tab itself |
@@ -29,19 +29,25 @@ storiesOf('Dashboard | Components/SubmissionList', module)
             const submissionsTyped: Submission[] = [
                 {
                     id: 'id1',
-                    title: 'Theory of Everything',
+                    articleType: 'research-article',
                     lastStepVisited: 'author',
                     status: 'CONTINUE_SUBMISSION',
                     updated: new Date().getTime(),
                     author: undefined,
+                    manuscriptDetails: {
+                        title: 'Theory of Everything',
+                    },
                 },
                 {
                     id: 'id2',
-                    title: 'Theory of Nothing',
+                    articleType: 'research-article',
                     lastStepVisited: 'files',
                     status: 'SUBMITTED',
                     updated: getMockSubmissionForDaysAgo(7),
                     author: undefined,
+                    manuscriptDetails: {
+                        title: 'Theory of Nothing',
+                    },
                 },
             ];
             const submissions = object('Submissions', submissionsTyped);

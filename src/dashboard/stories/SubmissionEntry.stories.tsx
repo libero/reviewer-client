@@ -13,7 +13,7 @@ const notes = `
    # SubmissionEntry
    ## Styling
    | ClassName | Description |
-   | -----------| -------------| 
+   | -----------| -------------|
    | .submission-entry | The outer container for the row |
    | .submission-entry__link | The styling for the outer anchor tag and title text|
    | .submission-entry__link--{status} | Overrides for the different statuses of the submission (default: 'CONTINUE_SUBMISSION', 'SUBMITTED', 'REJECTED' |
@@ -33,11 +33,14 @@ storiesOf('Dashboard | Components/SubmissionEntry', module)
         (): JSX.Element => {
             const submission: Submission = {
                 id: 'id1',
-                title: text('Title', 'Theory of Everything'),
+                articleType: 'research-article',
                 lastStepVisited: 'author',
                 status: select('Status', ['CONTINUE_SUBMISSION', 'SUBMITTED', 'REJECTED'], 'CONTINUE_SUBMISSION'),
                 updated: new Date().getTime(),
                 author: undefined,
+                manuscriptDetails: {
+                    title: text('Title', 'Theory of Everything'),
+                },
             };
             return (
                 <MemoryRouter initialEntries={historyLocation}>

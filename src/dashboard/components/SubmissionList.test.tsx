@@ -10,7 +10,7 @@ describe('SubmissionList', (): void => {
 
     const mockSubmission: Submission = {
         id: 'someId',
-        title: 'testSubmission',
+        articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
