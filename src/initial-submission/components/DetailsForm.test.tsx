@@ -40,7 +40,6 @@ describe('DetailsForm', (): void => {
     });
 
     it('should render correctly', async (): Promise<void> => {
-        const updated = Date.now();
         expect(async () => {
             render(<DetailsForm initialValues={testInitialValues} />);
         }).not.toThrow();
