@@ -417,18 +417,26 @@ describe('File Details Form', (): void => {
         });
 
         it.only('syncronously sends upload requests when multiple files are selected', async (): Promise<void> => {
-            let mutationResolve: (value?: unknown) => void;
+            let mutationResolve1: (value?: unknown) => void;
+            let mutationResolve2: (value?: unknown) => void;
+            let mutationResolve3: (value?: unknown) => void;
 
-            // This does not work currently as the first call of mutationMock is the autosave.
-            // This is a bug which causes the page to call autosave on load. We're pausing this branch until the auto save
-            // bug is fixed so we have control of the mutation promises resolving.
-            mutationMock.mockImplementation(jest.fn(() => new Promise(() => {})));
-            mutationMock.mockImplementationOnce(
-                () =>
+            mutationMock
+                .mockImplementationOnce(() =>
                     new Promise(resolve => {
-                        mutationResolve = resolve;
-                    }),
-            );
+                        mutationResolve1 = resolve;
+                    }).then(() => console.log('resolved mock promise 1')),
+                )
+                .mockImplementationOnce(() =>
+                    new Promise(resolve => {
+                        mutationResolve2 = resolve;
+                    }).then(() => console.log('resolved mock promise 2')),
+                )
+                .mockImplementationOnce(() =>
+                    new Promise(resolve => {
+                        mutationResolve3 = resolve;
+                    }).then(() => console.log('resolved mock promise 3')),
+                );
             const { container, debug } = render(
                 <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
                 {
@@ -436,51 +444,55 @@ describe('File Details Form', (): void => {
                 },
             );
 
-            const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
+            const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
+            const file2 = new File(['§§§'], 'supercoolfile2.png', { type: 'image/png' });
+            const file3 = new File(['§§§'], 'supercoolfile3.png', { type: 'image/png' });
             const fileInput = container.querySelector('.multifile-upload__input');
             Object.defineProperty(fileInput, 'files', {
-                value: [file, file, file],
+                value: [file1, file2, file3],
             });
             await fireEvent.change(fileInput);
             expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
             expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(3);
-            mutationResolve({
+            mutationResolve1({
                 data: {
                     uploadSupportingFile: {
                         files: {
-                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
+                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile1.png' }],
                         },
                     },
                 },
             });
             await wait();
-            debug();
+            // debug();
             expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
             expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
-            // mutationResolve({
-            //     data: {
-            //         uploadSupportingFile: {
-            //             files: {
-            //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
-            //             },
-            //         },
-            //     },
-            // });
-            // await wait();
-            // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
-            // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
-            // mutationResolve({
-            //     data: {
-            //         uploadSupportingFile: {
-            //             files: {
-            //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
-            //             },
-            //         },
-            //     },
-            // });
-            // await wait();
-            // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
-            // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
+            mutationResolve2({
+                data: {
+                    uploadSupportingFile: {
+                        files: {
+                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile2.png' }],
+                        },
+                    },
+                },
+            });
+            await wait(() => {}, { timeout: 2000 });
+            await setTimeout(() => {}, 2000);
+            // debug();
+            expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
+            expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
+            mutationResolve3({
+                data: {
+                    uploadSupportingFile: {
+                        files: {
+                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile3.png' }],
+                        },
+                    },
+                },
+            });
+            await wait();
+            expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
+            expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
         });
         describe('only allows for ${maxSupportingFiles}', () => {
             it('when there are no existing supporting files', async (): Promise<void> => {

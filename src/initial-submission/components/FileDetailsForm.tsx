@@ -108,6 +108,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 },
             };
             setSupportingFilesStatus(fileStates);
+            console.log('File States', fileStates);
         };
     }
 
@@ -118,6 +119,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         const iterator = fileUploadInitializer(filesToStore);
 
         const loop = (result: IteratorResult<{ uploadPromise: {}; itemId: string }>, fileStates: FileState[]): void => {
+            console.log('going loopy....');
             if (result.done) {
                 setSupportingUploadDisabled(false);
             } else {
@@ -234,6 +236,9 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     };
 
     useAutoSave(onSave, [coverLetter]);
+    useEffect(() => {
+        console.log('changed files status', supportingFilesStatus);
+    }, [supportingFilesStatus]);
 
     return (
         <div>
