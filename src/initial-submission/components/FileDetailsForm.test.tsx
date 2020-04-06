@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent, act, wait, waitForElement } from '@testing-library/react';
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
@@ -381,7 +381,7 @@ describe('File Details Form', (): void => {
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
 
-        it('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
+        it.only('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
             let mutationResolve: (value?: unknown) => void;
             const mutationPromise = new Promise(resolve => {
                 mutationResolve = resolve;
