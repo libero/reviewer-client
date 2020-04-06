@@ -417,17 +417,16 @@ describe('File Details Form', (): void => {
         });
 
         it.only('syncronously sends upload requests when multiple files are selected', async (): Promise<void> => {
-            let mutationResolve: (value?: unknown) => void;
+            // let mutationResolve: (value?: unknown) => void;
 
             // This does not work currently as the first call of mutationMock is the autosave.
             // This is a bug which causes the page to call autosave on load. We're pausing this branch until the auto save
             // bug is fixed so we have control of the mutation promises resolving.
-            mutationMock.mockImplementation(jest.fn(() => new Promise(() => {})));
-            mutationMock.mockImplementationOnce(
-                () =>
-                    new Promise(resolve => {
-                        mutationResolve = resolve;
-                    }),
+            // mutationMock.mockImplementation(jest.fn(() => new Promise(() => {})));
+            const mutationResolve = mutationMock.mockImplementation(() =>
+                new Promise(resolve => {
+                    resolve();
+                }).then(() => console.log('resolved mock promise')),
             );
             const { container, debug } = render(
                 <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
@@ -453,22 +452,21 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-            await wait();
-            debug();
+            await wait(() => {}, { timeout: 500 });
             expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
             expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
-            // mutationResolve({
-            //     data: {
-            //         uploadSupportingFile: {
-            //             files: {
-            //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
-            //             },
-            //         },
-            //     },
-            // });
-            // await wait();
-            // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
-            // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
+            mutationResolve({
+                data: {
+                    uploadSupportingFile: {
+                        files: {
+                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
+                        },
+                    },
+                },
+            });
+            await wait();
+            expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
+            expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
             // mutationResolve({
             //     data: {
             //         uploadSupportingFile: {

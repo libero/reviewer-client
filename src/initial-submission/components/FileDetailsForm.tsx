@@ -72,62 +72,30 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
-    function* fileUploadInitializer(
-        fileToStore: { file: File; id: string }[],
-    ): Generator<{ uploadPromise: {}; itemId: string }> {
-        for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
-            yield {
-                uploadPromise: {
-                    variables: {
-                        id: initialValues.id,
-                        file: fileToStore[fileIndex].file,
-                        fileSize: fileToStore[fileIndex].file.size,
-                    },
-                },
-                itemId: fileToStore[fileIndex].id,
-            };
-            fileIndex += 1;
-        }
-    }
-
-    // fileUploadInitializer - Generator function that iterates over the file list - starting the upload process.
-    // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
-    //                           maintaining the state of the files.
-
-    function setSupportingFileState(
-        result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
-        fileStates: FileState[],
-    ) {
-        return (): void => {
-            const thisFilesIndex = fileStates.findIndex(
-                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
-            );
-            fileStates[thisFilesIndex] = {
-                fileStored: {
-                    fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
-                },
-            };
-            setSupportingFilesStatus(fileStates);
-        };
-    }
-
-    const uploadSupportingFiles = (
+    const uploadSupportingFiles = async (
         filesToStore: { file: File; id: string }[],
         newSupportedFilesList: FileState[],
-    ): void => {
-        const iterator = fileUploadInitializer(filesToStore);
-
-        const loop = (result: IteratorResult<{ uploadPromise: {}; itemId: string }>, fileStates: FileState[]): void => {
-            if (result.done) {
-                setSupportingUploadDisabled(false);
-            } else {
-                console.log(result.value);
-                uploadSupportingFile(result.value.uploadPromise)
-                    .then(setSupportingFileState(result, fileStates))
-                    .then(() => loop(iterator.next(), fileStates));
-            }
-        };
-        loop(iterator.next(), newSupportedFilesList);
+    ): Promise<void> => {
+        console.log('length', filesToStore.length);
+        for await (const fileToStore of filesToStore) {
+            await uploadSupportingFile({
+                variables: {
+                    id: initialValues.id,
+                    file: fileToStore.file,
+                    fileSize: fileToStore.file.size,
+                },
+            });
+            const itemId = fileToStore.id;
+            const thisFilesIndex = newSupportedFilesList.findIndex(
+                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === itemId,
+            );
+            newSupportedFilesList[thisFilesIndex] = {
+                fileStored: {
+                    fileName: newSupportedFilesList[thisFilesIndex].uploadInProgress.fileName,
+                },
+            };
+            setSupportingFilesStatus(newSupportedFilesList);
+        }
     };
 
     useEffect(() => {
@@ -183,6 +151,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             })),
         ];
         setSupportingFilesStatus(newSupportingFilesStatus);
+        console.log('onSupportingFilesUpload', onSupportingFilesUpload);
         uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
     };
 
