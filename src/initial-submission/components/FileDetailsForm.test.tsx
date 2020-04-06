@@ -381,7 +381,7 @@ describe('File Details Form', (): void => {
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
 
-        it.only('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
+        it('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
             let mutationResolve: (value?: unknown) => void;
             const mutationPromise = new Promise(resolve => {
                 mutationResolve = resolve;
