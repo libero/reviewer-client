@@ -79,7 +79,6 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
 };
 
 const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload }: Props): JSX.Element => {
-    console.log('RERENDERING');
     const { t } = useTranslation('ui');
     return (
         <div className="multifile-upload">
