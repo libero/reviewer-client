@@ -4,6 +4,7 @@ import AuthorDetailsForm from './AuthorDetailsForm';
 import { Submission } from '../types';
 
 const mutationMock = jest.fn();
+const testInitialValues: Submission = { id: 'foo', updated: Date.now(), articleType: '' };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -60,6 +61,7 @@ describe('Author Details Form', (): void => {
                 institution: 'somewhere',
             },
             id: 'foo',
+            articleType: '',
             updated: 0,
         };
         expect(
@@ -68,9 +70,8 @@ describe('Author Details Form', (): void => {
             },
         ).not.toThrow();
     });
-
     it('should fill the correct boxes with author information when the text is clicked', async (): Promise<void> => {
-        const { container, getByLabelText } = render(<AuthorDetailsForm initialValues={{ id: 'foo', updated: 0 }} />);
+        const { container, getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
         await fireEvent.click(container.querySelector('.typography__body--link'));
         expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
     });
@@ -84,7 +85,7 @@ describe('Author Details Form', (): void => {
                 institution: 'somewhere',
             },
             id: '',
-            title: '',
+            articleType: '',
             updated: 0,
         };
         const { getByLabelText } = render(<AuthorDetailsForm initialValues={initialValues} />);
@@ -95,15 +96,7 @@ describe('Author Details Form', (): void => {
     });
     describe('autosave', () => {
         it('when a first name is entered it triggers the autosave', () => {
-            const updated = Date.now();
-            const { getByLabelText } = render(
-                <AuthorDetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
 
             fireEvent.input(getByLabelText('author.author-first-name'), {
                 target: { value: 'test firstname' },
@@ -111,7 +104,7 @@ describe('Author Details Form', (): void => {
 
             expect(mutationMock).toBeCalledWith({
                 variables: {
-                    id: 'blah',
+                    id: 'foo',
                     details: {
                         email: '',
                         firstName: 'test firstname',
@@ -122,15 +115,7 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a last name is entered it triggers the autosave', () => {
-            const updated = Date.now();
-            const { getByLabelText } = render(
-                <AuthorDetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
 
             fireEvent.input(getByLabelText('author.author-last-name'), {
                 target: { value: 'test lastname' },
@@ -138,7 +123,7 @@ describe('Author Details Form', (): void => {
 
             expect(mutationMock).toBeCalledWith({
                 variables: {
-                    id: 'blah',
+                    id: 'foo',
                     details: {
                         email: '',
                         firstName: '',
@@ -149,15 +134,7 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a email is entered it triggers the autosave', () => {
-            const updated = Date.now();
-            const { getByLabelText } = render(
-                <AuthorDetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
 
             fireEvent.input(getByLabelText('author.author-email'), {
                 target: { value: 'test@example.com' },
@@ -165,7 +142,7 @@ describe('Author Details Form', (): void => {
 
             expect(mutationMock).toBeCalledWith({
                 variables: {
-                    id: 'blah',
+                    id: 'foo',
                     details: {
                         email: 'test@example.com',
                         firstName: '',
@@ -176,15 +153,7 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a email is entered it triggers the autosave', () => {
-            const updated = Date.now();
-            const { getByLabelText } = render(
-                <AuthorDetailsForm
-                    initialValues={{
-                        id: 'blah',
-                        updated,
-                    }}
-                />,
-            );
+            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
 
             fireEvent.input(getByLabelText('author.institution'), {
                 target: { value: 'test institution' },
@@ -192,7 +161,7 @@ describe('Author Details Form', (): void => {
 
             expect(mutationMock).toBeCalledWith({
                 variables: {
-                    id: 'blah',
+                    id: 'foo',
                     details: {
                         email: '',
                         firstName: '',

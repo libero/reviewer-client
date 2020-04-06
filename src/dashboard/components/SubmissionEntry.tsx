@@ -15,6 +15,13 @@ interface Props {
 const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
 
+    const getTitle = (submission: Submission): string =>
+        submission.manuscriptDetails &&
+        submission.manuscriptDetails.title &&
+        submission.manuscriptDetails.title.length !== 0
+            ? submission.manuscriptDetails.title
+            : '(no title)';
+
     const status = submission.status ? submission.status.toLowerCase() : '';
     return (
         <div className="submission-entry">
@@ -24,9 +31,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
             >
                 <div className="submission-entry__content">
                     <span className={`submission-entry__title submission-entry__title--${status}`}>
-                        {submission.manuscriptDetails && submission.manuscriptDetails.title.length !== 0
-                            ? submission.manuscriptDetails.title
-                            : '(no title)'}
+                        {getTitle(submission)}
                     </span>
                     <div className={`submission-entry__link_text submission-entry__link_text--${status}`}>
                         <span>Continue Submission</span>
@@ -44,9 +49,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                     <h2>Confirm delete submission?</h2>
                     <p>
                         Your submission &quot;
-                        {submission.manuscriptDetails && submission.manuscriptDetails.title.length !== 0
-                            ? submission.manuscriptDetails.title
-                            : '(no title)'}
+                        {getTitle(submission)}
                         &quot; will be deleted permanently
                     </p>
                 </Modal>

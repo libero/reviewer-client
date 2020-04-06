@@ -8,6 +8,7 @@ const maxSupportingFiles = 10;
 
 const mutationMock = jest.fn();
 let subscriptionData: {};
+const testInitialValues = { id: 'test', updated: Date.now(), articleType: '' };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -63,14 +64,19 @@ describe('File Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+            render(<FileDetailsForm initialValues={testInitialValues} />);
         }).not.toThrow();
     });
     describe('coverLetter', () => {
         it('sets coverletter initial value to initialValues.coverLetter on load', async (): Promise<void> => {
             const { container } = render(
                 <FileDetailsForm
-                    initialValues={{ id: 'test', files: { coverLetter: 'some default value' }, updated: Date.now() }}
+                    initialValues={{
+                        id: 'test',
+                        files: { coverLetter: 'some default value' },
+                        updated: Date.now(),
+                        articleType: '',
+                    }}
                 />,
             );
             expect(
@@ -81,7 +87,7 @@ describe('File Details Form', (): void => {
         it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
             expect(
                 (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
             ).toBe('');
@@ -90,7 +96,7 @@ describe('File Details Form', (): void => {
         it('should call the save mutation with correct variables when cover letter is changed', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
             fireEvent.input(container.querySelector('.cover-letter__input'), {
                 target: { value: 'test cover letter input' },
             });
@@ -145,7 +151,7 @@ describe('File Details Form', (): void => {
             );
         };
         it('should display an idle file upload if no file stored', () => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />);
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
             expect(container.querySelector('.file-upload__dropzone--idle')).toBeInTheDocument();
         });
         it('should display a complete file upload if a file is stored', () => {
@@ -153,6 +159,7 @@ describe('File Details Form', (): void => {
                 <FileDetailsForm
                     initialValues={{
                         id: 'test',
+                        articleType: '',
                         updated: Date.now(),
                         files: {
                             manuscriptFile: { filename: 'testfile.pdf', url: 'http://localhost/file.pdf' },
@@ -170,7 +177,7 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -200,12 +207,9 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container, getByText } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+                wrapper: routerWrapper(),
+            });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -220,12 +224,9 @@ describe('File Details Form', (): void => {
         it('Should display a validation error if the upload file is of the wrong file type', async (): Promise<
             void
         > => {
-            const { container, getByText } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+                wrapper: routerWrapper(),
+            });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -249,7 +250,7 @@ describe('File Details Form', (): void => {
         });
 
         it('Should allow a new file to be uploaded', async (): Promise<void> => {
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -263,12 +264,9 @@ describe('File Details Form', (): void => {
         });
 
         it('Should clear status when a new file is dropped', async (): Promise<void> => {
-            const { container, getByText } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+                wrapper: routerWrapper(),
+            });
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -287,7 +285,7 @@ describe('File Details Form', (): void => {
             });
 
             mutationMock.mockImplementation(() => mutationPromise);
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -344,6 +342,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         updated: Date.now(),
+                        articleType: '',
                         files: {
                             supportingFiles: [
                                 {
@@ -365,12 +364,9 @@ describe('File Details Form', (): void => {
             expect(getByText('File2.png')).toBeInTheDocument();
         });
         it('queues a selected file for upload', async (): Promise<void> => {
-            const { container, getByText } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+                wrapper: routerWrapper(),
+            });
 
             const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
             const fileInput = container.querySelector('.multifile-upload__input');
@@ -415,7 +411,7 @@ describe('File Details Form', (): void => {
 
         describe('only allows for ${maxSupportingFiles}', () => {
             it('when there are no existing supporting files', async (): Promise<void> => {
-                const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+                const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
                     wrapper: routerWrapper(),
                 });
 
@@ -440,6 +436,7 @@ describe('File Details Form', (): void => {
                         initialValues={{
                             id: 'test',
                             updated: Date.now(),
+                            articleType: '',
                             files: {
                                 supportingFiles: [
                                     {
