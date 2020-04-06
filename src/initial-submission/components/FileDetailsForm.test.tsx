@@ -384,9 +384,12 @@ describe('File Details Form', (): void => {
             });
 
             mutationMock.mockImplementation(() => mutationPromise);
-            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
             const fileInput = container.querySelector('.multifile-upload__input');

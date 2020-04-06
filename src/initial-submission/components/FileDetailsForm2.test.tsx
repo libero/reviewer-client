@@ -93,9 +93,12 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                         mutationResolve3 = resolve;
                     }),
             );
-        const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
-            wrapper: routerWrapper(),
-        });
+        const { container } = render(
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            {
+                wrapper: routerWrapper(),
+            },
+        );
 
         const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
         const file2 = new File(['§§§'], 'supercoolfile2.png', { type: 'image/png' });
