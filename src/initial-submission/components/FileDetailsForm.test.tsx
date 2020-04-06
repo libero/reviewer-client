@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, act, wait, waitForElement } from '@testing-library/react';
+import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
