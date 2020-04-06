@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent, act, wait, waitForElement } from '@testing-library/react';
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
@@ -381,7 +381,7 @@ describe('File Details Form', (): void => {
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
 
-        it('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
+        it.only('puts a single supporting file into done state when mutation resolves', async (): Promise<void> => {
             let mutationResolve: (value?: unknown) => void;
             const mutationPromise = new Promise(resolve => {
                 mutationResolve = resolve;
@@ -416,33 +416,46 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
         });
 
-        it.only('syncronously sends upload requests when multiple files are selected', async (): Promise<void> => {
+        it.only('synchronously sends upload requests when multiple files are selected', async (): Promise<void> => {
             let mutationResolve1: (value?: unknown) => void;
             let mutationResolve2: (value?: unknown) => void;
             let mutationResolve3: (value?: unknown) => void;
 
+            const waitForUploads = async (container: HTMLElement, uploads: number): Promise<void> => {
+                await waitForElement(
+                    () => {
+                        return container.querySelectorAll('.multifile-upload__file-name--complete').length === uploads;
+                    },
+                    {
+                        timeout: 2000,
+                    },
+                ).catch(error => {
+                    console.log(error, uploads, 'argh');
+                });
+            };
+
             mutationMock
-                .mockImplementationOnce(() =>
-                    new Promise(resolve => {
-                        mutationResolve1 = resolve;
-                    }).then(() => console.log('resolved mock promise 1')),
+                .mockImplementationOnce(
+                    () =>
+                        new Promise(resolve => {
+                            mutationResolve1 = resolve;
+                        }),
                 )
-                .mockImplementationOnce(() =>
-                    new Promise(resolve => {
-                        mutationResolve2 = resolve;
-                    }).then(() => console.log('resolved mock promise 2')),
+                .mockImplementationOnce(
+                    () =>
+                        new Promise(resolve => {
+                            mutationResolve2 = resolve;
+                        }),
                 )
-                .mockImplementationOnce(() =>
-                    new Promise(resolve => {
-                        mutationResolve3 = resolve;
-                    }).then(() => console.log('resolved mock promise 3')),
+                .mockImplementationOnce(
+                    () =>
+                        new Promise(resolve => {
+                            mutationResolve3 = resolve;
+                        }),
                 );
-            const { container, debug } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now() }} />, {
+                wrapper: routerWrapper(),
+            });
 
             const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
             const file2 = new File(['§§§'], 'supercoolfile2.png', { type: 'image/png' });
@@ -463,8 +476,7 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-            await wait();
-            // debug();
+            await waitForUploads(container, 1);
             expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
             expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
             mutationResolve2({
@@ -476,9 +488,7 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-            await wait(() => {}, { timeout: 2000 });
-            await setTimeout(() => {}, 2000);
-            // debug();
+            await waitForUploads(container, 2);
             expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
             expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
             mutationResolve3({
@@ -490,7 +500,7 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-            await wait();
+            await waitForUploads(container, 3);
             expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
             expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
         });
