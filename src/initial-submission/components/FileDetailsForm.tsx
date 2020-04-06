@@ -76,15 +76,15 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         filesToStore: { file: File; id: string }[],
         newSupportedFilesList: FileState[],
     ): Promise<void> => {
-        console.log('length', filesToStore.length);
         for await (const fileToStore of filesToStore) {
-            await uploadSupportingFile({
+            const value = await uploadSupportingFile({
                 variables: {
                     id: initialValues.id,
                     file: fileToStore.file,
                     fileSize: fileToStore.file.size,
                 },
             });
+            console.log('value', value);
             const itemId = fileToStore.id;
             const thisFilesIndex = newSupportedFilesList.findIndex(
                 (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === itemId,
@@ -151,7 +151,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             })),
         ];
         setSupportingFilesStatus(newSupportingFilesStatus);
-        console.log('onSupportingFilesUpload', onSupportingFilesUpload);
         uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
     };
 
