@@ -24,7 +24,8 @@ export default function(options = {}): void {
 
     merge(i18nOptions, options);
 
-    i18n.use(Backend)
+    i18n
+        .use(Backend)
         .use(initReactI18next)
         .init(i18nOptions);
 }
