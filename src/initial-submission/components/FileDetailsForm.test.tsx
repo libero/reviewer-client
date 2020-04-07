@@ -414,6 +414,7 @@ describe('File Details Form', (): void => {
 
         describe('only allows for ${maxSupportingFiles}', () => {
             it('when there are no existing supporting files', async (): Promise<void> => {
+                mutationMock.mockImplementation(() => new Promise(() => {}));
                 const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
                     wrapper: routerWrapper(),
                 });
@@ -434,6 +435,7 @@ describe('File Details Form', (): void => {
                 );
             });
             it('when there are existing supporting files', async (): Promise<void> => {
+                mutationMock.mockImplementation(() => new Promise(() => {}));
                 const { container } = render(
                     <FileDetailsForm
                         initialValues={{
