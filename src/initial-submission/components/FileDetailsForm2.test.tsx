@@ -37,6 +37,7 @@ jest.mock('@apollo/react-hooks', () => ({
 
 describe('SupportingFiles upload - Needs to be done in its own describe', () => {
     beforeEach(() => {
+        cleanup();
         mutationMock.mockImplementation(
             () =>
                 new Promise(resolve => {
@@ -53,6 +54,7 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
         );
     });
     afterEach(() => {
+        cleanup();
         mutationMock.mockReset();
     });
 
