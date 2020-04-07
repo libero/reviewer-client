@@ -18,6 +18,18 @@ jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): 
     }, deps);
 });
 
+const translate = (str: string): string => {
+      console.log("translating", str);
+      return str;
+}
+/*
+jest.mock('react-i18next', () => ({
+    useTranslation: (): object => ({
+      t: translate
+    })
+}));
+*/
+
 jest.mock('@apollo/react-hooks', () => ({
     useMutation: (): object[] => {
         return [
@@ -93,7 +105,7 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                         mutationResolve3 = resolve;
                     }),
             );
-        const { container } = render(
+        const { container, debug } = render(
             <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
             {
                 wrapper: routerWrapper(),
@@ -120,6 +132,9 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
             },
         });
         await waitForUploads(container, 1);
+
+        debug();
+
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
         mutationResolve2({
