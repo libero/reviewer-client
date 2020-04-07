@@ -69,7 +69,7 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                     return container.querySelectorAll('.multifile-upload__file-name--complete').length === uploads;
                 },
                 {
-                    timeout: 2000,
+                    timeout: 8000,
                 },
             ).catch(error => {
                 console.log(error, uploads, 'argh');
