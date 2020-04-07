@@ -373,7 +373,7 @@ describe('File Details Form', (): void => {
             Object.defineProperty(fileInput, 'files', {
                 value: [file],
             });
-            await fireEvent.change(fileInput);
+            await act(async () => await fireEvent.change(fileInput));
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
 
@@ -396,7 +396,7 @@ describe('File Details Form', (): void => {
             Object.defineProperty(fileInput, 'files', {
                 value: [file],
             });
-            await fireEvent.change(fileInput);
+            await act(async () => await fireEvent.change(fileInput));
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeNull();
             expect(container.querySelector('.multifile-upload__file-status--uploading')).toBeInTheDocument();
             mutationResolve({
@@ -430,7 +430,7 @@ describe('File Details Form', (): void => {
                 Object.defineProperty(fileInput, 'files', {
                     value: fileList,
                 });
-                await fireEvent.change(fileInput);
+                await act(async () => await fireEvent.change(fileInput));
                 expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
                     maxSupportingFiles,
                 );
@@ -472,7 +472,7 @@ describe('File Details Form', (): void => {
                 Object.defineProperty(fileInput, 'files', {
                     value: fileList,
                 });
-                await fireEvent.change(fileInput);
+                await act(async () => await fireEvent.change(fileInput));
                 expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
                     maxSupportingFiles,
                 );
