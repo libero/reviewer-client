@@ -1,4 +1,4 @@
-import { render, fireEvent, waitForElement } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
@@ -60,18 +60,6 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
         let mutationResolve1: (value?: unknown) => void;
         let mutationResolve2: (value?: unknown) => void;
         let mutationResolve3: (value?: unknown) => void;
-
-        const waitForUploads = async (container: HTMLElement, uploads: number): Promise<void> => {
-            await waitForElement(
-                () => {
-                    return container.querySelectorAll('.multifile-upload__file-name--complete').length === uploads;
-                },
-                {
-                    timeout: 2000,
-                },
-            );
-        };
-
         mutationMock
             .mockImplementationOnce(
                 () =>
@@ -117,8 +105,10 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                 },
             },
         });
-        await waitForUploads(container, 1);
-        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
+        await waitFor(
+            () => expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1),
+            { timeout: 30000 },
+        );
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
         mutationResolve2({
             data: {
@@ -129,8 +119,10 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                 },
             },
         });
-        await waitForUploads(container, 2);
-        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
+        await waitFor(
+            () => expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2),
+            { timeout: 30000 },
+        );
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
         mutationResolve3({
             data: {
@@ -141,8 +133,10 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                 },
             },
         });
-        await waitForUploads(container, 3);
-        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
+        await waitFor(
+            () => expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3),
+            { timeout: 30000 },
+        );
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
     });
 });
