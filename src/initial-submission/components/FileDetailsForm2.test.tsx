@@ -1,19 +1,28 @@
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
-import routerWrapper from '../../../test-utils/routerWrapper';
 import nock from 'nock'
+
+import routerWrapper from '../../../test-utils/routerWrapper';
+
+// jest.mock('react-i18next', () => ({
+//     // this mock makes sure any components using the translate HoC receive the t function as a prop
+//     useTranslation: () => {
+//         const stub = { t: () => "stub" };
+//         return stub;
+//     },
+// }));
+
+nock('http://localhost:80')
+.get(uri => {
+    console.log('problem uri', uri);
+    return false
+})
+.reply(200);
 
 
 const mutationMock = jest.fn();
 let subscriptionData: {};
-
-nock('http://localhost:80')
-  .get(uri => {
-      console.log('problem uri', uri);
-      return true;
-  })
-  .reply(200, 'path using function matched')
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
