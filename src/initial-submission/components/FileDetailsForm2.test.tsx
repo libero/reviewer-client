@@ -1,8 +1,6 @@
 import { render, fireEvent, waitForElement, wait, act } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
-import nock from 'nock'
-
 
 import routerWrapper from '../../../test-utils/routerWrapper';
 
@@ -10,6 +8,15 @@ const mutationMock = jest.fn();
 let subscriptionData: {};
 
 // jest.useFakeTimers();
+
+const blah = async () => new Promise(resolve => {
+    console.log('i am waiting');
+    // resolve();
+    setTimeout(() => {
+        console.log('i am waiting - resolved');
+        resolve()
+    }, 1000);
+});
 
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
@@ -44,6 +51,7 @@ jest.mock('@apollo/react-hooks', () => ({
 describe('SupportingFiles upload - Needs to be done in its own describe', () => {
     beforeEach(() => {
         jest.spyOn(React, 'useState');
+        // jest.spyOn(React, 'useEffect').mockImplementation(React.useLayoutEffect)
 
         mutationMock.mockImplementation(
             () =>
@@ -73,9 +81,9 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                         console.log('calling 1');
                         // resolve();
                         setTimeout(() => {
-                        console.log('calling 1 resolved');
-                        resolve()
-                        }, 10);
+                            console.log('calling 1 resolved');
+                            resolve()
+                        }, 50);
                     })
             )
             .mockImplementationOnce(
@@ -85,8 +93,8 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                         // resolve();
                         setTimeout(() => {
                             console.log('calling 2 resolved');
-                        resolve()
-                        }, 500);
+                            resolve()
+                        }, 100);
                     })
             )
             .mockImplementationOnce(
@@ -96,8 +104,8 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                         // resolve();
                         setTimeout(() => {
                             console.log('calling 3 resolved');
-                        resolve()
-                        }, 2000);
+                            resolve()
+                        }, 1000);
                     })
             );
 
@@ -118,7 +126,22 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
         await act(async () => await fireEvent.change(fileInput));
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(3);
-        await act(() => mutationResolve({
+
+        await act(async () => mutationResolve({
+            data: {
+                uploadSupportingFile: {
+                    files: {
+                        supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile1.png' }],
+                    },
+                },
+            },
+        }
+        ));
+        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
+        expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
+
+
+        await act(async () => await mutationResolve({
             data: {
                 uploadSupportingFile: {
                     files: {
@@ -127,46 +150,9 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                 },
             },
         }));
-        await new Promise(resolve => {
-            console.log('i am waiting');
-            // resolve();
-            setTimeout(() => {
-                console.log('i am waiting - resolved');
-            resolve()
-            }, 500);
-        })
-        // await waitForUploads(container, 1);
-        // await wait();
 
-        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
-        expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2);
-        // await act(() => mutationResolve({
-        //     data: {
-        //         uploadSupportingFile: {
-        //             files: {
-        //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile2.png' }],
-        //             },
-        //         },
-        //     },
-        // }));
-        // // act(() => { });
-        // // await waitForUploads(container, 2);
-        // await wait();
-        // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
-        // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
-        // mutationResolve({
-        //     data: {
-        //         uploadSupportingFile: {
-        //             files: {
-        //                 supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile3.png' }],
-        //             },
-        //         },
-        //     },
-        // });
-        // await wait();
-
-        // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
-        // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
+        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
+        expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
     });
 });
 

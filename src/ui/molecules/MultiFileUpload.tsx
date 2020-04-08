@@ -32,20 +32,22 @@ interface FileItemProps extends FileState {
 
 const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemProps): JSX.Element => {
     const { t } = useTranslation('ui');
-    const status = useMemo(() => {
-        if (error && status !== 'ERROR') {
-            return 'ERROR';
-        }
-        if (uploadInProgress && status !== 'UPLOADING') {
-            return 'UPLOADING';
-        }
-        if (fileStored && status !== 'COMPLETE') {
-            return 'COMPLETE';
-        }
-        if (status !== 'IDLE') {
-            return 'IDLE';
-        }
-    }, [uploadInProgress, error, fileStored]);
+    const status = uploadInProgress ? 'UPLOADING' : 'COMPLETE';
+    
+    // useMemo(() => {
+    //     if (error && status !== 'ERROR') {
+    //         return 'ERROR';
+    //     }
+    //     if (uploadInProgress && status !== 'UPLOADING') {
+    //         return 'UPLOADING';
+    //     }
+    //     if (fileStored && status !== 'COMPLETE') {
+    //         return 'COMPLETE';
+    //     }
+    //     if (status !== 'IDLE') {
+    //         return 'IDLE';
+    //     }
+    // }, [uploadInProgress, error, fileStored]);
 
     return (
         <div className="multifile-upload__upload-list-item">
@@ -69,11 +71,11 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
                     </span>
                 ) : null}
             </span>
-            {status === 'COMPLETE' || status === 'ERROR' ? (
+            {/* {status === 'COMPLETE' || status === 'ERROR' ? (
                 <div>
                     <Delete className="multifile-upload__delete" onClick={onDelete} />
                 </div>
-            ) : null}
+            ) : null} */}
         </div>
     );
 };
