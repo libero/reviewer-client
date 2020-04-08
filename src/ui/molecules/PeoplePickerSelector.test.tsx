@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React, { CSSProperties } from 'react';
 import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';

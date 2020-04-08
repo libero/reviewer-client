@@ -29,24 +29,24 @@ const FileUploadContent = ({
     uploadInProgress = {},
     fileStored = {},
 }: FileUploadContentProps): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('ui');
     switch (status) {
         case 'ERROR':
             return (
                 <Fragment>
                     <span className="typography__body file-upload__description">
-                        <span className="file-upload__error-prefix">{t('ui:file-upload.error-pre-content')}</span>
-                        {t('ui:file-upload.error-message.' + error)} Please{' '}
+                        <span className="file-upload__error-prefix">{t('file-upload.error-pre-content')}</span>
+                        {t('file-upload.error-message.' + error)} Please{' '}
                         <button onClick={open} className="typography__body--button-link">
-                            {t('ui:file-upload.error-upload')}
+                            {t('file-upload.error-upload')}
                         </button>
                         .
                     </span>
                     <span className="typography__small typography__small--secondary file-upload__extra">
-                        {t('ui:file-upload.error-extra.' + error)}
+                        {t('file-upload.error-extra.' + error)}
                         {error === 'server' ? (
                             <Link to="/contact-us" className="typography__body--link">
-                                {t('ui:file-upload.error-extra.contact-us') + '.'}
+                                {t('file-upload.error-extra.contact-us') + '.'}
                             </Link>
                         ) : null}
                     </span>
@@ -56,7 +56,7 @@ const FileUploadContent = ({
             return (
                 <Fragment>
                     <span className="typography__body file-upload__description">
-                        {t('ui:file-upload.uploading-message')}
+                        {t('file-upload.uploading-message')}
                         <span className="file-upload__progress-percentage">{uploadInProgress.progress}%</span>
                     </span>
                     <span className="typography__small typography__small--secondary file-upload__extra">
@@ -68,15 +68,15 @@ const FileUploadContent = ({
             return (
                 <Fragment>
                     <span className="typography__body file-upload__description">
-                        {t('ui:file-upload.complete-prefix')}
+                        {t('file-upload.complete-prefix')}
                         <a className="typography__body--link" href={fileStored.previewLink}>
-                            {t('ui:file-upload.complete-preview')}
+                            {t('file-upload.complete-preview')}
                         </a>
-                        {t('ui:file-upload.complete-message')}
+                        {t('file-upload.complete-message')}
                         <button onClick={open} className="typography__body--button-link">
-                            {t('ui:file-upload.complete-replace')}
+                            {t('file-upload.complete-replace')}
                         </button>
-                        {t('ui:file-upload.complete-suffix')}
+                        {t('file-upload.complete-suffix')}
                     </span>
                     <span className="typography__small typography__small--secondary file-upload__extra">
                         {fileStored.fileName}
@@ -88,12 +88,12 @@ const FileUploadContent = ({
                 <Fragment>
                     <span className="typography__body file-upload__description">
                         <button onClick={open} className="typography__body--button-link">
-                            {t('ui:file-upload.idle-upload')}
+                            {t('file-upload.idle-upload')}
                         </button>
-                        {t('ui:file-upload.idle-message')}
+                        {t('file-upload.idle-message')}
                     </span>{' '}
                     <span className="typography__small typography__small--secondary file-upload__extra">
-                        {t('ui:file-upload.idle-extra')}
+                        {t('file-upload.idle-extra')}
                     </span>
                 </Fragment>
             );

@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { render, RenderResult, fireEvent } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
@@ -5,19 +6,19 @@ import NavBar from './NavBar';
 
 const expectedMenuItems = [
     {
-        display: 'navbar.dashboard',
+        display: 'common:navbar.dashboard',
         url: '/',
     },
     {
-        display: 'navbar.author-guide',
+        display: 'common:navbar.author-guide',
         url: '/author-guide',
     },
     {
-        display: 'navbar.reviewer-guide',
+        display: 'common:navbar.reviewer-guide',
         url: '/reviewer-guide',
     },
     {
-        display: 'navbar.contact-us',
+        display: 'common:navbar.contact-us',
         url: '/contact-us',
     },
 ];

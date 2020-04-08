@@ -54,10 +54,10 @@ Inside the component, call the hook to get the `t` method
 
 ```ts
 const Example = () => {
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation('common');
 
     return (
-        <div>{ t('common:navbar.dashboard') }</div>
+        <div>{ t('navbar.dashboard') }</div>
     )
 }
 

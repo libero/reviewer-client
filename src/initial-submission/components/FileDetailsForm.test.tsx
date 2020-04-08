@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
@@ -373,7 +374,7 @@ describe('File Details Form', (): void => {
             Object.defineProperty(fileInput, 'files', {
                 value: [file],
             });
-            await fireEvent.change(fileInput);
+            await act(async () => await fireEvent.change(fileInput));
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
 
@@ -396,7 +397,7 @@ describe('File Details Form', (): void => {
             Object.defineProperty(fileInput, 'files', {
                 value: [file],
             });
-            await fireEvent.change(fileInput);
+            await act(async () => await fireEvent.change(fileInput));
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeNull();
             expect(container.querySelector('.multifile-upload__file-status--uploading')).toBeInTheDocument();
             mutationResolve({
@@ -414,6 +415,8 @@ describe('File Details Form', (): void => {
 
         describe('only allows for ${maxSupportingFiles}', () => {
             it('when there are no existing supporting files', async (): Promise<void> => {
+                // this test only needs files in pending state so don't resolve promise.
+                mutationMock.mockImplementation(() => new Promise(() => {}));
                 const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
                     wrapper: routerWrapper(),
                 });
@@ -428,12 +431,14 @@ describe('File Details Form', (): void => {
                 Object.defineProperty(fileInput, 'files', {
                     value: fileList,
                 });
-                await fireEvent.change(fileInput);
+                await act(async () => await fireEvent.change(fileInput));
                 expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
                     maxSupportingFiles,
                 );
             });
             it('when there are existing supporting files', async (): Promise<void> => {
+                // this test only needs files in pending state so don't resolve promise.
+                mutationMock.mockImplementation(() => new Promise(() => {}));
                 const { container } = render(
                     <FileDetailsForm
                         initialValues={{
@@ -468,7 +473,7 @@ describe('File Details Form', (): void => {
                 Object.defineProperty(fileInput, 'files', {
                     value: fileList,
                 });
-                await fireEvent.change(fileInput);
+                await act(async () => await fireEvent.change(fileInput));
                 expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
                     maxSupportingFiles,
                 );

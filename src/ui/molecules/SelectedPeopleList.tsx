@@ -13,7 +13,7 @@ interface Props {
     onOpen: () => void;
 }
 const SelectedPeopleList = ({ people = [], openSelectorText, required, onRemove, onOpen }: Props): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('ui');
     return (
         <div className="selected_people_list">
             {people.map(
@@ -29,9 +29,9 @@ const SelectedPeopleList = ({ people = [], openSelectorText, required, onRemove,
                 ),
             )}
             <div className="selected_people_list__item">
-                <Pod onClick={onOpen} buttonIcon={<Add />} buttonText={t('ui:selected_people_list--open')}>
+                <Pod onClick={onOpen} buttonIcon={<Add />} buttonText={t('selected_people_list--open')}>
                     <div className="selected_people_list__pod-content">
-                        {openSelectorText} ({required ? t('ui:validation--required') : t('ui:validation--optional')})
+                        {openSelectorText} ({required ? t('validation--required') : t('validation--optional')})
                     </div>
                 </Pod>
             </div>

@@ -8,43 +8,43 @@ interface Props {
 }
 
 const NoSubmissions = ({ onStartClick }: Props): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('no-submission');
 
     return (
         <div className="no-submissions">
             <TwoColumnLayout>
                 <ImageWithAttribution
                     image={Image}
-                    artistName={t('no-submission:image-artist')}
+                    artistName={t('image-artist')}
                     artistUrl="http://www.davidebonazzi.com/"
                     align="right"
                 />
                 <div>
-                    <h1 className="typography__heading typography__heading--h1">{t('no-submission:heading')}</h1>
+                    <h1 className="typography__heading typography__heading--h1">{t('heading')}</h1>
 
                     <div className="no-submissions__text">
-                        <Paragraph type="writing">{t('no-submission:new-system-1')}</Paragraph>
+                        <Paragraph type="writing">{t('new-system-1')}</Paragraph>
                         <Paragraph type="writing">
-                            {t('no-submission:new-system-2')}
-                            <strong>{t('no-submission:research-advance')}</strong>
-                            {t('no-submission:new-system-3')}
+                            {t('new-system-2')}
+                            <strong>{t('research-advance')}</strong>
+                            {t('new-system-3')}
                             <a className="typography typography__body--link" href="https://submit.elifesciences.org">
-                                {t('no-submission:legacy')}
+                                {t('legacy')}
                             </a>
                         </Paragraph>
                         <Paragraph type="writing">
-                            {t('no-submission:new-system-4')}
+                            {t('new-system-4')}
                             <a
                                 className="typography typography__body--link"
                                 href="https://reviewer.elifesciences.org/contact-us/contact-elife"
                             >
-                                {t('no-submission:contact')}
+                                {t('contact')}
                             </a>
                         </Paragraph>
                     </div>
                     <div className="no-submissions__buttons">
                         <Button type="primary" onClick={(): void => onStartClick()}>
-                            {t('no-submission:new-submission')}
+                            {t('new-submission')}
                         </Button>
                     </div>
                 </div>

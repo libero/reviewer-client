@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import { cleanup, render, fireEvent, RenderResult, waitForElement } from '@testing-library/react';
 import ArticleType from './ArticleType';
 import React from 'react';

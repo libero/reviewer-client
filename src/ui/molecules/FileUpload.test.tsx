@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { render, RenderResult, cleanup, fireEvent } from '@testing-library/react';
 import FileUpload from './FileUpload';

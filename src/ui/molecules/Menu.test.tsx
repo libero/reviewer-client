@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import Menu, { MenuItemType } from './Menu';
 import routerWrapper from '../../../test-utils/routerWrapper';

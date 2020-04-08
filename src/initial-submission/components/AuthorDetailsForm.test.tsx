@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import AuthorDetailsForm from './AuthorDetailsForm';

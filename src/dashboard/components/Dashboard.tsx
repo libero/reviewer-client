@@ -44,7 +44,7 @@ const Dashboard = withRouter(
                 );
             });
         };
-        const { t } = useTranslation();
+        const { t } = useTranslation('dashboard');
         if (isShowing) {
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
@@ -55,7 +55,7 @@ const Dashboard = withRouter(
                 <div className="dashboard">
                     <div className="dashboard__button_container">
                         <Button onClick={(): void => toggle()} type="primary">
-                            {t('dashboard:new-submission')}
+                            {t('new-submission')}
                         </Button>
                     </div>
                     {loading ? (
