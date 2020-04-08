@@ -27,7 +27,7 @@ const PeoplePickerSelector = ({
     min,
     max,
 }: Props): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('ui');
     const [locallySelected, setLocallySelected] = useState(initialySelected);
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
@@ -69,8 +69,8 @@ const PeoplePickerSelector = ({
             buttonDisabled={min && locallySelected.length < min}
         >
             {max && locallySelected.length >= max ? (
-                <Banner>{`${t('ui:validation--peoplepicker_maximum-prefix')} ${max} ${t(
-                    'ui:validation--peoplepicker_maximum-suffix',
+                <Banner>{`${t('validation--peoplepicker_maximum-prefix')} ${max} ${t(
+                    'validation--peoplepicker_maximum-suffix',
                 )}`}</Banner>
             ) : null}
             <div className="main-content--centered people-picker__selector_container">
@@ -84,8 +84,8 @@ const PeoplePickerSelector = ({
                     />
                     <span className="typography__body--primary people-picker__guidance">
                         {min
-                            ? `${t('ui:validation--peoplepicker_guidance-prefix')} ${min} ${t(
-                                  'ui:validation--peoplepicker_guidance-suffix',
+                            ? `${t('validation--peoplepicker_guidance-prefix')} ${min} ${t(
+                                  'validation--peoplepicker_guidance-suffix',
                               )}`
                             : null}
                     </span>

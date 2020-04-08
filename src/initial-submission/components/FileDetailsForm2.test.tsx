@@ -5,14 +5,6 @@ import nock from 'nock';
 
 import routerWrapper from '../../../test-utils/routerWrapper';
 
-// jest.mock('react-i18next', () => ({
-//     // this mock makes sure any components using the translate HoC receive the t function as a prop
-//     useTranslation: () => {
-//         const stub = { t: () => "stub" };
-//         return stub;
-//     },
-// }));
-
 nock('http://localhost:80')
     .get(uri => {
         console.log('problem uri', uri);

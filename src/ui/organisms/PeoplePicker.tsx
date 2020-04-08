@@ -27,7 +27,7 @@ const PeoplePicker = ({
     setSelectedPeople,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-    const { t } = useTranslation();
+    const { t } = useTranslation('ui');
     return (
         <div className="people-picker">
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
@@ -36,7 +36,7 @@ const PeoplePicker = ({
                 required={required}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}
-                openSelectorText={t('ui:people_picker--open-selector')}
+                openSelectorText={t('people_picker--open-selector')}
             />
             <PeoplePickerSelector
                 people={people}

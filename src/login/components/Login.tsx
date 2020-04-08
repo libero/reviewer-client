@@ -7,7 +7,7 @@ import { isUserAuthenticatedQuery } from '../../core/graphql';
 import { useQuery } from '@apollo/react-hooks';
 
 const Login = (): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('login');
     const { data = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
 
     if (data.isAuthenticated) {
@@ -18,18 +18,18 @@ const Login = (): JSX.Element => {
         <div className="login-page">
             <TwoColumnLayout>
                 <div>
-                    <h1 className="typography__heading typography__heading--h1">{t('login:welcome')}</h1>
+                    <h1 className="typography__heading typography__heading--h1">{t('welcome')}</h1>
 
                     <div className="login-page__text">
-                        <Paragraph type="writing">{t('login:mission-1')}</Paragraph>
-                        <Paragraph type="writing">{t('login:mission-2')}</Paragraph>
+                        <Paragraph type="writing">{t('mission-1')}</Paragraph>
+                        <Paragraph type="writing">{t('mission-2')}</Paragraph>
                         <Paragraph type="writing">
-                            {t('login:author-guide-message')}
+                            {t('author-guide-message')}
                             <a
                                 className="typography typography__body--link"
                                 href="https://reviewer.elifesciences.org/author-guide"
                             >
-                                {t('login:author-guide-link')}
+                                {t('author-guide-link')}
                             </a>
                             .
                         </Paragraph>
@@ -37,20 +37,20 @@ const Login = (): JSX.Element => {
 
                     <div className="login-page__buttons">
                         <a className="login-page__buttons--orcid" href={CONFIG.LOGIN_URL}>
-                            <Button type="orcid">{t('login:login-orcid')}</Button>
+                            <Button type="orcid">{t('login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">
-                            {t('login:sign-up-message-1')}
+                            {t('sign-up-message-1')}
                             <a className="typography typography__body--link" href="https://orcid.org/register">
-                                {t('login:sign-up-link')}
+                                {t('sign-up-link')}
                             </a>
-                            {t('login:sign-up-message-2')}
+                            {t('sign-up-message-2')}
                         </Paragraph>
                     </div>
                 </div>
                 <ImageWithAttribution
                     image={Image}
-                    artistName={t('login:image-artist')}
+                    artistName={t('image-artist')}
                     artistUrl="http://www.davidebonazzi.com/"
                     align="left"
                 />

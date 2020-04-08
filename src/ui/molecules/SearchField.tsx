@@ -11,7 +11,7 @@ interface Props {
 }
 
 const SearchField = ({ id, onChange, showHelpText = false, placeholder }: Props): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('ui');
     const [search, setSearch] = useState('');
     const [empty, setEmpty] = useState(true);
     const change = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -34,7 +34,7 @@ const SearchField = ({ id, onChange, showHelpText = false, placeholder }: Props)
             icon={empty ? <Search /> : <Close onClick={clearSearch} />}
             value={search}
             onChange={change}
-            helperText={showHelpText ? t('ui:search-box--helper') : null}
+            helperText={showHelpText ? t('search-box--helper') : null}
             placeholder={placeholder}
         />
     );

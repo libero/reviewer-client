@@ -35,7 +35,7 @@ const Modal = (
     }: Props,
     ref: React.Ref<HTMLDivElement>,
 ): JSX.Element => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('ui');
     const accept = (): void => {
         if (onAccept) {
             onAccept();
@@ -57,7 +57,7 @@ const Modal = (
             <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen main-content--centered' : ''}`}>
                 <Button onClick={(): void => cancel()}>Cancel</Button>
                 <Button onClick={(): void => accept()} type={buttonType} disabled={buttonDisabled}>
-                    {buttonText || t('ui:modal--default-button')}
+                    {buttonText || t('modal--default-button')}
                 </Button>
             </div>
         </div>
