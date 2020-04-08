@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent, wait } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent, waitFor } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import appContainer from '../../../test-utils/appContainer';
 
@@ -77,7 +77,7 @@ describe('Dashboard', (): void => {
             const { container } = render(<Dashboard />, {
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelector('.no-submissions')).toBeInTheDocument();
         });
 
@@ -85,7 +85,7 @@ describe('Dashboard', (): void => {
             const { container } = render(<Dashboard />, {
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             const startSubmissionButton = container.querySelector('.no-submissions__buttons button');
             fireEvent.click(startSubmissionButton);
             expect(container.querySelector('.article-type')).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('Dashboard', (): void => {
             const { container, getByText } = render(<Dashboard />, {
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             const startSubmissionButton = container.querySelector('.no-submissions__buttons button');
             fireEvent.click(startSubmissionButton);
             fireEvent.click(getByText('cancel-button'));
@@ -128,7 +128,7 @@ describe('Dashboard', (): void => {
             const { container } = render(<Dashboard />, {
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelector('.dashboard')).toBeInTheDocument();
         });
 
@@ -137,7 +137,7 @@ describe('Dashboard', (): void => {
                 container: appContainer(),
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
             const startSubmissionButton = container.querySelector('.dashboard__button_container button');
             fireEvent.click(startSubmissionButton);
@@ -149,12 +149,12 @@ describe('Dashboard', (): void => {
                 container: appContainer(),
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
             const startSubmissionButton = container.querySelector('.dashboard__button_container button');
             fireEvent.click(startSubmissionButton);
             fireEvent.click(getByText('cancel-button'));
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
         });
 
@@ -163,7 +163,7 @@ describe('Dashboard', (): void => {
                 container: appContainer(),
                 wrapper: routerWrapper(['/link-1']),
             });
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
             expect(getByText('Submission - A')).toBeInTheDocument();
             expect(getByText('Submission - B')).toBeInTheDocument();
@@ -174,7 +174,7 @@ describe('Dashboard', (): void => {
                     fireEvent.click(getByText('modal--default-button'));
                 }
             });
-            await wait();
+            await waitFor(() => {});
             expect(mockMutation).toHaveBeenCalledTimes(1);
         });
     });

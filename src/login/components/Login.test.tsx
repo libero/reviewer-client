@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React from 'react';
-import { cleanup, render, RenderResult, wait } from '@testing-library/react';
+import { cleanup, render, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/react-testing';
 
@@ -10,7 +10,7 @@ import { isUserAuthenticatedQuery } from '../../core/graphql';
 describe('Login', (): void => {
     afterEach(cleanup);
 
-    it('should render correctly', (): void => {
+    it('should render correctly', async done => {
         const mocks = [
             {
                 request: {
@@ -23,16 +23,17 @@ describe('Login', (): void => {
                 },
             },
         ];
-        expect(
-            (): RenderResult =>
-                render(
-                    <MockedProvider mocks={mocks} addTypename={false} resolvers={{}}>
-                        <MemoryRouter initialEntries={['/login']}>
-                            <Login />
-                        </MemoryRouter>
-                    </MockedProvider>,
-                ),
-        ).not.toThrow();
+        const { container } = render(
+            <MockedProvider mocks={mocks} addTypename={false} resolvers={{}}>
+                <MemoryRouter initialEntries={['/login']}>
+                    <Login />
+                </MemoryRouter>
+            </MockedProvider>,
+        );
+        await waitFor(() => {});
+        expect(container.querySelector('.login-page')).toBeDefined();
+        expect(container.textContent).toBeDefined();
+        done();
     });
 
     it('should redirect if authenticated', async done => {
@@ -66,7 +67,7 @@ describe('Login', (): void => {
 
         // Apollo queries need timeout, despite mock...
         // https://github.com/airbnb/enzyme/issues/2153
-        await wait();
+        await waitFor(() => {});
 
         expect(container.querySelector('.login-page')).toBe(null);
         expect(container.textContent).toBe('Root');
@@ -104,7 +105,7 @@ describe('Login', (): void => {
 
         // Apollo queries need timeout, despite mock...
         // https://github.com/airbnb/enzyme/issues/2153
-        await wait();
+        await waitFor(() => {});
         expect(container.querySelector('.login-page')).not.toBe(null);
         done();
     });

@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React, { CSSProperties } from 'react';
-import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@testing-library/react';
+import { render, cleanup, RenderResult, waitFor, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
 import appContainer from '../../../test-utils/appContainer';
@@ -107,9 +107,7 @@ describe('PeoplePickerSelector', (): void => {
                 container: appContainer(),
             },
         );
-        await waitForElement(
-            (): NodeListOf<Element> => baseElement.querySelectorAll('.people-picker__modal_list--item'),
-        );
+        await waitFor((): NodeListOf<Element> => baseElement.querySelectorAll('.people-picker__modal_list--item'));
         expect(baseElement.querySelectorAll('.people-picker__modal_list--item')).toHaveLength(4);
     });
 

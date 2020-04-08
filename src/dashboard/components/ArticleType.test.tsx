@@ -1,5 +1,5 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult, waitForElement } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, waitFor } from '@testing-library/react';
 import ArticleType from './ArticleType';
 import React from 'react';
 
@@ -26,7 +26,7 @@ describe('SubmissionWizard', (): void => {
             <ArticleType onCancel={(): void => {}} onConfirm={(): void => {}} loading={false} />,
         );
         fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
-        await waitForElement((): Element => getByText('feature.label'));
+        await waitFor((): Element => getByText('feature.label'));
         fireEvent.click(getByText('feature.label'));
         expect(container.querySelector('.select-field__single-value').textContent).toBe('feature.label');
         expect(getByText('feature.paragraph-1')).toBeInTheDocument();
@@ -52,7 +52,7 @@ describe('SubmissionWizard', (): void => {
             <ArticleType onConfirm={callback} onCancel={(): void => {}} loading={false} />,
         );
         fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
-        await waitForElement((): Element => getByText('feature.label'));
+        await waitFor((): Element => getByText('feature.label'));
         fireEvent.click(getByText('feature.label'));
         fireEvent.click(getByText('confirm-button'));
         expect(callback).toHaveBeenCalledWith('feature');
