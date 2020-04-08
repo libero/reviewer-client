@@ -11,11 +11,3 @@ import 'mutationobserver-shim';
 
 const jestDom = require('@testing-library/jest-dom');
 expect.extend({...jestDom});
-
-I18n({
-    debug: false,
-    fallbackLng: false,
-    react: {
-        useSuspense: false
-    }
-})
