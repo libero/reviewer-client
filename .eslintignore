@@ -3,4 +3,3 @@ dist
 node_modules
 test-utils
 webpack*
-**/__mocks__/*.js
