@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent, waitForElement } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent, waitFor } from '@testing-library/react';
 import SelectField from './SelectField';
 
 describe('TextField', (): void => {
@@ -62,7 +62,7 @@ describe('TextField', (): void => {
             />,
         );
         await fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
-        await waitForElement((): Element => getByText('test-option'));
+        await waitFor((): Element => getByText('test-option'));
         await fireEvent.click(getByText('test-option'));
         expect(onChangeFn).toHaveBeenCalled();
     });

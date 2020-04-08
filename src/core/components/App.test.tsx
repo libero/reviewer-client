@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React from 'react';
-import { render, wait } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import App from './App';
 import * as createApolloClient from '../utils/createApolloClient';
 import * as config from '../utils/config';
@@ -15,7 +15,7 @@ describe('App', (): void => {
     });
     it('should render correctly', async done => {
         const { container } = render(<App />);
-        await wait();
+        await waitFor(() => {});
         expect(container).toBeDefined();
         expect(config.fetchAndSetConfig).toHaveBeenCalledTimes(1);
         done();
@@ -24,7 +24,7 @@ describe('App', (): void => {
     it('should set token when creating apollo client', async done => {
         jest.spyOn(createApolloClient, 'default');
         render(<App />);
-        await wait();
+        await waitFor(() => {});
         expect(createApolloClient.default).toHaveBeenCalledTimes(1);
         expect(config.fetchAndSetConfig).toHaveBeenCalledTimes(1);
         expect(createApolloClient.default).toHaveBeenCalledWith('http://localhost');

@@ -1,5 +1,5 @@
 import '../../../test-utils/i18n-mock';
-import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent, act, waitFor } from '@testing-library/react';
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
@@ -196,7 +196,7 @@ describe('File Details Form', (): void => {
                 },
             });
             // need to wait to flush mutation resolve through
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             expect(container.querySelector('.file-upload__extra').textContent).toBe('testfile.pdf');
         });
@@ -217,7 +217,7 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
             mutationReject();
             // need to wait to flush mutation resolve through
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
             expect(getByText('file-upload.error-extra.server')).toBeInTheDocument();
         });
@@ -311,7 +311,7 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-            await wait();
+            await waitFor(() => {});
         });
     });
 
@@ -409,7 +409,7 @@ describe('File Details Form', (): void => {
                     },
                 },
             });
-            await wait();
+            await waitFor(() => {});
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
         });
 
