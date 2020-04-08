@@ -99,6 +99,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         fileStates: FileState[],
     ) {
         return (): void => {
+            console.log('here');
             const thisFilesIndex = fileStates.findIndex(
                 (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
             );
