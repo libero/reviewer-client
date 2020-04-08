@@ -1,7 +1,7 @@
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
-import nock from 'nock'
+import nock from 'nock';
 
 import routerWrapper from '../../../test-utils/routerWrapper';
 
@@ -14,12 +14,11 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 // }));
 
 nock('http://localhost:80')
-.get(uri => {
-    console.log('problem uri', uri);
-    return false
-})
-.reply(200);
-
+    .get(uri => {
+        console.log('problem uri', uri);
+        return false;
+    })
+    .reply(200);
 
 const mutationMock = jest.fn();
 let subscriptionData: {};
