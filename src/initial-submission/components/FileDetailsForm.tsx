@@ -107,6 +107,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
                 },
             };
+            console.log('fileStates', fileStates);
             setSupportingFilesStatus(fileStates);
         };
     }
