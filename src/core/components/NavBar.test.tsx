@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { render, RenderResult, fireEvent } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';

@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { cleanup, render, RenderResult, wait } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';

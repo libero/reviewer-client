@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { render, wait } from '@testing-library/react';
 import App from './App';

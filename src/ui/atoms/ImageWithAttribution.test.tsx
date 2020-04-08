@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import ImageWithAttribution from './ImageWithAttribution';

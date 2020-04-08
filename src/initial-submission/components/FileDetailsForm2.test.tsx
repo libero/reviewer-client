@@ -1,16 +1,32 @@
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
-import nock from 'nock';
-
 import routerWrapper from '../../../test-utils/routerWrapper';
 
-nock('http://localhost:80')
-    .get(uri => {
-        console.log('problem uri', uri);
-        return false;
-    })
-    .reply(200);
+//import 'react-i18next';
+// jest.mock('react-i18next', () => ({
+//     // this mock makes sure any components using the translate HoC receive the t function as a prop
+//     useTranslation: () => {
+//         const stub = { t: (str: string) => str };
+//         return stub;
+//     },
+// }));
+
+// const stub = {
+//     use: () => stub,
+//     init: () => stub,
+//     InitOptions: () => stub,
+// };
+
+// jest.mock('i18next', () => stub);
+
+// jest.mock('i18next-xhr-backend', () => ({
+//     init() {},
+//     readMulti(languages, namespaces, callback) {},
+//     read(language, namespace, callback) {},
+//     loadUrl(url, callback) {},
+//     create(languages, namespace, key, fallbackValue) {},
+// }));
 
 const mutationMock = jest.fn();
 let subscriptionData: {};

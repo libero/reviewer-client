@@ -1,3 +1,4 @@
+import '../../../test-utils/i18n-mock';
 import { render, cleanup, fireEvent, act, wait } from '@testing-library/react';
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
