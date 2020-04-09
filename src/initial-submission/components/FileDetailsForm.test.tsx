@@ -479,5 +479,26 @@ describe('File Details Form', (): void => {
                 );
             });
         });
+        it('displays max files message when max files is reached', async (): Promise<void> => {
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+
+            expect(() => getByText('files.supporting-files-max')).toThrow();
+
+            const file = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
+            const fileInput = container.querySelector('.multifile-upload__input');
+
+            Object.defineProperty(fileInput, 'files', {
+                value: Array(maxSupportingFiles).fill(file),
+            });
+
+            await act(async () => await fireEvent.change(fileInput));
+
+            expect(getByText('files.supporting-files-max')).toBeInTheDocument();
+        });
     });
 });

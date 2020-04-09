@@ -134,6 +134,19 @@ describe('MultiFileUpload', () => {
         expect(container.querySelector('.multifile-upload__input')).toBeNull();
     });
 
+    it('displays extra message when passed extraMessage prop', (): void => {
+        const { getByText } = render(
+            <MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} extraMessage="test message" />,
+        );
+        expect(getByText('test message')).toBeInTheDocument();
+    });
+
+    it('displays extra message when passed extraMessage prop', (): void => {
+        const { container } = render(<MultiFileUpload onUpload={jest.fn()} onDelete={jest.fn()} />);
+
+        expect(container.querySelector('.multifile-upload__extra-message')).toBeNull();
+    });
+
     describe('FileItem', (): void => {
         it('shows the correct UploadProgress for each item', () => {
             const { container } = render(
