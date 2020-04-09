@@ -96,14 +96,16 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
     //                           maintaining the state of the files.
 
+    function getFilesIndex(fileStates: FileState[], id: string): number {
+        return fileStates.findIndex((state: FileState) => state.uploadInProgress && state.uploadInProgress.id === id);
+    }
+
     function setSupportingFileState(
         result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
         fileStates: FileState[],
     ) {
         return (): void => {
-            const thisFilesIndex = fileStates.findIndex(
-                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
-            );
+            const thisFilesIndex = getFilesIndex(fileStates, result.value.itemId);
             fileStates[thisFilesIndex] = {
                 fileStored: {
                     fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
@@ -125,7 +127,14 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             } else {
                 uploadSupportingFile(result.value.uploadPromise)
                     .then(setSupportingFileState(result, fileStates))
-                    .then(() => loop(iterator.next(), fileStates));
+                    .then(() => loop(iterator.next(), fileStates))
+                    .catch(() => {
+                        const thisFilesIndex = getFilesIndex(fileStates, result.value.itemId);
+                        fileStates[thisFilesIndex] = {
+                            error: 'server',
+                        };
+                        setSupportingFilesStatus(fileStates);
+                    });
             }
         };
         loop(iterator.next(), newSupportedFilesList);
