@@ -78,7 +78,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     ): Promise<void> => {
         const cloneOfFileState = [...newSupportedFilesList];
         for await (const fileToStore of filesToStore) {
-            console.time('uploadSupportingFile');
             await uploadSupportingFile({
                 variables: {
                     id: initialValues.id,
@@ -86,7 +85,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     fileSize: fileToStore.file.size,
                 },
             });
-            console.timeEnd('uploadSupportingFile');
             const itemId = fileToStore.id;
             const thisFilesIndex = cloneOfFileState.findIndex(
                 (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === itemId,
@@ -96,10 +94,8 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     fileName: cloneOfFileState[thisFilesIndex].uploadInProgress.fileName,
                 },
             };
-            console.log('cloneOfFileState',cloneOfFileState);
             setSupportingFilesStatus(cloneOfFileState);
         }
-        setSupportingUploadDisabled(false);
     };
 
     useEffect(() => {
@@ -128,7 +124,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         supportingFilesStatus,
     ]);
 
-    const onSupportingFilesUpload = (filesList: FileList): void => {
+    const onSupportingFilesUpload = async (filesList: FileList): Promise<void> => {
 
         const filesListArray = Array.prototype.slice.call(filesList);
 
@@ -156,7 +152,8 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             })),
         ];
         setSupportingFilesStatus(newSupportingFilesStatus);
-        uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
+        await uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
+        setSupportingUploadDisabled(false);
     };
 
     const onManuscriptUpload = (filesList: File[]): void => {
@@ -207,8 +204,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     };
 
     useAutoSave(onSave, [coverLetter]);
-
-    // console.log('fileStates', supportingFilesStatus);
 
     return (
         <div>

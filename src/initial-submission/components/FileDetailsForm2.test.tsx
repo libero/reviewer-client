@@ -42,7 +42,7 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
         mutationMock.mockImplementation(
             () =>
                 new Promise(resolve => {
-                    resolve({
+                    setTimeout(() => resolve({
                         data: {
                             uploadSupportingFile: {
                                 files: {
@@ -50,7 +50,8 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
                                 },
                             },
                         },
-                    });
+                    }), 150);
+
                 }),
         );
     });
@@ -59,37 +60,6 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
     });
 
     it('synchronously sends upload requests when multiple files are selected', async (): Promise<void> => {
-        const mutationResolve = mutationMock
-            .mockImplementationOnce(
-                () =>
-                    new Promise(resolve => {
-                        setTimeout(() => resolve(), 0)
-                    })
-            )
-            .mockImplementationOnce(
-                () =>
-                    new Promise(resolve => {
-                        setTimeout(() => resolve(), 10)
-                    })
-            )
-            .mockImplementationOnce(
-                () =>
-                    new Promise(resolve => {
-                        setTimeout(() => resolve(), 100)
-                    })
-            )
-            .mockImplementationOnce(
-                () =>
-                    new Promise(resolve => {
-                        setTimeout(() => resolve(), 0)
-                    })
-            )
-            .mockImplementationOnce(
-                () =>
-                    new Promise(resolve => {
-                        setTimeout(() => resolve(), 300)
-                    })
-            );
         const { container } = render(
             <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
             {
@@ -104,48 +74,18 @@ describe('SupportingFiles upload - Needs to be done in its own describe', () => 
             value: [file1, file2, file3],
         });
 
-        fireEvent.change(fileInput);
+        fireEvent.change(fileInput)
 
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(3);
 
-        mutationResolve({
-            data: {
-                uploadSupportingFile: {
-                    files: {
-                        supportingFiles: [{ url: 'http://localhost/file1.pdf', filename: 'supercoolfile1.png' }],
-                    },
-                },
-            },
-        });
-
         await waitFor(() => expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1));
         await waitFor(() => expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(2));
-
-        mutationResolve({
-            data: {
-                uploadSupportingFile: {
-                    files: {
-                        supportingFiles: [{ url: 'http://localhost/file2.pdf', filename: 'supercoolfile2.png' }],
-                    },
-                },
-            },
-        });
 
         await waitFor(() => expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2));
         await waitFor(() => expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1));
 
-        // await act(async() => await mutationResolve({
-        //     data: {
-        //         uploadSupportingFile: {
-        //             files: {
-        //                 supportingFiles: [{ url: 'http://localhost/file3.pdf', filename: 'supercoolfile3.png' }],
-        //             },
-        //         },
-        //     },
-        // }));
-
-        // expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
-        // expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(1);
+        await waitFor(() => expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3));
+        await waitFor(() => expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0));
     });
 });
