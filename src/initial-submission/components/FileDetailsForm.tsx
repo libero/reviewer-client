@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
+import { useTranslation } from 'react-i18next';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
 import {
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+    const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     const { register, watch } = useForm({
         defaultValues: {
@@ -267,6 +269,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     onDelete={(): void => {}}
                     files={supportingFilesStatus}
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
+                    extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
             </div>
         </div>

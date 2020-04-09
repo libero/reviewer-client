@@ -4,7 +4,7 @@ import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 
-const mutationMock = jest.fn();
+const mutationMock = jest.fn(() => new Promise(() => {}));
 let subscriptionData: {};
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {

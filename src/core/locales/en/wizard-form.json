@@ -20,5 +20,8 @@
     "second-cosubmission-toggle-prefix": "Would you like to ",
     "second-cosubmission-toggle-link": "add another",
     "second-cosubmission-toggle-suffix": " co-submission?"
+  },
+  "files": {
+    "supporting-files-max": "Maximum 10 supporting files"
   }
 }

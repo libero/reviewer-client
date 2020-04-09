@@ -1,11 +1,14 @@
 @import '../../core/styles/typography';
 
+$messageColour: rgb(98,159,67);
+
 .multifile-upload__input {
     visibility: hidden;
 }
 
 .multifile-upload__upload-list {
   border: 0.063rem solid $borderColour;
+  margin-bottom: 1.5rem;
 }
 
 .multifile-upload__upload-list-item {
@@ -30,7 +33,6 @@
 }
 
 .multifile-upload__label {
-  margin-top: 1.5rem;
   display: inline-block;
 }
 
@@ -65,4 +67,9 @@
 
 .multifile-upload__file-status--error {
   color: $colourError;
+}
+
+.multifile-upload__extra-message {
+  color: $messageColour;
+  font-size: $fontSizeSmall;
 }

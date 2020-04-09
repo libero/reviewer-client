@@ -24,6 +24,7 @@ interface Props {
     onUpload: (files: FileList) => void;
     onDelete: (index: number) => void;
     disableUpload?: boolean;
+    extraMessage?: string;
 }
 
 interface FileItemProps extends FileState {
@@ -78,7 +79,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
     );
 };
 
-const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload }: Props): JSX.Element => {
+const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload, extraMessage }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
         <div className="multifile-upload">
@@ -111,6 +112,7 @@ const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload }: Prop
                     />
                 </Fragment>
             )}
+            {extraMessage ? <span className="multifile-upload__extra-message">{extraMessage}</span> : null}
         </div>
     );
 };
