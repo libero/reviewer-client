@@ -72,61 +72,34 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
-    function* fileUploadInitializer(
-        fileToStore: { file: File; id: string }[],
-    ): Generator<{ uploadPromise: {}; itemId: string }> {
-        for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
-            yield {
-                uploadPromise: {
-                    variables: {
-                        id: initialValues.id,
-                        file: fileToStore[fileIndex].file,
-                        fileSize: fileToStore[fileIndex].file.size,
-                    },
-                },
-                itemId: fileToStore[fileIndex].id,
-            };
-            fileIndex += 1;
-        }
-    }
-
-    // fileUploadInitializer - Generator function that iterates over the file list - starting the upload process.
-    // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
-    //                           maintaining the state of the files.
-
-    function setSupportingFileState(
-        result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
-        fileStates: FileState[],
-    ) {
-        return (): void => {
-            const thisFilesIndex = fileStates.findIndex(
-                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
-            );
-            fileStates[thisFilesIndex] = {
-                fileStored: {
-                    fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
-                },
-            };
-            setSupportingFilesStatus(fileStates);
-        };
-    }
-
-    const uploadSupportingFiles = (
+    const uploadSupportingFiles = async (
         filesToStore: { file: File; id: string }[],
         newSupportedFilesList: FileState[],
-    ): void => {
-        const iterator = fileUploadInitializer(filesToStore);
-
-        const loop = (result: IteratorResult<{ uploadPromise: {}; itemId: string }>, fileStates: FileState[]): void => {
-            if (result.done) {
-                setSupportingUploadDisabled(false);
-            } else {
-                uploadSupportingFile(result.value.uploadPromise)
-                    .then(setSupportingFileState(result, fileStates))
-                    .then(() => loop(iterator.next(), fileStates));
-            }
-        };
-        loop(iterator.next(), newSupportedFilesList);
+    ): Promise<void> => {
+        const cloneOfFileState = [...newSupportedFilesList];
+        for await (const fileToStore of filesToStore) {
+            console.time('uploadSupportingFile');
+            await uploadSupportingFile({
+                variables: {
+                    id: initialValues.id,
+                    file: fileToStore.file,
+                    fileSize: fileToStore.file.size,
+                },
+            });
+            console.timeEnd('uploadSupportingFile');
+            const itemId = fileToStore.id;
+            const thisFilesIndex = cloneOfFileState.findIndex(
+                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === itemId,
+            );
+            cloneOfFileState[thisFilesIndex] = {
+                fileStored: {
+                    fileName: cloneOfFileState[thisFilesIndex].uploadInProgress.fileName,
+                },
+            };
+            console.log('cloneOfFileState',cloneOfFileState);
+            setSupportingFilesStatus(cloneOfFileState);
+        }
+        setSupportingUploadDisabled(false);
     };
 
     useEffect(() => {
@@ -156,6 +129,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     ]);
 
     const onSupportingFilesUpload = (filesList: FileList): void => {
+
         const filesListArray = Array.prototype.slice.call(filesList);
 
         // disable upload while uploading
@@ -234,6 +208,8 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
 
     useAutoSave(onSave, [coverLetter]);
 
+    // console.log('fileStates', supportingFilesStatus);
+
     return (
         <div>
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
@@ -264,7 +240,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             <div className="supporting-files">
                 <MultiFileUpload
                     onUpload={onSupportingFilesUpload}
-                    onDelete={(): void => {}}
+                    onDelete={(): void => { }}
                     files={supportingFilesStatus}
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                 />
