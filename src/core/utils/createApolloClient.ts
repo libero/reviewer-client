@@ -56,9 +56,7 @@ export default (host: string): ApolloClient<unknown> => {
         options: {
             reconnect: true,
             connectionParams: {
-                headers: {
-                    Authorization: getToken() ? `Bearer ${getToken()}` : '',
-                },
+                Authorization: getToken() ? `Bearer ${getToken()}` : '',
             },
         },
     });
