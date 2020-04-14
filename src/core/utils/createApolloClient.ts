@@ -55,7 +55,7 @@ export default (host: string): ApolloClient<unknown> => {
         uri: `${host}/graphql`.replace('http', 'ws'),
         options: {
             reconnect: true,
-            connectionParams: () => ({
+            connectionParams: (): {} => ({
                 Authorization: `Bearer ${getToken()}`,
             }),
             lazy: true,
