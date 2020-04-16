@@ -19,6 +19,7 @@ interface Props {
 }
 
 const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
+    console.log('initialValues', initialValues);
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
