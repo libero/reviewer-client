@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
@@ -15,6 +15,7 @@ interface Props {
 
 interface StepProps {
     initialValues: Submission;
+    setIsSaving?: any;
 }
 
 interface StepConfig {
@@ -38,6 +39,7 @@ const stepConfig: StepConfig[] = [
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
+    const [isSaving, setIsSaving] = useState(false);
     const getCurrentStepPathIndex = (): number =>
         stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
 
@@ -64,7 +66,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 loading ? (
                                     <span>loading... </span>
                                 ) : (
-                                    <config.component initialValues={data.getSubmission} />
+                                    <config.component initialValues={data.getSubmission} setIsSaving={setIsSaving} />
                                 )
                             }
                         />
@@ -74,6 +76,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
             </Switch>
             {getCurrentStepPathIndex() > 0 && (
                 <Button
+                    disabled={isSaving}
                     onClick={(): void => {
                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
                     }}
@@ -83,6 +86,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
             )}
             {getCurrentStepPathIndex() < stepConfig.length - 1 && (
                 <Button
+                    disabled={isSaving}
                     onClick={(): void => {
                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
                     }}

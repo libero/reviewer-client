@@ -18,6 +18,7 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
+    setIsSaving?: any;
 }
 
 const DetailsForm = ({ initialValues }: Props): JSX.Element => {
