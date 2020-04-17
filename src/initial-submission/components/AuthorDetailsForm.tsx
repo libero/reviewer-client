@@ -36,13 +36,15 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
     });
 
     useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
         if (formState.dirty) {
-            console.log('here in the state');
             setIsSaving(true);
         } else {
             setIsSaving(false);
         }
-    }, [formState.dirty]);
+    }, [formState.dirty, setIsSaving]);
 
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
@@ -63,16 +65,14 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
 
     const onSave = async (): Promise<void> => {
         const values = getValues();
-        // Prevent XHR requests from taking place if the compount has unmounted,as the request would be invalid.
-        // This requires a more serious fix where saving state prevents
-        if (Object.entries(values).length > 0) {
-            const vars = {
-                variables: {
-                    id: initialValues.id,
-                    details: values,
-                },
-            };
-            await saveCallback(vars);
+        const vars = {
+            variables: {
+                id: initialValues.id,
+                details: values,
+            },
+        };
+        await saveCallback(vars);
+        if (setIsSaving) {
             reset(values);
         }
     };
