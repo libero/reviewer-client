@@ -50,6 +50,7 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
     );
 
     const onSave = (): void => {
+        debugger
         const vars = {
             variables: {
                 id: initialValues.id,
