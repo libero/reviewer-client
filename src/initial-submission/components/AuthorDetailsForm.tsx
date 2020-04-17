@@ -50,13 +50,18 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
     );
 
     const onSave = (): void => {
-        const vars = {
-            variables: {
-                id: initialValues.id,
-                details: getValues(),
-            },
-        };
-        saveCallback(vars);
+        const values = getValues();
+        // Prevent XHR requests from taking place if the compount has unmounted,as the request would be invalid.
+        // This requires a more serious fix where saving state prevents
+        if (Object.entries(values).length > 0) {
+            const vars = {
+                variables: {
+                    id: initialValues.id,
+                    details: values,
+                },
+            };
+            saveCallback(vars);
+        }
     };
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
