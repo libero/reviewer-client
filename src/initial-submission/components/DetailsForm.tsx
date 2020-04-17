@@ -25,7 +25,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
         title = '',
         previouslyDiscussed = '',
         previouslySubmitted = '',
-        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = [],
+        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
     const { register, setValue, watch, control } = useForm({
