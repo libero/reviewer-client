@@ -30,7 +30,7 @@ type UploadInProgress = {
 };
 interface Props {
     initialValues?: Submission;
-    setIsSaving?: any;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {

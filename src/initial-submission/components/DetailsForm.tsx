@@ -18,7 +18,7 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving?: any;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {

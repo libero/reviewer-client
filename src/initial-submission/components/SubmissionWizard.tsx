@@ -15,7 +15,7 @@ interface Props {
 
 interface StepProps {
     initialValues: Submission;
-    setIsSaving?: any;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface StepConfig {
