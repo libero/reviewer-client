@@ -35,6 +35,7 @@ interface Props {
 
 const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
+    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
     const { files } = initialValues;
     const { register, watch, reset, getValues, formState } = useForm({
         defaultValues: {
@@ -52,6 +53,17 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             setIsSaving(false);
         }
     }, [formState.dirty, setIsSaving]);
+
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
+        if (supportingUploadDisabled) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [supportingUploadDisabled]);
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -83,8 +95,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         }));
     };
     const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
-
-    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
     function* fileUploadInitializer(
         fileToStore: { file: File; id: string }[],
@@ -205,6 +215,8 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             return;
         }
 
+        setIsSaving(true);
+
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
             uploadInProgress: {
@@ -222,16 +234,17 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         })
             .then(({ data }) => {
                 const { filename: fileName, url: previewLink } = data.uploadManuscript.files.manuscriptFile;
-
                 setManuscriptStatus({
                     fileStored: {
                         fileName,
                         previewLink,
                     },
                 });
+                setIsSaving(false);
             })
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
+                setIsSaving(false);
             });
     };
 
@@ -244,7 +257,9 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             },
         };
         saveCallback(vars);
-        reset(getValues());
+        if (setIsSaving) {
+            reset(getValues());
+        }
     };
 
     useAutoSave(onSave, [coverLetter]);
