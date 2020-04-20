@@ -321,9 +321,7 @@ describe('MultiFileUpload', () => {
             const mockOnDelete = jest.fn();
             const { container } = render(
                 <MultiFileUpload
-                    files={[
-                        { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
-                    ]}
+                    files={[{ fileStored: { fileName: 'File 2.pdf', id: 'bob' } }]}
                     onUpload={jest.fn()}
                     onDelete={mockOnDelete}
                 />,
