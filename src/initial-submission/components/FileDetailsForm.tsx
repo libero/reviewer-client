@@ -65,6 +65,12 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         }
     }, [supportingUploadDisabled]);
 
+    const toggleSave = (status: boolean) => {
+        if (setIsSaving) {
+            setIsSaving(status);
+        }
+    };
+
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
     const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
@@ -215,7 +221,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             return;
         }
 
-        setIsSaving(true);
+        toggleSave(true);
 
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
@@ -240,11 +246,11 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
                         previewLink,
                     },
                 });
-                setIsSaving(false);
+                toggleSave(false);
             })
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
-                setIsSaving(false);
+                toggleSave(false);
             });
     };
 
