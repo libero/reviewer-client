@@ -33,14 +33,25 @@ interface Props {
     setIsSaving?: any;
 }
 
-const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
-    const { register, watch } = useForm({
+    const { register, watch, reset, getValues, formState } = useForm({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
     });
+
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
+        if (formState.dirty) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [formState.dirty, setIsSaving]);
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -233,6 +244,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             },
         };
         saveCallback(vars);
+        reset(getValues());
     };
 
     useAutoSave(onSave, [coverLetter]);
