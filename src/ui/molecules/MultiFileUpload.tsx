@@ -24,15 +24,17 @@ interface Props {
     files?: FileState[];
     onUpload: (files: FileList) => void;
     onDelete: (fileId: string) => void;
+    disableDelete?: boolean;
     disableUpload?: boolean;
     extraMessage?: string;
 }
 
 interface FileItemProps extends FileState {
     onDelete: (fileId: string) => void;
+    disableDelete?: boolean;
 }
 
-const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemProps): JSX.Element => {
+const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete }: FileItemProps): JSX.Element => {
     const { t } = useTranslation('ui');
     const status = useMemo(() => {
         if (error && status !== 'ERROR') {
@@ -71,7 +73,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
                     </span>
                 ) : null}
             </span>
-            {status === 'COMPLETE' || status === 'ERROR' ? (
+            {!disableDelete && (status === 'COMPLETE' || status === 'ERROR') ? (
                 <div>
                     <Delete className="multifile-upload__delete" onClick={(): void => onDelete(fileStored.id)} />
                 </div>
@@ -80,14 +82,21 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
     );
 };
 
-const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload, extraMessage }: Props): JSX.Element => {
+const MultiFileUpload = ({
+    files = [],
+    onUpload,
+    onDelete,
+    disableUpload,
+    disableDelete,
+    extraMessage,
+}: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
         <div className="multifile-upload">
             {files.length ? (
                 <div className="multifile-upload__upload-list">
                     {files.map((file, index) => {
-                        return <FileItem key={index} {...file} onDelete={onDelete} />;
+                        return <FileItem key={index} {...file} onDelete={onDelete} disableDelete={disableDelete} />;
                     })}
                 </div>
             ) : null}

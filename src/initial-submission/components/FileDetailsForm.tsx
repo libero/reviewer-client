@@ -312,6 +312,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     onUpload={onSupportingFilesUpload}
                     onDelete={deleteSupportingFileCallback}
                     files={supportingFilesStatus}
+                    disableDelete={supportingUploadDisabled}
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
