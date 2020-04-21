@@ -15,7 +15,7 @@ type FileStored = {
 };
 
 interface FileUploadContentProps {
-    status: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
+    status: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR' | 'PROCESSING';
     open: () => void;
     error?: UploadErrors;
     uploadInProgress?: UploadInProgress;
@@ -116,6 +116,9 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
     const status = useMemo(() => {
         if (state.error && status !== 'ERROR') {
             return 'ERROR';
+        }
+        if (state.uploadInProgress && state.uploadInProgress.progress === 0) {
+            return 'PROCESSING';
         }
         if (state.uploadInProgress && status !== 'UPLOADING') {
             return 'UPLOADING';

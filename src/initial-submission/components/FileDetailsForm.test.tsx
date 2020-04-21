@@ -172,7 +172,7 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             expect(container.querySelector('.file-upload__extra').textContent).toBe('testfile.pdf');
         });
-        it('should display in progress upload when file dropped', async (): Promise<void> => {
+        it('should display in processing when file dropped', async (): Promise<void> => {
             let mutationResolve: (value?: unknown) => void;
             const mutationPromise = new Promise(resolve => {
                 mutationResolve = resolve;
@@ -186,7 +186,7 @@ describe('File Details Form', (): void => {
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
 
-            expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
+            expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
             mutationResolve({
                 data: {
                     uploadManuscript: {
@@ -215,7 +215,7 @@ describe('File Details Form', (): void => {
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
-            expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
+            expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
             mutationReject();
             // need to wait to flush mutation resolve through
             await waitFor(() => {});
