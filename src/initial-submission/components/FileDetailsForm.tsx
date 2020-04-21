@@ -39,8 +39,19 @@ interface Props {
 const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
-    const [manuscriptUploadDisabled, setManuscriptUploadDisabled] = useState<boolean>(false);
     const { files } = initialValues;
+    // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
+    // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
+    const [manuscriptStatus, setManuscriptStatus] = useState<{
+        fileStored?: {};
+        uploadInProgress?: UploadInProgress;
+        error?: 'multiple' | 'validation' | 'server';
+    }>({
+        fileStored: {
+            fileName: files && files.manuscriptFile ? files.manuscriptFile.filename : undefined,
+            previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
+        },
+    });
     const { register, watch, reset, getValues, formState } = useForm({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
@@ -62,12 +73,12 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         if (!setIsSaving) {
             return;
         }
-        if (supportingUploadDisabled || manuscriptUploadDisabled) {
+        if (supportingUploadDisabled || manuscriptStatus.uploadInProgress) {
             setIsSaving(true);
         } else {
             setIsSaving(false);
         }
-    }, [supportingUploadDisabled, manuscriptUploadDisabled]);
+    }, [supportingUploadDisabled, manuscriptStatus]);
 
     const getInitialSupportingFiles = (): FileState[] => {
         if (!files || !files.supportingFiles) return [];
@@ -105,19 +116,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
 
     const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
         variables: { submissionId: initialValues.id },
-    });
-
-    // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
-    // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
-    const [manuscriptStatus, setManuscriptStatus] = useState<{
-        fileStored?: {};
-        uploadInProgress?: UploadInProgress;
-        error?: 'multiple' | 'validation' | 'server';
-    }>({
-        fileStored: {
-            fileName: files && files.manuscriptFile ? files.manuscriptFile.filename : undefined,
-            previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
-        },
     });
 
     function* fileUploadInitializer(
@@ -240,8 +238,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             return;
         }
 
-        setManuscriptUploadDisabled(true);
-
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
             uploadInProgress: {
@@ -265,11 +261,9 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
                         previewLink,
                     },
                 });
-                setManuscriptUploadDisabled(false);
             })
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
-                setManuscriptUploadDisabled(false);
             });
     };
 
@@ -314,11 +308,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
                 Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
                 <a className="typography__small typography__small--link files-step__link--nested">Learn more</a>
             </span>
-            <FileUpload
-                onUpload={onManuscriptUpload}
-                state={manuscriptStatus}
-                disabledUpload={manuscriptUploadDisabled}
-            />
+            <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 Supporting files (optional)
             </h2>

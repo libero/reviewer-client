@@ -107,10 +107,10 @@ interface Props {
         error?: UploadErrors;
         fileStored?: FileStored;
     };
-    disabledUpload: boolean;
+    // disabledUpload?: boolean;
 }
 
-const FileUpload: React.FC<Props> = ({ onUpload, state = {}, disabledUpload }: Props): JSX.Element => {
+const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Element => {
     const onDrop = useCallback(onUpload, []);
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
@@ -135,9 +135,9 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {}, disabledUpload }: P
                 className={`file-upload__dropzone file-upload__dropzone--${status.toLowerCase()} ${
                     isDragActive ? 'file-upload__dropzone--drag-active' : ''
                 }`}
-                {...(disabledUpload === false && getRootProps())}
+                {...(status !== 'UPLOADING' && getRootProps())}
             >
-                {disabledUpload === false && <input {...getInputProps()} />}
+                {status !== 'UPLOADING' && <input {...getInputProps()} />}
                 <UploadProgress progress={state.uploadInProgress && state.uploadInProgress.progress} status={status} />
                 <div className="file-upload__content">
                     <FileUploadContent
