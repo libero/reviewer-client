@@ -56,7 +56,19 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
-    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
+    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation, {
+        update(cache, { data: { uploadSupportingFile } }) {
+            const { getSubmission } = cache.readQuery({
+                query: getSubmissionQuery,
+                variables: { id: initialValues.id },
+            });
+            getSubmission.files.supportingFiles.push(uploadSupportingFile);
+            cache.writeQuery({
+                query: getSubmissionQuery,
+                data: { getSubmission: getSubmission },
+            });
+        },
+    });
     const [deleteSupportingFile] = useMutation(deleteSupportingFileMutation, {
         update(cache, { data: { deleteSupportingFile } }) {
             const { getSubmission } = cache.readQuery({
@@ -299,6 +311,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     onUpload={onSupportingFilesUpload}
                     onDelete={deleteSupportingFileCallback}
                     files={supportingFilesStatus}
+                    disableDelete={supportingUploadDisabled}
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />

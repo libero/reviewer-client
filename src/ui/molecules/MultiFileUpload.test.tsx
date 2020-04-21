@@ -147,6 +147,34 @@ describe('MultiFileUpload', () => {
         expect(container.querySelector('.multifile-upload__extra-message')).toBeNull();
     });
 
+    it('does not display FileItem delete icons if disableDelete is true', (): void => {
+        const { container, rerender } = render(
+            <MultiFileUpload
+                files={[
+                    { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 }, error: 'server' },
+                    { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
+                    { fileStored: { fileName: 'File 3.pdf', id: 'mel' } },
+                ]}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelectorAll('.multifile-upload__delete')).toHaveLength(3);
+        rerender(
+            <MultiFileUpload
+                files={[
+                    { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 }, error: 'server' },
+                    { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
+                    { fileStored: { fileName: 'File 3.pdf', id: 'mel' } },
+                ]}
+                disableDelete={true}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelectorAll('.multifile-upload__delete')).toHaveLength(0);
+    });
+
     describe('FileItem', (): void => {
         it('shows the correct UploadProgress for each item', () => {
             const { container } = render(
