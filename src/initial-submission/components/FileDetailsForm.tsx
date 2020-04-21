@@ -62,7 +62,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 query: getSubmissionQuery,
                 variables: { id: initialValues.id },
             });
-            console.log(uploadSupportingFile);
             getSubmission.files.supportingFiles.push(uploadSupportingFile);
             cache.writeQuery({
                 query: getSubmissionQuery,
