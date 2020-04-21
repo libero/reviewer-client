@@ -56,7 +56,20 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
-    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
+    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation, {
+        update(cache, { data: { uploadSupportingFile } }) {
+            const { getSubmission } = cache.readQuery({
+                query: getSubmissionQuery,
+                variables: { id: initialValues.id },
+            });
+            console.log(uploadSupportingFile);
+            getSubmission.files.supportingFiles.push(uploadSupportingFile);
+            cache.writeQuery({
+                query: getSubmissionQuery,
+                data: { getSubmission: getSubmission },
+            });
+        },
+    });
     const [deleteSupportingFile] = useMutation(deleteSupportingFileMutation, {
         update(cache, { data: { deleteSupportingFile } }) {
             const { getSubmission } = cache.readQuery({
