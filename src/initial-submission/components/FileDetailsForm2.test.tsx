@@ -49,7 +49,6 @@ const waitForUploads = async (container: HTMLElement, uploads: number): Promise<
 };
 
 describe('SupportingFiles upload', () => {
-    const setIsSaving = jest.fn();
     it('Can upload one file', async (): Promise<void> => {
         let mutationResolve1: (value?: unknown) => void;
 
@@ -61,10 +60,7 @@ describe('SupportingFiles upload', () => {
         );
 
         const { container } = render(
-            <FileDetailsForm
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
-                setIsSaving={setIsSaving}
-            />,
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
             {
                 wrapper: routerWrapper(),
             },
@@ -120,10 +116,7 @@ describe('SupportingFiles upload', () => {
             );
 
         const { container } = render(
-            <FileDetailsForm
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
-                setIsSaving={setIsSaving}
-            />,
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
             {
                 wrapper: routerWrapper(),
             },
@@ -180,10 +173,7 @@ describe('SupportingFiles upload', () => {
             );
 
         const { container } = render(
-            <FileDetailsForm
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
-                setIsSaving={setIsSaving}
-            />,
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
             {
                 wrapper: routerWrapper(),
             },

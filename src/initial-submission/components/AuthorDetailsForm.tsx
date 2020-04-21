@@ -16,7 +16,7 @@ interface GetCurrentUser {
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
@@ -36,6 +36,9 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
     });
 
     useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
         if (formState.dirty) {
             setIsSaving(true);
         } else {
@@ -69,7 +72,9 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
             },
         };
         await saveCallback(vars);
-        reset(values);
+        if (setIsSaving) {
+            reset(values);
+        }
     };
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);

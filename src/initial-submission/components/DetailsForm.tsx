@@ -18,7 +18,7 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
@@ -40,6 +40,9 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
         },
     });
     useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
         if (formState.dirty) {
             setIsSaving(true);
         } else {
@@ -57,7 +60,7 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const previouslySubmittedWatch = watch('previouslySubmitted');
     const firstCosubmissionWatch = watch('firstCosubmissionTitle');
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const cosubmission =
             firstCosubmissionWatch || secondCosubmissionWatch
                 ? [firstCosubmissionWatch, secondCosubmissionWatch || '']
@@ -77,8 +80,10 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
                 },
             },
         };
-        saveCallback(vars);
-        reset(getValues());
+        await saveCallback(vars);
+        if (setIsSaving) {
+            reset(getValues());
+        }
     };
 
     useAutoSave(onSave, [

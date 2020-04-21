@@ -35,7 +35,6 @@ jest.mock('@apollo/react-hooks', () => ({
 }));
 
 describe('DetailsForm', (): void => {
-    const setIsSaving = jest.fn();
     afterEach(() => {
         cleanup();
         mutationMock.mockReset();
@@ -43,14 +42,12 @@ describe('DetailsForm', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />);
+            render(<DetailsForm initialValues={testInitialValues} />);
         }).not.toThrow();
     });
 
     it('toggles display of second cosubmission text input when text link is clicked', () => {
-        const { container, getByText, getByLabelText } = render(
-            <DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
-        );
+        const { container, getByText, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
         expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
         fireEvent.click(getByLabelText('details.cosubmission-toggle'));
         expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
@@ -60,7 +57,7 @@ describe('DetailsForm', (): void => {
 
     describe('autosave', () => {
         it('when a title is entered it triggers the autosave', () => {
-            const { container } = render(<DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />);
+            const { container } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.input(container.querySelector('#title'), {
                 target: { value: 'test title' },
             });
@@ -80,9 +77,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the subjects are set it should trigger an autosave', () => {
-            const { container, getByText } = render(
-                <DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
-            );
+            const { container, getByText } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
             fireEvent.click(getByText('Neuroscience'));
 
@@ -101,9 +96,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the previously discussed box is filled it triggers the autosave', () => {
-            const { container, getByLabelText } = render(
-                <DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
-            );
+            const { container, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.click(getByLabelText('details.previously-discussed-toggle'));
             fireEvent.input(container.querySelector('#previouslyDiscussed'), {
                 target: { value: 'test discussion' },
@@ -124,9 +117,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the previously submitted box is filled it triggers the autosave', () => {
-            const { container, getByLabelText } = render(
-                <DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
-            );
+            const { container, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             fireEvent.click(getByLabelText('details.previously-submitted-toggle'));
             fireEvent.input(container.querySelector('#previouslySubmitted'), {
                 target: { value: 'test submitted' },
@@ -147,9 +138,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when the first cosubmission box is filled it triggers the autosave', () => {
-            const { container, getByText, getByLabelText } = render(
-                <DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
-            );
+            const { container, getByText, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
             fireEvent.click(getByLabelText('details.cosubmission-toggle'));
             expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
@@ -172,9 +161,7 @@ describe('DetailsForm', (): void => {
         });
 
         it('when both of the cosubmission boxes are filled it triggers the autosave', () => {
-            const { container, getByText, getByLabelText } = render(
-                <DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
-            );
+            const { container, getByText, getByLabelText } = render(<DetailsForm initialValues={testInitialValues} />);
             expect(getByLabelText('details.cosubmission-toggle')).toBeInTheDocument();
             fireEvent.click(getByLabelText('details.cosubmission-toggle'));
             expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
@@ -206,7 +193,6 @@ describe('DetailsForm', (): void => {
         it('sets default values to initialValues passed', (): void => {
             const { container } = render(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -240,14 +226,13 @@ describe('DetailsForm', (): void => {
         });
 
         it('collapses all toggles by default', () => {
-            const { container } = render(<DetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />);
+            const { container } = render(<DetailsForm initialValues={testInitialValues} />);
             expect(container.querySelectorAll('.toggle__panel')).toHaveLength(0);
         });
 
         it('toggles the previously discussed panel if there is a value for previouslyDiscussed', () => {
             const { container, getByLabelText } = render(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -265,7 +250,6 @@ describe('DetailsForm', (): void => {
         it('toggles the previously submitted panel if there is a value for previouslySubmitted', () => {
             const { container, getByLabelText } = render(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -283,7 +267,6 @@ describe('DetailsForm', (): void => {
         it('toggles the cosubmission panel if cosubmission has a length > 0', () => {
             const { rerender, container, getByLabelText } = render(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -298,7 +281,6 @@ describe('DetailsForm', (): void => {
             expect(getByLabelText('details.cosubmission-title-label')).toBeInTheDocument();
             rerender(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -313,7 +295,6 @@ describe('DetailsForm', (): void => {
             expect(getByLabelText('details.cosubmission-title-label')).toBeInTheDocument();
             rerender(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -331,7 +312,6 @@ describe('DetailsForm', (): void => {
         it('does not displays the second cosubmission input if there is no initial value for cosubmission[1]', () => {
             const { getByLabelText } = render(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
@@ -348,7 +328,6 @@ describe('DetailsForm', (): void => {
         it('displays the second cosubmission input if there is an initial value for cosubmission[1]', () => {
             const { getByLabelText } = render(
                 <DetailsForm
-                    setIsSaving={setIsSaving}
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),

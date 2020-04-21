@@ -33,7 +33,7 @@ type UploadInProgress = {
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
@@ -48,6 +48,9 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
     });
 
     useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
         if (formState.dirty) {
             setIsSaving(true);
         } else {
@@ -56,6 +59,9 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
     }, [formState.dirty, setIsSaving]);
 
     useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
         if (supportingUploadDisabled || manuscriptUploadDisabled) {
             setIsSaving(true);
         } else {
@@ -275,15 +281,17 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
     };
 
     const coverLetter = watch('coverLetter');
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
                 id: initialValues.id,
                 coverLetter,
             },
         };
-        saveCallback(vars);
-        reset(getValues());
+        await saveCallback(vars);
+        if (setIsSaving) {
+            reset(getValues());
+        }
     };
 
     useAutoSave(onSave, [coverLetter]);
