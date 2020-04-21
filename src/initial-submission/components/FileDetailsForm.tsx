@@ -1,21 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
-import { FileState } from '../../ui/molecules/MultiFileUpload';
-import {
-    deleteSupportingFileMutation,
-    fileUploadProgressSubscription,
-    getSubmissionQuery,
-    saveFilesPageMutation,
-    uploadManuscriptMutation,
-    uploadSupportingFileMutation,
-} from '../graphql';
+import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { File as ReviewerFile, Submission } from '../types';
-import { v4 } from 'uuid';
-import useSynchronousUpload from '../hooks/useSupportingFileUpload';
+import { Submission } from '../types';
+import useSupportingFileHook from '../hooks/useSupportingFileHook';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -44,96 +35,16 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             coverLetter: files ? files.coverLetter : '',
         },
     });
-
-    const getInitialSupportingFiles = (): FileState[] => {
-        if (!files || !files.supportingFiles) return [];
-        return files.supportingFiles.map(file => ({
-            fileStored: {
-                fileName: file.filename,
-                id: file.id,
-            },
-        }));
-    };
-    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
-    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation, {
-        update(cache, { data: { uploadSupportingFile } }) {
-            const { getSubmission } = cache.readQuery({
-                query: getSubmissionQuery,
-                variables: { id: initialValues.id },
-            });
-            getSubmission.files.supportingFiles.push(uploadSupportingFile);
-            cache.writeQuery({
-                query: getSubmissionQuery,
-                data: { getSubmission: getSubmission },
-            });
-        },
-    });
 
-    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
-    // new supporting file code
-    const onSupportingUploadSuccess = (
-        file: { file: File; id: string },
-        response: { data: { uploadSupportingFile: { id: string } } },
-    ): void => {
-        const responseFile = response.data.uploadSupportingFile;
-        const thisFilesIndex = supportingFilesStatus.findIndex(
-            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
-        );
-        supportingFilesStatus[thisFilesIndex] = {
-            fileStored: {
-                id: responseFile.id,
-                fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
-            },
-        };
-        setSupportingFilesStatus(supportingFilesStatus);
-        if (thisFilesIndex === supportingFilesStatus.length - 1) {
-            setSupportingUploadDisabled(false);
-        }
-    };
-    const onSupportingUploadError = (file: { file: File; id: string }): void => {
-        const thisFilesIndex = supportingFilesStatus.findIndex(
-            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
-        );
-        const stateClone = [...supportingFilesStatus];
-        stateClone[thisFilesIndex].error = 'server';
-        setSupportingFilesStatus(stateClone);
-    };
-
-    const uploadFilesSynchronously = useSynchronousUpload(
-        (fileToStore: { file: File }) =>
-            uploadSupportingFile({
-                variables: {
-                    id: initialValues.id,
-                    file: fileToStore.file,
-                    fileSize: fileToStore.file.size,
-                },
-            }),
-        onSupportingUploadSuccess,
-        onSupportingUploadError,
-    );
-
-    const [deleteSupportingFile] = useMutation(deleteSupportingFileMutation, {
-        update(cache, { data: { deleteSupportingFile } }) {
-            const { getSubmission } = cache.readQuery({
-                query: getSubmissionQuery,
-                variables: { id: initialValues.id },
-            });
-            getSubmission.files.supportingFiles = getSubmission.files.supportingFiles.filter(
-                (file: ReviewerFile) => file.id !== deleteSupportingFile,
-            );
-            const newSupportingFilesStatus = supportingFilesStatus.filter(
-                (file: FileState) =>
-                    (file.fileStored && file.fileStored.id !== deleteSupportingFile) || !file.fileStored,
-            );
-            setSupportingFilesStatus(newSupportingFilesStatus);
-            cache.writeQuery({
-                query: getSubmissionQuery,
-                data: { getSubmission: getSubmission },
-            });
-        },
-    });
+    const [
+        onSupportingFilesUpload,
+        deleteSupportingFileCallback,
+        supportingFilesStatus,
+        supportingUploadDisabled,
+        filesStoredCount,
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles);
 
     const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
         variables: { submissionId: initialValues.id },
@@ -174,40 +85,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         }
     }, [uploadProgressData, loading]);
 
-    const filesStoredCount = useMemo(() => supportingFilesStatus.filter(fileStatus => !fileStatus.error).length, [
-        supportingFilesStatus,
-    ]);
-
-    const onSupportingFilesUpload = (filesList: FileList): void => {
-        const filesListArray = Array.prototype.slice.call(filesList);
-
-        // disable upload while uploading
-        setSupportingUploadDisabled(true);
-
-        let trimmedFilesArray = filesListArray;
-        if (filesListArray.length + filesStoredCount > maxSupportingFiles) {
-            trimmedFilesArray = filesListArray.slice(0, maxSupportingFiles - filesStoredCount);
-        }
-
-        const filesToStore = trimmedFilesArray.map((file: File) => ({
-            file,
-            id: v4(),
-        }));
-
-        const newSupportingFilesStatus = [
-            ...supportingFilesStatus,
-            ...filesToStore.map((fileToStore: { file: File; id: string }) => ({
-                uploadInProgress: {
-                    progress: 0,
-                    fileName: fileToStore.file.name,
-                    id: fileToStore.id,
-                },
-            })),
-        ];
-        setSupportingFilesStatus(newSupportingFilesStatus);
-        uploadFilesSynchronously(filesToStore);
-    };
-
     const onManuscriptUpload = (filesList: File[]): void => {
         if (!allowedManuscriptFileTypes.includes(filesList[0].type) || filesList[0].size > maxFileSize) {
             setManuscriptStatus({ error: 'validation' });
@@ -242,13 +119,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
             });
-    };
-
-    const deleteSupportingFileCallback = async (fileId: string): Promise<string> => {
-        const stringExecutionResult = await deleteSupportingFile({
-            variables: { fileId: fileId, submissionId: initialValues.id },
-        });
-        return stringExecutionResult.data;
     };
 
     const coverLetter = watch('coverLetter');
