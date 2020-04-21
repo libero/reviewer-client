@@ -71,6 +71,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         },
     });
 
+    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
     // new supporting file code
     const onSupportingUploadSuccess = (
         file: { file: File; id: string },
@@ -87,6 +88,9 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             },
         };
         setSupportingFilesStatus(supportingFilesStatus);
+        if (thisFilesIndex === supportingFilesStatus.length - 1) {
+            setSupportingUploadDisabled(false);
+        }
     };
     const onSupportingUploadError = (file: { file: File; id: string }): void => {
         const thisFilesIndex = supportingFilesStatus.findIndex(
@@ -147,8 +151,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
         },
     });
-
-    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
     useEffect(() => {
         if (
