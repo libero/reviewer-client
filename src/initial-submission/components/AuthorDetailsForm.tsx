@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -16,9 +16,10 @@ interface GetCurrentUser {
 
 interface Props {
     initialValues?: Submission;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
@@ -30,7 +31,20 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
             .required(),
         institution: yup.string().required(),
     });
-    const { register, handleSubmit, errors, getValues } = useForm<AuthorDetails>({ validationSchema: schema });
+    const { register, handleSubmit, errors, getValues, formState, reset } = useForm<AuthorDetails>({
+        validationSchema: schema,
+    });
+
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
+        if (formState.dirty) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [formState.dirty, setIsSaving]);
 
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
@@ -49,18 +63,17 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
         initialValues && initialValues.author ? initialValues.author.institution : '',
     );
 
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const values = getValues();
-        // Prevent XHR requests from taking place if the compount has unmounted,as the request would be invalid.
-        // This requires a more serious fix where saving state prevents
-        if (Object.entries(values).length > 0) {
-            const vars = {
-                variables: {
-                    id: initialValues.id,
-                    details: values,
-                },
-            };
-            saveCallback(vars);
+        const vars = {
+            variables: {
+                id: initialValues.id,
+                details: values,
+            },
+        };
+        await saveCallback(vars);
+        if (setIsSaving) {
+            reset(values);
         }
     };
 

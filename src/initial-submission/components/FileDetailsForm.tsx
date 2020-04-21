@@ -33,16 +33,52 @@ type UploadInProgress = {
 
 interface Props {
     initialValues?: Submission;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
+    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
     const { files } = initialValues;
-    const { register, watch } = useForm({
+    // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
+    // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
+    const [manuscriptStatus, setManuscriptStatus] = useState<{
+        fileStored?: {};
+        uploadInProgress?: UploadInProgress;
+        error?: 'multiple' | 'validation' | 'server';
+    }>({
+        fileStored: {
+            fileName: files && files.manuscriptFile ? files.manuscriptFile.filename : undefined,
+            previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
+        },
+    });
+    const { register, watch, reset, getValues, formState } = useForm({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
     });
+
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
+        if (formState.dirty) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [formState.dirty, setIsSaving]);
+
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
+        if (supportingUploadDisabled || manuscriptStatus.uploadInProgress) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [supportingUploadDisabled, manuscriptStatus]);
 
     const getInitialSupportingFiles = (): FileState[] => {
         if (!files || !files.supportingFiles) return [];
@@ -93,21 +129,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
         variables: { submissionId: initialValues.id },
     });
-
-    // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
-    // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
-    const [manuscriptStatus, setManuscriptStatus] = useState<{
-        fileStored?: {};
-        uploadInProgress?: UploadInProgress;
-        error?: 'multiple' | 'validation' | 'server';
-    }>({
-        fileStored: {
-            fileName: files && files.manuscriptFile ? files.manuscriptFile.filename : undefined,
-            previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
-        },
-    });
-
-    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
 
     function* fileUploadInitializer(
         fileToStore: { file: File; id: string }[],
@@ -246,7 +267,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         })
             .then(({ data }) => {
                 const { filename: fileName, url: previewLink } = data.uploadManuscript.files.manuscriptFile;
-
                 setManuscriptStatus({
                     fileStored: {
                         fileName,
@@ -267,14 +287,17 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     };
 
     const coverLetter = watch('coverLetter');
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
                 id: initialValues.id,
                 coverLetter,
             },
         };
-        saveCallback(vars);
+        await saveCallback(vars);
+        if (setIsSaving) {
+            reset(getValues());
+        }
     };
 
     useAutoSave(onSave, [coverLetter]);

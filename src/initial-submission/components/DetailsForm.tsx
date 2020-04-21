@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
@@ -18,9 +18,10 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DetailsForm = ({ initialValues }: Props): JSX.Element => {
+const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const {
         title = '',
         previouslyDiscussed = '',
@@ -28,7 +29,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
-    const { register, setValue, watch, control } = useForm({
+    const { register, setValue, watch, control, formState, reset, getValues } = useForm({
         defaultValues: {
             title,
             subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
@@ -38,6 +39,17 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
             secondCosubmissionTitle,
         },
     });
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
+        }
+        if (formState.dirty) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [formState.dirty, setIsSaving]);
+
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
@@ -48,7 +60,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     const previouslySubmittedWatch = watch('previouslySubmitted');
     const firstCosubmissionWatch = watch('firstCosubmissionTitle');
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const cosubmission =
             firstCosubmissionWatch || secondCosubmissionWatch
                 ? [firstCosubmissionWatch, secondCosubmissionWatch || '']
@@ -68,7 +80,10 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                 },
             },
         };
-        saveCallback(vars);
+        await saveCallback(vars);
+        if (setIsSaving) {
+            reset(getValues());
+        }
     };
 
     useAutoSave(onSave, [
