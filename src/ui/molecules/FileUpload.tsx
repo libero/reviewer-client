@@ -128,6 +128,9 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
         }
     }, [state]);
 
+    const getFileStatus = () =>
+        state.uploadInProgress && state.uploadInProgress.progress === 0 ? 'PROCESSING' : status;
+
     return (
         <div className="file-upload">
             <div
@@ -137,7 +140,10 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
                 {...(status !== 'UPLOADING' && getRootProps())}
             >
                 {status !== 'UPLOADING' && <input {...getInputProps()} />}
-                <UploadProgress progress={state.uploadInProgress && state.uploadInProgress.progress} status={status} />
+                <UploadProgress
+                    progress={state.uploadInProgress && state.uploadInProgress.progress}
+                    status={getFileStatus()}
+                />
                 <div className="file-upload__content">
                     <FileUploadContent
                         status={status}
