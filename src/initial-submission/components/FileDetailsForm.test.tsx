@@ -65,13 +65,14 @@ describe('File Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<FileDetailsForm initialValues={testInitialValues} />);
+            render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />);
         }).not.toThrow();
     });
     describe('coverLetter', () => {
         it('sets coverletter initial value to initialValues.coverLetter on load', async (): Promise<void> => {
             const { container } = render(
                 <FileDetailsForm
+                    setIsSaving={() => {}}
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
@@ -88,7 +89,7 @@ describe('File Details Form', (): void => {
         it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />);
             expect(
                 (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
             ).toBe('');
@@ -97,7 +98,7 @@ describe('File Details Form', (): void => {
         it('should call the save mutation with correct variables when cover letter is changed', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />);
             fireEvent.input(container.querySelector('.cover-letter__input'), {
                 target: { value: 'test cover letter input' },
             });
@@ -152,12 +153,13 @@ describe('File Details Form', (): void => {
             );
         };
         it('should display an idle file upload if no file stored', () => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />);
             expect(container.querySelector('.file-upload__dropzone--idle')).toBeInTheDocument();
         });
         it('should display a complete file upload if a file is stored', () => {
             const { container } = render(
                 <FileDetailsForm
+                    setIsSaving={() => {}}
                     initialValues={{
                         id: 'test',
                         articleType: '',
@@ -178,7 +180,7 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -208,9 +210,12 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -225,9 +230,12 @@ describe('File Details Form', (): void => {
         it('Should display a validation error if the upload file is of the wrong file type', async (): Promise<
             void
         > => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -251,7 +259,7 @@ describe('File Details Form', (): void => {
         });
 
         it('Should allow a new file to be uploaded', async (): Promise<void> => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -265,9 +273,12 @@ describe('File Details Form', (): void => {
         });
 
         it('Should clear status when a new file is dropped', async (): Promise<void> => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -286,7 +297,7 @@ describe('File Details Form', (): void => {
             });
 
             mutationMock.mockImplementation(() => mutationPromise);
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
+            const { container } = render(<FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />, {
                 wrapper: routerWrapper(),
             });
 
@@ -340,6 +351,7 @@ describe('File Details Form', (): void => {
         it('displays initialValues supporting files on load', () => {
             const { container, getByText } = render(
                 <FileDetailsForm
+                    setIsSaving={() => {}}
                     initialValues={{
                         id: 'test',
                         updated: Date.now(),
@@ -365,9 +377,12 @@ describe('File Details Form', (): void => {
             expect(getByText('File2.png')).toBeInTheDocument();
         });
         it('queues a selected file for upload', async (): Promise<void> => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
             const fileInput = container.querySelector('.multifile-upload__input');
@@ -386,7 +401,10 @@ describe('File Details Form', (): void => {
 
             mutationMock.mockImplementation(() => mutationPromise);
             const { container } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+                <FileDetailsForm
+                    initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                    setIsSaving={() => {}}
+                />,
                 {
                     wrapper: routerWrapper(),
                 },
@@ -419,6 +437,7 @@ describe('File Details Form', (): void => {
             mutationMock.mockImplementation(() => Promise.resolve({ data: { deleteSupportingFile: 'penguin' } }));
             const { container } = render(
                 <FileDetailsForm
+                    setIsSaving={() => {}}
                     initialValues={{
                         id: 'test',
                         updated: Date.now(),
@@ -444,9 +463,12 @@ describe('File Details Form', (): void => {
             it('when there are no existing supporting files', async (): Promise<void> => {
                 // this test only needs files in pending state so don't resolve promise.
                 mutationMock.mockImplementation(() => new Promise(() => {}));
-                const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                    wrapper: routerWrapper(),
-                });
+                const { container } = render(
+                    <FileDetailsForm initialValues={testInitialValues} setIsSaving={() => {}} />,
+                    {
+                        wrapper: routerWrapper(),
+                    },
+                );
 
                 const fileList = [];
                 for (let fileCount = 0; fileCount < maxSupportingFiles + 1; fileCount++) {
@@ -468,6 +490,7 @@ describe('File Details Form', (): void => {
                 mutationMock.mockImplementation(() => new Promise(() => {}));
                 const { container } = render(
                     <FileDetailsForm
+                        setIsSaving={() => {}}
                         initialValues={{
                             id: 'test',
                             updated: Date.now(),
@@ -510,7 +533,10 @@ describe('File Details Form', (): void => {
         });
         it('displays max files message when max files is reached', async (): Promise<void> => {
             const { container, getByText } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+                <FileDetailsForm
+                    initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                    setIsSaving={() => {}}
+                />,
                 {
                     wrapper: routerWrapper(),
                 },
