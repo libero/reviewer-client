@@ -42,6 +42,7 @@ jest.mock('@apollo/react-hooks', () => ({
 }));
 
 describe('Author Details Form', (): void => {
+    const setIsSaving = jest.fn();
     afterEach(() => {
         cleanup();
         mutationMock.mockReset();
@@ -49,7 +50,7 @@ describe('Author Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<AuthorDetailsForm />);
+            render(<AuthorDetailsForm setIsSaving={setIsSaving} />);
         }).not.toThrow();
     });
 
@@ -67,12 +68,14 @@ describe('Author Details Form', (): void => {
         };
         expect(
             async (): Promise<void> => {
-                render(<AuthorDetailsForm initialValues={initialValues} />);
+                render(<AuthorDetailsForm initialValues={initialValues} setIsSaving={setIsSaving} />);
             },
         ).not.toThrow();
     });
     it('should fill the correct boxes with author information when the text is clicked', async (): Promise<void> => {
-        const { container, getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+        const { container, getByLabelText } = render(
+            <AuthorDetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
+        );
         await fireEvent.click(container.querySelector('.typography__body--link'));
         expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
     });
@@ -89,7 +92,9 @@ describe('Author Details Form', (): void => {
             articleType: '',
             updated: 0,
         };
-        const { getByLabelText } = render(<AuthorDetailsForm initialValues={initialValues} />);
+        const { getByLabelText } = render(
+            <AuthorDetailsForm initialValues={initialValues} setIsSaving={setIsSaving} />,
+        );
         expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
         expect((getByLabelText('author.author-last-name') as HTMLInputElement).value).toBe('Blogs');
         expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
@@ -97,7 +102,9 @@ describe('Author Details Form', (): void => {
     });
     describe('autosave', () => {
         it('when a first name is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
+            );
 
             fireEvent.input(getByLabelText('author.author-first-name'), {
                 target: { value: 'test firstname' },
@@ -116,7 +123,9 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a last name is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
+            );
 
             fireEvent.input(getByLabelText('author.author-last-name'), {
                 target: { value: 'test lastname' },
@@ -135,7 +144,9 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a email is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
+            );
 
             fireEvent.input(getByLabelText('author.author-email'), {
                 target: { value: 'test@example.com' },
@@ -154,7 +165,9 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a email is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm initialValues={testInitialValues} setIsSaving={setIsSaving} />,
+            );
 
             fireEvent.input(getByLabelText('author.institution'), {
                 target: { value: 'test institution' },
