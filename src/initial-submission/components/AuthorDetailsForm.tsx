@@ -36,9 +36,6 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
     });
 
     useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
         if (formState.dirty) {
             setIsSaving(true);
         } else {
@@ -72,9 +69,7 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
             },
         };
         await saveCallback(vars);
-        if (setIsSaving) {
-            reset(values);
-        }
+        reset(values);
     };
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);

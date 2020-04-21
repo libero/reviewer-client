@@ -40,9 +40,6 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
         },
     });
     useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
         if (formState.dirty) {
             setIsSaving(true);
         } else {
@@ -81,9 +78,7 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
             },
         };
         saveCallback(vars);
-        if (setIsSaving) {
-            reset(getValues());
-        }
+        reset(getValues());
     };
 
     useAutoSave(onSave, [

@@ -48,9 +48,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
     });
 
     useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
         if (formState.dirty) {
             setIsSaving(true);
         } else {
@@ -59,26 +56,12 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
     }, [formState.dirty, setIsSaving]);
 
     useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (supportingUploadDisabled) {
+        if (supportingUploadDisabled || manuscriptUploadDisabled) {
             setIsSaving(true);
         } else {
             setIsSaving(false);
         }
-    }, [supportingUploadDisabled]);
-
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (manuscriptUploadDisabled) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [manuscriptUploadDisabled]);
+    }, [supportingUploadDisabled, manuscriptUploadDisabled]);
 
     const getInitialSupportingFiles = (): FileState[] => {
         if (!files || !files.supportingFiles) return [];
@@ -300,9 +283,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             },
         };
         saveCallback(vars);
-        if (setIsSaving) {
-            reset(getValues());
-        }
+        reset(getValues());
     };
 
     useAutoSave(onSave, [coverLetter]);
