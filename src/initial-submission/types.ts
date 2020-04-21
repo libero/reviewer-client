@@ -12,6 +12,7 @@ export interface Submission {
 export interface File {
     filename: string;
     url?: string;
+    id?: string;
 }
 
 export interface FileDetails {

@@ -11,6 +11,7 @@ type UploadInProgress = {
 };
 type FileStored = {
     fileName: string;
+    id: string;
 };
 
 export type FileState = {
@@ -22,13 +23,13 @@ export type FileState = {
 interface Props {
     files?: FileState[];
     onUpload: (files: FileList) => void;
-    onDelete: (index: number) => void;
+    onDelete: (fileId: string) => void;
     disableUpload?: boolean;
     extraMessage?: string;
 }
 
 interface FileItemProps extends FileState {
-    onDelete: () => void;
+    onDelete: (fileId: string) => void;
 }
 
 const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemProps): JSX.Element => {
@@ -72,7 +73,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
             </span>
             {status === 'COMPLETE' || status === 'ERROR' ? (
                 <div>
-                    <Delete className="multifile-upload__delete" onClick={onDelete} />
+                    <Delete className="multifile-upload__delete" onClick={(): void => onDelete(fileStored.id)} />
                 </div>
             ) : null}
         </div>
@@ -86,7 +87,7 @@ const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload, extraM
             {files.length ? (
                 <div className="multifile-upload__upload-list">
                     {files.map((file, index) => {
-                        return <FileItem key={index} {...file} onDelete={(): void => onDelete(index)} />;
+                        return <FileItem key={index} {...file} onDelete={onDelete} />;
                     })}
                 </div>
             ) : null}

@@ -1,17 +1,19 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
 import {
+    deleteSupportingFileMutation,
+    fileUploadProgressSubscription,
+    getSubmissionQuery,
     saveFilesPageMutation,
     uploadManuscriptMutation,
     uploadSupportingFileMutation,
-    fileUploadProgressSubscription,
 } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { Submission } from '../types';
+import { File as ReviewerFile, Submission } from '../types';
 import { v4 } from 'uuid';
 
 //TODO: these should live in config
@@ -28,6 +30,7 @@ type UploadInProgress = {
     progress?: number;
     fileName?: string;
 };
+
 interface Props {
     initialValues?: Submission;
     setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,9 +74,39 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         }
     };
 
+    const getInitialSupportingFiles = (): FileState[] => {
+        if (!files || !files.supportingFiles) return [];
+        return files.supportingFiles.map(file => ({
+            fileStored: {
+                fileName: file.filename,
+                id: file.id,
+            },
+        }));
+    };
+    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
     const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
+    const [deleteSupportingFile] = useMutation(deleteSupportingFileMutation, {
+        update(cache, { data: { deleteSupportingFile } }) {
+            const { getSubmission } = cache.readQuery({
+                query: getSubmissionQuery,
+                variables: { id: initialValues.id },
+            });
+            getSubmission.files.supportingFiles = getSubmission.files.supportingFiles.filter(
+                (file: ReviewerFile) => file.id !== deleteSupportingFile,
+            );
+            const newSupportingFilesStatus = supportingFilesStatus.filter(
+                (file: FileState) =>
+                    (file.fileStored && file.fileStored.id !== deleteSupportingFile) || !file.fileStored,
+            );
+            setSupportingFilesStatus(newSupportingFilesStatus);
+            cache.writeQuery({
+                query: getSubmissionQuery,
+                data: { getSubmission: getSubmission },
+            });
+        },
+    });
 
     const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
         variables: { submissionId: initialValues.id },
@@ -91,16 +124,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
         },
     });
-
-    const getInitialSupportingFiles = (): FileState[] => {
-        if (!files || !files.supportingFiles) return [];
-        return files.supportingFiles.map(file => ({
-            fileStored: {
-                fileName: file.filename,
-            },
-        }));
-    };
-    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
 
     function* fileUploadInitializer(
         fileToStore: { file: File; id: string }[],
@@ -125,20 +148,20 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
     //                           maintaining the state of the files.
 
     function setSupportingFileState(
+        data: ReviewerFile,
         result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
         fileStates: FileState[],
-    ) {
-        return (): void => {
-            const thisFilesIndex = fileStates.findIndex(
-                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
-            );
-            fileStates[thisFilesIndex] = {
-                fileStored: {
-                    fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
-                },
-            };
-            setSupportingFilesStatus(fileStates);
+    ): void {
+        const thisFilesIndex = fileStates.findIndex(
+            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
+        );
+        fileStates[thisFilesIndex] = {
+            fileStored: {
+                id: data.id,
+                fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
+            },
         };
+        setSupportingFilesStatus(fileStates);
     }
 
     const uploadSupportingFiles = (
@@ -151,8 +174,9 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             if (result.done) {
                 setSupportingUploadDisabled(false);
             } else {
+                //diff state and returned
                 uploadSupportingFile(result.value.uploadPromise)
-                    .then(setSupportingFileState(result, fileStates))
+                    .then(data => setSupportingFileState(data.data.uploadSupportingFile, result, fileStates))
                     .then(() => loop(iterator.next(), fileStates));
             }
         };
@@ -254,6 +278,13 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             });
     };
 
+    const deleteSupportingFileCallback = async (fileId: string): Promise<string> => {
+        const stringExecutionResult = await deleteSupportingFile({
+            variables: { fileId: fileId, submissionId: initialValues.id },
+        });
+        return stringExecutionResult.data;
+    };
+
     const coverLetter = watch('coverLetter');
     const onSave = (): void => {
         const vars = {
@@ -300,7 +331,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             <div className="supporting-files">
                 <MultiFileUpload
                     onUpload={onSupportingFilesUpload}
-                    onDelete={(): void => {}}
+                    onDelete={deleteSupportingFileCallback}
                     files={supportingFilesStatus}
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
