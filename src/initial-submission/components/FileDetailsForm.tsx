@@ -39,6 +39,7 @@ interface Props {
 const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
+    const [manuscriptUploadDisabled, setManuscriptUploadDisabled] = useState<boolean>(false);
     const { files } = initialValues;
     const { register, watch, reset, getValues, formState } = useForm({
         defaultValues: {
@@ -68,11 +69,16 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         }
     }, [supportingUploadDisabled]);
 
-    const toggleSave = (status: boolean) => {
-        if (setIsSaving) {
-            setIsSaving(status);
+    useEffect(() => {
+        if (!setIsSaving) {
+            return;
         }
-    };
+        if (manuscriptUploadDisabled) {
+            setIsSaving(true);
+        } else {
+            setIsSaving(false);
+        }
+    }, [manuscriptUploadDisabled]);
 
     const getInitialSupportingFiles = (): FileState[] => {
         if (!files || !files.supportingFiles) return [];
@@ -245,7 +251,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             return;
         }
 
-        toggleSave(true);
+        setManuscriptUploadDisabled(true);
 
         setManuscriptStatus({
             fileStored: manuscriptStatus.fileStored,
@@ -270,11 +276,11 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
                         previewLink,
                     },
                 });
-                toggleSave(false);
+                setManuscriptUploadDisabled(false);
             })
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
-                toggleSave(false);
+                setManuscriptUploadDisabled(false);
             });
     };
 
@@ -319,7 +325,11 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
                 Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
                 <a className="typography__small typography__small--link files-step__link--nested">Learn more</a>
             </span>
-            <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
+            <FileUpload
+                onUpload={onManuscriptUpload}
+                state={manuscriptStatus}
+                disabledUpload={manuscriptUploadDisabled}
+            />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 Supporting files (optional)
             </h2>
