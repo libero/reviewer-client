@@ -15,6 +15,7 @@ import {
 import useAutoSave from '../hooks/useAutoSave';
 import { File as ReviewerFile, Submission } from '../types';
 import { v4 } from 'uuid';
+import useSynchronousUpload from '../hooks/useSupportingFileUpload';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -69,6 +70,46 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             });
         },
     });
+
+    // new supporting file code
+    const onSupportingUploadSuccess = (
+        file: { file: File; id: string },
+        response: { data: { uploadSupportingFile: { id: string } } },
+    ): void => {
+        const responseFile = response.data.uploadSupportingFile;
+        const thisFilesIndex = supportingFilesStatus.findIndex(
+            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
+        );
+        supportingFilesStatus[thisFilesIndex] = {
+            fileStored: {
+                id: responseFile.id,
+                fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
+            },
+        };
+        setSupportingFilesStatus(supportingFilesStatus);
+    };
+    const onSupportingUploadError = (file: { file: File; id: string }): void => {
+        const thisFilesIndex = supportingFilesStatus.findIndex(
+            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
+        );
+        const stateClone = [...supportingFilesStatus];
+        stateClone[thisFilesIndex].error = 'server';
+        setSupportingFilesStatus(stateClone);
+    };
+
+    const uploadFilesSynchronously = useSynchronousUpload(
+        (fileToStore: { file: File }) =>
+            uploadSupportingFile({
+                variables: {
+                    id: initialValues.id,
+                    file: fileToStore.file,
+                    fileSize: fileToStore.file.size,
+                },
+            }),
+        onSupportingUploadSuccess,
+        onSupportingUploadError,
+    );
+
     const [deleteSupportingFile] = useMutation(deleteSupportingFileMutation, {
         update(cache, { data: { deleteSupportingFile } }) {
             const { getSubmission } = cache.readQuery({
@@ -108,64 +149,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     });
 
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
-
-    function* fileUploadInitializer(
-        fileToStore: { file: File; id: string }[],
-    ): Generator<{ uploadPromise: {}; itemId: string }> {
-        for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
-            yield {
-                uploadPromise: {
-                    variables: {
-                        id: initialValues.id,
-                        file: fileToStore[fileIndex].file,
-                        fileSize: fileToStore[fileIndex].file.size,
-                    },
-                },
-                itemId: fileToStore[fileIndex].id,
-            };
-            fileIndex += 1;
-        }
-    }
-
-    // fileUploadInitializer - Generator function that iterates over the file list - starting the upload process.
-    // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
-    //                           maintaining the state of the files.
-
-    function setSupportingFileState(
-        data: ReviewerFile,
-        result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
-        fileStates: FileState[],
-    ): void {
-        const thisFilesIndex = fileStates.findIndex(
-            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
-        );
-        fileStates[thisFilesIndex] = {
-            fileStored: {
-                id: data.id,
-                fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
-            },
-        };
-        setSupportingFilesStatus(fileStates);
-    }
-
-    const uploadSupportingFiles = (
-        filesToStore: { file: File; id: string }[],
-        newSupportedFilesList: FileState[],
-    ): void => {
-        const iterator = fileUploadInitializer(filesToStore);
-
-        const loop = (result: IteratorResult<{ uploadPromise: {}; itemId: string }>, fileStates: FileState[]): void => {
-            if (result.done) {
-                setSupportingUploadDisabled(false);
-            } else {
-                //diff state and returned
-                uploadSupportingFile(result.value.uploadPromise)
-                    .then(data => setSupportingFileState(data.data.uploadSupportingFile, result, fileStates))
-                    .then(() => loop(iterator.next(), fileStates));
-            }
-        };
-        loop(iterator.next(), newSupportedFilesList);
-    };
 
     useEffect(() => {
         if (
@@ -220,7 +203,7 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             })),
         ];
         setSupportingFilesStatus(newSupportingFilesStatus);
-        uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
+        uploadFilesSynchronously(filesToStore);
     };
 
     const onManuscriptUpload = (filesList: File[]): void => {
