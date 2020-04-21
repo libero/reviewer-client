@@ -9,18 +9,16 @@ describe('FileUpload', (): void => {
     afterEach(cleanup);
     describe('Idle state', () => {
         it('should render correctly', (): void => {
-            expect(
-                (): RenderResult => render(<FileUpload onUpload={(): void => {}} disabledUpload={false} />),
-            ).not.toThrow();
+            expect((): RenderResult => render(<FileUpload onUpload={(): void => {}} />)).not.toThrow();
         });
 
         it('should not have the error classes when in idle state', () => {
-            const { container } = render(<FileUpload onUpload={jest.fn} disabledUpload={false} />);
+            const { container } = render(<FileUpload onUpload={jest.fn} />);
             expect(container.querySelector('.file-upload__error-prefix')).not.toBeInTheDocument();
         });
 
         it('should display the correct text when idle', () => {
-            const { getByText } = render(<FileUpload onUpload={jest.fn} disabledUpload={false} />);
+            const { getByText } = render(<FileUpload onUpload={jest.fn} />);
             expect(getByText('file-upload.idle-upload')).toBeInTheDocument();
             expect(getByText('file-upload.idle-message')).toBeInTheDocument();
             expect(getByText('file-upload.idle-extra')).toBeInTheDocument();
@@ -35,7 +33,6 @@ describe('FileUpload', (): void => {
                         <FileUpload
                             state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }}
                             onUpload={(): void => {}}
-                            disabledUpload={false}
                         />,
                     ),
             ).not.toThrow();
@@ -43,22 +40,14 @@ describe('FileUpload', (): void => {
 
         it('should have the uploading class for the border', () => {
             const { container } = render(
-                <FileUpload
-                    state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }}
-                    onUpload={jest.fn}
-                    disabledUpload={false}
-                />,
+                <FileUpload state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }} onUpload={jest.fn} />,
             );
             expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
         });
 
         it('should display the correct text when in uploading', () => {
             const { getByText } = render(
-                <FileUpload
-                    state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }}
-                    onUpload={jest.fn}
-                    disabledUpload={false}
-                />,
+                <FileUpload state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }} onUpload={jest.fn} />,
             );
             expect(getByText('file-upload.uploading-message')).toBeInTheDocument();
             expect(getByText('bob')).toBeInTheDocument();
@@ -70,32 +59,23 @@ describe('FileUpload', (): void => {
         it('should render correctly', (): void => {
             expect(
                 (): RenderResult =>
-                    render(
-                        <FileUpload state={{ error: 'server' }} onUpload={(): void => {}} disabledUpload={false} />,
-                        {
-                            wrapper: routerWrapper(),
-                        },
-                    ),
+                    render(<FileUpload state={{ error: 'server' }} onUpload={(): void => {}} />, {
+                        wrapper: routerWrapper(),
+                    }),
             ).not.toThrow();
         });
 
         it('should have the error class for the border', () => {
-            const { container } = render(
-                <FileUpload state={{ error: 'server' }} onUpload={jest.fn} disabledUpload={false} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { container } = render(<FileUpload state={{ error: 'server' }} onUpload={jest.fn} />, {
+                wrapper: routerWrapper(),
+            });
             expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
         });
 
         it('should display the correct text when in uploading', () => {
-            const { getByText } = render(
-                <FileUpload state={{ error: 'server' }} onUpload={jest.fn} disabledUpload={false} />,
-                {
-                    wrapper: routerWrapper(),
-                },
-            );
+            const { getByText } = render(<FileUpload state={{ error: 'server' }} onUpload={jest.fn} />, {
+                wrapper: routerWrapper(),
+            });
             expect(getByText('file-upload.error-pre-content')).toBeInTheDocument();
             expect(getByText('file-upload.error-upload')).toBeInTheDocument();
             expect(getByText('file-upload.error-extra.server')).toBeInTheDocument();
@@ -111,7 +91,6 @@ describe('FileUpload', (): void => {
                         <FileUpload
                             state={{ fileStored: { fileName: 'bob', previewLink: 'www.bob.com' } }}
                             onUpload={(): void => {}}
-                            disabledUpload={false}
                         />,
                     ),
             ).not.toThrow();
@@ -122,7 +101,6 @@ describe('FileUpload', (): void => {
                 <FileUpload
                     state={{ fileStored: { fileName: 'bob', previewLink: 'www.bob.com' } }}
                     onUpload={jest.fn}
-                    disabledUpload={false}
                 />,
             );
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
@@ -133,7 +111,6 @@ describe('FileUpload', (): void => {
                 <FileUpload
                     state={{ fileStored: { fileName: 'bob.pdf', previewLink: 'www.bob.com' } }}
                     onUpload={jest.fn}
-                    disabledUpload={false}
                 />,
             );
             expect(getByText('file-upload.complete-prefix', { exact: false })).toBeInTheDocument();
@@ -169,7 +146,7 @@ describe('FileUpload', (): void => {
         }
 
         it('should render the correct content when dragging', async (): Promise<void> => {
-            const { container } = render(<FileUpload onUpload={(): void => {}} disabledUpload={false} />);
+            const { container } = render(<FileUpload onUpload={(): void => {}} />);
             const dropzone = container.querySelector('.file-upload__dropzone');
             const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
             const data = mockData([file]);
@@ -184,7 +161,7 @@ describe('FileUpload', (): void => {
         });
 
         it('should render render the default content on dragleave', async (): Promise<void> => {
-            const { container } = render(<FileUpload onUpload={(): void => {}} disabledUpload={false} />);
+            const { container } = render(<FileUpload onUpload={(): void => {}} />);
             const dropzone = container.querySelector('.file-upload__dropzone');
             const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
             const data = mockData([file]);
@@ -208,7 +185,7 @@ describe('FileUpload', (): void => {
 
         it('call the callback when a file is dropped', async (): Promise<void> => {
             const mockUpload = jest.fn();
-            const { container } = render(<FileUpload onUpload={mockUpload} disabledUpload={false} />);
+            const { container } = render(<FileUpload onUpload={mockUpload} />);
             const dropzone = container.querySelector('.file-upload__dropzone');
             const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
             const data = mockData([file]);
