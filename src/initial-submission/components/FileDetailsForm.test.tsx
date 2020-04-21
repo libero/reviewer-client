@@ -45,6 +45,7 @@ const createFile = (type: string, fileName: string): File =>
 
 describe('File Details Form', (): void => {
     const originalError = console.error;
+
     beforeAll(() => {
         // This is horrible but necessary to prevent console error output which isn't to do with the test scenarios see: https://github.com/libero/reviewer-client/issues/69
         console.error = (...args: unknown[]): void => {

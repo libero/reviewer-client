@@ -134,9 +134,9 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
                 className={`file-upload__dropzone file-upload__dropzone--${status.toLowerCase()} ${
                     isDragActive ? 'file-upload__dropzone--drag-active' : ''
                 }`}
-                {...getRootProps()}
+                {...(status !== 'UPLOADING' && getRootProps())}
             >
-                <input {...getInputProps()} />
+                {status !== 'UPLOADING' && <input {...getInputProps()} />}
                 <UploadProgress progress={state.uploadInProgress && state.uploadInProgress.progress} status={status} />
                 <div className="file-upload__content">
                     <FileUploadContent
