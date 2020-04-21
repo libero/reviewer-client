@@ -16,10 +16,10 @@ interface GetCurrentUser {
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
+    buttonComponent?: (func: any, disabled?: boolean) => JSX.Element;
 }
 
-const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
@@ -34,17 +34,6 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
     const { register, handleSubmit, errors, getValues, formState, reset } = useForm<AuthorDetails>({
         validationSchema: schema,
     });
-
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (formState.dirty) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [formState.dirty, setIsSaving]);
 
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
@@ -72,9 +61,6 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
             },
         };
         await saveCallback(vars);
-        if (setIsSaving) {
-            reset(values);
-        }
     };
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
@@ -148,6 +134,7 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
                     register={register}
                 />
             </div>
+            {buttonComponent(onSave)}
         </form>
     );
 };

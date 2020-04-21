@@ -18,10 +18,10 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
+    buttonComponent?: (func: any, disabled?: boolean) => JSX.Element;
 }
 
-const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
+const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
     const {
         title = '',
         previouslyDiscussed = '',
@@ -39,16 +39,6 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
             secondCosubmissionTitle,
         },
     });
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (formState.dirty) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [formState.dirty, setIsSaving]);
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
     const { t } = useTranslation('wizard-form');
@@ -81,9 +71,6 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
             },
         };
         await saveCallback(vars);
-        if (setIsSaving) {
-            reset(getValues());
-        }
     };
 
     useAutoSave(onSave, [
@@ -158,6 +145,8 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
                     </span>
                 )}
             </Toggle>
+
+            {buttonComponent(onSave)}
         </form>
     );
 };

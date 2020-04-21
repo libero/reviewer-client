@@ -15,7 +15,8 @@ interface Props {
 
 interface StepProps {
     initialValues: Submission;
-    setIsSaving: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
+    buttonComponent?: (func: any, disabled: boolean) => JSX.Element;
 }
 
 interface StepConfig {
@@ -46,6 +47,37 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
         variables: { id },
     });
+
+    const buttonComponent = (saveFunction: any, disabled?: boolean) => <React.Fragment>
+        {getCurrentStepPathIndex() > 0 && (
+            <Button
+                disabled={disabled === true}
+                onClick={async () => {
+                    if (saveFunction) {
+                        await saveFunction();
+                    }
+                    history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                }}
+            >
+                back
+            </Button>
+        )}
+        {getCurrentStepPathIndex() < stepConfig.length - 1 && (
+            <Button
+                disabled={disabled === true}
+                onClick={async () => {
+                    if (saveFunction) {
+                        await saveFunction();
+                    }
+                    history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                }}
+                type="primary"
+            >
+                next
+            </Button>
+        )}
+    </React.Fragment>
+
     return (
         <div className="submission-wizard">
             <ProgressBar
@@ -66,35 +98,14 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 loading ? (
                                     <span>loading... </span>
                                 ) : (
-                                    <config.component initialValues={data.getSubmission} setIsSaving={setIsSaving} />
-                                )
+                                        <config.component initialValues={data.getSubmission} setIsSaving={setIsSaving} buttonComponent={buttonComponent} />
+                                    )
                             }
                         />
                     ),
                 )}
                 <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
-            {getCurrentStepPathIndex() > 0 && (
-                <Button
-                    disabled={isSaving}
-                    onClick={(): void => {
-                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
-                    }}
-                >
-                    back
-                </Button>
-            )}
-            {getCurrentStepPathIndex() < stepConfig.length - 1 && (
-                <Button
-                    disabled={isSaving}
-                    onClick={(): void => {
-                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
-                    }}
-                    type="primary"
-                >
-                    {isSaving ? 'saving...' : 'next'}
-                </Button>
-            )}
         </div>
     );
 };
