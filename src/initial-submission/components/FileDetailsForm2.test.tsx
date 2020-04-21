@@ -91,7 +91,29 @@ describe('SupportingFiles upload', () => {
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
     });
     it('Can upload two files', async (): Promise<void> => {
-        mutationMock.mockImplementation(() => Promise.resolve());
+        mutationMock
+            .mockImplementationOnce(() =>
+                Promise.resolve({
+                    data: {
+                        uploadSupportingFile: {
+                            url: 'http://localhost/file.pdf',
+                            filename: 'supercoolfile1.png',
+                            id: 'file1',
+                        },
+                    },
+                }),
+            )
+            .mockImplementationOnce(() =>
+                Promise.resolve({
+                    data: {
+                        uploadSupportingFile: {
+                            url: 'http://localhost/file.pdf',
+                            filename: 'supercoolfile2.png',
+                            id: 'file2',
+                        },
+                    },
+                }),
+            );
 
         const { container } = render(
             <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
@@ -115,7 +137,40 @@ describe('SupportingFiles upload', () => {
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
     });
     it('Can upload three files', async (): Promise<void> => {
-        mutationMock.mockImplementation(() => Promise.resolve());
+        mutationMock
+            .mockImplementationOnce(() =>
+                Promise.resolve({
+                    data: {
+                        uploadSupportingFile: {
+                            url: 'http://localhost/file.pdf',
+                            filename: 'supercoolfile1.png',
+                            id: 'file1',
+                        },
+                    },
+                }),
+            )
+            .mockImplementationOnce(() =>
+                Promise.resolve({
+                    data: {
+                        uploadSupportingFile: {
+                            url: 'http://localhost/file.pdf',
+                            filename: 'supercoolfile2.png',
+                            id: 'file2',
+                        },
+                    },
+                }),
+            )
+            .mockImplementationOnce(() =>
+                Promise.resolve({
+                    data: {
+                        uploadSupportingFile: {
+                            url: 'http://localhost/file.pdf',
+                            filename: 'supercoolfile3.png',
+                            id: 'file3',
+                        },
+                    },
+                }),
+            );
 
         const { container } = render(
             <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,

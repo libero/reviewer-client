@@ -315,7 +315,7 @@ describe('File Details Form', (): void => {
         });
     });
 
-    describe('SupportingFiles upload', () => {
+    describe('SupportingFiles', () => {
         beforeEach(() => {
             mutationMock.mockImplementation(
                 () =>
@@ -403,14 +403,41 @@ describe('File Details Form', (): void => {
             mutationResolve({
                 data: {
                     uploadSupportingFile: {
-                        files: {
-                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
-                        },
+                        url: 'http://localhost/file.pdf',
+                        filename: 'testfile.pdf',
+                        id: 'bob',
                     },
                 },
             });
             await waitFor(() => {});
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
+        });
+
+        it('should call the delete mutation with the correct id when the delete icon is clicked', async (): Promise<
+            void
+        > => {
+            mutationMock.mockImplementation(() => Promise.resolve({ data: { deleteSupportingFile: 'penguin' } }));
+            const { container } = render(
+                <FileDetailsForm
+                    initialValues={{
+                        id: 'test',
+                        updated: Date.now(),
+                        articleType: '',
+                        files: {
+                            supportingFiles: [
+                                { id: 'penguin', url: 'http://placekitten.com/400/400', filename: 'penguin.pdf' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+            expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
+            fireEvent.click(container.querySelector('.multifile-upload__delete'));
+            expect(mutationMock).toHaveBeenCalledTimes(1);
+            expect(mutationMock).toHaveBeenCalledWith({ variables: { fileId: 'penguin', submissionId: 'test' } });
         });
 
         describe('only allows for ${maxSupportingFiles}', () => {
@@ -449,9 +476,11 @@ describe('File Details Form', (): void => {
                                 supportingFiles: [
                                     {
                                         filename: 'File1.png',
+                                        id: 'bob',
                                     },
                                     {
                                         filename: 'File2.png',
+                                        id: 'mel',
                                     },
                                 ],
                             },

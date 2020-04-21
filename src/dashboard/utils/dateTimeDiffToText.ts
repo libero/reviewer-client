@@ -1,6 +1,8 @@
-import moment from 'moment';
+const MS_IN_DAY = 24 * 60 * 60 * 1000;
+
 export default (date: number): string => {
-    const diffDays = moment(new Date()).diff(date, 'days');
+    // Ensure we round down the number of days
+    const diffDays = Math.floor((Date.now() - date) / MS_IN_DAY);
     if (diffDays < 0 || Number.isNaN(diffDays)) {
         return 'Invalid date';
     }

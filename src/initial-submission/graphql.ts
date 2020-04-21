@@ -26,6 +26,7 @@ export const getSubmissionQuery = gql`
                 }
                 supportingFiles {
                     filename
+                    id
                 }
             }
         }
@@ -75,12 +76,8 @@ export const uploadSupportingFileMutation = gql`
     mutation UploadSupportingFile($id: ID!, $file: Upload!, $fileSize: Int!) {
         uploadSupportingFile(id: $id, file: $file, fileSize: $fileSize) {
             id
-            files {
-                supportingFiles {
-                    filename
-                    url
-                }
-            }
+            filename
+            url
         }
     }
 `;
@@ -108,5 +105,11 @@ export const fileUploadProgressSubscription = gql`
             type
             percentage
         }
+    }
+`;
+
+export const deleteSupportingFileMutation = gql`
+    mutation DeleteSupportingFile($fileId: ID!, $submissionId: ID!) {
+        deleteSupportingFile(fileId: $fileId, submissionId: $submissionId)
     }
 `;

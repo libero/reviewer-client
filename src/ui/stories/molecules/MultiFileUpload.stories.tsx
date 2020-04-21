@@ -14,8 +14,8 @@ storiesOf('ui | molecules/MultiFileUpload', module)
                 action('uploaded ' + files[0].name)();
             };
 
-            const onDelete = (index: number): void => {
-                action(`deleted ${index}`)();
+            const onDelete = (id: string): void => {
+                action(`deleted ${id}`)();
             };
 
             const disableUpload = boolean('Disable upload link', false);
