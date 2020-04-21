@@ -107,7 +107,6 @@ interface Props {
         error?: UploadErrors;
         fileStored?: FileStored;
     };
-    // disabledUpload?: boolean;
 }
 
 const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Element => {

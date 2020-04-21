@@ -92,7 +92,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                     }}
                     type="primary"
                 >
-                    {isSaving ? 'saving..' : 'next'}
+                    {isSaving ? 'saving...' : 'next'}
                 </Button>
             )}
         </div>
