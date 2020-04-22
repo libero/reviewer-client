@@ -217,4 +217,26 @@ describe('SupportingFiles upload', () => {
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
         expect(getByText('multifile-upload.status-error.server')).toBeInTheDocument();
     });
+
+    it('deletes an error state supporting upload item', async (): Promise<void> => {
+        mutationMock.mockImplementation(() => Promise.reject());
+
+        const { container, getByText } = render(
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            {
+                wrapper: routerWrapper(),
+            },
+        );
+        const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
+        const fileInput = container.querySelector('.multifile-upload__input');
+        Object.defineProperty(fileInput, 'files', {
+            value: [file1],
+        });
+        await fireEvent.change(fileInput);
+        await waitForUploads(container, 1, 'error');
+        expect(container.querySelectorAll('.multifile-upload__file-name--error')).toHaveLength(1);
+        expect(getByText('supercoolfile1.png')).toBeInTheDocument();
+        fireEvent.click(container.querySelector('.multifile-upload__delete'));
+        expect(() => getByText('supercoolfile1.png')).toThrow();
+    });
 });
