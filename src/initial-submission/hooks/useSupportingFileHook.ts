@@ -9,7 +9,8 @@ import { ExecutionResult } from 'graphql';
 const hook = (
     initialValues: Submission,
     maxSupportingFiles: number,
-): [(fileList: FileList) => void, (fileId: string) => Promise<string>, FileState[], boolean, number] => {
+    maxFileSize: number,
+): [(fileList: FileList) => void, (fileId: string) => Promise<void>, FileState[], boolean, number] => {
     const [index, setIndex] = useState(0);
     const [files, setFiles] = useState([]);
     const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
@@ -79,9 +80,6 @@ const hook = (
             },
         };
         setSupportingFilesStatus(supportingFilesStatus);
-        if (thisFilesIndex === supportingFilesStatus.length - 1) {
-            setSupportingUploadDisabled(false);
-        }
     };
     const onSupportingUploadError = (file: { file: File; id: string }): void => {
         const thisFilesIndex = supportingFilesStatus.findIndex(
@@ -112,6 +110,7 @@ const hook = (
                     onSupportingUploadError(files[index]);
                 });
         } else {
+            setSupportingUploadDisabled(false);
             setFiles([]);
             setIndex(0);
         }
@@ -120,38 +119,56 @@ const hook = (
     const onSupportingFilesUpload = (filesList: FileList): void => {
         const filesListArray = Array.prototype.slice.call(filesList);
 
-        // disable upload while uploading
-        setSupportingUploadDisabled(true);
-
         let trimmedFilesArray = filesListArray;
         if (filesListArray.length + filesStoredCount > maxSupportingFiles) {
             trimmedFilesArray = filesListArray.slice(0, maxSupportingFiles - filesStoredCount);
         }
 
         const filesToStore = trimmedFilesArray.map((file: File) => ({
+            isValid: file.size < maxFileSize,
             file,
-            id: v4(),
+            id: `local-${v4()}`,
         }));
 
         const newSupportingFilesStatus = [
             ...supportingFilesStatus,
-            ...filesToStore.map((fileToStore: { file: File; id: string }) => ({
-                uploadInProgress: {
-                    progress: 0,
-                    fileName: fileToStore.file.name,
-                    id: fileToStore.id,
-                },
-            })),
+            ...filesToStore.map((fileToStore: { file: File; id: string; isValid: boolean }) => {
+                const fileState: FileState = {
+                    uploadInProgress: {
+                        progress: 0,
+                        fileName: fileToStore.file.name,
+                        id: fileToStore.id,
+                    },
+                };
+
+                if (!fileToStore.isValid) {
+                    fileState.error = 'validation';
+                }
+
+                return fileState;
+            }),
         ];
         setSupportingFilesStatus(newSupportingFilesStatus);
-        setFiles(filesToStore);
+        const filteredFilesToStore = filesToStore.filter((file: { isValid: boolean }) => file.isValid);
+        if (filteredFilesToStore.length) {
+            // disable upload while uploading
+            setSupportingUploadDisabled(true);
+            setFiles(filteredFilesToStore);
+        }
     };
 
-    const deleteSupportingFileCallback = async (fileId: string): Promise<string> => {
-        const stringExecutionResult = await deleteSupportingFile({
+    const deleteSupportingFileCallback = async (fileId: string): Promise<void> => {
+        if (fileId.includes('local-')) {
+            const newSupportingFilesStatus = supportingFilesStatus.filter(
+                (file: FileState) => file.fileStored || file.uploadInProgress.id !== fileId,
+            );
+            setSupportingFilesStatus(newSupportingFilesStatus);
+            return;
+        }
+        await deleteSupportingFile({
             variables: { fileId: fileId, submissionId: initialValues.id },
         });
-        return stringExecutionResult.data;
+        return;
     };
 
     return [

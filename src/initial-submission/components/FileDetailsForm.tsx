@@ -16,7 +16,7 @@ const allowedManuscriptFileTypes = [
 ];
 const maxSupportingFiles = 10;
 
-const maxFileSize = 104857600;
+const maxFileSize = 10000;
 
 type UploadInProgress = {
     progress?: number;
@@ -54,7 +54,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         supportingFilesStatus,
         supportingUploadDisabled,
         filesStoredCount,
-    ] = useSupportingFileHook(initialValues, maxSupportingFiles);
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize);
 
     useEffect(() => {
         if (!setIsSaving) {
