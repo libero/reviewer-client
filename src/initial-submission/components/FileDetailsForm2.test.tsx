@@ -36,9 +36,9 @@ jest.mock('@apollo/react-hooks', () => ({
     },
 }));
 
-const waitForUploads = async (container: HTMLElement, uploads: number): Promise<void> => {
+const waitForUploads = async (container: HTMLElement, uploads: number, state: string): Promise<void> => {
     await waitFor<boolean>(
-        () => container.querySelectorAll('.multifile-upload__file-name--complete').length == uploads,
+        () => container.querySelectorAll(`.multifile-upload__file-name--${state}`).length == uploads,
         {
             container,
             timeout: 2000,
@@ -80,13 +80,12 @@ describe('SupportingFiles upload', () => {
         mutationResolve1({
             data: {
                 uploadSupportingFile: {
-                    files: {
-                        supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'supercoolfile1.png' }],
-                    },
+                    url: 'http://localhost/file.pdf',
+                    filename: 'supercoolfile1.png',
                 },
             },
         });
-        await waitForUploads(container, 1);
+        await waitForUploads(container, 1, 'complete');
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(1);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
     });
@@ -132,7 +131,7 @@ describe('SupportingFiles upload', () => {
 
         await act(async () => await fireEvent.change(fileInput));
 
-        await waitForUploads(container, 2);
+        await waitForUploads(container, 2, 'complete');
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
     });
@@ -190,8 +189,54 @@ describe('SupportingFiles upload', () => {
 
         await act(async () => await fireEvent.change(fileInput));
 
-        await waitForUploads(container, 3);
+        await waitForUploads(container, 3, 'complete');
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(3);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
+    });
+
+    it('puts file item into an error state if the request is rejected', async (): Promise<void> => {
+        mutationMock.mockImplementation(() => Promise.reject());
+
+        const { container, getByText } = render(
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            {
+                wrapper: routerWrapper(),
+            },
+        );
+        const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
+        const fileInput = container.querySelector('.multifile-upload__input');
+        Object.defineProperty(fileInput, 'files', {
+            value: [file1],
+        });
+        expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
+        expect(container.querySelectorAll('.multifile-upload__file-name--error')).toHaveLength(0);
+
+        await fireEvent.change(fileInput);
+        await waitForUploads(container, 1, 'error');
+        expect(container.querySelectorAll('.multifile-upload__file-name--error')).toHaveLength(1);
+        expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
+        expect(getByText('multifile-upload.status-error.server')).toBeInTheDocument();
+    });
+
+    it('deletes an error state supporting upload item', async (): Promise<void> => {
+        mutationMock.mockImplementation(() => Promise.reject());
+
+        const { container, getByText } = render(
+            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            {
+                wrapper: routerWrapper(),
+            },
+        );
+        const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
+        const fileInput = container.querySelector('.multifile-upload__input');
+        Object.defineProperty(fileInput, 'files', {
+            value: [file1],
+        });
+        await fireEvent.change(fileInput);
+        await waitForUploads(container, 1, 'error');
+        expect(container.querySelectorAll('.multifile-upload__file-name--error')).toHaveLength(1);
+        expect(getByText('supercoolfile1.png')).toBeInTheDocument();
+        fireEvent.click(container.querySelector('.multifile-upload__delete'));
+        expect(() => getByText('supercoolfile1.png')).toThrow();
     });
 });

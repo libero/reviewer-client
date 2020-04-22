@@ -54,7 +54,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         supportingFilesStatus,
         supportingUploadDisabled,
         filesStoredCount,
-    ] = useSupportingFileHook(initialValues, maxSupportingFiles);
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize);
 
     useEffect(() => {
         if (!setIsSaving) {
