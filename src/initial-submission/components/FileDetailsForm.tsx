@@ -16,7 +16,7 @@ const allowedManuscriptFileTypes = [
 ];
 const maxSupportingFiles = 10;
 
-const maxFileSize = 10000;
+const maxFileSize = 104857600;
 
 type UploadInProgress = {
     progress?: number;
