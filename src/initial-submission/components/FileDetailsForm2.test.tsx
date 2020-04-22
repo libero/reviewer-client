@@ -3,7 +3,6 @@ import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
-import { debug } from 'webpack';
 
 const mutationMock = jest.fn(() => new Promise(() => {}));
 let subscriptionData: {};
