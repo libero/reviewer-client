@@ -345,11 +345,11 @@ describe('MultiFileUpload', () => {
             expect(container.querySelector('.multifile-upload__delete')).toBeInTheDocument();
         });
 
-        it('calls onDelete with fileId when delete icon is clicked', () => {
+        it('calls onDelete with uploadInProgress.id when delete icon is clicked on ERROR item', () => {
             const mockOnDelete = jest.fn();
             const { container } = render(
                 <MultiFileUpload
-                    files={[{ fileStored: { fileName: 'File 2.pdf', id: 'bob' } }]}
+                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', id: 'bob' }, error: 'validation' }]}
                     onUpload={jest.fn()}
                     onDelete={mockOnDelete}
                 />,
@@ -359,6 +359,21 @@ describe('MultiFileUpload', () => {
             fireEvent.click(listItem.querySelector('.multifile-upload__delete'));
             expect(mockOnDelete).toBeCalledTimes(1);
             expect(mockOnDelete).toBeCalledWith('bob');
+        });
+        it('calls onDelete with fileStored.id when delete icon is clicked on COMPLETE item', () => {
+            const mockOnDelete = jest.fn();
+            const { container } = render(
+                <MultiFileUpload
+                    files={[{ fileStored: { fileName: 'File 2.pdf', id: 'jack' } }]}
+                    onUpload={jest.fn()}
+                    onDelete={mockOnDelete}
+                />,
+            );
+            const listItem = container.querySelector('.multifile-upload__upload-list-item');
+
+            fireEvent.click(listItem.querySelector('.multifile-upload__delete'));
+            expect(mockOnDelete).toBeCalledTimes(1);
+            expect(mockOnDelete).toBeCalledWith('jack');
         });
     });
 });
