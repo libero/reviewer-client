@@ -168,7 +168,6 @@ const hook = (
         await deleteSupportingFile({
             variables: { fileId: fileId, submissionId: initialValues.id },
         });
-        return;
     };
 
     return [
