@@ -45,7 +45,9 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
 
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
         variables: { id },
+        returnPartialData: true,
     });
+
     return (
         <div className="submission-wizard">
             <ProgressBar
