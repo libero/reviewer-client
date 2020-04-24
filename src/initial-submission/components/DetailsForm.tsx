@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -19,10 +19,10 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
+const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const {
         title = '',
         previouslyDiscussed = '',
@@ -30,6 +30,7 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
+
     const { t } = useTranslation('wizard-form');
     const schema = yup.object().shape({
         title: yup.string().required(t('details.validation.title-required')),
@@ -49,7 +50,7 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
         // }),
     });
 
-    const { register, setValue, watch, control, formState, reset, getValues } = useForm({
+    const { register, setValue, watch, control } = useForm({
         defaultValues: {
             title,
             subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
@@ -60,16 +61,6 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
         },
         validationSchema: schema,
     });
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (formState.dirty) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [formState.dirty, setIsSaving]);
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
@@ -101,9 +92,6 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
             },
         };
         await saveCallback(vars);
-        if (setIsSaving) {
-            reset(getValues());
-        }
     };
 
     useAutoSave(onSave, [
@@ -116,7 +104,7 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     ]);
 
     return (
-        <form>
+        <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
             <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
@@ -178,6 +166,8 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
                     </span>
                 )}
             </Toggle>
+
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </form>
     );
 };

@@ -26,10 +26,10 @@ type UploadInProgress = {
 
 interface Props {
     initialValues?: Submission;
-    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
@@ -48,7 +48,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         coverLetter: yup.string().required(t('files.validation.coverletter-required')),
     });
 
-    const { register, watch, reset, getValues, formState, errors } = useForm<FileDetails>({
+    const { register, watch, errors } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
@@ -62,27 +62,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
         supportingUploadDisabled,
         filesStoredCount,
     ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize);
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (formState.dirty) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [formState.dirty, setIsSaving]);
-
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (supportingUploadDisabled || manuscriptStatus.uploadInProgress) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [supportingUploadDisabled, manuscriptStatus]);
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -157,9 +136,6 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
             },
         };
         await saveCallback(vars);
-        if (setIsSaving) {
-            reset(getValues());
-        }
     };
 
     useAutoSave(onSave, [coverLetter]);
@@ -206,6 +182,7 @@ const FileDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => 
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
             </div>
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </div>
     );
 };
