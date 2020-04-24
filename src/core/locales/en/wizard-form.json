@@ -5,7 +5,14 @@
     "author-first-name": "First name",
     "author-last-name": "Last name",
     "author-email": "Email (correspondence)",
-    "institution": "Institution"
+    "institution": "Institution",
+    "validation": {
+      "first-name-required": "First name is required",
+      "last-name-required": "Last name is required",
+      "email-required": "Email is required",
+      "email-format": "Must be a valid email address",
+      "institution-required": "Institution is required"
+    }
   },
   "details": {
     "form-title": "Help us get your work seen by the right people",
@@ -22,6 +29,9 @@
     "second-cosubmission-toggle-suffix": " co-submission?"
   },
   "files": {
-    "supporting-files-max": "Maximum 10 supporting files"
+    "supporting-files-max": "Maximum 10 supporting files",
+    "validation": {
+      "coverletter-required": "Please write or paste in your cover letter"
+    }
   }
 }
