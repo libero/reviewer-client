@@ -18,10 +18,10 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
-    buttonComponent?: (onSave?: Function) => JSX.Element;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
+const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const {
         title = '',
         previouslyDiscussed = '',
@@ -149,7 +149,7 @@ const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => 
                 )}
             </Toggle>
 
-            {buttonComponent && buttonComponent(onSave)}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </form>
     );
 };

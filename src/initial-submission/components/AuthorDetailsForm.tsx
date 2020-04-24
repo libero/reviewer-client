@@ -16,10 +16,10 @@ interface GetCurrentUser {
 
 interface Props {
     initialValues?: Submission;
-    buttonComponent?: (onSave?: Function) => JSX.Element;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const AuthorDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
@@ -134,7 +134,7 @@ const AuthorDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Eleme
                     register={register}
                 />
             </div>
-            {buttonComponent && buttonComponent(onSave)}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </form>
     );
 };

@@ -8,6 +8,7 @@ import FileDetailsStep from './FileDetailsForm';
 import DetailsForm from './DetailsForm';
 import { useQuery } from '@apollo/react-hooks';
 import { getSubmissionQuery } from '../graphql';
+import * as H from 'history';
 
 interface Props {
     id: string;
@@ -15,7 +16,7 @@ interface Props {
 
 interface StepProps {
     initialValues: Submission;
-    buttonComponent?: (onSave?: Function) => JSX.Element;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
 interface StepConfig {
@@ -29,32 +30,13 @@ interface GetSubmission {
 }
 
 /*eslint-disable react/display-name*/
-const stepConfig: StepConfig[] = [
-    { id: 'author', label: 'Author', component: AuthorDetailsForm },
-    { id: 'files', label: 'Files', component: FileDetailsStep },
-    { id: 'details', label: 'Details', component: DetailsForm },
-    {
-        id: 'editors',
-        label: 'Editors',
-        component: ({ buttonComponent }: StepProps): JSX.Element => <div>Editors Step {buttonComponent()}</div>,
-    },
-    {
-        id: 'disclosure',
-        label: 'Disclosure',
-        component: ({ buttonComponent }: StepProps): JSX.Element => <div>Disclosure Step {buttonComponent()}</div>,
-    },
-];
-
-const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
-    const { id, step } = useParams();
-    const getCurrentStepPathIndex = (): number =>
-        stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
-
-    const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
-        variables: { id },
-    });
-
-    const buttonComponent = (saveFunction?: Function): JSX.Element => (
+const ButtonComponent = (
+    id: string,
+    history: H.History,
+    getCurrentStepPathIndex: Function,
+    stepConfig: StepConfig[],
+) => ({ saveFunction }: { saveFunction?: Function }): JSX.Element => {
+    return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
                 <Button
@@ -83,6 +65,37 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
             )}
         </React.Fragment>
     );
+};
+
+/*eslint-disable react/display-name*/
+const stepConfig: StepConfig[] = [
+    { id: 'author', label: 'Author', component: AuthorDetailsForm },
+    { id: 'files', label: 'Files', component: FileDetailsStep },
+    { id: 'details', label: 'Details', component: DetailsForm },
+    {
+        id: 'editors',
+        label: 'Editors',
+        component: ({ ButtonComponent }: StepProps): JSX.Element => (
+            <div>Editors Step {ButtonComponent && <ButtonComponent />}</div>
+        ),
+    },
+    {
+        id: 'disclosure',
+        label: 'Disclosure',
+        component: ({ ButtonComponent }: StepProps): JSX.Element => (
+            <div>Disclosure Step {ButtonComponent && <ButtonComponent />}</div>
+        ),
+    },
+];
+
+const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
+    const { id, step } = useParams();
+    const getCurrentStepPathIndex = (): number =>
+        stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
+
+    const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
+        variables: { id },
+    });
 
     return (
         <div className="submission-wizard">
@@ -106,7 +119,12 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 ) : (
                                     <config.component
                                         initialValues={data.getSubmission}
-                                        buttonComponent={buttonComponent}
+                                        ButtonComponent={ButtonComponent(
+                                            id,
+                                            history,
+                                            getCurrentStepPathIndex,
+                                            stepConfig,
+                                        )}
                                     />
                                 )
                             }

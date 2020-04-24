@@ -25,10 +25,10 @@ type UploadInProgress = {
 
 interface Props {
     initialValues?: Submission;
-    buttonComponent?: (onSave?: Function) => JSX.Element;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const FileDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
@@ -170,7 +170,7 @@ const FileDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
             </div>
-            {buttonComponent && buttonComponent(onSave)}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </div>
     );
 };
