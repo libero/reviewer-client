@@ -26,7 +26,13 @@
     "second-cosubmission-title-label": "Second co-submission article title (optional)",
     "second-cosubmission-toggle-prefix": "Would you like to ",
     "second-cosubmission-toggle-link": "add another",
-    "second-cosubmission-toggle-suffix": " co-submission?"
+    "second-cosubmission-toggle-suffix": " co-submission?",
+    "validation": {
+      "title-required": "Title is required",
+      "subjects-max": "No more than 2 subject areas",
+      "subjects-min": "Choose at least 1 subject area",
+      "subjects-required": "Subject area(s) required"
+    }
   },
   "files": {
     "supporting-files-max": "Maximum 10 supporting files",

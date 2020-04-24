@@ -28,6 +28,7 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
         lastName: yup.string().required(t('author.validation.last-name-required')),
         email: yup
             .string()
+            .trim()
             .email(t('author.validation.email-format'))
             .required(t('author.validation.email-required')),
         institution: yup.string().required(t('author.validation.institution-required')),

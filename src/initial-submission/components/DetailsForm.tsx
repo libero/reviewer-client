@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
 import { Submission, ManuscriptDetails } from '../types';
 import { Toggle } from '../../ui/molecules';
@@ -29,6 +30,25 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
+    const { t } = useTranslation('wizard-form');
+    const schema = yup.object().shape({
+        title: yup.string().required(t('details.validation.title-required')),
+        // This won't work as is.
+        // subjects: yup.array().when('articleType', {
+        //     is: (articleType: string) => articleType && articleType === 'feature',
+        //     then: yup
+        //         .array()
+        //         .of(yup.string())
+        //         .max(2, t('details.validation.subjects-max')),
+        //     otherwise: yup
+        //         .array()
+        //         .of(yup.string())
+        //         .min(1, t('details.validation.subjects-min'))
+        //         .max(2, t('details.validation.subjects-max'))
+        //         .required(t('details.validation.subjects-required')),
+        // }),
+    });
+
     const { register, setValue, watch, control, formState, reset, getValues } = useForm({
         defaultValues: {
             title,
@@ -38,6 +58,7 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
             firstCosubmissionTitle,
             secondCosubmissionTitle,
         },
+        validationSchema: schema,
     });
     useEffect(() => {
         if (!setIsSaving) {
@@ -51,7 +72,6 @@ const DetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
     }, [formState.dirty, setIsSaving]);
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
-    const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
 
     const titleWatch = watch('title');
