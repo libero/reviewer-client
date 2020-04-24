@@ -17,5 +17,8 @@ export default (onSave: () => void, watchArray: DependencyList): void => {
         } else {
             initialRender.current = false;
         }
+        return (): void => {
+            saveThrottle.cancel();
+        };
     }, watchArray);
 };

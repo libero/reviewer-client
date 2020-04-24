@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -16,10 +16,10 @@ interface GetCurrentUser {
 
 interface Props {
     initialValues: Submission;
-    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
@@ -31,7 +31,7 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
             .required(),
         institution: yup.string().required(),
     });
-    const { register, handleSubmit, errors, getValues, formState, reset, watch, setValue } = useForm<AuthorDetails>({
+    const { register, handleSubmit, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
         defaultValues: {
             firstName: initialValues.author ? initialValues.author.firstName : '',
             lastName: initialValues.author ? initialValues.author.lastName : '',
@@ -40,17 +40,6 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
         },
         validationSchema: schema,
     });
-
-    useEffect(() => {
-        if (!setIsSaving) {
-            return;
-        }
-        if (formState.dirty) {
-            setIsSaving(true);
-        } else {
-            setIsSaving(false);
-        }
-    }, [formState.dirty, setIsSaving]);
 
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
@@ -65,9 +54,6 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
             },
         };
         await saveCallback(vars);
-        if (setIsSaving) {
-            reset(values);
-        }
     };
 
     const authorFirstName = watch('firstName');
@@ -130,6 +116,7 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
                     register={register}
                 />
             </div>
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </form>
     );
 };

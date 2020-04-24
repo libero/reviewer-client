@@ -1,5 +1,5 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, act } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
@@ -65,11 +65,15 @@ describe('SubmissionWizard', (): void => {
             expect(getProps().location.pathname).toBe('/submit/id/author');
         });
         // when we introduce form validation we should inject the schema at the Routes.tsx level this will allow these tests to work by passing an empty validation schema
-        const testNavigationButtons = (buttonText: string, currentStep: string, expectedNextStep: string): void => {
+        const testNavigationButtons = async (
+            buttonText: string,
+            currentStep: string,
+            expectedNextStep: string,
+        ): Promise<void> => {
             const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
             const { getByText } = render(component, { wrapper: routerWrapper([`/submit/id/${currentStep}`]) });
             expect(getProps().location.pathname).toBe(`/submit/id/${currentStep}`);
-            fireEvent.click(getByText(buttonText));
+            await act(async () => await fireEvent.click(getByText(buttonText)));
             expect(getProps().location.pathname).toBe(`/submit/id/${expectedNextStep}`);
         };
 
