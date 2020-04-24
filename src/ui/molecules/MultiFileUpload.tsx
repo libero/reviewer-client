@@ -40,6 +40,9 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
         if (error && status !== 'ERROR') {
             return 'ERROR';
         }
+        if (uploadInProgress && uploadInProgress.progress === 0) {
+            return 'PROCESSING';
+        }
         if (uploadInProgress && status !== 'UPLOADING') {
             return 'UPLOADING';
         }
@@ -65,7 +68,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
                         className={`multifile-upload__file-status multifile-upload__file-status--${status.toLowerCase()}`}
                     >
                         {' '}
-                        {status === 'UPLOADING'
+                        {(status === 'UPLOADING' || 'PROCESSING')
                             ? uploadInProgress.progress === 0
                                 ? t('multifile-upload.status-queued')
                                 : `${t('multifile-upload.status-uploading')} ${uploadInProgress.progress}%`
