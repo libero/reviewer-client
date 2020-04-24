@@ -54,7 +54,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
         supportingFilesStatus,
         supportingUploadDisabled,
         filesStoredCount,
-    ] = useSupportingFileHook(initialValues, maxSupportingFiles);
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize);
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);

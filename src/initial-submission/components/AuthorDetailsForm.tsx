@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -15,7 +15,7 @@ interface GetCurrentUser {
 }
 
 interface Props {
-    initialValues?: Submission;
+    initialValues: Submission;
     ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
@@ -31,26 +31,19 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
             .required(),
         institution: yup.string().required(),
     });
-    const { register, handleSubmit, errors, getValues } = useForm<AuthorDetails>({
+    const { register, handleSubmit, errors, getValues, formState, reset, watch, setValue } = useForm<AuthorDetails>({
+        defaultValues: {
+            firstName: initialValues.author ? initialValues.author.firstName : '',
+            lastName: initialValues.author ? initialValues.author.lastName : '',
+            email: initialValues.author ? initialValues.author.email : '',
+            institution: initialValues.author ? initialValues.author.institution : '',
+        },
         validationSchema: schema,
     });
 
     const onSubmit = (data: AuthorDetails): void => {
         console.log(JSON.stringify(data, null, 4));
     };
-
-    const [authorFirstName, setAuthorFirstName] = useState(
-        initialValues && initialValues.author ? initialValues.author.firstName : '',
-    );
-    const [authorLastName, setAuthorLastName] = useState(
-        initialValues && initialValues.author ? initialValues.author.lastName : '',
-    );
-    const [authorEmail, setAuthorEmail] = useState(
-        initialValues && initialValues.author ? initialValues.author.email : '',
-    );
-    const [institution, setInstitution] = useState(
-        initialValues && initialValues.author ? initialValues.author.institution : '',
-    );
 
     const onSave = async (): Promise<void> => {
         const values = getValues();
@@ -63,16 +56,21 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
         await saveCallback(vars);
     };
 
+    const authorFirstName = watch('firstName');
+    const authorLastName = watch('lastName');
+    const authorEmail = watch('email');
+    const institution = watch('institution');
+
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
 
     const { t } = useTranslation('wizard-form');
 
     const getDetails = (): void => {
         const [lastName, firstName] = data.getCurrentUser.name.split(', ', 2);
-        setAuthorFirstName(firstName);
-        setAuthorLastName(lastName);
-        setAuthorEmail(data.getCurrentUser.email);
-        setInstitution(data.getCurrentUser.aff);
+        setValue('firstName', firstName);
+        setValue('lastName', lastName);
+        setValue('email', data.getCurrentUser.email);
+        setValue('institution', data.getCurrentUser.aff);
     };
 
     return (
@@ -91,10 +89,6 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
                     invalid={errors && errors.firstName !== undefined}
                     helperText={errors && errors.firstName ? errors.firstName.message : null}
                     labelText={t('author.author-first-name')}
-                    value={authorFirstName}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setAuthorFirstName(event.currentTarget.value)
-                    }
                     register={register}
                 />
                 <TextField
@@ -103,10 +97,6 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
                     invalid={errors && errors.lastName !== undefined}
                     helperText={errors && errors.lastName ? errors.lastName.message : null}
                     labelText={t('author.author-last-name')}
-                    value={authorLastName}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setAuthorLastName(event.currentTarget.value)
-                    }
                     register={register}
                 />
                 <TextField
@@ -115,10 +105,6 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
                     invalid={errors && errors.email !== undefined}
                     helperText={errors && errors.email ? errors.email.message : null}
                     labelText={t('author.author-email')}
-                    value={authorEmail}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setAuthorEmail(event.currentTarget.value)
-                    }
                     register={register}
                 />
                 <TextField
@@ -127,10 +113,6 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
                     invalid={errors && errors.institution !== undefined}
                     helperText={errors && errors.institution ? errors.institution.message : null}
                     labelText={t('author.institution')}
-                    value={institution}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setInstitution(event.currentTarget.value)
-                    }
                     register={register}
                 />
             </div>
