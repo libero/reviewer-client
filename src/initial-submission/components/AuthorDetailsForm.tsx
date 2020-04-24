@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -31,7 +31,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
             .required(),
         institution: yup.string().required(),
     });
-    const { register, handleSubmit, errors, getValues, formState, reset, watch, setValue } = useForm<AuthorDetails>({
+    const { register, handleSubmit, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
         defaultValues: {
             firstName: initialValues.author ? initialValues.author.firstName : '',
             lastName: initialValues.author ? initialValues.author.lastName : '',
