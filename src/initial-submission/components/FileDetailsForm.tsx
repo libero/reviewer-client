@@ -25,7 +25,7 @@ type UploadInProgress = {
 
 interface Props {
     initialValues?: Submission;
-    buttonComponent?: (func: any, disabled?: boolean) => JSX.Element;
+    buttonComponent?: (onSave?: Function) => JSX.Element;
 }
 
 const FileDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
@@ -43,7 +43,7 @@ const FileDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element
             previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
         },
     });
-    const { register, watch, reset, getValues, formState } = useForm({
+    const { register, watch } = useForm({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
@@ -55,18 +55,6 @@ const FileDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element
         supportingUploadDisabled,
         filesStoredCount,
     ] = useSupportingFileHook(initialValues, maxSupportingFiles);
-
-
-    // useEffect(() => {
-    //     if (!setIsSaving) {
-    //         return;
-    //     }
-    //     if (supportingUploadDisabled || manuscriptStatus.uploadInProgress) {
-    //         setIsSaving(true);
-    //     } else {
-    //         setIsSaving(false);
-    //     }
-    // }, [supportingUploadDisabled, manuscriptStatus]);
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -182,7 +170,7 @@ const FileDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
             </div>
-            {buttonComponent(onSave)}
+            {buttonComponent && buttonComponent(onSave)}
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
@@ -18,7 +18,7 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
-    buttonComponent?: (func: any, disabled?: boolean) => JSX.Element;
+    buttonComponent?: (onSave?: Function) => JSX.Element;
 }
 
 const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
@@ -29,7 +29,7 @@ const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => 
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
-    const { register, setValue, watch, control, formState, reset, getValues } = useForm({
+    const { register, setValue, watch, control, handleSubmit } = useForm({
         defaultValues: {
             title,
             subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
@@ -39,6 +39,9 @@ const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => 
             secondCosubmissionTitle,
         },
     });
+    const onSubmit = (data: {}): void => {
+        console.log(JSON.stringify(data, null, 4));
+    };
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
     const { t } = useTranslation('wizard-form');
@@ -83,7 +86,7 @@ const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => 
     ]);
 
     return (
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
             <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
@@ -146,7 +149,7 @@ const DetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => 
                 )}
             </Toggle>
 
-            {buttonComponent(onSave)}
+            {buttonComponent && buttonComponent(onSave)}
         </form>
     );
 };

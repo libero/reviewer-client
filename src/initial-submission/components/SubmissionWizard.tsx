@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
@@ -15,8 +15,7 @@ interface Props {
 
 interface StepProps {
     initialValues: Submission;
-    setIsSaving?: React.Dispatch<React.SetStateAction<boolean>>;
-    buttonComponent?: (func: any, disabled: boolean) => JSX.Element;
+    buttonComponent?: (onSave?: Function) => JSX.Element;
 }
 
 interface StepConfig {
@@ -34,13 +33,20 @@ const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
     { id: 'files', label: 'Files', component: FileDetailsStep },
     { id: 'details', label: 'Details', component: DetailsForm },
-    { id: 'editors', label: 'Editors', component: (): JSX.Element => <div>Editors Step</div> },
-    { id: 'disclosure', label: 'Disclosure', component: (): JSX.Element => <div>Disclosure Step</div> },
+    {
+        id: 'editors',
+        label: 'Editors',
+        component: ({ buttonComponent }: StepProps): JSX.Element => <div>Editors Step {buttonComponent()}</div>,
+    },
+    {
+        id: 'disclosure',
+        label: 'Disclosure',
+        component: ({ buttonComponent }: StepProps): JSX.Element => <div>Disclosure Step {buttonComponent()}</div>,
+    },
 ];
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
-    const [isSaving, setIsSaving] = useState(false);
     const getCurrentStepPathIndex = (): number =>
         stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
 
@@ -48,35 +54,35 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
         variables: { id },
     });
 
-    const buttonComponent = (saveFunction: any, disabled?: boolean) => <React.Fragment>
-        {getCurrentStepPathIndex() > 0 && (
-            <Button
-                disabled={disabled === true}
-                onClick={async () => {
-                    if (saveFunction) {
-                        await saveFunction();
-                    }
-                    history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
-                }}
-            >
-                back
-            </Button>
-        )}
-        {getCurrentStepPathIndex() < stepConfig.length - 1 && (
-            <Button
-                disabled={disabled === true}
-                onClick={async () => {
-                    if (saveFunction) {
-                        await saveFunction();
-                    }
-                    history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
-                }}
-                type="primary"
-            >
-                next
-            </Button>
-        )}
-    </React.Fragment>
+    const buttonComponent = (saveFunction?: Function): JSX.Element => (
+        <React.Fragment>
+            {getCurrentStepPathIndex() > 0 && (
+                <Button
+                    onClick={async (): Promise<void> => {
+                        if (saveFunction) {
+                            await saveFunction();
+                        }
+                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
+                    }}
+                >
+                    back
+                </Button>
+            )}
+            {getCurrentStepPathIndex() < stepConfig.length - 1 && (
+                <Button
+                    onClick={async (): Promise<void> => {
+                        if (saveFunction) {
+                            await saveFunction();
+                        }
+                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                    }}
+                    type="primary"
+                >
+                    next
+                </Button>
+            )}
+        </React.Fragment>
+    );
 
     return (
         <div className="submission-wizard">
@@ -98,8 +104,11 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 loading ? (
                                     <span>loading... </span>
                                 ) : (
-                                        <config.component initialValues={data.getSubmission} setIsSaving={setIsSaving} buttonComponent={buttonComponent} />
-                                    )
+                                    <config.component
+                                        initialValues={data.getSubmission}
+                                        buttonComponent={buttonComponent}
+                                    />
+                                )
                             }
                         />
                     ),

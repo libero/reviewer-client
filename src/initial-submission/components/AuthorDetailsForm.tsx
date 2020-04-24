@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -16,7 +16,7 @@ interface GetCurrentUser {
 
 interface Props {
     initialValues?: Submission;
-    buttonComponent?: (func: any, disabled?: boolean) => JSX.Element;
+    buttonComponent?: (onSave?: Function) => JSX.Element;
 }
 
 const AuthorDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Element => {
@@ -31,7 +31,7 @@ const AuthorDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Eleme
             .required(),
         institution: yup.string().required(),
     });
-    const { register, handleSubmit, errors, getValues, formState, reset } = useForm<AuthorDetails>({
+    const { register, handleSubmit, errors, getValues } = useForm<AuthorDetails>({
         validationSchema: schema,
     });
 
@@ -134,7 +134,7 @@ const AuthorDetailsForm = ({ initialValues, buttonComponent }: Props): JSX.Eleme
                     register={register}
                 />
             </div>
-            {buttonComponent(onSave)}
+            {buttonComponent && buttonComponent(onSave)}
         </form>
     );
 };
