@@ -1,3 +1,4 @@
+/*eslint-disable react/display-name*/
 import React from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button } from '../../ui/atoms';
@@ -29,7 +30,6 @@ interface GetSubmission {
     getSubmission: Submission;
 }
 
-/*eslint-disable react/display-name*/
 const ButtonComponent = (
     id: string,
     history: H.History,
@@ -67,7 +67,6 @@ const ButtonComponent = (
     );
 };
 
-/*eslint-disable react/display-name*/
 const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
     { id: 'files', label: 'Files', component: FileDetailsStep },
