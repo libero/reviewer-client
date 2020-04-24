@@ -23,9 +23,9 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
-        authorFirstName: yup.string().required(),
-        authorLastName: yup.string().required(),
-        authorEmail: yup
+        firstName: yup.string().required(),
+        lastName: yup.string().required(),
+        email: yup
             .string()
             .email()
             .required(),
@@ -38,6 +38,7 @@ const AuthorDetailsForm = ({ initialValues, setIsSaving }: Props): JSX.Element =
             email: initialValues.author ? initialValues.author.email : '',
             institution: initialValues.author ? initialValues.author.institution : '',
         },
+        mode: 'onBlur',
         validationSchema: schema,
     });
 
