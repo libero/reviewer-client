@@ -33,7 +33,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
             .required(t('author.validation.email-required')),
         institution: yup.string().required(t('author.validation.institution-required')),
     });
-    const { register, handleSubmit, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
+    const { register, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
         defaultValues: {
             firstName: initialValues.author ? initialValues.author.firstName : '',
             lastName: initialValues.author ? initialValues.author.lastName : '',
