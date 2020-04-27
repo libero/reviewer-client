@@ -43,7 +43,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-client-
       - name: Build
-        run: make build
+        run: make build_prod
       - name: Save Docker images
         run: |
           mkdir -p docker-image
@@ -85,7 +85,7 @@ jobs:
       - name: Chrome version
         run: google-chrome --version
       - name: Start services
-        run: make start
+        run: make start_ci
       - name: Browser Test
         run: make test_browser
   deploy-image:
