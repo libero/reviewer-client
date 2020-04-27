@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
 import { Submission, ManuscriptDetails } from '../types';
 import { Toggle } from '../../ui/molecules';
@@ -33,22 +32,22 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     const { t } = useTranslation('wizard-form');
 
     // TODO: hook this up to useForm. Bugs in this page preventing this currently
-    const schema = yup.object().shape({
-        title: yup.string().required(t('details.validation.title-required')),
-        subjects: yup.array().when('articleType', {
-            is: (articleType: string) => articleType && articleType === 'feature',
-            then: yup
-                .array()
-                .of(yup.string())
-                .max(2, t('details.validation.subjects-max')),
-            otherwise: yup
-                .array()
-                .of(yup.string())
-                .min(1, t('details.validation.subjects-min'))
-                .max(2, t('details.validation.subjects-max'))
-                .required(t('details.validation.subjects-required')),
-        }),
-    });
+    // const schema = yup.object().shape({
+    //     title: yup.string().required(t('details.validation.title-required')),
+    //     subjects: yup.array().when('articleType', {
+    //         is: (articleType: string) => articleType && articleType === 'feature',
+    //         then: yup
+    //             .array()
+    //             .of(yup.string())
+    //             .max(2, t('details.validation.subjects-max')),
+    //         otherwise: yup
+    //             .array()
+    //             .of(yup.string())
+    //             .min(1, t('details.validation.subjects-min'))
+    //             .max(2, t('details.validation.subjects-max'))
+    //             .required(t('details.validation.subjects-required')),
+    //     }),
+    // });
 
     const { register, setValue, watch, control } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
