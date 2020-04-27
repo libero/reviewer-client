@@ -55,6 +55,7 @@ test: yarn
 
 setup:
 	-@ git submodule update --init --recursive
+	-@ docker network create reviewer > /dev/null 2>&1 || true
 
 test_browser:
 	yarn wait-port localhost:9000
