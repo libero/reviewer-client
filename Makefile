@@ -31,15 +31,15 @@ start_dev:
 start_test:
 	${DOCKER_COMPOSE_TEST} pull reviewer-mocks nginx
 	$(MAKE) build_test
-	docker-compose up -d reviewer-client reviewer-mocks
+	${DOCKER_COMPOSE_TEST} -d reviewer-client reviewer-mocks
 	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
 	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
 	${DOCKER_COMPOSE_TEST} up -d nginx
 
 start_ci:
 	${DOCKER_COMPOSE_TEST} pull reviewer-mocks nginx
-	$(MAKE) build_prod
-	docker-compose up -d reviewer-client reviewer-mocks
+	${DOCKER_COMPOSE_TEST} up -d reviewer-mocks
+	${DOCKER_COMPOSE_BUILD } up -d reviewer-client 
 	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
 	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
 	${DOCKER_COMPOSE_TEST} up -d nginx
@@ -64,6 +64,7 @@ test_browser:
 run_ci:
 	make lint
 	make test
+	make build_prod
 	make start_ci
 	make test_browser
 	make stop
