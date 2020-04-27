@@ -21,16 +21,16 @@ interface Props {
     ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
-    const {
-        title = '',
-        previouslyDiscussed = '',
-        previouslySubmitted = '',
-        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
-        subjects = [],
-    } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
-    const { t } = useTranslation('wizard-form');
+const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
+    const detail = (values ? values : {}) as ManuscriptDetails;
+    detail.cosubmission = detail.cosubmission ? detail.cosubmission : ['', ''];
+    detail.subjects = detail.subjects ? detail.subjects : [];
 
+    return detail;
+};
+
+const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+    const { t } = useTranslation('wizard-form');
     // TODO: hook this up to useForm. Bugs in this page preventing this currently
     // const schema = yup.object().shape({
     //     title: yup.string().required(t('details.validation.title-required')),
@@ -48,6 +48,13 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     //             .required(t('details.validation.subjects-required')),
     //     }),
     // });
+    const {
+        title = '',
+        previouslyDiscussed = '',
+        previouslySubmitted = '',
+        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
+        subjects = [],
+    } = defaultManuscriptDetails(initialValues.manuscriptDetails);
 
     const { register, setValue, watch, control } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {

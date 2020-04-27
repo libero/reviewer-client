@@ -63,7 +63,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
 
     const getDetails = (): void => {
-        const [lastName, firstName] = data.getCurrentUser.name.split(', ', 2);
+        const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
         setValue('firstName', firstName);
         setValue('lastName', lastName);
         setValue('email', data.getCurrentUser.email);
