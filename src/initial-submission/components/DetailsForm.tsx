@@ -30,6 +30,24 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
 };
 
 const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+    const { t } = useTranslation('wizard-form');
+    // TODO: hook this up to useForm. Bugs in this page preventing this currently
+    // const schema = yup.object().shape({
+    //     title: yup.string().required(t('details.validation.title-required')),
+    //     subjects: yup.array().when('articleType', {
+    //         is: (articleType: string) => articleType && articleType === 'feature',
+    //         then: yup
+    //             .array()
+    //             .of(yup.string())
+    //             .max(2, t('details.validation.subjects-max')),
+    //         otherwise: yup
+    //             .array()
+    //             .of(yup.string())
+    //             .min(1, t('details.validation.subjects-min'))
+    //             .max(2, t('details.validation.subjects-max'))
+    //             .required(t('details.validation.subjects-required')),
+    //     }),
+    // });
     const {
         title = '',
         previouslyDiscussed = '',
@@ -37,7 +55,14 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
         subjects = [],
     } = defaultManuscriptDetails(initialValues.manuscriptDetails);
-    const { register, setValue, watch, control, handleSubmit } = useForm({
+
+    const { register, setValue, watch, control } = useForm<
+        Omit<ManuscriptDetails, 'subjects'> & {
+            subjects: { label: string; value: string }[];
+            firstCosubmissionTitle: string;
+            secondCosubmissionTitle: string;
+        }
+    >({
         defaultValues: {
             title,
             subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
@@ -47,12 +72,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
             secondCosubmissionTitle,
         },
     });
-    const onSubmit = (data: {}): void => {
-        console.log(JSON.stringify(data, null, 4));
-    };
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
-    const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
 
     const titleWatch = watch('title');
@@ -94,7 +115,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     ]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
             <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField

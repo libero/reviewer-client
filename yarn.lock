@@ -11304,9 +11304,9 @@ react-helmet-async@^1.0.2:
     shallowequal "1.1.0"
 
 react-hook-form@^4.8.2:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-4.8.2.tgz#c92aa4f0585296e285188d7415b677ed5256fdaf"
-  integrity sha512-8f0nblsiIiVyYmnVUHumLy12hipzyfz+cyJo30mzPFS8S1cBm1jzOe5d7qt7kXbjaiAOQg6lZ760E9XUAp4pEA==
+  version "4.10.2"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-4.10.2.tgz#fb56160c302a0e2b595ef78cc8946c9dc9cb776a"
+  integrity sha512-Ule/KqHBwUvuubqGC4WDvOARS6VjlULSS+WHspgQ5FhFKR4ytHDc4AMpjVfnv+Wbz2TEbMp9/ZHmuZsUksPCiA==
 
 react-hotkeys@2.0.0:
   version "2.0.0"
