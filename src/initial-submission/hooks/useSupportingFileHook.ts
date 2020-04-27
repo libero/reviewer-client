@@ -73,17 +73,23 @@ const hook = (
     ): void => {
         const responseFile = response.data.uploadSupportingFile;
         const thisFilesIndex = supportingFilesStatus.findIndex(
-            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
+            (state: FileState) => { 
+                console.log('state', state.uploadInProgress.id, file.id, state.uploadInProgress);
+                if (state.uploadInProgress) {
+                    return state.uploadInProgress.id === file.id;
+                }
+                return false; 
+            }
         );
-        console.log('supportingFilesStatus[thisFilesIndex]', supportingFilesStatus[thisFilesIndex], thisFilesIndex);
-        if (thisFilesIndex > -1) {
-            supportingFilesStatus[thisFilesIndex] = {
+        if (thisFilesIndex !== -1) {
+            const stateClone = [...supportingFilesStatus];
+            stateClone[thisFilesIndex] = {
                 fileStored: {
                     id: responseFile.id,
                     fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
                 },
             };
-            setSupportingFilesStatus(supportingFilesStatus);
+            setSupportingFilesStatus(stateClone);
         }
     };
     const onSupportingUploadError = (file: { file: File; id: string }): void => {
@@ -111,7 +117,6 @@ const hook = (
                     onSupportingUploadSuccess(files[index], data);
                 })
                 .catch((e) => {
-                    console.log('weeee', e);
                     setIndex(index + 1);
                     onSupportingUploadError(files[index]);
                 });
@@ -128,17 +133,17 @@ const hook = (
             uploadProgressData.fileUploadProgress !== null &&
             uploadProgressData.fileUploadProgress.type === 'SUPPORTING_FILE'
         ) {
+            const progress =  parseInt(uploadProgressData.fileUploadProgress.percentage, 10);
             const index = supportingFilesStatus.findIndex((fileState) => {
                 if (fileState.uploadInProgress) {
                     return fileState.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename
                 }
                 return false;
             });
-            if (index > -1) {
-                const uploadInProgress = { ...supportingFilesStatus[index].uploadInProgress, progress: parseInt(uploadProgressData.fileUploadProgress.percentage, 10) };
-                const newState = { ...supportingFilesStatus[index], uploadInProgress };
-                const newArray = [...supportingFilesStatus.slice(0, index), newState, ...supportingFilesStatus.slice(index, supportingFilesStatus.length - 1)];
-                setSupportingFilesStatus(newArray);
+            if (index !== -1) {
+                const stateClone = [...supportingFilesStatus];
+                stateClone[index].uploadInProgress.progress = progress;
+                setSupportingFilesStatus(stateClone);
             }
         };
     }, [uploadProgressData]);
