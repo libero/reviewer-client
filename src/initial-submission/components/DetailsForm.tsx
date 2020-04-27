@@ -34,23 +34,39 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     const { t } = useTranslation('wizard-form');
     const schema = yup.object().shape({
         title: yup.string().required(t('details.validation.title-required')),
-        // This won't work as is.
-        // subjects: yup.array().when('articleType', {
-        //     is: (articleType: string) => articleType && articleType === 'feature',
-        //     then: yup
-        //         .array()
-        //         .of(yup.string())
-        //         .max(2, t('details.validation.subjects-max')),
-        //     otherwise: yup
-        //         .array()
-        //         .of(yup.string())
-        //         .min(1, t('details.validation.subjects-min'))
-        //         .max(2, t('details.validation.subjects-max'))
-        //         .required(t('details.validation.subjects-required')),
-        // }),
+        subjects: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup
+                .array()
+                .of(yup.string())
+                .max(2, t('details.validation.subjects-max')),
+            otherwise: yup
+                .array()
+                .of(yup.string())
+                .min(1, t('details.validation.subjects-min'))
+                .max(2, t('details.validation.subjects-max'))
+                .required(t('details.validation.subjects-required')),
+        }),
     });
 
-    const { register, setValue, watch, control } = useForm({
+    const validationResolver = (data: {}) => {
+        try {
+            return {
+                values: schema.validateSync({ ...data, articleType: initialValues.articleType }),
+                errors: {},
+            };
+        } catch (e) {
+            return { values: {}, errors: e };
+        }
+    };
+
+    const { register, setValue, watch, control } = useForm<
+        Omit<ManuscriptDetails, 'subjects'> & {
+            subjects: { label: string; value: string }[];
+            firstCosubmissionTitle: string;
+            secondCosubmissionTitle: string;
+        }
+    >({
         defaultValues: {
             title,
             subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
@@ -59,7 +75,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
             firstCosubmissionTitle,
             secondCosubmissionTitle,
         },
-        validationSchema: schema,
+        mode: 'onBlur',
+        validationResolver,
     });
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
