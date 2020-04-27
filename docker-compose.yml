@@ -5,7 +5,7 @@ services:
     build:
       context: './'
       target: dev
-    image: libero/reviewer-client:${IMAGE_TAG:-local}-dev
+    image: libero/reviewer-client:${IMAGE_TAG:-local}
     environment: 
       CLIENT_PORT: 9000
       NEW_RELIC_CLIENT_LICENSE_KEY: ''
