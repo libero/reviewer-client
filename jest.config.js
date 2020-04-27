@@ -10,9 +10,7 @@ module.exports = {
         '\\.(css|scss)$': '<rootDir>/test-utils/styleTransform.js',
     },
     globals: {
-        CONFIG: {
-            API_HOST: 'http://localhost',
-            LOGIN_URL: '',
-        },
+        API_HOST: 'http://localhost',
+        LOGIN_URL: '',
     },
 };

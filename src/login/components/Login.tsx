@@ -6,6 +6,8 @@ import Image from '../../core/assets/welcome.jpg';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
 import { useQuery } from '@apollo/react-hooks';
 
+declare const LOGIN_URL: string;
+
 const Login = (): JSX.Element => {
     const { t } = useTranslation('login');
     const { data = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
@@ -36,7 +38,7 @@ const Login = (): JSX.Element => {
                     </div>
 
                     <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href={CONFIG.LOGIN_URL}>
+                        <a className="login-page__buttons--orcid" href={LOGIN_URL}>
                             <Button type="orcid">{t('login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">

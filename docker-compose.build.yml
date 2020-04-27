@@ -1,23 +1,19 @@
-version: '3'
+version: '3.4'
 services:
   # Client
-  client_source:
-    build:
-      context: './'
-      dockerfile: 'Dockerfile.source'
-      args:
-        image_tag: ${IMAGE_TAG}
-    image: libero/reviewer-client_source:${IMAGE_TAG}
+  # client_source:
+  #   build:
+  #     context: './'
+  #     dockerfile: 'Dockerfile.source'
+  #     args:
+  #       image_tag: ${IMAGE_TAG}
+  #   image: libero/reviewer-client_source:${IMAGE_TAG}
 
   reviewer-client:
     build:
       context: './'
-      dockerfile: "Dockerfile.application"
+      target: prod
       args:
         image_tag: "${IMAGE_TAG}"
     image: libero/reviewer-client:${IMAGE_TAG}
-    environment:
-      CLIENT_PORT: ${CLIENT_PORT}
-      CLIENT_API_PROXY_URL: ${CLIENT_API_PROXY_URL}
-    depends_on:
-      - client_source
+

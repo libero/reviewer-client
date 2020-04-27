@@ -7,7 +7,6 @@ const commonConfig = merge([
     {
         entry: {
             main: './index.tsx',
-            config: './config.ts',
         },
         plugins: [
             new HtmlWebPackPlugin({
@@ -25,6 +24,7 @@ const commonConfig = merge([
 const developmentConfig = merge([
     parts.output({ filename: '[name].bundle.js' }),
     parts.devServer(),
+    parts.loadEnv(),
     parts.loaders(),
     parts.copyFiles(),
     parts.generateSourceMaps({ type: 'eval' })
@@ -33,6 +33,7 @@ const developmentConfig = merge([
 const productionConfig = merge([
     parts.output({ filename: '[name].[contenthash].js' }),
     parts.clean(),
+    parts.loadEnv(),
     parts.loaders(),
     parts.minifyCSS(),
     parts.minifyJS(),

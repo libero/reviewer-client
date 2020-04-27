@@ -1,16 +1,46 @@
 IMAGE_TAG ?= "local"
 
-DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
+DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose
+DOCKER_COMPOSE_TEST = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.yml -f docker-compose.test.yml
+DOCKER_COMPOSE_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 yarn:
 	yarn
 
-build: yarn
-	yarn build
+build_dev: yarn
 	${DOCKER_COMPOSE} build reviewer-client
 
-start:
-	IMAGE_TAG=${IMAGE_TAG} docker-compose up -d
+build_test: yarn
+	${DOCKER_COMPOSE_TEST} build reviewer-client
+
+build_prod: yarn
+	yarn build
+	${DOCKER_COMPOSE_BUILD} build reviewer-client
+
+start_dev:
+	${DOCKER_COMPOSE} pull reviewer-mocks nginx
+	$(MAKE) build_dev
+	${DOCKER_COMPOSE} up -d reviewer-client reviewer-mocks
+	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
+	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
+	${DOCKER_COMPOSE} up -d nginx
+	${DOCKER_COMPOSE} logs -f reviewer-client
+
+start_test:
+	${DOCKER_COMPOSE_TEST} pull reviewer-mocks nginx
+	$(MAKE) build_test
+	docker-compose up -d reviewer-client reviewer-mocks
+	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
+	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
+	${DOCKER_COMPOSE_TEST} up -d nginx
+
+start_ci:
+	${DOCKER_COMPOSE_TEST} pull reviewer-mocks nginx
+	$(MAKE) build_prod
+	docker-compose up -d reviewer-client reviewer-mocks
+	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
+	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
+	${DOCKER_COMPOSE_TEST} up -d nginx
 
 stop:
 	docker-compose down
@@ -22,18 +52,7 @@ test: yarn
 	yarn test
 
 setup:
-	-@ cp .env.example .env
-	-@ if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
-	-@ if [ ! -e ./config/config.infra.json ] ; then cp config/config.infra.example.json config/config.infra.json ; fi
-	-@ if [ ! -e ./config/config.infra.local.json ] ; then cp config/config.infra.local.example.json config/config.infra.local.json ; fi
-	-@ if [ ! -e ./config/config.public.json ] ; then cp config/config.public.example.json config/config.public.json ; fi
-
-clean_config:
-	-@rm .env 2>/dev/null || true
-	-@rm config/reviewer-mocks/config.json 2>/dev/null || true
-	-@rm config/config.infra.json 2>/dev/null || true
-	-@rm config/config.infra.local.json 2>/dev/null || true
-	-@rm config/config.public.json 2>/dev/null || true
+	-@ git submodule update --init --recursive
 
 test_browser:
 	yarn wait-port localhost:9000
@@ -42,14 +61,6 @@ test_browser:
 run_ci:
 	make lint
 	make test
-	make build
-	make setup
-	make start
+	make start_ci
 	make test_browser
 	make stop
-
-start_dev:
-	docker pull liberoadmin/reviewer-mocks:latest
-	docker-compose up -d reviewer-mocks
-	yarn
-	yarn start:dev

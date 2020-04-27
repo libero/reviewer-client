@@ -8,49 +8,41 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
-const infraConfigPath = process.env.INFRA_CONFIG_PATH ? process.env.INFRA_CONFIG_PATH : '/etc/reviewer/config.infra.json';
-const publicConfigPath = process.env.PUBLIC_CONFIG_PATH ? process.env.PUBLIC_CONFIG_PATH : '/etc/reviewer/config.public.json';
-let infraConfig;
+// const infraConfigPath = process.env.INFRA_CONFIG_PATH ? process.env.INFRA_CONFIG_PATH : '/etc/reviewer/config.infra.json';
+// const publicConfigPath = process.env.PUBLIC_CONFIG_PATH ? process.env.PUBLIC_CONFIG_PATH : '/etc/reviewer/config.public.json';
+// let infraConfig;
 
-if (fs.existsSync(infraConfigPath)) {
-    infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
-} else {
-    infraConfig = {
-        "port": 9000,
-        "client_api_proxy_url": "http://localhost:3003/graphql",
-        "client_token_exchange_proxy_url": "http://localhost:3003/authenticate/",
-        "new_relic_client_license_key": "",
-        "new_relic_client_app_id": ""
-    };
-}
+// if (fs.existsSync(infraConfigPath)) {
+//     infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
+// } else {
+//     infraConfig = {
+//         "port": 9000,
+//         "client_api_proxy_url": "http://localhost:3003/graphql",
+//         "client_token_exchange_proxy_url": "http://localhost:3003/authenticate/",
+//         "new_relic_client_license_key": "",
+//         "new_relic_client_app_id": ""
+//     };
+// }
 
 exports.devServer = () => ({
     devServer: {
         stats: 'errors-only',
-        host: process.env.HOST,
+        host: '0.0.0.0',
         historyApiFallback: {
             disableDotRule: true
         },
-        port: infraConfig.port,
+        port: process.env.CLIENT_PORT,
+        disableHostCheck: true,
         open: true,
         overlay: true,
         hot: true,
-        proxy: {
-            '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
-                target: infraConfig.client_token_exchange_proxy_url,
-                pathRewrite: {'^/auth': ''},
-                changeOrigin: true, 
-            },
-            '/config': {
-                bypass: function (req) {
-                    // we need to check the url here again as it seems this is called
-                    // on every path
-                    if (req.url.startsWith('/config')) {
-                        return publicConfigPath;
-                    }
-                }
-            }
-        },
+        // proxy: {
+        //     '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
+        //         target: process.env.CLIENT_TOKEN_EXCHANGE_PROXY_URL,
+        //         pathRewrite: {'^/auth': ''},
+        //         changeOrigin: true, 
+        //     },
+        // },
     },
 });
 
@@ -117,6 +109,15 @@ exports.loaders = () => ({
         ],
     },
 });
+
+exports.loadEnv = () => ({
+    plugins: [
+      new webpack.DefinePlugin({
+        API_HOST: JSON.stringify(process.env.CLIENT_API_URL),
+        LOGIN_URL: JSON.stringify(process.env.CLIENT_LOGIN_URL),
+      })
+    ]
+  })
 
 exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],
@@ -190,8 +191,8 @@ exports.generateSourceMaps = ({ type }) => ({
 exports.newRelic = () => ({
     plugins: [
         new HtmlInjectNewRelicPlugin({
-            license: infraConfig.new_relic_client_license_key,
-            applicationID: infraConfig.new_relic_client_app_id,
+            license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
+            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID
         }),
     ],
 })
