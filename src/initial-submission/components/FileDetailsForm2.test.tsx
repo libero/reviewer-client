@@ -49,7 +49,6 @@ const waitForUploads = async (container: HTMLElement, uploads: number, state: st
 };
 
 describe('SupportingFiles upload', () => {
-    beforeEach(() => (subscriptionData = { data: null, loading: false }));
     it('Can upload one file', async (): Promise<void> => {
         let mutationResolve1: (value?: unknown) => void;
 
@@ -136,69 +135,6 @@ describe('SupportingFiles upload', () => {
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(2);
         expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
     });
-
-    it('should display processing status when percentage is 0 for supporting file', async (): Promise<void> => {
-        let mutationResolve: (value?: unknown) => void;
-        const mutationPromise = new Promise(resolve => {
-            mutationResolve = resolve;
-        });
-
-        mutationMock.mockImplementation(() => mutationPromise);
-        const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />, {
-            wrapper: routerWrapper(),
-        });
-
-        subscriptionData = {
-            fileUploadProgress: {
-                type: 'SUPPORTING_FILE',
-                filename: 'supercoolfile1.png',
-                percentage: '0',
-            },
-        };
-
-        const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
-        const fileInput = container.querySelector('.multifile-upload__input');
-        Object.defineProperty(fileInput, 'files', {
-            value: [file1],
-        });
-        expect(container.querySelectorAll('.multifile-upload__file-status--uploading')).toHaveLength(0);
-        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
-        await fireEvent.change(fileInput);
-        expect(container.querySelectorAll('.multifile-upload__file-name--processing')).toHaveLength(1);
-        expect(container.querySelectorAll('.multifile-upload__file-status--complete')).toHaveLength(0);
-    });
-
-    it.only('should display uploading status when percentage is more than 0 for supporting file', async (): Promise<void> => {
-        let mutationResolve: (value?: unknown) => void;
-        const mutationPromise = new Promise(resolve => {
-            mutationResolve = resolve;
-        });
-
-        mutationMock.mockImplementation(() => mutationPromise);
-        const { container } = render(<FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />, {
-            wrapper: routerWrapper(),
-        });
-
-        subscriptionData = {
-            fileUploadProgress: {
-                type: 'SUPPORTING_FILE',
-                filename: 'supercoolfile1.png',
-                percentage: '10',
-            },
-        };
-
-        const file1 = new File(['§§§'], 'supercoolfile1.png', { type: 'image/png' });
-        const fileInput = container.querySelector('.multifile-upload__input');
-        Object.defineProperty(fileInput, 'files', {
-            value: [file1],
-        });
-        expect(container.querySelectorAll('.multifile-upload__file-status--processing')).toHaveLength(0);
-        expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
-        await act(async () => await fireEvent.change(fileInput));
-        expect(container.querySelectorAll('.multifile-upload__file-name--uploading')).toHaveLength(1);
-        expect(container.querySelectorAll('.multifile-upload__file-status--complete')).toHaveLength(0);
-    });
-
     it('Can upload three files', async (): Promise<void> => {
         mutationMock
             .mockImplementationOnce(() =>
