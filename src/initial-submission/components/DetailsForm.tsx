@@ -21,14 +21,27 @@ interface Props {
     ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
+const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
+    const detail = (values ? values : {}) as ManuscriptDetails;
+    if (detail.cosubmission == null) {
+        detail.cosubmission = ['', ''];
+    }
+
+    if (detail.subjects == null) {
+        detail.subjects = [];
+    }
+
+    return detail;
+};
+
 const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const {
         title = '',
         previouslyDiscussed = '',
         previouslySubmitted = '',
-        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
+        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
         subjects = [],
-    } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
+    } = defaultManuscriptDetails(initialValues.manuscriptDetails);
     const { register, setValue, watch, control, handleSubmit } = useForm({
         defaultValues: {
             title,
