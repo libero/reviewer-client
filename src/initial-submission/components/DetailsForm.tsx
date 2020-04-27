@@ -30,8 +30,9 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
         subjects = [],
     } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
-
     const { t } = useTranslation('wizard-form');
+
+    // TODO: hook this up to useForm. Bugs in this page preventing this currently
     const schema = yup.object().shape({
         title: yup.string().required(t('details.validation.title-required')),
         subjects: yup.array().when('articleType', {
@@ -49,17 +50,6 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
         }),
     });
 
-    const validationResolver = (data: {}) => {
-        try {
-            return {
-                values: schema.validateSync({ ...data, articleType: initialValues.articleType }),
-                errors: {},
-            };
-        } catch (e) {
-            return { values: {}, errors: e };
-        }
-    };
-
     const { register, setValue, watch, control } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
             subjects: { label: string; value: string }[];
@@ -75,8 +65,6 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
             firstCosubmissionTitle,
             secondCosubmissionTitle,
         },
-        mode: 'onBlur',
-        validationResolver,
     });
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
