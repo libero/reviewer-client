@@ -74,7 +74,6 @@ const hook = (
         const responseFile = response.data.uploadSupportingFile;
         const thisFilesIndex = supportingFilesStatus.findIndex(
             (state: FileState) => { 
-                console.log('state', state.uploadInProgress.id, file.id, state.uploadInProgress);
                 if (state.uploadInProgress) {
                     return state.uploadInProgress.id === file.id;
                 }
@@ -130,10 +129,10 @@ const hook = (
     useEffect(() => {
         if (
             uploadProgressData &&
-            uploadProgressData.fileUploadProgress !== null &&
+            uploadProgressData.fileUploadProgress &&
             uploadProgressData.fileUploadProgress.type === 'SUPPORTING_FILE'
         ) {
-            const progress =  parseInt(uploadProgressData.fileUploadProgress.percentage, 10);
+            const progress = parseInt(uploadProgressData.fileUploadProgress.percentage, 10);
             const index = supportingFilesStatus.findIndex((fileState) => {
                 if (fileState.uploadInProgress) {
                     return fileState.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename
@@ -141,6 +140,7 @@ const hook = (
                 return false;
             });
             if (index !== -1) {
+                console.log('supportingFilesStatus', supportingFilesStatus[0]);
                 const stateClone = [...supportingFilesStatus];
                 stateClone[index].uploadInProgress.progress = progress;
                 setSupportingFilesStatus(stateClone);
