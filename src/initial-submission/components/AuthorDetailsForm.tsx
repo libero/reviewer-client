@@ -66,7 +66,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
     const { t } = useTranslation('wizard-form');
 
     const getDetails = (): void => {
-        const [lastName, firstName] = data.getCurrentUser.name.split(', ', 2);
+        const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
         setValue('firstName', firstName);
         setValue('lastName', lastName);
         setValue('email', data.getCurrentUser.email);
