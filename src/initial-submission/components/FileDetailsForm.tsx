@@ -48,13 +48,6 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
             coverLetter: files ? files.coverLetter : '',
         },
     });
-    const [
-        onSupportingFilesUpload,
-        deleteSupportingFileCallback,
-        supportingFilesStatus,
-        supportingUploadDisabled,
-        filesStoredCount,
-    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize);
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -62,6 +55,14 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
     const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
         variables: { submissionId: initialValues.id },
     });
+
+    const [
+        onSupportingFilesUpload,
+        deleteSupportingFileCallback,
+        supportingFilesStatus,
+        supportingUploadDisabled,
+        filesStoredCount,
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize, uploadProgressData);
 
     useEffect(() => {
         if (
