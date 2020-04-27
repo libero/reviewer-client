@@ -82,12 +82,14 @@ const hook = (
         );
         if (thisFilesIndex !== -1) {
             const stateClone = [...supportingFilesStatus];
+            console.log('stateClone', stateClone, thisFilesIndex);
             stateClone[thisFilesIndex] = {
                 fileStored: {
                     id: responseFile.id,
                     fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
                 },
             };
+            // console.log('stateClone', stateClone);
             setSupportingFilesStatus(stateClone);
         }
     };
@@ -140,7 +142,7 @@ const hook = (
                 return false;
             });
             if (index !== -1) {
-                console.log('supportingFilesStatus', supportingFilesStatus[0]);
+                console.log('supportingFilesStatus', supportingFilesStatus[0], index);
                 const stateClone = [...supportingFilesStatus];
                 stateClone[index].uploadInProgress.progress = progress;
                 setSupportingFilesStatus(stateClone);
