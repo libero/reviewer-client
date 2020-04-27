@@ -23,8 +23,8 @@ interface Props {
 
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
     const detail = (values ? values : {}) as ManuscriptDetails;
-    detail.cosubmission ? detail.cosubmission : ['', ''];
-    detail.subjects ? detail.subjects : [];
+    detail.cosubmission = detail.cosubmission ? detail.cosubmission : ['', ''];
+    detail.subjects = detail.subjects ? detail.subjects : [];
 
     return detail;
 };
