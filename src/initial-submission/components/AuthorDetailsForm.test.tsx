@@ -24,7 +24,7 @@ jest.mock('@apollo/react-hooks', () => ({
         return {
             data: {
                 getCurrentUser: {
-                    name: 'Blogs, Joe',
+                    name: 'Joe Bloggs',
                     email: 'joe@blogs.com',
                     aff: 'somewhere',
                 },
