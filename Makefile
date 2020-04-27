@@ -17,6 +17,7 @@ build_prod: yarn
 	yarn build
 	${DOCKER_COMPOSE_BUILD} build reviewer-client
 
+# start tests with reviewer-mocks mocking continuum
 start_dev:
 	${DOCKER_COMPOSE} pull reviewer-mocks nginx
 	$(MAKE) build_dev
@@ -26,6 +27,7 @@ start_dev:
 	${DOCKER_COMPOSE} up -d nginx
 	${DOCKER_COMPOSE} logs -f reviewer-client
 
+# start tests with reviewer-mocks mocking api, continuum-adaptor and continuum
 start_test:
 	${DOCKER_COMPOSE_TEST} pull reviewer-mocks nginx
 	$(MAKE) build_test
