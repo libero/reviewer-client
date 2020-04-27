@@ -135,16 +135,16 @@ const hook = (
             uploadProgressData.fileUploadProgress.type === 'SUPPORTING_FILE'
         ) {
             const progress = parseInt(uploadProgressData.fileUploadProgress.percentage, 10);
-            const index = supportingFilesStatus.findIndex((fileState) => {
+            const matchingIndex = supportingFilesStatus.findIndex((fileState) => {
                 if (fileState.uploadInProgress) {
                     return fileState.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename
                 }
                 return false;
             });
-            if (index !== -1) {
-                console.log('supportingFilesStatus', supportingFilesStatus[0], index);
+            if (matchingIndex !== -1) {
+                console.log('supportingFilesStatus', supportingFilesStatus[0], matchingIndex);
                 const stateClone = [...supportingFilesStatus];
-                stateClone[index].uploadInProgress.progress = progress;
+                stateClone[matchingIndex].uploadInProgress.progress = progress;
                 setSupportingFilesStatus(stateClone);
             }
         };
