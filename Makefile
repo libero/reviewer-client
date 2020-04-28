@@ -42,11 +42,11 @@ start_dev: ## start with dev build image, with reviewer-mocks mocking continuum
 start_test: ## start with dev build image, reviewer-mocks mocking api, continuum-adaptor and continuum
 	${DOCKER_COMPOSE_TEST} pull reviewer-mocks nginx
 	$(MAKE) build_test
-	${DOCKER_COMPOSE_TEST} -d reviewer-client reviewer-mocks
+	${DOCKER_COMPOSE_TEST} up -d reviewer-client reviewer-mocks
 	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
 	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
 	${DOCKER_COMPOSE_TEST} up -d nginx
-
+	${DOCKER_COMPOSE} logs -f reviewer-client
 
 start_ci: ## start with production build, with reviewer-mocks mocking api, continuum-adaptor and continuum
 	${DOCKER_COMPOSE_CI} pull reviewer-mocks
@@ -65,7 +65,7 @@ test: yarn ## run unit tests
 
 test_browser: ## run browser tests
 	yarn wait-port localhost:9000
-	yarn test:browser
+	yarn test:browser-headless
 
 run_ci: ## run as if in ci
 	make lint
