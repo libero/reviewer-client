@@ -14,6 +14,7 @@ help:
 setup: ## perform setup tasks
 	-@ git submodule update --init --recursive
 	-@ docker network create reviewer > /dev/null 2>&1 || true
+	-@ if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
 	-$(MAKE) install
 
 install: ## install dependencies
