@@ -61,7 +61,6 @@ RUN yarn run build
 # Stage: Production environment
 #
 FROM nginx:stable-alpine@sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e2f48ee39434ec017 as prod
-ENV NODE_ENV=production
 
 LABEL maintainer="eLife Reviewer Product Team <reviewer-product@elifesciences.org>"
 
