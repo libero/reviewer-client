@@ -11,6 +11,7 @@ type UploadInProgress = {
 };
 type FileStored = {
     fileName: string;
+    id: string;
 };
 
 export type FileState = {
@@ -22,22 +23,29 @@ export type FileState = {
 interface Props {
     files?: FileState[];
     onUpload: (files: FileList) => void;
-    onDelete: (index: number) => void;
+    onDelete: (fileId: string) => void;
+    disableDelete?: boolean;
     disableUpload?: boolean;
     extraMessage?: string;
 }
 
 interface FileItemProps extends FileState {
-    onDelete: () => void;
+    onDelete: (fileId: string) => void;
+    disableDelete?: boolean;
 }
 
-const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemProps): JSX.Element => {
+const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete }: FileItemProps): JSX.Element => {
     const { t } = useTranslation('ui');
+    const progress = uploadInProgress ? uploadInProgress.progress : null;
     const status = useMemo(() => {
         if (error && status !== 'ERROR') {
             return 'ERROR';
         }
-        if (uploadInProgress && status !== 'UPLOADING') {
+        // give us the spinner
+        if (uploadInProgress && uploadInProgress.progress === null && status !== 'PROCESSING') {
+            return 'PROCESSING';
+        }
+        if (uploadInProgress && uploadInProgress.progress !== null && status !== 'UPLOADING') {
             return 'UPLOADING';
         }
         if (fileStored && status !== 'COMPLETE') {
@@ -46,7 +54,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
         if (status !== 'IDLE') {
             return 'IDLE';
         }
-    }, [uploadInProgress, error, fileStored]);
+    }, [progress, error, fileStored]);
 
     return (
         <div className="multifile-upload__upload-list-item">
@@ -62,31 +70,41 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete }: FileItemPro
                         className={`multifile-upload__file-status multifile-upload__file-status--${status.toLowerCase()}`}
                     >
                         {' '}
-                        {status === 'UPLOADING'
-                            ? uploadInProgress.progress === 0
-                                ? t('multifile-upload.status-queued')
+                        {status === 'UPLOADING' || status === 'PROCESSING'
+                            ? uploadInProgress.progress === null
+                                ? ''
                                 : `${t('multifile-upload.status-uploading')} ${uploadInProgress.progress}%`
                             : `${t(`multifile-upload.status-error.${error}`)}`}
                     </span>
                 ) : null}
             </span>
-            {status === 'COMPLETE' || status === 'ERROR' ? (
+            {!disableDelete && (status === 'COMPLETE' || status === 'ERROR') ? (
                 <div>
-                    <Delete className="multifile-upload__delete" onClick={onDelete} />
+                    <Delete
+                        className="multifile-upload__delete"
+                        onClick={(): void => onDelete(fileStored ? fileStored.id : uploadInProgress.id)}
+                    />
                 </div>
             ) : null}
         </div>
     );
 };
 
-const MultiFileUpload = ({ files = [], onUpload, onDelete, disableUpload, extraMessage }: Props): JSX.Element => {
+const MultiFileUpload = ({
+    files = [],
+    onUpload,
+    onDelete,
+    disableUpload,
+    disableDelete,
+    extraMessage,
+}: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
         <div className="multifile-upload">
             {files.length ? (
                 <div className="multifile-upload__upload-list">
                     {files.map((file, index) => {
-                        return <FileItem key={index} {...file} onDelete={(): void => onDelete(index)} />;
+                        return <FileItem key={index} {...file} onDelete={onDelete} disableDelete={disableDelete} />;
                     })}
                 </div>
             ) : null}

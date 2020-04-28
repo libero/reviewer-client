@@ -102,8 +102,8 @@ describe('MultiFileUpload', () => {
             <MultiFileUpload
                 files={[
                     { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 } },
-                    { fileStored: { fileName: 'File 2.pdf' } },
-                    { fileStored: { fileName: 'File 3.pdf' } },
+                    { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
+                    { fileStored: { fileName: 'File 3.pdf', id: 'mel' } },
                 ]}
                 onUpload={jest.fn()}
                 onDelete={jest.fn()}
@@ -147,13 +147,41 @@ describe('MultiFileUpload', () => {
         expect(container.querySelector('.multifile-upload__extra-message')).toBeNull();
     });
 
+    it('does not display FileItem delete icons if disableDelete is true', (): void => {
+        const { container, rerender } = render(
+            <MultiFileUpload
+                files={[
+                    { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 }, error: 'server' },
+                    { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
+                    { fileStored: { fileName: 'File 3.pdf', id: 'mel' } },
+                ]}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelectorAll('.multifile-upload__delete')).toHaveLength(3);
+        rerender(
+            <MultiFileUpload
+                files={[
+                    { uploadInProgress: { fileName: 'File 1.pdf', progress: 42 }, error: 'server' },
+                    { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
+                    { fileStored: { fileName: 'File 3.pdf', id: 'mel' } },
+                ]}
+                disableDelete={true}
+                onUpload={jest.fn()}
+                onDelete={jest.fn()}
+            />,
+        );
+        expect(container.querySelectorAll('.multifile-upload__delete')).toHaveLength(0);
+    });
+
     describe('FileItem', (): void => {
         it('shows the correct UploadProgress for each item', () => {
             const { container } = render(
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
-                        { fileStored: { fileName: 'File 2.pdf' } },
+                        { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
                     ]}
                     onUpload={jest.fn()}
@@ -172,8 +200,9 @@ describe('MultiFileUpload', () => {
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
-                        { fileStored: { fileName: 'File 2.pdf' } },
+                        { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: null } },
                     ]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
@@ -183,12 +212,13 @@ describe('MultiFileUpload', () => {
             expect(items[0].querySelector('.multifile-upload__file-name--uploading')).toBeInTheDocument();
             expect(items[1].querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
             expect(items[2].querySelector('.multifile-upload__file-name--error')).toBeInTheDocument();
+            expect(items[3].querySelector('.multifile-upload__file-name--processing')).toBeInTheDocument();
         });
 
         it('uses fileStored name when FileItem is in COMPLETE state', () => {
             const { container } = render(
                 <MultiFileUpload
-                    files={[{ fileStored: { fileName: 'File 2.pdf' } }]}
+                    files={[{ fileStored: { fileName: 'File 2.pdf', id: 'bob' } }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
@@ -223,7 +253,7 @@ describe('MultiFileUpload', () => {
                 <MultiFileUpload
                     files={[
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
-                        { fileStored: { fileName: 'File 2.pdf' } },
+                        { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
                     ]}
                     onUpload={jest.fn()}
@@ -246,17 +276,6 @@ describe('MultiFileUpload', () => {
                 />,
             );
             expect(getByText('multifile-upload.status-uploading 42%')).toBeInTheDocument();
-        });
-
-        it('shows upload in a queued state when UPLOADING and progress is 0', () => {
-            const { getByText } = render(
-                <MultiFileUpload
-                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 } }]}
-                    onUpload={jest.fn()}
-                    onDelete={jest.fn()}
-                />,
-            );
-            expect(getByText('multifile-upload.status-queued')).toBeInTheDocument();
         });
 
         it('shows server error status text when ERROR and value is server', () => {
@@ -298,7 +317,7 @@ describe('MultiFileUpload', () => {
         it('displays delete icon for COMPLETE items', () => {
             const { container } = render(
                 <MultiFileUpload
-                    files={[{ fileStored: { fileName: 'File 2.pdf' } }]}
+                    files={[{ fileStored: { fileName: 'File 2.pdf', id: 'bob' } }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
@@ -317,29 +336,35 @@ describe('MultiFileUpload', () => {
             expect(container.querySelector('.multifile-upload__delete')).toBeInTheDocument();
         });
 
-        it('calls onDelete with files index when delete icon is clicked', () => {
+        it('calls onDelete with uploadInProgress.id when delete icon is clicked on ERROR item', () => {
             const mockOnDelete = jest.fn();
             const { container } = render(
                 <MultiFileUpload
-                    files={[
-                        { uploadInProgress: { fileName: 'File 2.pdf', progress: 0 }, error: 'validation' },
-                        { fileStored: { fileName: 'File 2.pdf' } },
-                    ]}
+                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', id: 'bob' }, error: 'validation' }]}
                     onUpload={jest.fn()}
                     onDelete={mockOnDelete}
                 />,
             );
-            const items = container.querySelectorAll('.multifile-upload__upload-list-item');
+            const listItem = container.querySelector('.multifile-upload__upload-list-item');
 
-            expect(mockOnDelete).toBeCalledTimes(0);
-            fireEvent.click(items[0].querySelector('.multifile-upload__delete'));
+            fireEvent.click(listItem.querySelector('.multifile-upload__delete'));
             expect(mockOnDelete).toBeCalledTimes(1);
-            expect(mockOnDelete).toBeCalledWith(0);
+            expect(mockOnDelete).toBeCalledWith('bob');
+        });
+        it('calls onDelete with fileStored.id when delete icon is clicked on COMPLETE item', () => {
+            const mockOnDelete = jest.fn();
+            const { container } = render(
+                <MultiFileUpload
+                    files={[{ fileStored: { fileName: 'File 2.pdf', id: 'jack' } }]}
+                    onUpload={jest.fn()}
+                    onDelete={mockOnDelete}
+                />,
+            );
+            const listItem = container.querySelector('.multifile-upload__upload-list-item');
 
-            mockOnDelete.mockReset();
-            fireEvent.click(items[1].querySelector('.multifile-upload__delete'));
+            fireEvent.click(listItem.querySelector('.multifile-upload__delete'));
             expect(mockOnDelete).toBeCalledTimes(1);
-            expect(mockOnDelete).toBeCalledWith(1);
+            expect(mockOnDelete).toBeCalledWith('jack');
         });
     });
 });

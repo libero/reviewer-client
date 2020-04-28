@@ -12,6 +12,7 @@ export interface Submission {
 export interface File {
     filename: string;
     url?: string;
+    id?: string;
 }
 
 export interface FileDetails {
@@ -33,4 +34,15 @@ export interface ManuscriptDetails {
     previouslyDiscussed?: string;
     previouslySubmitted?: string;
     cosubmission?: string[];
+}
+
+export interface UploadInProgressData {
+    fileUploadProgress: {
+        percentage: string;
+        userId: string;
+        filename: string;
+        fileId: string;
+        type: string;
+        submissionId: string;
+    };
 }

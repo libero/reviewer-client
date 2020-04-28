@@ -15,7 +15,7 @@ type FileStored = {
 };
 
 interface FileUploadContentProps {
-    status: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR';
+    status: 'IDLE' | 'UPLOADING' | 'COMPLETE' | 'ERROR' | 'PROCESSING';
     open: () => void;
     error?: UploadErrors;
     uploadInProgress?: UploadInProgress;
@@ -117,6 +117,9 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
         if (state.error && status !== 'ERROR') {
             return 'ERROR';
         }
+        if (state.uploadInProgress && state.uploadInProgress.progress === 0) {
+            return 'PROCESSING';
+        }
         if (state.uploadInProgress && status !== 'UPLOADING') {
             return 'UPLOADING';
         }
@@ -134,9 +137,9 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
                 className={`file-upload__dropzone file-upload__dropzone--${status.toLowerCase()} ${
                     isDragActive ? 'file-upload__dropzone--drag-active' : ''
                 }`}
-                {...getRootProps()}
+                {...(status !== 'UPLOADING' && getRootProps())}
             >
-                <input {...getInputProps()} />
+                {status !== 'UPLOADING' && <input {...getInputProps()} />}
                 <UploadProgress progress={state.uploadInProgress && state.uploadInProgress.progress} status={status} />
                 <div className="file-upload__content">
                     <FileUploadContent

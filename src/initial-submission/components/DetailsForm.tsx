@@ -18,17 +18,51 @@ const selectOptions = [
 
 interface Props {
     initialValues?: Submission;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const DetailsForm = ({ initialValues }: Props): JSX.Element => {
+const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
+    const detail = (values ? values : {}) as ManuscriptDetails;
+    detail.cosubmission = detail.cosubmission ? detail.cosubmission : ['', ''];
+    detail.subjects = detail.subjects ? detail.subjects : [];
+
+    return detail;
+};
+
+const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+    const { t } = useTranslation('wizard-form');
+    // TODO: hook this up to useForm. Bugs in this page preventing this currently
+    // const schema = yup.object().shape({
+    //     title: yup.string().required(t('details.validation.title-required')),
+    //     subjects: yup.array().when('articleType', {
+    //         is: (articleType: string) => articleType && articleType === 'feature',
+    //         then: yup
+    //             .array()
+    //             .of(yup.string())
+    //             .max(2, t('details.validation.subjects-max')),
+    //         otherwise: yup
+    //             .array()
+    //             .of(yup.string())
+    //             .min(1, t('details.validation.subjects-min'))
+    //             .max(2, t('details.validation.subjects-max'))
+    //             .required(t('details.validation.subjects-required')),
+    //     }),
+    // });
     const {
         title = '',
         previouslyDiscussed = '',
         previouslySubmitted = '',
-        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle] = ['', ''],
+        cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
         subjects = [],
-    } = (initialValues.manuscriptDetails ? initialValues.manuscriptDetails : {}) as ManuscriptDetails;
-    const { register, setValue, watch, control } = useForm({
+    } = defaultManuscriptDetails(initialValues.manuscriptDetails);
+
+    const { register, setValue, watch, control } = useForm<
+        Omit<ManuscriptDetails, 'subjects'> & {
+            subjects: { label: string; value: string }[];
+            firstCosubmissionTitle: string;
+            secondCosubmissionTitle: string;
+        }
+    >({
         defaultValues: {
             title,
             subjects: subjects.map(subject => selectOptions.find(option => option.value === subject)),
@@ -38,8 +72,8 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
             secondCosubmissionTitle,
         },
     });
+
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
-    const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDetailsPageMutation);
 
     const titleWatch = watch('title');
@@ -48,7 +82,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     const previouslySubmittedWatch = watch('previouslySubmitted');
     const firstCosubmissionWatch = watch('firstCosubmissionTitle');
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const cosubmission =
             firstCosubmissionWatch || secondCosubmissionWatch
                 ? [firstCosubmissionWatch, secondCosubmissionWatch || '']
@@ -68,7 +102,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                 },
             },
         };
-        saveCallback(vars);
+        await saveCallback(vars);
     };
 
     useAutoSave(onSave, [
@@ -81,7 +115,7 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
     ]);
 
     return (
-        <form>
+        <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
             <TextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
@@ -143,6 +177,8 @@ const DetailsForm = ({ initialValues }: Props): JSX.Element => {
                     </span>
                 )}
             </Toggle>
+
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </form>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -15,69 +15,63 @@ interface GetCurrentUser {
 }
 
 interface Props {
-    initialValues?: Submission;
+    initialValues: Submission;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+    const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
-        authorFirstName: yup.string().required(),
-        authorLastName: yup.string().required(),
-        authorEmail: yup
+        firstName: yup.string().required(t('author.validation.first-name-required')),
+        lastName: yup.string().required(t('author.validation.last-name-required')),
+        email: yup
             .string()
-            .email()
-            .required(),
-        institution: yup.string().required(),
+            .trim()
+            .email(t('author.validation.email-format'))
+            .required(t('author.validation.email-required')),
+        institution: yup.string().required(t('author.validation.institution-required')),
     });
-    const { register, handleSubmit, errors, getValues } = useForm<AuthorDetails>({ validationSchema: schema });
+    const { register, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
+        defaultValues: {
+            firstName: initialValues.author ? initialValues.author.firstName : '',
+            lastName: initialValues.author ? initialValues.author.lastName : '',
+            email: initialValues.author ? initialValues.author.email : '',
+            institution: initialValues.author ? initialValues.author.institution : '',
+        },
+        mode: 'onBlur',
+        validationSchema: schema,
+    });
 
-    const onSubmit = (data: AuthorDetails): void => {
-        console.log(JSON.stringify(data, null, 4));
-    };
-
-    const [authorFirstName, setAuthorFirstName] = useState(
-        initialValues && initialValues.author ? initialValues.author.firstName : '',
-    );
-    const [authorLastName, setAuthorLastName] = useState(
-        initialValues && initialValues.author ? initialValues.author.lastName : '',
-    );
-    const [authorEmail, setAuthorEmail] = useState(
-        initialValues && initialValues.author ? initialValues.author.email : '',
-    );
-    const [institution, setInstitution] = useState(
-        initialValues && initialValues.author ? initialValues.author.institution : '',
-    );
-
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const values = getValues();
-        // Prevent XHR requests from taking place if the compount has unmounted,as the request would be invalid.
-        // This requires a more serious fix where saving state prevents
-        if (Object.entries(values).length > 0) {
-            const vars = {
-                variables: {
-                    id: initialValues.id,
-                    details: values,
-                },
-            };
-            saveCallback(vars);
-        }
+        const vars = {
+            variables: {
+                id: initialValues.id,
+                details: values,
+            },
+        };
+        await saveCallback(vars);
     };
+
+    const authorFirstName = watch('firstName');
+    const authorLastName = watch('lastName');
+    const authorEmail = watch('email');
+    const institution = watch('institution');
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
 
-    const { t } = useTranslation('wizard-form');
-
     const getDetails = (): void => {
-        const [lastName, firstName] = data.getCurrentUser.name.split(', ', 2);
-        setAuthorFirstName(firstName);
-        setAuthorLastName(lastName);
-        setAuthorEmail(data.getCurrentUser.email);
-        setInstitution(data.getCurrentUser.aff);
+        const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
+        setValue('firstName', firstName);
+        setValue('lastName', lastName);
+        setValue('email', data.getCurrentUser.email);
+        setValue('institution', data.getCurrentUser.aff);
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <div className="orcid-details">
                 <div className="orcid-details__link_text">
                     <span onClick={getDetails} className="typography__body typography__body--link">
@@ -92,10 +86,6 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     invalid={errors && errors.firstName !== undefined}
                     helperText={errors && errors.firstName ? errors.firstName.message : null}
                     labelText={t('author.author-first-name')}
-                    value={authorFirstName}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setAuthorFirstName(event.currentTarget.value)
-                    }
                     register={register}
                 />
                 <TextField
@@ -104,10 +94,6 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     invalid={errors && errors.lastName !== undefined}
                     helperText={errors && errors.lastName ? errors.lastName.message : null}
                     labelText={t('author.author-last-name')}
-                    value={authorLastName}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setAuthorLastName(event.currentTarget.value)
-                    }
                     register={register}
                 />
                 <TextField
@@ -116,10 +102,6 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     invalid={errors && errors.email !== undefined}
                     helperText={errors && errors.email ? errors.email.message : null}
                     labelText={t('author.author-email')}
-                    value={authorEmail}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setAuthorEmail(event.currentTarget.value)
-                    }
                     register={register}
                 />
                 <TextField
@@ -128,13 +110,10 @@ const AuthorDetailsForm = ({ initialValues }: Props): JSX.Element => {
                     invalid={errors && errors.institution !== undefined}
                     helperText={errors && errors.institution ? errors.institution.message : null}
                     labelText={t('author.institution')}
-                    value={institution}
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setInstitution(event.currentTarget.value)
-                    }
                     register={register}
                 />
             </div>
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </form>
     );
 };

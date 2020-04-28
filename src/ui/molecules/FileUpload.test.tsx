@@ -38,6 +38,13 @@ describe('FileUpload', (): void => {
             ).not.toThrow();
         });
 
+        it('should have the processing class for the border', () => {
+            const { container } = render(
+                <FileUpload state={{ uploadInProgress: { fileName: 'bob', progress: 0 } }} onUpload={jest.fn} />,
+            );
+            expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
+        });
+
         it('should have the uploading class for the border', () => {
             const { container } = render(
                 <FileUpload state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }} onUpload={jest.fn} />,

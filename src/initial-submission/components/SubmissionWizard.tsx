@@ -1,4 +1,5 @@
-import React from 'react';
+/*eslint-disable react/display-name*/
+import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
@@ -8,6 +9,7 @@ import FileDetailsStep from './FileDetailsForm';
 import DetailsForm from './DetailsForm';
 import { useQuery } from '@apollo/react-hooks';
 import { getSubmissionQuery } from '../graphql';
+import * as H from 'history';
 
 interface Props {
     id: string;
@@ -15,6 +17,7 @@ interface Props {
 
 interface StepProps {
     initialValues: Submission;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
 interface StepConfig {
@@ -27,13 +30,78 @@ interface GetSubmission {
     getSubmission: Submission;
 }
 
-/*eslint-disable react/display-name*/
+const ButtonComponent = (
+    id: string,
+    history: H.History,
+    getCurrentStepPathIndex: Function,
+    stepConfig: StepConfig[],
+) => ({ saveFunction }: { saveFunction?: Function }): JSX.Element => {
+    const [processing, setProcessing] = useState(false);
+    return (
+        <React.Fragment>
+            {getCurrentStepPathIndex() > 0 && (
+                <Button
+                    onClick={async (): Promise<void> => {
+                        if (!processing) {
+                            try {
+                                setProcessing(true);
+                                if (saveFunction) {
+                                    await saveFunction();
+                                }
+                                history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
+                                setProcessing(false);
+                            } catch (e) {
+                                setProcessing(false);
+                            }
+                        }
+                    }}
+                >
+                    back
+                </Button>
+            )}
+            {getCurrentStepPathIndex() < stepConfig.length - 1 && (
+                <Button
+                    onClick={async (): Promise<void> => {
+                        if (!processing) {
+                            try {
+                                setProcessing(true);
+                                if (saveFunction) {
+                                    await saveFunction();
+                                }
+                                history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                setProcessing(false);
+                            } catch (e) {
+                                setProcessing(false);
+                            }
+                        }
+                    }}
+                    type="primary"
+                >
+                    next
+                </Button>
+            )}
+        </React.Fragment>
+    );
+};
+
 const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
     { id: 'files', label: 'Files', component: FileDetailsStep },
     { id: 'details', label: 'Details', component: DetailsForm },
-    { id: 'editors', label: 'Editors', component: (): JSX.Element => <div>Editors Step</div> },
-    { id: 'disclosure', label: 'Disclosure', component: (): JSX.Element => <div>Disclosure Step</div> },
+    {
+        id: 'editors',
+        label: 'Editors',
+        component: ({ ButtonComponent }: StepProps): JSX.Element => (
+            <div>Editors Step {ButtonComponent && <ButtonComponent />}</div>
+        ),
+    },
+    {
+        id: 'disclosure',
+        label: 'Disclosure',
+        component: ({ ButtonComponent }: StepProps): JSX.Element => (
+            <div>Disclosure Step {ButtonComponent && <ButtonComponent />}</div>
+        ),
+    },
 ];
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
@@ -43,7 +111,9 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
 
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
         variables: { id },
+        returnPartialData: true,
     });
+
     return (
         <div className="submission-wizard">
             <ProgressBar
@@ -64,7 +134,15 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 loading ? (
                                     <span>loading... </span>
                                 ) : (
-                                    <config.component initialValues={data.getSubmission} />
+                                    <config.component
+                                        initialValues={data.getSubmission}
+                                        ButtonComponent={ButtonComponent(
+                                            id,
+                                            history,
+                                            getCurrentStepPathIndex,
+                                            stepConfig,
+                                        )}
+                                    />
                                 )
                             }
                         />
@@ -72,25 +150,6 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 )}
                 <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
-            {getCurrentStepPathIndex() > 0 && (
-                <Button
-                    onClick={(): void => {
-                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
-                    }}
-                >
-                    back
-                </Button>
-            )}
-            {getCurrentStepPathIndex() < stepConfig.length - 1 && (
-                <Button
-                    onClick={(): void => {
-                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
-                    }}
-                    type="primary"
-                >
-                    next
-                </Button>
-            )}
         </div>
     );
 };

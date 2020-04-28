@@ -1,18 +1,13 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
-import { FileState } from '../../ui/molecules/MultiFileUpload';
-import {
-    saveFilesPageMutation,
-    uploadManuscriptMutation,
-    uploadSupportingFileMutation,
-    fileUploadProgressSubscription,
-} from '../graphql';
+import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { Submission } from '../types';
-import { v4 } from 'uuid';
+import { Submission, FileDetails, UploadInProgressData } from '../types';
+import useSupportingFileHook from '../hooks/useSupportingFileHook';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -28,27 +23,15 @@ type UploadInProgress = {
     progress?: number;
     fileName?: string;
 };
+
 interface Props {
     initialValues?: Submission;
+    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
-    const { register, watch } = useForm({
-        defaultValues: {
-            coverLetter: files ? files.coverLetter : '',
-        },
-    });
-
-    const [saveCallback] = useMutation(saveFilesPageMutation);
-    const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
-    const [uploadSupportingFile] = useMutation(uploadSupportingFileMutation);
-
-    const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
-        variables: { submissionId: initialValues.id },
-    });
-
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
     // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
     const [manuscriptStatus, setManuscriptStatus] = useState<{
@@ -61,75 +44,35 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
         },
     });
+    const schema = yup.object().shape({
+        coverLetter: yup.string().required(t('files.validation.coverletter-required')),
+    });
 
-    const getInitialSupportingFiles = (): FileState[] => {
-        if (!files || !files.supportingFiles) return [];
-        return files.supportingFiles.map(file => ({
-            fileStored: {
-                fileName: file.filename,
-            },
-        }));
-    };
-    const [supportingFilesStatus, setSupportingFilesStatus] = useState<FileState[]>(getInitialSupportingFiles());
+    const { register, watch, errors } = useForm<FileDetails>({
+        defaultValues: {
+            coverLetter: files ? files.coverLetter : '',
+        },
+        mode: 'onBlur',
+        validationSchema: schema,
+    });
 
-    const [supportingUploadDisabled, setSupportingUploadDisabled] = useState<boolean>(false);
+    const [saveCallback] = useMutation(saveFilesPageMutation);
+    const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
 
-    function* fileUploadInitializer(
-        fileToStore: { file: File; id: string }[],
-    ): Generator<{ uploadPromise: {}; itemId: string }> {
-        for (let fileIndex = 0; fileIndex < fileToStore.length; ) {
-            yield {
-                uploadPromise: {
-                    variables: {
-                        id: initialValues.id,
-                        file: fileToStore[fileIndex].file,
-                        fileSize: fileToStore[fileIndex].file.size,
-                    },
-                },
-                itemId: fileToStore[fileIndex].id,
-            };
-            fileIndex += 1;
-        }
-    }
+    const { data: uploadProgressData, loading } = useSubscription<UploadInProgressData>(
+        fileUploadProgressSubscription,
+        {
+            variables: { submissionId: initialValues.id },
+        },
+    );
 
-    // fileUploadInitializer - Generator function that iterates over the file list - starting the upload process.
-    // uploadSupportingFiles - This is responsible for iterating over the list (using the generator) and
-    //                           maintaining the state of the files.
-
-    function setSupportingFileState(
-        result: IteratorResult<{ uploadPromise: {}; itemId: string }>,
-        fileStates: FileState[],
-    ) {
-        return (): void => {
-            const thisFilesIndex = fileStates.findIndex(
-                (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === result.value.itemId,
-            );
-            fileStates[thisFilesIndex] = {
-                fileStored: {
-                    fileName: fileStates[thisFilesIndex].uploadInProgress.fileName,
-                },
-            };
-            setSupportingFilesStatus(fileStates);
-        };
-    }
-
-    const uploadSupportingFiles = (
-        filesToStore: { file: File; id: string }[],
-        newSupportedFilesList: FileState[],
-    ): void => {
-        const iterator = fileUploadInitializer(filesToStore);
-
-        const loop = (result: IteratorResult<{ uploadPromise: {}; itemId: string }>, fileStates: FileState[]): void => {
-            if (result.done) {
-                setSupportingUploadDisabled(false);
-            } else {
-                uploadSupportingFile(result.value.uploadPromise)
-                    .then(setSupportingFileState(result, fileStates))
-                    .then(() => loop(iterator.next(), fileStates));
-            }
-        };
-        loop(iterator.next(), newSupportedFilesList);
-    };
+    const [
+        onSupportingFilesUpload,
+        deleteSupportingFileCallback,
+        supportingFilesStatus,
+        supportingUploadDisabled,
+        filesStoredCount,
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize, uploadProgressData);
 
     useEffect(() => {
         if (
@@ -152,40 +95,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             }
         }
     }, [uploadProgressData, loading]);
-
-    const filesStoredCount = useMemo(() => supportingFilesStatus.filter(fileStatus => !fileStatus.error).length, [
-        supportingFilesStatus,
-    ]);
-
-    const onSupportingFilesUpload = (filesList: FileList): void => {
-        const filesListArray = Array.prototype.slice.call(filesList);
-
-        // disable upload while uploading
-        setSupportingUploadDisabled(true);
-
-        let trimmedFilesArray = filesListArray;
-        if (filesListArray.length + filesStoredCount > maxSupportingFiles) {
-            trimmedFilesArray = filesListArray.slice(0, maxSupportingFiles - filesStoredCount);
-        }
-
-        const filesToStore = trimmedFilesArray.map((file: File) => ({
-            file,
-            id: v4(),
-        }));
-
-        const newSupportingFilesStatus = [
-            ...supportingFilesStatus,
-            ...filesToStore.map((fileToStore: { file: File; id: string }) => ({
-                uploadInProgress: {
-                    progress: 0,
-                    fileName: fileToStore.file.name,
-                    id: fileToStore.id,
-                },
-            })),
-        ];
-        setSupportingFilesStatus(newSupportingFilesStatus);
-        uploadSupportingFiles(filesToStore, newSupportingFilesStatus);
-    };
 
     const onManuscriptUpload = (filesList: File[]): void => {
         if (!allowedManuscriptFileTypes.includes(filesList[0].type) || filesList[0].size > maxFileSize) {
@@ -210,7 +119,6 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
         })
             .then(({ data }) => {
                 const { filename: fileName, url: previewLink } = data.uploadManuscript.files.manuscriptFile;
-
                 setManuscriptStatus({
                     fileStored: {
                         fileName,
@@ -224,14 +132,14 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
     };
 
     const coverLetter = watch('coverLetter');
-    const onSave = (): void => {
+    const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
                 id: initialValues.id,
                 coverLetter,
             },
         };
-        saveCallback(vars);
+        await saveCallback(vars);
     };
 
     useAutoSave(onSave, [coverLetter]);
@@ -248,7 +156,12 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
                 <li>Who do you consider to be the most relevant audience for this work?</li>
                 <li>What do you think the work has achieved or not achieved?</li>
             </ul>
-            <CoverLetter id="coverLetter" register={register} />
+            <CoverLetter
+                id="coverLetter"
+                register={register}
+                invalid={errors && errors.coverLetter !== undefined}
+                helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
+            />
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your manuscript file</h2>
             <span className="typography__small typography__small--secondary">
                 Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
@@ -266,12 +179,14 @@ const FileDetailsForm = ({ initialValues }: Props): JSX.Element => {
             <div className="supporting-files">
                 <MultiFileUpload
                     onUpload={onSupportingFilesUpload}
-                    onDelete={(): void => {}}
+                    onDelete={deleteSupportingFileCallback}
                     files={supportingFilesStatus}
+                    disableDelete={supportingUploadDisabled}
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
             </div>
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
         </div>
     );
 };

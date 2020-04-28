@@ -24,7 +24,7 @@ jest.mock('@apollo/react-hooks', () => ({
         return {
             data: {
                 getCurrentUser: {
-                    name: 'Blogs, Joe',
+                    name: 'Joe Bloggs',
                     email: 'joe@blogs.com',
                     aff: 'somewhere',
                 },
@@ -41,6 +41,18 @@ jest.mock('@apollo/react-hooks', () => ({
     },
 }));
 
+const initialValues: Submission = {
+    author: {
+        firstName: 'Joe',
+        lastName: 'Blogs',
+        email: 'joe@blogs.com',
+        institution: 'somewhere',
+    },
+    id: 'foo',
+    articleType: '',
+    updated: 0,
+};
+
 describe('Author Details Form', (): void => {
     afterEach(() => {
         cleanup();
@@ -49,22 +61,11 @@ describe('Author Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<AuthorDetailsForm />);
+            render(<AuthorDetailsForm initialValues={initialValues} />);
         }).not.toThrow();
     });
 
     it('should render correctly with all props', async (): Promise<void> => {
-        const initialValues: Submission = {
-            author: {
-                firstName: 'Joe',
-                lastName: 'Blogs',
-                email: 'joe@blogs.com',
-                institution: 'somewhere',
-            },
-            id: 'foo',
-            articleType: '',
-            updated: 0,
-        };
         expect(
             async (): Promise<void> => {
                 render(<AuthorDetailsForm initialValues={initialValues} />);

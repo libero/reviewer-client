@@ -45,6 +45,7 @@ const createFile = (type: string, fileName: string): File =>
 
 describe('File Details Form', (): void => {
     const originalError = console.error;
+
     beforeAll(() => {
         // This is horrible but necessary to prevent console error output which isn't to do with the test scenarios see: https://github.com/libero/reviewer-client/issues/69
         console.error = (...args: unknown[]): void => {
@@ -171,7 +172,7 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             expect(container.querySelector('.file-upload__extra').textContent).toBe('testfile.pdf');
         });
-        it('should display in progress upload when file dropped', async (): Promise<void> => {
+        it('should display in processing when file dropped', async (): Promise<void> => {
             let mutationResolve: (value?: unknown) => void;
             const mutationPromise = new Promise(resolve => {
                 mutationResolve = resolve;
@@ -185,7 +186,7 @@ describe('File Details Form', (): void => {
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
 
-            expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
+            expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
             mutationResolve({
                 data: {
                     uploadManuscript: {
@@ -214,7 +215,7 @@ describe('File Details Form', (): void => {
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
-            expect(container.querySelector('.file-upload__dropzone--uploading')).toBeInTheDocument();
+            expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
             mutationReject();
             // need to wait to flush mutation resolve through
             await waitFor(() => {});
@@ -315,7 +316,7 @@ describe('File Details Form', (): void => {
         });
     });
 
-    describe('SupportingFiles upload', () => {
+    describe('SupportingFiles', () => {
         beforeEach(() => {
             mutationMock.mockImplementation(
                 () =>
@@ -399,18 +400,45 @@ describe('File Details Form', (): void => {
             });
             await act(async () => await fireEvent.change(fileInput));
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeNull();
-            expect(container.querySelector('.multifile-upload__file-status--uploading')).toBeInTheDocument();
+            expect(container.querySelector('.multifile-upload__file-status--processing')).toBeInTheDocument();
             mutationResolve({
                 data: {
                     uploadSupportingFile: {
-                        files: {
-                            supportingFiles: [{ url: 'http://localhost/file.pdf', filename: 'testfile.pdf' }],
-                        },
+                        url: 'http://localhost/file.pdf',
+                        filename: 'testfile.pdf',
+                        id: 'bob',
                     },
                 },
             });
             await waitFor(() => {});
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
+        });
+
+        it('should call the delete mutation with the correct id when the delete icon is clicked', async (): Promise<
+            void
+        > => {
+            mutationMock.mockImplementation(() => Promise.resolve({ data: { deleteSupportingFile: 'penguin' } }));
+            const { container } = render(
+                <FileDetailsForm
+                    initialValues={{
+                        id: 'test',
+                        updated: Date.now(),
+                        articleType: '',
+                        files: {
+                            supportingFiles: [
+                                { id: 'penguin', url: 'http://placekitten.com/400/400', filename: 'penguin.pdf' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+            expect(container.querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
+            fireEvent.click(container.querySelector('.multifile-upload__delete'));
+            expect(mutationMock).toHaveBeenCalledTimes(1);
+            expect(mutationMock).toHaveBeenCalledWith({ variables: { fileId: 'penguin', submissionId: 'test' } });
         });
 
         describe('only allows for ${maxSupportingFiles}', () => {
@@ -449,9 +477,11 @@ describe('File Details Form', (): void => {
                                 supportingFiles: [
                                     {
                                         filename: 'File1.png',
+                                        id: 'bob',
                                     },
                                     {
                                         filename: 'File2.png',
+                                        id: 'mel',
                                     },
                                 ],
                             },
