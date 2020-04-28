@@ -84,4 +84,7 @@ ENV NODE_ENV=production
 COPY --from=yarn-prod /app/ .
 COPY --from=build-prod /app/dist/ dist/
 
-CMD ["/bin/sh", "/app/build-config.sh"]
+HEALTHCHECK --interval=5s --timeout=1s \
+	CMD echo -e "GET /health\n\n" | nc localhost:9000
+
+CMD ["nginx", "-g", "daemon off;"]

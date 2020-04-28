@@ -14,7 +14,7 @@ exports.devServer = () => ({
         historyApiFallback: {
             disableDotRule: true
         },
-        port: process.env.CLIENT_PORT,
+        port: process.env.CLIENT_PORT || 9000,
         disableHostCheck: true,
         open: true,
         overlay: true,
@@ -85,15 +85,6 @@ exports.loaders = () => ({
         ],
     },
 });
-
-exports.loadEnv = () => ({
-    plugins: [
-      new webpack.DefinePlugin({
-        API_HOST: JSON.stringify(process.env.CLIENT_API_URL),
-        LOGIN_URL: JSON.stringify(process.env.CLIENT_LOGIN_URL),
-      })
-    ]
-  })
 
 exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],

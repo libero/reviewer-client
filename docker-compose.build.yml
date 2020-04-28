@@ -1,14 +1,5 @@
 version: '3.4'
 services:
-  # Client
-  # client_source:
-  #   build:
-  #     context: './'
-  #     dockerfile: 'Dockerfile.source'
-  #     args:
-  #       image_tag: ${IMAGE_TAG}
-  #   image: libero/reviewer-client_source:${IMAGE_TAG}
-
   reviewer-client:
     build:
       context: './'

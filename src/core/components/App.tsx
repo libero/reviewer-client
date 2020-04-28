@@ -14,8 +14,6 @@ import { Footer } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
 import * as config from '../utils/config';
 
-declare const API_HOST: string;
-
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
@@ -24,7 +22,7 @@ const App: React.FC = (): JSX.Element => {
         Auth.importToken();
     }, []);
     return (
-        <ApolloProvider client={createApolloClient(API_HOST)}>
+        <ApolloProvider client={createApolloClient()}>
             <Router>
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />

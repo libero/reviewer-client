@@ -27,7 +27,6 @@ describe('App', (): void => {
         await waitFor(() => {});
         expect(createApolloClient.default).toHaveBeenCalledTimes(1);
         expect(config.fetchAndSetConfig).toHaveBeenCalledTimes(1);
-        expect(createApolloClient.default).toHaveBeenCalledWith('http://localhost');
         done();
     });
 });
