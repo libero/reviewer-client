@@ -36,6 +36,7 @@ interface FileItemProps extends FileState {
 
 const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete }: FileItemProps): JSX.Element => {
     const { t } = useTranslation('ui');
+    const progress = uploadInProgress ? uploadInProgress.progress : null;
     const status = useMemo(() => {
         if (error && status !== 'ERROR') {
             return 'ERROR';
@@ -44,7 +45,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
         if (uploadInProgress && uploadInProgress.progress !== null && status !== 'PROCESSING') {
             return 'PROCESSING';
         }
-        if (uploadInProgress && status !== 'UPLOADING') {
+        if (uploadInProgress && uploadInProgress.progress === null && status !== 'UPLOADING') {
             return 'UPLOADING';
         }
         if (fileStored && status !== 'COMPLETE') {
@@ -53,7 +54,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
         if (status !== 'IDLE') {
             return 'IDLE';
         }
-    }, [uploadInProgress, error, fileStored]);
+    }, [progress, error, fileStored]);
 
     return (
         <div className="multifile-upload__upload-list-item">
