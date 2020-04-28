@@ -80,17 +80,17 @@ const hook = (
                 return false; 
             }
         );
+        // patch previous value rather than overriding it completely.
         if (thisFilesIndex !== -1) {
-            const stateClone = [...supportingFilesStatus];
-            console.log('stateClone', stateClone, thisFilesIndex);
-            stateClone[thisFilesIndex] = {
-                fileStored: {
-                    id: responseFile.id,
-                    fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
-                },
-            };
-            // console.log('stateClone', stateClone);
-            setSupportingFilesStatus(stateClone);
+            setSupportingFilesStatus((previous) => {
+                previous[thisFilesIndex] = {
+                    fileStored: {
+                        id: responseFile.id,
+                        fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
+                    },
+                };
+                return previous;
+            });
         }
     };
     const onSupportingUploadError = (file: { file: File; id: string }): void => {
@@ -142,7 +142,6 @@ const hook = (
                 return false;
             });
             if (matchingIndex !== -1) {
-                console.log('supportingFilesStatus', supportingFilesStatus[0], matchingIndex);
                 const stateClone = [...supportingFilesStatus];
                 stateClone[matchingIndex].uploadInProgress.progress = progress;
                 setSupportingFilesStatus(stateClone);
