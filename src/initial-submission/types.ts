@@ -35,3 +35,14 @@ export interface ManuscriptDetails {
     previouslySubmitted?: string;
     cosubmission?: string[];
 }
+
+export interface UploadInProgressData {
+    fileUploadProgress: {
+        percentage: string;
+        userId: string;
+        filename: string;
+        fileId: string;
+        type: string;
+        submissionId: string;
+    };
+}

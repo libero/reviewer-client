@@ -190,7 +190,7 @@ describe('MultiFileUpload', () => {
             );
 
             const items = container.querySelectorAll('.multifile-upload__upload-list-item');
-            expect(items[0].querySelector('.upload-progress--uploading')).toBeInTheDocument();
+            expect(items[0].querySelector('.upload-progress--processing')).toBeInTheDocument();
             expect(items[1].querySelector('.upload-progress--complete')).toBeInTheDocument();
             expect(items[2].querySelector('.upload-progress--error')).toBeInTheDocument();
         });
@@ -208,7 +208,7 @@ describe('MultiFileUpload', () => {
                 />,
             );
             const items = container.querySelectorAll('.multifile-upload__upload-list-item');
-            expect(items[0].querySelector('.multifile-upload__file-name--uploading')).toBeInTheDocument();
+            expect(items[0].querySelector('.multifile-upload__file-name--processing')).toBeInTheDocument();
             expect(items[1].querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
             expect(items[2].querySelector('.multifile-upload__file-name--error')).toBeInTheDocument();
         });
@@ -276,10 +276,10 @@ describe('MultiFileUpload', () => {
             expect(getByText('multifile-upload.status-uploading 42%')).toBeInTheDocument();
         });
 
-        it('shows upload in a queued state when UPLOADING and progress is 0', () => {
+        it('shows upload in a queued state when UPLOADING and progress is null', () => {
             const { getByText } = render(
                 <MultiFileUpload
-                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 } }]}
+                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: null } }]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
                 />,
