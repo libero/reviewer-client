@@ -84,6 +84,8 @@ jobs:
         run: make setup
       - name: Chrome version
         run: google-chrome --version
+      - name: Debug
+        run: ls config/nginx/
       - name: Start services
         run: make start_ci
       - name: Browser Test
