@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name*/
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
@@ -36,15 +36,24 @@ const ButtonComponent = (
     getCurrentStepPathIndex: Function,
     stepConfig: StepConfig[],
 ) => ({ saveFunction }: { saveFunction?: Function }): JSX.Element => {
+    const [processing, setProcessing] = useState(false);
     return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
                 <Button
                     onClick={async (): Promise<void> => {
-                        if (saveFunction) {
-                            await saveFunction();
+                        if (!processing) {
+                            try {
+                                setProcessing(true);
+                                if (saveFunction) {
+                                    await saveFunction();
+                                }
+                                history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
+                                setProcessing(false);
+                            } catch (e) {
+                                setProcessing(false);
+                            }
                         }
-                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
                     }}
                 >
                     back
@@ -53,10 +62,18 @@ const ButtonComponent = (
             {getCurrentStepPathIndex() < stepConfig.length - 1 && (
                 <Button
                     onClick={async (): Promise<void> => {
-                        if (saveFunction) {
-                            await saveFunction();
+                        if (!processing) {
+                            try {
+                                setProcessing(true);
+                                if (saveFunction) {
+                                    await saveFunction();
+                                }
+                                history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                setProcessing(false);
+                            } catch (e) {
+                                setProcessing(false);
+                            }
                         }
-                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
                     }}
                     type="primary"
                 >

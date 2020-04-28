@@ -20,30 +20,29 @@ interface Props {
 }
 
 const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+    const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = yup.object().shape({
-        authorFirstName: yup.string().required(),
-        authorLastName: yup.string().required(),
-        authorEmail: yup
+        firstName: yup.string().required(t('author.validation.first-name-required')),
+        lastName: yup.string().required(t('author.validation.last-name-required')),
+        email: yup
             .string()
-            .email()
-            .required(),
-        institution: yup.string().required(),
+            .trim()
+            .email(t('author.validation.email-format'))
+            .required(t('author.validation.email-required')),
+        institution: yup.string().required(t('author.validation.institution-required')),
     });
-    const { register, handleSubmit, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
+    const { register, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
         defaultValues: {
             firstName: initialValues.author ? initialValues.author.firstName : '',
             lastName: initialValues.author ? initialValues.author.lastName : '',
             email: initialValues.author ? initialValues.author.email : '',
             institution: initialValues.author ? initialValues.author.institution : '',
         },
+        mode: 'onBlur',
         validationSchema: schema,
     });
-
-    const onSubmit = (data: AuthorDetails): void => {
-        console.log(JSON.stringify(data, null, 4));
-    };
 
     const onSave = async (): Promise<void> => {
         const values = getValues();
@@ -63,8 +62,6 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
 
-    const { t } = useTranslation('wizard-form');
-
     const getDetails = (): void => {
         const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
         setValue('firstName', firstName);
@@ -74,7 +71,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <div className="orcid-details">
                 <div className="orcid-details__link_text">
                     <span onClick={getDetails} className="typography__body typography__body--link">

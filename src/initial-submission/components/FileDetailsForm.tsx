@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { Submission, UploadInProgressData } from '../types';
+import { Submission, FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 
 //TODO: these should live in config
@@ -43,10 +44,16 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
             previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
         },
     });
-    const { register, watch } = useForm({
+    const schema = yup.object().shape({
+        coverLetter: yup.string().required(t('files.validation.coverletter-required')),
+    });
+
+    const { register, watch, errors } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
+        mode: 'onBlur',
+        validationSchema: schema,
     });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
@@ -149,7 +156,12 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
                 <li>Who do you consider to be the most relevant audience for this work?</li>
                 <li>What do you think the work has achieved or not achieved?</li>
             </ul>
-            <CoverLetter id="coverLetter" register={register} />
+            <CoverLetter
+                id="coverLetter"
+                register={register}
+                invalid={errors && errors.coverLetter !== undefined}
+                helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
+            />
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your manuscript file</h2>
             <span className="typography__small typography__small--secondary">
                 Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
