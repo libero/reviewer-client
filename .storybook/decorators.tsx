@@ -10,7 +10,7 @@ const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = ({ children }: Props): JSX.Element => {
     return (
-        <ApolloProvider client={createApolloClient('')}>
+        <ApolloProvider client={createApolloClient()}>
             <Suspense fallback={<Loader />}>
                 {children}
             </Suspense>
