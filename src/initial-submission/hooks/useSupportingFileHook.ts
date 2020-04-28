@@ -3,14 +3,14 @@ import { useMutation } from '@apollo/react-hooks';
 import { v4 } from 'uuid';
 import { uploadSupportingFileMutation, deleteSupportingFileMutation, getSubmissionQuery } from '../graphql';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { File as ReviewerFile, Submission } from '../types';
+import { File as ReviewerFile, Submission, UploadInProgressData } from '../types';
 import { ExecutionResult } from 'graphql';
 
 const hook = (
     initialValues: Submission,
     maxSupportingFiles: number,
     maxFileSize: number,
-    uploadProgressData: any,
+    uploadProgressData: UploadInProgressData,
 ): [(fileList: FileList) => void, (fileId: string) => Promise<void>, FileState[], boolean, number] => {
     const [index, setIndex] = useState(0);
     const [files, setFiles] = useState([]);

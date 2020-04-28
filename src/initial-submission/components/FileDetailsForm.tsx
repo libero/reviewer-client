@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { Submission } from '../types';
+import { Submission, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 
 //TODO: these should live in config
@@ -52,9 +52,12 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
 
-    const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
-        variables: { submissionId: initialValues.id },
-    });
+    const { data: uploadProgressData, loading } = useSubscription<UploadInProgressData>(
+        fileUploadProgressSubscription,
+        {
+            variables: { submissionId: initialValues.id },
+        },
+    );
 
     const [
         onSupportingFilesUpload,
