@@ -51,8 +51,8 @@ start_test: ## start with dev build image, reviewer-mocks mocking api, continuum
 start_ci: ## start with production build, with reviewer-mocks mocking api, continuum-adaptor and continuum
 	${DOCKER_COMPOSE_CI} pull reviewer-mocks
 	${DOCKER_COMPOSE_CI} up -d reviewer-mocks reviewer-client 
-	./.scripts/docker/wait-healthy.sh reviewer-client_app 20
-	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
+	./.scripts/docker/wait-healthy.sh reviewer-client_app 60
+	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 60
 
 stop: ## stop all services
 	${DOCKER_COMPOSE} down
