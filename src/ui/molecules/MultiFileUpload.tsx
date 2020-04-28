@@ -42,10 +42,10 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
             return 'ERROR';
         }
         // give us the spinner
-        if (uploadInProgress && uploadInProgress.progress !== null && status !== 'PROCESSING') {
+        if (uploadInProgress && uploadInProgress.progress === null && status !== 'PROCESSING') {
             return 'PROCESSING';
         }
-        if (uploadInProgress && uploadInProgress.progress === null && status !== 'UPLOADING') {
+        if (uploadInProgress && uploadInProgress.progress !== null && status !== 'UPLOADING') {
             return 'UPLOADING';
         }
         if (fileStored && status !== 'COMPLETE') {
@@ -72,7 +72,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
                         {' '}
                         {status === 'UPLOADING' || status === 'PROCESSING'
                             ? uploadInProgress.progress === null
-                                ? t('multifile-upload.status-queued')
+                                ? ''
                                 : `${t('multifile-upload.status-uploading')} ${uploadInProgress.progress}%`
                             : `${t(`multifile-upload.status-error.${error}`)}`}
                     </span>
