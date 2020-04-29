@@ -32,7 +32,7 @@ const useSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion
         detail.title = suggestions[0].value;
     }
     return detail;
-}
+};
 
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
     const detail = (values ? values : {}) as ManuscriptDetails;
