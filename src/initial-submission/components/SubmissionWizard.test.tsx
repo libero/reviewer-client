@@ -1,5 +1,5 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult, act } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, act, waitFor } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
@@ -104,6 +104,25 @@ describe('SubmissionWizard', (): void => {
             };
             testNavigationButtons(nextButtonText, 'author', 'files', enterDetails);
         });
+        it('clicking Next on Author step remains on the Author page when invalid', async (): Promise<void> => {
+            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByText, container } = render(component, {
+                wrapper: routerWrapper(['/submit/id/author']),
+            });
+            expect(getProps().location.pathname).toBe('/submit/id/author');
+            fireEvent.input(container.querySelector('#firstName'), {
+                target: { value: 'Bob' },
+            });
+            fireEvent.input(container.querySelector('#lastName'), {
+                target: { value: 'Ross' },
+            });
+            fireEvent.input(container.querySelector('#email'), {
+                target: { value: 'bob@ross.com' },
+            });
+            await act(async () => await fireEvent.click(getByText(nextButtonText)));
+            expect(getProps().location.pathname).toBe(`/submit/id/author`);
+            expect(getByText('author.validation.institution-required', { exact: false })).toBeInTheDocument();
+        });
         it('clicking Next on Files step takes you to Details', (): void => {
             const enterDetails = (container: HTMLElement): void => {
                 fireEvent.input(container.querySelector('.cover-letter__input'), {
@@ -111,6 +130,16 @@ describe('SubmissionWizard', (): void => {
                 });
             };
             testNavigationButtons(nextButtonText, 'files', 'details', enterDetails);
+        });
+        it('clicking Next on Files step remains on the Files page when invalid', async (): Promise<void> => {
+            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByText } = render(component, {
+                wrapper: routerWrapper(['/submit/id/files']),
+            });
+            expect(getProps().location.pathname).toBe('/submit/id/files');
+            await act(async () => await fireEvent.click(getByText(nextButtonText)));
+            expect(getProps().location.pathname).toBe('/submit/id/files');
+            expect(getByText('files.validation.coverletter-required', { exact: false })).toBeInTheDocument();
         });
         it('clicking Back on Details step takes you to Files', (): void => {
             testNavigationButtons(backButtonText, 'details', 'files');
