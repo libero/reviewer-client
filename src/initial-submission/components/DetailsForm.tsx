@@ -21,24 +21,19 @@ interface Props {
     ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
-const useSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): ManuscriptDetails => {
+const overwriteWithSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): void => {
     const detail = (values ? values : {}) as ManuscriptDetails;
     const titleIsBlank = !detail.title || detail.title === '';
-    const suggestedTitle = suggestions.reduce(
-        (title, item) => (title += item.fieldName == 'title' ? item.value : ''),
-        '',
-    );
-    if (titleIsBlank && suggestedTitle) {
-        detail.title = suggestions[0].value;
+    const titleSuggestion = suggestions.find(suggestion => suggestion.fieldName === 'title');
+    if (titleIsBlank && titleSuggestion) {
+        detail.title = titleSuggestion.value;
     }
-    return detail;
 };
 
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
     const detail = (values ? values : {}) as ManuscriptDetails;
     detail.cosubmission = detail.cosubmission ? detail.cosubmission : ['', ''];
     detail.subjects = detail.subjects ? detail.subjects : [];
-
     return detail;
 };
 
@@ -61,8 +56,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     //             .required(t('details.validation.subjects-required')),
     //     }),
     // });
-    let details = defaultManuscriptDetails(initialValues.manuscriptDetails);
-    details = useSuggestions(details, initialValues.suggestions || []);
+    const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    overwriteWithSuggestions(details, initialValues.suggestions || []);
 
     const {
         title,
