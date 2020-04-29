@@ -9,17 +9,13 @@ import { getCurrentUserQuery } from '../../core/graphql';
 import { saveAuthorPageMutation } from '../graphql';
 import { User } from '../../core/types';
 import useAutoSave from '../hooks/useAutoSave';
+import { StepProps } from './SubmissionWizard';
 
 interface GetCurrentUser {
     getCurrentUser: User;
 }
 
-interface Props {
-    initialValues: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
-}
-
-const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
@@ -33,7 +29,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
             .required(t('author.validation.email-required')),
         institution: yup.string().required(t('author.validation.institution-required')),
     });
-    const { register, errors, getValues, watch, setValue } = useForm<AuthorDetails>({
+    const { register, errors, getValues, watch, setValue, triggerValidation } = useForm<AuthorDetails>({
         defaultValues: {
             firstName: initialValues.author ? initialValues.author.firstName : '',
             lastName: initialValues.author ? initialValues.author.lastName : '',
@@ -113,7 +109,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Eleme
                     register={register}
                 />
             </div>
-            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </form>
     );
 };

@@ -15,9 +15,9 @@ interface Props {
     id: string;
 }
 
-interface StepProps {
+export interface StepProps {
     initialValues: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
+    ButtonComponent?: (props: { saveFunction?: Function; triggerValidation: () => Promise<boolean> }) => JSX.Element;
 }
 
 interface StepConfig {
@@ -29,13 +29,19 @@ interface StepConfig {
 interface GetSubmission {
     getSubmission: Submission;
 }
-
+// TODO add i18n for buttons
 const ButtonComponent = (
     id: string,
     history: H.History,
     getCurrentStepPathIndex: Function,
     stepConfig: StepConfig[],
-) => ({ saveFunction }: { saveFunction?: Function }): JSX.Element => {
+) => ({
+    saveFunction,
+    triggerValidation,
+}: {
+    saveFunction: Function;
+    triggerValidation: () => Promise<boolean>;
+}): JSX.Element => {
     const [processing, setProcessing] = useState(false);
     return (
         <React.Fragment>
@@ -45,9 +51,7 @@ const ButtonComponent = (
                         if (!processing) {
                             try {
                                 setProcessing(true);
-                                if (saveFunction) {
-                                    await saveFunction();
-                                }
+                                await saveFunction();
                                 history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
                                 setProcessing(false);
                             } catch (e) {
@@ -65,10 +69,12 @@ const ButtonComponent = (
                         if (!processing) {
                             try {
                                 setProcessing(true);
-                                if (saveFunction) {
-                                    await saveFunction();
-                                }
-                                history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                triggerValidation().then(async valid => {
+                                    if (valid) {
+                                        await saveFunction();
+                                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                    }
+                                });
                                 setProcessing(false);
                             } catch (e) {
                                 setProcessing(false);
@@ -92,14 +98,24 @@ const stepConfig: StepConfig[] = [
         id: 'editors',
         label: 'Editors',
         component: ({ ButtonComponent }: StepProps): JSX.Element => (
-            <div>Editors Step {ButtonComponent && <ButtonComponent />}</div>
+            <div>
+                Editors Step{' '}
+                {ButtonComponent && (
+                    <ButtonComponent triggerValidation={(): Promise<boolean> => Promise.resolve(true)} />
+                )}
+            </div>
         ),
     },
     {
         id: 'disclosure',
         label: 'Disclosure',
         component: ({ ButtonComponent }: StepProps): JSX.Element => (
-            <div>Disclosure Step {ButtonComponent && <ButtonComponent />}</div>
+            <div>
+                Disclosure Step{' '}
+                {ButtonComponent && (
+                    <ButtonComponent triggerValidation={(): Promise<boolean> => Promise.resolve(true)} />
+                )}
+            </div>
         ),
     },
 ];
