@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { saveDetailsPageMutation } from '../graphql';
 import { Value } from '../../ui/atoms/SelectField';
 import useAutoSave from '../hooks/useAutoSave';
+import { StepProps } from './SubmissionWizard';
 
 // TODO: this should be pulled from config
 const selectOptions = [
@@ -15,11 +16,6 @@ const selectOptions = [
     { label: 'Developmental Biology and Stem Cells', value: 'developmentalbiologyandstemcells' },
     { label: 'I am not a config list', value: 'foo' },
 ];
-
-interface Props {
-    initialValues?: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
-}
 
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
     const detail = (values ? values : {}) as ManuscriptDetails;
@@ -29,7 +25,7 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
     return detail;
 };
 
-const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     // TODO: hook this up to useForm. Bugs in this page preventing this currently
     // const schema = yup.object().shape({
@@ -56,7 +52,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
         subjects = [],
     } = defaultManuscriptDetails(initialValues.manuscriptDetails);
 
-    const { register, setValue, watch, control } = useForm<
+    const { register, setValue, watch, control, triggerValidation } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
             subjects: { label: string; value: string }[];
             firstCosubmissionTitle: string;
@@ -178,7 +174,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
                 )}
             </Toggle>
 
-            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </form>
     );
 };

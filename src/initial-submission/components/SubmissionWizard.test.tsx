@@ -17,6 +17,7 @@ jest.mock('@apollo/react-hooks', () => ({
                 getSubmission: {
                     id: 'some-id',
                     updated: 42,
+                    articleType: 'fiction',
                 },
             },
             loading: loading,
@@ -69,10 +70,16 @@ describe('SubmissionWizard', (): void => {
             buttonText: string,
             currentStep: string,
             expectedNextStep: string,
+            enterDetails?: (container: HTMLElement) => void,
         ): Promise<void> => {
             const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
-            const { getByText } = render(component, { wrapper: routerWrapper([`/submit/id/${currentStep}`]) });
+            const { getByText, container } = render(component, {
+                wrapper: routerWrapper([`/submit/id/${currentStep}`]),
+            });
             expect(getProps().location.pathname).toBe(`/submit/id/${currentStep}`);
+            if (enterDetails) {
+                enterDetails(container);
+            }
             await act(async () => await fireEvent.click(getByText(buttonText)));
             expect(getProps().location.pathname).toBe(`/submit/id/${expectedNextStep}`);
         };
@@ -81,22 +88,29 @@ describe('SubmissionWizard', (): void => {
         const backButtonText = 'back';
 
         it('clicking Next on Author step takes you to Files', (): void => {
-            testNavigationButtons(nextButtonText, 'author', 'files');
+            const enterDetails = (container: HTMLElement): void => {
+                fireEvent.input(container.querySelector('#firstName'), {
+                    target: { value: 'Bob' },
+                });
+                fireEvent.input(container.querySelector('#lastName'), {
+                    target: { value: 'Ross' },
+                });
+                fireEvent.input(container.querySelector('#email'), {
+                    target: { value: 'bob@ross.com' },
+                });
+                fireEvent.input(container.querySelector('#institution'), {
+                    target: { value: 'HappyLittleTrees inc' },
+                });
+            };
+            testNavigationButtons(nextButtonText, 'author', 'files', enterDetails);
         });
         it('clicking Next on Files step takes you to Details', (): void => {
-            testNavigationButtons(nextButtonText, 'files', 'details');
-        });
-        it('clicking Next on Details step takes you to Editors', (): void => {
-            testNavigationButtons(nextButtonText, 'details', 'editors');
-        });
-        it('clicking Next on Editors step takes you to Disclosure', (): void => {
-            testNavigationButtons(nextButtonText, 'editors', 'disclosure');
-        });
-        it('clicking Back on Disclosure step takes you to Editors', (): void => {
-            testNavigationButtons(backButtonText, 'disclosure', 'editors');
-        });
-        it('clicking Back on Editors step takes you to Details', (): void => {
-            testNavigationButtons(backButtonText, 'editors', 'details');
+            const enterDetails = (container: HTMLElement): void => {
+                fireEvent.input(container.querySelector('.cover-letter__input'), {
+                    target: { value: 'This is my article, publish it now!' },
+                });
+            };
+            testNavigationButtons(nextButtonText, 'files', 'details', enterDetails);
         });
         it('clicking Back on Details step takes you to Files', (): void => {
             testNavigationButtons(backButtonText, 'details', 'files');
