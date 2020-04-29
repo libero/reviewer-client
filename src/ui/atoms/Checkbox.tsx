@@ -39,9 +39,9 @@ const Checkbox = ({
                 htmlFor={id}
                 className={`checkbox-field__label${checked ? ' checkbox-field__label--checked' : ''}${
                     invalid ? ' checkbox-field__label--invalid' : ''
-                } typography__label typography__label--primary`}
+                }`}
             >
-                {checked && <Check aria-hidden="true" className="checkbox-field__label-check" />}
+                {checked && <Check aria-hidden="true" className="checkbox-field__label-check" viewBox="0 0 30 30" />}
                 {labelText}
             </label>
             <span
