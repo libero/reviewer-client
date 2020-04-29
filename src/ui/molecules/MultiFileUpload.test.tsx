@@ -202,6 +202,7 @@ describe('MultiFileUpload', () => {
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 } },
                         { fileStored: { fileName: 'File 2.pdf', id: 'bob' } },
                         { uploadInProgress: { fileName: 'File 2.pdf', progress: 42 }, error: 'server' },
+                        { uploadInProgress: { fileName: 'File 2.pdf', progress: null } },
                     ]}
                     onUpload={jest.fn()}
                     onDelete={jest.fn()}
@@ -211,6 +212,7 @@ describe('MultiFileUpload', () => {
             expect(items[0].querySelector('.multifile-upload__file-name--uploading')).toBeInTheDocument();
             expect(items[1].querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
             expect(items[2].querySelector('.multifile-upload__file-name--error')).toBeInTheDocument();
+            expect(items[3].querySelector('.multifile-upload__file-name--processing')).toBeInTheDocument();
         });
 
         it('uses fileStored name when FileItem is in COMPLETE state', () => {
@@ -274,17 +276,6 @@ describe('MultiFileUpload', () => {
                 />,
             );
             expect(getByText('multifile-upload.status-uploading 42%')).toBeInTheDocument();
-        });
-
-        it('shows upload in a queued state when UPLOADING and progress is 0', () => {
-            const { getByText } = render(
-                <MultiFileUpload
-                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: 0 } }]}
-                    onUpload={jest.fn()}
-                    onDelete={jest.fn()}
-                />,
-            );
-            expect(getByText('multifile-upload.status-queued')).toBeInTheDocument();
         });
 
         it('shows server error status text when ERROR and value is server', () => {

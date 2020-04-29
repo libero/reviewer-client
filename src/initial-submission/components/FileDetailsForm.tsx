@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { FileDetails, Submission } from '../types';
+import { FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 import { StepProps } from './SubmissionWizard';
 
@@ -51,20 +51,24 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
         mode: 'onBlur',
         validationSchema: schema,
     });
+
+    const [saveCallback] = useMutation(saveFilesPageMutation);
+    const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
+
+    const { data: uploadProgressData, loading } = useSubscription<UploadInProgressData>(
+        fileUploadProgressSubscription,
+        {
+            variables: { submissionId: initialValues.id },
+        },
+    );
+
     const [
         onSupportingFilesUpload,
         deleteSupportingFileCallback,
         supportingFilesStatus,
         supportingUploadDisabled,
         filesStoredCount,
-    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize);
-
-    const [saveCallback] = useMutation<Submission>(saveFilesPageMutation);
-    const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
-
-    const { data: uploadProgressData, loading } = useSubscription(fileUploadProgressSubscription, {
-        variables: { submissionId: initialValues.id },
-    });
+    ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize, uploadProgressData);
 
     useEffect(() => {
         if (

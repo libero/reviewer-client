@@ -3,13 +3,14 @@ import { useMutation } from '@apollo/react-hooks';
 import { v4 } from 'uuid';
 import { uploadSupportingFileMutation, deleteSupportingFileMutation, getSubmissionQuery } from '../graphql';
 import { FileState } from '../../ui/molecules/MultiFileUpload';
-import { File as ReviewerFile, Submission } from '../types';
+import { File as ReviewerFile, Submission, UploadInProgressData } from '../types';
 import { ExecutionResult } from 'graphql';
 
 const hook = (
     initialValues: Submission,
     maxSupportingFiles: number,
     maxFileSize: number,
+    uploadProgressData: UploadInProgressData,
 ): [(fileList: FileList) => void, (fileId: string) => Promise<void>, FileState[], boolean, number] => {
     const [index, setIndex] = useState(0);
     const [files, setFiles] = useState([]);
@@ -70,16 +71,24 @@ const hook = (
         response: ExecutionResult<{ uploadSupportingFile: { id: string } }>,
     ): void => {
         const responseFile = response.data.uploadSupportingFile;
-        const thisFilesIndex = supportingFilesStatus.findIndex(
-            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
-        );
-        supportingFilesStatus[thisFilesIndex] = {
-            fileStored: {
-                id: responseFile.id,
-                fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
-            },
-        };
-        setSupportingFilesStatus(supportingFilesStatus);
+        const thisFilesIndex = supportingFilesStatus.findIndex((state: FileState) => {
+            if (state.uploadInProgress) {
+                return state.uploadInProgress.id === file.id;
+            }
+            return false;
+        });
+        // patch previous value rather than overriding it completely.
+        if (thisFilesIndex !== -1) {
+            setSupportingFilesStatus(previous => {
+                previous[thisFilesIndex] = {
+                    fileStored: {
+                        id: responseFile.id,
+                        fileName: supportingFilesStatus[thisFilesIndex].uploadInProgress.fileName,
+                    },
+                };
+                return previous;
+            });
+        }
     };
     const onSupportingUploadError = (file: { file: File; id: string }): void => {
         const thisFilesIndex = supportingFilesStatus.findIndex(
@@ -116,6 +125,27 @@ const hook = (
         }
     }, [index, files]);
 
+    useEffect(() => {
+        if (
+            uploadProgressData &&
+            uploadProgressData.fileUploadProgress &&
+            uploadProgressData.fileUploadProgress.type === 'SUPPORTING_FILE'
+        ) {
+            const progress = parseInt(uploadProgressData.fileUploadProgress.percentage, 10);
+            const matchingIndex = supportingFilesStatus.findIndex(fileState => {
+                if (fileState.uploadInProgress) {
+                    return fileState.uploadInProgress.fileName === uploadProgressData.fileUploadProgress.filename;
+                }
+                return false;
+            });
+            if (matchingIndex !== -1) {
+                const stateClone = [...supportingFilesStatus];
+                stateClone[matchingIndex].uploadInProgress.progress = progress;
+                setSupportingFilesStatus(stateClone);
+            }
+        }
+    }, [uploadProgressData]);
+
     const onSupportingFilesUpload = (filesList: FileList): void => {
         const filesListArray = Array.prototype.slice.call(filesList);
 
@@ -135,7 +165,7 @@ const hook = (
             ...filesToStore.map((fileToStore: { file: File; id: string; isValid: boolean }) => {
                 const fileState: FileState = {
                     uploadInProgress: {
-                        progress: 0,
+                        progress: null,
                         fileName: fileToStore.file.name,
                         id: fileToStore.id,
                     },

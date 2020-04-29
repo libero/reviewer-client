@@ -1,3 +1,8 @@
+export type Suggestion = {
+    fieldName: string;
+    value: string;
+};
+
 export interface Submission {
     id: string;
     updated: number;
@@ -7,6 +12,7 @@ export interface Submission {
     author?: AuthorDetails;
     manuscriptDetails?: ManuscriptDetails;
     files?: FileDetails;
+    suggestions?: Array<Suggestion>;
 }
 
 export interface File {
@@ -34,4 +40,15 @@ export interface ManuscriptDetails {
     previouslyDiscussed?: string;
     previouslySubmitted?: string;
     cosubmission?: string[];
+}
+
+export interface UploadInProgressData {
+    fileUploadProgress: {
+        percentage: string;
+        userId: string;
+        filename: string;
+        fileId: string;
+        type: string;
+        submissionId: string;
+    };
 }
