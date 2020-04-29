@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
-import { Submission, ManuscriptDetails } from '../types';
+import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDetailsPageMutation } from '../graphql';
@@ -21,11 +21,19 @@ interface Props {
     ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
 }
 
+const overwriteWithSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): void => {
+    const detail = (values ? values : {}) as ManuscriptDetails;
+    const titleIsBlank = !detail.title || detail.title === '';
+    const titleSuggestion = suggestions.find(suggestion => suggestion.fieldName === 'title');
+    if (titleIsBlank && titleSuggestion) {
+        detail.title = titleSuggestion.value;
+    }
+};
+
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
     const detail = (values ? values : {}) as ManuscriptDetails;
     detail.cosubmission = detail.cosubmission ? detail.cosubmission : ['', ''];
     detail.subjects = detail.subjects ? detail.subjects : [];
-
     return detail;
 };
 
@@ -48,13 +56,16 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     //             .required(t('details.validation.subjects-required')),
     //     }),
     // });
+    const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    overwriteWithSuggestions(details, initialValues.suggestions || []);
+
     const {
-        title = '',
+        title,
         previouslyDiscussed = '',
         previouslySubmitted = '',
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
         subjects = [],
-    } = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    } = details;
 
     const { register, setValue, watch, control } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {

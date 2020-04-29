@@ -29,6 +29,10 @@ export const getSubmissionQuery = gql`
                     id
                 }
             }
+            suggestions {
+                fieldName
+                value
+            }
         }
     }
 `;
@@ -62,6 +66,10 @@ export const uploadManuscriptMutation = gql`
     mutation UploadManuscript($id: ID!, $file: Upload!, $fileSize: Int!) {
         uploadManuscript(id: $id, file: $file, fileSize: $fileSize) {
             id
+            suggestions {
+                fieldName
+                value
+            }
             files {
                 manuscriptFile {
                     filename
