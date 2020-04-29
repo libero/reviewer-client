@@ -1,5 +1,5 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult, act, waitFor } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, act } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
