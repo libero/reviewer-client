@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
-import { Submission, ManuscriptDetails } from '../types';
+import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDetailsPageMutation } from '../graphql';
@@ -19,6 +19,19 @@ const selectOptions = [
 interface Props {
     initialValues?: Submission;
     ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
+}
+
+const useSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): ManuscriptDetails => {
+    const detail = (values ? values : {}) as ManuscriptDetails;
+    const titleIsBlank = !detail.title || detail.title === '';
+    const suggestedTitle = suggestions.reduce(
+        (title, item) => (title += item.fieldName == 'title' ? item.value : ''),
+        '',
+    );
+    if (titleIsBlank && suggestedTitle) {
+        detail.title = suggestions[0].value;
+    }
+    return detail;
 }
 
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
@@ -48,13 +61,16 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     //             .required(t('details.validation.subjects-required')),
     //     }),
     // });
+    let details = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    details = useSuggestions(details, initialValues.suggestions || []);
+
     const {
-        title = '',
+        title,
         previouslyDiscussed = '',
         previouslySubmitted = '',
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
         subjects = [],
-    } = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    } = details;
 
     const { register, setValue, watch, control } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
