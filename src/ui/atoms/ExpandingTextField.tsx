@@ -25,7 +25,9 @@ const ExpandingTextField = ({
     const maxRows = 4;
 
     const inputRef = useRef<HTMLTextAreaElement>();
-    register(inputRef);
+    if (register) {
+        register(inputRef);
+    }
 
     const [rows, setRows] = useState<number>();
     const [flag, setFlag] = useState<boolean>();

@@ -49,7 +49,7 @@ describe('ExpandingTextField', (): void => {
                 onChange={onChangeFn}
             />,
         );
-        await fireEvent.change(container.querySelector('input'), { target: { value: 'test' } });
+        await fireEvent.change(container.querySelector('textarea'), { target: { value: 'test' } });
         expect(onChangeFn).toHaveBeenCalled();
     });
 });
