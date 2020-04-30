@@ -1,8 +1,7 @@
 .DEFAULT_GOAL := help
 .PHONY: help yarn build_dev build_test build_prod start_dev start_test start_ci stop lint test setup test_browser run_ci
+
 IMAGE_TAG ?= "local"
-
-
 DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose
 DOCKER_COMPOSE_TEST = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.yml -f docker-compose.test.yml
 DOCKER_COMPOSE_CI = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.yml -f docker-compose.ci.yml
