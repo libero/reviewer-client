@@ -29,7 +29,7 @@ const ExpandingTextField = ({
         register(inputRef.current);
     }
 
-    const [rows, setRows] = useState<number>();
+    const [rows, setRows] = useState<number>(minRows);
     const [flag, setFlag] = useState<boolean>();
 
     const setRowsOfTextArea = (newRows = 1): void => {
@@ -43,9 +43,8 @@ const ExpandingTextField = ({
         const { lineHeight } = window.getComputedStyle(inputRef.current);
         const intLineHeight = parseInt(lineHeight, 10);
         const { scrollHeight } = inputRef.current;
-        const rows = Math.floor((scrollHeight - 24) / intLineHeight);
-
-        const constrainedRows = Math.min(rows, maxRows || rows);
+        const clacRows = Math.floor((scrollHeight - 24) / intLineHeight);
+        const constrainedRows = Math.min(clacRows, maxRows || clacRows);
         const currentChars = inputRef.current.value.length;
         if (numChars > currentChars) {
             setRowsOfTextArea(minRows || 1);
