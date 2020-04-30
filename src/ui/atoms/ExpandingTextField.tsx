@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, MutableRefObject, useState, useRef, useEffect } from 'react';
+import React, { InputHTMLAttributes, useState, useRef, useEffect } from 'react';
 import Close from '@material-ui/icons/Close';
 
 let numChars: number;
