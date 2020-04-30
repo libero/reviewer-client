@@ -8,7 +8,7 @@ interface Props extends InputHTMLAttributes<HTMLTextAreaElement> {
     id: string;
     invalid?: boolean;
     labelText?: string;
-    register?: (element: MutableRefObject<HTMLTextAreaElement>) => void;
+    register?: (element: HTMLTextAreaElement) => void;
     className?: string;
 }
 
@@ -26,7 +26,7 @@ const ExpandingTextField = ({
 
     const inputRef = useRef<HTMLTextAreaElement>();
     if (register) {
-        register(inputRef);
+        register(inputRef.current);
     }
 
     const [rows, setRows] = useState<number>();
