@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
 import { ExpandingTextField } from '../../atoms';
-import Search from '@material-ui/icons/Search';
 import '../../../core/styles/index.scss';
 
 storiesOf('ui | atoms/ExpandingTextField', module)
@@ -23,7 +22,6 @@ storiesOf('ui | atoms/ExpandingTextField', module)
                     invalid={inValid}
                     labelText={label}
                     helperText={helperText}
-                    icon={<Search fontSize="small" />}
                 />
             );
         },

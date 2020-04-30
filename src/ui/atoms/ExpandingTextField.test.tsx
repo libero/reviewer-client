@@ -12,15 +12,7 @@ describe('ExpandingTextField', (): void => {
     it('should render correctly with all props', (): void => {
         expect(
             (): RenderResult =>
-                render(
-                    <ExpandingTextField
-                        id="test"
-                        helperText="helper text"
-                        invalid={true}
-                        labelText="label"
-                        icon={<div />}
-                    />,
-                ),
+                render(<ExpandingTextField id="test" helperText="helper text" invalid={true} labelText="label" />),
         ).not.toThrow();
     });
 
