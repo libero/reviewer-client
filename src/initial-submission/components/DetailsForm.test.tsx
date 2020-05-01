@@ -207,7 +207,7 @@ describe('DetailsForm', (): void => {
                     }}
                 />,
             );
-            expect((container.querySelector('input[name=title]') as HTMLInputElement).value).toBe('Test title');
+            expect((container.querySelector('textarea[name=title]') as HTMLInputElement).value).toBe('Test title');
             expect((container.querySelector('textarea[name=previouslyDiscussed]') as HTMLTextAreaElement).value).toBe(
                 'Previously discussed',
             );

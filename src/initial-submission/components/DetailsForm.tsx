@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
+import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
 import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
 import { useMutation } from '@apollo/react-hooks';
@@ -54,7 +54,6 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     // });
     const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
     overwriteWithSuggestions(details, initialValues.suggestions || []);
-
     const {
         title,
         previouslyDiscussed = '',
@@ -124,7 +123,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
-            <TextField id="title" register={register} labelText={t('details.title-label')} />
+            <ExpandingTextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
                 id="subjects"
                 labelText="Subject area(s)"
