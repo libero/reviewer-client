@@ -25,9 +25,6 @@ const ExpandingTextField = ({
     const maxRows = 4;
 
     const inputRef = useRef<HTMLTextAreaElement>();
-    if (register) {
-        register(inputRef.current);
-    }
 
     const [rows, setRows] = useState<number>(minRows);
     const [flag, setFlag] = useState<boolean>();
@@ -65,7 +62,7 @@ const ExpandingTextField = ({
     useEffect(() => {
         calculateHeight();
     }, []);
-    console.log(rest, inputRef);
+
     return (
         <div className={`expanding-text-field${className ? ' ' + className : ''}`}>
             {labelText && (
@@ -81,7 +78,12 @@ const ExpandingTextField = ({
                 }`}
                 type="text"
                 rows={rows || minRows}
-                ref={inputRef}
+                ref={(e: HTMLTextAreaElement): void => {
+                    if (register) {
+                        register(e);
+                    }
+                    inputRef.current = e;
+                }}
                 onChange={calculateHeight}
                 {...rest}
             />
