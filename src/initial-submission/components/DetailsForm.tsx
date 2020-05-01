@@ -51,6 +51,20 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 .max(2, t('details.validation.subjects-max'))
                 .required(t('details.validation.subjects-required')),
         }),
+        previouslyDiscussed: yup
+            .string()
+            .notOneOf(['', undefined], 'Please describe your previous interaction')
+            .nullable(),
+        previouslySubmitted: yup.array(
+            yup
+                .string()
+                .notOneOf([''], 'Article title is required')
+                .nullable(),
+        ),
+        firstCosubmissionTitle: yup
+            .string()
+            .notOneOf(['', undefined], 'Article title is required')
+            .nullable(),
     });
 
     const validationResolver = useCallback((data: any) => {
