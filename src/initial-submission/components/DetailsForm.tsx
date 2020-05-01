@@ -54,7 +54,6 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     // });
     const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
     overwriteWithSuggestions(details, initialValues.suggestions || []);
-
     const {
         title,
         previouslyDiscussed = '',

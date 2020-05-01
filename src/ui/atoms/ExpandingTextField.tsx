@@ -65,7 +65,7 @@ const ExpandingTextField = ({
     useEffect(() => {
         calculateHeight();
     }, []);
-
+    console.log(rest, inputRef);
     return (
         <div className={`expanding-text-field${className ? ' ' + className : ''}`}>
             {labelText && (
