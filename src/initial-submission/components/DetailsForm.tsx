@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
 import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
@@ -35,23 +36,43 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
 
 const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
-    // TODO: hook this up to useForm. Bugs in this page preventing this currently
-    // const schema = yup.object().shape({
-    //     title: yup.string().required(t('details.validation.title-required')),
-    //     subjects: yup.array().when('articleType', {
-    //         is: (articleType: string) => articleType && articleType === 'feature',
-    //         then: yup
-    //             .array()
-    //             .of(yup.string())
-    //             .max(2, t('details.validation.subjects-max')),
-    //         otherwise: yup
-    //             .array()
-    //             .of(yup.string())
-    //             .min(1, t('details.validation.subjects-min'))
-    //             .max(2, t('details.validation.subjects-max'))
-    //             .required(t('details.validation.subjects-required')),
-    //     }),
-    // });
+    const schema = yup.object().shape({
+        title: yup.string().required(t('details.validation.title-required')),
+        subjects: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup
+                .array()
+                .of(yup.string())
+                .max(2, t('details.validation.subjects-max')),
+            otherwise: yup
+                .array()
+                .of(yup.string())
+                .min(1, t('details.validation.subjects-min'))
+                .max(2, t('details.validation.subjects-max'))
+                .required(t('details.validation.subjects-required')),
+        }),
+    });
+
+    const validationResolver = useCallback((data: any) => {
+        try {
+            schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
+            return { errors: {}, values: data };
+        } catch (errors) {
+            return {
+                errors: errors.inner.reduce(
+                    (
+                        errorObject: {},
+                        { path, message, type }: { path: string; message: string; type: string; inner: [] },
+                    ) => ({
+                        ...errorObject,
+                        [path]: { message, type },
+                    }),
+                    {},
+                ),
+                values: data,
+            };
+        }
+    }, []);
     const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
     overwriteWithSuggestions(details, initialValues.suggestions || []);
     const {
@@ -62,7 +83,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         subjects = [],
     } = details;
 
-    const { register, setValue, watch, control, triggerValidation } = useForm<
+    const { register, setValue, watch, control, triggerValidation, errors } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
             subjects: { label: string; value: string }[];
             firstCosubmissionTitle: string;
@@ -77,6 +98,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             firstCosubmissionTitle,
             secondCosubmissionTitle,
         },
+        mode: 'onBlur',
+        validationResolver,
     });
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
@@ -120,6 +143,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         secondCosubmissionWatch,
     ]);
 
+    console.log(errors);
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
