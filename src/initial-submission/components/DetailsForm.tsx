@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { SelectField, TextField, MultilineTextField } from '../../ui/atoms';
-import { Submission, ManuscriptDetails } from '../types';
+import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
+import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDetailsPageMutation } from '../graphql';
 import { Value } from '../../ui/atoms/SelectField';
 import useAutoSave from '../hooks/useAutoSave';
+import { StepProps } from './SubmissionWizard';
+import { getConfig } from '../../core/utils/config';
 
-// TODO: this should be pulled from config
-const selectOptions = [
-    { label: 'Neuroscience', value: 'neuroscience' },
-    { label: 'Developmental Biology and Stem Cells', value: 'developmentalbiologyandstemcells' },
-    { label: 'I am not a config list', value: 'foo' },
-];
+const majorSubjectAreas = getConfig().client.majorSubjectAreas;
+const selectOptions = Object.keys(majorSubjectAreas).map(key => ({ label: majorSubjectAreas[key], value: key }));
 
-interface Props {
-    initialValues?: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
-}
+const overwriteWithSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): void => {
+    const detail = (values ? values : {}) as ManuscriptDetails;
+    const titleIsBlank = !detail.title || detail.title === '';
+    const titleSuggestion = suggestions.find(suggestion => suggestion.fieldName === 'title');
+    if (titleIsBlank && titleSuggestion) {
+        detail.title = titleSuggestion.value;
+    }
+};
 
 const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails => {
     const detail = (values ? values : {}) as ManuscriptDetails;
     detail.cosubmission = detail.cosubmission ? detail.cosubmission : ['', ''];
     detail.subjects = detail.subjects ? detail.subjects : [];
-
     return detail;
 };
 
-const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     // TODO: hook this up to useForm. Bugs in this page preventing this currently
     // const schema = yup.object().shape({
@@ -48,15 +49,17 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     //             .required(t('details.validation.subjects-required')),
     //     }),
     // });
+    const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    overwriteWithSuggestions(details, initialValues.suggestions || []);
     const {
-        title = '',
+        title,
         previouslyDiscussed = '',
         previouslySubmitted = '',
         cosubmission: [firstCosubmissionTitle, secondCosubmissionTitle],
         subjects = [],
-    } = defaultManuscriptDetails(initialValues.manuscriptDetails);
+    } = details;
 
-    const { register, setValue, watch, control } = useForm<
+    const { register, setValue, watch, control, triggerValidation } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
             subjects: { label: string; value: string }[];
             firstCosubmissionTitle: string;
@@ -117,10 +120,10 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
-            <TextField id="title" register={register} labelText={t('details.title-label')} />
+            <ExpandingTextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
                 id="subjects"
-                labelText="Subject area(s)"
+                labelText={t('details.subject-areas')}
                 values={selectOptions}
                 setValue={setValue}
                 control={control}
@@ -178,7 +181,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => 
                 )}
             </Toggle>
 
-            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </form>
     );
 };

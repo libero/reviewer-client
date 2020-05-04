@@ -6,8 +6,9 @@ import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { Submission, FileDetails, UploadInProgressData } from '../types';
+import { FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
+import { StepProps } from './SubmissionWizard';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -24,12 +25,7 @@ type UploadInProgress = {
     fileName?: string;
 };
 
-interface Props {
-    initialValues?: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function }) => JSX.Element;
-}
-
-const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element => {
+const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
@@ -48,7 +44,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
         coverLetter: yup.string().required(t('files.validation.coverletter-required')),
     });
 
-    const { register, watch, errors } = useForm<FileDetails>({
+    const { register, watch, errors, triggerValidation } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
@@ -186,7 +182,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: Props): JSX.Element
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
             </div>
-            {ButtonComponent && <ButtonComponent saveFunction={onSave} />}
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </div>
     );
 };

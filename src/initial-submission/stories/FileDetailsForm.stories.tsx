@@ -9,6 +9,14 @@ storiesOf('Initial Submission | steps/FileDetails', module)
     .add(
         'FileDetails',
         (): JSX.Element => {
-            return <FileDetailsForm />;
+            return (
+                <FileDetailsForm
+                    initialValues={{
+                        id: '42',
+                        updated: Date.now(),
+                        articleType: 'fiction',
+                    }}
+                />
+            );
         },
     );
