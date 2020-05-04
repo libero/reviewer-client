@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
-import { cleanup, render, fireEvent } from '@testing-library/react';
+import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 import { Submission } from '../types';
 
@@ -339,6 +339,30 @@ describe('DetailsForm', (): void => {
                 />,
             );
             expect(getByLabelText('details.second-cosubmission-title-label')).toBeInTheDocument();
+        });
+    });
+
+    describe('validation', () => {
+        it('shows error message if title is empty', async () => {
+            const { getByText, debug } = render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: Date.now(),
+                        articleType: '',
+                    }}
+                    ButtonComponent={({
+                        _,
+                        triggerValidation,
+                    }: {
+                        _: Function;
+                        triggerValidation: () => Promise<boolean>;
+                    }): JSX.Element => <button onClick={triggerValidation}>TEST BUTTON</button>}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.title-required')).toBeInTheDocument());
+            debug();
         });
     });
 });
