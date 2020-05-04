@@ -4,7 +4,6 @@ import { cleanup, render, fireEvent, waitFor, RenderResult } from '@testing-libr
 import DetailsForm from './DetailsForm';
 import { Submission } from '../types';
 import * as config from '../../core/utils/config';
-import { Config } from '../../core/utils/config';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -371,7 +370,6 @@ describe('DetailsForm', (): void => {
                         articleType: '',
                     }}
                     ButtonComponent={({
-                        _,
                         triggerValidation,
                     }: {
                         _: Function;
@@ -445,7 +443,6 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={fullValues}
                     ButtonComponent={({
-                        _,
                         triggerValidation,
                     }: {
                         _: Function;
