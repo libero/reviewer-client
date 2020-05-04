@@ -11,12 +11,8 @@ import useAutoSave from '../hooks/useAutoSave';
 import { StepProps } from './SubmissionWizard';
 import { getConfig } from '../../core/utils/config';
 
-const config = getConfig();
-let selectOptions: Array<Value> = [];
-if (config) {
-    const majorSubjectAreas = config.client.majorSubjectAreas;
-    selectOptions = Object.keys(majorSubjectAreas).map(key => ({ label: majorSubjectAreas[key], value: key }));
-}
+const majorSubjectAreas = getConfig().client.majorSubjectAreas;
+const selectOptions = Object.keys(majorSubjectAreas).map(key => ({ label: majorSubjectAreas[key], value: key }));
 
 const overwriteWithSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): void => {
     const detail = (values ? values : {}) as ManuscriptDetails;
