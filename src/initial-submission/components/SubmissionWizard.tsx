@@ -53,7 +53,6 @@ const ButtonComponent = (
                                 setProcessing(true);
                                 await saveFunction();
                                 history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() - 1].id}`);
-                                setProcessing(false);
                             } catch (e) {
                                 setProcessing(false);
                             }
@@ -75,7 +74,6 @@ const ButtonComponent = (
                                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
                                     }
                                 });
-                                setProcessing(false);
                             } catch (e) {
                                 setProcessing(false);
                             }
