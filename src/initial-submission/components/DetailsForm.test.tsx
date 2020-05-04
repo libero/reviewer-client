@@ -1,9 +1,10 @@
 import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
-import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
+import { cleanup, render, fireEvent, waitFor, RenderResult } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 import { Submission } from '../types';
 import * as config from '../../core/utils/config';
+import { Config } from '../../core/utils/config';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -17,6 +18,8 @@ jest.mock('../../core/utils/config', () => ({
         client: {
             majorSubjectAreas: {
                 neuroscience: 'Neuroscience',
+                cats: 'cats',
+                doom: 'doom',
             },
         },
     })),
@@ -359,8 +362,8 @@ describe('DetailsForm', (): void => {
     });
 
     describe('validation', () => {
-        it('shows error message if title is empty', async () => {
-            const { getByText, debug } = render(
+        const renderDetails = (): RenderResult => {
+            return render(
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
@@ -373,12 +376,94 @@ describe('DetailsForm', (): void => {
                     }: {
                         _: Function;
                         triggerValidation: () => Promise<boolean>;
-                    }): JSX.Element => <button onClick={triggerValidation}>TEST BUTTON</button>}
+                    }): JSX.Element => (
+                        <button
+                            onClick={(): void => {
+                                triggerValidation();
+                            }}
+                        >
+                            TEST BUTTON
+                        </button>
+                    )}
+                />,
+            );
+        };
+
+        it('shows error message if title is empty', async () => {
+            const { getByText } = renderDetails();
+
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.title-required')).toBeInTheDocument());
+        });
+
+        it('shows error message if subjects is empty', async () => {
+            const { getByText } = renderDetails();
+
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.subjects-required')).toBeInTheDocument());
+        });
+
+        it('shows error message if previouslyDiscussed is empty', async () => {
+            const { getByText, container } = renderDetails();
+
+            fireEvent.click(container.querySelector('input[name="previouslyDiscussedContainer.toggle"]'));
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() =>
+                expect(getByText('details.validation.previously-discussed-required')).toBeInTheDocument(),
+            );
+        });
+
+        it('shows error message if previouslyConsidered is empty', async () => {
+            const { getByText, container } = renderDetails();
+
+            fireEvent.click(container.querySelector('input[name="previouslyConsideredContainer.toggle"]'));
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() =>
+                expect(getByText('details.validation.previously-submitted-required')).toBeInTheDocument(),
+            );
+        });
+
+        it('shows error message if cosubmission is empty', async () => {
+            const { getByText, container } = renderDetails();
+            fireEvent.click(container.querySelector('input[name="cosubmission.toggle"]'));
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.cosubmission-required')).toBeInTheDocument());
+        });
+
+        it('should not display validation messages when correct values are passed in', async () => {
+            const fullValues: Submission = {
+                ...testInitialValues,
+                manuscriptDetails: {
+                    title: 'Are cats the biggest threat to humanity?',
+                    subjects: ['cats', 'doom'],
+                    previouslyDiscussed: 'Discussed with possible cat sympathiser',
+                    previouslySubmitted: 'Twice before',
+                    cosubmission: ['The end of the age of Man: Cats have invented paw operated can openers'],
+                },
+            };
+            const { container, getByText } = render(
+                <DetailsForm
+                    initialValues={fullValues}
+                    ButtonComponent={({
+                        _,
+                        triggerValidation,
+                    }: {
+                        _: Function;
+                        triggerValidation: () => Promise<boolean>;
+                    }): JSX.Element => (
+                        <button
+                            onClick={async (): Promise<void> => {
+                                await triggerValidation();
+                            }}
+                        >
+                            TEST BUTTON
+                        </button>
+                    )}
                 />,
             );
             fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => expect(getByText('details.validation.title-required')).toBeInTheDocument());
-            debug();
+            await waitFor(() => {});
+            expect(container.querySelector('.typography__label--error')).not.toBeInTheDocument();
         });
     });
 });
