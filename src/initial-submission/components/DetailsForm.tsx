@@ -9,13 +9,10 @@ import { saveDetailsPageMutation } from '../graphql';
 import { Value } from '../../ui/atoms/SelectField';
 import useAutoSave from '../hooks/useAutoSave';
 import { StepProps } from './SubmissionWizard';
+import { getConfig } from '../../core/utils/config';
 
-// TODO: this should be pulled from config
-const selectOptions = [
-    { label: 'Neuroscience', value: 'neuroscience' },
-    { label: 'Developmental Biology and Stem Cells', value: 'developmentalbiologyandstemcells' },
-    { label: 'I am not a config list', value: 'foo' },
-];
+const majorSubjectAreas = getConfig().client.majorSubjectAreas;
+const selectOptions = Object.keys(majorSubjectAreas).map(key => ({ label: majorSubjectAreas[key], value: key }));
 
 const overwriteWithSuggestions = (values: ManuscriptDetails, suggestions: Array<Suggestion>): void => {
     const detail = (values ? values : {}) as ManuscriptDetails;
@@ -126,7 +123,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <ExpandingTextField id="title" register={register} labelText={t('details.title-label')} />
             <SelectField
                 id="subjects"
-                labelText="Subject area(s)"
+                labelText={t('details.subject-areas')}
                 values={selectOptions}
                 setValue={setValue}
                 control={control}

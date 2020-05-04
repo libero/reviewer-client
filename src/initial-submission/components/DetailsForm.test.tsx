@@ -3,6 +3,7 @@ import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 import { Submission } from '../types';
+import * as config from '../../core/utils/config';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -10,6 +11,16 @@ const testInitialValues: Submission = {
     articleType: '',
     updated: Date.now(),
 };
+
+jest.mock('../../core/utils/config', () => ({
+    getConfig: jest.fn().mockImplementation(() => ({
+        client: {
+            majorSubjectAreas: {
+                neuroscience: 'Neuroscience',
+            },
+        },
+    })),
+}));
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -53,6 +64,11 @@ describe('DetailsForm', (): void => {
         expect(getByText('details.second-cosubmission-toggle-link')).toBeInTheDocument();
         fireEvent.click(getByText('details.second-cosubmission-toggle-link'));
         expect(container.querySelector('#secondCosubmissionTitle')).toBeInTheDocument();
+    });
+
+    it('should get subject areas from config', () => {
+        // getConfig is called only once when file is included so no need for render
+        expect(config.getConfig).toHaveBeenCalledTimes(1);
     });
 
     describe('autosave', () => {
