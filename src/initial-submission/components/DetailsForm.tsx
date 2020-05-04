@@ -157,7 +157,6 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         secondCosubmissionWatch,
     ]);
 
-    console.log(errors);
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
