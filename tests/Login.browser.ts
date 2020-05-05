@@ -9,6 +9,7 @@ export = {
         await dashboard.onPage();
         const appPage = browser.page.AppPage();
         await appPage.testUserName('Tamlyn Rhodes (author)');
+        await dashboard.createNewSubmission('Research Article');
         browser.end();
     },
 };
