@@ -1,8 +1,65 @@
-// import { EnhancedPageObject, NightwatchBrowser } from 'nightwatch';
+import { NightwatchBrowser, NightwatchCallbackResult } from 'nightwatch';
 
+export class DashboardPage {
+    private readonly dashboardContainer: string = '.dashboard';
+    private readonly newSubmissionButton: string = '.no-submissions__buttons';
+    private readonly menuLink: string = '.menu__link--active';
+    private readonly submissionLinks: string = '.submission-entry__link';
+    private readonly newSubmissionContainer: string = '.article-type';
+    private readonly articleTypeSelect: string = '.select-field__input';
+    private readonly articleTypeMenu: string = '.select-field__menu';
+    private readonly articleTypeOptions: string = '.select-field__option';
 
-// const dashboardCommands = {v
-//     onPage: async function(this: NightwatchBrowser): Promise<void> {
+    private browser: NightwatchBrowser;
+
+    constructor(browser: NightwatchBrowser) {
+        this.browser = browser;
+    }
+
+    public onPage(): DashboardPage {
+        this.browser.waitForElementVisible(this.newSubmissionButton, 10000);
+        return this;
+    }
+
+    public async newSubmission(articleType: string): Promise<void> {
+        function sleep(n: number): Promise<void> {
+            return new Promise(resolve => setTimeout(resolve, n));
+        }
+        // should return the author details page object when its created
+        this.browser.click(this.newSubmissionButton);
+        this.browser.click(this.articleTypeSelect).waitForElementVisible(this.articleTypeMenu, 2000);
+        this.browser.elements(
+            'css selector',
+            this.articleTypeOptions,
+            async (options: NightwatchCallbackResult<{ ELEMENT: string }[]>) => {
+                const optionCount = ((options.value as unknown) as Array<string>).length;
+                let locks = optionCount;
+                let found = -1;
+                for (let i = 1; i <= optionCount && !found; i++) {
+                    await this.browser.getText(this.articleTypeOptions + `:nth-child(${i})`, result => {
+                        if (articleType === result.value) {
+                            found = i;
+                            console.log('found: ' + i);
+                        }
+                        locks--;
+                    });
+                }
+                // while (locks > 0) {
+                //     await sleep(100);
+                //     console.log('loop', found, locks);
+                // }
+                console.log('clicking: ' + found);
+                this.browser.click(this.articleTypeOptions + `:nth-child(${found})`);
+            },
+        );
+        this.browser.expect
+            .element(this.articleTypeSelect)
+            .text.to.equal(articleType)
+            .before(10000);
+    }
+}
+
+// const dashboardCommands = {v//     onPage: async function(this: NightwatchBrowser): Promise<void> {
 //         this.page.
 //         await this.expect.section('@newSubmission').to.be.visible;
 //         const newSub = this.section.newSubmission;
