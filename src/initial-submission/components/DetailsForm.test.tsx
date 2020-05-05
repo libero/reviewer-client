@@ -361,13 +361,13 @@ describe('DetailsForm', (): void => {
     });
 
     describe('validation', () => {
-        const renderDetails = (): RenderResult => {
+        const renderDetails = (articleType = 'researchArticle'): RenderResult => {
             return render(
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
                         updated: Date.now(),
-                        articleType: '',
+                        articleType,
                     }}
                     ButtonComponent={({
                         triggerValidation,
@@ -399,6 +399,13 @@ describe('DetailsForm', (): void => {
 
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => expect(getByText('details.validation.subjects-required')).toBeInTheDocument());
+        });
+
+        it('shows no error message if subjects is empty and article type is feature', async () => {
+            const { getByText } = renderDetails('feature');
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(() => getByText('details.validation.subjects-required')).toThrow();
         });
 
         it('shows error message if previouslyDiscussed is empty', async () => {
