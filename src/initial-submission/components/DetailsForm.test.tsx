@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
-import { cleanup, render, fireEvent } from '@testing-library/react';
+import { cleanup, render, fireEvent, waitFor, RenderResult } from '@testing-library/react';
 import DetailsForm from './DetailsForm';
 import { Submission } from '../types';
 import * as config from '../../core/utils/config';
@@ -17,6 +17,8 @@ jest.mock('../../core/utils/config', () => ({
         client: {
             majorSubjectAreas: {
                 neuroscience: 'Neuroscience',
+                cats: 'cats',
+                doom: 'doom',
             },
         },
     })),
@@ -355,6 +357,117 @@ describe('DetailsForm', (): void => {
                 />,
             );
             expect(getByLabelText('details.second-cosubmission-title-label')).toBeInTheDocument();
+        });
+    });
+
+    describe('validation', () => {
+        const renderDetails = (articleType = 'researchArticle'): RenderResult => {
+            return render(
+                <DetailsForm
+                    initialValues={{
+                        id: 'blah',
+                        updated: Date.now(),
+                        articleType,
+                    }}
+                    ButtonComponent={({
+                        triggerValidation,
+                    }: {
+                        _: Function;
+                        triggerValidation: () => Promise<boolean>;
+                    }): JSX.Element => (
+                        <button
+                            onClick={(): void => {
+                                triggerValidation();
+                            }}
+                        >
+                            TEST BUTTON
+                        </button>
+                    )}
+                />,
+            );
+        };
+
+        it('shows error message if title is empty', async () => {
+            const { getByText } = renderDetails();
+
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.title-required')).toBeInTheDocument());
+        });
+
+        it('shows error message if subjects is empty', async () => {
+            const { getByText } = renderDetails();
+
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.subjects-required')).toBeInTheDocument());
+        });
+
+        it('shows no error message if subjects is empty and article type is feature', async () => {
+            const { getByText } = renderDetails('feature');
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(() => getByText('details.validation.subjects-required')).toThrow();
+        });
+
+        it('shows error message if previouslyDiscussed is empty', async () => {
+            const { getByText, container } = renderDetails();
+
+            fireEvent.click(container.querySelector('input[name="previouslyDiscussedContainer.toggle"]'));
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() =>
+                expect(getByText('details.validation.previously-discussed-required')).toBeInTheDocument(),
+            );
+        });
+
+        it('shows error message if previouslyConsidered is empty', async () => {
+            const { getByText, container } = renderDetails();
+
+            fireEvent.click(container.querySelector('input[name="previouslyConsideredContainer.toggle"]'));
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() =>
+                expect(getByText('details.validation.previously-submitted-required')).toBeInTheDocument(),
+            );
+        });
+
+        it('shows error message if cosubmission is empty', async () => {
+            const { getByText, container } = renderDetails();
+            fireEvent.click(container.querySelector('input[name="cosubmission.toggle"]'));
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('details.validation.cosubmission-required')).toBeInTheDocument());
+        });
+
+        it('should not display validation messages when correct values are passed in', async () => {
+            const fullValues: Submission = {
+                ...testInitialValues,
+                manuscriptDetails: {
+                    title: 'Are cats the biggest threat to humanity?',
+                    subjects: ['cats', 'doom'],
+                    previouslyDiscussed: 'Discussed with possible cat sympathiser',
+                    previouslySubmitted: 'Twice before',
+                    cosubmission: ['The end of the age of Man: Cats have invented paw operated can openers'],
+                },
+            };
+            const { container, getByText } = render(
+                <DetailsForm
+                    initialValues={fullValues}
+                    ButtonComponent={({
+                        triggerValidation,
+                    }: {
+                        _: Function;
+                        triggerValidation: () => Promise<boolean>;
+                    }): JSX.Element => (
+                        <button
+                            onClick={async (): Promise<void> => {
+                                await triggerValidation();
+                            }}
+                        >
+                            TEST BUTTON
+                        </button>
+                    )}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.typography__label--error')).not.toBeInTheDocument();
         });
     });
 });

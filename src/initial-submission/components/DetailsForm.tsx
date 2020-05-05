@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
 import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
@@ -32,23 +33,57 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
 
 const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
-    // TODO: hook this up to useForm. Bugs in this page preventing this currently
-    // const schema = yup.object().shape({
-    //     title: yup.string().required(t('details.validation.title-required')),
-    //     subjects: yup.array().when('articleType', {
-    //         is: (articleType: string) => articleType && articleType === 'feature',
-    //         then: yup
-    //             .array()
-    //             .of(yup.string())
-    //             .max(2, t('details.validation.subjects-max')),
-    //         otherwise: yup
-    //             .array()
-    //             .of(yup.string())
-    //             .min(1, t('details.validation.subjects-min'))
-    //             .max(2, t('details.validation.subjects-max'))
-    //             .required(t('details.validation.subjects-required')),
-    //     }),
-    // });
+    const schema = yup.object().shape({
+        title: yup.string().required(t('details.validation.title-required')),
+        subjects: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup
+                .array()
+                .of(yup.string())
+                .max(2, t('details.validation.subjects-max'))
+                .nullable(),
+            otherwise: yup
+                .array()
+                .of(yup.string())
+                .min(1, t('details.validation.subjects-min'))
+                .max(2, t('details.validation.subjects-max'))
+                .required(t('details.validation.subjects-required'))
+                .nullable(),
+        }),
+        previouslyDiscussed: yup
+            .string()
+            .notOneOf(['', undefined], t('details.validation.previously-discussed-required'))
+            .nullable(),
+        previouslySubmitted: yup
+            .string()
+            .notOneOf(['', undefined], t('details.validation.previously-submitted-required'))
+            .nullable(),
+        firstCosubmissionTitle: yup
+            .string()
+            .notOneOf(['', undefined], t('details.validation.cosubmission-required'))
+            .nullable(),
+    });
+
+    const validationResolver = useCallback((data: ManuscriptDetails) => {
+        try {
+            schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
+            return { errors: {}, values: data };
+        } catch (errors) {
+            return {
+                errors: errors.inner.reduce(
+                    (
+                        errorObject: {},
+                        { path, message, type }: { path: string; message: string; type: string; inner: [] },
+                    ) => ({
+                        ...errorObject,
+                        [path]: { message, type },
+                    }),
+                    {},
+                ),
+                values: data,
+            };
+        }
+    }, []);
     const details = defaultManuscriptDetails(initialValues.manuscriptDetails);
     overwriteWithSuggestions(details, initialValues.suggestions || []);
     const {
@@ -59,7 +94,7 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         subjects = [],
     } = details;
 
-    const { register, setValue, watch, control, triggerValidation } = useForm<
+    const { register, setValue, watch, control, triggerValidation, errors } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
             subjects: { label: string; value: string }[];
             firstCosubmissionTitle: string;
@@ -74,6 +109,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             firstCosubmissionTitle,
             secondCosubmissionTitle,
         },
+        mode: 'onBlur',
+        validationResolver,
     });
 
     const [hasSecondCosubmission, setCosubmissionState] = useState<boolean>(!!secondCosubmissionTitle);
@@ -120,7 +157,13 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
             <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
-            <ExpandingTextField id="title" register={register} labelText={t('details.title-label')} />
+            <ExpandingTextField
+                id="title"
+                register={register}
+                labelText={t('details.title-label')}
+                invalid={errors && errors.title !== undefined}
+                helperText={errors && errors.title ? errors.title.message : null}
+            />
             <SelectField
                 id="subjects"
                 labelText={t('details.subject-areas')}
@@ -129,8 +172,13 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 control={control}
                 formComponent={true}
                 multi
-                helperText="Choose up to 2 subject areas"
                 className="subject-area"
+                invalid={errors && errors.subjects !== undefined}
+                helperText={
+                    errors && errors.subjects
+                        ? ((errors.subjects as unknown) as { message: string }).message
+                        : t('details.subjects-helper-text')
+                }
             />
             <Toggle
                 id="previouslyDiscussedContainer"
@@ -141,6 +189,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     id="previouslyDiscussed"
                     register={register}
                     labelText={t('details.previously-discussed-label')}
+                    invalid={errors && errors.previouslyDiscussed !== undefined}
+                    helperText={errors && errors.previouslyDiscussed ? errors.previouslyDiscussed.message : null}
                 />
             </Toggle>
             <Toggle
@@ -152,6 +202,8 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     id="previouslySubmitted"
                     register={register}
                     labelText={t('details.previously-submitted-label')}
+                    invalid={errors && errors.previouslySubmitted !== undefined}
+                    helperText={errors && errors.previouslySubmitted ? errors.previouslySubmitted.message : null}
                 />
             </Toggle>
             <Toggle
@@ -163,12 +215,18 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     id="firstCosubmissionTitle"
                     register={register}
                     labelText={t('details.cosubmission-title-label')}
+                    invalid={errors && errors.firstCosubmissionTitle !== undefined}
+                    helperText={errors && errors.firstCosubmissionTitle ? errors.firstCosubmissionTitle.message : null}
                 />
                 {hasSecondCosubmission ? (
                     <TextField
                         id="secondCosubmissionTitle"
                         register={register}
                         labelText={t('details.second-cosubmission-title-label')}
+                        invalid={errors && errors.secondCosubmissionTitle !== undefined}
+                        helperText={
+                            errors && errors.secondCosubmissionTitle ? errors.secondCosubmissionTitle.message : null
+                        }
                     />
                 ) : (
                     <span className="typography__small">

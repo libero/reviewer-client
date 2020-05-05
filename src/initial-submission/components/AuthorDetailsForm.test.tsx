@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
-import { cleanup, render, fireEvent } from '@testing-library/react';
+import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import { Submission } from '../types';
 
@@ -40,6 +40,21 @@ jest.mock('@apollo/react-hooks', () => ({
         ];
     },
 }));
+
+const ButtonComponent = ({
+    triggerValidation,
+}: {
+    _: Function;
+    triggerValidation: () => Promise<boolean>;
+}): JSX.Element => (
+    <button
+        onClick={(): void => {
+            triggerValidation();
+        }}
+    >
+        TEST BUTTON
+    </button>
+);
 
 const initialValues: Submission = {
     author: {
@@ -172,6 +187,139 @@ describe('Author Details Form', (): void => {
                     },
                 },
             });
+        });
+    });
+    describe('validation', () => {
+        it('shows error if first name is empty', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        author: {
+                            firstName: '',
+                            lastName: 'Blogs',
+                            email: 'joe@blogs.com',
+                            institution: 'somewhere',
+                        },
+                        id: 'foo',
+                        articleType: '',
+                        updated: 0,
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(1);
+            expect(getByText('author.validation.first-name-required')).toBeInTheDocument();
+        });
+        it('shows error if last name is empty', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        author: {
+                            firstName: 'Joe',
+                            lastName: '',
+                            email: 'joe@blogs.com',
+                            institution: 'somewhere',
+                        },
+                        id: 'foo',
+                        articleType: '',
+                        updated: 0,
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(1);
+            expect(getByText('author.validation.last-name-required')).toBeInTheDocument();
+        });
+        it('shows error if email is empty', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        author: {
+                            firstName: 'Joe',
+                            lastName: 'Blogs',
+                            email: '',
+                            institution: 'somewhere',
+                        },
+                        id: 'foo',
+                        articleType: '',
+                        updated: 0,
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(1);
+            expect(getByText('author.validation.email-required')).toBeInTheDocument();
+        });
+        it('shows error if email is invalid', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        author: {
+                            firstName: 'Joe',
+                            lastName: 'Blogs',
+                            email: 'not an email',
+                            institution: 'somewhere',
+                        },
+                        id: 'foo',
+                        articleType: '',
+                        updated: 0,
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(1);
+            expect(getByText('author.validation.email-format')).toBeInTheDocument();
+        });
+        it('shows error if institution is empty', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        author: {
+                            firstName: 'Joe',
+                            lastName: 'Blogs',
+                            email: 'joe@blogs.com',
+                            institution: '',
+                        },
+                        id: 'foo',
+                        articleType: '',
+                        updated: 0,
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(1);
+            expect(getByText('author.validation.institution-required')).toBeInTheDocument();
+        });
+        it('should not display validation messages when correct values are passed in', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    initialValues={{
+                        author: {
+                            firstName: 'Joe',
+                            lastName: 'Blogs',
+                            email: 'joe@blogs.com',
+                            institution: 'somewhere',
+                        },
+                        id: 'foo',
+                        articleType: '',
+                        updated: 0,
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(0);
         });
     });
 });

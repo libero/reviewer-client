@@ -27,12 +27,16 @@
     "second-cosubmission-toggle-prefix": "Would you like to ",
     "second-cosubmission-toggle-link": "add another",
     "second-cosubmission-toggle-suffix": " co-submission?",
+    "subjects-helper-text": "Choose up to 2 subject areas",
     "subject-areas": "Subject area(s)",
     "validation": {
       "title-required": "Title is required",
       "subjects-max": "No more than 2 subject areas",
       "subjects-min": "Choose at least 1 subject area",
-      "subjects-required": "Subject area(s) required"
+      "subjects-required": "Subject area(s) required",
+      "previously-discussed-required": "Please describe your previous interaction",
+      "previously-submitted-required": "Article title is required",
+      "cosubmission-required": "Article title is required"
     }
   },
   "files": {
