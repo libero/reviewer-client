@@ -33,21 +33,23 @@ export class DashboardPage {
             this.articleTypeOptions,
             async (options: NightwatchCallbackResult<{ ELEMENT: string }[]>) => {
                 const optionCount = ((options.value as unknown) as Array<string>).length;
-                let locks = optionCount;
+                const locks = [];
                 let found = -1;
                 for (let i = 1; i <= optionCount && !found; i++) {
-                    await this.browser.getText(this.articleTypeOptions + `:nth-child(${i})`, result => {
-                        if (articleType === result.value) {
-                            found = i;
-                            console.log('found: ' + i);
-                        }
-                        locks--;
-                    });
+                    locks.push(
+                        new Promise(resolve => {
+                            this.browser.getText(this.articleTypeOptions + `:nth-child(${i})`, result => {
+                                if (articleType === result.value) {
+                                    found = i;
+                                    console.log('found: ' + i);
+                                }
+                                console.log('resolved' + i);
+                                resolve();
+                            });
+                        }),
+                    );
                 }
-                // while (locks > 0) {
-                //     await sleep(100);
-                //     console.log('loop', found, locks);
-                // }
+                await Promise.all(locks);
                 console.log('clicking: ' + found);
                 this.browser.click(this.articleTypeOptions + `:nth-child(${found})`);
             },
