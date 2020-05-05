@@ -2,11 +2,8 @@
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
-const smp = new SpeedMeasurePlugin();
-
-const commonConfig = smp.wrap(merge([
+const commonConfig = merge([
     {
         entry: {
             main: './index.tsx',
@@ -23,7 +20,7 @@ const commonConfig = smp.wrap(merge([
             extensions: ['.ts', '.tsx', '.js', '.json'],
         },
     },
-]));
+]);
 
 const developmentConfig = merge([
     parts.output({ filename: '[name].bundle.js' }),

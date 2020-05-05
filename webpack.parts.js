@@ -26,10 +26,7 @@ if (fs.existsSync(infraConfigPath)) {
 
 exports.devServer = () => ({
     devServer: {
-        stats: {
-            logging: 'verbose',
-            timings: true
-        },
+        stats: 'errors-only',
         host: process.env.HOST,
         historyApiFallback: {
             disableDotRule: true
@@ -42,7 +39,7 @@ exports.devServer = () => ({
             '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
                 target: infraConfig.client_token_exchange_proxy_url,
                 pathRewrite: {'^/auth': ''},
-                changeOrigin: true,
+                changeOrigin: true, 
             },
             '/config': {
                 bypass: function (req) {
@@ -81,7 +78,6 @@ exports.loaders = () => ({
                 enforce: 'pre',
                 test: /\.js$/,
                 loader: 'source-map-loader',
-                exclude: path.resolve(__dirname, "node_modules"),
             },
             {
                 test: /\.(png|jpg|gif)$/,
