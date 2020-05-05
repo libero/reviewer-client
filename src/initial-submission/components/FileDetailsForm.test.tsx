@@ -40,6 +40,16 @@ jest.mock('@apollo/react-hooks', () => ({
     },
 }));
 
+const testButton = ({ triggerValidation }: { _: Function; triggerValidation: () => Promise<boolean> }): JSX.Element => (
+    <button
+        onClick={(): void => {
+            triggerValidation();
+        }}
+    >
+        TEST BUTTON
+    </button>
+);
+
 const createFile = (type: string, fileName: string): File =>
     new File([JSON.stringify({ ping: true })], fileName, { type });
 
@@ -108,6 +118,30 @@ describe('File Details Form', (): void => {
                     coverLetter: 'test cover letter input',
                 },
             });
+        });
+
+        it('shows validation message if left empty', async (): Promise<void> => {
+            const { getByText } = render(
+                <FileDetailsForm initialValues={testInitialValues} ButtonComponent={testButton} />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('files.validation.coverletter-required')).toBeInTheDocument());
+        });
+        it('shows no errors if coverletter has a value', async (): Promise<void> => {
+            const { getByText } = render(
+                <FileDetailsForm
+                    initialValues={{
+                        id: 'test',
+                        files: { coverLetter: 'some default value' },
+                        updated: Date.now(),
+                        articleType: '',
+                    }}
+                    ButtonComponent={testButton}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(() => getByText('files.validation.coverletter-required')).toThrow();
         });
     });
 
