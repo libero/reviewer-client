@@ -1,5 +1,5 @@
 {
-    "src_folders": ["tests"],
+    "src_folders": ["tests/browser-tests"],
     "page_objects_path": "tests/page-objects",
     "webdriver": {
         "start_process": true,

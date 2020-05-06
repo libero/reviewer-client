@@ -24,9 +24,9 @@ export class AuthorDetailsPage {
 
     public getEmail(): void {
         this.browser
-        .waitForElementVisible(this.emailInput)
-        .assert.visible(this.emailInput)
-        .getValue(this.emailInput)
+            .waitForElementVisible(this.emailInput)
+            .assert.visible(this.emailInput)
+            .getValue(this.emailInput);
     }
 
     public setFirstName(input: string): void {
