@@ -38,8 +38,9 @@ export class DashboardPage {
 
     public async newSubmission(articleType: string): Promise<void> {
         // should return the author details page object when its created
-        this.browser.click(this.newSubmissionButton);
-        this.browser.click(this.articleTypeSelect).waitForElementVisible(this.articleTypeMenu, 2000);
+        this.browser.moveToElement(this.newSubmissionButton, 0, 0).mouseButtonClick(0);
+        this.browser.click(this.articleTypeSelect);
+        // this.browser.saveScreenshot('./tests/output/blah.png');
         this.browser.elements(
             'css selector',
             this.articleTypeOptions,
@@ -47,7 +48,7 @@ export class DashboardPage {
                 const result = await this.getAllElements(options);
 
                 const foundIndex = result.indexOf(articleType);
-                this.browser.assert.notEqual(foundIndex, -1, `Unable to find the article type ${articleType}`);
+                this.browser.assert.notEqual(foundIndex, -1, `Found the article type: ${articleType}`);
 
                 console.log('found: ' + foundIndex);
                 this.browser.click(this.articleTypeOptions + `:nth-child(${foundIndex + 1})`);

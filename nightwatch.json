@@ -10,6 +10,12 @@
         "default": {
             "desiredCapabilities": {
                 "browserName": "chrome"
+            },
+            "screenshots": {
+                "enabled": true,
+                "on_failure": true,
+                "on_error": true,
+                "path": "tests/output/screenshots"
             }
         }
     }
