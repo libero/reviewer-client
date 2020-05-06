@@ -15,7 +15,6 @@ export class DashboardPage {
     constructor(browser: NightwatchBrowser) {
         this.browser = browser;
     }
-
     public onPage(): DashboardPage {
         this.browser.waitForElementVisible(this.newSubmissionButton, 10000);
         return this;
