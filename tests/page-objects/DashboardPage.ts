@@ -2,7 +2,7 @@ import { NightwatchBrowser, NightwatchCallbackResult } from 'nightwatch';
 
 export class DashboardPage {
     private readonly dashboardContainer: string = '.dashboard';
-    private readonly newSubmissionButton: string = '.no-submissions__buttons';
+    private readonly newSubmissionButton: string = '.no-submissions__buttons > button';
     private readonly menuLink: string = '.menu__link--active';
     private readonly submissionLinks: string = '.submission-entry__link';
     private readonly newSubmissionContainer: string = '.article-type';
@@ -38,7 +38,7 @@ export class DashboardPage {
 
     public async newSubmission(articleType: string): Promise<void> {
         // should return the author details page object when its created
-        this.browser.moveToElement(this.newSubmissionButton, 0, 0).mouseButtonClick(0);
+        this.browser.click(this.newSubmissionButton);
         this.browser.click(this.articleTypeSelect);
         // this.browser.saveScreenshot('./tests/output/blah.png');
         this.browser.elements(
