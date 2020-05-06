@@ -22,11 +22,25 @@ export class AuthorDetailsPage {
             .setValue(this.emailInput, input);
     }
 
+    public getEmail(): void {
+        this.browser
+        .waitForElementVisible(this.emailInput)
+        .assert.visible(this.emailInput)
+        .getValue(this.emailInput)
+    }
+
     public setFirstName(input: string): void {
         this.browser
             .waitForElementVisible(this.firstNameInput)
             .assert.visible(this.firstNameInput)
             .setValue(this.firstNameInput, input);
+    }
+
+    public getFirstName(input: string): void {
+        this.browser
+            .waitForElementVisible(this.firstNameInput)
+            .assert.visible(this.firstNameInput)
+            .getValue(this.firstNameInput);
     }
 
     public setLastName(input: string): void {
@@ -36,11 +50,25 @@ export class AuthorDetailsPage {
             .setValue(this.lastNameInput, input);
     }
 
+    public getLastName(input: string): void {
+        this.browser
+            .waitForElementVisible(this.lastNameInput)
+            .assert.visible(this.lastNameInput)
+            .getValue(this.lastNameInput);
+    }
+
     public setInstitution(input: string): void {
         this.browser
             .waitForElementVisible(this.institutionInput)
             .assert.visible(this.institutionInput)
             .setValue(this.institutionInput, input);
+    }
+
+    public getInstitution(input: string): void {
+        this.browser
+            .waitForElementVisible(this.institutionInput)
+            .assert.visible(this.institutionInput)
+            .getValue(this.institutionInput);
     }
 
     public next(): void {
