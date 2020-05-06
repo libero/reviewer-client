@@ -21,10 +21,22 @@ export class DashboardPage {
         return this;
     }
 
-    public async newSubmission(articleType: string): Promise<void> {
-        function sleep(n: number): Promise<void> {
-            return new Promise(resolve => setTimeout(resolve, n));
+    private async getAllElements(options: NightwatchCallbackResult<{ ELEMENT: string }[]>): Promise<Array<unknown>> {
+        const optionCount = ((options.value as unknown) as Array<string>).length;
+        const results = [];
+        for (let i = 1; i <= optionCount; i++) {
+            results.push(
+                new Promise(resolve => {
+                    this.browser.getText(this.articleTypeOptions + `:nth-child(${i})`, result => {
+                        resolve(result.value);
+                    });
+                }),
+            );
         }
+        return Promise.all(results);
+    }
+
+    public async newSubmission(articleType: string): Promise<void> {
         // should return the author details page object when its created
         this.browser.click(this.newSubmissionButton);
         this.browser.click(this.articleTypeSelect).waitForElementVisible(this.articleTypeMenu, 2000);
@@ -32,26 +44,13 @@ export class DashboardPage {
             'css selector',
             this.articleTypeOptions,
             async (options: NightwatchCallbackResult<{ ELEMENT: string }[]>) => {
-                const optionCount = ((options.value as unknown) as Array<string>).length;
-                const locks = [];
-                let found = -1;
-                for (let i = 1; i <= optionCount && !found; i++) {
-                    locks.push(
-                        new Promise(resolve => {
-                            this.browser.getText(this.articleTypeOptions + `:nth-child(${i})`, result => {
-                                if (articleType === result.value) {
-                                    found = i;
-                                    console.log('found: ' + i);
-                                }
-                                console.log('resolved' + i);
-                                resolve();
-                            });
-                        }),
-                    );
-                }
-                await Promise.all(locks);
-                console.log('clicking: ' + found);
-                this.browser.click(this.articleTypeOptions + `:nth-child(${found})`);
+                const result = await this.getAllElements(options);
+
+                const foundIndex = result.indexOf(articleType);
+                this.browser.assert.notEqual(foundIndex, -1, `Unable to find the article type ${articleType}`);
+
+                console.log('found: ' + foundIndex);
+                this.browser.click(this.articleTypeOptions + `:nth-child(${foundIndex + 1})`);
             },
         );
         this.browser.expect

@@ -8,7 +8,8 @@ export = {
         login.open();
         login.login();
         const dashboard = new DashboardPage(browser);
-        dashboard.onPage().newSubmission('Feature Article');
+        dashboard.onPage();
+        dashboard.newSubmission('Feature Article');
         // const dashboard = browser.page.DashboardPage();
         // await dashboard.onPage();
         // const appPage = browser.page.AppPage();
