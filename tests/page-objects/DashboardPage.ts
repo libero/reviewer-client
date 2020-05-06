@@ -1,4 +1,3 @@
-import { promisfy } from 'util';
 import { NightwatchBrowser, NightwatchCallbackResult } from 'nightwatch';
 
 export interface DashboardSubmission {
@@ -31,10 +30,10 @@ export class DashboardPage {
 
     constructor(browser: NightwatchBrowser) {
         this.browser = browser;
-        // this.isVisible = (selector: string): Promise<boolean> =>
-        //     new Promise<boolean>(resolve =>
-        //         this.browser.isVisible(selector, (result: NightwatchCallbackResult<boolean>) => resolve(result.value ? true : false)),
-        //     );
+        this.isVisible = (selector: string): Promise<boolean> =>
+            new Promise(resolve =>
+                this.browser.isVisible(selector, result => resolve(result.status === 1 ? true : false)),
+            );
     }
 
     public onPage(): DashboardPage {
@@ -43,9 +42,9 @@ export class DashboardPage {
     }
 
     public async pageState(): Promise<DashboardState> {
-        if (await this.browser.isVisible(this.dashboardContainer)) {
+        if (await this.isVisible(this.dashboardContainer)) {
             return DashboardState.Submissions;
-        } else if (await this.browser.isVisible(this.dashboardNoSubmissions)) {
+        } else if (await this.isVisible(this.dashboardNoSubmissions)) {
             return DashboardState.NoSubmissions;
         }
         return DashboardState.Unknown;
