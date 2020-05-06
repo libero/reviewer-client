@@ -43,7 +43,7 @@ const NoSubmissions = ({ onStartClick }: Props): JSX.Element => {
                         </Paragraph>
                     </div>
                     <div className="no-submissions__buttons">
-                        <Button type="primary" onClick={(): void => onStartClick()}>
+                        <Button id="new-submission-button" type="primary" onClick={(): void => onStartClick()}>
                             {t('new-submission')}
                         </Button>
                     </div>

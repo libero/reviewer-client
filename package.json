@@ -12,8 +12,8 @@
         "prettier": "prettier --write 'src/**/*ts?'",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "test:browser": "tsc -p tests/tsconfig.json && yarn nightwatch",
-        "test:browser-headless": "tsc -p tests/tsconfig.json && yarn nightwatch --headless"
+        "test:browser": "rm -vr ./tests/**/*.js ; tsc -p tests/tsconfig.json && yarn nightwatch",
+        "test:browser-headless": "rm -vr ./tests/**/*.js ; tsc -p tests/tsconfig.json && yarn nightwatch --headless"
     },
     "husky": {
         "hooks": {
