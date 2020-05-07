@@ -1,5 +1,5 @@
 import { useEffect, useRef, DependencyList } from 'react';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 
 // This is outside of the component because of the throttle being recreated on each render if its inside.
 const save = (onSave: Function): void => {

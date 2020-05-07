@@ -1,7 +1,9 @@
 import React from 'react';
 import { Pod, Modal } from '../atoms';
 import PersonInfo from './PersonInfo';
-import { Add, CheckCircle, Info } from '@material-ui/icons';
+import Add from '@material-ui/icons/Add';
+import CheckCircle from '@material-ui/icons/CheckCircle';
+import Info from '@material-ui/icons/Info';
 import useModal from '../../ui/hooks/useModal';
 
 export interface PersonProps {
