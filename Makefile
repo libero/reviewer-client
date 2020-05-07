@@ -4,7 +4,7 @@
 IMAGE_TAG ?= "local"
 DOCKER_COMPOSE = IMAGE_TAG=${IMAGE_TAG} docker-compose
 DOCKER_COMPOSE_TEST = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.yml -f docker-compose.test.yml
-DOCKER_COMPOSE_CI = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.yml -f docker-compose.ci.yml
+DOCKER_COMPOSE_CI = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.ci.yml
 DOCKER_COMPOSE_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 help:
@@ -48,7 +48,7 @@ start_test: ## start with dev build image, reviewer-mocks mocking api, continuum
 
 start_ci: ## start with production build, with reviewer-mocks mocking api, continuum-adaptor and continuum
 	${DOCKER_COMPOSE_CI} pull reviewer-mocks
-	${DOCKER_COMPOSE_CI} up -d reviewer-mocks reviewer-client 
+	${DOCKER_COMPOSE_CI} up -d reviewer-mocks reviewer-client nginx
 	./.scripts/docker/wait-healthy.sh reviewer-client_app 60
 	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 60
 
