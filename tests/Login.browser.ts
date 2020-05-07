@@ -1,14 +1,7 @@
-import { NightwatchBrowser } from 'nightwatch';
+import { Selector } from 'testcafe';
 
-export = {
-    'Test Login': async function(browser: NightwatchBrowser): Promise<void> {
-        const login = browser.page.LoginPage();
-        await login.navigate();
-        await login.login();
-        const dashboard = browser.page.DashboardPage();
-        await dashboard.onPage();
-        const appPage = browser.page.AppPage();
-        await appPage.testUserName('Tamlyn Rhodes (author)');
-        browser.end();
-    },
-};
+fixture`Getting Started`.page`http://localhost:9000`;
+
+test('My first test', async t => {
+    await t.expect(Selector('.button--orcid').visible).ok();
+});

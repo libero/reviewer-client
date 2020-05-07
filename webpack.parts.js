@@ -117,6 +117,7 @@ exports.loaders = () => ({
                     },
                 ],
             },
+            { test: /\.(js)$/, exclude: [/node_modules\/(?!(react-hook-form)\/).*/], use: [ { loader: "babel-loader" } ] },
         ],
     },
 });
