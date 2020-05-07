@@ -67,7 +67,4 @@ typings/
 .next
 dist
 
-config/**/*
-!config/reviewer-mocks
-!config/reviewer-mocks/config.example.json
-!config/config.*.example.json
+config/reviewer-mocks/config.json

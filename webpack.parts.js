@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -8,51 +7,20 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
-const infraConfigPath = process.env.INFRA_CONFIG_PATH ? process.env.INFRA_CONFIG_PATH : '/etc/reviewer/config.infra.json';
-const publicConfigPath = process.env.PUBLIC_CONFIG_PATH ? process.env.PUBLIC_CONFIG_PATH : '/etc/reviewer/config.public.json';
-let infraConfig;
-
-if (fs.existsSync(infraConfigPath)) {
-    infraConfig = JSON.parse(fs.readFileSync(infraConfigPath, 'utf8'));
-} else {
-    infraConfig = {
-        "port": 9000,
-        "client_api_proxy_url": "http://localhost:3003/graphql",
-        "client_token_exchange_proxy_url": "http://localhost:3003/authenticate/",
-        "new_relic_client_license_key": "",
-        "new_relic_client_app_id": ""
-    };
-}
-
 exports.devServer = () => ({
     devServer: {
+        host: '0.0.0.0',
         stats: {
             logging: 'verbose',
         },
-        host: process.env.HOST,
         historyApiFallback: {
             disableDotRule: true
         },
-        port: infraConfig.port,
+        port: process.env.CLIENT_PORT || 9000,
+        disableHostCheck: true,
         open: true,
         overlay: true,
         hot: true,
-        proxy: {
-            '/auth/': { // this needs a '/' at the end otherwise, e.g /auth-redirect/ becomes /auth/-redirect
-                target: infraConfig.client_token_exchange_proxy_url,
-                pathRewrite: {'^/auth': ''},
-                changeOrigin: true,
-            },
-            '/config': {
-                bypass: function (req) {
-                    // we need to check the url here again as it seems this is called
-                    // on every path
-                    if (req.url.startsWith('/config')) {
-                        return publicConfigPath;
-                    }
-                }
-            }
-        },
     },
 });
 
@@ -193,8 +161,8 @@ exports.generateSourceMaps = ({ type }) => ({
 exports.newRelic = () => ({
     plugins: [
         new HtmlInjectNewRelicPlugin({
-            license: infraConfig.new_relic_client_license_key,
-            applicationID: infraConfig.new_relic_client_app_id,
+            license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
+            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID
         }),
     ],
 })

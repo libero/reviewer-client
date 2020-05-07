@@ -1,0 +1,9 @@
+version: '3.4'
+services:
+  reviewer-client:
+    container_name: reviewer-client_app
+    
+  nginx:
+    volumes:
+      - ./config/nginx/nginx.test.conf:/etc/nginx/nginx.conf
+      
