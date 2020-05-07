@@ -2,45 +2,46 @@
 
 The client for "libero reviewer".
 
-## Running
+## Running the client
 
-Setup with:
-```sh
-make setup
-```
+1. `make setup`
+2. Run client options:  
+   __Test:__ mock everything with _reviewer-mocks_  
+   ```sh
+   make start_test
+   ```
 
-The Makefile provides some commands to run the client in various scenarios
+   __Dev:__ run against local _reviewer-submission_ and _continuum-adaptor_, only mock _continuum_
+   ```sh
+   # start local instances of submission and adaptor
+   cd ../reviewer-submission ; make setup ; make start_dev
+   cd ../continuum-adaptor ; make setup ; make start
 
-### Run with reviewer mocks only mocking continuum
+   cd ../reviewer-client
+   make start_dev
+   ```
 
-This is to run with reviewer-mocks only providing continuum functionality. You will
-need to run the reviewer-submission and continuum-adaptor services on your host machine
+   __CI:__ lint, test and browsertest akin to pipeline
+   ```sh
+   make run_ci
+   ```
 
-```sh
-make start_dev
-```
+3. `make stop` to teardown
 
-### Run with reviewer-mocks running all backend services
+## Use of `reviewer-mocks`
 
-This is to run with reviewer-mocks providing functionality for continuum as well as reviewer-submission and
-continuum-adaptor. You don't need to run any other services on your host machine
+The compose files use `liberoadmin/reviewer-mocks:latest`.
 
-```
-make start_test
-```
-
-### Run like in CI
-
-To run a sumulacrum of the CI you can use the
-```
-make run_ci
-```
-command which will run all of the build and test steps and tear down the serves afterwards.
-
-
-### Stopping services
-
-To stop any docker services running, run
-```
-make stop
-```
+- make sure you have the current image with:  
+  ```sh
+  docker pull liberoadmin/reviewer-mocks:latest
+  ```
+- when changing mocks locally, tag it accordingly:  
+  ```sh
+  cd ../reviewer-mocks
+  make build
+  docker tag \
+    libero/reviewer-mocks:local \
+    liberoadmin/reviewer-mocks:latest
+  ```
+  
