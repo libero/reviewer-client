@@ -10,9 +10,7 @@ export class DashboardPage {
     private readonly newSubmissionContainer: Selector = Selector('.article-type');
     private readonly articleTypeSelect: Selector = Selector('.select-field__control');
     private readonly articleTypeValue: Selector = Selector('.select-field__single-value');
-    private readonly articleTypeMenu: Selector = Selector('.select-field__menu');
     private readonly articleTypeOptions: Selector = Selector('.select-field__option');
-    private readonly dashboardTabs: Selector = Selector('.dashboard__tabs');
 
     public async assertOnPage(): Promise<void> {
         const dashboard = await this.withSubmissions.visible;
@@ -23,8 +21,10 @@ export class DashboardPage {
 
     public async newSubmission(articleType: string): Promise<void> {
         await t.click(this.newSubmissionButton);
+        await t.expect(this.newSubmissionContainer.exists).ok();
         await t.click(this.articleTypeSelect);
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
+        await t.click(this.continueButton);
     }
 }
