@@ -9,8 +9,10 @@ const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
 exports.devServer = () => ({
     devServer: {
-        stats: 'errors-only',
         host: '0.0.0.0',
+        stats: {
+            logging: 'verbose',
+        },
         historyApiFallback: {
             disableDotRule: true
         },
@@ -46,6 +48,7 @@ exports.loaders = () => ({
                 enforce: 'pre',
                 test: /\.js$/,
                 loader: 'source-map-loader',
+                exclude: path.resolve(__dirname, "node_modules"),
             },
             {
                 test: /\.(png|jpg|gif)$/,
