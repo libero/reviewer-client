@@ -26,11 +26,6 @@ services:
       - ./babelrc:/app/babelrc
       - ./webpack.parts.js:/app/webpack.parts.js
       - ./webpack.config.js:/app/webpack.config.js
-    healthcheck:
-      test: 'echo -e "GET /\n\n" | nc localhost 9000'
-      interval: 3s
-      timeout: 10s
-      retries: 3
     networks:
       - "reviewer"
 
@@ -42,7 +37,7 @@ services:
     ports:
       - '9000:9000'
     volumes:
-      - ./config/nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+      - ./config/nginx-proxies/nginx.dev.conf:/etc/nginx/nginx.conf
   
   reviewer-mocks:
     container_name: reviewer-client_mocks

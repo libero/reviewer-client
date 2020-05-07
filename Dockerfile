@@ -66,8 +66,9 @@ LABEL maintainer="eLife Reviewer Product Team <reviewer-product@elifesciences.or
 
 COPY --from=yarn-prod /app/ .
 COPY --from=build-prod /app/dist/ dist/
+COPY config/nginx/nginx.conf /etc/nginx/nginx.conf
 
 HEALTHCHECK --interval=5s --timeout=1s \
-	CMD echo -e "GET /health\n\n" | nc localhost:9000
+	CMD echo -e "GET /health\n\n" | nc localhost:80
 
 CMD ["nginx", "-g", "daemon off;"]
