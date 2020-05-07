@@ -54,7 +54,7 @@ const Dashboard = withRouter(
             return (
                 <div className="dashboard">
                     <div className="dashboard__button_container">
-                        <Button onClick={(): void => toggle()} type="primary">
+                        <Button id="new-submission-button" onClick={(): void => toggle()} type="primary">
                             {t('new-submission')}
                         </Button>
                     </div>
