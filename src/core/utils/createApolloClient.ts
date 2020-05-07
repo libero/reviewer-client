@@ -8,7 +8,8 @@ import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
 
-export default (host: string): ApolloClient<unknown> => {
+export default (): ApolloClient<unknown> => {
+    const host = `${window.location.protocol}//${window.location.host}`;
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
         // Adding the line below causes logs of CORS issues which prevents

@@ -20,7 +20,6 @@ describe('App', (): void => {
         render(<App />);
         await waitFor(() => {});
         expect(createApolloClient.default).toHaveBeenCalledTimes(1);
-        expect(createApolloClient.default).toHaveBeenCalledWith('http://localhost');
         done();
     });
 });

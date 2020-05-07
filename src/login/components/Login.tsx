@@ -36,7 +36,7 @@ const Login = (): JSX.Element => {
                     </div>
 
                     <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href={CONFIG.LOGIN_URL}>
+                        <a className="login-page__buttons--orcid" href="/continuum-login">
                             <Button type="orcid">{t('login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">

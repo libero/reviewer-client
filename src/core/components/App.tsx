@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
-import '@khanacademy/tota11y';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { Footer } from '../../ui/atoms';
@@ -20,7 +19,7 @@ const App: React.FC = (): JSX.Element => {
         Auth.importToken();
     }, []);
     return (
-        <ApolloProvider client={createApolloClient(CONFIG.API_HOST)}>
+        <ApolloProvider client={createApolloClient()}>
             <Router>
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />

@@ -7,7 +7,6 @@ const commonConfig = merge([
     {
         entry: {
             main: './index.tsx',
-            config: './config.ts',
         },
         plugins: [
             new HtmlWebPackPlugin({

@@ -2,43 +2,46 @@
 
 The client for "libero reviewer".
 
-## Running
+## Running the client
 
-### Run in docker
-To run the application in the testing environment use the following commands.
-```
-make build
-make setup
-make start
-```
+1. `make setup`
+2. Run client options:  
+   __Test:__ mock everything with _reviewer-mocks_  
+   ```sh
+   make start_test
+   ```
 
-this will start the application in a docker container with a mocked backend and authentication system.
+   __Dev:__ run against local _reviewer-submission_ and _continuum-adaptor_, only mock _continuum_
+   ```sh
+   # start local instances of submission and adaptor
+   cd ../reviewer-submission ; make setup ; make start_dev
+   cd ../continuum-adaptor ; make setup ; make start
 
-### Run client locally on host
+   cd ../reviewer-client
+   make start_dev
+   ```
 
-In config.public.json, set the `client_api_url` to:
-```json
-"client_api_url": "http://localhost:3003"
-```
-this will connect the client directly to the reviewer-mocks for api requests
+   __CI:__ lint, test and browsertest akin to pipeline
+   ```sh
+   make run_ci
+   ```
 
-```
-make start_dev
-```
-this will start the client using the webpack dev server with no other services running.
+3. `make stop` to teardown
 
-### Run like in CI
+## Use of `reviewer-mocks`
 
-To run a sumulacrum of the CI you can use the
-```
-make run_ci
-```
-command which will run all of the build and test steps and tear down the serves afterwards.
+The compose files use `liberoadmin/reviewer-mocks:latest`.
 
-
-### Stopping services
-
-To stop any docker services running, run
-```
-make stop
-```
+- make sure you have the current image with:  
+  ```sh
+  docker pull liberoadmin/reviewer-mocks:latest
+  ```
+- when changing mocks locally, tag it accordingly:  
+  ```sh
+  cd ../reviewer-mocks
+  make build
+  docker tag \
+    libero/reviewer-mocks:local \
+    liberoadmin/reviewer-mocks:latest
+  ```
+  

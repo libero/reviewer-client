@@ -1,15 +1,66 @@
-version: '3'
+version: '3.4'
 services:
-  client:
+  reviewer-client:
+    container_name: reviewer-client_app
+    build:
+      context: './'
+      target: dev
     image: libero/reviewer-client:${IMAGE_TAG:-local}
-    ports:
-      - "${CLIENT_PORT}:9000"
+    environment: 
+      CLIENT_PORT: 9000
+      NEW_RELIC_CLIENT_LICENSE_KEY: ''
+      NEW_RELIC_CLIENT_APP_ID: ''
     volumes:
-      - ./config/:/etc/reviewer/:z
+      - ./globals.d.ts:/app/globals.d.ts
+      - ./.eslintignore:/app/.eslintignore
+      - ./.eslintrc.js:/app/.eslintrc.js
+      - ./.prettierrc.js:/app/.prettierrc.js
+      - ./jest.config.js:/app/jest.config.js
+      - ./src/:/app/src
+      - ./package.json:/app/package.json
+      - ./yarn.json:/app/yarn.json
+      - ./tests/:/app/tests
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./index.ts:/app/index.ts
+      - ./index.ejs:/app/index.ejs
+      - ./babelrc:/app/babelrc
+      - ./webpack.parts.js:/app/webpack.parts.js
+      - ./webpack.config.js:/app/webpack.config.js
+    healthcheck:
+      test: 'echo -e "GET /\n\n" | nc localhost 9000'
+      interval: 3s
+      timeout: 10s
+      retries: 3
+    networks:
+      - "reviewer"
 
+  nginx:
+    container_name: reviewer-client_nginx
+    image: nginx:stable-alpine@sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e2f48ee39434ec017
+    networks:
+      - "reviewer"
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./config/nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+  
   reviewer-mocks:
+    container_name: reviewer-client_mocks
     image: liberoadmin/reviewer-mocks:latest
     ports:
       - "3003:3003"
     volumes:
       - ./config/reviewer-mocks:/etc/reviewer/:z
+    networks:
+      - "reviewer"
+    healthcheck:
+      test: 'echo -e "GET /health\n\n" | nc localhost 3003'
+      interval: 3s
+      timeout: 10s
+      retries: 3
+      
+networks:
+  reviewer:
+    external:
+      name: "reviewer"
+      

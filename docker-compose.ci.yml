@@ -1,0 +1,12 @@
+version: '3.4'
+services:
+  reviewer-client:
+    container_name: reviewer-client_app
+    build:
+      context: './'
+      target: prod
+    ports:
+      - '9000:9000'
+    image: libero/reviewer-client:${IMAGE_TAG}
+    volumes:
+      - ./config/nginx/nginx.ci.conf:/etc/nginx/nginx.conf
