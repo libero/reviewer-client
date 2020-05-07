@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField } from '../atoms';
-import { Search, Close } from '@material-ui/icons';
+import Search from '@material-ui/icons/Search';
+import Close from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

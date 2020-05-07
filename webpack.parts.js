@@ -117,7 +117,7 @@ exports.minifyJS = () => ({
 exports.splitBundles = () => ({
     plugins: [
         // Ignore all locale files of moment.js
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /uk/)
     ],
     optimization: {
         runtimeChunk: 'single',

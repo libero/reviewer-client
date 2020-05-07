@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
-import '@khanacademy/tota11y';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { Footer } from '../../ui/atoms';

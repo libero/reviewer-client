@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Menu, { MenuItemType } from './Menu';
-import { default as MenuIcon } from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 import Close from '@material-ui/icons/Close';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 

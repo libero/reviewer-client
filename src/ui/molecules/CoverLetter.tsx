@@ -1,5 +1,5 @@
 import React, { TextareaHTMLAttributes } from 'react';
-import { Close } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     helperText?: string;
