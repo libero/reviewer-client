@@ -37,6 +37,7 @@ COPY globals.d.ts \
     .eslintrc.js \
     .eslintignore \
     .prettierrc.js \
+    babel.config.json \
     webpack.parts.js \
     jest.config.js \
     tsconfig.json \
