@@ -33,7 +33,6 @@ FROM node AS dev
 COPY globals.d.ts \
     index.ejs \
     index.tsx \
-    .babelrc \
     .eslintrc.js \
     .eslintignore \
     .prettierrc.js \
