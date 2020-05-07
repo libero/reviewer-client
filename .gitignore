@@ -19,8 +19,7 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# Browser test compiled js files and output
-tests/**/*.js
+# Browser test output
 tests/output
 
 # nyc test coverage

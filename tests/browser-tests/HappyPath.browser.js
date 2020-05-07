@@ -1,12 +1,12 @@
-import { NightwatchBrowser } from 'nightwatch';
-import { LoginPage } from '../page-objects/LoginPage';
-import { DashboardPage } from '../page-objects/DashboardPage';
+'use strict';
+const { LoginPage } = require('../page-objects/LoginPage');
+const { DashboardPage } = require('../page-objects/DashboardPage');
 
-export = {
-    'Happy Path': (browser: NightwatchBrowser): void => {
+module.exports = {
+    'Happy Path': async browser => {
         const login = new LoginPage(browser);
         login.open();
-        login.login();
+        await login.login();
 
         const dashboard = new DashboardPage(browser);
 

@@ -1,59 +1,40 @@
-import { promisfy } from 'util';
-import { NightwatchBrowser, NightwatchCallbackResult } from 'nightwatch';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+'use strict';
 
-export interface DashboardSubmission {
-    id: string;
-    title: string;
-    date: string;
-    status: string;
-}
-
-export enum DashboardState {
-    'Submissions',
-    'NoSubmissions',
-    'Unknown',
-}
-
-export class DashboardPage {
-    private readonly dashboardContainer: string = '.dashboard';
-    private readonly dashboardNoSubmissions: string = '.no-submissions';
-    private readonly newSubmissionButton: string = '#new-submission-button';
-    private readonly continueButton: string = '.article-type__buttons > .button--primary';
-    private readonly menuLink: string = '.menu__link--active';
-    private readonly submissionLinks: string = '.submission-entry__link';
-    private readonly newSubmissionContainer: string = '.article-type';
-    private readonly articleTypeSelect: string = '.select-field__input';
-    private readonly articleTypeMenu: string = '.select-field__menu';
-    private readonly articleTypeOptions: string = '.select-field__option';
-    private readonly dashboardTabs: string = '.dashboard__tabs';
-    private browser: NightwatchBrowser;
-    private readonly isVisible: Function;
-
-    constructor(browser: NightwatchBrowser) {
+class DashboardPage {
+    constructor(browser) {
+        this.dashboardContainer = '.dashboard';
+        this.dashboardNoSubmissions = '.no-submissions';
+        this.newSubmissionButton = '#new-submission-button';
+        this.continueButton = '.article-type__buttons > .button--primary';
+        this.menuLink = '.menu__link--active';
+        this.submissionLinks = '.submission-entry__link';
+        this.newSubmissionContainer = '.article-type';
+        this.articleTypeSelect = '.select-field__input';
+        this.articleTypeMenu = '.select-field__menu';
+        this.articleTypeOptions = '.select-field__option';
+        this.dashboardTabs = '.dashboard__tabs';
         this.browser = browser;
-        // this.isVisible = (selector: string): Promise<boolean> =>
-        //     new Promise<boolean>(resolve =>
-        //         this.browser.isVisible(selector, (result: NightwatchCallbackResult<boolean>) => resolve(result.value ? true : false)),
-        //     );
     }
-
-    public onPage(): DashboardPage {
+    onPage() {
         this.browser.waitForElementVisible(this.newSubmissionButton, 10000);
         return this;
     }
-
-    public async pageState(): Promise<DashboardState> {
-        if (await this.browser.isVisible(this.dashboardContainer)) {
-            return DashboardState.Submissions;
-        } else if (await this.browser.isVisible(this.dashboardNoSubmissions)) {
-            return DashboardState.NoSubmissions;
+    async pageState() {
+        const dashboard = await this.browser.isVisible(this.dashboardContainer);
+        const noSubs = await this.browser.isVisible(this.dashboardNoSubmissions);
+        console.log(dashboard, noSubs);
+        if (dashboard) {
+            return 'Submissions';
+        } else {
+            if (noSubs) {
+                return 'NoSubmissions';
+            }
         }
-        return DashboardState.Unknown;
+        return 'Unknown';
     }
-
-    public getAllSubmissions(): Array<DashboardSubmission> {
-        const submissions = new Array<DashboardSubmission>();
-
+    getAllSubmissions() {
+        const submissions = [];
         // this.browser.elements(
         //     'css selector',
         //     this.dashboardTabs,
@@ -67,46 +48,37 @@ export class DashboardPage {
         // );
         return submissions;
     }
-
-    private async getAllElements(options: NightwatchCallbackResult<{ ELEMENT: string }[]>): Promise<Array<unknown>> {
-        const optionCount = ((options.value as unknown) as Array<string>).length;
+    async getAllElements(options) {
+        const optionCount = options.value.length;
         const results = [];
         for (let i = 1; i <= optionCount; i++) {
             results.push(
                 new Promise(resolve => {
                     this.browser.getText(this.articleTypeOptions + `:nth-child(${i})`, result => {
                         resolve(result.value);
-                    });
-                }),
-            );
+                });
+            }));
         }
         return Promise.all(results);
     }
-
-    public async newSubmission(articleType: string): Promise<void> {
+    async newSubmission(articleType) {
         // should return the author details page object when its created
         this.browser.click(this.newSubmissionButton);
         this.browser.click(this.articleTypeSelect);
-        this.browser.elements(
-            'css selector',
-            this.articleTypeOptions,
-            async (options: NightwatchCallbackResult<{ ELEMENT: string }[]>) => {
-                const result = await this.getAllElements(options);
-                const foundIndex = result.indexOf(articleType);
-
-                this.browser.assert.notEqual(foundIndex, -1, `Found the article type: ${articleType}`);
-                this.browser.click(this.articleTypeOptions + `:nth-child(${foundIndex + 1})`);
-            },
-        );
+        this.browser.elements('css selector', this.articleTypeOptions, async (options) => {
+            const result = await this.getAllElements(options);
+            const foundIndex = result.indexOf(articleType);
+            this.browser.assert.notEqual(foundIndex, -1, `Found the article type: ${articleType}`);
+            this.browser.click(this.articleTypeOptions + `:nth-child(${foundIndex + 1})`);
+        });
         this.browser.expect
             .element(this.articleTypeSelect)
             .text.to.equal(articleType)
             .before(1000);
-
         this.browser.click(this.continueButton);
     }
 }
-
+module.exports = { DashboardPage };
 // const dashboardCommands = {v//     onPage: async function(this: NightwatchBrowser): Promise<void> {
 //         this.page.
 //         await this.expect.section('@newSubmission').to.be.visible;
@@ -137,7 +109,6 @@ export class DashboardPage {
 //         await option.click();
 //     },
 // };
-
 // const pageObject: EnhancedPageObject<[dashboardCommands]> = {
 //     commands: [dashboardCommands],
 //     sections: {
@@ -171,5 +142,4 @@ export class DashboardPage {
 //         },
 //     },
 // };
-
 // export = pageObject;
