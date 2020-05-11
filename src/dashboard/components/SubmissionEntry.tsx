@@ -23,7 +23,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
 
     const status = submission.status ? submission.status.toLowerCase() : '';
     return (
-        <div className="submission-entry">
+        <div className="submission-entry" data-id={submission.id}>
             <Link
                 className={`submission-entry__link submission-entry__link--${status}`}
                 to={`/submit/${submission.id}/${submission.lastStepVisited || 'author'}`}

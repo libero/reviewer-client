@@ -1,15 +1,13 @@
-const loginCommands = {
-    login: async function(): Promise<void> {
-        return this.waitForElementVisible('@loginButton', 10000).click('@loginButton');
-    },
-};
+import { Selector, t } from 'testcafe';
 
-export = {
-    commands: [loginCommands],
-    url: 'http://localhost:9000',
-    elements: {
-        loginButton: {
-            selector: '.button--orcid',
-        },
-    },
-};
+export class LoginPage {
+    private readonly loginButton: Selector = Selector('.button--orcid');
+
+    public async assertOnPage(): Promise<void> {
+        await t.expect(this.loginButton.visible).ok();
+    }
+
+    public async login(): Promise<void> {
+        await t.click(this.loginButton);
+    }
+}
