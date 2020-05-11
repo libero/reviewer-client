@@ -1,22 +1,72 @@
 import { Selector, t } from 'testcafe';
 
+export enum DashboardState {
+    WithSubmissions = 'WithSubmissions',
+    NoSubmission = 'NoSubmission',
+    Unknown = 'Unknown',
+}
+
+export interface DashboardSubmission {
+    id: string;
+    title: string;
+    dateDiff: string;
+    timestamp: string;
+}
+
 export class DashboardPage {
-    private readonly withSubmissions: Selector = Selector('.dashboard');
-    private readonly noSubmissions: Selector = Selector('.no-submissions');
-    private readonly newSubmissionButton: Selector = Selector('#new-submission-button');
-    private readonly continueButton: Selector = Selector('.article-type__buttons > .button--primary');
-    private readonly menuLink: Selector = Selector('.menu__link--active');
+    private readonly withSubmissions = Selector('.dashboard');
+    private readonly noSubmissions = Selector('.no-submissions');
+    private readonly newSubmissionButton = Selector('#new-submission-button');
+    private readonly continueButton = Selector('.article-type__buttons > .button--primary');
+    private readonly menuLink = Selector('.menu__link--active');
+    private readonly submissionEntry = Selector('.submission-entry');
     private readonly submissionLinks: Selector = Selector('.submission-entry__link');
     private readonly newSubmissionContainer: Selector = Selector('.article-type');
     private readonly articleTypeSelect: Selector = Selector('.select-field__control');
     private readonly articleTypeValue: Selector = Selector('.select-field__single-value');
     private readonly articleTypeOptions: Selector = Selector('.select-field__option');
+    private readonly confirmDeleteButton = Selector('.button button--danger');
 
     public async assertOnPage(): Promise<void> {
         const dashboard = await this.withSubmissions.visible;
         const noSubmissions = await this.noSubmissions.visible;
 
         await t.expect(dashboard !== noSubmissions).ok();
+    }
+
+    public async getState(): Promise<DashboardState> {
+        const dashboard = await this.withSubmissions.visible;
+        const noSubmissions = await this.noSubmissions.visible;
+        if (dashboard) {
+            return DashboardState.WithSubmissions;
+        } else if (noSubmissions) {
+            return DashboardState.NoSubmission;
+        } else {
+            return DashboardState.Unknown;
+        }
+    }
+
+    public async getSubmissions(): Promise<DashboardSubmission[]> {
+        const state = await this.getState();
+        switch (state) {
+            case DashboardState.WithSubmissions:
+                const submissions = await this.submissionEntry;
+                const subCount = await submissions.count;
+                const dashboardSubmissions: DashboardSubmission[] = [];
+                for (let i = 0; i < subCount; i++) {
+                    const sub = submissions.nth(i);
+                    const id = await sub.getAttribute('data-id');
+                    console.log(id);
+                    const title = await sub.find('.submission-entry__title').textContent;
+                    const dateDiff = await sub.find('.submission-entry__dates').child(0).textContent;
+                    const timestamp = await sub.find('.submission-entry__dates').child(1).textContent;
+                    dashboardSubmissions.push({ id, title, dateDiff, timestamp });
+                }
+                return dashboardSubmissions;
+            case DashboardState.NoSubmission:
+            case DashboardState.Unknown:
+                return [];
+        }
     }
 
     public async newSubmission(articleType: string): Promise<void> {
@@ -26,5 +76,15 @@ export class DashboardPage {
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
         await t.click(this.continueButton);
+    }
+
+    public async deleteSubmission(id: string): Promise<void> {
+        if ((await this.getState()) !== DashboardState.WithSubmissions) {
+            console.warn('no submissions to delete');
+            return;
+        }
+        const submissionSelector = Selector(`[data-id="${id}"]`); //TODO replace with with
+        await t.click(submissionSelector.child('.submission-entry__icon'));
+        await t.click(this.confirmDeleteButton);
     }
 }
