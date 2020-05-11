@@ -1,8 +1,8 @@
 import { Selector, t } from 'testcafe';
 
 export class AuthorDetailsPage {
-    private readonly nextButton = Selector('.button--orcid');
-    private readonly backButton = Selector('.button--orcid');
+    private readonly nextButton = Selector('.submission-wizard-next-button');
+    private readonly backButton = Selector('.submission-wizard-back-button');
 
     private readonly firstNameInput = Selector('.orcid-details__firstName');
     private readonly lastNameInput = Selector('.orcid-details__lastName');
