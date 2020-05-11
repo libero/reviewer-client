@@ -41,4 +41,16 @@ test('TEMP - Files Step test', async () => {
     const filesPage = new FilesPage();
     await filesPage.assertOnPage();
     await filesPage.fillAndProceed();
+    await filesPage.uploadSupportingFiles(['../test-data/dummy-manuscript.docx', '../test-data/dummy-manuscript.docx']);
+    const filesStatus = await filesPage.getSupportingFilesStatus();
+    await t.expect(filesStatus).eql([
+        {
+            status: 0,
+            filename: 'dummy-manuscript.docx',
+        },
+        {
+            status: 0,
+            filename: 'dummy-manuscript.docx',
+        },
+    ]);
 });
