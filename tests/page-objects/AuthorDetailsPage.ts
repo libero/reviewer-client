@@ -3,10 +3,11 @@ import { Selector, t } from 'testcafe';
 export class AuthorDetailsPage {
     private readonly nextButton = Selector('.submission-wizard-next-button');
 
-    private readonly firstNameInput = Selector('.orcid-details__firstName');
-    private readonly lastNameInput = Selector('.orcid-details__lastName');
-    private readonly emailInput = Selector('.orcid-details__email');
-    private readonly institutionInput = Selector('.orcid-details__institution');
+    private readonly firstNameInput = Selector('.author-step__firstName');
+    private readonly lastNameInput = Selector('.author-step__lastName');
+    private readonly emailInput = Selector('.author-step__email');
+    private readonly institutionInput = Selector('.author-step__institution');
+    private readonly prefillInput = Selector('.author-step__prefill');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.firstNameInput.visible).ok();
@@ -16,6 +17,10 @@ export class AuthorDetailsPage {
         await t.expect(this.nextButton.visible).ok();
     }
 
+    public async prefill(): Promise<void> {
+        await t.click(this.prefillInput);  
+    }
+
     public async populateForm(): Promise<void> {
         await this.setFirstName('first');
         await this.lastNameInput('last');
@@ -23,7 +28,7 @@ export class AuthorDetailsPage {
         await this.setInstitution('institution');
     }
 
-    public async setEmail(input: string): Promise<void> {
+    public async setEmail(input: string = 'email@elifesciences.org'): Promise<void> {
         await t.expect(this.emailInput.visible).ok();
         await t.typeText(this.emailInput, input);
         await t.expect(this.emailInput.value).eql(input);
@@ -34,7 +39,7 @@ export class AuthorDetailsPage {
         return await this.emailInput.value;
     }
 
-    public async setFirstName(input: string): Promise<void> {
+    public async setFirstName(input: string = 'first'): Promise<void> {
         await t.expect(this.firstNameInput.visible).ok();
         await t.typeText(this.firstNameInput, input);
         await t.expect(this.firstNameInput.value).eql(input);
@@ -45,7 +50,7 @@ export class AuthorDetailsPage {
         return await this.firstNameInput.value;
     }
 
-    public async setLastName(input: string): Promise<void> {
+    public async setLastName(input: string = 'last'): Promise<void> {
         await t.expect(this.lastNameInput.visible).ok();
         await t.typeText(this.lastNameInput, input);
         await t.expect(this.lastNameInput.value).eql(input);
@@ -56,7 +61,7 @@ export class AuthorDetailsPage {
         return await this.lastNameInput.value;
     }
 
-    public async setInstitution(input: string): Promise<void> {
+    public async setInstitution(input: string = 'institution'): Promise<void> {
         await t.expect(this.institutionInput.visible).ok();
         await t.typeText(this.institutionInput, input);
         await t.expect(this.institutionInput.value).eql(input);

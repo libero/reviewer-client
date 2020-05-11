@@ -1,33 +1,33 @@
-.orcid-details {
+.author-step {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 6rem 6rem;
   grid-template-areas:
-    "orcid-details ."
+    "author-step ."
     "firstName lastName"
     "email institution";
   grid-gap: 1.5rem;
   margin-bottom: 4.5rem;
 }
 
-.orcid-details__link_text {
+.author-step__link_text {
   margin-bottom: 1rem;
   cursor: pointer;
 }
 
-.orcid-details__firstName {
+.author-step__firstName {
   grid-area: firstName;
 }
 
-.orcid-details__lastName {
+.author-step__lastName {
   grid-area: lastName;
 }
 
-.orcid-details__email {
+.author-step__email {
   grid-area: email;
 }
 
-.orcid-details__institution {
+.author-step__institution {
   grid-area: institution;
 }
 
