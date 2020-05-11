@@ -1,9 +1,10 @@
-import { DashboardPage, LoginPage } from '../page-objects';
+import { t } from 'testcafe';
+import { DashboardPage, LoginPage, FilesPage } from '../page-objects';
 // import { DashboardState } from '../page-objects/DashboardPage';
 
 fixture`Getting Started`.page`http://localhost:9000`;
 
-test('My first test', async () => {
+test.skip('My first test', async () => {
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
@@ -11,7 +12,7 @@ test('My first test', async () => {
     await dashboardPage.assertOnPage();
 });
 
-test('Happy path', async () => {
+test.skip('Happy path', async () => {
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
@@ -25,4 +26,19 @@ test('Happy path', async () => {
     // console.log(submissions.length);
     // await t.expect(submissions.length).eql(7);
     // console.log(JSON.stringify(submissions));
+});
+
+test('TEMP - Files Step test', async () => {
+    const loginPage = new LoginPage();
+    await loginPage.assertOnPage();
+    await loginPage.login();
+    const dashboardPage = new DashboardPage();
+    await dashboardPage.assertOnPage();
+    await dashboardPage.newSubmission('Feature Article');
+    await t.navigateTo('http://localhost:9000');
+    const submissions = await dashboardPage.getSubmissions();
+    await t.navigateTo(`/submit/${submissions[0].id}/files`);
+    const filesPage = new FilesPage();
+    await filesPage.assertOnPage();
+    await filesPage.fillAndProceed();
 });
