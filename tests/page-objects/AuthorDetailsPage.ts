@@ -2,7 +2,6 @@ import { Selector, t } from 'testcafe';
 
 export class AuthorDetailsPage {
     private readonly nextButton = Selector('.submission-wizard-next-button');
-    private readonly backButton = Selector('.submission-wizard-back-button');
 
     private readonly firstNameInput = Selector('.orcid-details__firstName');
     private readonly lastNameInput = Selector('.orcid-details__lastName');
@@ -15,7 +14,6 @@ export class AuthorDetailsPage {
         await t.expect(this.emailInput.visible).ok();
         await t.expect(this.institutionInput.visible).ok();
         await t.expect(this.nextButton.visible).ok();
-        await t.expect(this.backButton.visible).ok();
     }
 
     public async populateForm(): Promise<void> {
@@ -72,10 +70,5 @@ export class AuthorDetailsPage {
     public async next(): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
         await t.click(this.nextButton);
-    }
-
-    public async back(): Promise<void> {
-        await t.expect(this.backButton.visible).ok();
-        await t.click(this.backButton);
     }
 }
