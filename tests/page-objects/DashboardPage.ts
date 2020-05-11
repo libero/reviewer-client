@@ -18,14 +18,12 @@ export class DashboardPage {
     private readonly noSubmissions = Selector('.no-submissions');
     private readonly newSubmissionButton = Selector('#new-submission-button');
     private readonly continueButton = Selector('.article-type__buttons > .button--primary');
-    private readonly menuLink = Selector('.menu__link--active');
     private readonly submissionEntry = Selector('.submission-entry');
-    private readonly submissionLinks: Selector = Selector('.submission-entry__link');
     private readonly newSubmissionContainer: Selector = Selector('.article-type');
     private readonly articleTypeSelect: Selector = Selector('.select-field__control');
     private readonly articleTypeValue: Selector = Selector('.select-field__single-value');
     private readonly articleTypeOptions: Selector = Selector('.select-field__option');
-    private readonly confirmDeleteButton = Selector('.button button--danger');
+    private readonly confirmDeleteButton = Selector('.button--danger');
 
     public async assertOnPage(): Promise<void> {
         const dashboard = await this.withSubmissions.visible;
@@ -56,7 +54,6 @@ export class DashboardPage {
                 for (let i = 0; i < subCount; i++) {
                     const sub = submissions.nth(i);
                     const id = await sub.getAttribute('data-id');
-                    console.log(id);
                     const title = await sub.find('.submission-entry__title').textContent;
                     const dateDiff = await sub.find('.submission-entry__dates').child(0).textContent;
                     const timestamp = await sub.find('.submission-entry__dates').child(1).textContent;
@@ -83,8 +80,8 @@ export class DashboardPage {
             console.warn('no submissions to delete');
             return;
         }
-        const submissionSelector = Selector(`[data-id="${id}"]`); //TODO replace with with
-        await t.click(submissionSelector.child('.submission-entry__icon'));
+        const submissionSelector = await this.submissionEntry.withAttribute('data-id', id); //TODO replace with with
+        await t.click(submissionSelector.find('.submission-entry__icon'));
         await t.click(this.confirmDeleteButton);
     }
 }
