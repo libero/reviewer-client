@@ -9,6 +9,22 @@ export class AuthorDetailsPage {
     private readonly emailInput = Selector('.orcid-details__email');
     private readonly institutionInput = Selector('.orcid-details__institution');
 
+    public async assertOnPage(): Promise<void> {
+        await t.expect(this.firstNameInput.visible).ok();
+        await t.expect(this.lastNameInput.visible).ok();
+        await t.expect(this.emailInput.visible).ok();
+        await t.expect(this.institutionInput.visible).ok();
+        await t.expect(this.nextButton.visible).ok();
+        await t.expect(this.backButton.visible).ok();
+    }
+
+    public async populateForm(): Promise<void> {
+        await this.setFirstName('first');
+        await this.lastNameInput('last');
+        await this.setEmail('email@elifesciences.org');
+        await this.setInstitution('institution');
+    }
+
     public async setEmail(input: string): Promise<void> {
         await t.expect(this.emailInput.visible).ok();
         await t.typeText(this.emailInput, input);
