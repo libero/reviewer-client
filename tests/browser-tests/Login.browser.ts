@@ -1,5 +1,5 @@
 import { t } from 'testcafe';
-import { DashboardPage, LoginPage, FilesPage } from '../page-objects';
+import { DashboardPage, FilesPage, FileStatus, LoginPage } from '../page-objects';
 // import { DashboardState } from '../page-objects/DashboardPage';
 
 fixture`Getting Started`.page`http://localhost:9000`;
@@ -43,11 +43,20 @@ test('TEMP - Files Step test', async () => {
     await filesPage.fillAndProceed();
     await filesPage.uploadSupportingFiles(['../test-data/dummy-manuscript.docx', '../test-data/dummy-manuscript.docx']);
     const filesStatus = await filesPage.getSupportingFilesStatus();
+    console.log(filesStatus);
     await t.expect(filesStatus).eql([
         {
             status: 0,
             filename: 'dummy-manuscript.docx',
         },
+        {
+            status: 0,
+            filename: 'dummy-manuscript.docx',
+        },
+    ]);
+    await filesPage.deleteSupportingFile(1);
+    const newFilesStatus = await filesPage.getSupportingFilesStatus();
+    await t.expect(newFilesStatus).eql([
         {
             status: 0,
             filename: 'dummy-manuscript.docx',

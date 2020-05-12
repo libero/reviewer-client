@@ -5,8 +5,8 @@ export enum FileStatus {
     Success = 0,
     Uploading = 1,
     Error = 2,
-    Unknown = 3,
 }
+
 interface DropzoneStatus {
     status: FileStatus;
     text: string;
@@ -92,11 +92,40 @@ export class FilesPage {
 
     public async uploadSupportingFiles(filesPath: string[]): Promise<void> {
         await t.setFilesToUpload(this.supportingInput, filesPath);
+        console.log('waiting for uploads');
+        await this.waitForUploads();
+    }
+
+    public async waitForUploads(retries = 0): Promise<void> {
+        const statuses = await this.getSupportingFilesStatus();
+        const uploaded = statuses.every(status => status.status === FileStatus.Success);
+        console.log('uploaded', uploaded);
+        if (!uploaded && retries < 50) {
+            console.log('retries', retries);
+            await t.wait(100);
+            await this.waitForUploads(retries++);
+        } else if (!uploaded) {
+            throw new Error('failed to upload in 5 seconds');
+        }
+    }
+
+    public async deleteSupportingFile(index: number): Promise<void> {
+        const supportingFiles = await this.supportFilesList;
+        const initialCount = await supportingFiles.count;
+        const supportingFile = await supportingFiles.nth(index);
+        const icon = await supportingFile.find('.multifile-upload__delete');
+        const status = await this.getSupportingFilesStatus();
+        await t.expect(status.every(st => st.status !== FileStatus.Uploading)).ok();
+        await t.debug();
+        await t.click(icon);
+        await t.wait(200);
+        const expected = await Selector('.multifile-upload__upload-list-item').count;
+        await t.expect(initialCount).gt(expected);
     }
 
     public async fillAndProceed(): Promise<void> {
-        await this.fillCoverLetterInput();
-        await t.expect(await hasError(this.coverLetterContainer)).notOk();
+        // await this.fillCoverLetterInput();
+        // await t.expect(await hasError(this.coverLetterContainer)).notOk();
         await this.uploadManuscriptFile('../test-data/dummy-manuscript.docx');
         const dropzoneStatus = await this.getManuscriptDropzoneStatus();
         await t.expect(dropzoneStatus).eql({
