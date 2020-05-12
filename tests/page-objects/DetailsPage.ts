@@ -1,5 +1,4 @@
 import { Selector, t } from 'testcafe';
-import { findFieldsThatChangedTypeOnInputObjectTypes } from 'graphql/utilities/findBreakingChanges';
 
 export class DetailsPage {
     private readonly titleInput = Selector('#title');
