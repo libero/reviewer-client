@@ -9,7 +9,7 @@ export class DetailsPage {
     private readonly previouslySubmittedInput = Selector('#previouslySubmitted');
     private readonly CosubmissionToggle = Selector('#cosubmission.toggle');
     private readonly firstCosubmissionTitleInput = Selector('#firstCosubmissionTitle');
-    private readonly secondCosubmissionButton = Selector('#secondCosubmissionTitle');
+    private readonly secondCosubmissionButton = Selector('#secondCosubmissionTitleButton');
     private readonly secondCosubmissionTitleInput = Selector('#secondCosubmissionTitle');
     private readonly nextButton = Selector('.submission-wizard-next-button');
     private readonly backButton = Selector('.submission-wizard-back-button');
