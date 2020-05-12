@@ -7,10 +7,10 @@ export class DetailsPage {
     private readonly previouslyDiscussedInput = Selector('#previouslyDiscussed');
     private readonly previouslyConsideredToggle = Selector('#previouslyConsideredContainer.toggle');
     private readonly previouslySubmittedInput = Selector('#previouslySubmitted');
-    private readonly previouslyCosubmissionToggle = Selector('#cosubmission.toggle');
+    private readonly CosubmissionToggle = Selector('#cosubmission.toggle');
     private readonly firstCosubmissionTitleInput = Selector('#firstCosubmissionTitle');
-    private readonly secondCosubmissionTitleInput = Selector('#secondCosubmissionTitle');
     private readonly secondCosubmissionButton = Selector('#secondCosubmissionTitle');
+    private readonly secondCosubmissionTitleInput = Selector('#secondCosubmissionTitle');
     private readonly nextButton = Selector('.submission-wizard-next-button');
     private readonly backButton = Selector('.submission-wizard-back-button');
 
@@ -22,7 +22,7 @@ export class DetailsPage {
         await t.expect(this.previouslyDiscussedInput.visible).notOk();
         await t.expect(this.previouslyConsideredToggle.visible).ok();
         await t.expect(this.previouslySubmittedInput.visible).notOk();
-        await t.expect(this.previouslyCosubmissionToggle.visible).ok();
+        await t.expect(this.CosubmissionToggle.visible).ok();
         await t.expect(this.firstCosubmissionTitleInput.visible).notOk();
         await t.expect(this.secondCosubmissionTitleInput.visible).notOk();
         await t.expect(this.secondCosubmissionButton.visible).ok();
@@ -83,8 +83,8 @@ export class DetailsPage {
     }
 
     public async setCosubmission(input: string = 'first co'): Promise<void> {
-        await t.expect(this.previouslyCosubmissionToggle.visible).ok();
-        await t.click(this.previouslyCosubmissionToggle);
+        await t.expect(this.CosubmissionToggle.visible).ok();
+        await t.click(this.CosubmissionToggle);
         await t.typeText(this.firstCosubmissionTitleInput, input);
         await t.expect(this.firstCosubmissionTitleInput.value).eql(input);
     }
