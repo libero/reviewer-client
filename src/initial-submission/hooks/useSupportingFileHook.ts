@@ -38,11 +38,6 @@ const hook = (
                 query: getSubmissionQuery,
                 variables: { id: initialValues.id },
             });
-            if (!getSubmission.files) {
-                getSubmission.files = {
-                    supportingFiles: [],
-                };
-            }
             getSubmission.files.supportingFiles.push(uploadSupportingFile);
             cache.writeQuery({
                 query: getSubmissionQuery,
