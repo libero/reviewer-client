@@ -32,7 +32,7 @@ export class DashboardPage {
         const noSubmissions = await this.noSubmissions.visible;
 
         if (!dashboard && !noSubmissions && retries < MAX_ASSERT_ON_PAGE_RETRIES) {
-            await this.assertOnPage(retries++);
+            await this.assertOnPage(retries + 1);
         } else {
             await t.expect(dashboard !== noSubmissions).ok();
         }

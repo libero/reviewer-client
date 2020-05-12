@@ -103,7 +103,7 @@ export class FilesPage {
         const uploaded = statuses.every(status => status.status === FileStatus.Success);
         if (!uploaded && retries < 50) {
             await t.wait(100);
-            await this.waitForUploads(retries++);
+            await this.waitForUploads(retries + 1);
         } else if (!uploaded) {
             throw new Error('failed to upload in 5 seconds');
         }
