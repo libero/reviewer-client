@@ -25,6 +25,7 @@ export class FilesPage {
     private readonly manuscriptInput = Selector('.file-upload__dropzone > input');
     private readonly supportingInput = Selector('.multifile-upload__input');
     private readonly manuscriptDropzone = Selector('.file-upload__dropzone');
+    private readonly manuscriptReplaceButton = Selector('.file-upload__description > button');
     private readonly supportFilesList = Selector('.multifile-upload__upload-list-item');
 
     private stringToFileStatus(status: string): FileStatus {
@@ -88,20 +89,18 @@ export class FilesPage {
 
     public async uploadManuscriptFile(filePath: string): Promise<void> {
         await t.setFilesToUpload(this.manuscriptInput, filePath);
+        await t.expect(await this.manuscriptReplaceButton.withText('Replace').visible).ok();
     }
 
     public async uploadSupportingFiles(filesPath: string[]): Promise<void> {
         await t.setFilesToUpload(this.supportingInput, filesPath);
-        console.log('waiting for uploads');
         await this.waitForUploads();
     }
 
     public async waitForUploads(retries = 0): Promise<void> {
         const statuses = await this.getSupportingFilesStatus();
         const uploaded = statuses.every(status => status.status === FileStatus.Success);
-        console.log('uploaded', uploaded);
         if (!uploaded && retries < 50) {
-            console.log('retries', retries);
             await t.wait(100);
             await this.waitForUploads(retries++);
         } else if (!uploaded) {
@@ -114,18 +113,13 @@ export class FilesPage {
         const initialCount = await supportingFiles.count;
         const supportingFile = await supportingFiles.nth(index);
         const icon = await supportingFile.find('.multifile-upload__delete');
-        const status = await this.getSupportingFilesStatus();
-        await t.expect(status.every(st => st.status !== FileStatus.Uploading)).ok();
-        await t.debug();
         await t.click(icon);
-        await t.wait(200);
-        const expected = await Selector('.multifile-upload__upload-list-item').count;
-        await t.expect(initialCount).gt(expected);
+        await t.expect(initialCount).gt(await this.supportFilesList.count);
     }
 
     public async fillAndProceed(): Promise<void> {
-        // await this.fillCoverLetterInput();
-        // await t.expect(await hasError(this.coverLetterContainer)).notOk();
+        await this.fillCoverLetterInput();
+        await t.expect(await hasError(this.coverLetterContainer)).notOk();
         await this.uploadManuscriptFile('../test-data/dummy-manuscript.docx');
         const dropzoneStatus = await this.getManuscriptDropzoneStatus();
         await t.expect(dropzoneStatus).eql({

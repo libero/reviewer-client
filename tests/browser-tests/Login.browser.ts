@@ -43,7 +43,6 @@ test('TEMP - Files Step test', async () => {
     await filesPage.fillAndProceed();
     await filesPage.uploadSupportingFiles(['../test-data/dummy-manuscript.docx', '../test-data/dummy-manuscript.docx']);
     const filesStatus = await filesPage.getSupportingFilesStatus();
-    console.log(filesStatus);
     await t.expect(filesStatus).eql([
         {
             status: 0,
@@ -62,4 +61,10 @@ test('TEMP - Files Step test', async () => {
             filename: 'dummy-manuscript.docx',
         },
     ]);
+    await filesPage.uploadManuscriptFile('../test-data/dummy-manuscript2.docx');
+    await t.expect(await filesPage.getManuscriptDropzoneStatus()).eql({
+        status: FileStatus.Success,
+        text: 'Done! Preview or Replace your manuscript file.',
+        extraText: 'dummy-manuscript2.docx',
+    });
 });
