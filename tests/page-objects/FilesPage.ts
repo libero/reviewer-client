@@ -19,6 +19,7 @@ interface SupportingFileStatus {
 }
 
 export class FilesPage {
+    private readonly nextButton = Selector('.submission-wizard-next-button');
     private readonly stepWrapper = Selector('.files-step');
     private readonly coverLetterContainer = Selector('.cover-letter');
     private readonly coverLetterInput = Selector('.cover-letter__input');
@@ -117,7 +118,7 @@ export class FilesPage {
         await t.expect(initialCount).gt(await this.supportFilesList.count);
     }
 
-    public async fillAndProceed(): Promise<void> {
+    public async populateForm(): Promise<void> {
         await this.fillCoverLetterInput();
         await t.expect(await hasError(this.coverLetterContainer)).notOk();
         await this.uploadManuscriptFile('../test-data/dummy-manuscript.docx');
@@ -127,5 +128,10 @@ export class FilesPage {
             text: 'Done! Preview or Replace your manuscript file.',
             extraText: 'dummy-manuscript.docx',
         });
+    }
+
+    public async next(): Promise<void> {
+        await t.expect(this.nextButton.visible).ok();
+        await t.click(this.nextButton);
     }
 }
