@@ -1,10 +1,10 @@
 import { t } from 'testcafe';
-import { DashboardPage, FilesPage, FileStatus, LoginPage } from '../page-objects';
+import { DashboardPage, FilesPage, FileStatus, LoginPage, AuthorDetailsPage } from '../page-objects';
 // import { DashboardState } from '../page-objects/DashboardPage';
 
 fixture`Getting Started`.page`http://localhost:9000`;
 
-test.skip('My first test', async () => {
+test('My first test', async () => {
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
@@ -12,13 +12,16 @@ test.skip('My first test', async () => {
     await dashboardPage.assertOnPage();
 });
 
-test.skip('Happy path', async () => {
+test('Happy path', async () => {
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
     const dashboardPage = new DashboardPage();
     await dashboardPage.assertOnPage();
     await dashboardPage.newSubmission('Feature Article');
+    const authorDetailsPage = new AuthorDetailsPage();
+    await authorDetailsPage.assertOnPage();
+    await authorDetailsPage.next();
     // await t.navigateTo('http://localhost:9000');
     // console.log(await dashboardPage.getState());
     // await t.expect(await dashboardPage.getState()).eql(DashboardState.WithSubmissions);
