@@ -1,4 +1,4 @@
-import { DashboardPage, LoginPage } from '../page-objects';
+import { DashboardPage, LoginPage, AuthorDetailsPage } from '../page-objects';
 // import { DashboardState } from '../page-objects/DashboardPage';
 
 fixture`Getting Started`.page`http://localhost:9000`;
@@ -18,6 +18,9 @@ test('Happy path', async () => {
     const dashboardPage = new DashboardPage();
     await dashboardPage.assertOnPage();
     await dashboardPage.newSubmission('Feature Article');
+    const authorDetailsPage = new AuthorDetailsPage();
+    await authorDetailsPage.assertOnPage();
+    await authorDetailsPage.next();
     // await t.navigateTo('http://localhost:9000');
     // console.log(await dashboardPage.getState());
     // await t.expect(await dashboardPage.getState()).eql(DashboardState.WithSubmissions);

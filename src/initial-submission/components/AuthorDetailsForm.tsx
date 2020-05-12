@@ -68,16 +68,16 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.E
 
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
-            <div className="orcid-details">
-                <div className="orcid-details__link_text">
-                    <span onClick={getDetails} className="typography__body typography__body--link">
+            <div className="author-step">
+                <div className="author-step__link_text">
+                    <span onClick={getDetails} className="typography__body typography__body--link author-step__prefill">
                         {t('author.prefill--link')}{' '}
                     </span>
                     <span className="typography__body typography__body--primary">{t('author.prefill--text')}</span>
                 </div>
 
                 <TextField
-                    className="orcid-details__firstName"
+                    className="author-step__firstName"
                     id="firstName"
                     invalid={errors && errors.firstName !== undefined}
                     helperText={errors && errors.firstName ? errors.firstName.message : null}
@@ -85,7 +85,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.E
                     register={register}
                 />
                 <TextField
-                    className="orcid-details__lastName"
+                    className="author-step__lastName"
                     id="lastName"
                     invalid={errors && errors.lastName !== undefined}
                     helperText={errors && errors.lastName ? errors.lastName.message : null}
@@ -93,7 +93,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.E
                     register={register}
                 />
                 <TextField
-                    className="orcid-details__email"
+                    className="author-step__email"
                     id="email"
                     invalid={errors && errors.email !== undefined}
                     helperText={errors && errors.email ? errors.email.message : null}
@@ -101,7 +101,7 @@ const AuthorDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.E
                     register={register}
                 />
                 <TextField
-                    className="orcid-details__institution"
+                    className="author-step__institution"
                     id="institution"
                     invalid={errors && errors.institution !== undefined}
                     helperText={errors && errors.institution ? errors.institution.message : null}

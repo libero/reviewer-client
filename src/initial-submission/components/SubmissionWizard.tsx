@@ -47,6 +47,7 @@ const ButtonComponent = (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
                 <Button
+                    className="submission-wizard-back-button"
                     onClick={async (): Promise<void> => {
                         if (!processing) {
                             try {
@@ -64,6 +65,7 @@ const ButtonComponent = (
             )}
             {getCurrentStepPathIndex() < stepConfig.length - 1 && (
                 <Button
+                    className="submission-wizard-next-button"
                     onClick={async (): Promise<void> => {
                         if (!processing) {
                             try {
