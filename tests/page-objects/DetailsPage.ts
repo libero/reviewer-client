@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { findFieldsThatChangedTypeOnInputObjectTypes } from 'graphql/utilities/findBreakingChanges';
 
 export class DetailsPage {
     private readonly titleInput = Selector('#title');
@@ -26,6 +27,16 @@ export class DetailsPage {
         await t.expect(this.firstCosubmissionTitleInput.visible).notOk();
         await t.expect(this.secondCosubmissionTitleInput.visible).notOk();
         await t.expect(this.secondCosubmissionButton.visible).ok();
+    }
+
+    async populateForm(): Promise<void> {
+        await this.setTitle();
+        await this.setSubjects();
+        await this.setPreviouslyDiscussed();
+        await this.setPreviouslyConsidered();
+        await this.setPreviouslyConsidered();
+        await this.setCosubmission();
+        await this.setSecondCosubmission();
     }
 
     public async setTitle(input: string = 'title'): Promise<void> {
@@ -72,14 +83,14 @@ export class DetailsPage {
         await this.previouslySubmittedInput.value;
     }
 
-    public async setPreviouslyCosubmissionToggle(input: string = 'first co'): Promise<void> {
+    public async setCosubmission(input: string = 'first co'): Promise<void> {
         await t.expect(this.previouslyCosubmissionToggle.visible).ok();
         await t.click(this.previouslyCosubmissionToggle);
         await t.typeText(this.firstCosubmissionTitleInput, input);
         await t.expect(this.firstCosubmissionTitleInput.value).eql(input);
     }
 
-    public async getPreviouslyCosubmission(): Promise<void> {
+    public async getCosubmission(): Promise<void> {
         await t.expect(this.firstCosubmissionTitleInput.visible).ok();
         await this.firstCosubmissionTitleInput.value;
     }
