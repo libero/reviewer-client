@@ -29,11 +29,25 @@ export class NavigationPane {
     }
 
     public async assertNavItems(): Promise<void> {
+        await t.expect(this.menu.visible).ok();
         await t.expect(this.menu.child().count).eql(4);
         await t.expect(this.menu.child(0).innerText).eql('Dashboard');
         await t.expect(this.menu.child(0).innerText).eql('Author Guide');
         await t.expect(this.menu.child(0).innerText).eql('Reviewer Guide');
         await t.expect(this.menu.child(0).innerText).eql('Contact Us');
+    }
+
+    public async assertProfileDropDown(): Promise<void> {
+        const profileSelector = this.profileDropdown.child('profile_dropdown__panel');
+        await t.expect(this.profileDropdown.visible).ok();
+        await t.expect(profileSelector.visible).notOk();
+        await t.click(this.profileDropdown.child('button'));
+        await t.expect(profileSelector.visible).ok();
+        await t.expect(profileSelector.child('profile_dropdown__panel_heading').visible).ok();
+        await t.expect(profileSelector.child('profile_dropdown__list').child().count).eql(2);
+        await t.expect(profileSelector.child('profile_dropdown__list').child(0).textContent).eql('Manage ORCID');
+        await t.expect(profileSelector.child('profile_dropdown__list').child(1).textContent).eql('Logout');
+        
     }
 
 }
