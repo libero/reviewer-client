@@ -9,6 +9,8 @@ export class DetailsPage {
     private readonly previouslySubmittedInput = Selector('#previouslySubmitted');
     private readonly previouslyCosubmissionToggle = Selector('#cosubmission.toggle');
     private readonly firstCosubmissionTitleInput = Selector('#firstCosubmissionTitle');
+    private readonly secondCosubmissionTitleInput = Selector('#secondCosubmissionTitle');
+    private readonly secondCosubmissionButton = Selector('#secondCosubmissionTitle');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.titleInput.visible).ok();
@@ -19,6 +21,8 @@ export class DetailsPage {
         await t.expect(this.previouslySubmittedInput.visible).notOk();
         await t.expect(this.previouslyCosubmissionToggle.visible).ok();
         await t.expect(this.firstCosubmissionTitleInput.visible).notOk();
+        await t.expect(this.secondCosubmissionTitleInput.visible).notOk();
+        await t.expect(this.secondCosubmissionButton.visible).ok();
     }
 
 }
