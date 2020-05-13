@@ -1,4 +1,4 @@
-import { Selector, t } from 'testcafe';
+import { Selector, t, ClientFunction } from 'testcafe';
 
 export class NavigationPane {
     private readonly iconLink = Selector('.app-bar__icon-link');
@@ -27,13 +27,41 @@ export class NavigationPane {
         await t.expect(this.burgerMenuButton.visible).notOk();
     }
 
+    public async navigateToDashboard(): Promise<void> {
+        await this.assertNavItems();
+        await t.click(this.menu.child(0));
+        const windowLocation = await ClientFunction(() => window.location)();
+        await t.expect(windowLocation.pathname).eql('/');
+    }
+
+    public async navigateToAuthorGuide(): Promise<void> {
+        await this.assertNavItems();
+        await t.click(this.menu.child(1));
+        const windowLocation = await ClientFunction(() => window.location)();
+        await t.expect(windowLocation.pathname).eql('/author-guide');
+    }
+
+    public async navigateToReviewerGuide(): Promise<void> {
+        await this.assertNavItems();
+        await t.click(this.menu.child(2));
+        const windowLocation = await ClientFunction(() => window.location)();
+        await t.expect(windowLocation.pathname).eql('/reviewer-guide');
+    }
+
+    public async navigateToContactUs(): Promise<void> {
+        await this.assertNavItems();
+        await t.click(this.menu.child(3));
+        const windowLocation = await ClientFunction(() => window.location)();
+        await t.expect(windowLocation.pathname).eql('/contact-us');
+    }
+
     public async assertNavItems(): Promise<void> {
         await t.expect(this.menu.visible).ok();
         await t.expect(this.menu.child().count).eql(4);
         await t.expect(this.menu.child(0).innerText).eql('Dashboard');
-        await t.expect(this.menu.child(0).innerText).eql('Author Guide');
-        await t.expect(this.menu.child(0).innerText).eql('Reviewer Guide');
-        await t.expect(this.menu.child(0).innerText).eql('Contact Us');
+        await t.expect(this.menu.child(1).innerText).eql('Author Guide');
+        await t.expect(this.menu.child(2).innerText).eql('Reviewer Guide');
+        await t.expect(this.menu.child(3).innerText).eql('Contact Us');
     }
 
     public async assertProfileDropDown(): Promise<void> {

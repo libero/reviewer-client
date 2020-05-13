@@ -1,15 +1,25 @@
 import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane } from '../page-objects';
-// import { DashboardState } from '../page-objects/DashboardPage';
 
 fixture`Getting Started`.page`http://localhost:9000`;
 
-test('My first test', async () => {
+test.only('assert nav bar', async() => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
     await navigationPane.assertOnPageAuthenticated();
+    await navigationPane.assertNavItems();
+    await navigationPane.assertProfileDropDown();
+    await navigationPane.navigateToAuthorGuide();
+    await navigationPane.navigateToReviewerGuide();
+    await navigationPane.navigateToDashboard();
+});
+
+test('My first test', async () => {
+    const loginPage = new LoginPage();
+    await loginPage.assertOnPage();
+    await loginPage.login();
     const dashboardPage = new DashboardPage();
     await dashboardPage.assertOnPage();
 });
