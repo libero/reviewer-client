@@ -13,11 +13,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const { t } = useTranslation('wizard-form');
     const { editorDetails } = initialValues;
 
-    const schema = yup.object().shape({
-        coverLetter: yup.string().required(t('files.validation.coverletter-required')),
-    });
+    const schema = yup.object().shape({});
 
-    const { register, watch, errors, triggerValidation } = useForm<EditorsDetails>({
+    const { watch, triggerValidation } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
