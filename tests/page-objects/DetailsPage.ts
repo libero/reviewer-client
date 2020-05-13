@@ -2,7 +2,9 @@ import { Selector, t } from 'testcafe';
 
 export class DetailsPage {
     private readonly titleInput = Selector('#title');
-    private readonly subjectsInput = Selector('#subjects');
+    private readonly subjectsContainer = Selector('.subject-area');
+    private readonly subjectOptions: Selector = Selector('.select-field__option');
+    private readonly subjectValue: Selector = Selector('.select-field__single-value');
     private readonly previouslyDiscussedToggle = Selector('#previouslyDiscussedContainer.toggle');
     private readonly previouslyDiscussedInput = Selector('#previouslyDiscussed');
     private readonly previouslyConsideredToggle = Selector('#previouslyConsideredContainer.toggle');
@@ -17,7 +19,7 @@ export class DetailsPage {
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.titleInput.visible).ok();
-        await t.expect(this.subjectsInput.visible).ok();
+        await t.expect(this.subjectsContainer.visible).ok();
         await t.expect(this.previouslyDiscussedToggle.visible).ok();
         await t.expect(this.previouslyDiscussedInput.visible).notOk();
         await t.expect(this.previouslyConsideredToggle.visible).ok();
@@ -48,14 +50,14 @@ export class DetailsPage {
         return await this.titleInput.value;
     }
 
-    public async setSubjects(input: string = 'subject'): Promise<void> {
-        await t.expect(this.subjectsInput.visible).ok();
-        await t.typeText(this.subjectsInput, input);
-        await t.expect(this.subjectsInput.value).eql(input);
+    public async setSubjects(): Promise<void> {
+        await t.expect(this.subjectsContainer.visible).ok();
+        await t.click(this.subjectOptions.withText('cell-biology'));
+        await t.expect(this.subjectValue.textContent).eql('cell-biology');
     }
 
     public async getSubjects(): Promise<string> {
-        return await this.subjectsInput.value;
+        return await this.subjectsContainer.value;
     }
 
     public async setPreviouslyDiscussed(input: string = 'previous'): Promise<void> {
