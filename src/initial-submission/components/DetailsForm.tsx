@@ -231,7 +231,11 @@ const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 ) : (
                     <span className="typography__small">
                         {t('details.second-cosubmission-toggle-prefix')}
-                        <span className="typography__body--link" onClick={(): void => setCosubmissionState(true)}>
+                        <span
+                            className="typography__body--link"
+                            id="secondCosubmissionTitleButton"
+                            onClick={(): void => setCosubmissionState(true)}
+                        >
                             {t('details.second-cosubmission-toggle-link')}
                         </span>
                         {t('details.second-cosubmission-toggle-suffix')}
