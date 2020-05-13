@@ -39,7 +39,10 @@ const ProfileDropdown: React.FC<Props> = ({ user }: Props): JSX.Element => {
                             </a>
                         </li>
                         <li className="profile_dropdown__list_item">
-                            <NavLink to="/logout" className="profile_dropdown__item profile_dropdown__link">
+                            <NavLink
+                                to="/logout"
+                                className="profile_dropdown__item profile_dropdown__link profile_dropdown__logout"
+                            >
                                 Logout
                             </NavLink>
                         </li>

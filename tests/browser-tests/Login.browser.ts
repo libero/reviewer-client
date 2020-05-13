@@ -13,8 +13,11 @@ test('assert nav bar', async() => {
     await navigationPane.assertProfileDropDown();
     await navigationPane.navigateToAuthorGuide();
     await navigationPane.navigateToReviewerGuide();
+    await navigationPane.navigateToContactUs();
     await navigationPane.navigateToDashboard();
     await navigationPane.assertUserName();
+    await navigationPane.logout();
+    await navigationPane.assertOnPage();
 });
 
 test('My first test', async () => {

@@ -83,6 +83,7 @@ export class NavigationPane {
         await t.click(this.profileDropdown.child('button'));
         await t.expect(profileSelector.visible).ok();
         await t.expect(profileSelector.child('.profile_dropdown__panel_heading').textContent).eql(input);
+        await t.click(this.profileDropdown);
     }
 
     public async logout(): Promise<void> {
@@ -91,11 +92,6 @@ export class NavigationPane {
         await t.expect(profileSelector.visible).notOk();
         await t.click(this.profileDropdown.child('button'));
         await t.expect(profileSelector.visible).ok();
-        await t.click(
-            profileSelector
-                .child('.profile_dropdown__list')
-                .child('.profile_dropdown__list_item')
-                .child('.profile_dropdown__link'),
-        );
+        await t.click(Selector('.profile_dropdown__logout'));
     }
 }
