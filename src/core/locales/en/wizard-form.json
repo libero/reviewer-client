@@ -44,5 +44,10 @@
     "validation": {
       "coverletter-required": "Please write or paste in your cover letter"
     }
+  },
+  "editors": {
+    "title": "Who should review your work?",
+    "editors-people-picker-label": "Suggest Senior Editors",
+    "reviewers-people-picker-label": "Suggest Reviewing Editors"
   }
 }

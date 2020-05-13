@@ -12,6 +12,7 @@ export interface Submission {
     author?: AuthorDetails;
     manuscriptDetails?: ManuscriptDetails;
     files?: FileDetails;
+    editorDetails?: EditorsDetails;
     suggestions?: Array<Suggestion>;
 }
 
@@ -25,6 +26,28 @@ export interface FileDetails {
     coverLetter?: string;
     manuscriptFile?: File | null;
     supportingFiles?: Array<File>;
+}
+
+export interface EditorsDetails {
+    suggestedSeniorEditors: string[];
+    opposedSeniorEditors: string[];
+    opposedSeniorEditorsReason: string;
+    suggestedReviewingEditors: string[];
+    opposedReviewingEditors: string[];
+    opposedReviewingEditorsReason: string;
+    suggestedReviewers: ReviewerAlias[];
+    opposedReviewers: OpposedReviewer[];
+    opposedReviewersReason: string;
+}
+
+export interface ReviewerAlias {
+    name: string;
+    email: string;
+}
+
+export interface OpposedReviewer {
+    name: string;
+    email: string;
 }
 
 export interface AuthorDetails {

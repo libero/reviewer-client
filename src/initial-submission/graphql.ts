@@ -121,3 +121,28 @@ export const deleteSupportingFileMutation = gql`
         deleteSupportingFile(fileId: $fileId, submissionId: $submissionId)
     }
 `;
+
+export const saveEditorsPageMutation = gql`
+    mutation SaveEditorPage($id: ID!, $details: EditorDetailsInput!) {
+        saveEditorPage(id: $id, details: $details) {
+            id
+            editorDetails {
+                suggestedSeniorEditors
+                opposedSeniorEditors
+                opposedSeniorEditorsReason
+                suggestedReviewingEditors
+                opposedReviewingEditors
+                opposedReviewingEditorsReason
+                suggestedReviewers {
+                    name
+                    email
+                }
+                opposedReviewers {
+                    name
+                    email
+                }
+                opposedReviewersReason
+            }
+        }
+    }
+`;
