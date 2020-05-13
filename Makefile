@@ -32,8 +32,8 @@ start_dev: ## start with dev build image, with reviewer-mocks mocking continuum
 	${DOCKER_COMPOSE} pull reviewer-mocks nginx
 	$(MAKE) build_dev
 	${DOCKER_COMPOSE} up -d reviewer-client reviewer-mocks
-	./.scripts/docker/wait-healthy.sh reviewer-client_app 210
-	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
+	# ./.scripts/docker/wait-healthy.sh reviewer-client_app 210
+	# ./.scripts/docker/wait-healthy.sh reviewer-client_mocks 20
 	${DOCKER_COMPOSE} up -d nginx
 	${DOCKER_COMPOSE} logs -f reviewer-client
 

@@ -1,4 +1,4 @@
-import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage } from '../page-objects';
+import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage } from '../page-objects';
 // import { DashboardState } from '../page-objects/DashboardPage';
 
 fixture`Getting Started`.page`http://localhost:9000`;
@@ -29,4 +29,9 @@ test('Happy path', async () => {
     await filesPage.assertOnPage();
     await filesPage.populateForm();
     await filesPage.next();
+
+    const detailsPage = new DetailsPage();
+    await detailsPage.assertOnPage();
+    await detailsPage.populateForm();
+    await detailsPage.next();
 });
