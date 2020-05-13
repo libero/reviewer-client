@@ -14,6 +14,7 @@ test('assert nav bar', async() => {
     await navigationPane.navigateToAuthorGuide();
     await navigationPane.navigateToReviewerGuide();
     await navigationPane.navigateToDashboard();
+    await navigationPane.assertUserName();
 });
 
 test('My first test', async () => {
