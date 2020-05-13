@@ -10,6 +10,7 @@ import DetailsForm from './DetailsForm';
 import { useQuery } from '@apollo/react-hooks';
 import { getSubmissionQuery } from '../graphql';
 import * as H from 'history';
+import EditorsForm from './EditorsForm';
 
 interface Props {
     id: string;
@@ -94,18 +95,7 @@ const stepConfig: StepConfig[] = [
     { id: 'author', label: 'Author', component: AuthorDetailsForm },
     { id: 'files', label: 'Files', component: FileDetailsStep },
     { id: 'details', label: 'Details', component: DetailsForm },
-    {
-        id: 'editors',
-        label: 'Editors',
-        component: ({ ButtonComponent }: StepProps): JSX.Element => (
-            <div>
-                Editors Step{' '}
-                {ButtonComponent && (
-                    <ButtonComponent triggerValidation={(): Promise<boolean> => Promise.resolve(true)} />
-                )}
-            </div>
-        ),
-    },
+    { id: 'editors', label: 'Editors', component: EditorsForm },
     {
         id: 'disclosure',
         label: 'Disclosure',

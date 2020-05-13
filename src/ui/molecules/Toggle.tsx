@@ -14,7 +14,7 @@ const Toggle = ({ children, toggleLabel, id, open = false }: Props): JSX.Element
     return (
         <div className="toggle">
             <Checkbox
-                id={`${id}.toggle`}
+                id={`${id}-toggle`}
                 labelText={toggleLabel}
                 onChange={(event): void => setOpened(event.target.checked)}
                 initialValue={opened}

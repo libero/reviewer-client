@@ -411,7 +411,7 @@ describe('DetailsForm', (): void => {
         it('shows error message if previouslyDiscussed is empty', async () => {
             const { getByText, container } = renderDetails();
 
-            fireEvent.click(container.querySelector('input[name="previouslyDiscussedContainer.toggle"]'));
+            fireEvent.click(container.querySelector('input[name="previouslyDiscussedContainer-toggle"]'));
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() =>
                 expect(getByText('details.validation.previously-discussed-required')).toBeInTheDocument(),
@@ -421,7 +421,7 @@ describe('DetailsForm', (): void => {
         it('shows error message if previouslyConsidered is empty', async () => {
             const { getByText, container } = renderDetails();
 
-            fireEvent.click(container.querySelector('input[name="previouslyConsideredContainer.toggle"]'));
+            fireEvent.click(container.querySelector('input[name="previouslyConsideredContainer-toggle"]'));
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() =>
                 expect(getByText('details.validation.previously-submitted-required')).toBeInTheDocument(),
@@ -430,7 +430,7 @@ describe('DetailsForm', (): void => {
 
         it('shows error message if cosubmission is empty', async () => {
             const { getByText, container } = renderDetails();
-            fireEvent.click(container.querySelector('input[name="cosubmission.toggle"]'));
+            fireEvent.click(container.querySelector('input[name="cosubmission-toggle"]'));
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => expect(getByText('details.validation.cosubmission-required')).toBeInTheDocument());
         });

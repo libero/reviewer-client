@@ -141,7 +141,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
     useAutoSave(onSave, [coverLetter]);
 
     return (
-        <div>
+        <div className="files-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
             <span className="typography__small typography__small--secondary">
                 Enter your cover letter below. Please help us evaluate your work by answering the following questions:
