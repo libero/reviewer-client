@@ -1,7 +1,20 @@
-import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage } from '../page-objects';
-// import { DashboardState } from '../page-objects/DashboardPage';
+import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane } from '../page-objects';
 
 fixture`Getting Started`.page`http://localhost:9000`;
+
+test('assert nav bar', async() => {
+    const navigationPane = new NavigationPane();
+    await navigationPane.assertOnPage();
+    const loginPage = new LoginPage();
+    await loginPage.assertOnPage();
+    await loginPage.login();
+    await navigationPane.assertOnPageAuthenticated();
+    await navigationPane.assertNavItems();
+    await navigationPane.assertProfileDropDown();
+    await navigationPane.navigateToAuthorGuide();
+    await navigationPane.navigateToReviewerGuide();
+    await navigationPane.navigateToDashboard();
+});
 
 test('My first test', async () => {
     const loginPage = new LoginPage();
@@ -12,9 +25,12 @@ test('My first test', async () => {
 });
 
 test('Happy path', async () => {
+    const navigationPane = new NavigationPane();
+    await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
+    await navigationPane.assertOnPageAuthenticated();
 
     const dashboardPage = new DashboardPage();
     await dashboardPage.assertOnPage();
