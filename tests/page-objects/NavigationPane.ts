@@ -5,7 +5,7 @@ export class NavigationPane {
     private readonly burgerMenuContainer = Selector('.burger_menu');
     private readonly burgerMenuButton = Selector('.burger_menu__icon_button');
     private readonly burgerMenuContent = Selector('.burger_menu__overlay');
-    private readonly menu = Selector('.burger_menu__list');
+    private readonly menu = Selector('.menu__list');
     private readonly profileDropdown = Selector('.profile_dropdown');
 
     public async assertOnPage(): Promise<void> {
