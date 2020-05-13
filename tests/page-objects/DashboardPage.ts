@@ -13,6 +13,8 @@ export interface DashboardSubmission {
     timestamp: string;
 }
 
+const MAX_ASSERT_ON_PAGE_RETRIES = 5;
+
 export class DashboardPage {
     private readonly withSubmissions = Selector('.dashboard');
     private readonly noSubmissions = Selector('.no-submissions');
@@ -25,11 +27,15 @@ export class DashboardPage {
     private readonly articleTypeOptions: Selector = Selector('.select-field__option');
     private readonly confirmDeleteButton = Selector('.button--danger');
 
-    public async assertOnPage(): Promise<void> {
+    public async assertOnPage(retries = 0): Promise<void> {
         const dashboard = await this.withSubmissions.visible;
         const noSubmissions = await this.noSubmissions.visible;
 
-        await t.expect(dashboard !== noSubmissions).ok();
+        if (!dashboard && !noSubmissions && retries < MAX_ASSERT_ON_PAGE_RETRIES) {
+            await this.assertOnPage(retries + 1);
+        } else {
+            await t.expect(dashboard !== noSubmissions).ok();
+        }
     }
 
     public async getState(): Promise<DashboardState> {
