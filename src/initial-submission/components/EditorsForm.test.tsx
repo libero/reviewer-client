@@ -1,8 +1,9 @@
 import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import EditorsForm from './EditorsForm';
 import { Submission } from '../types';
+import appContainer from '../../../test-utils/appContainer';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -24,48 +25,49 @@ jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): 
 });
 
 jest.mock('@apollo/react-hooks', () => ({
-    useQuery: (
-        _: unknown,
-        variables: { role: string },
-    ): { data: Array<Record<string, object | string>>; loading: boolean } => {
-        if (variables.role === 'seniorEditors') {
+    useQuery: (_: unknown, options: { variables: { role: string } }): { data: object; loading: boolean } => {
+        if (options.variables.role === 'seniorEditors') {
             return {
-                data: [
-                    {
-                        id: '1',
-                        name: 'Bob',
-                        aff: 'Institution 1',
-                        focuses: ['Tag 1', 'Tag 2'],
-                        expertises: ['Tag 3'],
-                    },
-                    {
-                        id: '2',
-                        name: 'Batman',
-                        aff: 'Institution 2',
-                        focuses: ['Tag 1', 'Tag 2'],
-                        expertises: ['Tag 3'],
-                    },
-                ],
+                data: {
+                    getEditors: [
+                        {
+                            id: '1',
+                            name: 'James Bond',
+                            aff: 'MI6',
+                            focuses: ['Spying', 'Vodka'],
+                            expertises: ['Marksmanship', 'One Liners'],
+                        },
+                        {
+                            id: '2',
+                            name: 'Blofeld',
+                            aff: 'Spectre',
+                            focuses: ['World Domination', 'Money', 'Evil'],
+                            expertises: ['White Cats'],
+                        },
+                    ],
+                },
                 loading: false,
             };
         }
         return {
-            data: [
-                {
-                    id: '3',
-                    name: 'Jack',
-                    aff: 'Institution 1',
-                    focuses: ['Tag 1', 'Tag 2'],
-                    expertises: ['Tag 3'],
-                },
-                {
-                    id: '4',
-                    name: 'James',
-                    aff: 'Institution 2',
-                    focuses: ['Tag 1', 'Tag 2'],
-                    expertises: ['Tag 3'],
-                },
-            ],
+            data: {
+                getEditors: [
+                    {
+                        id: '3',
+                        name: 'Alec Trevelyan',
+                        aff: 'MI6',
+                        focuses: ['Space Based Ion Weaponry', 'Money'],
+                        expertises: ['Betrayal', 'One Liners'],
+                    },
+                    {
+                        id: '4',
+                        name: 'Scaramanga',
+                        aff: 'None',
+                        focuses: ['Dueling', 'Gunsmithing'],
+                        expertises: ['Marksmanship'],
+                    },
+                ],
+            },
             loading: false,
         };
     },
@@ -88,5 +90,52 @@ describe('DetailsForm', (): void => {
         expect(async () => {
             render(<EditorsForm initialValues={testInitialValues} />);
         }).not.toThrow();
+    });
+
+    describe('PeoplePickers', (): void => {
+        it('display a senior editors when picker is clicked', async () => {
+            const { baseElement, container, getByText, getAllByText } = render(
+                <EditorsForm initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                },
+            );
+            const seniorEditorPicker = container.querySelector('.senior-editors-picker');
+            expect(seniorEditorPicker).toBeInTheDocument();
+            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            expect(getByText('James Bond')).toBeInTheDocument();
+        });
+
+        it('display a senior editors when picker is clicked', async () => {
+            const { baseElement, container, getByText, getAllByText } = render(
+                <EditorsForm initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                },
+            );
+            const seniorEditorPicker = container.querySelector('.senior-editors-picker');
+            expect(seniorEditorPicker).toBeInTheDocument();
+            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            expect(getByText('James Bond')).toBeInTheDocument();
+        });
+
+        it('display a senior reviewers when picker is clicked', async () => {
+            const { baseElement, container, getByText, getAllByText } = render(
+                <EditorsForm initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                },
+            );
+            const seniorReviewersPicker = container.querySelector('.reviewing-editors-picker');
+            expect(seniorReviewersPicker).toBeInTheDocument();
+            await fireEvent.click(getAllByText('selected_people_list--open')[1]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            expect(getByText('Scaramanga')).toBeInTheDocument();
+        });
     });
 });

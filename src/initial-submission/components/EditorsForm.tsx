@@ -114,6 +114,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 }
                 setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
                 selectedPeople={suggestedSeniorEditors}
+                className="senior-editors-picker"
             />
             {/* TODO add exclude editor toggleable box */}
             <PeoplePicker
@@ -127,6 +128,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 }
                 setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
                 selectedPeople={suggestedReviewingEditors}
+                className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
             {/* TODO add suggest reviewer (non editor) expanding email field */}

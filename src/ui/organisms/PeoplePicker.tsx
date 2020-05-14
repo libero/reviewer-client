@@ -13,6 +13,7 @@ interface Props {
     max?: number;
     onRemove: (personId: string) => void;
     setSelectedPeople: (selectedPeople: string[]) => void;
+    className?: string;
 }
 
 const PeoplePicker = ({
@@ -24,11 +25,12 @@ const PeoplePicker = ({
     max,
     onRemove,
     setSelectedPeople,
+    className,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
     return (
-        <div className="people-picker">
+        <div className={`people-picker ${className ? className : ''}`}>
             <h2 className="typography__heading typography__heading--h3">{label}</h2>
             <SelectedPeopleList
                 people={people.filter((person): boolean => selectedPeople.includes(person.id))}
