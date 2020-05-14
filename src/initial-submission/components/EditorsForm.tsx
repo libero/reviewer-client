@@ -30,7 +30,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
 
     const schema = yup.object().shape({});
 
-    const { watch, triggerValidation } = useForm<EditorsDetails>({
+    const { watch, register, triggerValidation, setValue } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
@@ -57,8 +57,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         mode: 'onBlur',
         validationSchema: schema,
     });
-
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
+
+    register({ name: 'suggestedSeniorEditors', type: 'custom' });
+    register({ name: 'suggestedReviewingEditors', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
@@ -107,17 +109,26 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
                 people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
-                onRemove={(): void => {}}
+                onRemove={(selected): void =>
+                    setValue('suggestedSeniorEditors', suggestedSeniorEditors.filter(personId => personId !== selected))
+                }
                 onSearch={(): void => {}}
-                setSelectedPeople={(): void => {}}
+                setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
+                selectedPeople={suggestedSeniorEditors}
             />
             {/* TODO add exclude editor toggleable box */}
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
                 people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
-                onRemove={(): void => {}}
+                onRemove={(selected): void =>
+                    setValue(
+                        'suggestedReviewingEditors',
+                        suggestedReviewingEditors.filter(personId => personId !== selected),
+                    )
+                }
                 onSearch={(): void => {}}
-                setSelectedPeople={(): void => {}}
+                setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
+                selectedPeople={suggestedReviewingEditors}
             />
             {/* TODO add exclude reviewer toggleable box */}
             {/* TODO add suggest reviewer (non editor) expanding email field */}
