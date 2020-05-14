@@ -93,5 +93,7 @@ export class NavigationPane {
         await t.click(this.profileDropdown.child('button'));
         await t.expect(profileSelector.visible).ok();
         await t.click(Selector('.profile_dropdown__logout'));
+        const windowLocation = await ClientFunction(() => window.location)();
+        await t.expect(windowLocation.pathname).eql('/login');
     }
 }

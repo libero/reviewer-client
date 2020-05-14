@@ -2,7 +2,7 @@ import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, Na
 
 fixture`Getting Started`.page`http://localhost:9000`;
 
-test('assert nav bar', async() => {
+test.only('assert nav bar', async() => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
@@ -17,7 +17,6 @@ test('assert nav bar', async() => {
     await navigationPane.navigateToDashboard();
     await navigationPane.assertUserName();
     await navigationPane.logout();
-    await navigationPane.assertOnPage();
 });
 
 test('My first test', async () => {
