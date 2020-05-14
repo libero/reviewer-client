@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React, { CSSProperties } from 'react';
-import { render, cleanup, RenderResult, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, RenderResult, waitFor, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
 import appContainer from '../../../test-utils/appContainer';
@@ -296,33 +296,168 @@ describe('PeoplePickerSelector', (): void => {
         expect(baseElement.querySelector('.button--primary')).toBeEnabled();
     });
 
-    //TODO: Replace this with a test for internal search filter.
-    // it('should call the onSearch callback when the user types a string into the search box', async (): Promise<
-    //     void
-    // > => {
-    //     jest.useFakeTimers();
+    it('filters by partial name match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'ja' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Jack')).toBeInTheDocument();
+        expect(getByText('Jake')).toBeInTheDocument();
+        expect(() => getByText('Bob')).toThrow();
+    });
+    it('filters by partial aff match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                        aff: 'apple',
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                        aff: 'banana',
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                        aff: 'apple',
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'app' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Jack')).toBeInTheDocument();
+        expect(getByText('Bob')).toBeInTheDocument();
+        expect(() => getByText('Jake')).toThrow();
+    });
 
-    //     const searchMock = jest.fn();
-    //     const { baseElement } = render(
-    //         <PeoplePickerSelector
-    //             initialySelected={[]}
-    //             people={people}
-    //             onDone={jest.fn()}
-    //             onSearch={searchMock}
-    //             label=" "
-    //             toggle={jest.fn()}
-    //             isShowing={true}
-    //         />,
-    //         {
-    //             container: appContainer(),
-    //         },
-    //     );
-    //     await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
-    //     act((): void => {
-    //         jest.advanceTimersByTime(510);
-    //     });
-    //     expect(searchMock).toBeCalledWith('someSearch');
-    // });
+    it('filters by partial focuses match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                        focuses: ['cow', 'hen'],
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                        focuses: ['duck'],
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                        focuses: ['rabbit', 'duck'],
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'du' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Jake')).toBeInTheDocument();
+        expect(getByText('Bob')).toBeInTheDocument();
+        expect(() => getByText('Jack')).toThrow();
+    });
+    it('filters by partial expertises match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                        expertises: ['planes', 'cars'],
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                        expertises: ['boats', 'cars'],
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                        expertises: ['trains', 'boats'],
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'boa' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Bob')).toBeInTheDocument();
+        expect(getByText('Jake')).toBeInTheDocument();
+        expect(() => getByText('Jack')).toThrow();
+    });
 
     it('should add SelectedOption blocks for each selected person', async (): Promise<void> => {
         const { baseElement } = render(
