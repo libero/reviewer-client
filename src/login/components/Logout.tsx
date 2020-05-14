@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { clearToken } from '../utils/tokenUtils';
 
 const Logout = (): JSX.Element => {
-    clearToken();
+    useEffect(() => {
+        clearToken();
+        window.location.reload();
+    }, []);
 
     return <Redirect to="/" />;
 };
