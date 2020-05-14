@@ -108,7 +108,7 @@ describe('DetailsForm', (): void => {
             expect(getByText('James Bond')).toBeInTheDocument();
         });
 
-        it('display a senior editors when picker is clicked', async () => {
+        it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
                 <EditorsForm initialValues={testInitialValues} />,
                 {
