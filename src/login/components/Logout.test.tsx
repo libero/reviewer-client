@@ -38,6 +38,6 @@ describe('Logout', () => {
             </MemoryRouter>,
         );
 
-        expect(container.textContent).toBe('Root');
+        expect(container.textContent).toBe('');
     });
 });
