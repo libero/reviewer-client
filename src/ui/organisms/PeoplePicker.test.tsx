@@ -8,10 +8,7 @@ describe('PeoplePicker', (): void => {
     afterEach(cleanup);
     it('should render correctly', (): void => {
         expect(
-            (): RenderResult =>
-                render(
-                    <PeoplePicker onRemove={jest.fn()} onSearch={jest.fn()} label="" setSelectedPeople={jest.fn()} />,
-                ),
+            (): RenderResult => render(<PeoplePicker onRemove={jest.fn()} label="" setSelectedPeople={jest.fn()} />),
         ).not.toThrow();
     });
 
@@ -26,7 +23,6 @@ describe('PeoplePicker', (): void => {
                         min={1}
                         max={2}
                         onRemove={jest.fn()}
-                        onSearch={jest.fn()}
                         label=""
                         setSelectedPeople={jest.fn()}
                     />,
@@ -36,7 +32,7 @@ describe('PeoplePicker', (): void => {
 
     it('SelectedPeopleList button toggles the PeoplePickerSelector', async (): Promise<void> => {
         const { getByText, baseElement } = render(
-            <PeoplePicker onRemove={jest.fn()} onSearch={jest.fn()} label="" setSelectedPeople={jest.fn()} />,
+            <PeoplePicker onRemove={jest.fn()} label="" setSelectedPeople={jest.fn()} />,
             {
                 container: appContainer(),
             },

@@ -9,7 +9,6 @@ interface Props {
     people?: EditorAlias[];
     initialySelected?: string[];
     onDone: (selectedPeople: string[]) => void;
-    onSearch: (value: string) => void;
     label: string;
     toggle: Function;
     isShowing: boolean;
@@ -21,7 +20,6 @@ const PeoplePickerSelector = ({
     initialySelected = [],
     people = [],
     onDone,
-    onSearch,
     label,
     isShowing,
     toggle,
@@ -32,6 +30,27 @@ const PeoplePickerSelector = ({
     const [locallySelected, setLocallySelected] = useState(initialySelected);
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
+    const [filteredPeople, setFilteredPeople] = useState(people);
+
+    const onSearch = (searchTerm: string): void => {
+        if (!searchTerm) {
+            setFilteredPeople(people);
+            return;
+        }
+
+        setFilteredPeople(
+            people.filter(person => {
+                const searchableExpertises = person.expertises ? person.expertises.join(' ') : '';
+                const searchableFocuses = person.focuses ? person.focuses.join(' ') : '';
+                return (
+                    person.name.toLowerCase().includes(searchTerm) ||
+                    (person.aff && person.aff.toLowerCase().includes(searchTerm)) ||
+                    searchableFocuses.toLowerCase().includes(searchTerm) ||
+                    searchableExpertises.toLowerCase().includes(searchTerm)
+                );
+            }),
+        );
+    };
 
     // don't run onSearch on first render
     const isFirstRender = useRef(true);
@@ -47,6 +66,8 @@ const PeoplePickerSelector = ({
         }
         onSearch(debouncedSearchTerm);
     }, [debouncedSearchTerm]);
+
+    useEffect(() => setFilteredPeople(people), [people]);
 
     const accept = (): void => {
         onDone(locallySelected);
@@ -109,7 +130,7 @@ const PeoplePickerSelector = ({
                     )}
                 </div>
                 <div className="people-picker__modal_list">
-                    {people.map(
+                    {filteredPeople.map(
                         (person): React.ReactNode => {
                             const selected = locallySelected.includes(person.id);
                             return (

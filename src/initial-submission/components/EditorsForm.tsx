@@ -112,7 +112,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 onRemove={(selected): void =>
                     setValue('suggestedSeniorEditors', suggestedSeniorEditors.filter(personId => personId !== selected))
                 }
-                onSearch={(): void => {}}
                 setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
                 selectedPeople={suggestedSeniorEditors}
             />
@@ -126,7 +125,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                         suggestedReviewingEditors.filter(personId => personId !== selected),
                     )
                 }
-                onSearch={(): void => {}}
                 setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
                 selectedPeople={suggestedReviewingEditors}
             />
