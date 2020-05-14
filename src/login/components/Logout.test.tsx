@@ -5,6 +5,9 @@ import Logout from './Logout';
 import { MemoryRouter, Route } from 'react-router';
 
 describe('Logout', () => {
+    beforeEach(() => {
+        window.location.reload = jest.fn();
+    });
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
@@ -38,6 +41,7 @@ describe('Logout', () => {
             </MemoryRouter>,
         );
 
-        expect(container.textContent).toBe('Root');
+        expect(container.textContent).toBe('');
+        expect(window.location.reload).toHaveBeenCalled();
     });
 });

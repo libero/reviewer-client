@@ -1,11 +1,14 @@
-import React from 'react';
-import { Redirect } from 'react-router';
+import React, { useEffect } from 'react';
 import { clearToken } from '../utils/tokenUtils';
 
 const Logout = (): JSX.Element => {
-    clearToken();
+    useEffect(() => {
+        clearToken();
+        window.location.reload();
+        window.location.pathname = '/';
+    }, []);
 
-    return <Redirect to="/" />;
+    return <div />;
 };
 
 export default Logout;
