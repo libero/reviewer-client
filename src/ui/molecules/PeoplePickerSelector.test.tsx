@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React, { CSSProperties } from 'react';
-import { render, cleanup, RenderResult, waitFor, fireEvent, act } from '@testing-library/react';
+import { render, cleanup, RenderResult, waitFor, fireEvent } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
 import appContainer from '../../../test-utils/appContainer';
