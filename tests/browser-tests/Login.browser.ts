@@ -2,7 +2,7 @@ import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, Na
 
 fixture`Getting Started`.page`http://localhost:9000`;
 
-test.only('assert nav bar', async() => {
+test('assert nav bar', async() => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
