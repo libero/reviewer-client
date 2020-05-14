@@ -146,3 +146,15 @@ export const saveEditorsPageMutation = gql`
         }
     }
 `;
+
+export const getEditorsQuery = gql`
+    query EditorList($role: String!) {
+        getEditors(role: $role) {
+            id
+            name
+            aff
+            focuses
+            expertises
+        }
+    }
+`;

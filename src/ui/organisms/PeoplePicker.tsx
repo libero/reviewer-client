@@ -1,10 +1,11 @@
 import React from 'react';
-import { PeoplePickerSelector, PersonProps, SelectedPeopleList } from '../molecules';
+import { PeoplePickerSelector, SelectedPeopleList } from '../molecules';
 import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
+import { EditorAlias } from '../../initial-submission/types';
 
 interface Props {
-    people?: PersonProps[];
+    people?: EditorAlias[];
     selectedPeople?: string[];
     label: string;
     required?: boolean;

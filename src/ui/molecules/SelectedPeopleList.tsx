@@ -2,11 +2,12 @@ import React from 'react';
 import Delete from '@material-ui/icons/Delete';
 import Add from '@material-ui/icons/Add';
 import { Pod } from '../atoms';
-import { PersonPod, PersonProps } from '.';
+import { PersonPod } from '.';
 import { useTranslation } from 'react-i18next';
+import { EditorAlias } from '../../initial-submission/types';
 
 interface Props {
-    people?: PersonProps[];
+    people?: EditorAlias[];
     openSelectorText: string;
     required?: boolean;
     onRemove: (personId: string) => void;
@@ -17,7 +18,7 @@ const SelectedPeopleList = ({ people = [], openSelectorText, required, onRemove,
     return (
         <div className="selected_people_list">
             {people.map(
-                (person: PersonProps): JSX.Element => (
+                (person: EditorAlias): JSX.Element => (
                     <div key={person.id} className="selected_people_list__item">
                         <PersonPod
                             {...person}

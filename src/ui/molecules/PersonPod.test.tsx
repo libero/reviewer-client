@@ -7,7 +7,7 @@ describe('Button', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<PersonPod toggleHandler={jest.fn()} />)).not.toThrow();
+        expect((): RenderResult => render(<PersonPod toggleHandler={jest.fn()} id="" name="" />)).not.toThrow();
     });
 
     it('should render correctly with all props', (): void => {
@@ -17,7 +17,7 @@ describe('Button', (): void => {
                     <PersonPod
                         toggleHandler={jest.fn()}
                         name="name"
-                        institution="inst"
+                        aff="inst"
                         focuses={['focus']}
                         expertises={['expertises']}
                         id="id"
@@ -27,35 +27,42 @@ describe('Button', (): void => {
     });
 
     it('should toggle the check if preselected is passed in', async (): Promise<void> => {
-        const { container } = render(<PersonPod toggleHandler={jest.fn()} initialySelected={true} />);
+        const { container } = render(<PersonPod toggleHandler={jest.fn()} initialySelected={true} id="" name="" />);
         expect(container.querySelectorAll('[data-selected]').length).toBe(1);
     });
 
     it('should call the callback if the button is clicked', async (): Promise<void> => {
         const mockHandler = jest.fn();
-        const { container } = render(<PersonPod toggleHandler={mockHandler} />);
+        const { container } = render(<PersonPod toggleHandler={mockHandler} id="" name="" />);
         await fireEvent.click(container.querySelector('.pod__button'));
         expect(mockHandler).toHaveBeenCalled();
     });
 
     it('should render name prop text', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} name="A TEST NAME" />);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} id="" name="A TEST NAME" />);
         expect(getByText('A TEST NAME')).toBeInTheDocument();
     });
 
     it('should render institution prop text', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} institution="A TEST INSTITUTION" />);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} id="" name="" aff="A TEST INSTITUTION" />);
         expect(getByText('A TEST INSTITUTION')).toBeInTheDocument();
     });
 
     it('should render a comma seperated list of focuses', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} focuses={['FocusA', 'FocusB', 'FocusC']} />);
+        const { getByText } = render(
+            <PersonPod toggleHandler={jest.fn()} id="" name="" focuses={['FocusA', 'FocusB', 'FocusC']} />,
+        );
         expect(getByText('FocusA, FocusB, FocusC')).toBeInTheDocument();
     });
 
     it('should render a comma seperated list of expertieses', (): void => {
         const { getByText } = render(
-            <PersonPod toggleHandler={jest.fn()} expertises={['Expertise1', 'Expertise2', 'Expertise3']} />,
+            <PersonPod
+                toggleHandler={jest.fn()}
+                id=""
+                name=""
+                expertises={['Expertise1', 'Expertise2', 'Expertise3']}
+            />,
         );
         expect(getByText('Expertise1, Expertise2, Expertise3')).toBeInTheDocument();
     });
@@ -64,6 +71,8 @@ describe('Button', (): void => {
         const { getByText } = render(
             <PersonPod
                 toggleHandler={jest.fn()}
+                id=""
+                name=""
                 focuses={['FocusA', 'FocusB', 'FocusC']}
                 expertises={['Expertise1', 'Expertise2', 'Expertise3']}
             />,
@@ -72,13 +81,17 @@ describe('Button', (): void => {
     });
 
     it('should use an override select icon if passed', (): void => {
-        const { container, rerender } = render(<PersonPod initialySelected={true} toggleHandler={jest.fn()} />);
+        const { container, rerender } = render(
+            <PersonPod initialySelected={true} toggleHandler={jest.fn()} id="" name="" />,
+        );
         expect(container.querySelector('.pod__button').querySelector('.person-pod__selected_icon')).toBeInTheDocument();
         rerender(
             <PersonPod
                 initialySelected={true}
                 selectedButtonIcon={<div className="testIcon" />}
                 toggleHandler={jest.fn()}
+                id=""
+                name=""
             />,
         );
         expect(

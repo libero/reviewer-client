@@ -20,7 +20,7 @@ describe('PeoplePicker', (): void => {
             (): RenderResult =>
                 render(
                     <PeoplePicker
-                        people={[{ id: '1' }]}
+                        people={[{ id: '1', name: 'Bob 1' }]}
                         selectedPeople={['1']}
                         required={true}
                         min={1}

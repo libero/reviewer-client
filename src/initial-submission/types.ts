@@ -50,6 +50,14 @@ export interface OpposedReviewer {
     email: string;
 }
 
+export interface EditorAlias {
+    id: string;
+    name: string;
+    aff?: string;
+    focuses?: string[];
+    expertises?: string[];
+}
+
 export interface AuthorDetails {
     firstName?: string;
     lastName?: string;

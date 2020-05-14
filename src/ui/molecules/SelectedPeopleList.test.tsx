@@ -18,7 +18,7 @@ describe('SelectedPeopleList', (): void => {
             (): RenderResult =>
                 render(
                     <SelectedPeopleList
-                        people={[{ id: '1' }]}
+                        people={[{ id: '1', name: 'Bob' }]}
                         required={true}
                         openSelectorText=" "
                         onRemove={jest.fn()}
@@ -73,12 +73,15 @@ describe('SelectedPeopleList', (): void => {
         const people = [
             {
                 id: '1',
+                name: 'Bob 1',
             },
             {
                 id: '2',
+                name: 'Bob 2',
             },
             {
                 id: '3',
+                name: 'Bob 3',
             },
         ];
         const { container } = render(
@@ -97,7 +100,7 @@ describe('SelectedPeopleList', (): void => {
         const onRemoveSpy = jest.fn();
         const { container } = render(
             <SelectedPeopleList
-                people={[{ id: '1' }]}
+                people={[{ id: '1', name: 'Bob 1' }]}
                 openSelectorText="SomeTestText"
                 onRemove={onRemoveSpy}
                 onOpen={jest.fn()}

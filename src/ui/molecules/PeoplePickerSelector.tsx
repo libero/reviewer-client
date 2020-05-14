@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PersonProps, PersonPod, SearchField, SelectedOption } from '.';
+import { PersonPod, SearchField, SelectedOption } from '.';
 import { Modal, Banner } from '../atoms';
 import useDebounce from '../hooks/useDebounce';
+import { EditorAlias } from '../../initial-submission/types';
 
 interface Props {
-    people?: PersonProps[];
+    people?: EditorAlias[];
     initialySelected?: string[];
     onDone: (selectedPeople: string[]) => void;
     onSearch: (value: string) => void;

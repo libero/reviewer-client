@@ -1,17 +1,32 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import { saveEditorsPageMutation } from '../graphql';
+import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorsDetails, Submission } from '../types';
+import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
+
+interface GetEditors {
+    getEditors: EditorAlias[];
+}
 
 const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { editorDetails } = initialValues;
+    const { data: getSeniorEditors, loading: loadingSeniorEditors } = useQuery<GetEditors>(getEditorsQuery, {
+        variables: {
+            role: 'seniorEditors',
+        },
+    });
+
+    const { data: getReviewingEditors, loading: loadingReviewingEditors } = useQuery<GetEditors>(getEditorsQuery, {
+        variables: {
+            role: 'reviewingEditors',
+        },
+    });
 
     const schema = yup.object().shape({});
 
@@ -91,6 +106,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
+                people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
                 onRemove={(): void => {}}
                 onSearch={(): void => {}}
                 setSelectedPeople={(): void => {}}
@@ -98,6 +114,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             {/* TODO add exclude editor toggleable box */}
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
+                people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
                 onRemove={(): void => {}}
                 onSearch={(): void => {}}
                 setSelectedPeople={(): void => {}}
