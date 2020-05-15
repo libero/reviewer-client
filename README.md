@@ -2,6 +2,18 @@
 
 The client for "libero reviewer".
 
+<details>
+
+<summary>Requirements</summary>
+
+- [Docker]
+- [GNU Make]
+- [Node.js]
+
+</details>
+
+The project contains a [Makefile] which uses [Docker] for development.
+
 ## Running the client
 
 1. `make setup`
@@ -44,4 +56,3 @@ The compose files use `liberoadmin/reviewer-mocks:latest`.
     libero/reviewer-mocks:local \
     liberoadmin/reviewer-mocks:latest
   ```
-  
