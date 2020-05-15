@@ -21,7 +21,7 @@ export class EditorPage {
         await t.expect(Selector('.typography__heading typography__heading--h2').textContent).eql('Suggest Senior Editors');
         await t.expect(Selector('.typography__heading typography__heading--h2').textContent).eql('Suggest Senior Editors');
         await t.expect(Selector('.peoplePickerSearch').visible).ok();
-        await t.click('.pod__button');
+        await t.click(Selector('.people-picker__selector_container').find('.pod__button'));
     }
 
     public async next(): Promise<void> {
