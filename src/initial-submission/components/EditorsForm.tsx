@@ -8,6 +8,7 @@ import useAutoSave from '../hooks/useAutoSave';
 import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
+import { ExpandingEmailField } from '../../ui/molecules';
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -30,7 +31,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
 
     const schema = yup.object().shape({});
 
-    const { watch, register, triggerValidation, setValue } = useForm<EditorsDetails>({
+    const { watch, register, triggerValidation, setValue, control } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
@@ -131,6 +132,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
+            <ExpandingEmailField maxFields={6} control={control} register={register} name="suggestedReviewers" />
             {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 

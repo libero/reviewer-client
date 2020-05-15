@@ -45,6 +45,10 @@
     "validation--peoplepicker_guidance-prefix": "At least",
     "validation--peoplepicker_guidance-suffix": "suggestions required",
     "validation--peoplepicker_maximum-prefix": "Maximum",
-    "validation--peoplepicker_maximum-suffix": "people selected"
+    "validation--peoplepicker_maximum-suffix": "people selected",
+    "expanding-email-field": {
+       "name": "Reviewer name (optional)",
+        "email": "Reviewer email (optional)"
+    }
 }
 
