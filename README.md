@@ -58,6 +58,7 @@ The compose files use `liberoadmin/reviewer-mocks:latest`.
   ```
 
 [Docker]: https://www.docker.com/
+[GNU Make]: https://www.gnu.org/software/make/
 [Makefile]: Makefile
 [Node.js]: https://nodejs.org/
 [timeout]: http://man7.org/linux/man-pages/man1/timeout.1.html
