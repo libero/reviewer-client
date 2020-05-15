@@ -9,29 +9,29 @@ const people = [
     {
         id: '1',
         name: 'Name 1',
-        institution: 'Institution 1',
-        focuses: ['Tag 1', 'Tage 2'],
+        aff: 'Institution 1',
+        focuses: ['Tag 1', 'Tag 2'],
         expertises: ['Tag 3'],
     },
     {
         id: '2',
         name: 'Name 2',
-        institution: 'Institution 2',
-        focuses: ['Tag 1', 'Tage 2'],
+        aff: 'Institution 2',
+        focuses: ['Tag 1', 'Tag 2'],
         expertises: ['Tag 3'],
     },
     {
         id: '3',
         name: 'Name 3',
-        institution: 'Institution 3',
-        focuses: ['Tag 1', 'Tage 2'],
+        aff: 'Institution 3',
+        focuses: ['Tag 1', 'Tag 2'],
         expertises: ['Tag 3'],
     },
     {
         id: '4',
         name: 'Name 4',
-        institution: 'Institution 4',
-        focuses: ['Tag 1', 'Tage 2'],
+        aff: 'Institution 4',
+        focuses: ['Tag 1', 'Tag 2'],
         expertises: ['Tag 3'],
     },
 ];
@@ -55,18 +55,9 @@ describe('PeoplePickerSelector', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(
-                    <PeoplePickerSelector
-                        onDone={jest.fn()}
-                        onSearch={jest.fn()}
-                        label=" "
-                        toggle={jest.fn()}
-                        isShowing={true}
-                    />,
-                    {
-                        container: appContainer(),
-                    },
-                ),
+                render(<PeoplePickerSelector onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />, {
+                    container: appContainer(),
+                }),
         ).not.toThrow();
     });
 
@@ -78,7 +69,6 @@ describe('PeoplePickerSelector', (): void => {
                         people={people}
                         initialySelected={['1']}
                         onDone={jest.fn()}
-                        onSearch={jest.fn()}
                         label=" "
                         toggle={jest.fn()}
                         isShowing={true}
@@ -98,7 +88,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -117,7 +106,6 @@ describe('PeoplePickerSelector', (): void => {
                 people={people}
                 initialySelected={[]}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label="SomeTestLabel"
                 toggle={jest.fn()}
                 isShowing={true}
@@ -136,7 +124,6 @@ describe('PeoplePickerSelector', (): void => {
                 people={people}
                 initialySelected={['1', '3']}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -154,7 +141,6 @@ describe('PeoplePickerSelector', (): void => {
             <PeoplePickerSelector
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 min={min}
@@ -175,7 +161,6 @@ describe('PeoplePickerSelector', (): void => {
             <PeoplePickerSelector
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 min={min}
@@ -190,14 +175,7 @@ describe('PeoplePickerSelector', (): void => {
 
     it('does not render guidance text if no min selected is passed', (): void => {
         const { baseElement } = render(
-            <PeoplePickerSelector
-                people={people}
-                onDone={jest.fn()}
-                onSearch={jest.fn()}
-                label=" "
-                toggle={jest.fn()}
-                isShowing={true}
-            />,
+            <PeoplePickerSelector people={people} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
             {
                 container: appContainer(),
             },
@@ -211,7 +189,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -235,7 +212,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={doneMock}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -257,7 +233,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={doneMock}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -278,7 +253,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={['1', '2', '3', '4']}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -298,7 +272,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=""
                 toggle={jest.fn()}
                 isShowing={true}
@@ -314,7 +287,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={['1', '2']}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=""
                 toggle={jest.fn()}
                 isShowing={true}
@@ -324,18 +296,26 @@ describe('PeoplePickerSelector', (): void => {
         expect(baseElement.querySelector('.button--primary')).toBeEnabled();
     });
 
-    it('should call the onSearch callback when the user types a string into the search box', async (): Promise<
-        void
-    > => {
+    it('filters by partial name match when searching users', async (): Promise<void> => {
         jest.useFakeTimers();
-
-        const searchMock = jest.fn();
-        const { baseElement } = render(
+        const { baseElement, container, getByText } = render(
             <PeoplePickerSelector
                 initialySelected={[]}
-                people={people}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                    },
+                ]}
                 onDone={jest.fn()}
-                onSearch={searchMock}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -344,11 +324,139 @@ describe('PeoplePickerSelector', (): void => {
                 container: appContainer(),
             },
         );
-        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'ja' } });
         act((): void => {
             jest.advanceTimersByTime(510);
         });
-        expect(searchMock).toBeCalledWith('someSearch');
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Jack')).toBeInTheDocument();
+        expect(getByText('Jake')).toBeInTheDocument();
+        expect(() => getByText('Bob')).toThrow();
+    });
+    it('filters by partial aff match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                        aff: 'apple',
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                        aff: 'banana',
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                        aff: 'apple',
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'app' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Jack')).toBeInTheDocument();
+        expect(getByText('Bob')).toBeInTheDocument();
+        expect(() => getByText('Jake')).toThrow();
+    });
+
+    it('filters by partial focuses match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                        focuses: ['cow', 'hen'],
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                        focuses: ['duck'],
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                        focuses: ['rabbit', 'duck'],
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'du' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Jake')).toBeInTheDocument();
+        expect(getByText('Bob')).toBeInTheDocument();
+        expect(() => getByText('Jack')).toThrow();
+    });
+    it('filters by partial expertises match when searching users', async (): Promise<void> => {
+        jest.useFakeTimers();
+        const { baseElement, container, getByText } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={[
+                    {
+                        id: '1',
+                        name: 'Jack',
+                        expertises: ['planes', 'cars'],
+                    },
+                    {
+                        id: '2',
+                        name: 'Jake',
+                        expertises: ['boats', 'cars'],
+                    },
+                    {
+                        id: '3',
+                        name: 'Bob',
+                        expertises: ['trains', 'boats'],
+                    },
+                ]}
+                onDone={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+            {
+                container: appContainer(),
+            },
+        );
+        expect(container.querySelectorAll('.pod')).toHaveLength(3);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'boa' } });
+        act((): void => {
+            jest.advanceTimersByTime(510);
+        });
+        expect(container.querySelectorAll('.pod')).toHaveLength(2);
+        expect(getByText('Bob')).toBeInTheDocument();
+        expect(getByText('Jake')).toBeInTheDocument();
+        expect(() => getByText('Jack')).toThrow();
     });
 
     it('should add SelectedOption blocks for each selected person', async (): Promise<void> => {
@@ -357,7 +465,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -377,7 +484,6 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={['1']}
                 people={people}
                 onDone={jest.fn()}
-                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}

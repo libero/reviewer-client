@@ -5,16 +5,9 @@ import Add from '@material-ui/icons/Add';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Info from '@material-ui/icons/Info';
 import useModal from '../../ui/hooks/useModal';
+import { EditorAlias } from '../../initial-submission/types';
 
-export interface PersonProps {
-    name?: string;
-    institution?: string;
-    focuses?: string[];
-    expertises?: string[];
-    id?: string;
-}
-
-interface Props extends PersonProps {
+interface Props extends EditorAlias {
     initialySelected?: boolean;
     toggleHandler(id: string, selected: boolean): void;
     selectedButtonIcon?: JSX.Element;
@@ -24,7 +17,7 @@ const PersonPod = ({
     id,
     initialySelected = false,
     toggleHandler,
-    institution,
+    aff,
     name,
     focuses = [],
     expertises = [],
@@ -49,13 +42,11 @@ const PersonPod = ({
                 buttonType="primary"
                 buttonText={`${initialySelected ? 'Remove' : 'Add'} Editor`}
             >
-                <PersonInfo name={name} institution={institution} focuses={focuses} expertises={expertises} />
+                <PersonInfo name={name} aff={aff} focuses={focuses} expertises={expertises} />
             </Modal>
             <div className="person-pod__text">
                 <span className="typography__body typography__body--primary typography__body--no-margin">{name}</span>
-                <span className="typography__small typography__small--primary typography__small--no-margin">
-                    {institution}
-                </span>
+                <span className="typography__small typography__small--primary typography__small--no-margin">{aff}</span>
                 <div className="person-pod__inline_text">
                     <Info
                         aria-label="Info"

@@ -53,15 +53,6 @@ const PeoplePickerStory = (): JSX.Element => {
         action(`Removed person ${id}`)();
     };
 
-    const onSearch = (value: string): void => {
-        setFilteredPeople(
-            people.filter((person): boolean =>
-                `${person.name} ${person.institution} ${person.expertises} ${person.focuses}`.includes(value),
-            ),
-        );
-        action('Search filter')(value);
-    };
-
     const required = boolean('Required', false);
     const label = text('Label', 'People Picker');
     const min = number('Min', 2);
@@ -80,7 +71,6 @@ const PeoplePickerStory = (): JSX.Element => {
             people={filteredPeople}
             selectedPeople={selectedPeople}
             onRemove={removePerson}
-            onSearch={onSearch}
             label={label}
             min={min}
             max={max}

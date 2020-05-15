@@ -26,7 +26,7 @@ storiesOf('ui | molecules/PersonPod', module)
                     focuses={focuses}
                     expertises={expertises}
                     name={name}
-                    institution={institution}
+                    aff={institution}
                     selectedButtonIcon={deleteIcon ? <Delete /> : undefined}
                     toggleHandler={(id: string, selected: boolean): void => action('toggles')(id, selected)}
                 />

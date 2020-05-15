@@ -1,18 +1,19 @@
 import React from 'react';
-import { PeoplePickerSelector, PersonProps, SelectedPeopleList } from '../molecules';
+import { PeoplePickerSelector, SelectedPeopleList } from '../molecules';
 import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
+import { EditorAlias } from '../../initial-submission/types';
 
 interface Props {
-    people?: PersonProps[];
+    people?: EditorAlias[];
     selectedPeople?: string[];
     label: string;
     required?: boolean;
     min?: number;
     max?: number;
     onRemove: (personId: string) => void;
-    onSearch: (value: string) => void;
     setSelectedPeople: (selectedPeople: string[]) => void;
+    className?: string;
 }
 
 const PeoplePicker = ({
@@ -23,16 +24,17 @@ const PeoplePicker = ({
     min,
     max,
     onRemove,
-    onSearch,
     setSelectedPeople,
+    className,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
+    const filteredSelected = people.filter((person): boolean => selectedPeople.includes(person.id));
     return (
-        <div className="people-picker">
+        <div className={`people-picker ${className ? className : ''}`}>
             <h2 className="typography__heading typography__heading--h3">{label}</h2>
             <SelectedPeopleList
-                people={people.filter((person): boolean => selectedPeople.includes(person.id))}
+                people={filteredSelected}
                 required={required}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}
@@ -40,9 +42,8 @@ const PeoplePicker = ({
             />
             <PeoplePickerSelector
                 people={people}
-                initialySelected={selectedPeople}
+                initialySelected={filteredSelected.map(selected => selected.id)}
                 onDone={setSelectedPeople}
-                onSearch={onSearch}
                 label={label}
                 toggle={toggle}
                 isShowing={isShowing}

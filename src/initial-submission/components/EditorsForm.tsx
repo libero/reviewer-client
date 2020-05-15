@@ -1,21 +1,36 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import { saveEditorsPageMutation } from '../graphql';
+import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorsDetails, Submission } from '../types';
+import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
+
+interface GetEditors {
+    getEditors: EditorAlias[];
+}
 
 const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { editorDetails } = initialValues;
+    const { data: getSeniorEditors, loading: loadingSeniorEditors } = useQuery<GetEditors>(getEditorsQuery, {
+        variables: {
+            role: 'seniorEditors',
+        },
+    });
+
+    const { data: getReviewingEditors, loading: loadingReviewingEditors } = useQuery<GetEditors>(getEditorsQuery, {
+        variables: {
+            role: 'reviewingEditors',
+        },
+    });
 
     const schema = yup.object().shape({});
 
-    const { watch, triggerValidation } = useForm<EditorsDetails>({
+    const { watch, register, triggerValidation, setValue } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
@@ -42,8 +57,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         mode: 'onBlur',
         validationSchema: schema,
     });
-
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
+
+    register({ name: 'suggestedSeniorEditors', type: 'custom' });
+    register({ name: 'suggestedReviewingEditors', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
@@ -91,16 +108,27 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
-                onRemove={(): void => {}}
-                onSearch={(): void => {}}
-                setSelectedPeople={(): void => {}}
+                people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
+                onRemove={(selected): void =>
+                    setValue('suggestedSeniorEditors', suggestedSeniorEditors.filter(personId => personId !== selected))
+                }
+                setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
+                selectedPeople={suggestedSeniorEditors}
+                className="senior-editors-picker"
             />
             {/* TODO add exclude editor toggleable box */}
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
-                onRemove={(): void => {}}
-                onSearch={(): void => {}}
-                setSelectedPeople={(): void => {}}
+                people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
+                onRemove={(selected): void =>
+                    setValue(
+                        'suggestedReviewingEditors',
+                        suggestedReviewingEditors.filter(personId => personId !== selected),
+                    )
+                }
+                setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
+                selectedPeople={suggestedReviewingEditors}
+                className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
             {/* TODO add suggest reviewer (non editor) expanding email field */}
