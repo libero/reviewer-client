@@ -123,19 +123,153 @@ describe('DetailsForm', (): void => {
             expect(getByText('James Bond')).toBeInTheDocument();
         });
 
-        it('display a senior reviewers when picker is clicked', async () => {
+        it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                 },
             );
-            const seniorReviewersPicker = container.querySelector('.reviewing-editors-picker');
-            expect(seniorReviewersPicker).toBeInTheDocument();
+            const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
+            expect(reviewingEditorPicker).toBeInTheDocument();
             await fireEvent.click(getAllByText('selected_people_list--open')[1]);
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             expect(getByText('Scaramanga')).toBeInTheDocument();
+        });
+
+        it('displays a senior editor as selected when they have been added in the people picker', async (): Promise<
+            void
+        > => {
+            const { baseElement, container, getAllByText, getByText } = render(
+                <EditorsForm initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                },
+            );
+            const seniorEditorPicker = container.querySelector('.senior-editors-picker');
+            expect(seniorEditorPicker).toBeInTheDocument();
+            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            const selectedName = baseElement.querySelector(
+                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+            ).textContent;
+            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+            fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+            expect(getByText(selectedName)).toBeInTheDocument();
+        });
+
+        it('displays a revieweing editor as selected when they have been added in the people picker', async (): Promise<
+            void
+        > => {
+            const { baseElement, container, getAllByText, getByText } = render(
+                <EditorsForm initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                },
+            );
+            const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
+            expect(reviewingEditorPicker).toBeInTheDocument();
+            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            const selectedName = baseElement.querySelector(
+                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+            ).textContent;
+            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+            fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+            expect(getByText(selectedName)).toBeInTheDocument();
+        });
+
+        it('displays initial value senior editors', () => {
+            const { getByText } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedSeniorEditors: ['1'],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(getByText('James Bond')).toBeInTheDocument();
+        });
+
+        it('displays initial value reviewing editors', () => {
+            const { getByText } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewingEditors: ['4'],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(getByText('Scaramanga')).toBeInTheDocument();
+        });
+
+        it('removes a deleted reviewing editor', async (): Promise<void> => {
+            const { container, getByText } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewingEditors: ['4'],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(getByText('Scaramanga')).toBeInTheDocument();
+            fireEvent.click(
+                container.querySelector(
+                    '.reviewing-editors-picker .selected_people_list__item:nth-child(1) .pod__button',
+                ),
+            );
+            expect(() => getByText('Scaramanga')).toThrow();
+        });
+
+        it('removes a deleted senior editor', async (): Promise<void> => {
+            const { container, getByText } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedSeniorEditors: ['1'],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(getByText('James Bond')).toBeInTheDocument();
+            fireEvent.click(
+                container.querySelector('.senior-editors-picker .selected_people_list__item:nth-child(1) .pod__button'),
+            );
+            expect(() => getByText('James Bond')).toThrow();
         });
     });
 });

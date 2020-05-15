@@ -29,15 +29,15 @@ export interface FileDetails {
 }
 
 export interface EditorsDetails {
-    suggestedSeniorEditors: string[];
-    opposedSeniorEditors: string[];
-    opposedSeniorEditorsReason: string;
-    suggestedReviewingEditors: string[];
-    opposedReviewingEditors: string[];
-    opposedReviewingEditorsReason: string;
-    suggestedReviewers: ReviewerAlias[];
-    opposedReviewers: OpposedReviewer[];
-    opposedReviewersReason: string;
+    suggestedSeniorEditors?: string[];
+    opposedSeniorEditors?: string[];
+    opposedSeniorEditorsReason?: string;
+    suggestedReviewingEditors?: string[];
+    opposedReviewingEditors?: string[];
+    opposedReviewingEditorsReason?: string;
+    suggestedReviewers?: ReviewerAlias[];
+    opposedReviewers?: OpposedReviewer[];
+    opposedReviewersReason?: string;
 }
 
 export interface ReviewerAlias {
