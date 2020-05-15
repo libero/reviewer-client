@@ -15,7 +15,7 @@ export class EditorPage {
     }
 
     public async addEditor(): Promise<void> {
-        const addButton = this.seniorEditorsPicker.child('.pod__button');
+        const addButton = this.seniorEditorsPicker.find('.pod__button');
         await t.click(addButton);
         await t.expect(Selector('.typography__heading typography__heading--h2').visible).ok();
         await t.expect(Selector('.typography__heading typography__heading--h2').textContent).eql('Suggest Senior Editors');
