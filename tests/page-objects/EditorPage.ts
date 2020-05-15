@@ -17,11 +17,10 @@ export class EditorPage {
     public async addEditor(): Promise<void> {
         const addButton = this.seniorEditorsPicker.find('.pod__button');
         await t.click(addButton);
-        await t.expect(Selector('.typography__heading typography__heading--h2').visible).ok();
-        await t.expect(Selector('.typography__heading typography__heading--h2').textContent).eql('Suggest Senior Editors');
+        await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('.typography__heading typography__heading--h2').textContent).eql('Suggest Senior Editors');
         await t.expect(Selector('.peoplePickerSearch').visible).ok();
-        await t.click(Selector('.people-picker__selector_container').find('.pod__button'));
+        await t.click(Selector('.people-people-picker__modal_list--item').find('.pod__button'));
     }
 
     public async next(): Promise<void> {
