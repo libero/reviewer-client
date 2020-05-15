@@ -9,7 +9,7 @@ The client for "libero reviewer".
 - [Docker]
 - [GNU Make]
 - [Node.js]
-
+- [timeout] (on MacOSX this can be obtained with `brew install coreutils`)
 </details>
 
 The project contains a [Makefile] which uses [Docker] for development.
@@ -56,3 +56,8 @@ The compose files use `liberoadmin/reviewer-mocks:latest`.
     libero/reviewer-mocks:local \
     liberoadmin/reviewer-mocks:latest
   ```
+
+[Docker]: https://www.docker.com/
+[Makefile]: Makefile
+[Node.js]: https://nodejs.org/
+[timeout]: http://man7.org/linux/man-pages/man1/timeout.1.html
