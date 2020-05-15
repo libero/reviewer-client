@@ -29,11 +29,12 @@ const PeoplePicker = ({
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
+    const filteredSelected = people.filter((person): boolean => selectedPeople.includes(person.id));
     return (
         <div className={`people-picker ${className ? className : ''}`}>
             <h2 className="typography__heading typography__heading--h3">{label}</h2>
             <SelectedPeopleList
-                people={people.filter((person): boolean => selectedPeople.includes(person.id))}
+                people={filteredSelected}
                 required={required}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}
@@ -41,7 +42,7 @@ const PeoplePicker = ({
             />
             <PeoplePickerSelector
                 people={people}
-                initialySelected={selectedPeople}
+                initialySelected={filteredSelected.map(selected => selected.id)}
                 onDone={setSelectedPeople}
                 label={label}
                 toggle={toggle}

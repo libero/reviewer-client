@@ -271,5 +271,23 @@ describe('DetailsForm', (): void => {
             );
             expect(() => getByText('James Bond')).toThrow();
         });
+
+        it('handles selected people removed from api', () => {
+            expect(async () => {
+                render(
+                    <EditorsForm
+                        initialValues={{
+                            id: 'blah',
+                            articleType: '',
+                            updated: Date.now(),
+                            editorDetails: {
+                                suggestedSeniorEditors: ['apple'],
+                                suggestedReviewingEditors: ['pear'],
+                            },
+                        }}
+                    />,
+                );
+            }).not.toThrow();
+        });
     });
 });

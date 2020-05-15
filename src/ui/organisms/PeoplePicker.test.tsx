@@ -41,4 +41,22 @@ describe('PeoplePicker', (): void => {
         await fireEvent.click(getByText('selected_people_list--open'));
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
     });
+
+    it('handles selected people not in the peoples prop', () => {
+        expect(
+            (): RenderResult =>
+                render(
+                    <PeoplePicker
+                        people={[{ id: '1', name: 'Bob 1' }]}
+                        selectedPeople={['someunknownuser']}
+                        required={true}
+                        min={1}
+                        max={2}
+                        onRemove={jest.fn()}
+                        label=""
+                        setSelectedPeople={jest.fn()}
+                    />,
+                ),
+        ).not.toThrow();
+    });
 });
