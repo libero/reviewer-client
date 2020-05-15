@@ -1,4 +1,4 @@
-import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane } from '../page-objects';
+import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane, EditorPage } from '../page-objects';
 
 fixture`Getting Started`.page`http://localhost:9000`;
 
@@ -27,7 +27,7 @@ test('My first test', async () => {
     await dashboardPage.assertOnPage();
 });
 
-test('Happy path', async () => {
+test.only('Happy path', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
@@ -53,4 +53,9 @@ test('Happy path', async () => {
     await detailsPage.assertOnPage();
     await detailsPage.populateForm();
     await detailsPage.next();
+
+    const editorPage = new EditorPage();
+    await editorPage.assertOnPage();
+    await editorPage.addEditor();
+    await editorPage.next();
 });
