@@ -1,25 +1,28 @@
 .person-pod__text {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
 .person-pod__selected_icon {
-  color: $colourPrimary;
+    color: $colourPrimary;
 }
 
 .person-pod__inline_text {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: $colourPrimary;
-  margin-top: 0.118rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: $colourPrimary;
+    margin-top: 0.118rem;
 
-  span {
-    margin-left: 0.563rem;
-  }
+    span {
+        margin-left: 0.563rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .person-pod__info_icon {
-  cursor: pointer;
+    cursor: pointer;
 }
