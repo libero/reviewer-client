@@ -13,13 +13,14 @@
 
 .pod__body {
   padding: 0.75rem;
-  max-width: 80%;
+  flex-grow: 1;
+  max-width: 90%;
 }
 
 .pod__button {
   border: none;
   font-size: 0;
-  width:3rem;
+  width: 3rem;
   background-color: transparent;
   cursor: pointer;
   color: $colourTextSecondary;
