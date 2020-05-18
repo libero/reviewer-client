@@ -12,7 +12,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
       - uses: actions/setup-node@v1
@@ -32,7 +32,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
       - uses: actions/setup-node@v1
@@ -48,7 +48,7 @@ jobs:
         run: |
           make build_prod
           docker save -o reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           path: reviewer-client.tar
 
@@ -56,10 +56,10 @@ jobs:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v2
       - name: Setup client with mocks; build, run and save browsertest container
         run: |
           docker load -i reviewer-client.tar
@@ -67,7 +67,7 @@ jobs:
           make start_ci
           make test_browser_containerized
           docker save -o reviewer-browsertests.tar libero/reviewer-browsertests:${IMAGE_TAG}
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           path: reviewer-browsertests.tar
 
@@ -76,10 +76,10 @@ jobs:
     needs: browser-test
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v2
       - name: Load Docker images
         run: |
           docker load -i reviewer-client.tar
