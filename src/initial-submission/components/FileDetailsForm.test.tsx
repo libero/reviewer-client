@@ -154,7 +154,11 @@ describe('File Details Form', (): void => {
                             data: {
                                 uploadManuscript: {
                                     files: {
-                                        manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                                        manuscriptFile: {
+                                            url: 'http://localhost/file.pdf',
+                                            downloadLink: 'http://localhost/file.pdf',
+                                            filename: 'testfile.pdf',
+                                        },
                                     },
                                 },
                             },
@@ -198,7 +202,11 @@ describe('File Details Form', (): void => {
                         articleType: '',
                         updated: Date.now(),
                         files: {
-                            manuscriptFile: { filename: 'testfile.pdf', url: 'http://localhost/file.pdf' },
+                            manuscriptFile: {
+                                filename: 'testfile.pdf',
+                                url: 'http://localhost/file.pdf',
+                                downloadLink: 'http://localhost/file.pdf',
+                            },
                         },
                     }}
                 />,
@@ -225,7 +233,11 @@ describe('File Details Form', (): void => {
                 data: {
                     uploadManuscript: {
                         files: {
-                            manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                            manuscriptFile: {
+                                url: 'http://localhost/file.pdf',
+                                filename: 'testfile.pdf',
+                                downloadLink: 'http://localhost/file.pdf',
+                            },
                         },
                     },
                 },
@@ -342,7 +354,11 @@ describe('File Details Form', (): void => {
             mutationResolve({
                 data: {
                     uploadManuscript: {
-                        manuscriptFile: { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                        manuscriptFile: {
+                            url: 'http://localhost/file.pdf',
+                            filename: 'testfile.pdf',
+                            downloadLink: 'http://localhost/file.pdf',
+                        },
                     },
                 },
             });
@@ -360,7 +376,11 @@ describe('File Details Form', (): void => {
                                 uploadSupportingFile: {
                                     files: {
                                         supportingFiles: [
-                                            { url: 'http://localhost/file.pdf', filename: 'testfile.pdf' },
+                                            {
+                                                url: 'http://localhost/file.pdf',
+                                                filename: 'testfile.pdf',
+                                                downloadLink: 'http://localhost/file.pdf',
+                                            },
                                         ],
                                     },
                                 },
@@ -441,6 +461,7 @@ describe('File Details Form', (): void => {
                         url: 'http://localhost/file.pdf',
                         filename: 'testfile.pdf',
                         id: 'bob',
+                        downloadLink: 'http://localhost/file.pdf',
                     },
                 },
             });
@@ -460,7 +481,12 @@ describe('File Details Form', (): void => {
                         articleType: '',
                         files: {
                             supportingFiles: [
-                                { id: 'penguin', url: 'http://placekitten.com/400/400', filename: 'penguin.pdf' },
+                                {
+                                    id: 'penguin',
+                                    url: 'http://placekitten.com/400/400',
+                                    filename: 'penguin.pdf',
+                                    downloadLink: 'http://localhost/file.pdf',
+                                },
                             ],
                         },
                     }}

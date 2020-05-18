@@ -37,7 +37,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
     }>({
         fileStored: {
             fileName: files && files.manuscriptFile ? files.manuscriptFile.filename : undefined,
-            previewLink: files && files.manuscriptFile ? files.manuscriptFile.url : undefined,
+            previewLink: files && files.manuscriptFile ? files.manuscriptFile.downloadLink : undefined,
         },
     });
     const schema = yup.object().shape({
@@ -114,7 +114,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
             },
         })
             .then(({ data }) => {
-                const { filename: fileName, url: previewLink } = data.uploadManuscript.files.manuscriptFile;
+                const { filename: fileName, downloadLink: previewLink } = data.uploadManuscript.files.manuscriptFile;
                 setManuscriptStatus({
                     fileStored: {
                         fileName,

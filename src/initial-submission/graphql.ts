@@ -74,6 +74,7 @@ export const uploadManuscriptMutation = gql`
                 manuscriptFile {
                     filename
                     url
+                    downloadLink
                 }
             }
         }
