@@ -1,0 +1,6 @@
+{
+    "login_return_url": "http://reviewer-client_nginx:9000/login",
+    "continuum_jwt_secret": "some_secret_from_journal",
+    "continuum_return_url": "http://reviewer-client_nginx:9000/auth-redirect",
+    "authentication_jwt_secret": "super_secret_jam"
+}
