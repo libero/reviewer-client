@@ -54,7 +54,7 @@ jobs:
       - uses: actions/download-artifact@v2
       - name: Setup client with mocks; build, run and save browsertest container
         run: |
-          docker load -i reviewer-client.tar
+          docker load -i reviewer-client.tar/reviewer-client.tar
           make setup
           make start_ci
           make test_browser_containerized
@@ -75,8 +75,8 @@ jobs:
       - uses: actions/download-artifact@v2
       - name: Load Docker images
         run: |
-          docker load -i reviewer-client.tar
-          docker load -i reviewer-browsertests.tar
+          docker load -i reviewer-client.tar/reviewer-client.tar
+          docker load -i reviewer-browsertests.tar/reviewer-browsertests.tar
       - name: Push images to hub.docker.com
         run: |
           .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
