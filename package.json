@@ -131,9 +131,6 @@
         "react-tabs": "^3.0.0",
         "subscriptions-transport-ws": "^0.9.16",
         "uuid": "^7.0.2",
-        "webpack": "^4.35.3",
-        "webpack-cli": "^3.3.6",
-        "webpack-merge": "^4.2.1",
         "yup": "^0.28.1"
     },
     "engines": {
