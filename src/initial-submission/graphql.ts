@@ -23,6 +23,7 @@ export const getSubmissionQuery = gql`
                 manuscriptFile {
                     filename
                     url
+                    downloadLink
                 }
                 supportingFiles {
                     filename
