@@ -13,7 +13,6 @@ help:
 setup: ## perform setup tasks
 	-@ git submodule update --init --recursive
 	-@ docker network create reviewer > /dev/null 2>&1 || true
-	-$(MAKE) install
 
 install: ## install dependencies
 	yarn
