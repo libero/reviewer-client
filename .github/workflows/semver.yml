@@ -14,7 +14,9 @@ jobs:
           submodules: 'true'
       - run: |
           docker pull liberoadmin/reviewer-client:master-${GITHUB_SHA::8}
+          docker pull liberoadmin/reviewer-browsertests:master-${GITHUB_SHA::8}
           .scripts/github/retag-and-push.sh reviewer-client master-${GITHUB_SHA::8}
+          .scripts/github/retag-and-push.sh reviewer-browsertests master-${GITHUB_SHA::8}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
