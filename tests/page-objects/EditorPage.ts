@@ -18,9 +18,26 @@ export class EditorPage {
         const addButton = this.seniorEditorsPicker.find('.pod__button');
         await t.click(addButton);
         await t.expect(Selector('.typography__heading--h2').visible).ok();
-        await t.expect(Selector('.typography__heading typography__heading--h2').textContent).eql('Suggest Senior Editors');
-        await t.expect(Selector('.peoplePickerSearch').visible).ok();
-        await t.click(Selector('.people-people-picker__modal_list--item').find('.pod__button'));
+        await t.expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent).eql('Suggest Senior Editors');
+        await t.expect(Selector('#peoplePickerSearch').visible).ok();
+        const button = Selector('.people-picker__modal_list--item').find('.pod__button');
+        await t.expect(button.visible).ok();
+        await t.click(button);
+        await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
+        await t.click(Selector('.modal__buttons_container').find('.button--primary'));
+    }
+
+    public async addReviewer(): Promise<void> {
+        const addButton = this.suggestedReviewingEditorsPicker.find('.pod__button');
+        await t.click(addButton);
+        await t.expect(Selector('.typography__heading--h2').visible).ok();
+        await t.expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent).eql('Suggest Reviewing Editors');
+        await t.expect(Selector('#peoplePickerSearch').visible).ok();
+        const button = Selector('.people-picker__modal_list--item').find('.pod__button');
+        await t.expect(button.visible).ok();
+        await t.click(button);
+        await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
+        await t.click(Selector('.modal__buttons_container').find('.button--primary'));
     }
 
     public async next(): Promise<void> {

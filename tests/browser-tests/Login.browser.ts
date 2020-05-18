@@ -57,5 +57,6 @@ test.only('Happy path', async () => {
     const editorPage = new EditorPage();
     await editorPage.assertOnPage();
     await editorPage.addEditor();
+    await editorPage.addReviewer();
     await editorPage.next();
 });
