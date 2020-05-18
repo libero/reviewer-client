@@ -64,11 +64,14 @@ test_browser: ## run browser tests
 	yarn wait-port localhost:9000
 	yarn test:browser-headless
 
+test_browser_containerized:
+	docker build . -f browsertests.Dockerfile --tag browsertests:${IMAGE_TAG}
+	docker run -it --network reviewer -e BASE_URL="reviewer-client_nginx" browsertests:${IMAGE_TAG}
+
 run_ci: ## run as if in ci
 	make lint
 	make test
 	make build_prod
 	make start_ci
-	docker build . -f browsertests.Dockerfile --tag browsertests
-	docker run -it --network reviewer -e BASE_URL="reviewer-client_nginx" browsertests:latest
+	make test_browser_containerized
 	make stop
