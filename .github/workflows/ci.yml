@@ -41,7 +41,7 @@ jobs:
           docker save -o reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
       - uses: actions/upload-artifact@v2
         with:
-          name: reviewer-client
+          name: reviewer-client.tar
           path: reviewer-client.tar
 
   browser-test:
@@ -61,7 +61,7 @@ jobs:
           docker save -o reviewer-browsertests.tar libero/reviewer-browsertests:${IMAGE_TAG}
       - uses: actions/upload-artifact@v2
         with:
-          name: reviewer-browsertests
+          name: reviewer-browsertests.tar
           path: reviewer-browsertests.tar
 
   upload-images:
