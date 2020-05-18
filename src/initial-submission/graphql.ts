@@ -23,6 +23,7 @@ export const getSubmissionQuery = gql`
                 manuscriptFile {
                     filename
                     url
+                    downloadLink
                 }
                 supportingFiles {
                     filename
@@ -74,6 +75,7 @@ export const uploadManuscriptMutation = gql`
                 manuscriptFile {
                     filename
                     url
+                    downloadLink
                 }
             }
         }

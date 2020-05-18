@@ -20,6 +20,7 @@ export interface File {
     filename: string;
     url?: string;
     id?: string;
+    downloadLink?: string;
 }
 
 export interface FileDetails {
