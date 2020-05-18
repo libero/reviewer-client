@@ -155,7 +155,7 @@ describe('File Details Form', (): void => {
                                 uploadManuscript: {
                                     files: {
                                         manuscriptFile: {
-                                            url: 'http://localhost/file.pdf',
+                                            url: 'bucket/path/file.pdf',
                                             downloadLink: 'http://localhost/file.pdf',
                                             filename: 'testfile.pdf',
                                         },
@@ -204,7 +204,7 @@ describe('File Details Form', (): void => {
                         files: {
                             manuscriptFile: {
                                 filename: 'testfile.pdf',
-                                url: 'http://localhost/file.pdf',
+                                url: 'bucket/path/file.pdf',
                                 downloadLink: 'http://localhost/file.pdf',
                             },
                         },
@@ -234,7 +234,7 @@ describe('File Details Form', (): void => {
                     uploadManuscript: {
                         files: {
                             manuscriptFile: {
-                                url: 'http://localhost/file.pdf',
+                                url: 'bucket/path/file.pdf',
                                 filename: 'testfile.pdf',
                                 downloadLink: 'http://localhost/file.pdf',
                             },
@@ -355,7 +355,7 @@ describe('File Details Form', (): void => {
                 data: {
                     uploadManuscript: {
                         manuscriptFile: {
-                            url: 'http://localhost/file.pdf',
+                            url: 'bucket/path/file.pdf',
                             filename: 'testfile.pdf',
                             downloadLink: 'http://localhost/file.pdf',
                         },
@@ -377,7 +377,7 @@ describe('File Details Form', (): void => {
                                     files: {
                                         supportingFiles: [
                                             {
-                                                url: 'http://localhost/file.pdf',
+                                                url: 'bucket/path/file.pdf',
                                                 filename: 'testfile.pdf',
                                                 downloadLink: 'http://localhost/file.pdf',
                                             },
@@ -458,7 +458,7 @@ describe('File Details Form', (): void => {
             mutationResolve({
                 data: {
                     uploadSupportingFile: {
-                        url: 'http://localhost/file.pdf',
+                        url: 'bucket/path/file.pdf',
                         filename: 'testfile.pdf',
                         id: 'bob',
                         downloadLink: 'http://localhost/file.pdf',
@@ -483,7 +483,7 @@ describe('File Details Form', (): void => {
                             supportingFiles: [
                                 {
                                     id: 'penguin',
-                                    url: 'http://placekitten.com/400/400',
+                                    url: 'bucket/path/file.pdf',
                                     filename: 'penguin.pdf',
                                     downloadLink: 'http://localhost/file.pdf',
                                 },
