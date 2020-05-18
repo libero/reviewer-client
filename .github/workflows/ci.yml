@@ -55,7 +55,6 @@ jobs:
       - name: Setup client with mocks; build, run and save browsertest container
         run: |
           docker load -i reviewer-client.tar
-          make setup
           make start_ci
           make test_browser_containerized
           docker save -o reviewer-browsertests.tar libero/reviewer-browsertests:${IMAGE_TAG}
