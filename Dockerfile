@@ -26,12 +26,13 @@ COPY test-utils/ test-utils/
 COPY src/ src/
 COPY webpack/ webpack/
 
-#
-# Stage: Production NPM install
-#
-FROM node AS yarn-prod
+RUN yarn install
 
-RUN yarn install --production
+#
+# Stage: Production build
+#
+FROM node AS build-prod
+
 RUN yarn run build
 
 #
@@ -39,7 +40,6 @@ RUN yarn run build
 #
 FROM node AS dev
 
-RUN yarn install
 CMD ["yarn", "run", "start:dev"]
 
 #
@@ -49,8 +49,8 @@ FROM nginx:stable-alpine@sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e
 
 LABEL maintainer="eLife Reviewer Product Team <reviewer-product@elifesciences.org>"
 
-COPY --from=yarn-prod /app/ .
-COPY --from=yarn-prod /app/dist/ dist/
+COPY --from=build-prod /app/ .
+COPY --from=build-prod /app/dist/ dist/
 COPY config/nginx/nginx.conf /etc/nginx/nginx.conf
 
 HEALTHCHECK --interval=5s --timeout=1s \
