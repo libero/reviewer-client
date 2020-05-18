@@ -49,11 +49,9 @@ FROM nginx:stable-alpine@sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e
 
 LABEL maintainer="eLife Reviewer Product Team <reviewer-product@elifesciences.org>"
 
-COPY --from=build-prod /app/ .
-COPY --from=build-prod /app/dist/ dist/
-COPY config/nginx/nginx.conf /etc/nginx/nginx.conf
-
 HEALTHCHECK --interval=5s --timeout=1s \
 	CMD echo -e "GET /health\n\n" | nc localhost:80
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=build-prod /app/ .
+COPY --from=build-prod /app/dist/ dist/
+COPY config/nginx/nginx.conf /etc/nginx/nginx.conf
