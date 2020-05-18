@@ -1,15 +1,7 @@
-.expanding-email-field {
+.expanding-email-field__row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "name email";
-  grid-gap: 1.5rem;
-}
-
-.expanding-email-field__pair--name {
-  grid-area: name;
-}
-
-.expanding-email-field__pair--email {
-  grid-area: email;
+  @include twoColumnGrid;
+  @include forSize('tabletPortraitUp') {
+    grid-gap: 1.5rem;
+  }
 }

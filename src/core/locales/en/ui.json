@@ -47,8 +47,8 @@
     "validation--peoplepicker_maximum-prefix": "Maximum",
     "validation--peoplepicker_maximum-suffix": "people selected",
     "expanding-email-field": {
-       "name": "Reviewer name (optional)",
-        "email": "Reviewer email (optional)"
+       "name": "name",
+        "email": "email"
     }
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorAlias, EditorsDetails, Submission } from '../types';
+import { EditorAlias, EditorsDetails, ReviewerAlias, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField } from '../../ui/molecules';
@@ -50,7 +50,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     ? editorDetails.opposedReviewingEditorsReason
                     : '',
             suggestedReviewers:
-                editorDetails && editorDetails.suggestedReviewers ? editorDetails.suggestedReviewers : [],
+                editorDetails && editorDetails.suggestedReviewers
+                    ? editorDetails.suggestedReviewers
+                    : [{ name: '', email: '' }],
             opposedReviewers: editorDetails && editorDetails.opposedReviewers ? editorDetails.opposedReviewers : [],
             opposedReviewersReason:
                 editorDetails && editorDetails.opposedReviewersReason ? editorDetails.opposedReviewersReason : '',
@@ -63,15 +65,22 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
 
+    const { fields: reviewerFields } = useFieldArray<ReviewerAlias>({
+        control,
+        name: 'suggestedReviewers',
+    });
+
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
     const opposedSeniorEditorsReason = watch('opposedSeniorEditorsReason');
     const suggestedReviewingEditors = watch('suggestedReviewingEditors');
     const opposedReviewingEditors = watch('opposedReviewingEditors');
     const opposedReviewingEditorsReason = watch('opposedReviewingEditorsReason');
-    const suggestedReviewers = watch('suggestedReviewers');
     const opposedReviewers = watch('opposedReviewers');
     const opposedReviewersReason = watch('opposedReviewersReason');
+
+    const suggestedReviewers = watch('suggestedReviewers');
+
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
@@ -97,9 +106,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedSeniorEditors,
         opposedSeniorEditorsReason,
         suggestedReviewingEditors,
+        suggestedReviewers,
         opposedReviewingEditors,
         opposedReviewingEditorsReason,
-        suggestedReviewers,
         opposedReviewers,
         opposedReviewersReason,
     ]);
@@ -132,7 +141,14 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
-            <ExpandingEmailField maxFields={6} control={control} register={register} name="suggestedReviewers" />
+            {/*TODO: translationforprefix*/}
+            <ExpandingEmailField
+                maxFields={6}
+                fields={reviewerFields}
+                register={register}
+                name="suggestedReviewers"
+                labelPrefix="Reviewer"
+            />
             {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
