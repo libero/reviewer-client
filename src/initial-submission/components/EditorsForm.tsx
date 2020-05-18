@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -65,7 +65,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
 
-    const { fields: reviewerFields } = useFieldArray<ReviewerAlias>({
+    const { fields: reviewerFields, append, remove } = useFieldArray<ReviewerAlias>({
         control,
         name: 'suggestedReviewers',
     });
@@ -80,6 +80,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const opposedReviewersReason = watch('opposedReviewersReason');
 
     const suggestedReviewers = watch('suggestedReviewers');
+    useEffect(() => {
+        console.log(suggestedReviewers);
+    }, [suggestedReviewers]);
 
     const onSave = async (): Promise<void> => {
         const vars = {
@@ -92,7 +95,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     suggestedReviewingEditors,
                     opposedReviewingEditors,
                     opposedReviewingEditorsReason,
-                    suggestedReviewers,
+                    suggestedReviewers: suggestedReviewers.map(rev => ({ name: rev.name, email: rev.email })),
                     opposedReviewers,
                     opposedReviewersReason,
                 },
@@ -148,6 +151,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 register={register}
                 name="suggestedReviewers"
                 labelPrefix="Reviewer"
+                append={append}
+                remove={remove}
+                watchArray={suggestedReviewers}
             />
             {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
