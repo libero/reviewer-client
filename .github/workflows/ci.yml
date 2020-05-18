@@ -41,7 +41,7 @@ jobs:
           docker save -o reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
       - uses: actions/upload-artifact@v2
         with:
-          name: reviewer-client
+          name: reviewer-client.tar
           path: reviewer-client.tar
 
   browser-test:
@@ -54,13 +54,13 @@ jobs:
       - uses: actions/download-artifact@v2
       - name: Setup client with mocks; build, run and save browsertest container
         run: |
-          docker load -i reviewer-client.tar
+          docker load -i reviewer-client.tar/reviewer-client.tar
           make start_ci
           make test_browser_containerized
           docker save -o reviewer-browsertests.tar libero/reviewer-browsertests:${IMAGE_TAG}
       - uses: actions/upload-artifact@v2
         with:
-          name: reviewer-browsertests
+          name: reviewer-browsertests.tar
           path: reviewer-browsertests.tar
 
   upload-images:
@@ -74,8 +74,8 @@ jobs:
       - uses: actions/download-artifact@v2
       - name: Load Docker images
         run: |
-          docker load -i reviewer-client.tar
-          docker load -i reviewer-browsertests.tar
+          docker load -i reviewer-client.tar/reviewer-client.tar
+          docker load -i reviewer-browsertests.tar/reviewer-browsertests.tar
       - name: Push images to hub.docker.com
         run: |
           .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG

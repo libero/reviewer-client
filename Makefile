@@ -13,7 +13,6 @@ help:
 setup: ## perform setup tasks
 	-@ git submodule update --init --recursive
 	-@ docker network create reviewer > /dev/null 2>&1 || true
-	-$(MAKE) install
 
 install: ## install dependencies
 	yarn
@@ -65,8 +64,8 @@ test_browser: ## run browser tests
 	yarn test:browser-headless
 
 test_browser_containerized:
-	docker build . -f browsertests.Dockerfile --tag browsertests:${IMAGE_TAG}
-	docker run -it --network reviewer -e BASE_URL="reviewer-client_nginx" browsertests:${IMAGE_TAG}
+	docker build . -f browsertests.Dockerfile --tag libero/reviewer-browsertests:${IMAGE_TAG}
+	docker run --network reviewer -e BASE_URL="reviewer-client_nginx:9000" libero/reviewer-browsertests:${IMAGE_TAG}
 
 run_ci: ## run as if in ci
 	make lint
