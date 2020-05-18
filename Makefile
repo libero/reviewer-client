@@ -13,7 +13,6 @@ help:
 setup: ## perform setup tasks
 	-@ git submodule update --init --recursive
 	-@ docker network create reviewer > /dev/null 2>&1 || true
-	-@ if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
 	-$(MAKE) install
 
 install: ## install dependencies
@@ -70,5 +69,6 @@ run_ci: ## run as if in ci
 	make test
 	make build_prod
 	make start_ci
-	make test_browser
+	docker build . -f browsertests.Dockerfile --tag browsertests
+	docker run docker run -it --network reviewer browsertests:latest
 	make stop
