@@ -23,7 +23,7 @@ build_dev: install ## build client for running in development with non mocked ap
 build_test: install ## build client for running in development with mocked api and continuum-adaptor
 	${DOCKER_COMPOSE_TEST} build reviewer-client
 
-build_prod: install ## build client for production
+build_prod: ## build client for production
 	${DOCKER_COMPOSE_BUILD} build reviewer-client
 
 start_dev: ## start with dev build image, with reviewer-mocks mocking continuum
