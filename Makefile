@@ -70,5 +70,5 @@ run_ci: ## run as if in ci
 	make build_prod
 	make start_ci
 	docker build . -f browsertests.Dockerfile --tag browsertests
-	docker run -it --network reviewer browsertests:latest
+	docker run -it --network reviewer -e BASE_URL="reviewer-client_nginx" browsertests:latest
 	make stop
