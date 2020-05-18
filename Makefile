@@ -64,8 +64,8 @@ test_browser: ## run browser tests
 	yarn test:browser-headless
 
 test_browser_containerized:
-	docker build . -f browsertests.Dockerfile --tag libero/browsertests:${IMAGE_TAG}
-	docker run --network reviewer -e BASE_URL="reviewer-client_nginx:9000" libero/browsertests:${IMAGE_TAG}
+	docker build . -f browsertests.Dockerfile --tag libero/reviewer-browsertests:${IMAGE_TAG}
+	docker run --network reviewer -e BASE_URL="reviewer-client_nginx:9000" libero/reviewer-browsertests:${IMAGE_TAG}
 
 run_ci: ## run as if in ci
 	make lint
