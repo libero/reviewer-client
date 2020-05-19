@@ -53,4 +53,4 @@ HEALTHCHECK --interval=5s --timeout=1s \
 	CMD echo -e "GET /health\n\n" | nc localhost:80
 
 COPY config/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build-prod /app/ .
+COPY --from=build-prod /app/dist dist
