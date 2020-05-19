@@ -76,11 +76,11 @@ const ExpandingEmailField = ({
     };
     return (
         <div className="expanding-email-field">
-            <button onClick={() => console.log(JSON.stringify(fields))} >print</button>
+            <button onClick={(): void => console.log(JSON.stringify(fields))}>print</button>
             {fields.map((field, index) => {
                 return (
                     <div className="expanding-email-field__row" key={field.id}>
-                        <button onClick={() => remove(index)} >Remove</button>
+                        <button onClick={() => remove(index)}>Remove</button>
                         <TextField
                             className="expanding-email-field__pair--name"
                             id={`${name}-${index}-name`}
