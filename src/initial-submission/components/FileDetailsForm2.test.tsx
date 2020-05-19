@@ -80,8 +80,9 @@ describe('SupportingFiles upload', () => {
         mutationResolve1({
             data: {
                 uploadSupportingFile: {
-                    url: 'http://localhost/file.pdf',
+                    url: 'bucket/path/file.pdf',
                     filename: 'supercoolfile1.png',
+                    downloadLink: 'http://localhost/file.pdf',
                 },
             },
         });
@@ -95,9 +96,10 @@ describe('SupportingFiles upload', () => {
                 Promise.resolve({
                     data: {
                         uploadSupportingFile: {
-                            url: 'http://localhost/file.pdf',
+                            url: 'bucket/path/file.pdf',
                             filename: 'supercoolfile1.png',
                             id: 'file1',
+                            downloadLink: 'http://localhost/file.pdf',
                         },
                     },
                 }),
@@ -106,9 +108,10 @@ describe('SupportingFiles upload', () => {
                 Promise.resolve({
                     data: {
                         uploadSupportingFile: {
-                            url: 'http://localhost/file.pdf',
+                            url: 'bucket/path/file.pdf',
                             filename: 'supercoolfile2.png',
                             id: 'file2',
+                            downloadLink: 'http://localhost/file.pdf',
                         },
                     },
                 }),
@@ -141,9 +144,10 @@ describe('SupportingFiles upload', () => {
                 Promise.resolve({
                     data: {
                         uploadSupportingFile: {
-                            url: 'http://localhost/file.pdf',
+                            url: 'bucket/path/file.pdf',
                             filename: 'supercoolfile1.png',
                             id: 'file1',
+                            downloadLink: 'http://localhost/file.pdf',
                         },
                     },
                 }),
@@ -152,9 +156,10 @@ describe('SupportingFiles upload', () => {
                 Promise.resolve({
                     data: {
                         uploadSupportingFile: {
-                            url: 'http://localhost/file.pdf',
+                            url: 'bucket/path/file.pdf',
                             filename: 'supercoolfile2.png',
                             id: 'file2',
+                            downloadLink: 'http://localhost/file.pdf',
                         },
                     },
                 }),
@@ -163,9 +168,10 @@ describe('SupportingFiles upload', () => {
                 Promise.resolve({
                     data: {
                         uploadSupportingFile: {
-                            url: 'http://localhost/file.pdf',
+                            url: 'bucket/path/file.pdf',
                             filename: 'supercoolfile3.png',
                             id: 'file3',
+                            downloadLink: 'http://localhost/file.pdf',
                         },
                     },
                 }),
