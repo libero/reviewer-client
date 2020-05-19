@@ -46,6 +46,23 @@ The project contains a [Makefile] which uses [Docker] for development.
 
 3. `make stop` to teardown
 
+## Adding Browsertests
+
+To allow browsertest containerization we need to inject a `BASE_URL` from an environment variable.
+
+Make sure to include something like this for all browsertests:
+
+```js
+import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane } from '../page-objects';
+
+const BASE_URL = process.env.BASE_URL || 'localhost:9000';
+
+fixture`Getting Started`.page`${BASE_URL}`;
+
+test('assert nav bar', async() => {
+  ...
+```
+
 ## Use of `reviewer-mocks`
 
 The compose files use `liberoadmin/reviewer-mocks:latest`.
