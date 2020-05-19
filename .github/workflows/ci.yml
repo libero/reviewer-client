@@ -55,6 +55,7 @@ jobs:
       - name: Setup client with mocks
         run: |
           docker load -i reviewer-client.tar/reviewer-client.tar
+          make setup
           make start_ci
       - name: Build and run browsertest container
         run: make test_browser_containerized
