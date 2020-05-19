@@ -44,7 +44,7 @@ jobs:
           name: reviewer-client.tar
           path: reviewer-client.tar
 
-  browser-test:
+  browsertest-and-push-images:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
@@ -52,31 +52,14 @@ jobs:
         with:
           submodules: true
       - uses: actions/download-artifact@v2
-      - name: Setup client with mocks; build, run and save browsertest container
+      - name: Setup client with mocks
         run: |
           docker load -i reviewer-client.tar/reviewer-client.tar
           make start_ci
-          make test_browser_containerized
-          docker save -o reviewer-browsertests.tar libero/reviewer-browsertests:${IMAGE_TAG}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: reviewer-browsertests.tar
-          path: reviewer-browsertests.tar
-
-  upload-images:
-    runs-on: ubuntu-latest
-    needs: browser-test
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - uses: actions/download-artifact@v2
-      - name: Load Docker images
-        run: |
-          docker load -i reviewer-client.tar/reviewer-client.tar
-          docker load -i reviewer-browsertests.tar/reviewer-browsertests.tar
-      - name: Push images to hub.docker.com
+      - name: Build and run browsertest container
+        run: make test_browser_containerized
+      - name: Push images to docker hub
+        if: github.ref == 'refs/heads/master'
         run: |
           .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
           .scripts/github/retag-and-push.sh reviewer-browsertests $IMAGE_TAG

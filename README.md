@@ -14,7 +14,7 @@ The client for "libero reviewer".
 
 The project contains a [Makefile] which uses [Docker] for development.
 
-## Running the client
+## Development
 
 1. `make setup`
 2. Run client options:  
@@ -37,6 +37,12 @@ The project contains a [Makefile] which uses [Docker] for development.
    ```sh
    make run_ci
    ```
+
+3. Run tests:  
+   - `make lint`: lint code
+   - `make test`: unittests
+   - `make test_browser`: locally executed browsertests, use with `start_test` or `start_dev`
+   - `make test_browser_containerized`: use with `build_prod ; start_ci`
 
 3. `make stop` to teardown
 
