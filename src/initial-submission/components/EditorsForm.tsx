@@ -65,11 +65,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
 
-    const { fields: reviewerFields, append, remove } = useFieldArray<ReviewerAlias>({
-        control,
-        name: 'suggestedReviewers',
-    });
-
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
     const opposedSeniorEditorsReason = watch('opposedSeniorEditorsReason');
@@ -80,9 +75,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const opposedReviewersReason = watch('opposedReviewersReason');
 
     const suggestedReviewers = watch('suggestedReviewers');
-    useEffect(() => {
-        console.log(suggestedReviewers);
-    }, [suggestedReviewers]);
 
     const onSave = async (): Promise<void> => {
         const vars = {
@@ -146,14 +138,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             {/* TODO add exclude reviewer toggleable box */}
             {/*TODO: translationforprefix*/}
             <ExpandingEmailField
-                maxFields={6}
-                fields={reviewerFields}
+                maxRows={6}
                 register={register}
                 name="suggestedReviewers"
                 labelPrefix="Reviewer"
-                append={append}
-                remove={remove}
-                watchArray={suggestedReviewers}
+                inputRows={suggestedReviewers}
             />
             {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
