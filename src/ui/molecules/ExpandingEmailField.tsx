@@ -15,7 +15,7 @@ interface ValidationError {
 interface Props {
     maxRows: number;
     minRows?: number;
-    register: () => LegacyRef<HTMLInputElement>;
+    register: (() => void) | LegacyRef<HTMLInputElement>;
     name: string;
     labelPrefix?: string;
     inputRows: NameEmail[];
@@ -66,7 +66,7 @@ const ExpandingEmailField = ({
             }
         }
     }, [inputRows]);
-
+    // TODO ADD UNREGISTER
     return (
         <div className="expanding-email-field">
             {[...Array(rowCount)].map((_, index) => (
@@ -75,7 +75,7 @@ const ExpandingEmailField = ({
                         className="expanding-email-field__pair--name"
                         id={`${name}-${index}-name`}
                         name={`${name}[${index}].name`}
-                        register={register()}
+                        register={register}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.name')}`}
                         invalid={!!(errors[index] && errors[index].name)}
                         helperText={errors[index] && errors[index].name ? errors[index].name.message : null}
@@ -84,7 +84,7 @@ const ExpandingEmailField = ({
                         className="expanding-email-field__pair--email"
                         id={`${name}-${index}-email`}
                         name={`${name}[${index}].email`}
-                        register={register()}
+                        register={register}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.email')}`}
                         invalid={!!(errors[index] && errors[index].email)}
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
