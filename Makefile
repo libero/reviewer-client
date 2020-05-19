@@ -13,8 +13,6 @@ help:
 setup: ## perform setup tasks
 	-@ git submodule update --init --recursive
 	-@ docker network create reviewer > /dev/null 2>&1 || true
-	-@ if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
-	-$(MAKE) install
 
 install: ## install dependencies
 	yarn
@@ -25,7 +23,7 @@ build_dev: install ## build client for running in development with non mocked ap
 build_test: install ## build client for running in development with mocked api and continuum-adaptor
 	${DOCKER_COMPOSE_TEST} build reviewer-client
 
-build_prod: install ## build client for production
+build_prod: ## build client for production
 	${DOCKER_COMPOSE_BUILD} build reviewer-client
 
 start_dev: ## start with dev build image, with reviewer-mocks mocking continuum
@@ -65,10 +63,14 @@ test_browser: ## run browser tests
 	yarn wait-port localhost:9000
 	yarn test:browser-headless
 
+test_browser_containerized:
+	docker build . -f browsertests.Dockerfile --tag libero/reviewer-browsertests:${IMAGE_TAG}
+	docker run --network reviewer -e BASE_URL="reviewer-client_nginx:9000" libero/reviewer-browsertests:${IMAGE_TAG}
+
 run_ci: ## run as if in ci
 	make lint
 	make test
 	make build_prod
 	make start_ci
-	make test_browser
+	make test_browser_containerized
 	make stop

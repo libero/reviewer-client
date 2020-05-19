@@ -45,7 +45,7 @@ services:
     ports:
       - "3003:3003"
     volumes:
-      - ./config/reviewer-mocks:/etc/reviewer/:z
+      - ./config/reviewer-mocks/config.default.json:/etc/reviewer/config.json
     networks:
       - "reviewer"
     healthcheck:
