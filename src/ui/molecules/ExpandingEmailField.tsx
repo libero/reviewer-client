@@ -8,6 +8,10 @@ interface NameEmail {
     email?: string;
 }
 
+interface ValidationError {
+    message?: string;
+}
+
 interface Props {
     maxRows: number;
     minRows?: number;
@@ -15,9 +19,18 @@ interface Props {
     name: string;
     labelPrefix?: string;
     inputRows: NameEmail[];
+    errors?: { email?: ValidationError; name?: ValidationError }[];
 }
 
-const ExpandingEmailField = ({ maxRows, minRows = 1, register, name, inputRows, labelPrefix }: Props): JSX.Element => {
+const ExpandingEmailField = ({
+    maxRows,
+    minRows = 1,
+    register,
+    name,
+    inputRows,
+    labelPrefix,
+    errors = [],
+}: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     const [rowCount, setRowCount] = useState<number>(inputRows.length);
 
@@ -64,6 +77,8 @@ const ExpandingEmailField = ({ maxRows, minRows = 1, register, name, inputRows, 
                         name={`${name}[${index}].name`}
                         register={register()}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.name')}`}
+                        invalid={!!(errors[index] && errors[index].name)}
+                        helperText={errors[index] && errors[index].name ? errors[index].name.message : null}
                     />
                     <TextField
                         className="expanding-email-field__pair--email"
@@ -71,6 +86,8 @@ const ExpandingEmailField = ({ maxRows, minRows = 1, register, name, inputRows, 
                         name={`${name}[${index}].email`}
                         register={register()}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.email')}`}
+                        invalid={!!(errors[index] && errors[index].email)}
+                        helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
                     />
                 </div>
             ))}

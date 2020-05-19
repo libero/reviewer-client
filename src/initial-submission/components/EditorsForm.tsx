@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorAlias, EditorsDetails, ReviewerAlias, Submission } from '../types';
+import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField } from '../../ui/molecules';
@@ -29,9 +29,25 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
     });
 
-    const schema = yup.object().shape({});
+    const schema = yup.object().shape({
+        suggestedReviewers: yup.array(
+            yup.object().shape(
+                {
+                    name: yup
+                        .string()
+                        .trim()
+                        .required('Name is required'),
+                    email: yup
+                        .string()
+                        .trim()
+                        .email('Must be a valid email'),
+                },
+                [['name', 'email']],
+            ),
+        ),
+    });
 
-    const { watch, register, triggerValidation, setValue, control } = useForm<EditorsDetails>({
+    const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
@@ -76,6 +92,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
 
     const suggestedReviewers = watch('suggestedReviewers');
 
+    console.log(errors);
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
@@ -143,6 +160,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 name="suggestedReviewers"
                 labelPrefix="Reviewer"
                 inputRows={suggestedReviewers}
+                errors={errors.suggestedReviewers}
             />
             {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
