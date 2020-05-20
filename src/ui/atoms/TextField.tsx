@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, LegacyRef } from 'react';
 import Close from '@material-ui/icons/Close';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,7 +7,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     invalid?: boolean;
     labelText?: string;
     icon?: JSX.Element;
-    register?: () => void;
+    register?: (() => void) | LegacyRef<HTMLInputElement>;
     className?: string;
 }
 const TextField = ({ id, labelText, invalid, helperText, icon, register, className, ...rest }: Props): JSX.Element => {

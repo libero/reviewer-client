@@ -8,6 +8,7 @@ import useAutoSave from '../hooks/useAutoSave';
 import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
+import { ExpandingEmailField } from '../../ui/molecules';
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -28,9 +29,25 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
     });
 
-    const schema = yup.object().shape({});
+    const schema = yup.object().shape({
+        suggestedReviewers: yup.array(
+            yup.object().shape(
+                {
+                    name: yup
+                        .string()
+                        .trim()
+                        .required('Name is required'),
+                    email: yup
+                        .string()
+                        .trim()
+                        .email('Must be a valid email'),
+                },
+                [['name', 'email']],
+            ),
+        ),
+    });
 
-    const { watch, register, triggerValidation, setValue } = useForm<EditorsDetails>({
+    const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
@@ -49,7 +66,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     ? editorDetails.opposedReviewingEditorsReason
                     : '',
             suggestedReviewers:
-                editorDetails && editorDetails.suggestedReviewers ? editorDetails.suggestedReviewers : [],
+                editorDetails && editorDetails.suggestedReviewers
+                    ? editorDetails.suggestedReviewers
+                    : [{ name: '', email: '' }],
             opposedReviewers: editorDetails && editorDetails.opposedReviewers ? editorDetails.opposedReviewers : [],
             opposedReviewersReason:
                 editorDetails && editorDetails.opposedReviewersReason ? editorDetails.opposedReviewersReason : '',
@@ -68,9 +87,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const suggestedReviewingEditors = watch('suggestedReviewingEditors');
     const opposedReviewingEditors = watch('opposedReviewingEditors');
     const opposedReviewingEditorsReason = watch('opposedReviewingEditorsReason');
-    const suggestedReviewers = watch('suggestedReviewers');
     const opposedReviewers = watch('opposedReviewers');
     const opposedReviewersReason = watch('opposedReviewersReason');
+
+    const suggestedReviewers = watch('suggestedReviewers');
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
@@ -82,7 +102,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     suggestedReviewingEditors,
                     opposedReviewingEditors,
                     opposedReviewingEditorsReason,
-                    suggestedReviewers,
+                    suggestedReviewers: suggestedReviewers.map(rev => ({ name: rev.name, email: rev.email })),
                     opposedReviewers,
                     opposedReviewersReason,
                 },
@@ -96,9 +116,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedSeniorEditors,
         opposedSeniorEditorsReason,
         suggestedReviewingEditors,
+        suggestedReviewers,
         opposedReviewingEditors,
         opposedReviewingEditorsReason,
-        suggestedReviewers,
         opposedReviewers,
         opposedReviewersReason,
     ]);
@@ -131,6 +151,15 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
+            {/*TODO: translationforprefix*/}
+            <ExpandingEmailField
+                maxRows={6}
+                register={register}
+                name="suggestedReviewers"
+                labelPrefix="Reviewer"
+                inputRows={suggestedReviewers}
+                errors={errors.suggestedReviewers}
+            />
             {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
