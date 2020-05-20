@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -36,11 +36,22 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     name: yup
                         .string()
                         .trim()
-                        .required('Name is required'),
+                        .when('email', {
+                            is: email => email && email.length > 0,
+                            then: yup.string().required('Name is required'),
+                            otherwise: yup.string(),
+                        }),
                     email: yup
                         .string()
                         .trim()
-                        .email('Must be a valid email'),
+                        .when('name', {
+                            is: name => name && name.length > 0,
+                            then: yup
+                                .string()
+                                .email('Must be a valid email')
+                                .required('Email is required'),
+                            otherwise: yup.string().email('Must be a valid email'),
+                        }),
                 },
                 [['name', 'email']],
             ),
@@ -159,6 +170,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 labelPrefix={t('editors.reviewers-label-prefix')}
                 inputRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
+                onChange={(): void => {
+                    triggerValidation('suggestedReviewers');
+                }}
             />
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
