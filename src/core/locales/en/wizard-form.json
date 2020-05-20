@@ -48,6 +48,8 @@
   "editors": {
     "title": "Who should review your work?",
     "editors-people-picker-label": "Suggest Senior Editors",
-    "reviewers-people-picker-label": "Suggest Reviewing Editors"
+    "reviewers-people-picker-label": "Suggest Reviewing Editors",
+    "reviewers-title": "Suggest Reviewers (Optional)",
+    "reviewers-label-prefix": "Reviewer"
   }
 }

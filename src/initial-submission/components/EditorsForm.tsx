@@ -151,16 +151,15 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
-            {/*TODO: translationforprefix*/}
+            <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <ExpandingEmailField
                 maxRows={6}
                 register={register}
                 name="suggestedReviewers"
-                labelPrefix="Reviewer"
+                labelPrefix={t('editors.reviewers-label-prefix')}
                 inputRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
             />
-            {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
