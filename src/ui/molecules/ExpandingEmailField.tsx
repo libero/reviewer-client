@@ -68,7 +68,6 @@ const ExpandingEmailField = ({
             }
         }
     }, [inputRows]);
-    // TODO ADD UNREGISTER
     return (
         <div className="expanding-email-field">
             {[...Array(rowCount)].map((_, index) => (
