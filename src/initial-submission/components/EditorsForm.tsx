@@ -18,13 +18,13 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const { editorDetails } = initialValues;
     const { data: getSeniorEditors, loading: loadingSeniorEditors } = useQuery<GetEditors>(getEditorsQuery, {
         variables: {
-            role: 'seniorEditors',
+            role: 'seniorEditor',
         },
     });
 
     const { data: getReviewingEditors, loading: loadingReviewingEditors } = useQuery<GetEditors>(getEditorsQuery, {
         variables: {
-            role: 'reviewingEditors',
+            role: 'reviewingEditor',
         },
     });
 
