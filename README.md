@@ -54,7 +54,7 @@ Make sure to include something like this for all browsertests:
 
 ```js
 import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane } from '../page-objects';
-import { BASE_URL } from './lib/baseUrl';
+import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`;
 
