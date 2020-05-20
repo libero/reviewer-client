@@ -91,8 +91,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const opposedReviewersReason = watch('opposedReviewersReason');
 
     const suggestedReviewers = watch('suggestedReviewers');
-
-    console.log(errors);
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
