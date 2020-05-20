@@ -1,4 +1,9 @@
-import React, { LegacyRef, useState, useEffect } from 'react';
+import React, {
+    LegacyRef,
+    useState,
+    useEffect,
+    ChangeEventHandler
+} from 'react';
 import { TextField } from '../atoms';
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +25,7 @@ interface Props {
     labelPrefix?: string;
     inputRows: NameEmail[];
     errors?: { email?: ValidationError; name?: ValidationError }[];
+    onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 const ExpandingEmailField = ({
@@ -30,6 +36,7 @@ const ExpandingEmailField = ({
     inputRows,
     labelPrefix,
     errors = [],
+    onChange,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     const [rowCount, setRowCount] = useState<number>(inputRows.length);
@@ -79,6 +86,7 @@ const ExpandingEmailField = ({
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.name')}`}
                         invalid={!!(errors[index] && errors[index].name)}
                         helperText={errors[index] && errors[index].name ? errors[index].name.message : null}
+                        onChange={onChange}
                     />
                     <TextField
                         className="expanding-email-field__pair--email"
@@ -88,6 +96,7 @@ const ExpandingEmailField = ({
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.email')}`}
                         invalid={!!(errors[index] && errors[index].email)}
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
+                        onChange={onChange}
                     />
                 </div>
             ))}
