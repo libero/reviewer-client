@@ -146,4 +146,20 @@ describe('Expanding Email Field', () => {
         fireEvent.input(container.querySelector('[name="test[3].email"]'), { target: { value: ' ' } });
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(3);
     });
+
+    it('should not remove the row if the alternate field of the row has a value', () => {
+        const inputFields = [
+            { name: 'name: 0', email: 'email: 0' },
+            { name: 'name: 1', email: 'email: 1' },
+            { name: 'name: 2', email: 'email: 2' },
+            { name: 'name: 3', email: 'email: 3' },
+            { name: '', email: '' },
+        ];
+        const { container } = render(<AddRemoveWrapper customInputRows={inputFields} />);
+        expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
+        fireEvent.input(container.querySelector('[name="test[3].name"]'), { target: { value: ' ' } });
+        expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
+        fireEvent.input(container.querySelector('[name="test[3].email"]'), { target: { value: ' ' } });
+        expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(4);
+    });
 });
