@@ -1,9 +1,4 @@
-import React, {
-    LegacyRef,
-    useState,
-    useEffect,
-    ChangeEventHandler
-} from 'react';
+import React, { LegacyRef, useState, useEffect, ChangeEventHandler } from 'react';
 import { TextField } from '../atoms';
 import { useTranslation } from 'react-i18next';
 

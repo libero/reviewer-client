@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
-import React, { useState, Fragment, ReactEventHandler, ChangeEvent } from 'react';
-import { cleanup, render, RenderResult, fireEvent, waitFor } from '@testing-library/react';
+import React, { useState, Fragment, ChangeEvent } from 'react';
+import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import ExpandingEmailField from './ExpandingEmailField';
 
 describe('Expanding Email Field', () => {
@@ -29,8 +29,9 @@ describe('Expanding Email Field', () => {
     const AddRemoveWrapper = ({ customInputRows }: WrapperProps): JSX.Element => {
         const [inputRows, setInputRows] = useState(customInputRows || [{ name: 'name: 0', email: 'email: 0' }]);
         const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-            const rowNumber = Number.parseInt(e.target.getAttribute('name').charAt(5));
-            const field = e.target.getAttribute('name').split('.')[1];
+            const name = e.target.getAttribute('name');
+            const rowNumber = Number.parseInt(name.charAt(5));
+            const field = name.split('.')[1];
             const newRows = [...inputRows];
             if (!newRows[rowNumber]) {
                 newRows[rowNumber] = { name: '', email: '' };
@@ -124,7 +125,7 @@ describe('Expanding Email Field', () => {
             { name: 'name: 3', email: 'email: 3' },
             { name: '', email: '' },
         ];
-        const { container, debug } = render(<AddRemoveWrapper customInputRows={inputFields} />);
+        const { container } = render(<AddRemoveWrapper customInputRows={inputFields} />);
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
         fireEvent.input(container.querySelector('[name="test[3].name"]'), { target: { value: ' ' } });
         fireEvent.input(container.querySelector('[name="test[3].email"]'), { target: { value: ' ' } });
