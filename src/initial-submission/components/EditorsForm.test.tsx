@@ -290,4 +290,13 @@ describe('DetailsForm', (): void => {
             }).not.toThrow();
         });
     });
+    describe('Suggested reviewers', () => {
+        it('renders a single empty row of name email fields', () => {
+            const { getByLabelText } = render(<EditorsForm initialValues={testInitialValues} />, {
+                container: appContainer(),
+            });
+            expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name')).toBeInTheDocument();
+            expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email')).toBeInTheDocument();
+        });
+    });
 });
