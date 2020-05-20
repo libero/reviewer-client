@@ -120,7 +120,6 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
         returnPartialData: true,
     });
 
-    console.log('loading: ' + loading);
     return (
         <div className="submission-wizard">
             <ProgressBar
