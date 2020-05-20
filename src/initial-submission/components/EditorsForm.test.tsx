@@ -26,7 +26,7 @@ jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): 
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (_: unknown, options: { variables: { role: string } }): { data: object; loading: boolean } => {
-        if (options.variables.role === 'seniorEditors') {
+        if (options.variables.role === 'seniorEditor') {
             return {
                 data: {
                     getEditors: [
