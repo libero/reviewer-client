@@ -1,6 +1,7 @@
 export { default as BurgerMenu } from './BurgerMenu';
 export { default as CoverLetter } from './CoverLetter';
 export { default as ExcludedToggle } from './ExcludedToggle';
+export { default as ExpandingEmailField } from './ExpandingEmailField';
 export { default as FileUpload } from './FileUpload';
 export { default as Menu } from './Menu';
 export { default as MultiFileUpload } from './MultiFileUpload';

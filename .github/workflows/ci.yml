@@ -8,10 +8,11 @@ on:
 env:
   IMAGE_TAG: ${{ github.sha }}
 jobs:
+
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
       - uses: actions/setup-node@v1
@@ -27,85 +28,42 @@ jobs:
         run: make lint
       - name: Unit Test
         run: make test
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.15'
-      - uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-client-
-      - name: Build
-        run: make build_prod
-      - name: Save Docker images
+      - name: Build and tarball container image
         run: |
-          mkdir -p docker-image
-          docker save -o docker-image/reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
-          gzip docker-image/reviewer-client.tar
-      - name: Upload prod Docker image
-        uses: actions/upload-artifact@v1
+          make build_prod
+          docker save -o reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
+      - uses: actions/upload-artifact@v2
         with:
-          name: docker-image
-          path: docker-image
-  browser-test:
+          name: reviewer-client.tar
+          path: reviewer-client.tar
+
+  browsertest-and-push-images:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.15'
-      - uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-client-
-      - name: yarn
-        run: yarn
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: docker-image
-      - name: Load Docker image
+      - uses: actions/download-artifact@v2
+      - name: Setup client with mocks
         run: |
-          gunzip docker-image/reviewer-client.tar.gz
-          docker load -i docker-image/reviewer-client.tar
-      - name: Create Config
-        run: make setup
-      - name: Chrome version
-        run: google-chrome --version
-      - name: Start services
-        run: make start_ci
-      - name: Browser Test
-        run: make test_browser
-  deploy-image:
-    runs-on: ubuntu-latest
-    needs: browser-test
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: true
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: docker-image
-      - name: Load Docker image
+          docker load -i reviewer-client.tar/reviewer-client.tar
+          make setup
+          make start_ci
+      - name: Build and run browsertest container
+        run: make test_browser_containerized
+      - name: Push images to docker hub
+        if: github.ref == 'refs/heads/master'
         run: |
-          gunzip docker-image/reviewer-client.tar.gz
-          docker load -i docker-image/reviewer-client.tar
-      - name: Push image
-        run: .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
+          .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
+          .scripts/github/retag-and-push.sh reviewer-browsertests $IMAGE_TAG
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

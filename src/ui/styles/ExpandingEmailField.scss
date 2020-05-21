@@ -1,0 +1,7 @@
+.expanding-email-field__row {
+  display: grid;
+  @include twoColumnGrid;
+  @include forSize('tabletPortraitUp') {
+    grid-gap: 1.5rem;
+  }
+}

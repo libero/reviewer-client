@@ -1,6 +1,7 @@
 import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane, EditorPage } from '../page-objects';
+import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`Getting Started`.page`http://localhost:9000`;
+fixture`Getting Started`.page`${BASE_URL}`;
 
 test('assert nav bar', async() => {
     const navigationPane = new NavigationPane();
