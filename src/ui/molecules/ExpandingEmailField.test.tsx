@@ -162,4 +162,17 @@ describe('Expanding Email Field', () => {
         fireEvent.input(container.querySelector('[name="test[3].email"]'), { target: { value: ' ' } });
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(4);
     });
+
+    it('forwards the passed className', () => {
+        const { container } = render(
+            <ExpandingEmailField
+                className="testClassName"
+                maxRows={6}
+                register={jest.fn()}
+                name="test"
+                inputRows={[{ name: '', email: '' }]}
+            />,
+        );
+        expect(container.querySelector('.testClassName')).toBeInTheDocument();
+    });
 });

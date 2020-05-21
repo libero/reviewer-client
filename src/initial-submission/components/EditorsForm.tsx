@@ -36,11 +36,22 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     name: yup
                         .string()
                         .trim()
-                        .required('Name is required'),
+                        .when('email', {
+                            is: email => email && email.length > 0,
+                            then: yup.string().required(t('editors.validation.reviewers-name-required')),
+                            otherwise: yup.string(),
+                        }),
                     email: yup
                         .string()
                         .trim()
-                        .email('Must be a valid email'),
+                        .when('name', {
+                            is: name => name && name.length > 0,
+                            then: yup
+                                .string()
+                                .email(t('editors.validation.reviewers-email-valid'))
+                                .required(t('editors.validation.reviewers-email-required')),
+                            otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
+                        }),
                 },
                 [['name', 'email']],
             ),
@@ -151,16 +162,19 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 className="reviewing-editors-picker"
             />
             {/* TODO add exclude reviewer toggleable box */}
-            {/*TODO: translationforprefix*/}
+            <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <ExpandingEmailField
                 maxRows={6}
                 register={register}
+                className="suggestedReviewers__inputs"
                 name="suggestedReviewers"
-                labelPrefix="Reviewer"
+                labelPrefix={t('editors.reviewers-label-prefix')}
                 inputRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
+                onChange={(): void => {
+                    triggerValidation('suggestedReviewers');
+                }}
             />
-            {/* TODO add suggest reviewer (non editor) expanding email field */}
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}

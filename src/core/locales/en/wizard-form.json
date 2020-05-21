@@ -48,6 +48,13 @@
   "editors": {
     "title": "Who should review your work?",
     "editors-people-picker-label": "Suggest Senior Editors",
-    "reviewers-people-picker-label": "Suggest Reviewing Editors"
+    "reviewers-people-picker-label": "Suggest Reviewing Editors",
+    "reviewers-title": "Suggest Reviewers (Optional)",
+    "reviewers-label-prefix": "Reviewer",
+    "validation": {
+      "reviewers-name-required": "Name is required",
+      "reviewers-email-required": "Email is required",
+      "reviewers-email-valid": "Must be a valid email"
+    }
   }
 }

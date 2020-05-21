@@ -81,6 +81,21 @@ jest.mock('@apollo/react-hooks', () => ({
     },
 }));
 
+const ButtonComponent = ({
+    triggerValidation,
+}: {
+    _: Function;
+    triggerValidation: () => Promise<boolean>;
+}): JSX.Element => (
+    <button
+        onClick={(): void => {
+            triggerValidation();
+        }}
+    >
+        TEST BUTTON
+    </button>
+);
+
 describe('DetailsForm', (): void => {
     afterEach(() => {
         cleanup();
@@ -288,6 +303,194 @@ describe('DetailsForm', (): void => {
                     />,
                 );
             }).not.toThrow();
+        });
+    });
+    describe('Suggested reviewers', () => {
+        it('renders a single empty row of name email fields', () => {
+            const { getByLabelText } = render(<EditorsForm initialValues={testInitialValues} />, {
+                container: appContainer(),
+            });
+            expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name')).toBeInTheDocument();
+            expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email')).toBeInTheDocument();
+            expect(() => getByLabelText('editors.reviewers-label-prefix 2 expanding-email-field.name')).toThrow();
+        });
+
+        it('populates with multiple initial suggestedReviewers values', () => {
+            const { getByLabelText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [
+                                { name: 'name1', email: 'email@example.com' },
+                                { name: 'name2', email: 'email@example.com' },
+                                { name: 'name3', email: 'email@example.com' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
+                4,
+            );
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name') as HTMLInputElement)
+                    .value,
+            ).toBe('name1');
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 2 expanding-email-field.name') as HTMLInputElement)
+                    .value,
+            ).toBe('name2');
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 3 expanding-email-field.name') as HTMLInputElement)
+                    .value,
+            ).toBe('name3');
+        });
+        it('limits the user to 6 entries', () => {
+            const { getByLabelText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [
+                                { name: 'name1', email: 'email@example.com' },
+                                { name: 'name2', email: 'email@example.com' },
+                                { name: 'name3', email: 'email@example.com' },
+                                { name: 'name4', email: 'email@example.com' },
+                                { name: 'name5', email: 'email@example.com' },
+                                { name: 'name6', email: 'email@example.com' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
+                6,
+            );
+            expect(() => getByLabelText('editors.reviewers-label-prefix 7 expanding-email-field.name')).toThrow();
+        });
+
+        it('empty rows are valid', async (): Promise<void> => {
+            const { getByText, getByLabelText, container } = render(
+                <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
+                {
+                    container: appContainer(),
+                },
+            );
+
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name') as HTMLInputElement)
+                    .value,
+            ).toBe('');
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email') as HTMLInputElement)
+                    .value,
+            ).toBe('');
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
+        });
+
+        it('requires a email if name has value', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name1', email: '' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-email-required',
+            );
+        });
+        it('requires a name if email has value', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: '', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-name-required',
+            );
+        });
+
+        it('requires a valid email format if email is filled', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name1', email: 'notanemail' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-email-valid',
+            );
+        });
+        it('is valid if there is a name and valid email in a row', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
         });
     });
 });
