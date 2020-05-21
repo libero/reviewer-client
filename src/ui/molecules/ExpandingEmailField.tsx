@@ -35,6 +35,7 @@ const ExpandingEmailField = ({
     onChange,
     className,
 }: Props): JSX.Element => {
+    console.log('rendering expandingEmailField: ', name);
     const { t } = useTranslation('ui');
     const [rowCount, setRowCount] = useState<number>(inputRows.length);
 
@@ -53,6 +54,7 @@ const ExpandingEmailField = ({
         return blankRows;
     };
     useEffect(() => {
+        console.log('blah: ', name);
         const lastField = inputRows[inputRows.length - 1];
         const secondLastField = inputRows[inputRows.length - 2];
 

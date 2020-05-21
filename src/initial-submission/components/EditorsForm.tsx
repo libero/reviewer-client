@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,8 @@ import useAutoSave from '../hooks/useAutoSave';
 import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
-import { ExpandingEmailField } from '../../ui/molecules';
+import { ExcludedToggle, ExpandingEmailField } from '../../ui/molecules';
+import { TextField } from '../../ui/atoms';
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -80,7 +81,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 editorDetails && editorDetails.suggestedReviewers
                     ? editorDetails.suggestedReviewers
                     : [{ name: '', email: '' }],
-            opposedReviewers: editorDetails && editorDetails.opposedReviewers ? editorDetails.opposedReviewers : [],
+            opposedReviewers:
+                editorDetails && editorDetails.opposedReviewers
+                    ? editorDetails.opposedReviewers
+                    : [{ name: '', email: '' }],
             opposedReviewersReason:
                 editorDetails && editorDetails.opposedReviewersReason ? editorDetails.opposedReviewersReason : '',
         },
@@ -134,6 +138,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
+    useEffect(() => {
+        console.log(JSON.stringify(opposedReviewers));
+    }, [opposedReviewers]);
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -175,7 +183,28 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     triggerValidation('suggestedReviewers');
                 }}
             />
-            {/* TODO add exclude reviewer (non editor) toggleable box */}
+            {/*TODO i18n*/}
+            <ExcludedToggle
+                toggleActionText="exclude a reviewer"
+                togglePrefixText="Would you like to "
+                panelHeading={'Excluded Reviewers'}
+            >
+                <ExpandingEmailField
+                    name="opposedReviewers"
+                    register={register}
+                    errors={errors.opposedReviewers}
+                    labelPrefix="Reviewer"
+                    className="opposedReviewers__inputs"
+                    maxRows={3}
+                    inputRows={opposedReviewers}
+                />
+                <TextField
+                    id="opposedReviewersReason"
+                    register={register}
+                    name="opposedReviewersReason"
+                    className="opposedReviewersReason__input"
+                />
+            </ExcludedToggle>
 
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </div>
