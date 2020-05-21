@@ -13,7 +13,7 @@ COPY package.json \
 
 RUN yarn install
 
-    globals.d.ts \
+COPY globals.d.ts \
     index.ejs \
     index.tsx \
     .eslintrc.js \
