@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -30,6 +30,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
     });
 
+
+
     const schema = yup.object().shape({
         suggestedReviewers: yup.array(
             yup.object().shape(
@@ -59,7 +61,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         ),
     });
 
-    const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
+    const { watch, register, triggerValidation, setValue, errors, control } = useForm<EditorsDetails>({
         defaultValues: {
             suggestedSeniorEditors:
                 editorDetails && editorDetails.suggestedSeniorEditors ? editorDetails.suggestedSeniorEditors : [],
@@ -171,7 +173,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             />
             {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
-            <ExpandingEmailField
+            {/* <ExpandingEmailField
                 maxRows={6}
                 register={register}
                 className="suggestedReviewers__inputs"
@@ -182,7 +184,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 onChange={(): void => {
                     triggerValidation('suggestedReviewers');
                 }}
-            />
+            /> */}
             {/*TODO i18n*/}
             <ExcludedToggle
                 toggleActionText="exclude a reviewer"
@@ -192,6 +194,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 <ExpandingEmailField
                     name="opposedReviewers"
                     register={register}
+                    control={control}
                     errors={errors.opposedReviewers}
                     labelPrefix="Reviewer"
                     className="opposedReviewers__inputs"

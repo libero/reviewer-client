@@ -1,6 +1,8 @@
 import React, { LegacyRef, useState, useEffect, ChangeEventHandler } from 'react';
 import { TextField } from '../atoms';
 import { useTranslation } from 'react-i18next';
+import { Control, useFieldArray } from 'react-hook-form';
+
 
 interface NameEmail {
     id?: string;
@@ -16,6 +18,7 @@ interface Props {
     maxRows: number;
     minRows?: number;
     register: (() => void) | LegacyRef<HTMLInputElement>;
+    control: Control;
     name: string;
     labelPrefix?: string;
     inputRows: NameEmail[];
@@ -34,10 +37,18 @@ const ExpandingEmailField = ({
     errors = [],
     onChange,
     className,
+    control
 }: Props): JSX.Element => {
     console.log('rendering expandingEmailField: ', name);
     const { t } = useTranslation('ui');
     const [rowCount, setRowCount] = useState<number>(inputRows.length);
+    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+        {
+          control, // control props comes from useForm (optional: if you are using FormContext)
+          name: name, // unique name for your Field Array
+          // keyName: "id", default to "id", you can change the key name
+        }
+      );
 
     const isRowBlank = (row: NameEmail): boolean => row.name + row.email === '';
 
@@ -74,7 +85,7 @@ const ExpandingEmailField = ({
     }, [inputRows]);
     return (
         <div className={`${className ? className : ''} expanding-email-field`}>
-            {[...Array(rowCount)].map((_, index) => (
+            {fields.map((_, index) => (
                 <div className="expanding-email-field__row" key={`row-${index}`}>
                     <TextField
                         className="expanding-email-field__pair--name"
