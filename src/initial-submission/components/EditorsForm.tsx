@@ -9,6 +9,7 @@ import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField } from '../../ui/molecules';
+import { ExcludedToggle } from '../../ui/molecules';
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -150,7 +151,21 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 selectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
             />
-            {/* TODO add exclude reviewer toggleable box */}
+            <ExcludedToggle togglePrefixText="Would you like to " toggleActionText="exclude a senior editor">
+                <PeoplePicker
+                    label={t('editors.reviewers-people-picker-label')}
+                    people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
+                    onRemove={(selected): void =>
+                        setValue(
+                            'opposedReviewingEditors',
+                            opposedReviewingEditors.filter(personId => personId !== selected),
+                        )
+                    }
+                    setSelectedPeople={(selected): void => setValue('opposedReviewingEditors', selected)}
+                    selectedPeople={opposedReviewingEditors}
+                    className="opposed-reviewing-editors-picker"
+                />
+            </ExcludedToggle>
             {/*TODO: translationforprefix*/}
             <ExpandingEmailField
                 maxRows={6}
