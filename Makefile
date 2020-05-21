@@ -26,6 +26,9 @@ build_test: install ## build client for running in development with mocked api a
 build_prod: ## build client for production
 	${DOCKER_COMPOSE_BUILD} build reviewer-client
 
+build_browsertest:
+	docker build . -f browsertests.Dockerfile --tag libero/reviewer-browsertests:${IMAGE_TAG}
+
 start_dev: ## start with dev build image, with reviewer-mocks mocking continuum
 	${DOCKER_COMPOSE} pull reviewer-mocks nginx
 	$(MAKE) build_dev
@@ -63,9 +66,19 @@ test_browser: ## run browser tests
 	yarn wait-port localhost:9000
 	yarn test:browser-headless
 
-test_browser_containerized:
-	docker build . -f browsertests.Dockerfile --tag libero/reviewer-browsertests:${IMAGE_TAG}
-	docker run --network reviewer -e BASE_URL="reviewer-client_nginx:9000" libero/reviewer-browsertests:${IMAGE_TAG}
+test_chromium:
+	docker run --network reviewer \
+		-e BASE_URL="reviewer-client_nginx:9000" \
+		libero/reviewer-browsertests:${IMAGE_TAG}
+
+test_firefox:
+	docker run --network reviewer \
+		-e BASE_URL="reviewer-client_nginx:9000" \
+		--entrypoint testcafe \
+		libero/reviewer-browsertests:${IMAGE_TAG} \
+		"firefox:headless" 'tests/**/*.browser.ts'
+
+test_browser_containerized: build_browsertest test_chromium test_firefox
 
 run_ci: ## run as if in ci
 	make lint
