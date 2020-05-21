@@ -21,7 +21,7 @@ interface Props {
     inputRows: NameEmail[];
     errors?: { email?: ValidationError; name?: ValidationError }[];
     onChange?: ChangeEventHandler<HTMLInputElement>;
-    className: string;
+    className?: string;
 }
 
 const ExpandingEmailField = ({

@@ -38,7 +38,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                         .trim()
                         .when('email', {
                             is: email => email && email.length > 0,
-                            then: yup.string().required('Name is required'),
+                            then: yup.string().required(t('editors.validation.reviewers-name-required')),
                             otherwise: yup.string(),
                         }),
                     email: yup
@@ -48,9 +48,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                             is: name => name && name.length > 0,
                             then: yup
                                 .string()
-                                .email('Must be a valid email')
-                                .required('Email is required'),
-                            otherwise: yup.string().email('Must be a valid email'),
+                                .email(t('editors.validation.reviewers-email-valid'))
+                                .required(t('editors.validation.reviewers-email-required')),
+                            otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
                         }),
                 },
                 [['name', 'email']],

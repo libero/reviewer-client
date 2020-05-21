@@ -421,7 +421,7 @@ describe('DetailsForm', (): void => {
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
             expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
-                'Email is required',
+                'editors.validation.reviewers-email-required',
             );
         });
         it('requires a name if email has value', async (): Promise<void> => {
@@ -444,7 +444,7 @@ describe('DetailsForm', (): void => {
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
             expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
-                'Name is required',
+                'editors.validation.reviewers-name-required',
             );
         });
 
@@ -468,7 +468,7 @@ describe('DetailsForm', (): void => {
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
             expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
-                'Must be a valid email',
+                'editors.validation.reviewers-email-valid',
             );
         });
         it('is valid if there is a name and valid email in a row', async (): Promise<void> => {
