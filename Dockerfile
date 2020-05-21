@@ -9,6 +9,10 @@ HEALTHCHECK --interval=5s --timeout=1s \
 
 COPY package.json \
     yarn.lock \
+    ./
+
+RUN yarn install
+
     globals.d.ts \
     index.ejs \
     index.tsx \
@@ -25,8 +29,6 @@ COPY tests/ tests/
 COPY test-utils/ test-utils/
 COPY src/ src/
 COPY webpack/ webpack/
-
-RUN yarn install
 
 #
 # Stage: Production build
