@@ -82,7 +82,7 @@ const ExpandingEmailField = ({
                 setRowCount(rowCount + 1);
             }
         }
-    }, [inputRows]);
+    }, [fields]);
     return (
         <div className={`${className ? className : ''} expanding-email-field`}>
             {fields.map((_, index) => (
