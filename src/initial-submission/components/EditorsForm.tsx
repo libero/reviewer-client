@@ -81,6 +81,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
 
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
+    register({ name: 'opposedReviewingEditors', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
@@ -140,7 +141,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             {/* TODO add exclude editor toggleable box */}
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
-                people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
+                people={
+                    loadingReviewingEditors
+                        ? []
+                        : getReviewingEditors.getEditors.filter(ed => !opposedReviewingEditors.includes(ed.id))
+                }
                 onRemove={(selected): void =>
                     setValue(
                         'suggestedReviewingEditors',
@@ -154,7 +159,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <ExcludedToggle togglePrefixText="Would you like to " toggleActionText="exclude a senior editor">
                 <PeoplePicker
                     label={t('editors.reviewers-people-picker-label')}
-                    people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
+                    people={
+                        loadingReviewingEditors
+                            ? []
+                            : getReviewingEditors.getEditors.filter(ed => !suggestedReviewingEditors.includes(ed.id))
+                    }
                     onRemove={(selected): void =>
                         setValue(
                             'opposedReviewingEditors',
