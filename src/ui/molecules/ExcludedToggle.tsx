@@ -6,6 +6,7 @@ interface Props {
     togglePrefixText: string;
     toggleActionText: string;
     open?: boolean;
+    onClose?: Function;
 }
 
 const ExcludedToggle = ({
@@ -14,6 +15,7 @@ const ExcludedToggle = ({
     toggleActionText,
     children,
     panelHeading,
+    onClose,
 }: Props): JSX.Element => {
     const [opened, setOpened] = useState(open);
     return (
@@ -22,7 +24,15 @@ const ExcludedToggle = ({
                 <div className="excluded-toggle__panel">
                     <div className="excluded-toggle__panel-header">
                         <h3 className="excluded-toggle__panel-heading">{panelHeading}</h3>
-                        <button className="excluded-toggle__close-button" onClick={(): void => setOpened(!opened)}>
+                        <button
+                            className="excluded-toggle__close-button"
+                            onClick={(): void => {
+                                if (onClose) {
+                                    onClose();
+                                }
+                                setOpened(!opened);
+                            }}
+                        >
                             <Close />
                             close
                         </button>
