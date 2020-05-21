@@ -8,8 +8,8 @@ import useAutoSave from '../hooks/useAutoSave';
 import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
-import { ExpandingEmailField } from '../../ui/molecules';
-import { ExcludedToggle } from '../../ui/molecules';
+import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
+import { MultilineTextField } from '../../ui/atoms';
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -125,6 +125,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
+    const closeOpposedReviewers = (): void => {
+        setValue('opposedReviewingEditorsReason', '');
+        setValue('opposedReviewingEditors', []);
+    };
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -156,7 +161,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 selectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
             />
-            <ExcludedToggle togglePrefixText="Would you like to " toggleActionText="exclude a senior editor">
+            <ExcludedToggle
+                togglePrefixText="Would you like to "
+                toggleActionText="exclude a senior editor"
+                onClose={closeOpposedReviewers}
+            >
                 <PeoplePicker
                     label={t('editors.reviewers-people-picker-label')}
                     people={
@@ -173,6 +182,17 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     setSelectedPeople={(selected): void => setValue('opposedReviewingEditors', selected)}
                     selectedPeople={opposedReviewingEditors}
                     className="opposed-reviewing-editors-picker"
+                />
+                <MultilineTextField
+                    id="opposedReviewerReason"
+                    register={register}
+                    labelText={t('editors.opposed-reviewering-editor-reason-label')}
+                    invalid={errors && errors.opposedReviewingEditorsReason !== undefined}
+                    helperText={
+                        errors && errors.opposedReviewingEditorsReason
+                            ? errors.opposedReviewingEditorsReason.message
+                            : null
+                    }
                 />
             </ExcludedToggle>
             {/*TODO: translationforprefix*/}

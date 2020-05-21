@@ -49,6 +49,7 @@
     "title": "Who should review your work?",
     "editors-people-picker-label": "Suggest Senior Editors",
     "reviewers-people-picker-label": "Suggest Reviewing Editors",
-    "exclude-reviewers-people-picker-label": "Exclude a Reviewing Editor"
+    "exclude-reviewers-people-picker-label": "Exclude a Reviewing Editor",
+    "opposed-reviewering-editor-reason-label": "Reason for exclusion"
   }
 }
