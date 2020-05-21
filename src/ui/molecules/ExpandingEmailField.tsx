@@ -21,6 +21,7 @@ interface Props {
     inputRows: NameEmail[];
     errors?: { email?: ValidationError; name?: ValidationError }[];
     onChange?: ChangeEventHandler<HTMLInputElement>;
+    className: string;
 }
 
 const ExpandingEmailField = ({
@@ -32,6 +33,7 @@ const ExpandingEmailField = ({
     labelPrefix,
     errors = [],
     onChange,
+    className,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     const [rowCount, setRowCount] = useState<number>(inputRows.length);
@@ -69,7 +71,7 @@ const ExpandingEmailField = ({
         }
     }, [inputRows]);
     return (
-        <div className="expanding-email-field">
+        <div className={`${className ? className : ''} expanding-email-field`}>
             {[...Array(rowCount)].map((_, index) => (
                 <div className="expanding-email-field__row" key={`row-${index}`}>
                     <TextField
