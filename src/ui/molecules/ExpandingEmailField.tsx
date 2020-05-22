@@ -22,7 +22,8 @@ interface Props {
     errors?: { email?: ValidationError; name?: ValidationError }[];
     onChange?: ChangeEventHandler<HTMLInputElement>;
     className?: string;
-    append?: (value: Partial<Record<string, any>> | Partial<Record<string, any>>[]) => void
+    append?: (value: Partial<Record<string, any>> | Partial<Record<string, any>>[]) => void;
+    remove?: (index?: number | number[]) => void;
 }
 
 const ExpandingEmailField = ({
@@ -36,25 +37,36 @@ const ExpandingEmailField = ({
     onChange,
     className,
     append,
+    remove,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
+    const isRowBlank = (index: number): boolean => {
+        return (
+            (document.querySelector(`[name="${name}[${index}].name"]`) as HTMLInputElement).value +
+                (document.querySelector(`[name="${name}[${index}].email"]`) as HTMLInputElement).value ===
+            ''
+        );
+    };
     useEffect(() => {
         if (inputRows.length === 0) {
-            append({name: '', email: ''});
+            append({ name: '', email: '' });
         }
         const lastField = inputRows[inputRows.length - 1];
         const secondLastField = inputRows[inputRows.length - 2];
 
         if (lastField) {
+            if (!!secondLastField && isRowBlank(inputRows.length - 1) && isRowBlank(inputRows.length - 2)) {
+                remove(inputRows.length - 1);
+            }
+
             if ((lastField.name || lastField.email) && inputRows.length < maxRows) {
                 if (secondLastField && (secondLastField.name || secondLastField.email)) {
-                    append({name: '', email: ''});
+                    append({ name: '', email: '' });
                 } else if (!secondLastField) {
-                    append({name: '', email: ''});
+                    append({ name: '', email: '' });
                 }
             }
         }
-   
     }, [inputRows]);
     return (
         <div className={`${className ? className : ''} expanding-email-field`}>

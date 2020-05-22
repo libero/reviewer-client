@@ -106,7 +106,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         fields: opposedReviewersFields,
         append: appendOpposedReviewers,
         // prepend,
-        // remove,
+        remove: removeOpposedReviewer,
         // swap,
         // move,
         // insert,
@@ -119,7 +119,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         fields: suggestedReviewersFields,
         append: appendsuggestedReviewers,
         // prepend,
-        // remove,
+        remove: removeSuggestedReviewer,
         // swap,
         // move,
         // insert,
@@ -206,6 +206,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 inputRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
                 append={appendsuggestedReviewers}
+                remove={removeSuggestedReviewer}
                 onChange={(): void => {
                     triggerValidation('suggestedReviewers');
                 }}
@@ -225,6 +226,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     maxRows={3}
                     append={appendOpposedReviewers}
                     inputRows={opposedReviewers}
+                    remove={removeOpposedReviewer}
                 />
                 <TextField
                     id="opposedReviewersReason"
