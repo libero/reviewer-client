@@ -46,10 +46,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 [['name', 'email']],
             ),
         ),
-        // opposedReviewersReason: yup.string().when('opposedReviewingEditors', {
-        //     is: !!editors.length,
-        //     then: yup.string().required(t('editors.validation.opposed-reviewering-editor-reason-required)),
-        //   })
+        opposedReviewingEditors: yup.array().max(2, t('opposed-reviewering-editors-max')),
+        opposedReviewersReason: yup.string().when('opposedReviewingEditors', {
+            is: (editors) => !!editors.length,
+            then: yup.string().required(t('editors.validation.opposed-reviewering-editor-reason-required')),
+          })
     });
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
