@@ -209,6 +209,41 @@ describe('DetailsForm', (): void => {
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
         });
 
+        it.only('displays a validation message if no reason is provided but editing reviewers are excluded', async (): Promise<
+            void
+        > => {
+            const { baseElement, container, getAllByText, getByText } = render(
+                <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
+                {
+                    container: appContainer(),
+                },
+            );
+            const excludeTooggle = container.querySelector('.excluded-toggle__action');
+            expect(excludeTooggle).toBeInTheDocument();
+            await fireEvent.click(excludeTooggle);
+            const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
+            expect(opposedReviewingEditors).toBeInTheDocument();
+            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            const selectedName = baseElement.querySelector(
+                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+            ).textContent;
+            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+
+            await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+            expect(getByText(selectedName)).toBeInTheDocument();
+            const reasonInput = container.querySelector('#opposedReviewersReason');
+            expect(reasonInput).toBeInTheDocument();
+            await fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.excluded-toggle__panel .typography__label--error').textContent).toBe(
+                'editors.validation.opposed-reviewering-editor-reason-required',
+            );
+        });
+
         it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
             const { baseElement, container, getAllByText, getByText } = render(
                 <EditorsForm initialValues={testInitialValues} />,
