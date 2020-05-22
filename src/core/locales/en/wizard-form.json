@@ -49,11 +49,16 @@
     "title": "Who should review your work?",
     "editors-people-picker-label": "Suggest Senior Editors",
     "reviewers-people-picker-label": "Suggest Reviewing Editors",
+    "reviewers-title": "Suggest Reviewers (Optional)",
+    "reviewers-label-prefix": "Reviewer",
     "exclude-reviewers-people-picker-label": "Exclude a Reviewing Editor",
     "opposed-reviewering-editor-reason-label": "Reason for exclusion",
     "validation": {
       "opposed-reviewering-editor-reason-required": "Please provide a reason for exclusion",
-      "opposed-reviewering-editors-max": "Please suggest no more than 2 editors"
+      "opposed-reviewering-editors-max": "Please suggest no more than 2 editors",
+      "reviewers-name-required": "Name is required",
+      "reviewers-email-required": "Email is required",
+      "reviewers-email-valid": "Must be a valid email"
     }
   }
 }

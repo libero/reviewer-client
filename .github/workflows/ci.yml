@@ -57,8 +57,9 @@ jobs:
           docker load -i reviewer-client.tar/reviewer-client.tar
           make setup
           make start_ci
-      - name: Build and run browsertest container
-        run: make test_browser_containerized
+      - run: make build_browsertest
+      - run: make test_chromium
+      - run: make test_firefox
       - name: Push images to docker hub
         if: github.ref == 'refs/heads/master'
         run: |
