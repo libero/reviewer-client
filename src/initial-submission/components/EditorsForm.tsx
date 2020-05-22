@@ -217,7 +217,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 name="suggestedReviewers"
                 labelPrefix={t('editors.reviewers-label-prefix')}
                 inputRows={suggestedReviewers}
-                errors={errors.suggestedReviewers}
+                errors={errors && errors.suggestedReviewers}
                 onChange={(): void => {
                     triggerValidation('suggestedReviewers');
                 }}
