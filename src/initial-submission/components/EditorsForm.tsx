@@ -48,9 +48,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         ),
         opposedReviewingEditors: yup.array().max(2, t('opposed-reviewering-editors-max')),
         opposedReviewersReason: yup.string().when('opposedReviewingEditors', {
-            is: (editors) => !!editors.length,
+            is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-reviewering-editor-reason-required')),
-          })
+        }),
     });
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
@@ -189,15 +189,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     className="opposed-reviewing-editors-picker"
                 />
                 <MultilineTextField
-                    id="opposedReviewerReason"
+                    id="opposedReviewersReason"
                     register={register}
                     labelText={t('editors.opposed-reviewering-editor-reason-label')}
-                    invalid={errors && errors.opposedReviewingEditorsReason !== undefined}
-                    helperText={
-                        errors && errors.opposedReviewingEditorsReason
-                            ? errors.opposedReviewingEditorsReason.message
-                            : null
-                    }
+                    invalid={errors && errors.opposedReviewersReason !== undefined}
+                    helperText={errors && errors.opposedReviewersReason ? errors.opposedReviewersReason.message : null}
                 />
             </ExcludedToggle>
             {/*TODO: translationforprefix*/}
