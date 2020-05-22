@@ -207,7 +207,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     helperText={errors && errors.opposedReviewersReason ? errors.opposedReviewersReason.message : null}
                 />
             </ExcludedToggle>
-            {/*TODO: translationforprefix*/}
             {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <ExpandingEmailField
