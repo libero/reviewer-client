@@ -205,6 +205,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     labelText={t('editors.opposed-reviewering-editor-reason-label')}
                     invalid={errors && errors.opposedReviewersReason !== undefined}
                     helperText={errors && errors.opposedReviewersReason ? errors.opposedReviewersReason.message : null}
+                    onChange={(): void => {
+                        triggerValidation('opposedReviewersReason');
+                    }}
                 />
             </ExcludedToggle>
             {/* TODO add exclude reviewer toggleable box */}

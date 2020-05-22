@@ -229,7 +229,7 @@ describe('DetailsForm', (): void => {
             const selectedName = baseElement.querySelector(
                 '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
-            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+            await fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
             expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
             await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
@@ -237,11 +237,10 @@ describe('DetailsForm', (): void => {
             expect(getByText(selectedName)).toBeInTheDocument();
             const reasonInput = container.querySelector('#opposedReviewersReason');
             expect(reasonInput).toBeInTheDocument();
+            await fireEvent.click(reasonInput);
             await fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
-            expect(container.querySelector('.excluded-toggle__panel .typography__label--error').textContent).toBe(
-                'editors.validation.opposed-reviewering-editor-reason-required',
-            );
+            expect(container.querySelector('.typography__label--error').textContent).toBe('editors.validation.opposed-reviewering-editor-reason-required');
         });
 
         it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
