@@ -41,11 +41,26 @@ const ExpandingEmailField = ({
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     const isRowBlank = (index: number): boolean => {
-        return (
-            (document.querySelector(`[name="${name}[${index}].name"]`) as HTMLInputElement).value +
-                (document.querySelector(`[name="${name}[${index}].email"]`) as HTMLInputElement).value ===
-            ''
-        );
+        const s =
+            document.querySelector<HTMLInputElement>(`[name="${name}[${index}].name"]`).value +
+            document.querySelector<HTMLInputElement>(`[name="${name}[${index}].email"]`).value;
+        // console.log('isRowBlank: ', s, 'index: ', index);
+        return s === '';
+    };
+    const findBlankRows = (): number[] => {
+        let found = false;
+        let blankRows: number[] = [];
+        [...inputRows].reverse().forEach((_, index) => {
+            const currentIndex = inputRows.length - (1 + index);
+            if (isRowBlank(currentIndex) && !found && currentIndex !== 0) {
+                blankRows.push(currentIndex);
+            } else {
+                found = true;
+                blankRows = blankRows.slice(0, blankRows.length - 1);
+            }
+        });
+        // console.log(blankRows);
+        return blankRows;
     };
     useEffect(() => {
         if (inputRows.length === 0) {
@@ -53,13 +68,14 @@ const ExpandingEmailField = ({
         }
         const lastField = inputRows[inputRows.length - 1];
         const secondLastField = inputRows[inputRows.length - 2];
-
+        const blankRows = findBlankRows();
+        console.log('useEffecting');
         if (lastField) {
-            if (!!secondLastField && isRowBlank(inputRows.length - 1) && isRowBlank(inputRows.length - 2)) {
-                remove(inputRows.length - 1);
-            }
-
-            if ((lastField.name || lastField.email) && inputRows.length < maxRows) {
+            if (blankRows.length) {
+                debugger;
+                remove(blankRows);
+                console.log('removing: ', blankRows);
+            } else if ((lastField.name || lastField.email) && inputRows.length < maxRows) {
                 if (secondLastField && (secondLastField.name || secondLastField.email)) {
                     append({ name: '', email: '' });
                 } else if (!secondLastField) {
@@ -67,6 +83,7 @@ const ExpandingEmailField = ({
                 }
             }
         }
+        console.log('inputRows: ', inputRows);
     }, [inputRows]);
     return (
         <div className={`${className ? className : ''} expanding-email-field`}>

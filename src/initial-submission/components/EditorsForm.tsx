@@ -164,9 +164,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
-    useEffect(() => {
-        console.log(JSON.stringify(opposedReviewers));
-    }, [opposedReviewers]);
+    // useEffect(() => {
+    //     console.log(JSON.stringify(opposedReviewers));
+    // }, [opposedReviewers]);
 
     return (
         <div className="editors-step">
