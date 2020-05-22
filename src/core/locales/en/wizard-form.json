@@ -53,6 +53,8 @@
     "reviewers-label-prefix": "Reviewer",
     "exclude-reviewers-people-picker-label": "Exclude a Reviewing Editor",
     "opposed-reviewering-editor-reason-label": "Reason for exclusion",
+    "opposed-reviewing-editors-toggle-prefix": "Would you like to ",
+    "opposed-reviewing-editors-toggle-action-text": "exclude a senior editor",
     "validation": {
       "opposed-reviewering-editor-reason-required": "Please provide a reason for exclusion",
       "opposed-reviewering-editors-max": "Please suggest no more than 2 editors",

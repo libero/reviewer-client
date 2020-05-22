@@ -178,8 +178,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 className="reviewing-editors-picker"
             />
             <ExcludedToggle
-                togglePrefixText="Would you like to "
-                toggleActionText="exclude a senior editor"
+                togglePrefixText={t('opposed-reviewing-editors-toggle-prefix')}
+                toggleActionText={t('opposed-reviewing-editors-toggle-action-text')}
                 onClose={closeOpposedReviewers}
             >
                 <PeoplePicker
