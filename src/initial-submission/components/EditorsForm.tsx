@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -103,7 +103,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const opposedReviewingEditors = watch('opposedReviewingEditors');
     const opposedReviewingEditorsReason = watch('opposedReviewingEditorsReason');
     const {
-        fields: opposedReviewersFields,
         append: appendOpposedReviewers,
         // prepend,
         remove: removeOpposedReviewer,
@@ -116,7 +115,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     });
 
     const {
-        fields: suggestedReviewersFields,
         append: appendsuggestedReviewers,
         // prepend,
         remove: removeSuggestedReviewer,

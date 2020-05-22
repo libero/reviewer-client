@@ -1,4 +1,4 @@
-import React, { LegacyRef, useState, useEffect, ChangeEventHandler } from 'react';
+import React, { LegacyRef, useEffect, ChangeEventHandler } from 'react';
 import { TextField } from '../atoms';
 import { useTranslation } from 'react-i18next';
 
@@ -22,7 +22,7 @@ interface Props {
     errors?: { email?: ValidationError; name?: ValidationError }[];
     onChange?: ChangeEventHandler<HTMLInputElement>;
     className?: string;
-    append?: (value: Partial<Record<string, any>> | Partial<Record<string, any>>[]) => void;
+    append?: (value: Partial<NameEmail> | Partial<NameEmail>[]) => void;
     remove?: (index?: number | number[]) => void;
 }
 
@@ -72,7 +72,6 @@ const ExpandingEmailField = ({
         console.log('useEffecting');
         if (lastField) {
             if (blankRows.length) {
-                debugger;
                 remove(blankRows);
                 console.log('removing: ', blankRows);
             } else if ((lastField.name || lastField.email) && inputRows.length < maxRows) {
