@@ -30,8 +30,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
     });
 
-
-
     const schema = yup.object().shape({
         suggestedReviewers: yup.array(
             yup.object().shape(
@@ -104,6 +102,32 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const suggestedReviewingEditors = watch('suggestedReviewingEditors');
     const opposedReviewingEditors = watch('opposedReviewingEditors');
     const opposedReviewingEditorsReason = watch('opposedReviewingEditorsReason');
+    const {
+        fields: opposedReviewersFields,
+        append: appendOpposedReviewers,
+        // prepend,
+        // remove,
+        // swap,
+        // move,
+        // insert,
+    } = useFieldArray({
+        control, // control props comes from useForm (optional: if you are using FormContext)
+        name: 'opposedReviewers', // unique name for your Field Array
+    });
+
+    const {
+        fields: suggestedReviewersFields,
+        append: appendsuggestedReviewers,
+        // prepend,
+        // remove,
+        // swap,
+        // move,
+        // insert,
+    } = useFieldArray({
+        control, // control props comes from useForm (optional: if you are using FormContext)
+        name: 'suggestedReviewers', // unique name for your Field Array
+    });
+
     const opposedReviewers = watch('opposedReviewers');
     const opposedReviewersReason = watch('opposedReviewersReason');
 
@@ -173,7 +197,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             />
             {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
-            {/* <ExpandingEmailField
+            <ExpandingEmailField
                 maxRows={6}
                 register={register}
                 className="suggestedReviewers__inputs"
@@ -181,10 +205,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 labelPrefix={t('editors.reviewers-label-prefix')}
                 inputRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
+                append={appendsuggestedReviewers}
                 onChange={(): void => {
                     triggerValidation('suggestedReviewers');
                 }}
-            /> */}
+            />
             {/*TODO i18n*/}
             <ExcludedToggle
                 toggleActionText="exclude a reviewer"
@@ -194,11 +219,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 <ExpandingEmailField
                     name="opposedReviewers"
                     register={register}
-                    control={control}
                     errors={errors.opposedReviewers}
                     labelPrefix="Reviewer"
                     className="opposedReviewers__inputs"
                     maxRows={3}
+                    append={appendOpposedReviewers}
                     inputRows={opposedReviewers}
                 />
                 <TextField

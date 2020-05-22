@@ -38,7 +38,6 @@ const ExcludedToggle = ({
                         onClick={(): void => setOpened(!opened)}
                     >
                         {toggleActionText}
-                        {children}
                     </button>
                     ?
                 </span>
