@@ -1,9 +1,8 @@
-import React, { LegacyRef, useState, useEffect, ChangeEventHandler } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField } from '../atoms';
 import { useTranslation } from 'react-i18next';
 
 interface NameEmail {
-    id?: string;
     name?: string;
     email?: string;
 }
@@ -15,28 +14,26 @@ interface ValidationError {
 interface Props {
     maxRows: number;
     minRows?: number;
-    register: (() => void) | LegacyRef<HTMLInputElement>;
     name: string;
     labelPrefix?: string;
-    inputRows: NameEmail[];
+    initialRows: NameEmail[];
     errors?: { email?: ValidationError; name?: ValidationError }[];
-    onChange?: ChangeEventHandler<HTMLInputElement>;
+    onChange: (personArray: NameEmail[]) => void;
     className?: string;
 }
 
 const ExpandingEmailField = ({
     maxRows,
     minRows = 1,
-    register,
     name,
-    inputRows,
+    initialRows,
     labelPrefix,
     errors = [],
     onChange,
     className,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
-    const [rowCount, setRowCount] = useState<number>(inputRows.length);
+    const [peopleArray, setPeopleArray] = useState<NameEmail[]>(initialRows);
 
     const isRowBlank = (row: NameEmail): boolean => row.name + row.email === '';
 
@@ -52,47 +49,75 @@ const ExpandingEmailField = ({
         }
         return blankRows;
     };
-    useEffect(() => {
-        const lastField = inputRows[inputRows.length - 1];
-        const secondLastField = inputRows[inputRows.length - 2];
 
-        const blankRows = getTrailingBlankReviewerCount(inputRows);
+    function addEmptyRow(): void {
+        const newPeopleArray = [...peopleArray];
+        newPeopleArray.push({ name: '', email: '' });
+        setPeopleArray(newPeopleArray);
+        onChange(newPeopleArray);
+    }
+
+    useEffect(() => {
+        const lastField = peopleArray[peopleArray.length - 1];
+        const secondLastField = peopleArray[peopleArray.length - 2];
+
+        const blankRows = getTrailingBlankReviewerCount(peopleArray);
+        if (peopleArray.length === 0) {
+            addEmptyRow();
+            return;
+        }
+
         if (blankRows > 1) {
             const rowsToRemove = blankRows - 1;
-            if (rowCount - rowsToRemove >= minRows) {
-                setRowCount(rowCount - rowsToRemove);
+            if (peopleArray.length - rowsToRemove >= minRows) {
+                const newPeopleArray = [...peopleArray];
+                newPeopleArray.splice(peopleArray.length - rowsToRemove - 1);
+                setPeopleArray(newPeopleArray);
+                onChange(newPeopleArray);
             }
-        } else if ((lastField.name || lastField.email) && inputRows.length < maxRows) {
+        } else if (lastField && (lastField.name || lastField.email) && peopleArray.length < maxRows) {
             if (secondLastField && (secondLastField.name || secondLastField.email)) {
-                setRowCount(rowCount + 1);
+                addEmptyRow();
             } else if (!secondLastField) {
-                setRowCount(rowCount + 1);
+                addEmptyRow();
             }
         }
-    }, [inputRows]);
+    }, [peopleArray]);
+
+    const updatePeople = (index: number, field: 'name' | 'email', value: string): void => {
+        const newPeople = [...peopleArray];
+        newPeople[index][field] = value;
+        onChange(newPeople);
+        setPeopleArray(newPeople);
+    };
+
     return (
         <div className={`${className ? className : ''} expanding-email-field`}>
-            {[...Array(rowCount)].map((_, index) => (
+            {peopleArray.map((person, index) => (
                 <div className="expanding-email-field__row" key={`row-${index}`}>
                     <TextField
                         className="expanding-email-field__pair--name"
                         id={`${name}-${index}-name`}
                         name={`${name}[${index}].name`}
-                        register={register}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.name')}`}
                         invalid={!!(errors[index] && errors[index].name)}
                         helperText={errors[index] && errors[index].name ? errors[index].name.message : null}
-                        onChange={onChange}
+                        onChange={(e): void => {
+                            updatePeople(index, 'name', e.target.value);
+                        }}
+                        defaultValue={person.name}
                     />
                     <TextField
                         className="expanding-email-field__pair--email"
                         id={`${name}-${index}-email`}
                         name={`${name}[${index}].email`}
-                        register={register}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.email')}`}
                         invalid={!!(errors[index] && errors[index].email)}
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
-                        onChange={onChange}
+                        defaultValue={person.email}
+                        onChange={(e): void => {
+                            updatePeople(index, 'email', e.target.value);
+                        }}
                     />
                 </div>
             ))}

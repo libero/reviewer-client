@@ -180,12 +180,9 @@ describe('DetailsForm', (): void => {
         it('displays an excluded reviewing editor when they been selected and reason to be added', async (): Promise<
             void
         > => {
-            const { baseElement, container, getAllByText, getByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
-                {
-                    container: appContainer(),
-                },
-            );
+            const { baseElement, container, getByText } = render(<EditorsForm initialValues={testInitialValues} />, {
+                container: appContainer(),
+            });
             const excludeTooggle = container.querySelector('.excluded-toggle__action');
             expect(excludeTooggle).toBeInTheDocument();
             await fireEvent.click(excludeTooggle);
@@ -212,7 +209,7 @@ describe('DetailsForm', (): void => {
         it('displays a validation message if no reason is provided but editing reviewers are excluded', async (): Promise<
             void
         > => {
-            const { baseElement, container, getAllByText, getByText } = render(
+            const { baseElement, container, getByText } = render(
                 <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
                 {
                     container: appContainer(),
@@ -248,12 +245,9 @@ describe('DetailsForm', (): void => {
         });
 
         it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
-            const { baseElement, container, getAllByText, getByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
-                {
-                    container: appContainer(),
-                },
-            );
+            const { baseElement, container, getByText } = render(<EditorsForm initialValues={testInitialValues} />, {
+                container: appContainer(),
+            });
             const excludeTooggle = container.querySelector('.excluded-toggle__action');
             expect(excludeTooggle).toBeInTheDocument();
             await fireEvent.click(excludeTooggle);

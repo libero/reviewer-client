@@ -91,12 +91,14 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 editorDetails && editorDetails.opposedReviewersReason ? editorDetails.opposedReviewersReason : '',
         },
         mode: 'onBlur',
+        validateCriteriaMode: 'all',
         validationSchema: schema,
     });
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
 
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
+    register({ name: 'suggestedReviewers', type: 'custom' });
     register({ name: 'opposedReviewingEditors', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
@@ -107,8 +109,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const opposedReviewingEditorsReason = watch('opposedReviewingEditorsReason');
     const opposedReviewers = watch('opposedReviewers');
     const opposedReviewersReason = watch('opposedReviewersReason');
-
     const suggestedReviewers = watch('suggestedReviewers');
+
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
@@ -214,14 +216,13 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <ExpandingEmailField
                 maxRows={6}
-                register={register}
                 className="suggestedReviewers__inputs"
                 name="suggestedReviewers"
                 labelPrefix={t('editors.reviewers-label-prefix')}
-                inputRows={suggestedReviewers}
+                initialRows={suggestedReviewers}
                 errors={errors && errors.suggestedReviewers}
-                onChange={(): void => {
-                    triggerValidation('suggestedReviewers');
+                onChange={(personArray): void => {
+                    setValue('suggestedReviewers', personArray, true);
                 }}
             />
             {/* TODO add exclude reviewer (non editor) toggleable box */}

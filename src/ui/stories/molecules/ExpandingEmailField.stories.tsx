@@ -5,6 +5,7 @@ import { ExpandingEmailField } from '../../molecules';
 import '../../../core/styles/index.scss';
 import centered from '@storybook/addon-centered/react';
 import { ReviewerAlias } from '../../../initial-submission/types';
+import { action } from '@storybook/addon-actions';
 
 storiesOf('ui | molecules/ExpandingEmailField', module)
     .addDecorator(withKnobs)
@@ -20,15 +21,16 @@ storiesOf('ui | molecules/ExpandingEmailField', module)
             ]);
             const maxRows = number('Maximum Rows', 6);
             const minRows = number('Minimum Rows', 1);
+            const onChange = action('Change');
             return (
                 <ExpandingEmailField
-                    register={(): void => {}}
                     name={name}
                     maxRows={maxRows}
-                    inputRows={inputRows}
+                    initialRows={inputRows}
                     labelPrefix={labelPrefix}
                     minRows={minRows}
                     errors={errors}
+                    onChange={onChange}
                 />
             );
         },
