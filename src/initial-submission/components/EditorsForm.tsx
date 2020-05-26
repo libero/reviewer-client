@@ -91,6 +91,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
 
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
+    register({ name: 'suggestedReviewers', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
@@ -100,8 +101,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const opposedReviewingEditorsReason = watch('opposedReviewingEditorsReason');
     const opposedReviewers = watch('opposedReviewers');
     const opposedReviewersReason = watch('opposedReviewersReason');
-
     const suggestedReviewers = watch('suggestedReviewers');
+
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {
@@ -134,6 +135,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
+    console.log(suggestedReviewers);
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -170,7 +172,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 labelPrefix={t('editors.reviewers-label-prefix')}
                 initialRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
-                onChange={(): void => {
+                onChange={(personArray): void => {
+                    console.log('CHANGE', personArray);
+                    setValue('suggestedReviewer', personArray);
                     triggerValidation('suggestedReviewers');
                 }}
             />

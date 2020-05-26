@@ -87,6 +87,7 @@ const ExpandingEmailField = ({
     const updatePeople = (index: number, field: 'name' | 'email', value: string): void => {
         const newPeople = [...peopleArray];
         newPeople[index][field] = value;
+        onChange(newPeople);
         setPeopleArray(newPeople);
     };
 
