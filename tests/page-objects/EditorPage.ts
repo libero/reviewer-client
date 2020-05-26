@@ -9,6 +9,7 @@ export class EditorPage {
     private readonly suggestedReviewingEditorsPicker = Selector('.reviewing-editors-picker');
     private readonly toggleOpposedEditorsPicker = Selector('.excluded-toggle__action');
     private readonly opposedEditorsPicker = Selector('.opposed-reviewing-editors-picker');
+    private readonly opposedEditorsReason = Selector('#opposedReviewersReason');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.editorsStep.visible).ok();
@@ -74,6 +75,12 @@ export class EditorPage {
         await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
         await t.click(Selector('.modal__buttons_container').find('.button--primary'));
         await t.expect(this.opposedEditorsPicker.find('.selected_people_list__item').count).eql(2);
+        await this.setOpposedEditorsReason();
+    }
+
+    public async setOpposedEditorsReason(input = 'reason'): Promise<void> {
+        await t.typeText(this.opposedEditorsReason, input);
+        await t.expect(this.opposedEditorsReason.value).eql(input);
     }
 
     public async assertReviewerSearch(): Promise<void> {
