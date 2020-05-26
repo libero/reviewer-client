@@ -59,5 +59,6 @@ test('Happy path', async () => {
     await editorPage.assertOnPage();
     await editorPage.addEditor();
     await editorPage.addReviewer();
+    await editorPage.addOpposingReviewingEditor();
     await editorPage.next();
 });
