@@ -10,12 +10,20 @@ export class EditorPage {
     private readonly toggleOpposedEditorsPicker = Selector('.excluded-toggle__action');
     private readonly opposedEditorsPicker = Selector('.opposed-reviewing-editors-picker');
     private readonly opposedEditorsReason = Selector('#opposedReviewersReason');
+    private readonly suggestedReviewers = Selector('.suggestedReviewers__inputs');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.editorsStep.visible).ok();
         await t.expect(this.seniorEditorsPicker.visible).ok();
         await t.expect(this.suggestedReviewingEditorsPicker.visible).ok();
         await t.expect(this.nextButton.visible).ok();
+    }
+
+    public async populateForm(): Promise<void> {
+        await this.addEditor();
+        await this.addReviewer();
+        await this.addOpposingReviewingEditor();
+        await this.setSuggestedReviewers();
     }
 
     public async addEditor(): Promise<void> {
@@ -92,6 +100,24 @@ export class EditorPage {
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).eql(0);
         await t.selectText(searchInput).pressKey('delete');
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
+    }
+    public async setSuggestedReviewers(inputs = ['name', 'name@elifesciences.org']): Promise<void> {
+        await t.expect(this.suggestedReviewers.visible).ok();
+        let index = 0;
+        for await (const [name, email] of inputs) {
+            const nameInput = Selector(`#suggestedReviewers-${index}-name`);
+            const emailInput = Selector(`#suggestedReviewers-${index}-email`);
+            await t.typeText(nameInput, name);
+            await t.expect(nameInput.value).eql(name);
+            await t.typeText(emailInput, email);
+            await t.expect(emailInput.value).eql(email);
+            index = index + 1;
+        }
+        if (inputs.length === 5) {
+            await t.expect(Selector('.expanding-email-field__row').count).eql(inputs.length);
+        } else {
+            await t.expect(Selector('.expanding-email-field__row').count).eql(inputs.length + 1);
+        }
     }
 
     public async back(): Promise<void> {
