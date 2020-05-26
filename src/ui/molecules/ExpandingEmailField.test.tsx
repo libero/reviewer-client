@@ -11,7 +11,6 @@ describe('Expanding Email Field', () => {
             (): RenderResult =>
                 render(
                     <ExpandingEmailField
-                        register={jest.fn()}
                         name="test"
                         initialRows={[{ name: '', email: '' }]}
                         maxRows={1}
@@ -25,7 +24,6 @@ describe('Expanding Email Field', () => {
         const { container } = render(
             <ExpandingEmailField
                 maxRows={6}
-                register={jest.fn()}
                 name={'test'}
                 initialRows={[{ name: '', email: '' }]}
                 onChange={jest.fn()}
@@ -39,13 +37,7 @@ describe('Expanding Email Field', () => {
     it('should render 2 field rows if a populated inputRow is passed in', () => {
         const inputRows = [{ name: 'bob', email: 'bob@email.com' }];
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={inputRows}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputRows} onChange={jest.fn()} />,
         );
         expect(container.querySelector('[name="test[0].name"]')).toBeInTheDocument();
         expect(container.querySelector('[name="test[0].email"]')).toBeInTheDocument();
@@ -54,13 +46,7 @@ describe('Expanding Email Field', () => {
 
     it('should add a new row if text is entered into the last row', () => {
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={[]}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={[]} onChange={jest.fn()} />,
         );
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(1);
         fireEvent.input(container.querySelector('[name="test[0].name"]'), { target: { value: 'bob' } });
@@ -75,13 +61,7 @@ describe('Expanding Email Field', () => {
             { name: 'name: 3', email: 'email: 3' },
         ];
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={inputFields}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputFields} onChange={jest.fn()} />,
         );
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
         fireEvent.input(container.querySelector('[name="test[4].name"]'), { target: { value: 'bob' } });
@@ -98,13 +78,7 @@ describe('Expanding Email Field', () => {
             { name: '', email: '' },
         ];
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={inputFields}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputFields} onChange={jest.fn()} />,
         );
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(6);
         fireEvent.input(container.querySelector('[name="test[5].name"]'), { target: { value: 'bob' } });
@@ -119,13 +93,7 @@ describe('Expanding Email Field', () => {
             { name: 'name: 3', email: 'email: 3' },
         ];
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={inputFields}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputFields} onChange={jest.fn()} />,
         );
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
         fireEvent.change(container.querySelector('[name="test[3].name"]'), { target: { value: '' } });
@@ -142,13 +110,7 @@ describe('Expanding Email Field', () => {
             { name: '', email: '' },
         ];
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={inputFields}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputFields} onChange={jest.fn()} />,
         );
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
         fireEvent.input(container.querySelector('[name="test[3].name"]'), { target: { value: '' } });
@@ -165,13 +127,7 @@ describe('Expanding Email Field', () => {
             { name: '', email: '' },
         ];
         const { container } = render(
-            <ExpandingEmailField
-                maxRows={6}
-                register={jest.fn()}
-                name={'test'}
-                initialRows={inputFields}
-                onChange={jest.fn()}
-            />,
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputFields} onChange={jest.fn()} />,
         );
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(5);
         fireEvent.input(container.querySelector('[name="test[3].name"]'), { target: { value: '' } });
@@ -185,7 +141,6 @@ describe('Expanding Email Field', () => {
             <ExpandingEmailField
                 className="testClassName"
                 maxRows={6}
-                register={jest.fn()}
                 name="test"
                 initialRows={[{ name: '', email: '' }]}
                 onChange={jest.fn()}

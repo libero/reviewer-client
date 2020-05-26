@@ -165,7 +165,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <ExpandingEmailField
                 maxRows={6}
-                register={register}
                 className="suggestedReviewers__inputs"
                 name="suggestedReviewers"
                 labelPrefix={t('editors.reviewers-label-prefix')}

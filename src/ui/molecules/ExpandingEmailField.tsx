@@ -1,4 +1,4 @@
-import React, { LegacyRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField } from '../atoms';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,6 @@ interface ValidationError {
 interface Props {
     maxRows: number;
     minRows?: number;
-    register: (() => void) | LegacyRef<HTMLInputElement>;
     name: string;
     labelPrefix?: string;
     initialRows: NameEmail[];
@@ -26,7 +25,6 @@ interface Props {
 const ExpandingEmailField = ({
     maxRows,
     minRows = 1,
-    register,
     name,
     initialRows,
     labelPrefix,
@@ -100,7 +98,6 @@ const ExpandingEmailField = ({
                         className="expanding-email-field__pair--name"
                         id={`${name}-${index}-name`}
                         name={`${name}[${index}].name`}
-                        register={register}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.name')}`}
                         invalid={!!(errors[index] && errors[index].name)}
                         helperText={errors[index] && errors[index].name ? errors[index].name.message : null}
@@ -113,7 +110,6 @@ const ExpandingEmailField = ({
                         className="expanding-email-field__pair--email"
                         id={`${name}-${index}-email`}
                         name={`${name}[${index}].email`}
-                        register={register}
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.email')}`}
                         invalid={!!(errors[index] && errors[index].email)}
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}

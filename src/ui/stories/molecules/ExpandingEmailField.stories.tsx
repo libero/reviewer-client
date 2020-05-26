@@ -24,7 +24,6 @@ storiesOf('ui | molecules/ExpandingEmailField', module)
             const onChange = action('Change');
             return (
                 <ExpandingEmailField
-                    register={(): void => {}}
                     name={name}
                     maxRows={maxRows}
                     initialRows={inputRows}
