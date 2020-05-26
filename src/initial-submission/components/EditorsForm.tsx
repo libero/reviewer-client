@@ -225,6 +225,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     setValue('suggestedReviewers', personArray, true);
                 }}
             />
+            <ExcludedToggle
+                togglePrefixText={t('editors.opposed-reviewers-toggle-prefix')}
+                toggleActionText={t('editors.opposed-reviewers-toggle-action-text')}
+                onClose={closeOpposedReviewers}
+            ></ExcludedToggle>
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}

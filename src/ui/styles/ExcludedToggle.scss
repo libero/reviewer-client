@@ -15,6 +15,7 @@
   font: inherit;
   padding: 0;
   cursor: pointer;
+  background-color: transparent;
   &:hover{
     text-decoration: underline;
   }
@@ -35,6 +36,7 @@
   padding: 0;
   cursor: pointer;
   color: $colourTextSecondary;
+  background-color: transparent;
   //hide the inner text used for accessibility
   font-size: 0;
 }

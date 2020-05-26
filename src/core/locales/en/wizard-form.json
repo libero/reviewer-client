@@ -55,6 +55,8 @@
     "opposed-reviewering-editor-reason-label": "Reason for exclusion",
     "opposed-reviewing-editors-toggle-prefix": "Would you like to ",
     "opposed-reviewing-editors-toggle-action-text": "exclude a senior editor",
+    "opposed-reviewers-toggle-prefix": "Would you like to ",
+    "opposed-reviewers-toggle-action-text": "exclude a reviewer",
     "validation": {
       "opposed-reviewering-editor-reason-required": "Please provide a reason for exclusion",
       "opposed-reviewering-editors-max": "Please suggest no more than 2 editors",
