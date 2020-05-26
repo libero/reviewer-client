@@ -42,8 +42,8 @@ export interface EditorsDetails {
 }
 
 export interface ReviewerAlias {
-    name: string;
-    email: string;
+    name?: string;
+    email?: string;
 }
 
 export interface OpposedReviewer {

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorAlias, EditorsDetails, Submission } from '../types';
+import { EditorAlias, EditorsDetails, Submission, ReviewerAlias } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField } from '../../ui/molecules';
@@ -85,6 +85,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 editorDetails && editorDetails.opposedReviewersReason ? editorDetails.opposedReviewersReason : '',
         },
         mode: 'onBlur',
+        validateCriteriaMode: 'all',
         validationSchema: schema,
     });
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
@@ -135,7 +136,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
-    console.log(suggestedReviewers);
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -173,9 +173,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 initialRows={suggestedReviewers}
                 errors={errors.suggestedReviewers}
                 onChange={(personArray): void => {
-                    console.log('CHANGE', personArray);
-                    setValue('suggestedReviewer', personArray);
-                    triggerValidation('suggestedReviewers');
+                    setValue('suggestedReviewers', personArray, true);
                 }}
             />
             {/* TODO add exclude reviewer (non editor) toggleable box */}
