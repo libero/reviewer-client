@@ -57,8 +57,38 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 [['name', 'email']],
             ),
         ),
+        opposedReviewers: yup.array(
+            yup.object().shape(
+                {
+                    name: yup
+                        .string()
+                        .trim()
+                        .when('email', {
+                            is: email => email && email.length > 0,
+                            then: yup.string().required(t('editors.validation.reviewers-name-required')),
+                            otherwise: yup.string(),
+                        }),
+                    email: yup
+                        .string()
+                        .trim()
+                        .when('name', {
+                            is: name => name && name.length > 0,
+                            then: yup
+                                .string()
+                                .email(t('editors.validation.reviewers-email-valid'))
+                                .required(t('editors.validation.reviewers-email-required')),
+                            otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
+                        }),
+                },
+                [['name', 'email']],
+            ),
+        ),
+        opposedReviewersReason: yup.string().when('opposedReviewers', {
+            is: editors => !!editors.length,
+            then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
+        }),
         opposedReviewingEditors: yup.array().max(2, t('opposed-reviewering-editors-max')),
-        opposedReviewersReason: yup.string().when('opposedReviewingEditors', {
+        opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-reviewering-editor-reason-required')),
         }),
@@ -100,6 +130,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
     register({ name: 'suggestedReviewers', type: 'custom' });
     register({ name: 'opposedReviewingEditors', type: 'custom' });
+    register({ name: 'opposedReviewers', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
@@ -143,9 +174,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
-    const closeOpposedReviewers = (): void => {
-        setValue('opposedReviewingEditorsReason', '');
-        setValue('opposedReviewingEditors', []);
+    const closeOpposedReviewers = (reasonFieldName: string, opposedFieldName: string): void => {
+        setValue(reasonFieldName, '');
+        setValue(opposedFieldName, []);
     };
 
     return (
@@ -182,7 +213,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-reviewing-editors-toggle-prefix')}
                 toggleActionText={t('editors.opposed-reviewing-editors-toggle-action-text')}
-                onClose={closeOpposedReviewers}
+                onClose={(): void => closeOpposedReviewers('opposedReviewingEditorsReason', 'opposedReviewingEditors')}
             >
                 <PeoplePicker
                     label={t('editors.reviewers-people-picker-label')}
@@ -202,13 +233,18 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     className="opposed-reviewing-editors-picker"
                 />
                 <MultilineTextField
-                    id="opposedReviewersReason"
+                    id="opposedReviewingEditorsReason"
                     register={register}
                     labelText={t('editors.opposed-reviewering-editor-reason-label')}
-                    invalid={errors && errors.opposedReviewersReason !== undefined}
-                    helperText={errors && errors.opposedReviewersReason ? errors.opposedReviewersReason.message : null}
+                    invalid={errors && errors.opposedReviewingEditorsReason !== undefined}
+                    helperText={
+                        errors && errors.opposedReviewingEditorsReason
+                            ? errors.opposedReviewingEditorsReason.message
+                            : null
+                    }
                     onChange={(): void => {
-                        triggerValidation('opposedReviewersReason');
+                        //Is this needed? should be auto calling on change
+                        triggerValidation('opposedReviewingEditorsReason');
                     }}
                 />
             </ExcludedToggle>
@@ -228,8 +264,28 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-reviewers-toggle-prefix')}
                 toggleActionText={t('editors.opposed-reviewers-toggle-action-text')}
-                onClose={closeOpposedReviewers}
-            ></ExcludedToggle>
+                panelHeading={t('editors.opposed-reviewers-title')}
+                onClose={(): void => closeOpposedReviewers('opposedReviewersReason', 'opposedReviewers')}
+            >
+                <ExpandingEmailField
+                    maxRows={2}
+                    className="opposedReviewers__inputs"
+                    name="opposedReviewers"
+                    labelPrefix={t('editors.opposed-reviewers-label-prefix')}
+                    initialRows={opposedReviewers}
+                    errors={errors && errors.opposedReviewers}
+                    onChange={(personArray): void => {
+                        setValue('opposedReviewers', personArray, true);
+                    }}
+                />
+                <MultilineTextField
+                    id="opposedReviewersReason"
+                    register={register}
+                    labelText={t('editors.opposed-reviewers-reason-label')}
+                    invalid={errors && errors.opposedReviewersReason !== undefined}
+                    helperText={errors && errors.opposedReviewersReason ? errors.opposedReviewersReason.message : null}
+                />
+            </ExcludedToggle>
             {/* TODO add exclude reviewer (non editor) toggleable box */}
 
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
