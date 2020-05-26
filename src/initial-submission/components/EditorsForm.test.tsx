@@ -191,7 +191,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
             expect(opposedReviewingEditors).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            await fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
@@ -209,7 +209,7 @@ describe('DetailsForm', (): void => {
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
         });
 
-        it.only('displays a validation message if no reason is provided but editing reviewers are excluded', async (): Promise<
+        it('displays a validation message if no reason is provided but editing reviewers are excluded', async (): Promise<
             void
         > => {
             const { baseElement, container, getAllByText, getByText } = render(
@@ -223,7 +223,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
             expect(opposedReviewingEditors).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            await fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
@@ -237,10 +237,14 @@ describe('DetailsForm', (): void => {
             expect(getByText(selectedName)).toBeInTheDocument();
             const reasonInput = container.querySelector('#opposedReviewersReason');
             expect(reasonInput).toBeInTheDocument();
-            await fireEvent.click(reasonInput);
+            expect(
+                container.querySelectorAll('.opposed-reviewing-editors-picker .selected_people_list__item').length,
+            ).toEqual(2);
             await fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
-            expect(container.querySelector('.typography__label--error').textContent).toBe('editors.validation.opposed-reviewering-editor-reason-required');
+            expect(container.querySelector('.typography__label--error').textContent).toBe(
+                'editors.validation.opposed-reviewering-editor-reason-required',
+            );
         });
 
         it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
@@ -255,7 +259,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
             expect(opposedReviewingEditors).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            await fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
