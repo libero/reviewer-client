@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorAlias, EditorsDetails, Submission, ReviewerAlias } from '../types';
+import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField } from '../../ui/molecules';

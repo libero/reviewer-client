@@ -30,9 +30,7 @@ storiesOf('ui | molecules/ExpandingEmailField', module)
                     labelPrefix={labelPrefix}
                     minRows={minRows}
                     errors={errors}
-                    onChange={(people): void => {
-                        onChange(people);
-                    }}
+                    onChange={onChange}
                 />
             );
         },
