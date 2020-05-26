@@ -8,7 +8,8 @@ import useAutoSave from '../hooks/useAutoSave';
 import { EditorAlias, EditorsDetails, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
-import { ExpandingEmailField } from '../../ui/molecules';
+import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
+import { MultilineTextField } from '../../ui/atoms';
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -56,6 +57,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 [['name', 'email']],
             ),
         ),
+        opposedReviewingEditors: yup.array().max(2, t('opposed-reviewering-editors-max')),
+        opposedReviewersReason: yup.string().when('opposedReviewingEditors', {
+            is: editors => !!editors.length,
+            then: yup.string().required(t('editors.validation.opposed-reviewering-editor-reason-required')),
+        }),
     });
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
@@ -93,6 +99,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
     register({ name: 'suggestedReviewers', type: 'custom' });
+    register({ name: 'opposedReviewingEditors', type: 'custom' });
 
     const suggestedSeniorEditors = watch('suggestedSeniorEditors');
     const opposedSeniorEditors = watch('opposedSeniorEditors');
@@ -136,6 +143,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewersReason,
     ]);
 
+    const closeOpposedReviewers = (): void => {
+        setValue('opposedReviewingEditorsReason', '');
+        setValue('opposedReviewingEditors', []);
+    };
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -152,7 +164,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             {/* TODO add exclude editor toggleable box */}
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
-                people={loadingReviewingEditors ? [] : getReviewingEditors.getEditors}
+                people={
+                    loadingReviewingEditors
+                        ? []
+                        : getReviewingEditors.getEditors.filter(ed => !opposedReviewingEditors.includes(ed.id))
+                }
                 onRemove={(selected): void =>
                     setValue(
                         'suggestedReviewingEditors',
@@ -163,6 +179,39 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 selectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
             />
+            <ExcludedToggle
+                togglePrefixText={t('editors.opposed-reviewing-editors-toggle-prefix')}
+                toggleActionText={t('editors.opposed-reviewing-editors-toggle-action-text')}
+                onClose={closeOpposedReviewers}
+            >
+                <PeoplePicker
+                    label={t('editors.reviewers-people-picker-label')}
+                    people={
+                        loadingReviewingEditors
+                            ? []
+                            : getReviewingEditors.getEditors.filter(ed => !suggestedReviewingEditors.includes(ed.id))
+                    }
+                    onRemove={(selected): void =>
+                        setValue(
+                            'opposedReviewingEditors',
+                            opposedReviewingEditors.filter(personId => personId !== selected),
+                        )
+                    }
+                    setSelectedPeople={(selected): void => setValue('opposedReviewingEditors', selected)}
+                    selectedPeople={opposedReviewingEditors}
+                    className="opposed-reviewing-editors-picker"
+                />
+                <MultilineTextField
+                    id="opposedReviewersReason"
+                    register={register}
+                    labelText={t('editors.opposed-reviewering-editor-reason-label')}
+                    invalid={errors && errors.opposedReviewersReason !== undefined}
+                    helperText={errors && errors.opposedReviewersReason ? errors.opposedReviewersReason.message : null}
+                    onChange={(): void => {
+                        triggerValidation('opposedReviewersReason');
+                    }}
+                />
+            </ExcludedToggle>
             {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <ExpandingEmailField
@@ -171,7 +220,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 name="suggestedReviewers"
                 labelPrefix={t('editors.reviewers-label-prefix')}
                 initialRows={suggestedReviewers}
-                errors={errors.suggestedReviewers}
+                errors={errors && errors.suggestedReviewers}
                 onChange={(personArray): void => {
                     setValue('suggestedReviewers', personArray, true);
                 }}
