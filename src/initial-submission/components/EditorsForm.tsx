@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
-import { EditorAlias, EditorsDetails, Submission } from '../types';
+import { EditorAlias, EditorsDetails, ReviewerAlias, Submission } from '../types';
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
@@ -29,6 +29,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             role: 'reviewingEditor',
         },
     });
+
+    const removeBlankRows = (reviewers: ReviewerAlias[]) =>
+        reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
 
     const schema = yup.object().shape({
         suggestedReviewers: yup.array(
@@ -153,8 +156,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     suggestedReviewingEditors,
                     opposedReviewingEditors,
                     opposedReviewingEditorsReason,
-                    suggestedReviewers: suggestedReviewers.map(rev => ({ name: rev.name, email: rev.email })),
-                    opposedReviewers,
+                    suggestedReviewers: removeBlankRows(suggestedReviewers),
+                    opposedReviewers: removeBlankRows(opposedReviewers),
                     opposedReviewersReason,
                 },
             },
@@ -258,7 +261,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 initialRows={suggestedReviewers}
                 errors={errors && errors.suggestedReviewers}
                 onChange={(personArray): void => {
-                    setValue('suggestedReviewers', personArray, true);
+                    setValue('suggestedReviewers', removeBlankRows(personArray), true);
                 }}
             />
             <ExcludedToggle
@@ -275,7 +278,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     initialRows={opposedReviewers}
                     errors={errors && errors.opposedReviewers}
                     onChange={(personArray): void => {
-                        setValue('opposedReviewers', personArray, true);
+                        setValue('opposedReviewers', removeBlankRows(personArray), true);
                     }}
                 />
                 <MultilineTextField
