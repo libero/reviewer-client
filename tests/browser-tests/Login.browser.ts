@@ -1,4 +1,4 @@
-import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane } from '../page-objects';
+import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane, EditorPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`;
@@ -54,4 +54,9 @@ test('Happy path', async () => {
     await detailsPage.assertOnPage();
     await detailsPage.populateForm();
     await detailsPage.next();
+
+    const editorPage = new EditorPage();
+    await editorPage.assertOnPage();
+    await editorPage.populateForm();
+    await editorPage.next();
 });
