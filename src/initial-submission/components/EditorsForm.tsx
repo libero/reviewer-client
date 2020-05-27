@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +30,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
     });
 
-    const removeBlankRows = (reviewers: ReviewerAlias[]) =>
+    const removeBlankRows = (reviewers: ReviewerAlias[]): ReviewerAlias[] =>
         reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
 
     const schema = yup.object().shape({
@@ -87,13 +87,13 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             ),
         ),
         opposedReviewersReason: yup.string().when('opposedReviewers', {
-            is: editors => !!editors.length,
+            is: (editors: ReviewerAlias[]) => editors.some(editor => editor.name + editor.email !== ''),
             then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
         }),
-        opposedReviewingEditors: yup.array().max(2, t('opposed-reviewering-editors-max')),
+        opposedReviewingEditors: yup.array().max(2, t('opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
-            then: yup.string().required(t('editors.validation.opposed-reviewering-editor-reason-required')),
+            then: yup.string().required(t('editors.validation.opposed-reviewing-editor-reason-required')),
         }),
     });
 
@@ -117,9 +117,12 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     : '',
             suggestedReviewers:
                 editorDetails && editorDetails.suggestedReviewers
-                    ? editorDetails.suggestedReviewers
+                    ? editorDetails.suggestedReviewers.map(reviewer => ({ name: reviewer.name, email: reviewer.email }))
                     : [{ name: '', email: '' }],
-            opposedReviewers: editorDetails && editorDetails.opposedReviewers ? editorDetails.opposedReviewers : [],
+            opposedReviewers:
+                editorDetails && editorDetails.opposedReviewers
+                    ? editorDetails.opposedReviewers.map(reviewer => ({ name: reviewer.name, email: reviewer.email }))
+                    : [],
             opposedReviewersReason:
                 editorDetails && editorDetails.opposedReviewersReason ? editorDetails.opposedReviewersReason : '',
         },
@@ -156,8 +159,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     suggestedReviewingEditors,
                     opposedReviewingEditors,
                     opposedReviewingEditorsReason,
-                    suggestedReviewers: removeBlankRows(suggestedReviewers),
-                    opposedReviewers: removeBlankRows(opposedReviewers),
+                    suggestedReviewers,
+                    opposedReviewers,
                     opposedReviewersReason,
                 },
             },
@@ -181,7 +184,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         setValue(reasonFieldName, '');
         setValue(opposedFieldName, []);
     };
-
+    // TODO Validation out of sync (removing blank rows messing up order)
+    // TODO Trigger validation of of reasons
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -238,7 +242,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 <MultilineTextField
                     id="opposedReviewingEditorsReason"
                     register={register}
-                    labelText={t('editors.opposed-reviewering-editor-reason-label')}
+                    labelText={t('editors.opposed-reviewing-editor-reason-label')}
                     invalid={errors && errors.opposedReviewingEditorsReason !== undefined}
                     helperText={
                         errors && errors.opposedReviewingEditorsReason
