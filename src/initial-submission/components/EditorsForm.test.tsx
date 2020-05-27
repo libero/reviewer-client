@@ -96,7 +96,7 @@ const ButtonComponent = ({
     </button>
 );
 
-describe('DetailsForm', (): void => {
+describe('EditorsDetailsForm', (): void => {
     afterEach(() => {
         cleanup();
         mutationMock.mockReset();
@@ -200,7 +200,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
-            const reasonInput = container.querySelector('#opposedReviewersReason');
+            const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
             expect(reasonInput).toBeInTheDocument();
             await fireEvent.change(reasonInput, { target: { value: 'reason' } });
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
@@ -232,7 +232,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
-            const reasonInput = container.querySelector('#opposedReviewersReason');
+            const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
             expect(reasonInput).toBeInTheDocument();
             expect(
                 container.querySelectorAll('.opposed-reviewing-editors-picker .selected_people_list__item').length,
@@ -240,7 +240,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
             expect(container.querySelector('.typography__label--error').textContent).toBe(
-                'editors.validation.opposed-reviewering-editor-reason-required',
+                'editors.validation.opposed-reviewing-editor-reason-required',
             );
         });
 
@@ -265,7 +265,7 @@ describe('DetailsForm', (): void => {
             await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
-            const reasonInput = container.querySelector('#opposedReviewersReason');
+            const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
             expect(reasonInput).toBeInTheDocument();
             await fireEvent.change(reasonInput, { target: { value: 'reason' } });
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
