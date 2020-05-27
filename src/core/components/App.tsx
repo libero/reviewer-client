@@ -6,6 +6,7 @@ import { default as InitialSubmissionRoutes } from '../../initial-submission/com
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
+import ContactUs from '../../contact-us/components/ContactUs';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
@@ -24,6 +25,7 @@ const App: React.FC = (): JSX.Element => {
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
                     <Route component={Login} exact path="/login" />
+                    <Route component={ContactUs} exact path="/contact-us" />
                     <Route component={Logout} exact path="/logout" />
                     <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
                     <InitialSubmissionRoutes />
