@@ -1,54 +1,42 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
-import Image from '../../core/assets/welcome.jpg';;
+import { TwoColumnLayout, Paragraph } from '../../ui/atoms';
+import ContactUsNavigation from './ContactUsNavigation';
 
-const Login = (): JSX.Element => {
+const ContactUs = (): JSX.Element => {
     const { t } = useTranslation('contactus');
 
     return (
-        <div className="contactus-page">
+        <div className="login-page">
             <TwoColumnLayout>
+                <ContactUsNavigation />
                 <div>
-                    <h1 className="typography__heading typography__heading--h1">{t('welcome')}</h1>
+                    <h1>Contact eLife</h1>
 
-                    <div className="login-page__text">
-                        <Paragraph type="writing">{t('mission-1')}</Paragraph>
-                        <Paragraph type="writing">{t('mission-2')}</Paragraph>
-                        <Paragraph type="writing">
-                            {t('author-guide-message')}
-                            <a
-                                className="typography typography__body--link"
-                                href="https://reviewer.elifesciences.org/author-guide"
-                            >
-                                {t('author-guide-link')}
-                            </a>
-                            .
-                        </Paragraph>
-                    </div>
+                    <Paragraph type="writing">
+                        You can use the &quot;Check Status&quot; link under Manuscript Tasks to find information about
+                        your article and how long different parts of the editorial and review process can take. You can
+                        also read about the system&apos;s requirements regarding browsers, emails, and PDFs if you are
+                        having difficulties. If you have any further questions about submitting, submitted, or accepted
+                        articles, please contact our editorial or production teams:
+                    </Paragraph>
 
-                    <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href="/continuum-login">
-                            <Button type="orcid">{t('login-orcid')}</Button>
-                        </a>
-                        <Paragraph type="writing">
-                            {t('sign-up-message-1')}
-                            <a className="typography typography__body--link" href="https://orcid.org/register">
-                                {t('sign-up-link')}
-                            </a>
-                            {t('sign-up-message-2')}
-                        </Paragraph>
-                    </div>
+                    <ul>
+                        <li>editorial [at] elifesciences [dot] org</li>
+                        <li>production [at] elifesciences [dot] org</li>
+                    </ul>
+
+                    <Paragraph type="writing">
+                        Media inquiries may be addressed to our communications team at:
+                    </Paragraph>
+
+                    <ul>
+                        <li>press [at] elifesciences [dot] org</li>
+                    </ul>
                 </div>
-                <ImageWithAttribution
-                    image={Image}
-                    artistName={t('image-artist')}
-                    artistUrl="http://www.davidebonazzi.com/"
-                    align="left"
-                />
             </TwoColumnLayout>
         </div>
     );
 };
 
-export default Login;
+export default ContactUs;
