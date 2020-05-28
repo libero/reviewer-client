@@ -1,0 +1,23 @@
+{
+    "contact-elife": {
+        "heading": "Contact eLife",
+        "paragraph-1": "You can use the \"Check Status\" link under Manuscript Tasks to find information about your article and how long different parts of the editorial and review process can take. You can also read about the system's requirements regarding browsers, emails, and PDFs if you are having difficulties. If you have any further questions about submitting, submitted, or accepted articles, please contact our editorial or production teams:",
+        "editor-email": "editorial [at] elifesciences [dot] org",
+        "production-email": "production [at] elifesciences [dot] org",
+        "press-email": "press [at] elifesciences [dot] org",
+        "media-inquiries-paragraph": "Media inquiries may be addressed to our communications team at:        "
+    },
+    "feature": {
+        "label": "Feature Article",
+        "paragraph-1": "Feature Articles should offer fresh insights into topics of broad interest to readers working in the life and biomedical sciences and should be written in an active/engaging style.",
+        "paragraph-2": "There are no strict limits on length, but authors are advised to stay below 2000 words, two display items (figures, tables etc) and 20 references if possible.",
+        "paragraph-3": "For more information on our article types please read our "
+    },
+    "research-advance": {
+        "label": "Research Advance",
+        "paragraph-1": "This format is for substantial developments that directly build upon a Research Article, Short Report or Tools and Resources article published previously by eLife.",
+        "paragraph-2": "For more information on our article types please read our "
+    },
+    "cancel-button": "cancel",
+    "confirm-button": "continue"
+}

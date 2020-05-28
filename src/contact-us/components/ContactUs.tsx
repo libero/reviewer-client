@@ -1,19 +1,16 @@
 import React from 'react';
 import { Switch, useRouteMatch, Route, Redirect } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { TwoColumnLayout } from '../../ui/atoms';
 import ContactUsNavigation from './ContactUsNavigation';
-import ContactUsElife from './ContactElife';
+import ContactUsElife from './ContactUsElife';
 import EditorialStaff from './EditorialStaff';
 import ProductionStaff from './ProductionStaff';
 
 const ContactUs = (): JSX.Element => {
-    const { t } = useTranslation('contactus');
     let { path } = useRouteMatch();
 
     return (
         <div className="login-page">
-            <TwoColumnLayout>
+            <div>
                 <ContactUsNavigation />
                 <div>
                     <Switch>
@@ -30,7 +27,7 @@ const ContactUs = (): JSX.Element => {
                     </Switch>
      
                 </div>
-            </TwoColumnLayout>
+            </div>
         </div>
     );
 };
