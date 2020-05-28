@@ -30,6 +30,23 @@ export const getSubmissionQuery = gql`
                     id
                 }
             }
+            editorDetails {
+                suggestedSeniorEditors
+                opposedSeniorEditors
+                opposedSeniorEditorsReason
+                suggestedReviewingEditors
+                opposedReviewingEditors
+                opposedReviewingEditorsReason
+                suggestedReviewers {
+                    name
+                    email
+                }
+                opposedReviewers {
+                    name
+                    email
+                }
+                opposedReviewersReason
+            }
             suggestions {
                 fieldName
                 value

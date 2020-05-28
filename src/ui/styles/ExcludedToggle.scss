@@ -3,10 +3,13 @@
   padding: 1.5rem;
   border-radius: 0.188rem;
   border: $border;
+  margin-bottom: 4.5rem;
 }
 
 .excluded-toggle__label {
   line-height: 1.5rem;
+  display: block;
+  margin-bottom: 4.5rem;
 }
 
 .excluded-toggle__action {
@@ -15,6 +18,7 @@
   font: inherit;
   padding: 0;
   cursor: pointer;
+  background-color: transparent;
   &:hover{
     text-decoration: underline;
   }
@@ -35,6 +39,7 @@
   padding: 0;
   cursor: pointer;
   color: $colourTextSecondary;
+  background-color: transparent;
   //hide the inner text used for accessibility
   font-size: 0;
 }

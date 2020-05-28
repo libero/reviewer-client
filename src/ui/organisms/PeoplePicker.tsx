@@ -7,7 +7,7 @@ import { EditorAlias } from '../../initial-submission/types';
 interface Props {
     people?: EditorAlias[];
     selectedPeople?: string[];
-    label: string;
+    label?: string;
     required?: boolean;
     min?: number;
     max?: number;
