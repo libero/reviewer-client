@@ -7,10 +7,14 @@ export class EditorPage {
     private readonly editorsStep = Selector('.editors-step');
     private readonly seniorEditorsPicker = Selector('.senior-editors-picker');
     private readonly suggestedReviewingEditorsPicker = Selector('.reviewing-editors-picker');
-    private readonly toggleOpposedEditorsPicker = Selector('.excluded-toggle__action');
-    private readonly opposedEditorsPicker = Selector('.opposed-reviewing-editors-picker');
-    private readonly opposedEditorsReason = Selector('#opposedReviewingEditorsReason');
+    private readonly toggleOpposedReviewingEditorsPicker = Selector('.excluded-toggle__action').withText(
+        'exclude a reviewing editor',
+    );
+    private readonly opposedReviewingEditorsPicker = Selector('.opposed-reviewing-editors-picker');
+    private readonly opposedReviewingEditorsReason = Selector('#opposedReviewingEditorsReason');
     private readonly suggestedReviewers = Selector('.suggestedReviewers__inputs');
+    private readonly toggleOpposedReviewerPicker = Selector('.excluded-toggle__action').withText('exclude a reviewer');
+    private readonly opposedReviewers = Selector('.opposedReviewers__inputs');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.editorsStep.visible).ok();
@@ -24,6 +28,7 @@ export class EditorPage {
         await this.addReviewer();
         await this.addOpposingReviewingEditor();
         await this.setSuggestedReviewers();
+        await this.addOpposingReviewer();
     }
 
     public async addEditor(): Promise<void> {
@@ -45,7 +50,7 @@ export class EditorPage {
 
     public async assertEditorSearch(): Promise<void> {
         const searchInput = Selector('#peoplePickerSearch');
-        const peopleList  = Selector('.people-picker__modal_list');
+        const peopleList = Selector('.people-picker__modal_list');
         await t.expect(searchInput.visible).ok();
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
         await t.typeText(searchInput, 'should not exist');
@@ -73,9 +78,9 @@ export class EditorPage {
     }
 
     public async addOpposingReviewingEditor(): Promise<void> {
-        await t.click(this.toggleOpposedEditorsPicker);
-        await t.expect(this.opposedEditorsPicker.find('.selected_people_list__item').count).eql(1);
-        const addButton = this.opposedEditorsPicker.find('.pod__button');
+        await t.click(this.toggleOpposedReviewingEditorsPicker);
+        await t.expect(this.opposedReviewingEditorsPicker.find('.selected_people_list__item').count).eql(1);
+        const addButton = this.opposedReviewingEditorsPicker.find('.pod__button');
         await t.click(addButton);
         await this.assertReviewerSearch();
         await t.expect(Selector('.typography__heading--h2').visible).ok();
@@ -88,13 +93,13 @@ export class EditorPage {
         await t.click(button);
         await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
         await t.click(Selector('.modal__buttons_container').find('.button--primary'));
-        await t.expect(this.opposedEditorsPicker.find('.selected_people_list__item').count).eql(2);
-        await this.setOpposedEditorsReason();
+        await t.expect(this.opposedReviewingEditorsPicker.find('.selected_people_list__item').count).eql(2);
+        await this.setopposedReviewingEditorsReason();
     }
 
-    public async setOpposedEditorsReason(input = 'reason'): Promise<void> {
-        await t.typeText(this.opposedEditorsReason, input);
-        await t.expect(this.opposedEditorsReason.value).eql(input);
+    public async setopposedReviewingEditorsReason(input = 'reason'): Promise<void> {
+        await t.typeText(this.opposedReviewingEditorsReason, input);
+        await t.expect(this.opposedReviewingEditorsReason.value).eql(input);
     }
 
     public async assertReviewerSearch(): Promise<void> {
@@ -124,6 +129,11 @@ export class EditorPage {
         } else {
             await t.expect(Selector('.expanding-email-field__row').count).eql(inputs.length + 1);
         }
+    }
+
+    public async addOpposingReviewer(): Promise<void> {
+        await t.click(this.toggleOpposedReviewerPicker);
+        await t.expect(this.opposedReviewers.visible).ok();
     }
 
     public async back(): Promise<void> {
