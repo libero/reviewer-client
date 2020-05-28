@@ -184,8 +184,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         setValue(reasonFieldName, '');
         setValue(opposedFieldName, []);
     };
-    // TODO Validation out of sync (removing blank rows messing up order)
     // TODO Trigger validation of of reasons
+    // TODO open colapsable if values present
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -283,6 +283,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     errors={errors && errors.opposedReviewers}
                     onChange={(personArray): void => {
                         setValue('opposedReviewers', personArray, true);
+                        triggerValidation('opposedReviewersReason');
                     }}
                 />
                 <MultilineTextField
