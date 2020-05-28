@@ -1,17 +1,22 @@
 .side-bar-nav {
     display: flex;
     flex-direction: column;
+    padding: 0 50px 0 0;
 
-    a {
-        cursor: pointer;
-        text-decoration: none;
-        color: rgb(136, 136, 136);
-    }
-    a:hover {
-        color: rgb(33, 33, 33);
-        text-decoration: none;
-    }
-    a.active {
-        color: rgb(33, 33, 33);
+    span {
+        padding: 12px 0px;
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            color: rgb(136, 136, 136);
+            white-space: nowrap;
+        }
+        a:hover {
+            color: rgb(33, 33, 33);
+            text-decoration: none;
+        }
+        a.active {
+            color: rgb(33, 33, 33);
+        }
     }
 }
