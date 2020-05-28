@@ -1,38 +1,34 @@
 import React from 'react';
+import { Switch, useRouteMatch, Route, Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { TwoColumnLayout, Paragraph } from '../../ui/atoms';
+import { TwoColumnLayout } from '../../ui/atoms';
 import ContactUsNavigation from './ContactUsNavigation';
+import ContactUsElife from './ContactElife';
+import EditorialStaff from './EditorialStaff';
+import ProductionStaff from './ProductionStaff';
 
 const ContactUs = (): JSX.Element => {
     const { t } = useTranslation('contactus');
+    let { path } = useRouteMatch();
 
     return (
         <div className="login-page">
             <TwoColumnLayout>
                 <ContactUsNavigation />
                 <div>
-                    <h1>Contact eLife</h1>
-
-                    <Paragraph type="writing">
-                        You can use the &quot;Check Status&quot; link under Manuscript Tasks to find information about
-                        your article and how long different parts of the editorial and review process can take. You can
-                        also read about the system&apos;s requirements regarding browsers, emails, and PDFs if you are
-                        having difficulties. If you have any further questions about submitting, submitted, or accepted
-                        articles, please contact our editorial or production teams:
-                    </Paragraph>
-
-                    <ul>
-                        <li>editorial [at] elifesciences [dot] org</li>
-                        <li>production [at] elifesciences [dot] org</li>
-                    </ul>
-
-                    <Paragraph type="writing">
-                        Media inquiries may be addressed to our communications team at:
-                    </Paragraph>
-
-                    <ul>
-                        <li>press [at] elifesciences [dot] org</li>
-                    </ul>
+                    <Switch>
+                    <Route path={`${path}/contact-elife`}>
+                        <ContactUsElife />
+                    </Route>
+                    <Route path={`${path}/editorial-staff`}>
+                        <EditorialStaff />
+                    </Route>
+                    <Route path={`${path}/production-staff`}>
+                        <ProductionStaff />
+                    </Route>
+                        <Redirect to={path + '/contact-elife'} />
+                    </Switch>
+     
                 </div>
             </TwoColumnLayout>
         </div>

@@ -25,13 +25,11 @@ const App: React.FC = (): JSX.Element => {
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
                     <Route component={Login} exact path="/login" />
-                    <Route component={ContactUs} exact path="/contact-us/contact-elife" />
-                    <Route component={ContactUs} exact path="/contact-us/editorial-staff" />
-                    <Route component={ContactUs} exact path="/contact-us/production-staff" />
                     <Route component={Logout} exact path="/logout" />
                     <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
                     <InitialSubmissionRoutes />
                     <DashboardRoutes />
+                    <Route component={ContactUs} path="/contact-us" />
                     <Footer />
                 </React.Suspense>
             </Router>
