@@ -184,8 +184,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         setValue(reasonFieldName, '');
         setValue(opposedFieldName, []);
     };
-    // TODO Trigger validation of of reasons
-    // TODO open colapsable if values present
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -221,6 +220,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 togglePrefixText={t('editors.opposed-reviewing-editors-toggle-prefix')}
                 toggleActionText={t('editors.opposed-reviewing-editors-toggle-action-text')}
                 onClose={(): void => closeOpposedReviewers('opposedReviewingEditorsReason', 'opposedReviewingEditors')}
+                open={opposedReviewingEditors.length > 0 || opposedReviewingEditorsReason !== ''}
             >
                 <PeoplePicker
                     label={t('editors.reviewers-people-picker-label')}
@@ -235,7 +235,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                             opposedReviewingEditors.filter(personId => personId !== selected),
                         )
                     }
-                    setSelectedPeople={(selected): void => setValue('opposedReviewingEditors', selected)}
+                    setSelectedPeople={(selected): void => {
+                        setValue('opposedReviewingEditors', selected);
+                        triggerValidation('opposedReviewingEditorsReason');
+                    }}
                     selectedPeople={opposedReviewingEditors}
                     className="opposed-reviewing-editors-picker"
                 />
@@ -273,6 +276,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 toggleActionText={t('editors.opposed-reviewers-toggle-action-text')}
                 panelHeading={t('editors.opposed-reviewers-title')}
                 onClose={(): void => closeOpposedReviewers('opposedReviewersReason', 'opposedReviewers')}
+                open={opposedReviewers.length > 0 || opposedReviewersReason !== ''}
             >
                 <ExpandingEmailField
                     maxRows={2}
