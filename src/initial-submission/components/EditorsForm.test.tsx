@@ -203,6 +203,7 @@ describe('EditorsDetailsForm', (): void => {
             const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
             expect(reasonInput).toBeInTheDocument();
             await fireEvent.change(reasonInput, { target: { value: 'reason' } });
+            await waitFor(() => {});
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
         });
 
@@ -268,6 +269,7 @@ describe('EditorsDetailsForm', (): void => {
             const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
             expect(reasonInput).toBeInTheDocument();
             await fireEvent.change(reasonInput, { target: { value: 'reason' } });
+            await waitFor(() => {});
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
             const closeButton = container.querySelector('.excluded-toggle__close-button');
             expect(closeButton).toBeInTheDocument();
