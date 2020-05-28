@@ -52,7 +52,7 @@
     "reviewers-title": "Suggest Reviewers (Optional)",
     "reviewers-label-prefix": "Reviewer",
     "exclude-reviewers-people-picker-label": "Exclude a Reviewing Editor",
-    "opposed-reviewering-editor-reason-label": "Reason for exclusion",
+    "opposed-reviewing-editor-reason-label": "Reason for exclusion",
     "opposed-reviewing-editors-toggle-prefix": "Would you like to ",
     "opposed-reviewing-editors-toggle-action-text": "exclude a reviewing editor",
     "opposed-reviewers-title": "Exclude Reviewers",

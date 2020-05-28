@@ -595,4 +595,216 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
         });
     });
+
+    describe('opposedReviewers', () => {
+        it('renders with opposed reviewers section closed when no opposed reviewers or reason in initial values', () => {
+            const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
+                container: appContainer(),
+            });
+            expect(getByText('editors.opposed-reviewers-toggle-action-text')).toBeInTheDocument();
+            expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
+            expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
+        });
+
+        it('renders with opposed reviewers section open when opposed reviewers or reason in initial values', async (): Promise<
+            void
+        > => {
+            const { getByText, container, rerender } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(() => getByText('editors.opposed-reviewers-toggle-action-text')).toThrow();
+            expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
+            expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
+            rerender(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewersReason: 'some reason',
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            await waitFor(() => {});
+            expect(() => getByText('editors.opposed-reviewers-toggle-action-text')).toThrow();
+            expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
+            expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
+        });
+
+        it('clicking opposed toggle displays opposed reviewers fields and reson textarea', () => {
+            const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
+                container: appContainer(),
+            });
+            expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
+            expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
+            fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
+            expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
+            expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
+        });
+        it('clears opposed values and reason if toggle section is close', () => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                            opposedReviewersReason: 'some reason',
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+
+            expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].name"]').value).toBe('name1');
+            expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].email"]').value).toBe(
+                'email@example.com',
+            );
+            expect(container.querySelector<HTMLInputElement>('[name="opposedReviewersReason"]').value).toBe(
+                'some reason',
+            );
+            fireEvent.click(container.querySelector('.excluded-toggle__close-button'));
+            fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
+            expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].name"]').value).toBe('');
+            expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].email"]').value).toBe('');
+            expect(container.querySelector<HTMLInputElement>('[name="opposedReviewersReason"]').value).toBe('');
+        });
+
+        it('limits the user to 2 opposed reviewers', () => {
+            const { getByLabelText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [
+                                { name: 'name1', email: 'email@example.com' },
+                                { name: 'name2', email: 'email@example.com' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            expect(container.querySelectorAll('.opposedReviewers__inputs .expanding-email-field__row')).toHaveLength(2);
+            expect(() =>
+                getByLabelText('editors.opposed-reviewers-label-prefix 3 expanding-email-field.name'),
+            ).toThrow();
+        });
+
+        it('requires a name if email has value', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: '', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.opposedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-name-required',
+            );
+        });
+
+        it('requires a valid email format if email is filled', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'notanemail' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.opposedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-email-valid',
+            );
+        });
+        it('requires a reason value if opposed reviewer has a value', async (): Promise<void> => {
+            const { getByText } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(getByText('editors.validation.opposed-reviewers-reason-required')).toBeInTheDocument();
+        });
+        it('is valid with opposed reviewers and a reason', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                            opposedReviewersReason: 'some reason',
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(() => getByText('editors.validation.opposed-reviewers-reason-required')).toThrow();
+            expect(container.querySelectorAll('.opposedReviewers__inputs .typography__label--error')).toHaveLength(0);
+        });
+    });
 });
