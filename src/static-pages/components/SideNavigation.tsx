@@ -1,18 +1,29 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const ContactUsNavigation = ({ links }: { links: Array<{ link: string; label: string }> }): JSX.Element => {
-    const { t } = useTranslation('contactus');
+interface Props {
+    links: Array<{ link: string; label: string }>;
+    currentPath: string;
+}
+
+const ContactUsNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
+    const isSelected = (path: string): boolean => {
+        console.log('currentPath', currentPath);
+        console.log('path', path);
+        return path.toLocaleLowerCase().trim() === currentPath.toLocaleLowerCase().trim();
+    };
 
     return (
-        <div>
+        <div className="side-bar-nav">
             {links.map(l => (
-                <p>
-                    <Link to={l.link} className="typography__body--link">
+                <span>
+                    <Link
+                        to={l.link}
+                        className={isSelected(l.link) ? 'typography__body--link active' : 'typography__body--link '}
+                    >
                         {l.label}
                     </Link>
-                </p>
+                </span>
             ))}
         </div>
     );
