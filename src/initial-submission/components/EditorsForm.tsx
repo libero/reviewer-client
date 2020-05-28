@@ -159,8 +159,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     suggestedReviewingEditors,
                     opposedReviewingEditors,
                     opposedReviewingEditorsReason,
-                    suggestedReviewers,
-                    opposedReviewers,
+                    suggestedReviewers: removeBlankRows(suggestedReviewers),
+                    opposedReviewers: removeBlankRows(opposedReviewers),
                     opposedReviewersReason,
                 },
             },
@@ -265,7 +265,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 initialRows={suggestedReviewers}
                 errors={errors && errors.suggestedReviewers}
                 onChange={(personArray): void => {
-                    setValue('suggestedReviewers', removeBlankRows(personArray), true);
+                    setValue('suggestedReviewers', personArray, true);
                 }}
             />
             <ExcludedToggle
@@ -282,7 +282,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     initialRows={opposedReviewers}
                     errors={errors && errors.opposedReviewers}
                     onChange={(personArray): void => {
-                        setValue('opposedReviewers', removeBlankRows(personArray), true);
+                        setValue('opposedReviewers', personArray, true);
                     }}
                 />
                 <MultilineTextField
