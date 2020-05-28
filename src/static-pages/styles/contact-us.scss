@@ -11,3 +11,20 @@
     }
   }
   
+
+.editor-grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  .editor-grid-item {
+    max-width: 50%;
+    @include forSize('desktopUp') {
+      width: 33.33%;
+    }
+    padding: 0 12px;
+    img {
+      width: 100%;
+    }
+  }
+}
