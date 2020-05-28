@@ -221,9 +221,9 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 toggleActionText={t('editors.opposed-reviewing-editors-toggle-action-text')}
                 onClose={(): void => closeOpposedReviewers('opposedReviewingEditorsReason', 'opposedReviewingEditors')}
                 open={opposedReviewingEditors.length > 0 || opposedReviewingEditorsReason !== ''}
+                panelHeading={t('editors.reviewers-people-picker-label')}
             >
                 <PeoplePicker
-                    label={t('editors.reviewers-people-picker-label')}
                     people={
                         loadingReviewingEditors
                             ? []

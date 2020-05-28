@@ -28,7 +28,7 @@ test('My first test', async () => {
     await dashboardPage.assertOnPage();
 });
 
-test.only('Happy path', async () => {
+test('Happy path', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
