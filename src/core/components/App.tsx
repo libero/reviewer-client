@@ -6,7 +6,7 @@ import { default as InitialSubmissionRoutes } from '../../initial-submission/com
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
-import ContactUs from '../../contact-us/components/ContactUs';
+import ContactUs from '../../static-pages/components/ContactUs';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
