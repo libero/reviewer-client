@@ -61,8 +61,8 @@
     "opposed-reviewers-toggle-action-text": "exclude a reviewer",
     "opposed-reviewers-reason-label": "Reason for exclusion",
     "validation": {
-      "opposed-reviewering-editor-reason-required": "Please provide a reason for exclusion",
-      "opposed-reviewering-editors-max": "Please suggest no more than 2 editors",
+      "opposed-reviewing-editor-reason-required": "Please provide a reason for exclusion",
+      "opposed-reviewing-editors-max": "Please suggest no more than 2 editors",
       "opposed-reviewers-reason-required": "Please provide a reason for exclusion",
       "reviewers-name-required": "Name is required",
       "reviewers-email-required": "Email is required",

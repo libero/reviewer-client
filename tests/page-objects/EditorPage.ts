@@ -9,7 +9,7 @@ export class EditorPage {
     private readonly suggestedReviewingEditorsPicker = Selector('.reviewing-editors-picker');
     private readonly toggleOpposedEditorsPicker = Selector('.excluded-toggle__action');
     private readonly opposedEditorsPicker = Selector('.opposed-reviewing-editors-picker');
-    private readonly opposedEditorsReason = Selector('#opposedReviewersReason');
+    private readonly opposedEditorsReason = Selector('#opposedReviewingEditorsReason');
     private readonly suggestedReviewers = Selector('.suggestedReviewers__inputs');
 
     public async assertOnPage(): Promise<void> {
@@ -32,7 +32,9 @@ export class EditorPage {
         await t.click(addButton);
         await this.assertEditorSearch();
         await t.expect(Selector('.typography__heading--h2').visible).ok();
-        await t.expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent).eql('Suggest Senior Editors');
+        await t
+            .expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent)
+            .eql('Suggest Senior Editors');
         const button = Selector('.people-picker__modal_list--item').find('.pod__button');
         await t.expect(button.visible).ok();
         await t.click(button);
@@ -58,7 +60,9 @@ export class EditorPage {
         await t.click(addButton);
         await this.assertReviewerSearch();
         await t.expect(Selector('.typography__heading--h2').visible).ok();
-        await t.expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent).eql('Suggest Reviewing Editors');
+        await t
+            .expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent)
+            .eql('Suggest Reviewing Editors');
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
         const button = Selector('.people-picker__modal_list--item').find('.pod__button');
         await t.expect(button.visible).ok();
@@ -75,7 +79,9 @@ export class EditorPage {
         await t.click(addButton);
         await this.assertReviewerSearch();
         await t.expect(Selector('.typography__heading--h2').visible).ok();
-        await t.expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent).eql('Suggest Reviewing Editors');
+        await t
+            .expect(Selector('.people-picker__selector_container').find('.typography__heading--h2').textContent)
+            .eql('Suggest Reviewing Editors');
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
         const button = Selector('.people-picker__modal_list--item').find('.pod__button');
         await t.expect(button.visible).ok();
@@ -93,7 +99,7 @@ export class EditorPage {
 
     public async assertReviewerSearch(): Promise<void> {
         const searchInput = Selector('#peoplePickerSearch');
-        const peopleList  = Selector('.people-picker__modal_list');
+        const peopleList = Selector('.people-picker__modal_list');
         await t.expect(searchInput.visible).ok();
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
         await t.typeText(searchInput, 'should not exist');
