@@ -14,6 +14,7 @@ const ContactUs = (): JSX.Element => {
         <div className="contact-us-page">
             <ContactUsNavigation
                 links={[
+                    // TODO: use translations
                     { link: `${path}/contact-elife`, label: 'Contact eLife' },
                     { link: `${path}/editorial-staff`, label: 'Editorial Staff' },
                     { link: `${path}/production-staff`, label: 'Production Staff' },

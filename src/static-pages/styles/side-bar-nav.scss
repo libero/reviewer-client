@@ -1,10 +1,20 @@
-.side-bar-nav {
+.dropdown-nav {
     display: flex;
+    @include forSize('tabletPortraitUp') {
+        display: none;
+    }
+}
+.side-bar-nav {
+    display: none;
     flex-direction: column;
     padding: 0 50px 0 0;
 
+    @include forSize('tabletPortraitUp') {
+        display: flex;
+    }
+
     span {
-        padding: 12px 0px;
+        padding: 10px 0px;
         a {
             cursor: pointer;
             text-decoration: none;
