@@ -72,9 +72,8 @@ jobs:
           yarn
           make setup
           make start_ci_localhost
-      - run: |
-          make test_safari
-          make test_edge
+      - run: make test_safari
+      - run: make test_edge
 
   browsertest-and-push-images:
     needs: [test, build]
