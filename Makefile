@@ -76,7 +76,18 @@ test_firefox:
 		-e BASE_URL="reviewer-client_nginx:9000" \
 		--entrypoint testcafe \
 		libero/reviewer-browsertests:${IMAGE_TAG} \
-		"firefox:headless" 'tests/**/*.browser.ts'
+		"firefox:headless" \
+		'tests/**/*.browser.ts'
+
+test_safari: yarn
+	yarn testcafe 'browserstack:safari@13.1:OS X Catalina' 'tests/**/*.browser.ts'
+	yarn testcafe 'browserstack:safari@12.1:OS X Mojave' 'tests/**/*.browser.ts'
+	yarn testcafe 'browserstack:safari@11.1:OS X High Sierra' 'tests/**/*.browser.ts'
+
+test_edge: yarn
+	yarn testcafe 'browserstack:edge@18.0:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'browserstack:edge@81.0:Windows 10' 'tests/**/*.browser.ts'
+
 
 test_browser_containerized: build_browsertest test_chromium test_firefox
 
