@@ -20,9 +20,6 @@
 }
 
 .people-picker__search_box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-left: -0.75rem;
   margin-right: -0.75rem;
   margin-top: 2rem;
@@ -30,9 +27,9 @@
   .text-field{
     padding-left: 0.75rem;
     padding-right: 0.75rem;
-    width: 50%;
-    @include forSize('phoneUp') {
-      width: 100%;
+    width: 100%;
+    @include forSize('tabletPortraitUp') {
+      width: 50%;
     }
   }
   .typography__label--helper-text {
