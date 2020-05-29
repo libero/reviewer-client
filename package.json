@@ -130,6 +130,7 @@
         "react-select": "^3.0.4",
         "react-tabs": "^3.0.0",
         "subscriptions-transport-ws": "^0.9.16",
+        "testcafe-browser-provider-browserstack": "^1.13.0",
         "uuid": "^7.0.2",
         "yup": "^0.28.1"
     },
