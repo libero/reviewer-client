@@ -4,8 +4,10 @@ import ContactUsNavigation from './SideNavigation';
 import ContactUsElife from './ContactUsElife';
 import EditorialStaff from './EditorialStaff';
 import ProductionStaff from './ProductionStaff';
+import { useTranslation } from 'react-i18next';
 
 const ContactUs = (): JSX.Element => {
+    const { t } = useTranslation('contact-us');
     let { path } = useRouteMatch();
     const location = useLocation();
     const currentPath = location.pathname;
@@ -15,9 +17,9 @@ const ContactUs = (): JSX.Element => {
             <ContactUsNavigation
                 links={[
                     // TODO: use translations
-                    { link: `${path}/contact-elife`, label: 'Contact eLife' },
-                    { link: `${path}/editorial-staff`, label: 'Editorial Staff' },
-                    { link: `${path}/production-staff`, label: 'Production Staff' },
+                    { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
+                    { link: `${path}/editorial-staff`, label: t('links.editors-link') },
+                    { link: `${path}/production-staff`, label: t('links.production-link') },
                 ]}
                 currentPath={currentPath}
             />

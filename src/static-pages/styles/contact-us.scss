@@ -19,12 +19,12 @@
   }
   
 
-.editor-grid {
+.person-grid {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 
-  .editor-grid-item {
+  .person-grid-item {
     max-width: 50%;
     @include forSize('desktopUp') {
       width: 33.33%;
