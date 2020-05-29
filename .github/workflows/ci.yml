@@ -74,9 +74,8 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - run: |
-          make yarn
-          yarn testcafe '${{ matrix.browser }}'' 'tests/**/*.browser.ts'
+      - run: yarn
+      - run: yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
   browsertest-and-push-images:
     needs: [test, build]
