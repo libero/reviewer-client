@@ -25,17 +25,8 @@
   flex-wrap: wrap;
 
   .person-grid-item {
-    max-width: 50%;
-    padding: 0 1.5rem 1rem 0;
     @include forSize('desktopUp') {
       width: 33.33%;
-    }
-    img {
-      width: 100%;
-    }
-    .person-name {
-      font-family: $fontStrong;
-      font-weight: 400;
     }
   }
 }
