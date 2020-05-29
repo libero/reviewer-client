@@ -24,7 +24,6 @@ const DropdownOpenedIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     </components.DropdownIndicator>
 );
 
-
 interface MobileNavProps {
     id: string;
     values: Value[];

@@ -9,9 +9,7 @@ const ContactUsElife = (): JSX.Element => {
         <div className="contact-us-content">
             <h1>{t('contact-elife.heading')}</h1>
 
-            <Paragraph type="writing">
-                {t('contact-elife.paragraph-1')}
-            </Paragraph>
+            <Paragraph type="writing">{t('contact-elife.paragraph-1')}</Paragraph>
 
             <ul>
                 <li>{t('contact-elife.editor-email')}</li>
