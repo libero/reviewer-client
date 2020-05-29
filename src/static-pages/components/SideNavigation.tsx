@@ -5,17 +5,25 @@ import { ValueType } from 'react-select/src/types';
 import { Value } from '../../ui/atoms/SelectField';
 import { IndicatorProps } from 'react-select/src/components/indicators';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 
 interface Props {
     links: Array<{ link: string; label: string }>;
     currentPath: string;
 }
 
-const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
+const DropdownClosedIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     <components.DropdownIndicator {...props}>
         <ArrowDropDown />
     </components.DropdownIndicator>
 );
+
+const DropdownOpenedIndicator = (props: IndicatorProps<Value>): JSX.Element => (
+    <components.DropdownIndicator {...props}>
+        <ArrowDropUp />
+    </components.DropdownIndicator>
+);
+
 
 interface MobileNavProps {
     id: string;
@@ -40,11 +48,13 @@ const MobileNav = ({ id, values, defaultValue }: MobileNavProps): JSX.Element =>
             className={'mobile-dropdown'}
             classNamePrefix="select-nav"
             options={values}
-            components={{ DropdownIndicator }}
+            components={{ DropdownIndicator: isOpen ? DropdownOpenedIndicator : DropdownClosedIndicator }}
             onChange={onChange}
             isMulti={false}
             defaultValue={defaultValue}
             isSearchable={false}
+            onFocus={() => setIsOpen(!isOpen)}
+            onBlur={() => setIsOpen(!isOpen)}
         />
     );
 };

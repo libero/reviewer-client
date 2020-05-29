@@ -6,7 +6,7 @@ const ProductionStaff = (): JSX.Element => {
     const { t } = useTranslation('contactus');
 
     return (
-        <div>
+        <div className="contact-us-content">
             <h1>Production</h1>
         </div>
     );
