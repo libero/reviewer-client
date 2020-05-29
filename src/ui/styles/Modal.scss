@@ -28,11 +28,27 @@
 .modal__fullscreen {
   width: 100vw;
   height: 100vh;
-  padding: 0;
   overflow-y: auto;
   position: fixed;
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 0 auto 0;
+  grid-template-rows: 1fr 4.5rem;
+  min-height: 100vh;
+  padding: 0 1.5rem;
+  grid-template-areas:
+          ". content ."
+          "buttons buttons buttons";
+
+  @include forSize('tabletPortraitUp') {
+    grid-template-columns: 0 1fr 0;
+  }
+  @include forSize('tabletLandscapeUp') {
+    grid-template-columns: auto 52.5rem auto;
+  }
 
   .modal__content {
+    grid-area: content;
     margin-bottom: 8.25rem;
   }
 }
@@ -60,6 +76,7 @@
   bottom: 0;
   height: 8.25rem;
   background-color: $white;
+  grid-area: buttons;
 }
 
 .modal__buttons {
