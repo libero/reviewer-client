@@ -38,11 +38,20 @@ The project contains a [Makefile] which uses [Docker] for development.
    make run_ci
    ```
 
+   __CI-localhost:__ same as __CI__ but exposed on localhost
+   ```sh
+   make build_prod
+   make start_ci_localhost
+   ```
+
 3. Run tests:  
    - `make lint`: lint code
    - `make test`: unittests
-   - `make test_browser`: locally executed browsertests, use with `start_test` or `start_dev`
+   - `make test_browser`: locally executed browsertests, use with `start_test`, `start_dev` or `start_ci_localhost`
    - `make test_browser_containerized`: use with `build_prod ; start_ci`
+   - `make test_safari` and `test_edge`: browsertests run against browserstack, use with `start_test`, `start_dev` or `start_ci_localhost`
+
+  To use [Browserstack](https://browserstack.com) you need an account and have to set `BROWSERSTACK_USERNAME` and `BROWSERSTACK_ACCESS_KEY` env vars.
 
 3. `make stop` to teardown
 
