@@ -76,7 +76,7 @@ jobs:
             ${{ runner.os }}-yarn-client-
       - run: |
           make yarn
-          yarn testcafe ${{browser}} 'tests/**/*.browser.ts'
+          yarn testcafe ${{ matrix.browser }} 'tests/**/*.browser.ts'
 
   browsertest-and-push-images:
     needs: [test, build]
