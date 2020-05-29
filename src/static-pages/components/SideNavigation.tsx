@@ -1,33 +1,65 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { SelectField } from '../../ui/atoms';
+import Select, { components } from 'react-select';
+import { ValueType } from 'react-select/src/types';
 import { Value } from '../../ui/atoms/SelectField';
+import { IndicatorProps } from 'react-select/src/components/indicators';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 
 interface Props {
     links: Array<{ link: string; label: string }>;
     currentPath: string;
 }
 
+const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
+    <components.DropdownIndicator {...props}>
+        <ArrowDropDown />
+    </components.DropdownIndicator>
+);
+
+interface MobileNavProps {
+    id: string;
+    values: Value[];
+    multi?: boolean;
+    searchable?: boolean;
+    placeholder?: string;
+    defaultValue?: Value;
+    onChange?(value: ValueType<Value>): void;
+    formComponent?: boolean;
+}
+
+const MobileNav = ({ id, values, defaultValue }: MobileNavProps): JSX.Element => {
+    const history = useHistory();
+    const [isOpen, setIsOpen] = useState(false);
+    const onChange = (option: Value) => {
+        history.push(option.value);
+    };
+    return (
+        <Select
+            aria-labelledby={`${id}-label`}
+            className={'mobile-dropdown'}
+            classNamePrefix="select-nav"
+            options={values}
+            components={{ DropdownIndicator }}
+            onChange={onChange}
+            isMulti={false}
+            defaultValue={defaultValue}
+            isSearchable={false}
+        />
+    );
+};
+
 const ContactUsNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
-    let history = useHistory();
     const isSelected = (path: string): boolean => {
         return path.toLocaleLowerCase().trim() === currentPath.toLocaleLowerCase().trim();
     };
-
-    const onChange = (value: string) => {
-        history.push(value);
-    };
-
     const dropdownLinks = links.map(l => ({ label: l.label, value: l.link }));
-
     return (
         <React.Fragment>
             <div className="dropdown-nav">
-                <SelectField
-                    labelText=""
+                <MobileNav
                     id="selectedNavigationItem"
                     values={dropdownLinks}
-                    onChange={(value: Value): void => onChange(value.value)}
                     defaultValue={dropdownLinks.find(dl => isSelected(dl.value))}
                     searchable={false}
                 />
