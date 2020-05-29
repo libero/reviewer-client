@@ -94,8 +94,8 @@ test_safari: yarn
 	yarn testcafe 'browserstack:safari@11.1:OS X High Sierra' 'tests/**/*.browser.ts'
 
 test_edge: yarn
-	yarn testcafe 'browserstack:edge@18.0:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'browserstack:edge@81.0:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'browserstack:edge@18.0:Windows 10' 'tests/**/*.browser.ts'
 
 test_browser_containerized: build_browsertest test_chromium test_firefox
 

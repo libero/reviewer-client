@@ -47,16 +47,6 @@ jobs:
   browserstack-tests:
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [
-          'browserstack:safari@13.1:OS X Catalina',
-          'browserstack:safari@12.1:OS X Mojave',
-          'browserstack:safari@11.1:OS X High Sierra',
-          'browserstack:edge@18.0:Windows 10',
-          'browserstack:edge@81.0:Windows 10'
-          ]
     env:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
@@ -82,7 +72,9 @@ jobs:
           yarn
           make setup
           make start_ci_localhost
-      - run: yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
+      - run: |
+          make test_safari
+          make test_edge
 
   browsertest-and-push-images:
     needs: [test, build]
