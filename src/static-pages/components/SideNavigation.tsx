@@ -74,7 +74,7 @@ const ContactUsNavigation = ({ links, currentPath = '/' }: Props): JSX.Element =
                 />
             </div>
             <div className="side-bar-nav">
-                {links.map((l, index) => (
+                {links.map(l => (
                     <span key={`${l.link}-container`}>
                         <Link
                             key={`${l.link}`}
