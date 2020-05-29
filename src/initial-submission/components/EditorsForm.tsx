@@ -34,6 +34,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
 
     const schema = yup.object().shape({
+        opposedSeniorEditors: yup.array().max(1),
         suggestedReviewers: yup.array(
             yup.object().shape(
                 {
@@ -198,7 +199,39 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 selectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
             />
-            {/* TODO add exclude editor toggleable box */}
+            <ExcludedToggle
+                togglePrefixText={t('editors.opposed-senior-editors-toggle-prefix')}
+                toggleActionText={t('editors.opposed-senior-editors-toggle-action-text')}
+                onClose={(): void => closeOpposedReviewers('opposedSeniorEditorsReason', 'opposedSeniorEditors')}
+                open={opposedSeniorEditors.length > 0 || opposedSeniorEditorsReason !== ''}
+                panelHeading={t('editors.reviewers-people-picker-label')}
+            >
+                <PeoplePicker
+                    people={
+                        loadingSeniorEditors
+                            ? []
+                            : getSeniorEditors.getEditors.filter(ed => !suggestedSeniorEditors.includes(ed.id))
+                    }
+                    onRemove={(selected): void =>
+                        setValue('opposedSeniorEditors', opposedSeniorEditors.filter(personId => personId !== selected))
+                    }
+                    setSelectedPeople={(selected): void => {
+                        setValue('opposedSeniorEditors', selected);
+                        triggerValidation('opposedSeniorEditorsReason');
+                    }}
+                    selectedPeople={opposedSeniorEditors}
+                    className="opposed-senior-editors-picker"
+                />
+                <MultilineTextField
+                    id="opposedSeniorEditorsReason"
+                    register={register}
+                    labelText={t('editors.opposed-senior-editor-reason-label')}
+                    invalid={errors && errors.opposedSeniorEditorsReason !== undefined}
+                    helperText={
+                        errors && errors.opposedSeniorEditorsReason ? errors.opposedSeniorEditorsReason.message : null
+                    }
+                />
+            </ExcludedToggle>
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
                 people={
