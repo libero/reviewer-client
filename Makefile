@@ -50,9 +50,15 @@ start_test: ## start with dev build image, reviewer-mocks mocking api, continuum
 	${DOCKER_COMPOSE_TEST} up -d nginx
 	${DOCKER_COMPOSE} logs -f reviewer-client
 
-start_ci: ## start with production build, with reviewer-mocks mocking api, continuum-adaptor and continuum
+start_ci: ## start with production build, everything mocked and reachable inside docker network for containerized browsertest 
 	${DOCKER_COMPOSE_CI} pull reviewer-mocks
 	${DOCKER_COMPOSE_CI} up -d reviewer-mocks reviewer-client nginx
+	./.scripts/docker/wait-healthy.sh reviewer-client_app 60
+	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 60
+
+start_ci_localhost: ## start with production build, everything mocked and exposed on localhost
+	${DOCKER_COMPOSE_CI} pull reviewer-mocks
+	${DOCKER_COMPOSE_CI} -f docker-compose.ci.localhost.yml up -d reviewer-mocks reviewer-client nginx
 	./.scripts/docker/wait-healthy.sh reviewer-client_app 60
 	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 60
 

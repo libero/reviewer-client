@@ -45,6 +45,7 @@ jobs:
           path: reviewer-client.tar
 
   browserstack-tests:
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -74,7 +75,13 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - run: yarn
+      - uses: actions/download-artifact@v2
+      - name: Setup client with mocks
+        run: |
+          docker load -i reviewer-client.tar/reviewer-client.tar
+          yarn
+          make setup
+          make start_ci_localhost
       - run: yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
   browsertest-and-push-images:
