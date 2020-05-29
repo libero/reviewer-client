@@ -38,7 +38,7 @@ interface MobileNavProps {
 const MobileNav = ({ id, values, defaultValue }: MobileNavProps): JSX.Element => {
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
-    const onChange = (option: Value) => {
+    const onChange = (option: Value): void => {
         history.push(option.value);
     };
     return (
@@ -52,8 +52,8 @@ const MobileNav = ({ id, values, defaultValue }: MobileNavProps): JSX.Element =>
             isMulti={false}
             defaultValue={defaultValue}
             isSearchable={false}
-            onFocus={() => setIsOpen(!isOpen)}
-            onBlur={() => setIsOpen(!isOpen)}
+            onFocus={(): void => setIsOpen(!isOpen)}
+            onBlur={(): void => setIsOpen(!isOpen)}
         />
     );
 };
@@ -74,9 +74,10 @@ const ContactUsNavigation = ({ links, currentPath = '/' }: Props): JSX.Element =
                 />
             </div>
             <div className="side-bar-nav">
-                {links.map(l => (
-                    <span>
+                {links.map((l, index) => (
+                    <span key={`${l.link}-container`}>
                         <Link
+                            key={`${l.link}`}
                             to={l.link}
                             className={isSelected(l.link) ? 'typography__body--link active' : 'typography__body--link '}
                         >

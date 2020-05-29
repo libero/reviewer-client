@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 const ContactUs = (): JSX.Element => {
     const { t } = useTranslation('contact-us');
-    let { path } = useRouteMatch();
+    const { path } = useRouteMatch();
     const location = useLocation();
     const currentPath = location.pathname;
 
