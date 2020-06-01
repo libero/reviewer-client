@@ -34,7 +34,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
 
     const schema = yup.object().shape({
-        opposedSeniorEditors: yup.array().max(1),
         suggestedReviewers: yup.array(
             yup.object().shape(
                 {
@@ -94,7 +93,12 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewingEditors: yup.array().max(2, t('opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
-            then: yup.string().required(t('editors.validation.opposed-reviewing-editor-reason-required')),
+            then: yup.string().required(t('editors.validation.opposed-reviewing-editors-reason-required')),
+        }),
+        opposedSeniorEditors: yup.array().max(1, t('opposed-senior-editors-max')),
+        opposedSeniorEditorsReason: yup.string().when('opposedSeniorEditors', {
+            is: editors => !!editors.length,
+            then: yup.string().required(t('editors.validation.opposed-senior-editors-reason-required')),
         }),
     });
 
@@ -136,6 +140,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
     register({ name: 'suggestedReviewers', type: 'custom' });
+    register({ name: 'opposedSeniorEditors', type: 'custom' });
     register({ name: 'opposedReviewingEditors', type: 'custom' });
     register({ name: 'opposedReviewers', type: 'custom' });
 
