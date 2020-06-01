@@ -71,7 +71,7 @@ lint: install ## lint code
 test: yarn ## run unit tests
 	yarn test
 
-test_browser: ## run browser tests
+test_browser: ## run browser tests with local chrome
 	yarn wait-port localhost:9000
 	yarn test:browser-headless
 
