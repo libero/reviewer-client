@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.15'
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
         with:
           path: node_modules
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
         with:
           path: reviewer-client.tar
           key: reviewer-client.tar
