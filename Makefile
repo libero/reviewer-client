@@ -97,6 +97,10 @@ test_edge: yarn
 	yarn testcafe 'browserstack:edge@81.0:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'browserstack:edge@18.0:Windows 10' 'tests/**/*.browser.ts'
 
+test_browserstack: yarn
+	yarn testcafe 'browserstack:chrome@76.0:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'browserstack:firefox@81.0:Windows 10' 'tests/**/*.browser.ts'
+
 test_browser_containerized: build_browsertest test_chromium test_firefox
 
 run_ci: ## run as if in ci
