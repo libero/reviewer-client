@@ -84,7 +84,7 @@ jobs:
           make start_ci_localhost
       - name: ${{ matrix.browser }}
         run: |
-          export BROWSERSTACK_BUILD_ID=${GITHUB_REF}-${GIHUB_SHA}
+          export BROWSERSTACK_BUILD_ID=${GITHUB_REF}-${GITHUB_SHA}
           yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
   browsertest-and-push-images:
