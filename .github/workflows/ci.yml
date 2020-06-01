@@ -85,7 +85,7 @@ jobs:
           make start_ci_localhost
       - name: ${{ matrix.browser }}
         run: |
-          yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
+          yarn testcafe --page-load-timeout 30000 --assertion-timeout 30000 '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
   browsertest-container:
     needs: [test, build]
