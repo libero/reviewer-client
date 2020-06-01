@@ -95,7 +95,7 @@ test_safari: yarn
 
 test_edge: yarn
 	yarn testcafe 'browserstack:edge@81.0:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe 'browserstack:edge@18.0:Windows 10' 'tests/**/*.browser.ts'
+	#yarn testcafe 'browserstack:edge@18.0:Windows 10' 'tests/**/*.browser.ts'
 
 test_browserstack: yarn
 	yarn testcafe 'browserstack:chrome@83.0:Windows 10' 'tests/**/*.browser.ts'
