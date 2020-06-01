@@ -62,6 +62,7 @@ jobs:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
       BROWSERSTACK_PROJECT_NAME: libero-reviewer-client
+      BROWSERSTACK_BUILD_ID: ${{ github.ref }}-${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -84,7 +85,6 @@ jobs:
           make start_ci_localhost
       - name: ${{ matrix.browser }}
         run: |
-          export BROWSERSTACK_BUILD_ID=${GITHUB_REF}-${GITHUB_SHA}
           yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
   browsertest-and-push-images:
