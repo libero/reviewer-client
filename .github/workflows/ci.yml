@@ -87,7 +87,7 @@ jobs:
         run: |
           yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
-  browsertest-and-push-images:
+  browsertest-container:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
@@ -102,9 +102,24 @@ jobs:
           make start_ci
       - run: make build_browsertest
       - run: make test_chromium
-      - run: make test_firefox
+
+  browsertest-and-push-images:
+    needs: [test, build, browserstack-tests]
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: actions/download-artifact@v2
+      - name: Setup client with mocks
+        run: |
+          docker load -i reviewer-client.tar/reviewer-client.tar
+          make setup
+          make start_ci
+      - run: make build_browsertest
+      - run: make test_chromium
       - name: Push images to docker hub
-        if: github.ref == 'refs/heads/master'
         run: |
           .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
           .scripts/github/retag-and-push.sh reviewer-browsertests $IMAGE_TAG
