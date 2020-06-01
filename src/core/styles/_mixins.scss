@@ -20,6 +20,7 @@
 
 @mixin twoColumnGrid {
   display: grid;
+  grid-template-columns: 1fr;
   @include forSize('tabletPortraitUp') {
     grid-template-columns: 1fr 1fr;
   }
