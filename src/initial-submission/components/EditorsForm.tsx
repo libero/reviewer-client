@@ -204,7 +204,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 toggleActionText={t('editors.opposed-senior-editors-toggle-action-text')}
                 onClose={(): void => closeOpposedReviewers('opposedSeniorEditorsReason', 'opposedSeniorEditors')}
                 open={opposedSeniorEditors.length > 0 || opposedSeniorEditorsReason !== ''}
-                panelHeading={t('editors.reviewers-people-picker-label')}
+                panelHeading={t('editors.opposed-senior-editors-people-picker-label')}
             >
                 <PeoplePicker
                     people={
@@ -225,7 +225,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 <MultilineTextField
                     id="opposedSeniorEditorsReason"
                     register={register}
-                    labelText={t('editors.opposed-senior-editor-reason-label')}
+                    labelText={t('editors.opposed-senior-editors-reason-label')}
                     invalid={errors && errors.opposedSeniorEditorsReason !== undefined}
                     helperText={
                         errors && errors.opposedSeniorEditorsReason ? errors.opposedSeniorEditorsReason.message : null
