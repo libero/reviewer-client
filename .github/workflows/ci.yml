@@ -35,14 +35,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Build and tarball container image
-        run: |
-          make build_prod
-          docker save -o reviewer-client.tar libero/reviewer-client:${IMAGE_TAG}
-      - uses: actions/upload-artifact@v2
+      - uses: whoan/docker-build-with-cache-action@v5
         with:
-          name: reviewer-client.tar
-          path: reviewer-client.tar
+          username: libero
+          password: "${{ secrets.GITHUB_TOKEN }}"
+          image_name: libero/reviewer-client/reviewer-client
+          #image_tag: ${{ github.sha }}
+          push_git_tag: true
+          registry: docker.pkg.github.com
+          build_extra_args: "--build-arg=image_tag=${IMAGE_TAG}"
 
   browserstack-tests:
     needs: build
@@ -79,13 +80,15 @@ jobs:
           key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-client-
-      - uses: actions/download-artifact@v2
       - name: Setup client with mocks
         run: |
-          docker load -i reviewer-client.tar/reviewer-client.tar
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p $GITHUB_TOKEN
+          docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
           yarn
           make setup
           make start_ci_localhost
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: ${{ matrix.browser }}
         run: |
           yarn testcafe --page-load-timeout 30000 --assertion-timeout 30000 '${{ matrix.browser }}' 'tests/**/*.browser.ts'
@@ -98,12 +101,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/download-artifact@v2
       - name: Setup client with mocks
         run: |
-          docker load -i reviewer-client.tar/reviewer-client.tar
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p $GITHUB_TOKEN
+          docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
           make setup
           make start_ci
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: make build_browsertest
       - run: make test_chromium
 
@@ -115,12 +120,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: actions/download-artifact@v2
       - name: Setup client with mocks
         run: |
-          docker load -i reviewer-client.tar/reviewer-client.tar
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR -p $GITHUB_TOKEN
+          docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
           make setup
           make start_ci
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: make build_browsertest
       - run: make test_chromium
       - name: Push images to docker hub
