@@ -42,8 +42,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const schema = yup.object().shape({
         suggestedSeniorEditors: yup
             .array()
-            .min(MIN_SUGGESTED_SENIOR_EDITORS, t('suggested-senior-editors-min'))
-            .max(MAX_SUGGESTED_SENIOR_EDITORS, t('suggested-senior-editors-max')),
+            .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
+            .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
         suggestedReviewers: yup
             .array(
                 yup.object().shape(
@@ -71,7 +71,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     [['name', 'email']],
                 ),
             )
-            .max(MAX_SUGGESTED_REVIEWERS, t('suggested-reviewers-max')),
+            .max(MAX_SUGGESTED_REVIEWERS, t('editors.validation.suggested-reviewers-max')),
         opposedReviewers: yup.array(
             yup.object().shape(
                 {
@@ -109,8 +109,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         }),
         suggestedReviewingEditors: yup
             .array()
-            .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('suggested-reviewing-editors-min'))
-            .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('suggested-reviewing-editors-max')),
+            .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
+            .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
     });
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({

@@ -117,7 +117,7 @@ describe('EditorsDetailsForm', (): void => {
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
             expect(seniorEditorPicker).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             expect(getByText('James Bond')).toBeInTheDocument();
@@ -132,7 +132,7 @@ describe('EditorsDetailsForm', (): void => {
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
             expect(seniorEditorPicker).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             expect(getByText('James Bond')).toBeInTheDocument();
@@ -147,7 +147,7 @@ describe('EditorsDetailsForm', (): void => {
             );
             const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
             expect(reviewingEditorPicker).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[1]);
+            fireEvent.click(getAllByText('selected_people_list--open')[1]);
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             expect(getByText('Scaramanga')).toBeInTheDocument();
@@ -164,14 +164,23 @@ describe('EditorsDetailsForm', (): void => {
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
             expect(seniorEditorPicker).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
                 '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
-            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
-            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+            fireEvent.click(
+                baseElement.querySelector(
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(odd) .pod .pod__button',
+                ),
+            );
+            fireEvent.click(
+                baseElement.querySelector(
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(even) .pod .pod__button',
+                ),
+            );
+            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(2);
             fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
@@ -185,10 +194,10 @@ describe('EditorsDetailsForm', (): void => {
             });
             const excludeTooggle = container.querySelector('.excluded-toggle__action');
             expect(excludeTooggle).toBeInTheDocument();
-            await fireEvent.click(excludeTooggle);
+            fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
             expect(opposedReviewingEditors).toBeInTheDocument();
-            await fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+            fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
@@ -197,7 +206,7 @@ describe('EditorsDetailsForm', (): void => {
             fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
             expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
-            await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
             const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
@@ -216,21 +225,22 @@ describe('EditorsDetailsForm', (): void => {
                     container: appContainer(),
                 },
             );
+
             const excludeTooggle = container.querySelector('.excluded-toggle__action');
             expect(excludeTooggle).toBeInTheDocument();
-            await fireEvent.click(excludeTooggle);
+            fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
             expect(opposedReviewingEditors).toBeInTheDocument();
-            await fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+            fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
                 '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
-            await fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
             expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
-            await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
             const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
@@ -238,9 +248,9 @@ describe('EditorsDetailsForm', (): void => {
             expect(
                 container.querySelectorAll('.opposed-reviewing-editors-picker .selected_people_list__item').length,
             ).toEqual(2);
-            await fireEvent.click(getByText('TEST BUTTON'));
+            fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
-            expect(container.querySelector('.typography__label--error').textContent).toBe(
+            expect(container.querySelector('.excluded-toggle__panel .typography__label--error').textContent).toBe(
                 'editors.validation.opposed-reviewing-editor-reason-required',
             );
         });
@@ -251,10 +261,10 @@ describe('EditorsDetailsForm', (): void => {
             });
             const excludeTooggle = container.querySelector('.excluded-toggle__action');
             expect(excludeTooggle).toBeInTheDocument();
-            await fireEvent.click(excludeTooggle);
+            fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
             expect(opposedReviewingEditors).toBeInTheDocument();
-            await fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+            fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
@@ -263,7 +273,7 @@ describe('EditorsDetailsForm', (): void => {
             fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
             expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
-            await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
             const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
@@ -273,7 +283,7 @@ describe('EditorsDetailsForm', (): void => {
             expect((reasonInput as HTMLInputElement).value).toBe('reason');
             const closeButton = container.querySelector('.excluded-toggle__close-button');
             expect(closeButton).toBeInTheDocument();
-            await fireEvent.click(closeButton);
+            fireEvent.click(closeButton);
             expect(closeButton).not.toBeInTheDocument();
             expect(reasonInput).not.toBeInTheDocument();
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
@@ -290,14 +300,23 @@ describe('EditorsDetailsForm', (): void => {
             );
             const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
             expect(reviewingEditorPicker).toBeInTheDocument();
-            await fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
                 '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
-            fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
-            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+            fireEvent.click(
+                baseElement.querySelector(
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(odd) .pod .pod__button',
+                ),
+            );
+            fireEvent.click(
+                baseElement.querySelector(
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(even) .pod .pod__button',
+                ),
+            );
+            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(2);
             fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
             expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
             expect(getByText(selectedName)).toBeInTheDocument();
