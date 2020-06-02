@@ -82,13 +82,13 @@ test_browser_containerized:
 		libero/reviewer-browsertests:${IMAGE_TAG}
 
 test_browser_saucelabs: yarn
-	yarn testcafe 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:MicrosoftEdge@18.17763:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
 
 test_browser_saucelabs_serial: yarn
 	yarn testcafe 'saucelabs:Chrome@latest:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
+	#yarn testcafe 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@latest:macOS Catalina' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@latest:macOS 10.14' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
