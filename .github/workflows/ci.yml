@@ -83,7 +83,7 @@ jobs:
         run: |
           echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
           docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
-          docker tag libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
+          docker tag docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
           yarn
           make setup
           make start_ci_localhost
@@ -105,7 +105,7 @@ jobs:
         run: |
           echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
           docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
-          docker tag libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
+          docker tag docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
           make setup
           make start_ci
         env:
@@ -125,7 +125,7 @@ jobs:
         run: |
           echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
           docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
-          docker tag libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
+          docker tag docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
           make setup
           make start_ci
         env:
