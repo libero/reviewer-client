@@ -63,8 +63,9 @@ jobs:
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
       BROWSERSTACK_PROJECT_NAME: libero-reviewer-client
       BROWSERSTACK_BUILD_ID: ${{ github.ref }}-${{ github.event.pull_request.head.sha }}
-      BROWSERSTACK_NETWORK_LOGS: 'true'
+      BROWSERSTACK_NETWORK_LOGS: true
       BROWSERSTACK_CONSOLE: 'verbose'
+      BROWSERSTACK_USE_AUTOMATE: "1"
     steps:
       - uses: actions/checkout@v2
         with:
