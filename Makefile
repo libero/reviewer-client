@@ -9,6 +9,8 @@ DOCKER_COMPOSE_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.b
 
 export BROWSERSTACK_PROJECT_NAME = "libero-reviewer-client"
 export BROWSERSTACK_BUILD_ID ?= "local-$(shell date --utc +%Y%m%d.%H%M)"
+export BROWSERSTACK_NETWORK_LOGS ?= 'true'
+export BROWSERSTACK_CONSOLE ?= 'verbose'
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
