@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -40,10 +40,19 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
 
     const schema = yup.object().shape({
-        suggestedSeniorEditors: yup
-            .array()
-            .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
-            .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
+        suggestedSeniorEditors: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup
+                .array()
+                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
+                // .nullable(),
+            otherwise: yup
+                .array()
+                .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
+                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max'))
+                // .nullable(),
+        }),
+
         suggestedReviewers: yup
             .array(
                 yup.object().shape(
@@ -102,16 +111,47 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             is: (editors: ReviewerAlias[]) => editors.some(editor => editor.name + editor.email !== ''),
             then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
         }),
-        opposedReviewingEditors: yup.array().max(2, t('opposed-reviewing-editors-max')),
+        opposedReviewingEditors: yup.array().max(2, t('editors.validation.opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-reviewing-editor-reason-required')),
         }),
-        suggestedReviewingEditors: yup
-            .array()
-            .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
-            .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
+        suggestedReviewingEditors: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup
+                .array()
+                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
+                // .nullable(),
+            otherwise: yup
+                .array()
+                .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
+                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max'))
+                // .nullable(),
+        }),
     });
+
+    const validationResolver = useCallback((data: EditorsDetails) => {
+        try {
+            schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
+            return { errors: {}, values: data };
+        } catch (errors) {
+            console.log('errors.inner',  errors.inner);
+            return {
+                
+                errors: errors.inner.reduce(
+                    (
+                        errorObject: {},
+                        { path, message, type }: { path: string; message: string; type: string; inner: [] },
+                    ) => ({
+                        ...errorObject,
+                        [path]: { message, type },
+                    }),
+                    {},
+                ),
+                values: data,
+            };
+        }
+    }, []);
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
         defaultValues: {
@@ -144,7 +184,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
         mode: 'onBlur',
         validateCriteriaMode: 'all',
-        validationSchema: schema,
+        validationResolver,
     });
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
 
