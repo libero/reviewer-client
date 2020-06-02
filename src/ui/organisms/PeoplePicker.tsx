@@ -14,6 +14,7 @@ interface Props {
     onRemove: (personId: string) => void;
     setSelectedPeople: (selectedPeople: string[]) => void;
     className?: string;
+    error?: string;
 }
 
 const PeoplePicker = ({
@@ -26,6 +27,7 @@ const PeoplePicker = ({
     onRemove,
     setSelectedPeople,
     className,
+    error,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
@@ -50,6 +52,11 @@ const PeoplePicker = ({
                 min={min}
                 max={max}
             />
+            {error && (
+                <span className={'typography__label typography__label--helper-text typography__label--error'}>
+                    {error}
+                </span>
+            )}
         </div>
     );
 };
