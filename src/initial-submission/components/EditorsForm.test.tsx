@@ -226,6 +226,59 @@ describe('EditorsDetailsForm', (): void => {
                 expect(container.querySelector('.opposed-senior-editors-picker')).toBeInTheDocument();
                 expect(container.querySelector('#opposedSeniorEditorsReason')).toBeInTheDocument();
             });
+            it('displays a validation message if no reason is given when there are excluded senior editors selected', async (): Promise<
+                void
+            > => {
+                const { getByText } = render(
+                    <EditorsForm
+                        initialValues={{
+                            id: 'blah',
+                            articleType: '',
+                            updated: Date.now(),
+                            editorDetails: {
+                                opposedSeniorEditors: ['1'],
+                            },
+                        }}
+                        ButtonComponent={ButtonComponent}
+                    />,
+                    {
+                        container: appContainer(),
+                    },
+                );
+                fireEvent.click(getByText('TEST BUTTON'));
+                await waitFor(() => {});
+                expect(getByText('editors.validation.opposed-senior-editors-reason-required')).toBeInTheDocument();
+            });
+
+            it('clears the excluded senior editors and reason when the toggle section is closed', () => {
+                const { getByText, container } = render(
+                    <EditorsForm
+                        initialValues={{
+                            id: 'blah',
+                            articleType: '',
+                            updated: Date.now(),
+                            editorDetails: {
+                                opposedSeniorEditors: ['1'],
+                                opposedSeniorEditorsReason: 'some reason',
+                            },
+                        }}
+                        ButtonComponent={ButtonComponent}
+                    />,
+                    {
+                        container: appContainer(),
+                    },
+                );
+                expect(container.querySelectorAll('.opposed-senior-editors-picker .pod')).toHaveLength(2);
+                expect(container.querySelector<HTMLTextAreaElement>('[name="opposedSeniorEditorsReason"]').value).toBe(
+                    'some reason',
+                );
+                fireEvent.click(container.querySelector('.excluded-toggle__close-button'));
+                fireEvent.click(getByText('editors.opposed-senior-editors-toggle-action-text'));
+                expect(container.querySelectorAll('.opposed-senior-editors-picker .pod')).toHaveLength(1);
+                expect(container.querySelector<HTMLTextAreaElement>('[name="opposedSeniorEditorsReason"]').value).toBe(
+                    '',
+                );
+            });
         });
 
         describe('Excluded reviewing editors', () => {
