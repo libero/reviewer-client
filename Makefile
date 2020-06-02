@@ -9,7 +9,7 @@ DOCKER_COMPOSE_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.b
 
 export SAUCE_JOB = "reviewer-client"
 export SAUCE_BUILD ?= "local-$(shell date --utc +%Y%m%d.%H%M)"
-export SAUCE_API_HOST = "eu-central-1.saucelabs.com"
+export SAUCE_API_HOST=eu-central-1.saucelabs.com
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -82,9 +82,13 @@ test_browser_containerized:
 		libero/reviewer-browsertests:${IMAGE_TAG}
 
 test_browser_saucelabs: yarn
+	yarn testcafe 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:MicrosoftEdge@18.17763:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
+
+test_browser_saucelabs_serial: yarn
 	yarn testcafe 'saucelabs:Chrome@latest:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe 'saucelabs:Edge@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@latest:macOS Catalina' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@latest:macOS 10.14' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
