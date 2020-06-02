@@ -36,7 +36,7 @@ export class EditorPage {
 
     public async populateForm(): Promise<void> {
         await this.addSeniorEditors();
-        //await this.addOpposingSeniorEditor();
+        await this.addOpposingSeniorEditor();
         await this.addReviewingEditors();
         await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
