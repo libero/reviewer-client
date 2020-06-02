@@ -4,6 +4,7 @@ export const getSubmissionQuery = gql`
     query GetSubmission($id: ID!) {
         getSubmission(id: $id) {
             id
+            articleType
             manuscriptDetails {
                 title
                 subjects
