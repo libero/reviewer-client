@@ -52,7 +52,7 @@ export class NavigationPane {
         await this.assertNavItems();
         await t.click(this.menu.child(3));
         const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/contact-us');
+        await t.expect(windowLocation.pathname).eql('/contact-us/contact-elife');
     }
 
     public async assertNavItems(): Promise<void> {
