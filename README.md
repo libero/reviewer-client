@@ -49,9 +49,9 @@ The project contains a [Makefile] which uses [Docker] for development.
    - `make test`: unittests
    - `make test_browser`: locally executed browsertests, use with `start_test`, `start_dev` or `start_ci_localhost`
    - `make test_browser_containerized`: use with `build_prod ; start_ci`
-   - `make test_safari` and `test_edge`: browsertests run against browserstack, use with `start_test`, `start_dev` or `start_ci_localhost`
+   - `make test_browser_saucelabs`: browsertests run against saucelabs, use with `start_test`, `start_dev` or `start_ci_localhost`
 
-  To use [Browserstack](https://browserstack.com) you need an account and have to set `BROWSERSTACK_USERNAME` and `BROWSERSTACK_ACCESS_KEY` env vars.
+  To use [saucelabs](https://saucelabs.com) you need an account and have to set `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env vars.
 
 3. `make stop` to teardown
 
