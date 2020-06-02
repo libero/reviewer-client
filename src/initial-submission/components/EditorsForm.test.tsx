@@ -183,7 +183,7 @@ describe('EditorsDetailsForm', (): void => {
             const { baseElement, container, getByText } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
             });
-            const excludeTooggle = container.querySelector('.excluded-toggle__action');
+            const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
             expect(excludeTooggle).toBeInTheDocument();
             await fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
@@ -216,7 +216,7 @@ describe('EditorsDetailsForm', (): void => {
                     container: appContainer(),
                 },
             );
-            const excludeTooggle = container.querySelector('.excluded-toggle__action');
+            const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
             expect(excludeTooggle).toBeInTheDocument();
             await fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
@@ -241,7 +241,7 @@ describe('EditorsDetailsForm', (): void => {
             await fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
             expect(container.querySelector('.typography__label--error').textContent).toBe(
-                'editors.validation.opposed-reviewing-editor-reason-required',
+                'editors.validation.opposed-reviewing-editors-reason-required',
             );
         });
 
@@ -249,7 +249,7 @@ describe('EditorsDetailsForm', (): void => {
             const { baseElement, container, getByText } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
             });
-            const excludeTooggle = container.querySelector('.excluded-toggle__action');
+            const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
             expect(excludeTooggle).toBeInTheDocument();
             await fireEvent.click(excludeTooggle);
             const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
