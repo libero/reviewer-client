@@ -89,9 +89,9 @@ test_browser_saucelabs_serial: yarn
 	yarn testcafe 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
 	#yarn testcafe 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe 'saucelabs:Safari@latest:macOS Catalina' 'tests/**/*.browser.ts'
-	yarn testcafe 'saucelabs:Safari@latest:macOS 10.14' 'tests/**/*.browser.ts'
-	yarn testcafe 'saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Safari@13:macOS 10.13' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Safari@12.0:macOS 10.14' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
 
 run_ci: ## run as if in ci
 	make lint
