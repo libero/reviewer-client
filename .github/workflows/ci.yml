@@ -61,6 +61,9 @@ jobs:
     env:
       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      SAUCE_JOB: reviewer-client
+      SAUCE_BUILD: ${{ github.ref }}-${{ github.event.pull_request.head.sha }}
+      SAUCE_API_HOST: eu-central-1.saucelabs.com
     steps:
       - uses: actions/checkout@v2
         with:
