@@ -10,7 +10,6 @@ import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField } from '../../ui/atoms';
-import { yupResolver } from '@hookform/resolvers';
 
 const MIN_SUGGESTED_SENIOR_EDITORS = 2;
 const MAX_SUGGESTED_SENIOR_EDITORS = 6;
@@ -43,13 +42,15 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const schema = yup.object().shape({
         suggestedSeniorEditors: yup.array().when('articleType', {
             is: (articleType: string) => articleType && articleType === 'feature',
-            then: yup.array().max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
-            // .nullable(),
+            then: yup
+                .array()
+                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
+                // .nullable(),
             otherwise: yup
                 .array()
                 .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
-                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
-            // .nullable(),
+                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max'))
+                // .nullable(),
         }),
 
         suggestedReviewers: yup
@@ -120,19 +121,36 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             then: yup
                 .array()
                 .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
+                // .nullable(),
             otherwise: yup
                 .array()
                 .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
-                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
+                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max'))
+                // .nullable(),
         }),
     });
 
     const validationResolver = useCallback((data: EditorsDetails) => {
-        return yupResolver(schema, { abortEarly: false })({ ...data, articleType: initialValues.articleType }).then(
-            (v: any) => {
-                return { ...v, values: data };
-            },
-        );
+        try {
+            schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
+            return { errors: {}, values: data };
+        } catch (errors) {
+            console.log('errors.inner',  errors.inner);
+            return {
+                
+                errors: errors.inner.reduce(
+                    (
+                        errorObject: {},
+                        { path, message, type }: { path: string; message: string; type: string; inner: [] },
+                    ) => ({
+                        ...errorObject,
+                        [path]: { message, type },
+                    }),
+                    {},
+                ),
+                values: data,
+            };
+        }
     }, []);
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
