@@ -63,6 +63,11 @@
     "validation": {
       "opposed-reviewing-editor-reason-required": "Please provide a reason for exclusion",
       "opposed-reviewing-editors-max": "Please suggest no more than 2 editors",
+      "suggested-senior-editors-max": "Please suggest no more than 6 editors",
+      "suggested-senior-editors-min": "Please suggest at least 2 editors",
+      "suggested-reviewers-max": "Please suggest no more than 6 editors",
+      "suggested-reviewing-editors-max": "Please suggest no more than 6 editors",
+      "suggested-reviewing-editors-min": "Please suggest at least 2 editors",
       "opposed-reviewers-reason-required": "Please provide a reason for exclusion",
       "reviewers-name-required": "Name is required",
       "reviewers-email-required": "Email is required",
