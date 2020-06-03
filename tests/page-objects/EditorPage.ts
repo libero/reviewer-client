@@ -38,7 +38,7 @@ export class EditorPage {
         await this.addSeniorEditors();
         await this.addOpposingSeniorEditor();
         await this.addReviewingEditors();
-        await this.addOpposingReviewingEditor();
+        //await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
         await this.addOpposingReviewer();
     }
