@@ -758,7 +758,7 @@ describe('EditorsDetailsForm', (): void => {
             );
         });
 
-        it.only('requires a valid email format if email is filled', async (): Promise<void> => {
+        it('requires a valid email format if email is filled', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
                     initialValues={{

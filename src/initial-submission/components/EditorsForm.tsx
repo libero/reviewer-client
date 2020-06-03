@@ -10,6 +10,7 @@ import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField } from '../../ui/atoms';
+import { set } from 'lodash';
 
 const MIN_SUGGESTED_SENIOR_EDITORS = 2;
 const MAX_SUGGESTED_SENIOR_EDITORS = 6;
@@ -42,13 +43,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     const schema = yup.object().shape({
         suggestedSeniorEditors: yup.array().when('articleType', {
             is: (articleType: string) => articleType && articleType === 'feature',
-            then: yup
-                .array()
-                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
+            then: yup.array().max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
             otherwise: yup
                 .array()
                 .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
-                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max'))
+                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
         }),
 
         suggestedReviewers: yup
@@ -122,7 +121,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             otherwise: yup
                 .array()
                 .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
-                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max'))
+                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
         }),
     });
 
@@ -132,15 +131,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             return { errors: {}, values: data };
         } catch (errors) {
             return {
-                
                 errors: errors.inner.reduce(
                     (
                         errorObject: {},
                         { path, message, type }: { path: string; message: string; type: string; inner: [] },
-                    ) => ({
-                        ...errorObject,
-                        [path]: { message, type },
-                    }),
+                    ) => set(errorObject, path, { message, type }),
                     {},
                 ),
                 values: data,
@@ -182,6 +177,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         validationResolver,
     });
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
+
+    console.log('errors', errors);
 
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
