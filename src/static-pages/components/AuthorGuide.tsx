@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
 import SideNavigation from './SideNavigation';
 import { useTranslation } from 'react-i18next';
+import EditorialProcess from './EditorialProcess';
 
 const AuthorGuide = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
@@ -27,7 +28,7 @@ const AuthorGuide = (): JSX.Element => {
             />
             <Switch>
                 <Route path={`${path}/editorial-process`}>
-                    <div />
+                    <EditorialProcess />
                 </Route>
                 <Route path={`${path}/types`}>
                     <div />
