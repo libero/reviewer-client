@@ -45,12 +45,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             then: yup
                 .array()
                 .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
-                // .nullable(),
             otherwise: yup
                 .array()
                 .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
                 .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max'))
-                // .nullable(),
         }),
 
         suggestedReviewers: yup
@@ -121,12 +119,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             then: yup
                 .array()
                 .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
-                // .nullable(),
             otherwise: yup
                 .array()
                 .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
                 .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max'))
-                // .nullable(),
         }),
     });
 
@@ -135,7 +131,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
             return { errors: {}, values: data };
         } catch (errors) {
-            console.log('errors.inner',  errors.inner);
             return {
                 
                 errors: errors.inner.reduce(
