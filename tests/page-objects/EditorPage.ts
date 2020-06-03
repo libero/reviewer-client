@@ -44,13 +44,16 @@ export class EditorPage {
         await this.assertPeoplePickerSearch();
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
-        const button = Selector('.people-picker__modal_list--item').find('.pod__button');
-        await t.expect(button.visible).ok();
-        await t.click(button);
+        const firstAddButton = Selector('.people-picker__modal_list--item:nth-child(odd)').find('.pod__button');
+        await t.expect(firstAddButton.visible).ok();
+        await t.click(firstAddButton);
+        const secondAddButton = Selector('.people-picker__modal_list--item:nth-child(even)').find('.pod__button');
+        await t.expect(secondAddButton.visible).ok();
+        await t.click(secondAddButton);
         await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
         await t.click(Selector('.modal__buttons_container').find('.button--primary'));
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
-        await t.expect(picker.find('.selected_people_list__item').count).eql(2);
+        await t.expect(picker.find('.selected_people_list__item').count).eql(3);
     }
 
     public async addEditor(): Promise<void> {
