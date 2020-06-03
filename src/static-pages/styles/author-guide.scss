@@ -1,0 +1,19 @@
+.author-guide-page {
+    grid-area: static-nav;
+    display: flex;
+    flex-direction: column;
+    @include forSize('tabletPortraitUp') {
+      flex-direction: unset;
+      justify-content: center;
+      grid-area: main;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .contact-us-content {
+      padding: 0 2rem;
+      @include forSize('tabletPortraitUp') {
+        padding: 0;
+      }
+    }
+  }

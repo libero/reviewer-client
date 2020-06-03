@@ -1,4 +1,15 @@
 {
+    "links": {
+        "edit-process": "Editorial Process",
+        "article-types": "Article Types",
+        "initial-subs": "Initial submissions",
+        "full-subs": "Full Submissions",
+        "revised-subs": "Revised Submissions",
+        "post-decisions": "Post Decision",
+        "journal-policies": "Journal Policies",
+        "fees": "Publication Fees",
+        "journal-metrics": "Journal Metrics"
+    },  
     "editorial": {
         "heading": "Editorial",
         "p1": "eLife is a selective journal that publishes <a href=\"https://elifesciences.org/elife-news/what-are-elife-papers-made-of\" />promising research</a> in all areas of biology and medicine. Leading academic researchers on our editorial board evaluate all new submissions. The editors elect to send around 30% of manuscripts, those that they believe are of the highest scientific standards and importance, to external experts for in-depth peer review. More than half of the articles that are selected for peer review are ultimately published in eLife, for an overall acceptance rate of around 16%.",
