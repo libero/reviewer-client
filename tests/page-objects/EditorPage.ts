@@ -69,6 +69,7 @@ export class EditorPage {
         await t.expect(searchInput.visible).ok();
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
         await t.typeText(searchInput, 'should not exist');
+        await t.expect(searchInput.value).eql('should not exist');
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).eql(0);
         await t.selectText(searchInput).pressKey('delete');
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
