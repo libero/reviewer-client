@@ -58,6 +58,7 @@ jobs:
           'saucelabs:Safari@12.0:macOS 10.14',
           'saucelabs:Safari@11.0:macOS 10.12'
           ]
+        run: [1, 2, 3, 4, 5]
     env:
       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
@@ -87,7 +88,7 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: ${{ matrix.browser }}
+      - name: ${{ matrix.browser }}-run${{ martrix.run }}
         run: yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
 
   browsertest-container:
