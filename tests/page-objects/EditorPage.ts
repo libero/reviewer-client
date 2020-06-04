@@ -133,8 +133,9 @@ export class EditorPage {
 
     public async addOpposingReviewer(inputs?: NameEmail[], reason = 'Hates squirrels'): Promise<void> {
         await t.click(this.toggleOpposedReviewerPicker);
+        await t.takeScreenshot(`ss-AfterToggle-${this.time}.png`);
         await this.setNameEmailFields(this.opposedReviewers, 'opposedReviewers', inputs);
-        await t.takeScreenshot(`ss-setNameEmailFields-${this.time}.png`);
+        await t.takeScreenshot(`ss-AfterSetNameEmailFields-${this.time}.png`);
         await t.typeText(this.opposedReviewersReason, reason);
         await t.takeScreenshot(`ss-AfterTypeText-${this.time}.png`);
         await t.expect(this.opposedReviewersReason.value).eql(reason);
