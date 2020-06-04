@@ -4,6 +4,7 @@ import SideNavigation from './SideNavigation';
 import { useTranslation } from 'react-i18next';
 import EditorialProcess from './EditorialProcess';
 import ArticleTypes from './ArticleTypes';
+import FullSubmission from './FullSubmission';
 
 const AuthorGuide = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
@@ -38,7 +39,7 @@ const AuthorGuide = (): JSX.Element => {
                     <div />
                 </Route>
                 <Route path={`${path}/full`}>
-                    <div />
+                    <FullSubmission />
                 </Route>
                 <Route path={`${path}/revised`}>
                     <div />
