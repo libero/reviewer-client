@@ -7,7 +7,7 @@ DOCKER_COMPOSE_TEST = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.ym
 DOCKER_COMPOSE_CI = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.ci.yml
 DOCKER_COMPOSE_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
-export SAUCE_JOB = "reviewer-client"
+export SAUCE_JOB=reviewer-client
 export SAUCE_BUILD ?= "local-$(shell date --utc +%Y%m%d.%H%M)"
 export SAUCE_API_HOST=eu-central-1.saucelabs.com
 
