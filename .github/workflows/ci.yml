@@ -44,7 +44,7 @@ jobs:
           registry: docker.pkg.github.com
           build_extra_args: "--build-arg=image_tag=${IMAGE_TAG}"
 
-  saucelabs-tests:
+  browserstack-tests:
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -112,7 +112,7 @@ jobs:
       - run: make test_chromium
 
   browsertest-and-push-images:
-    needs: [test, build, saucelabs-tests]
+    needs: [test, build, browserstack-tests]
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
