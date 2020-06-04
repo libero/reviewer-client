@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import EditorialProcess from './EditorialProcess';
 import ArticleTypes from './ArticleTypes';
 import FullSubmission from './FullSubmission';
+import RevisedSubmission from './RevisedSubmission';
 
 const AuthorGuide = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
@@ -24,7 +25,7 @@ const AuthorGuide = (): JSX.Element => {
                     { link: `${path}/post`, label: t('links.post-decisions') },
                     { link: `${path}/journal-policies`, label: t('links.journal-policies') },
                     { link: `${path}/fees`, label: t('links.fees') },
-                    { link: `${path}/journal-metrics`, label: t('links.journal-metrics') }
+                    { link: `${path}/journal-metrics`, label: t('links.journal-metrics') },
                 ]}
                 currentPath={currentPath}
             />
@@ -42,7 +43,7 @@ const AuthorGuide = (): JSX.Element => {
                     <FullSubmission />
                 </Route>
                 <Route path={`${path}/revised`}>
-                    <div />
+                    <RevisedSubmission />
                 </Route>
                 <Route path={`${path}/post`}>
                     <div />

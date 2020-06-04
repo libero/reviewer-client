@@ -90,12 +90,24 @@ const ArticleTypes = (): JSX.Element => {
             <Paragraph type="writing">{t('article-types.special-issues.p3')}</Paragraph>
             <Paragraph type="writing">{t('article-types.special-issues.p4')}</Paragraph>
             <ul>
-                <li><Paragraph type="writing"><Interwave content={t('article-types.special-issues.bullet1')} /></Paragraph></li>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('article-types.special-issues.bullet1')} />
+                    </Paragraph>
+                </li>
             </ul>
             <Paragraph type="writing">{t('article-types.special-issues.p5')}</Paragraph>
             <ul>
-                <li><Paragraph type="writing"><Interwave content={t('article-types.special-issues.bullet2')} /></Paragraph></li>
-                <li><Paragraph type="writing"><Interwave content={t('article-types.special-issues.bullet3')} /></Paragraph></li>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('article-types.special-issues.bullet2')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('article-types.special-issues.bullet3')} />
+                    </Paragraph>
+                </li>
             </ul>
         </div>
     );
