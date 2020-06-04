@@ -26,6 +26,12 @@ export class EditorPage {
     private readonly toggleOpposedReviewerPicker = Selector('.excluded-toggle__action').withText('exclude a reviewer');
     private readonly opposedReviewers = Selector('.opposedReviewers__inputs');
     private readonly opposedReviewersReason = Selector('#opposedReviewersReason');
+    private time: string;
+
+    constructor() {
+        const d = new Date(); // for now
+        this.time = d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds();
+    }
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.editorsStep.visible).ok();
@@ -41,6 +47,7 @@ export class EditorPage {
         await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
         await this.addOpposingReviewer();
+        await t.takeScreenshot(`ss-AfterOpposingReviewer-${this.time}.png`);
     }
 
     private async addPersonToPeoplePicker(picker: Selector): Promise<void> {
@@ -136,6 +143,8 @@ export class EditorPage {
     }
 
     public async next(): Promise<void> {
+        await t.takeScreenshot(`ss-BeforeClick-${this.time}.png`);
         await t.click(this.nextButton);
+        await t.takeScreenshot(`ss-AfterClick-${this.time}.png`);
     }
 }
