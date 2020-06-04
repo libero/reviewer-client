@@ -41,7 +41,7 @@ const ContactUsElife = (): JSX.Element => {
             <h2>{t('editorial.revised-sub.heading')}</h2>
             <Paragraph type="writing">{t('editorial.revised-sub.p1')}</Paragraph>
 
-            <h2>{t('editorial.faqs.heading')}</h2>
+            <h2 id="scoop_protection">{t('editorial.faqs.heading')}</h2>
 
             <h3>{t('editorial.faqs.question1')}</h3>
             <Paragraph type="writing">{t('editorial.faqs.answer1')}</Paragraph>
