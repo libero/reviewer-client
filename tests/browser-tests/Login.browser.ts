@@ -2,7 +2,7 @@ import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, Na
 import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`;
-
+/*
 test('assert nav bar', async() => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
@@ -27,7 +27,7 @@ test('My first test', async () => {
     const dashboardPage = new DashboardPage();
     await dashboardPage.assertOnPage();
 });
-
+*/
 test('Happy path', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
