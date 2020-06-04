@@ -178,8 +178,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     });
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
 
-    console.log('errors', errors);
-
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
     register({ name: 'suggestedReviewers', type: 'custom' });
