@@ -7,35 +7,37 @@ const ContactUsElife = (): JSX.Element => {
 
     return (
         <div className="author-guide-content">
-            <h1>{t('editorial.heading')}</h1>
+            <h1>{t('editorial.editorial.heading')}</h1>
 
-            <Paragraph type="writing">{t('editorial.p1')}</Paragraph>
-            <Paragraph type="writing">{t('editorial.p2')}</Paragraph>
+            <Paragraph type="writing">{t('editorial.editorial.p1')}</Paragraph>
+            <Paragraph type="writing">{t('editorial.editorial.p2')}</Paragraph>
 
-            <p>TODO: pre-print component</p>
+            <div className="blue-box">
+                <h1>{t('editorial.editorial.pre-print.heading')}</h1>
+                <Paragraph type="writing">{t('editorial.editorial.pre-print.p2')}</Paragraph>
+                <Paragraph type="writing">{t('editorial.editorial.pre-print.p2')}</Paragraph>
+            </div>
+            <Paragraph type="writing">{t('editorial.editorial.p3')}</Paragraph>
+            <Paragraph type="writing">{t('editorial.editorial.p4')}</Paragraph>
 
-            <Paragraph type="writing">{t('editorial.p4')}</Paragraph>
-            <Paragraph type="writing">{t('editorial.p5')}</Paragraph>
-            <p>TODO: pre-print component</p>
-            <Paragraph type="writing">{t('editorial.p5')}</Paragraph>
-            <Paragraph type="writing">{t('editorial.p6')}</Paragraph>
+            <div className="blue-box">
+                <Paragraph type="writing">{t('editorial.editorial.p5')}</Paragraph>
+            </div>
+            <Paragraph type="writing">{t('editorial.editorial.p6')}</Paragraph>
 
-            <p>TODO: pre-print component</p>
-
-            <h1>{t('editorial.heading2')}</h1>
-            <Paragraph type="writing">{t('editorial.p7')}</Paragraph>
+            <h1>{t('editorial.initial-sub.heading')}</h1>
+            <Paragraph type="writing">{t('editorial.initial-sub.p1')}</Paragraph>
             <ul>
                 <li>{t('editorial.initial-sub.bullet1')}</li>
                 <li>{t('editorial.initial-sub.bullet2')}</li>
                 <li>{t('editorial.initial-sub.bullet3')}</li>
             </ul>
 
-            <h1>{t('editorial.heading3')}</h1>
-            <Paragraph type="writing">{t('editorial.p8')}</Paragraph>
+            <h1>{t('editorial.full-sub.heading')}</h1>
+            <Paragraph type="writing">{t('editorial.full-sub.p1')}</Paragraph>
 
-            <h1>{t('editorial.heading4')}</h1>
-            <Paragraph type="writing">{t('editorial.p9')}</Paragraph>
-
+            <h1>{t('editorial.revised-sub.heading')}</h1>
+            <Paragraph type="writing">{t('editorial.revised-sub.p1')}</Paragraph>
         </div>
     );
 };
