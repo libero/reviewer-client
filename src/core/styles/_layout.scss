@@ -5,7 +5,7 @@
   min-height: 100vh;
   grid-template-areas:
           "header header header"
-          ". . ."
+          "static-nav static-nav static-nav"
           ". main ."
           ". . ."
           "footer footer footer";
