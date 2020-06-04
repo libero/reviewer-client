@@ -3,7 +3,7 @@ import Interwave from 'interweave'
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 
-const ContactUsElife = (): JSX.Element => {
+const EditorialProcess = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
     return (
@@ -75,4 +75,4 @@ const ContactUsElife = (): JSX.Element => {
     );
 };
 
-export default ContactUsElife;
+export default EditorialProcess;
