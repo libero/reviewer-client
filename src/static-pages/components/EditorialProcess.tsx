@@ -15,7 +15,7 @@ const ContactUsElife = (): JSX.Element => {
 
             <div className="blue-box">
                 <h2>{t('editorial.editorial.pre-print.heading')}</h2>
-                <Paragraph type="writing">{t('editorial.editorial.pre-print.p2')}</Paragraph>
+                <Paragraph type="writing">{t('editorial.editorial.pre-print.p1')}</Paragraph>
                 <Paragraph type="writing"><Interwave content={t('editorial.editorial.pre-print.p2')} /></Paragraph>
             </div>
 
