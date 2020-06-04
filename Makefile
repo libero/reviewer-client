@@ -76,7 +76,7 @@ test_firefox:
 		-e BASE_URL="reviewer-client_nginx:9000" \
 		--entrypoint testcafe \
 		libero/reviewer-browsertests:${IMAGE_TAG} \
-		"firefox:headless" 'tests/**/*.browser.ts'
+		"firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
 
 test_browser_containerized: build_browsertest test_chromium test_firefox
 

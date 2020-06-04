@@ -93,7 +93,12 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         opposedReviewingEditors: yup.array().max(2, t('opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
-            then: yup.string().required(t('editors.validation.opposed-reviewing-editor-reason-required')),
+            then: yup.string().required(t('editors.validation.opposed-reviewing-editors-reason-required')),
+        }),
+        opposedSeniorEditors: yup.array().max(1, t('opposed-senior-editors-max')),
+        opposedSeniorEditorsReason: yup.string().when('opposedSeniorEditors', {
+            is: editors => !!editors.length,
+            then: yup.string().required(t('editors.validation.opposed-senior-editors-reason-required')),
         }),
     });
 
@@ -135,6 +140,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
     register({ name: 'suggestedSeniorEditors', type: 'custom' });
     register({ name: 'suggestedReviewingEditors', type: 'custom' });
     register({ name: 'suggestedReviewers', type: 'custom' });
+    register({ name: 'opposedSeniorEditors', type: 'custom' });
     register({ name: 'opposedReviewingEditors', type: 'custom' });
     register({ name: 'opposedReviewers', type: 'custom' });
 
@@ -198,7 +204,39 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 selectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
             />
-            {/* TODO add exclude editor toggleable box */}
+            <ExcludedToggle
+                togglePrefixText={t('editors.opposed-senior-editors-toggle-prefix')}
+                toggleActionText={t('editors.opposed-senior-editors-toggle-action-text')}
+                onClose={(): void => closeOpposedReviewers('opposedSeniorEditorsReason', 'opposedSeniorEditors')}
+                open={opposedSeniorEditors.length > 0 || opposedSeniorEditorsReason !== ''}
+                panelHeading={t('editors.opposed-senior-editors-people-picker-label')}
+            >
+                <PeoplePicker
+                    people={
+                        loadingSeniorEditors
+                            ? []
+                            : getSeniorEditors.getEditors.filter(ed => !suggestedSeniorEditors.includes(ed.id))
+                    }
+                    onRemove={(selected): void =>
+                        setValue('opposedSeniorEditors', opposedSeniorEditors.filter(personId => personId !== selected))
+                    }
+                    setSelectedPeople={(selected): void => {
+                        setValue('opposedSeniorEditors', selected);
+                        triggerValidation('opposedSeniorEditorsReason');
+                    }}
+                    selectedPeople={opposedSeniorEditors}
+                    className="opposed-senior-editors-picker"
+                />
+                <MultilineTextField
+                    id="opposedSeniorEditorsReason"
+                    register={register}
+                    labelText={t('editors.opposed-senior-editors-reason-label')}
+                    invalid={errors && errors.opposedSeniorEditorsReason !== undefined}
+                    helperText={
+                        errors && errors.opposedSeniorEditorsReason ? errors.opposedSeniorEditorsReason.message : null
+                    }
+                />
+            </ExcludedToggle>
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
                 people={
@@ -221,7 +259,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 toggleActionText={t('editors.opposed-reviewing-editors-toggle-action-text')}
                 onClose={(): void => closeOpposedReviewers('opposedReviewingEditorsReason', 'opposedReviewingEditors')}
                 open={opposedReviewingEditors.length > 0 || opposedReviewingEditorsReason !== ''}
-                panelHeading={t('editors.reviewers-people-picker-label')}
+                panelHeading={t('editors.opposed-reviewing-editors-people-picker-label')}
             >
                 <PeoplePicker
                     people={
@@ -245,7 +283,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 <MultilineTextField
                     id="opposedReviewingEditorsReason"
                     register={register}
-                    labelText={t('editors.opposed-reviewing-editor-reason-label')}
+                    labelText={t('editors.opposed-reviewing-editors-reason-label')}
                     invalid={errors && errors.opposedReviewingEditorsReason !== undefined}
                     helperText={
                         errors && errors.opposedReviewingEditorsReason
