@@ -69,21 +69,22 @@ test_browser: ## run browser tests
 test_chromium:
 	docker run --network reviewer \
 		-e BASE_URL="reviewer-client_nginx:9000" \
-		libero/reviewer-browsertests:${IMAGE_TAG}
+		libero/reviewer-browsertests:${IMAGE_TAG} --screenshots /home/user/screenshots
 
 test_firefox:
 	docker run --network reviewer \
 		-e BASE_URL="reviewer-client_nginx:9000" \
+		-v /home/peter/tmp/reviewer-client/ss:/home/user/screenshots \
 		--entrypoint testcafe \
-		libero/reviewer-browsertests:${IMAGE_TAG} \
-		"firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
+		libero/reviewer-browsertests:${IMAGE_TAG}  --screenshots /home/user/screenshots \
+		"firefox:headless --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
 
-test_browser_containerized: build_browsertest test_chromium test_firefox
+test_browser_containerized: build_browsertest test_firefox
 
 run_ci: ## run as if in ci
-	make lint
-	make test
-	make build_prod
+	# make lint
+	# make test
+	# make build_prod
+	-make stop
 	make start_ci
 	make test_browser_containerized
-	make stop
