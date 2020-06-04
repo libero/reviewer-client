@@ -23,4 +23,14 @@
         border: 1px solid rgb(2, 136, 209);
         background-color: rgba(2, 136, 209, 0.125);
     }
+
+    ol {
+      font-weight: 600;
+      li {
+        margin: 10px 0;
+        .bullet-heading {
+          font-weight: 600;
+        }
+      }
+    }
 }

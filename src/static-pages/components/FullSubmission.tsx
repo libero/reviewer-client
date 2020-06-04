@@ -20,57 +20,97 @@ const FullSubmission = (): JSX.Element => {
 
             <ol>
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.reporting.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.reporting.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.reporting.p1')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.reporting.p2')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.figures.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p1')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p2')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p3')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p4')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p5')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p6')} /></Paragraph>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.figures.p7')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.data.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.data.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.data.p1')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.data.p2')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.file.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.file.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.file.p1')} /></Paragraph>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.file.p2')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.code.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.code.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.code.p1')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.standards.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.standards.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.standards.p1')} /></Paragraph>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.standards.p2')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.supplementary-files.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.supplementary-files.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.supplementary-files.p1')} /></Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing"><Interwave content={t('full-submission.files.related.heading')} /></Paragraph>
+                    <span className="bullet-heading">{t('full-submission.files.related.heading')}</span>
                     <Paragraph type="writing"><Interwave content={t('full-submission.files.related.p1')} /></Paragraph>
                 </li>
-                
             </ol>
 
+            <h2>{t('full-submission.meta.heading')}</h2>
+            <Paragraph type="writing"><Interwave content={t('full-submission.meta.p1')} /></Paragraph>
+
+            <ol>
+                <li>
+                    <span className="bullet-heading">{t('full-submission.meta.impact.heading')}</span>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.impact.p1')} /></Paragraph>
+                </li>
+
+                <li>
+                    <span className="bullet-heading">{t('full-submission.meta.author.heading')}</span>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.author.p1')} /></Paragraph>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.author.p2')} /></Paragraph>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.author.p3')} /></Paragraph>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.author.p4')} /></Paragraph>
+                </li>
+
+                <li>
+                    <span className="bullet-heading">{t('full-submission.meta.funding.heading')}</span>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.funding.p1')} /></Paragraph>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.funding.p2')} /></Paragraph>
+                </li>
+
+                <li>
+                    <span className="bullet-heading">{t('full-submission.meta.datasets.heading')}</span>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.datasets.p1')} /></Paragraph>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.datasets.p2')} /></Paragraph>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.datasets.p3')} /></Paragraph>
+                </li>
+
+                <li>
+                    <span className="bullet-heading">{t('full-submission.meta.ethics.heading')}</span>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.ethics.p1')} /></Paragraph>
+                </li>
+
+                <li>
+                    <span className="bullet-heading">{t('full-submission.meta.editors.heading')}</span>
+                    <Paragraph type="writing"><Interwave content={t('full-submission.meta.editors.p1')} /></Paragraph>
+                </li>
+
+            </ol>
+
+            <Paragraph type="writing"><Interwave content={t('full-submission.p2')} /></Paragraph>
 
         </div>
     );

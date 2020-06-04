@@ -136,6 +136,7 @@
     "full-submission": {
         "heading": "Full Submissions",
         "p1": "If an author is invited to submit a Full Submission, they will receive a link to the article submission system, which will take them to a page incorporating existing information about their Initial Submission. The corresponding author is then required to build on the existing information to support the peer-review process. Once the full submission is complete, all co-authors will be contacted to verify their authorship, contribution, and competing interest statements. Please note that Research Advances bypass the Initial Submission step.",
+        "p2": "If your Full Submission has been peer reviewed and you have been asked to make revisions, please review our guidelines for <a href=\"/author-guide/author-guide/revised\">Revised Submissions</a>.",
         "files": {
             "heading": "Submission Files",
             "p1": "At this point, authors can either upload another single PDF of their manuscript (with the text and figures combined), or they can upload the source files separately if they prefer.",
@@ -149,11 +150,11 @@
             "figures": {
                 "heading": "Figures and Figure Supplements:",
                 "p1": "eLife does not have space or printing constraints, so any number of colour figures can be included within Research Articles, although we urge authors to present their results as concisely as possible. Short Reports should not contain more than three or four display items. We also recognise that some figures are more central to the narrative of the paper than others, and so we therefore support ‘child’ figures (examples of which can be found in <a href=\"http://elifesciences.org/content/1/e00181#F3\">eLife 2012;1:e00181</a>). These \"Figure Supplements\" must be linked to one of the primary figures: they can, for example, provide additional examples of analyses or data shown in a primary figure.",
-                "p3": "There is no limit on the number of Figure Supplements for any one primary figure. Each figure supplement should be clearly labelled, Figure 1–figure supplement 1, Figure 1–figure supplement 2, Figure 2–figure supplement 1 and so on, and have a short title (and optional legend). Figure Supplements should be referred to in the legend of the associated primary figure, and should also be listed at the end of the article text file.",
-                "p4": "Authors should provide information about data processing and analysis in their figure legends, including any statistical tests applied, with exact sample number, p values of tests, criteria for data inclusion or exclusion, and details of replicates. In some cases, it might be unwieldy to have this information in the legend of a figure, in which case the information can be provided in a source data file – see below.",
-                "p5": "Although we understand that authors sometimes need to provide composite figures as main figures, we urge authors not to make such figures (and their legends) too large to avoid the figure and its legend extending beyond one page in the PDF. We also encourage authors to avoid composite figure supplements wherever possible.",
-                "p6": "When preparing figures, we recommend that authors follow the principles of <a href=\"http://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\">Colour Universal Design</a> (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
-                "p7": "Figures can be uploaded individually in the following formats: TIFF, GIF, JPG, EPS, AI, PDF and Corel Draw. If you would like to supply PDF images please ensure that they are saved in a Vector image format."
+                "p2": "There is no limit on the number of Figure Supplements for any one primary figure. Each figure supplement should be clearly labelled, Figure 1–figure supplement 1, Figure 1–figure supplement 2, Figure 2–figure supplement 1 and so on, and have a short title (and optional legend). Figure Supplements should be referred to in the legend of the associated primary figure, and should also be listed at the end of the article text file.",
+                "p3": "Authors should provide information about data processing and analysis in their figure legends, including any statistical tests applied, with exact sample number, p values of tests, criteria for data inclusion or exclusion, and details of replicates. In some cases, it might be unwieldy to have this information in the legend of a figure, in which case the information can be provided in a source data file – see below.",
+                "p4": "Although we understand that authors sometimes need to provide composite figures as main figures, we urge authors not to make such figures (and their legends) too large to avoid the figure and its legend extending beyond one page in the PDF. We also encourage authors to avoid composite figure supplements wherever possible.",
+                "p5": "When preparing figures, we recommend that authors follow the principles of <a href=\"http://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\">Colour Universal Design</a> (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
+                "p6": "Figures can be uploaded individually in the following formats: TIFF, GIF, JPG, EPS, AI, PDF and Corel Draw. If you would like to supply PDF images please ensure that they are saved in a Vector image format."
             },
             "data": {
                 "heading": "Source Data Files, for Figures and Tables:",
@@ -182,6 +183,44 @@
             "related": {
                 "heading": "Related Manuscripts:",
                 "p1": "Any related manuscripts should be described in the cover letter and uploaded using the Related Manuscript file type."
+            }
+        },
+        "meta": {
+            "heading": "Submission Metadata",
+            "p1": "The Full Submission requires additional information about the article and all authors. This allows eLife to propagate published content to a wide range of resources and indexes, so that accepted articles are widely discoverable and can be used by the broadest possible audience. During the full submission process, the corresponding author will also be asked to link their existing ORCID record to their eLife profile, or create an ORCID record, if he or she does not already have one. An ORCID iD is a unique and persistent digital identifier that distinguishes you from other researchers and reliably connects you with your research contributions and affiliations, to help ensure that your work is properly attributed and credited (<a href=\"https://elifesciences.org/inside-elife/e2bf15ca/publishers-to-require-orcid-identifiers-for-authors\" target=\"_blank\">learn more</a>).",
+            "impact": {
+                "heading": "Impact Statement:",
+                "p1": "The impact statement is single sentence (typically 15-30 words) that summarises the most important finding of the work: it needs to complement (rather than repeat) the title, and should avoid acronyms that are not well known to a broad readership. It also needs to be written in third-person (i.e., it should not use “we” or “our”)."
+            },
+            "author": {
+                "heading": "Complete Author Information:",
+                "p1": "Co-author details should be entered: in addition to the full author name and affiliation (department, institution, city, and country), a competing interests statement is required for each author. All financial and non-financial competing interests that could reasonably be perceived to be relevant to the work should be declared.",
+                "p2": "Information about individual author contributions should be provided using the Contributor Roles Taxonomy: Conceptualization; Methodology; Software; Validation; Formal analysis; Investigation; Resources; Data curation; Writing – original draft preparation; Writing – review &amp; editing; Visualization; Supervision; Project administration; Funding acquisition (<a href=\"https://elifesciences.org/inside-elife/f39cfcf5/enabling-the-contributor-roles-taxonomy-for-author-contributions?_ga=2.172472675.1994204094.1499675694-1424042520.1478607646\" target=\"_blank\">read more</a>).",
+                "p3": "During the Full Submission process, an email is sent to all authors to confirm that they approve of the submission of the manuscript, its content, authorship, and the order of authorship. It is also possible to indicate joint first authorship during the submission process.",
+                "p4": "If one or more author groups or consortia are indicated as authors, to ensure that individual collaborators are searchable on resources such as PubMed, please provide the list of collaborators in an Excel file (uploaded as file type Collaborators). Please ensure given names and surnames are listed in separate columns per collaborator. They will be listed under the acknowledgements on publication."
+            },
+
+            "funding": {
+                "heading": "Funding:",
+                "p1": "In addition to a list of the sources of funding, authors are also expected to provide the relevant grant numbers, where possible, and list the authors associated with the specific funding sources. Please do not include information about direct funding in the acknowledgements to avoid duplication.",
+                "p2": "Authors are also required to state whether the funding sources were involved in study design, data collection and interpretation, or the decision to submit the work for publication."
+            },
+
+            "datasets": {
+                "heading": "Datasets:",
+                "p1": "All datasets used in a publication should be cited in the text and listed in the reference section and/or data availability statement. References for data sets and program code should include a persistent identifier, for example a Digital Object Identifier (DOI) or accession number.",
+                "p2": "In the submission form, authors should provide the following information about newly generated and previously published datasets in the following format: Author(s), Year, Dataset Title, Dataset ID and/or URL, Database, License and Accessibility Information. This information will be used to create a list of the relevant major datasets in the published article (such as <a href=\"http://elifesciences.org/content/1/e00070/article-data\" target=\"_blank\" >eLife 2012;1:e00070</a>), to indicate their location along with unique identifiers, and licensing information – or any other factors – affecting access to or reuse of the datasets. For newly generated datasets, we encourage the use of the Creative Commons <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\" target=\"_blank\">CC0 public domain dedication</a>.",
+                "p3": "Where appropriate, data analysis tools should also be made available to assist interested researchers in the manipulation and use of the data."
+            },
+
+            "ethics": {
+                "heading": "Ethics Statement for Human Subjects Research or Animal Experimentation:",
+                "p1": "Authors are required to provide an ethics statement during submission to indicate the institutional review board or ethics committee that has approved the study and/or the guidelines that have been followed."
+            },
+
+            "editors": {
+                "heading": "Editor and Reviewer Suggestions/Exclusions:",
+                "p1": "We request that authors provide suggestions for at least four potential reviewers of the work. To encourage diversity, please consider specifically suggesting reviewers at an early stage of their career, women, and experts from places other than USA and Europe. Please do not list colleagues who are close associates, collaborators, or family members. Authors may also provide the names of reviewers or editors who they would prefer to exclude from the assessment of the article. We will make every effort to follow author requests for excluded individuals unless the editors judge that such exclusion would interfere with the rigorous assessment of the work."
             }
         }
     }
