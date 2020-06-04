@@ -131,6 +131,59 @@
             "bullet2": "<a href=\"https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue\" target=\"_blank\">Mechanistic Microbiome Studies</a>",
             "bullet3": "<a href=\"https://elifesciences.org/inside-elife/d81c2cd9/special-issue-call-for-papers-at-the-interface-of-cancer-biology-and-immunology\" target=\"_blank\">Discovery and Translation of Cancer Immunology</a>"
 
+        },
+
+        "full-submission": {
+            "heading": "Full Submissions",
+            "p1": "If an author is invited to submit a Full Submission, they will receive a link to the article submission system, which will take them to a page incorporating existing information about their Initial Submission. The corresponding author is then required to build on the existing information to support the peer-review process. Once the full submission is complete, all co-authors will be contacted to verify their authorship, contribution, and competing interest statements. Please note that Research Advances bypass the Initial Submission step.",
+            "files": {
+                "heading": "Submission Files",
+                "p1": "At this point, authors can either upload another single PDF of their manuscript (with the text and figures combined), or they can upload the source files separately if they prefer.",
+                "p2": "Either way, authors are strongly encouraged to think creatively about the presentation of their work, to take advantage of the flexibility and file formats eLife offers, and to keep the article as concise as possible. To assist the review process, please organise and format the manuscript so that it is easily readable. Please include page and line numbers, double spacing, and a legible font size for the main text and figure legends.",
+                "p3": "Regarding the use of supplementary data, our vision is presented in <a href=\"https://elifesciences.org/inside-elife/6f32c567/supplementary-data\" target=\"_blank\">this blog post</a>. In short, we strive to make supplementary data, if applicable, easily searchable, discoverable, and citable, and made available in the most useful format for reuse.",
+                "bullet1": {
+                    "heading": "eLife Transparent Reporting Form:",
+                    "p1": "To facilitate the interpretation and replication of experiments, authors should, where appropriate, provide detailed information in areas relating to sample-size estimation, replicates, and statistical reporting. At the Full Submission step, authors should be ready to upload a completed version of this form (<a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf\" target=\"_blank\">PDF</a>; <a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx\" target=\"_blank\">Word</a>), which should describe the places within the submission where this information has been included.",
+                    "p2": "Please note that we publish the completed Transparent Reporting Form for submissions accepted for publication. This will be available to download as a supplementary file in the format provided by the authors."
+                },
+                "bullet2": {
+                    "heading": "Figures and Figure Supplements:",
+                    "p1": "eLife does not have space or printing constraints, so any number of colour figures can be included within Research Articles, although we urge authors to present their results as concisely as possible. Short Reports should not contain more than three or four display items. We also recognise that some figures are more central to the narrative of the paper than others, and so we therefore support ‘child’ figures (examples of which can be found in <a href=\"http://elifesciences.org/content/1/e00181#F3\">eLife 2012;1:e00181</a>). These \"Figure Supplements\" must be linked to one of the primary figures: they can, for example, provide additional examples of analyses or data shown in a primary figure.",
+                    "p3": "There is no limit on the number of Figure Supplements for any one primary figure. Each figure supplement should be clearly labelled, Figure 1–figure supplement 1, Figure 1–figure supplement 2, Figure 2–figure supplement 1 and so on, and have a short title (and optional legend). Figure Supplements should be referred to in the legend of the associated primary figure, and should also be listed at the end of the article text file.",
+                    "p4": "Authors should provide information about data processing and analysis in their figure legends, including any statistical tests applied, with exact sample number, p values of tests, criteria for data inclusion or exclusion, and details of replicates. In some cases, it might be unwieldy to have this information in the legend of a figure, in which case the information can be provided in a source data file – see below.",
+                    "p5": "Although we understand that authors sometimes need to provide composite figures as main figures, we urge authors not to make such figures (and their legends) too large to avoid the figure and its legend extending beyond one page in the PDF. We also encourage authors to avoid composite figure supplements wherever possible.",
+                    "p6": "When preparing figures, we recommend that authors follow the principles of <a href=\"http://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\">Colour Universal Design</a> (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
+                    "p7": "Figures can be uploaded individually in the following formats: TIFF, GIF, JPG, EPS, AI, PDF and Corel Draw. If you would like to supply PDF images please ensure that they are saved in a Vector image format."
+                },
+                "bullet3": {
+                    "heading": "Source Data Files, for Figures and Tables:",
+                    "p1": "eLife encourages authors to provide Source Data files, for example, for figures such as histograms or tables showing summary data (as shown in <a href=\"http://elifesciences.org/content/1/e00109/#DC1\" target=\"_blank\">eLife 2012;1:e00109</a>). Each Source data file should relate directly to a single figure or table, whereas major datasets generated in the course of the work should be deposited externally, as explained below. Each source data file should be clearly labelled, 'Figure 1–Source Data 1', 'Table 1–Source Data 1' and so on, and have a short title (and optional legend). Source data files should be referred to in the relevant figure legend or table footnote, and they should also be listed at the end of the article text file.",
+                    "p2": "In addition, authors should provide information about data processing and analysis, including any statistical tests applied, with exact sample number, p values of tests, criteria for data inclusion or exclusion, and details of replicates. In some cases, it might be unwieldy to have this information in the legend of a figure, in which case the information should be provided along with the source data file."
+                },
+                "bullet4": {
+                    "heading": "Rich Media Files:",
+                    "p1": "Rich media files encompass forms of presentation that go beyond static presentation: for example, videos, audio clips, animations, slideshows, and interactive diagrams. Rich media files should be supplied as AVI, WMV, MOV, MP4, or H264. Where an audio track is present, we recommend a sampling rate of 44100, 22050, or 11025 Hz to avoid encoding and quality issues. Each file should be accompanied by a concise title/legend at the end of the article file. If the article is published, videos are embedded within the main body of the article (they are not presented as supplementary files) with the same status as primary figures (as shown in <a href=\"http://elifesciences.org/content/1/e00007#media-1\" target=\"_blank\">eLife 2012;1:e00007</a>).",
+                    "p2": "eLife supports JMOL, a Java viewer for three-dimensional chemical structures, and we encourage authors to provide <a href=\"http://wiki.jmol.org/index.php/File_formats/Coordinates\" target=\"_blank\">compatible files</a>."
+                },
+                "bullet5": {
+                    "heading": "Source Code:",
+                    "p1": "Relevant software or source code should be deposited in an open software archive. Where appropriate, authors can upload source code files to the submission system (for example, MATLAB, R, Python, C, C++, Java). Any code provided should be properly documented, in line with <a href=\"http://journals.plos.org/ploscompbiol/s/materials-and-software-sharing#loc-sharing-software\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">these instructions</a> (courtesy of PLOS). Please also refer to our <a href=\"/author-guide/journal-policies\">Software sharing policy</a>."
+                },
+                "bullet6": {
+                    "heading": "Reporting Standards Documents:",
+                    "p1": "eLife encourages authors to upload any relevant reporting standards documents."
+                },
+
+                "bullet7": {
+                    "heading": "Supplementary Files:",
+                    "p1": "Authors are discouraged from uploading large PDFs of data and/or text as supplementary files for the reasons explained above. However, information not central to the narrative, that falls outside of the other formats specified above, such as long lists of strains or plasmids, are welcome as supplementary files, provided they are uploaded in the most useful format. Supplementary files, if provided, should be labelled as Supplementary File 1, Supplementary File 2 and so on, and have a title (and optional legend). Supplementary files should be listed at the end of the article file."
+                },
+
+                "bullet8": {
+                    "heading": "Related Manuscripts:",
+                    "p1": "Any related manuscripts should be described in the cover letter and uploaded using the Related Manuscript file type."
+                }
+            }
         }
     }
 }
