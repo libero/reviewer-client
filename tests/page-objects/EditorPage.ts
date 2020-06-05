@@ -48,7 +48,7 @@ export class EditorPage {
         const addButton = picker.find('.pod__button');
         await t.click(addButton);
         await t.expect(Selector('.modal__overlay').count).eql(1);
-        await this.assertPeoplePickerSearch();
+        await t.expect(Selector('#peoplePickerSearch').visible).ok();
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
         const button = Selector('.people-picker__modal_list--item .pod__button');
