@@ -1,0 +1,32 @@
+.contact-us-page {
+    grid-area: static-nav;
+    display: flex;
+    flex-direction: column;
+    @include forSize('tabletPortraitUp') {
+      flex-direction: unset;
+      justify-content: center;
+      grid-area: main;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .contact-us-content {
+      padding: 0 2rem;
+      @include forSize('tabletPortraitUp') {
+        padding: 0;
+      }
+    }
+  }
+  
+
+.person-grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  .person-grid-item {
+    @include forSize('desktopUp') {
+      width: 33.33%;
+    }
+  }
+}

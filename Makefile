@@ -88,8 +88,7 @@ test_firefox:
 		-e BASE_URL="reviewer-client_nginx:9000" \
 		--entrypoint testcafe \
 		libero/reviewer-browsertests:${IMAGE_TAG} \
-		"firefox:headless" \
-		'tests/**/*.browser.ts'
+		"firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
 
 test_safari: yarn
 	yarn testcafe 'browserstack:safari@13.1:OS X Catalina' 'tests/**/*.browser.ts'
@@ -104,7 +103,7 @@ test_browserstack: yarn
 	yarn testcafe 'browserstack:chrome@83.0:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'browserstack:firefox@76.0:Windows 10' 'tests/**/*.browser.ts'
 
-test_browser_containerized: build_browsertest test_chromium test_firefox
+test_browser_containerized: build_browsertest test_chromium 
 
 run_ci: ## run as if in ci
 	make lint
