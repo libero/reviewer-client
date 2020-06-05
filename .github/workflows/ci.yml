@@ -59,7 +59,6 @@ jobs:
           make start_ci
       - run: make build_browsertest
       - run: make test_chromium
-      - run: make test_firefox
       - name: Push images to docker hub
         if: github.ref == 'refs/heads/master'
         run: |

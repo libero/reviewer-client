@@ -15,8 +15,13 @@ export class EditorPage {
     private readonly toggleOpposedReviewingEditorsPicker = Selector('.excluded-toggle__action').withText(
         'exclude a reviewing editor',
     );
+    private readonly toggleOpposedSeniorEditorsPicker = Selector('.excluded-toggle__action').withText(
+        'exclude a senior editor',
+    );
     private readonly opposedReviewingEditorsPicker = Selector('.opposed-reviewing-editors-picker');
+    private readonly opposedSeniorEditorsPicker = Selector('.opposed-senior-editors-picker');
     private readonly opposedReviewingEditorsReason = Selector('#opposedReviewingEditorsReason');
+    private readonly opposedSeniorEditorsReason = Selector('#opposedSeniorEditorsReason');
     private readonly suggestedReviewers = Selector('.suggestedReviewers__inputs');
     private readonly toggleOpposedReviewerPicker = Selector('.excluded-toggle__action').withText('exclude a reviewer');
     private readonly opposedReviewers = Selector('.opposedReviewers__inputs');
@@ -30,31 +35,37 @@ export class EditorPage {
     }
 
     public async populateForm(): Promise<void> {
-        await this.addEditor();
-        await this.addReviewer();
+        await this.addSeniorEditors();
+        await this.addOpposingSeniorEditor();
+        await this.addReviewingEditors();
         await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
         await this.addOpposingReviewer();
     }
 
-    private async addPersonToPeoplePicker(picker: Selector): Promise<void> {
+    private async addPersonToPeoplePicker(picker: Selector, number = 1): Promise<void> {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         const addButton = picker.find('.pod__button');
         await t.click(addButton);
-        await this.assertPeoplePickerSearch();
+        await t.expect(Selector('.modal__overlay').count).eql(1);
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
-        const button = Selector('.people-picker__modal_list--item').find('.pod__button');
-        await t.expect(button.visible).ok();
-        await t.click(button);
-        await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
+        const addButtonSelector = Selector('.people-picker__modal_list--item .pod__button');
+
+        for (let i=0; i < number; i++) {
+            const button = addButtonSelector.nth(i);
+            await t.expect(button.visible).ok();
+            await t.click(button);
+        }
+
+        await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(number);
         await t.click(Selector('.modal__buttons_container').find('.button--primary'));
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
-        await t.expect(picker.find('.selected_people_list__item').count).eql(2);
+        await t.expect(picker.find('.selected_people_list__item').count).eql(number + 1);
     }
 
-    public async addEditor(): Promise<void> {
-        await this.addPersonToPeoplePicker(this.seniorEditorsPicker);
+    public async addSeniorEditors(): Promise<void> {
+        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, 2);
     }
 
     public async assertPeoplePickerSearch(): Promise<void> {
@@ -63,25 +74,34 @@ export class EditorPage {
         await t.expect(searchInput.visible).ok();
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
         await t.typeText(searchInput, 'should not exist');
+        await t.expect(searchInput.value).eql('should not exist');
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).eql(0);
         await t.selectText(searchInput).pressKey('delete');
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
     }
 
-    public async addReviewer(): Promise<void> {
-        await this.addPersonToPeoplePicker(this.suggestedReviewingEditorsPicker);
+
+    public async addReviewingEditors(): Promise<void> {
+        await this.addPersonToPeoplePicker(this.suggestedReviewingEditorsPicker, 2);
+    }
+
+    public async addOpposingSeniorEditor(): Promise<void> {
+        await t.click(this.toggleOpposedSeniorEditorsPicker);
+        await this.addPersonToPeoplePicker(this.opposedSeniorEditorsPicker);
+        await this.setOpposedReason(this.opposedSeniorEditorsReason);
     }
 
     public async addOpposingReviewingEditor(): Promise<void> {
         await t.click(this.toggleOpposedReviewingEditorsPicker);
         await this.addPersonToPeoplePicker(this.opposedReviewingEditorsPicker);
-        await this.setOpposedReviewingEditorsReason();
+        await this.setOpposedReason(this.opposedReviewingEditorsReason);
     }
 
-    public async setOpposedReviewingEditorsReason(input = 'reason'): Promise<void> {
-        await t.typeText(this.opposedReviewingEditorsReason, input);
-        await t.expect(this.opposedReviewingEditorsReason.value).eql(input);
+    public async setOpposedReason(inputSelector, input = 'reason'): Promise<void> {
+        await t.typeText(inputSelector, input);
+        await t.expect(inputSelector.value).eql(input);
     }
+
     public async setNameEmailFields(
         selector: Selector,
         prefix: string,
