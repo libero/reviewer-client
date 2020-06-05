@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,13 @@ import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField } from '../../ui/atoms';
+import { set } from 'lodash';
+
+const MIN_SUGGESTED_SENIOR_EDITORS = 2;
+const MAX_SUGGESTED_SENIOR_EDITORS = 6;
+const MIN_SUGGESTED_REVIEWING_EDITORS = 2;
+const MAX_SUGGESTED_REVIEWING_EDITORS = 6;
+const MAX_SUGGESTED_REVIEWERS = 6;
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -34,32 +41,43 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
 
     const schema = yup.object().shape({
-        suggestedReviewers: yup.array(
-            yup.object().shape(
-                {
-                    name: yup
-                        .string()
-                        .trim()
-                        .when('email', {
-                            is: email => email && email.length > 0,
-                            then: yup.string().required(t('editors.validation.reviewers-name-required')),
-                            otherwise: yup.string(),
-                        }),
-                    email: yup
-                        .string()
-                        .trim()
-                        .when('name', {
-                            is: name => name && name.length > 0,
-                            then: yup
-                                .string()
-                                .email(t('editors.validation.reviewers-email-valid'))
-                                .required(t('editors.validation.reviewers-email-required')),
-                            otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
-                        }),
-                },
-                [['name', 'email']],
-            ),
-        ),
+        suggestedSeniorEditors: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup.array().max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
+            otherwise: yup
+                .array()
+                .min(MIN_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-min'))
+                .max(MAX_SUGGESTED_SENIOR_EDITORS, t('editors.validation.suggested-senior-editors-max')),
+        }),
+
+        suggestedReviewers: yup
+            .array(
+                yup.object().shape(
+                    {
+                        name: yup
+                            .string()
+                            .trim()
+                            .when('email', {
+                                is: email => email && email.length > 0,
+                                then: yup.string().required(t('editors.validation.reviewers-name-required')),
+                                otherwise: yup.string(),
+                            }),
+                        email: yup
+                            .string()
+                            .trim()
+                            .when('name', {
+                                is: name => name && name.length > 0,
+                                then: yup
+                                    .string()
+                                    .email(t('editors.validation.reviewers-email-valid'))
+                                    .required(t('editors.validation.reviewers-email-required')),
+                                otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
+                            }),
+                    },
+                    [['name', 'email']],
+                ),
+            )
+            .max(MAX_SUGGESTED_REVIEWERS, t('editors.validation.suggested-reviewers-max')),
         opposedReviewers: yup.array(
             yup.object().shape(
                 {
@@ -90,7 +108,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             is: (editors: ReviewerAlias[]) => editors.some(editor => editor.name + editor.email !== ''),
             then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
         }),
-        opposedReviewingEditors: yup.array().max(2, t('opposed-reviewing-editors-max')),
+        opposedReviewingEditors: yup.array().max(2, t('editors.validation.opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-reviewing-editors-reason-required')),
@@ -100,7 +118,35 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-senior-editors-reason-required')),
         }),
+        suggestedReviewingEditors: yup.array().when('articleType', {
+            is: (articleType: string) => articleType && articleType === 'feature',
+            then: yup
+                .array()
+                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
+            otherwise: yup
+                .array()
+                .min(MIN_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-min'))
+                .max(MAX_SUGGESTED_REVIEWING_EDITORS, t('editors.validation.suggested-reviewing-editors-max')),
+        }),
     });
+
+    const validationResolver = useCallback((data: EditorsDetails) => {
+        try {
+            schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
+            return { errors: {}, values: data };
+        } catch (errors) {
+            return {
+                errors: errors.inner.reduce(
+                    (
+                        errorObject: {},
+                        { path, message, type }: { path: string; message: string; type: string; inner: [] },
+                    ) => set(errorObject, path, { message, type }),
+                    {},
+                ),
+                values: data,
+            };
+        }
+    }, []);
 
     const { watch, register, triggerValidation, setValue, errors } = useForm<EditorsDetails>({
         defaultValues: {
@@ -133,7 +179,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
         },
         mode: 'onBlur',
         validateCriteriaMode: 'all',
-        validationSchema: schema,
+        validationResolver,
     });
     const [saveCallback] = useMutation<Submission>(saveEditorsPageMutation);
 
@@ -203,6 +249,13 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
                 selectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
+                error={
+                    errors && errors.suggestedSeniorEditors
+                        ? ((errors.suggestedSeniorEditors as unknown) as { message: string }).message
+                        : ''
+                }
+                min={MIN_SUGGESTED_SENIOR_EDITORS}
+                max={MAX_SUGGESTED_SENIOR_EDITORS}
             />
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-senior-editors-toggle-prefix')}
@@ -253,6 +306,13 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
                 selectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
+                error={
+                    errors && errors.suggestedReviewingEditors
+                        ? ((errors.suggestedReviewingEditors as unknown) as { message: string }).message
+                        : ''
+                }
+                min={MIN_SUGGESTED_REVIEWING_EDITORS}
+                max={MAX_SUGGESTED_REVIEWING_EDITORS}
             />
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-reviewing-editors-toggle-prefix')}

@@ -43,24 +43,29 @@ export class EditorPage {
         await this.addOpposingReviewer();
     }
 
-    private async addPersonToPeoplePicker(picker: Selector): Promise<void> {
+    private async addPersonToPeoplePicker(picker: Selector, number = 1): Promise<void> {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         const addButton = picker.find('.pod__button');
         await t.click(addButton);
         await t.expect(Selector('.modal__overlay').count).eql(1);
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
-        const button = Selector('.people-picker__modal_list--item .pod__button');
-        await t.expect(button.visible).ok();
-        await t.click(button);
-        await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(1);
+        const addButtonSelector = Selector('.people-picker__modal_list--item .pod__button');
+
+        for (let i=0; i < number; i++) {
+            const button = addButtonSelector.nth(i);
+            await t.expect(button.visible).ok();
+            await t.click(button);
+        }
+
+        await t.expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count).eql(number);
         await t.click(Selector('.modal__buttons_container').find('.button--primary'));
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
-        await t.expect(picker.find('.selected_people_list__item').count).eql(2);
+        await t.expect(picker.find('.selected_people_list__item').count).eql(number + 1);
     }
 
     public async addSeniorEditors(): Promise<void> {
-        await this.addPersonToPeoplePicker(this.seniorEditorsPicker);
+        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, 2);
     }
 
     public async assertPeoplePickerSearch(): Promise<void> {
@@ -75,8 +80,9 @@ export class EditorPage {
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
     }
 
+
     public async addReviewingEditors(): Promise<void> {
-        await this.addPersonToPeoplePicker(this.suggestedReviewingEditorsPicker);
+        await this.addPersonToPeoplePicker(this.suggestedReviewingEditorsPicker, 2);
     }
 
     public async addOpposingSeniorEditor(): Promise<void> {
