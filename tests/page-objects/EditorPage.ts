@@ -47,18 +47,13 @@ export class EditorPage {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         const addButton = picker.find('.pod__button');
         await t.click(addButton);
-        await this.assertPeoplePickerSearch();
         await t.expect(Selector('.modal__overlay').count).eql(1);
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
         const addButtonSelector = Selector('.people-picker__modal_list--item .pod__button');
 
-        const buttons = [];
-        for (let i = 0; i < number; i++) {
-            buttons.push(addButtonSelector.nth(i));
-        }
-
-        for await (const button of buttons) {
+        for (let i=0; i < number; i++) {
+            const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await t.click(button);
         }
