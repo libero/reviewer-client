@@ -313,5 +313,11 @@
                 "p1": "If authors feel that their article has been erroneously rejected by eLife, they should contact the editorial office. Appeals are first sent to the appropriate Senior editor for consideration."
             }
         }
+    },
+    "journal-policies": {
+        "heading": "Journal Policies",
+        "p1": "eLife is a member of the <a href=\"http://publicationethics.org/\" target=\"_blank\">Committee on Publication Ethics</a> (COPE), supports their principles, and follows their <a href=\"https://publicationethics.org/resources/flowcharts\" target=\"_blank\">flowcharts</a> for dealing with potential breaches of publication ethics. eLife also follows, as far as possible, the recommendations outlined in the <a href=\"http://www.icmje.org/recommendations/\" target=\"_blank\">Uniform Requirements for Manuscripts Submitted to Biomedical Journals</a>, guidelines established by the ICMJE.",
+        "p2": "Authors are expected to comply with best practice in research and publishing ethics, and with our associated guidelines and policies, for example with regard to authorship, competing interests, and data availability and reporting standards.",
+        "p3": "eLife is a signatory of the <a href=\"https://centerforopenscience.org/top/\" target=\"_blank\">Transparency and Openness Promotion (TOP) Guidelines</a>, which is an initiative by the <a href=\"https://centerforopenscience.org\" target=\"_blank\">Center for Open Science</a> that promotes shared standards for increasing openness, transparency, and reproducibility."
     }
 }
