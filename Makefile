@@ -78,7 +78,7 @@ test_firefox:
 		libero/reviewer-browsertests:${IMAGE_TAG} \
 		"firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
 
-test_browser_containerized: build_browsertest test_chromium test_firefox
+test_browser_containerized: build_browsertest test_chromium 
 
 run_ci: ## run as if in ci
 	make lint
