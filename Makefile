@@ -76,10 +76,19 @@ test_browser: ## run browser tests with local chrome
 	yarn wait-port localhost:9000
 	yarn test:browser-headless
 
-test_browser_containerized:
+test_chromium:
 	docker run --network reviewer \
 		-e BASE_URL="reviewer-client_nginx:9000" \
 		libero/reviewer-browsertests:${IMAGE_TAG}
+
+test_firefox:
+	docker run --network reviewer \
+		-e BASE_URL="reviewer-client_nginx:9000" \
+		--entrypoint testcafe \
+		libero/reviewer-browsertests:${IMAGE_TAG} \
+		"firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
+
+test_browser_containerized: build_browsertest test_chromium 
 
 test_browser_saucelabs: yarn
 	yarn testcafe 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
