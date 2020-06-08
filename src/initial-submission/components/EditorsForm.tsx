@@ -18,6 +18,7 @@ const MAX_SUGGESTED_SENIOR_EDITORS = 6;
 const MIN_SUGGESTED_REVIEWING_EDITORS = 2;
 const MAX_SUGGESTED_REVIEWING_EDITORS = 6;
 const MAX_SUGGESTED_REVIEWERS = 6;
+const MAX_OPPOSED_REVIEWERS = 2;
 const MAX_OPPOSED_REVIEWING_EDITORS = 2;
 const MAX_OPPOSED_SENIOR_EDITORS = 1;
 
@@ -81,32 +82,34 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 ),
             )
             .max(MAX_SUGGESTED_REVIEWERS, t('editors.validation.suggested-reviewers-max')),
-        opposedReviewers: yup.array(
-            yup.object().shape(
-                {
-                    name: yup
-                        .string()
-                        .trim()
-                        .when('email', {
-                            is: email => email && email.length > 0,
-                            then: yup.string().required(t('editors.validation.reviewers-name-required')),
-                            otherwise: yup.string(),
-                        }),
-                    email: yup
-                        .string()
-                        .trim()
-                        .when('name', {
-                            is: name => name && name.length > 0,
-                            then: yup
-                                .string()
-                                .email(t('editors.validation.reviewers-email-valid'))
-                                .required(t('editors.validation.reviewers-email-required')),
-                            otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
-                        }),
-                },
-                [['name', 'email']],
-            ),
-        ),
+        opposedReviewers: yup
+            .array(
+                yup.object().shape(
+                    {
+                        name: yup
+                            .string()
+                            .trim()
+                            .when('email', {
+                                is: email => email && email.length > 0,
+                                then: yup.string().required(t('editors.validation.reviewers-name-required')),
+                                otherwise: yup.string(),
+                            }),
+                        email: yup
+                            .string()
+                            .trim()
+                            .when('name', {
+                                is: name => name && name.length > 0,
+                                then: yup
+                                    .string()
+                                    .email(t('editors.validation.reviewers-email-valid'))
+                                    .required(t('editors.validation.reviewers-email-required')),
+                                otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
+                            }),
+                    },
+                    [['name', 'email']],
+                ),
+            )
+            .max(MAX_OPPOSED_REVIEWERS),
         opposedReviewersReason: yup.string().when('opposedReviewers', {
             is: (editors: ReviewerAlias[]) => editors.some(editor => editor.name + editor.email !== ''),
             then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
@@ -367,7 +370,6 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     }}
                 />
             </ExcludedToggle>
-            {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
             <span className="suggestedReviewers--diversity typography__body--secondary">
                 {t('editors.reviewers-diversity_1')}
@@ -377,7 +379,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 {t('editors.reviewers-diversity_2')}
             </span>
             <ExpandingEmailField
-                maxRows={6}
+                maxRows={MAX_SUGGESTED_REVIEWERS}
                 className="suggestedReviewers__inputs"
                 name="suggestedReviewers"
                 labelPrefix={t('editors.reviewers-label-prefix')}
@@ -395,7 +397,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 open={opposedReviewers.length > 0 || opposedReviewersReason !== ''}
             >
                 <ExpandingEmailField
-                    maxRows={2}
+                    maxRows={MAX_OPPOSED_REVIEWERS}
                     className="opposedReviewers__inputs"
                     name="opposedReviewers"
                     labelPrefix={t('editors.opposed-reviewers-label-prefix')}
