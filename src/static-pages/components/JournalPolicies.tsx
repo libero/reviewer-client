@@ -319,6 +319,40 @@ const JournalPolicies = (): JSX.Element => {
             <Paragraph type="writing">
                 <Interwave content={t('journal-policies.nomenclature.p2')} />
             </Paragraph>
+
+            <h2>{t('journal-policies.replication.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.replication.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.replication.p2')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.reporting-standards.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.reporting-standards.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.reporting-standards.p2')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.reporting-standards.p3')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.reporting-standards.p4')} />
+            </Paragraph>
+
+            <div className="blue-box">
+                <Paragraph type="writing">
+                    <Interwave content={t('journal-policies.reporting-standards.p5')} />
+                </Paragraph>
+            </div>
         </div>
     );
 };
