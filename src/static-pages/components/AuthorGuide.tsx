@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import EditorialProcess from './EditorialProcess';
 import ArticleTypes from './ArticleTypes';
 import FullSubmission from './FullSubmission';
+import InitialSubmission from './InitialSubmission';
 import RevisedSubmission from './RevisedSubmission';
 import PostDecision from './PostDecision';
 import JournalPolicies from './JournalPolicies';
@@ -40,7 +41,7 @@ const AuthorGuide = (): JSX.Element => {
                     <ArticleTypes />
                 </Route>
                 <Route path={`${path}/initial`}>
-                    <div />
+                    <InitialSubmission />
                 </Route>
                 <Route path={`${path}/full`}>
                     <FullSubmission />

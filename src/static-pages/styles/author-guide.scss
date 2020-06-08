@@ -34,3 +34,45 @@
       }
     }
 }
+
+
+.table-guide {
+  overflow-x: auto;
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    th {
+      background-color: rgb(247, 247, 247);
+      font-size: 12px;
+      padding: 6px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(224, 224, 224);
+      border-image: initial;
+    }
+    tr {
+      text-align: center;
+      &:hover {
+        background-color: aliceblue;
+      }
+    }
+    td {
+      font-size: 12px;
+      padding: 6px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(224, 224, 224);
+      border-image: initial;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0px;
+    // margin: -12px 0px 0px;
+    li {
+      font-size: 13px;
+    }
+  }
+
+}

@@ -521,5 +521,115 @@
                 "p1": "We place great importance on giving authors a prompt, fair and responsive service. However, if a manuscript is accepted for publication and our service falls far short of an acceptable standard, we may waive the publication fee. In addition, we may decide to refund a publication fee that has already been paid in exceptional circumstances, for example where an author withdraws a manuscript after acceptance."
             }
         }
+    },
+
+    "initial-submission": {
+        "heading": "Initial submissions",
+        "p1": "We refer authors to <a href=\"https://elifesciences.org/articles/48175?_ga=2.87814296.1615571170.1583746607-392198663.1550050583\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">“Ten common statistical mistakes to watch out for when writing or reviewing a manuscript”</a> as they prepare their submission. Please provide detailed information within the submission to facilitate the interpretation and replication of experiments, following the guidance in eLife's <a href=\"https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Transparent Reporting Form</a> (a completed version of this form will be requested if the work is invited for in-depth review).",
+        "pre-print": {
+            "heading": "Preprint Review",
+            "p1": "Authors who have posted their research as a preprint to bioRxiv are invited to have their work considered for publication in eLife and simultaneously peer-reviewed in-depth on bioRxiv through our Preprint Review service. Submissions to Preprint Review will proceed directly to peer review, provided we have appropriate expertise and capacity on our editorial board. All resulting peer reviews will be posted to bioRxiv and will independently inform a decision about whether to publish the paper in eLife. Authors will be given an opportunity to respond to the reviews prior to posting, but they cannot veto the posting of reviews.",
+            "p2": "Please read our <a href=\"https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review\" target=\"_blank\">announcement</a> for more details and restrictions. To opt in, please refer to the \"Preprint Review\" service clearly in your cover letter and include a link to the preprint.</p>"
+        },
+        "manuscript": {
+            "heading": "Single Manuscript PDF",
+            "p1": "Authors should start by uploading their manuscript text and figures as a single PDF (ideally smaller than 15MB), organised with easy readability in mind. Please include page and line numbers, and a legible font size for the main text and figure legends. We strongly encourage authors to embed figures and tables at appropriate places within the main text.",
+            "p2": "To facilitate the evaluation of the submission, we highly recommend including all authors for each reference in the reference list, although discretion can be used to truncate very long lists of authors.",
+            "p3": "The manuscript should include the following components:",
+            "p4": "If using a reference manager, we suggest selecting APA style as this is the best match for eLife reference style. However, we accept any reference style and will format all references during the production process.",
+            "components": {
+                "one": "<strong>Title: </strong>The title should ideally be fewer than 120 characters, with a clear indication of the biological system under investigation (if appropriate), and should avoid abbreviations and unfamiliar acronyms if possible. Please note that two-part titles – e.g. “What goes up must come down: Oscillations in transcriptional networks” – are not permitted for research papers.",
+                "two": "<strong>Author names and affiliations: </strong>A complete list of authors and affiliations should be provided in the paper itself.",
+                "three": "<strong>Abstract: </strong>The abstract should be fewer than 150 words and should not contain subheadings (except for papers following the CONSORT checklist). It should provide a clear, measured, and concise summary of the work. If the biological system (species names or broader taxonomic groups if appropriate) is not mentioned in the title, it must be included in the abstract.",
+                "four": {
+                    "p1": "<strong>Introduction, Results, Discussion, Materials and Methods: </strong>",
+                    "p2": "We encourage a clear and concise style of writing. Various writing guides are available, including Preparing a Manuscript for Submission to a Biomedical Journal (ICMJE) and The Elements of Style (New York: bartleby.com, 1999).",
+                    "p3": "Any \"personal communications\" relating to unpublished data should be incorporated within the main text, in the following format: (Author Initial(s) and Surname, personal communication, Month and Year). Authors should have permission from anyone named in this way and should be aware that a supporting letter will sometimes be requested.",
+                    "p4": "Within the Materials and Methods and/or figure legends, we encourage authors to provide complete information about their experiments, analyses, or data collection to ensure that readers can easily understand what was measured and analysed, and can accurately perform the relevant protocols.",
+                    "p5": "In cases where a new method within the submission would benefit from step-by-step protocols in addition to the methods described in the article, we would encourage authors to also consider submitting a detailed protocol to <a href=\"https://bio-protocol.org/login.aspx?in=2\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Bio-protocol</a>.",
+                    "p6": "On first mention, please provide details of any manufacturers in the following format: company name, city, country (or state, if based in the United States).",
+                    "p7": "Any footnotes (including commentary or footnotes embedded within the reference list) should be placed inside parentheses at the appropriate place in the main text."
+                },
+                "five": "<strong>Acknowledgements: </strong>Individuals who have contributed materially to the work, but do not satisfy the authorship criteria should be listed in the acknowledgements section. Authors should seek permission to include any individuals mentioned in the acknowledgements.",
+                "six": "<strong>Competing interests: </strong>At this stage we request that the corresponding author provides a statement of financial and non-financial competing interests on behalf of all authors. Examples include paid employment or consultancy, stock ownership, patent applications, personal relationships with relevant individuals, and membership of an advisory board.",
+                "seven": {
+                    "p1": "<strong>References: </strong>",
+                    "p2": "Accepted and published works, datasets (newly generated and previously published), program code, and previously published methods must be appropriately cited and included in the reference list to ensure that a wide range of research objects are afforded recognition through citation.",
+                    "p3": "Please find below the information we require for each type of reference. Please note, authors do not need to spend time formatting their references and can submit manuscripts formatted in a variety of reference styles, including Harvard, Vancouver, and Chicago. Wherever possible, please do not truncate the number of authors in the references list, but please do provide a DOI if possible."
+                    
+                }
+            },
+            "table": {
+                "rows": {
+                    "authors": "Authors",
+                    "editors": "Editors",
+                    "year": "Year",
+                    "pub-date": "Date accessed and publication date",
+                    "title": "Title (of article, chapter, abstract, software etc.)",
+                    "pub-title": "Publication title (e.g. journal, book, database, website, conference proceedings, software host etc.)",
+                    "vol": "Volume",
+                    "page-range": "Page range OR eLocation ID",
+                    "id": "Identifier (such as DOI , ISBN, accession or patent number)",
+                    "location": "Location (of publisher, conference, patent etc.)",
+                    "publisher": "Publisher",
+                    "edition": "Edition",
+                    "url": "URL link"
+                },
+                "cols": {
+                    "journal": "Journal",
+                    "book": "Book",
+                    "website": "Website",
+                    "data-citation": "Data citation",
+                    "software": "Software ‡",
+                    "pre-print": "Pre-print",
+                    "conference-proceedings": "Conference proceedings",
+                    "periodical": "Periodical",
+                    "technical-report": "Technical report",
+                    "thesis": "Thesis",
+                    "patent": "Patent"
+                },
+                "footer": {
+                    "bullet1": "* Not required, but if exists please include.",
+                    "bullet2": "† Only required for chapter reference.",
+                    "bullet3": "° Or curator.",
+                    "bullet4": "§ Full publication date required - day/month/year.",
+                    "bullet5": "‡ Please refer to the software citation principles when citing software. If a site suggests a citation should contain a date range, we suggest the publication date should be interpreted as the software having been developed during the date range, but published at the end of the range. Please provide a version of the software."
+                }
+
+            }
+        },
+        "figures": {
+            "heading": "Figures, Tables, and Rich Media Files",
+            "p1": "Figures and tables should be included within the PDF, with the figures and tables embedded within the text. Each figure and table should fit on one page, together with a title and concise legend (where appropriate), on the same page as the display item. Figures and tables should be numbered in the order in which they are cited in the text.",
+            "p2": "We encourage the use of rich media files: for example, videos, audio clips, animations, slideshows, and interactive diagrams. Authors can upload such files during the Initial Submission process if they will assist in the initial assessment but otherwise they can be uploaded if a Full Submission is requested. Anything crucial for the initial evaluation should be uploaded at the Initial Submission stage as a supporting file.",
+            "p3": "At this stage, supplementary figures and tables can be included if they exist, and if desired, within the single PDF.",
+            "p4": "When preparing figures, we recommend that authors follow the principles of <a href=\"http://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Colour Universal Design</a> (Masataka Okabe and Kei Ito, J*FLY), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
+            "p5": "When preparing coloured tables, authors should note that we can only accomodate schemes as outlined in <a href=\"https://cdn.elifesciences.org/author-guide/tables-colour.pdf?_ga=2.122882312.2069272108.1540132848-2034406101.1537543708\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">this guide</a>."
+        },
+        "meta": {
+            "heading": "Limited Metadata",
+            "p1": "You will be asked to enter the following information when completing the submission form:",
+            "p2": "If you receive an encouraging response to your Initial Submission, please review the guidelines relating to <a class=\"sc-jhAzac flWpEk\" href=\"/author-guide/full\">Full Submissions</a>.",
+            "data": {
+                "one": "<strong>Corresponding Author: </strong>At this stage, we only need the name, institution, and email address of the corresponding author.",
+                "two": {
+                    "p1": "<strong>Cover Letter: </strong>",
+                    "p2": "To help with the initial evaluation of your submission, you will be asked to briefly answer the following questions in a cover letter:",
+                    "p3": "In addition, please upload any related studies that you have published recently or have under consideration elsewhere as supporting files and describe them in your cover letter.",
+                    "bullet1": "How will your work make others in the field think differently and move the field forward?",
+                    "bullet2": "How does your work relate to the current literature on the topic?",
+                    "bullet3": "Who do you consider to be the most relevant audience for this work?",
+                    "bullet4": "Have you made clear in the letter what the work has and has not achieved?"
+                },
+                "three": "<strong>Manuscript Title</strong>",
+                "four": "<strong>Article Type: </strong> Information on the articles we publish can be found <a class=\"sc-jhAzac flWpEk\" href=\"/author-guide/types\">here</a>.",
+                "five": {
+                    "p1": "<strong>Subject Area(s): </strong>",
+                    "p2": "A list of major subject areas is provided from which authors should select one or two (choosing from: <a href=\"https://elifesciences.org/about/people/biochemistry-chemical-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Biochemistry and Chemical Biology</a>, <a href=\"https://elifesciences.org/about/people/cancer-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Cancer Biology</a>, <a href=\"http://elifesciences.org/about/people/cell-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Cell Biology</a>, <a href=\"https://elifesciences.org/about/people/chromosomes-gene-expression\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Chromosome and Gene Expression</a>, <a href=\"https://elifesciences.org/about/people/computational-systems-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Computational and Systems Biology</a>, <a href=\"https://elifesciences.org/about/people/developmental-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Developmental Biology</a>, <a href=\"http://elifesciences.org/about/people/ecology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Ecology</a>, <a href=\"https://elifesciences.org/about/people/epidemiology-global-health\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Epidemiology and Global Health</a>, <a href=\"https://elifesciences.org/about/people/evolutionary-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Evolutionary Biology</a>, <a href=\"https://elifesciences.org/about/people/genetics-genomics\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Genetics and Genomics</a>, <a href=\"https://elifesciences.org/about/people/human-biology-medicine\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Human Biology and Medicine</a>, <a href=\"https://elifesciences.org/about/people/immunology-inflammation\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Immunology and Inflammation</a>, <a href=\"https://elifesciences.org/about/people/microbiology-infectious-disease\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Microbiology and Infectious Disease</a>, <a href=\"https://elifesciences.org/about/people/neuroscience\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Neuroscience</a>, <a href=\"https://elifesciences.org/about/people/physics-living-systems\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Physics of Living Systems</a>, <a href=\"http://elifesciences.org/about/people/plant-biology\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Plant Biology</a>, <a href=\"https://elifesciences.org/about/people/stem-cells-regenerative-medicine\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Stem Cells and Regenerative Medicine</a>, <a href=\"https://elifesciences.org/about/people/structural-biology-molecular-biophysics\" target=\"_blank\" class=\"sc-gojNiO kiqxuj\">Structural Biology and Molecular Physics</a>)."
+                },
+                "six": "<strong>Editor suggestions: </strong>Authors should be ready to suggest two of eLife's Senior Editors and at least two members of the Board of Reviewing Editors (select the appropriate subject area via the dropdown menu) who would be appropriate for the assessment of the work. In the event of potential competing interests amongst members of the editorial board, authors can exclude one Senior Editor and no more than two Reviewing Editors, in which case we will make every effort to follow author requests for excluded individuals. Please note that any requests to exclude Senior Editors or Reviewing Editors should be explained briefly in the accompanying cover letter.",
+                "seven": "<strong>Reviewer suggestions: </strong>Authors can optionally suggest potential reviewers for their work at the Initial Submission stage. Please list the names of experts who are knowledgeable in your area and could give an unbiased review of your work. To support diversity, please consider suggesting potential reviewers at an early stage of their career, women, and experts from countries other than the USA and Europe. Please do not list colleagues who are close associates, collaborators, or family members. Requests to exclude individuals can also be made and must be accompanied with a brief explanation. We will make every effort to follow author requests for excluded individuals."
+            }
+        }
     }
 }
