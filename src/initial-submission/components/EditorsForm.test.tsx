@@ -308,7 +308,7 @@ describe('EditorsDetailsForm', (): void => {
             });
         });
 
-        describe.only('Excluded reviewing editors', () => {
+        describe('Excluded reviewing editors', () => {
             it('displays an excluded reviewing editor when they been selected and reason to be added', async (): Promise<
                 void
             > => {
@@ -589,7 +589,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(() => getByLabelText('editors.reviewers-label-prefix 2 expanding-email-field.name')).toThrow();
         });
 
-        it('populates with multiple initial suggestedReviewers values', () => {
+        it('populates with multiple initial suggestedReviewers values', async (): Promise<void> => {
             const { getByLabelText, container } = render(
                 <EditorsForm
                     initialValues={{
@@ -609,6 +609,7 @@ describe('EditorsDetailsForm', (): void => {
                     container: appContainer(),
                 },
             );
+            await waitFor(() => {});
             expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
                 4,
             );
@@ -819,17 +820,18 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
         });
 
-        it('clicking opposed toggle displays opposed reviewers fields and reson textarea', () => {
+        it('clicking opposed toggle displays opposed reviewers fields and reson textarea', async (): Promise<void> => {
             const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
             });
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
             fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
+            await waitFor(() => {});
             expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
         });
-        it('clears opposed values and reason if toggle section is close', () => {
+        it('clears opposed values and reason if toggle section is close', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
                     initialValues={{
@@ -857,6 +859,7 @@ describe('EditorsDetailsForm', (): void => {
             );
             fireEvent.click(container.querySelector('.excluded-toggle__close-button'));
             fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
+            await waitFor(() => {});
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].name"]').value).toBe('');
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].email"]').value).toBe('');
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewersReason"]').value).toBe('');
