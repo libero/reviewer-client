@@ -60,6 +60,13 @@ describe('PeoplePicker', (): void => {
         ).not.toThrow();
     });
 
+    it('should show the external label when hideLabel is not passed in or false', () => {
+        const { getByText } = render(
+            <PeoplePicker onRemove={jest.fn()} label="testLabel" setSelectedPeople={jest.fn()} />,
+        );
+        expect(getByText('testLabel')).toBeInTheDocument();
+    });
+
     it('should hide the external label when hideLabel is passed in', () => {
         const { container, getByText } = render(
             <PeoplePicker onRemove={jest.fn()} label="testLabel" setSelectedPeople={jest.fn()} />,
