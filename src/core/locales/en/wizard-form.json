@@ -1,83 +1,86 @@
 {
-  "author": {
-    "prefill--link": "Pre-fill my details ",
-    "prefill--text": "using ORCID",
-    "author-first-name": "First name",
-    "author-last-name": "Last name",
-    "author-email": "Email (correspondence)",
-    "institution": "Institution",
-    "validation": {
-      "first-name-required": "First name is required",
-      "last-name-required": "Last name is required",
-      "email-required": "Email is required",
-      "email-format": "Must be a valid email address",
-      "institution-required": "Institution is required"
+    "author": {
+        "prefill--link": "Pre-fill my details ",
+        "prefill--text": "using ORCID",
+        "author-first-name": "First name",
+        "author-last-name": "Last name",
+        "author-email": "Email (correspondence)",
+        "institution": "Institution",
+        "validation": {
+            "first-name-required": "First name is required",
+            "last-name-required": "Last name is required",
+            "email-required": "Email is required",
+            "email-format": "Must be a valid email address",
+            "institution-required": "Institution is required"
+        }
+    },
+    "details": {
+        "form-title": "Help us get your work seen by the right people",
+        "title-label": "Manuscript title",
+        "previously-discussed-toggle": "This manuscript has been discussed with an eLife editor",
+        "previously-discussed-label": "What did you discuss with whom?",
+        "previously-submitted-toggle": "This manuscript has been previously considered by eLife",
+        "previously-submitted-label": "Please give details (including previous article title and tracking number)",
+        "cosubmission-toggle": "This manuscript is part of a co-submission",
+        "cosubmission-title-label": "Co-submission article title",
+        "second-cosubmission-title-label": "Second co-submission article title (optional)",
+        "second-cosubmission-toggle-prefix": "Would you like to ",
+        "second-cosubmission-toggle-link": "add another",
+        "second-cosubmission-toggle-suffix": " co-submission?",
+        "subjects-helper-text": "Choose up to 2 subject areas",
+        "subject-areas": "Subject area(s)",
+        "validation": {
+            "title-required": "Title is required",
+            "subjects-max": "No more than 2 subject areas",
+            "subjects-min": "Choose at least 1 subject area",
+            "subjects-required": "Subject area(s) required",
+            "previously-discussed-required": "Please describe your previous interaction",
+            "previously-submitted-required": "Article title is required",
+            "cosubmission-required": "Article title is required"
+        }
+    },
+    "files": {
+        "supporting-files-max": "Maximum 10 supporting files",
+        "validation": {
+            "coverletter-required": "Please write or paste in your cover letter"
+        }
+    },
+    "editors": {
+        "title": "Who should review your work?",
+        "editors-people-picker-label": "Suggest Senior Editors",
+        "reviewers-people-picker-label": "Suggest Reviewing Editors",
+        "reviewers-title": "Suggest Reviewers (Optional)",
+        "reviewers-label-prefix": "Reviewer",
+        "reviewers-diversity_1": "Please consider diversity when suggesting reviewers. See our",
+        "reviewers-diversity-link": " author guide",
+        "reviewers-diversity_2": " for more information.",
+        "opposed-reviewing-editors-people-picker-label": "Exclude a Reviewing Editor",
+        "opposed-reviewing-editors-reason-label": "Reason for exclusion",
+        "opposed-reviewing-editors-toggle-prefix": "Would you like to ",
+        "opposed-reviewing-editors-toggle-action-text": "exclude a reviewing editor",
+        "opposed-senior-editors-people-picker-label": "Exclude a Senior Editor",
+        "opposed-senior-editors-reason-label": "Reason for exclusion",
+        "opposed-senior-editors-toggle-prefix": "Would you like to ",
+        "opposed-senior-editors-toggle-action-text": "exclude a senior editor",
+        "opposed-reviewers-title": "Exclude Reviewers",
+        "opposed-reviewers-label-prefix": "Excluded reviewer",
+        "opposed-reviewers-toggle-prefix": "Would you like to ",
+        "opposed-reviewers-toggle-action-text": "exclude a reviewer",
+        "opposed-reviewers-reason-label": "Reason for exclusion",
+        "validation": {
+            "opposed-reviewing-editors-reason-required": "Please provide a reason for exclusion",
+            "opposed-reviewing-editors-max": "Please suggest no more than 2 editors",
+            "suggested-senior-editors-max": "Please suggest no more than 6 editors",
+            "suggested-senior-editors-min": "Please suggest at least 2 editors",
+            "suggested-reviewers-max": "Please suggest no more than 6 editors",
+            "suggested-reviewing-editors-max": "Please suggest no more than 6 editors",
+            "suggested-reviewing-editors-min": "Please suggest at least 2 editors",
+            "opposed-senior-editors-reason-required": "Please provide a reason for exclusion",
+            "opposed-senior-editors-max": "Please suggest no more than 1 editors",
+            "opposed-reviewers-reason-required": "Please provide a reason for exclusion",
+            "reviewers-name-required": "Name is required",
+            "reviewers-email-required": "Email is required",
+            "reviewers-email-valid": "Must be a valid email"
+        }
     }
-  },
-  "details": {
-    "form-title": "Help us get your work seen by the right people",
-    "title-label": "Manuscript title",
-    "previously-discussed-toggle": "This manuscript has been discussed with an eLife editor",
-    "previously-discussed-label": "What did you discuss with whom?",
-    "previously-submitted-toggle": "This manuscript has been previously considered by eLife",
-    "previously-submitted-label": "Please give details (including previous article title and tracking number)",
-    "cosubmission-toggle": "This manuscript is part of a co-submission",
-    "cosubmission-title-label": "Co-submission article title",
-    "second-cosubmission-title-label": "Second co-submission article title (optional)",
-    "second-cosubmission-toggle-prefix": "Would you like to ",
-    "second-cosubmission-toggle-link": "add another",
-    "second-cosubmission-toggle-suffix": " co-submission?",
-    "subjects-helper-text": "Choose up to 2 subject areas",
-    "subject-areas": "Subject area(s)",
-    "validation": {
-      "title-required": "Title is required",
-      "subjects-max": "No more than 2 subject areas",
-      "subjects-min": "Choose at least 1 subject area",
-      "subjects-required": "Subject area(s) required",
-      "previously-discussed-required": "Please describe your previous interaction",
-      "previously-submitted-required": "Article title is required",
-      "cosubmission-required": "Article title is required"
-    }
-  },
-  "files": {
-    "supporting-files-max": "Maximum 10 supporting files",
-    "validation": {
-      "coverletter-required": "Please write or paste in your cover letter"
-    }
-  },
-  "editors": {
-    "title": "Who should review your work?",
-    "editors-people-picker-label": "Suggest Senior Editors",
-    "reviewers-people-picker-label": "Suggest Reviewing Editors",
-    "reviewers-title": "Suggest Reviewers (Optional)",
-    "reviewers-label-prefix": "Reviewer",
-    "opposed-reviewing-editors-people-picker-label": "Exclude a Reviewing Editor",
-    "opposed-reviewing-editors-reason-label": "Reason for exclusion",
-    "opposed-reviewing-editors-toggle-prefix": "Would you like to ",
-    "opposed-reviewing-editors-toggle-action-text": "exclude a reviewing editor",
-    "opposed-senior-editors-people-picker-label": "Exclude a Senior Editor",
-    "opposed-senior-editors-reason-label": "Reason for exclusion",
-    "opposed-senior-editors-toggle-prefix": "Would you like to ",
-    "opposed-senior-editors-toggle-action-text": "exclude a senior editor",
-    "opposed-reviewers-title": "Exclude Reviewers",
-    "opposed-reviewers-label-prefix": "Excluded reviewer",
-    "opposed-reviewers-toggle-prefix": "Would you like to ",
-    "opposed-reviewers-toggle-action-text": "exclude a reviewer",
-    "opposed-reviewers-reason-label": "Reason for exclusion",
-    "validation": {
-      "opposed-reviewing-editors-reason-required": "Please provide a reason for exclusion",
-      "opposed-reviewing-editors-max": "Please suggest no more than 2 editors",
-      "suggested-senior-editors-max": "Please suggest no more than 6 editors",
-      "suggested-senior-editors-min": "Please suggest at least 2 editors",
-      "suggested-reviewers-max": "Please suggest no more than 6 editors",
-      "suggested-reviewing-editors-max": "Please suggest no more than 6 editors",
-      "suggested-reviewing-editors-min": "Please suggest at least 2 editors",
-      "opposed-senior-editors-reason-required": "Please provide a reason for exclusion",
-      "opposed-senior-editors-max": "Please suggest no more than 1 editors",
-      "opposed-reviewers-reason-required": "Please provide a reason for exclusion",
-      "reviewers-name-required": "Name is required",
-      "reviewers-email-required": "Email is required",
-      "reviewers-email-valid": "Must be a valid email"
-    }
-  }
 }

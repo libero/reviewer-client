@@ -11,6 +11,7 @@ import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField } from '../../ui/atoms';
 import { set } from 'lodash';
+import { Link } from 'react-router-dom';
 
 const MIN_SUGGESTED_SENIOR_EDITORS = 2;
 const MAX_SUGGESTED_SENIOR_EDITORS = 6;
@@ -368,6 +369,13 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             </ExcludedToggle>
             {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
+            <span className="suggestedReviewers--diversity typography__body--secondary">
+                {t('editors.reviewers-diversity_1')}
+                <Link to="/author-guide" className="typography__body--link">
+                    {t('editors.reviewers-diversity-link')}
+                </Link>
+                {t('editors.reviewers-diversity_2')}
+            </span>
             <ExpandingEmailField
                 maxRows={6}
                 className="suggestedReviewers__inputs"
