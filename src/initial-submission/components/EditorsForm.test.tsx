@@ -288,6 +288,24 @@ describe('EditorsDetailsForm', (): void => {
                     '',
                 );
             });
+
+            it('should limit the user to adding 1 opposed senior editor', async (): Promise<void> => {
+                const { baseElement, container, getByText } = render(
+                    <EditorsForm initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                    },
+                );
+                fireEvent.click(getByText('editors.opposed-senior-editors-toggle-action-text'));
+                fireEvent.click(container.querySelector('.people-picker.opposed-senior-editors-picker button'));
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelector('.modal__overlay .banner')).toBeInTheDocument();
+            });
         });
 
         describe('Excluded reviewing editors', () => {
@@ -403,6 +421,30 @@ describe('EditorsDetailsForm', (): void => {
                 expect(closeButton).not.toBeInTheDocument();
                 expect(reasonInput).not.toBeInTheDocument();
                 expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+            });
+
+            it('should limit the user to adding 2 opposed reviewing editor', async (): Promise<void> => {
+                const { baseElement, container, getByText } = render(
+                    <EditorsForm initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                    },
+                );
+                fireEvent.click(getByText('editors.opposed-reviewing-editors-toggle-action-text'));
+                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(2) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelector('.modal__overlay .banner')).toBeInTheDocument();
             });
         });
 
