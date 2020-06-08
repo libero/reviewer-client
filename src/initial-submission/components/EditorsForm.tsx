@@ -17,6 +17,8 @@ const MAX_SUGGESTED_SENIOR_EDITORS = 6;
 const MIN_SUGGESTED_REVIEWING_EDITORS = 2;
 const MAX_SUGGESTED_REVIEWING_EDITORS = 6;
 const MAX_SUGGESTED_REVIEWERS = 6;
+const MAX_OPPOSED_REVIEWING_EDITORS = 2;
+const MAX_OPPOSED_SENIOR_EDITORS = 1;
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -108,12 +110,14 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             is: (editors: ReviewerAlias[]) => editors.some(editor => editor.name + editor.email !== ''),
             then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
         }),
-        opposedReviewingEditors: yup.array().max(2, t('editors.validation.opposed-reviewing-editors-max')),
+        opposedReviewingEditors: yup
+            .array()
+            .max(MAX_OPPOSED_REVIEWING_EDITORS, t('editors.validation.opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-reviewing-editors-reason-required')),
         }),
-        opposedSeniorEditors: yup.array().max(1, t('opposed-senior-editors-max')),
+        opposedSeniorEditors: yup.array().max(MAX_OPPOSED_SENIOR_EDITORS, t('opposed-senior-editors-max')),
         opposedSeniorEditorsReason: yup.string().when('opposedSeniorEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-senior-editors-reason-required')),
@@ -279,6 +283,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     }}
                     selectedPeople={opposedSeniorEditors}
                     className="opposed-senior-editors-picker"
+                    max={MAX_OPPOSED_SENIOR_EDITORS}
                 />
                 <MultilineTextField
                     id="opposedSeniorEditorsReason"
@@ -339,6 +344,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     }}
                     selectedPeople={opposedReviewingEditors}
                     className="opposed-reviewing-editors-picker"
+                    max={MAX_OPPOSED_REVIEWING_EDITORS}
                 />
                 <MultilineTextField
                     id="opposedReviewingEditorsReason"
