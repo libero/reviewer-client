@@ -631,5 +631,35 @@
                 "seven": "<strong>Reviewer suggestions: </strong>Authors can optionally suggest potential reviewers for their work at the Initial Submission stage. Please list the names of experts who are knowledgeable in your area and could give an unbiased review of your work. To support diversity, please consider suggesting potential reviewers at an early stage of their career, women, and experts from countries other than the USA and Europe. Please do not list colleagues who are close associates, collaborators, or family members. Requests to exclude individuals can also be made and must be accompanied with a brief explanation. We will make every effort to follow author requests for excluded individuals."
             }
         }
+    },
+    "metrics": {
+        "heading": "Journal Metrics",
+        "p1": "We provide the charts below to offer greater transparency about our submission volumes and decision times.",
+        "no-of-submissions": {
+            "heading": "1. Number of eLife submissions",
+            "p1": "This shows the number of initial submissions received each quarter."
+        },
+        "no-of-pubs": { 
+            "heading": "2. Number of research publications",
+            "p1": "This shows the number of research publications each quarter."
+        },
+
+        "time-before-peer": { 
+            "heading": "3. Decision times before peer review",
+            "p1": "This shows the number of days between receiving the initial submission and making a decision on the initial submission (25th, 50th, and 75th percentiles)."
+        },
+
+        "time-after-peer": {
+            "heading": "4. Decision times after peer review",
+            "p1": "This shows the number of days between receiving the full submission and making a decision on the full submission, after peer review (25th, 50th, and 75th percentiles)."
+        },
+
+        "subs-to-publication": {
+            "heading": "5. Submission to publication",
+            "p1": "This shows the number of days between receiving the initial submission and publication (25th, 50th, and 75th percentiles)."
+        },
+
+        "chart-title": "Number of eLife submissions"
+
     }
 }

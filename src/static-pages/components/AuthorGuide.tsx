@@ -9,6 +9,7 @@ import InitialSubmission from './InitialSubmission';
 import RevisedSubmission from './RevisedSubmission';
 import PostDecision from './PostDecision';
 import JournalPolicies from './JournalPolicies';
+import JournalMetrics from './JournalMetrics';
 import Fees from './Fees';
 
 const AuthorGuide = (): JSX.Element => {
@@ -59,7 +60,7 @@ const AuthorGuide = (): JSX.Element => {
                     <Fees />
                 </Route>
                 <Route path={`${path}/journal-metrics`}>
-                    <div />
+                    <JournalMetrics />
                 </Route>
                 <Redirect to={path + '/editorial-process'} />
             </Switch>
