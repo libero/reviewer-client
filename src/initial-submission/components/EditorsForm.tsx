@@ -284,6 +284,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     selectedPeople={opposedSeniorEditors}
                     className="opposed-senior-editors-picker"
                     max={MAX_OPPOSED_SENIOR_EDITORS}
+                    hideLabel={true}
+                    label={t('editors.opposed-senior-editors-people-picker-label')}
                 />
                 <MultilineTextField
                     id="opposedSeniorEditorsReason"
@@ -345,6 +347,8 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     selectedPeople={opposedReviewingEditors}
                     className="opposed-reviewing-editors-picker"
                     max={MAX_OPPOSED_REVIEWING_EDITORS}
+                    label={t('editors.opposed-reviewing-editors-people-picker-label')}
+                    hideLabel={true}
                 />
                 <MultilineTextField
                     id="opposedReviewingEditorsReason"
