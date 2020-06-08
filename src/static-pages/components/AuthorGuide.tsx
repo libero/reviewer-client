@@ -8,6 +8,7 @@ import FullSubmission from './FullSubmission';
 import RevisedSubmission from './RevisedSubmission';
 import PostDecision from './PostDecision';
 import JournalPolicies from './JournalPolicies';
+import Fees from './Fees';
 
 const AuthorGuide = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
@@ -54,7 +55,7 @@ const AuthorGuide = (): JSX.Element => {
                     <JournalPolicies />
                 </Route>
                 <Route path={`${path}/fees`}>
-                    <div />
+                    <Fees />
                 </Route>
                 <Route path={`${path}/journal-metrics`}>
                     <div />
