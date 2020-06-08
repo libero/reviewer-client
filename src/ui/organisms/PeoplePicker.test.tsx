@@ -38,7 +38,7 @@ describe('PeoplePicker', (): void => {
             },
         );
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
-        await fireEvent.click(getByText('selected_people_list--open'));
+        fireEvent.click(getByText('selected_people_list--open'));
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
     });
 
@@ -58,5 +58,14 @@ describe('PeoplePicker', (): void => {
                     />,
                 ),
         ).not.toThrow();
+    });
+
+    it('should hide the external label when hideLabel is passed in', () => {
+        const { container, getByText } = render(
+            <PeoplePicker onRemove={jest.fn()} label="testLabel" setSelectedPeople={jest.fn()} />,
+        );
+        expect(container.querySelector('typography__heading typography__heading--h3')).not.toBeInTheDocument();
+        fireEvent.click(getByText('people_picker--open-selector', { exact: false }));
+        expect(getByText('testLabel')).toBeInTheDocument();
     });
 });
