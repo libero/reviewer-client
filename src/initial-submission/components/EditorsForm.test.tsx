@@ -168,7 +168,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
-                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
             fireEvent.click(
                 baseElement.querySelector(
@@ -327,9 +327,13 @@ describe('EditorsDetailsForm', (): void => {
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
                 const selectedName = baseElement.querySelector(
-                    '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
                 ).textContent;
-                fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
                 expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
                 fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
@@ -360,9 +364,13 @@ describe('EditorsDetailsForm', (): void => {
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
                 const selectedName = baseElement.querySelector(
-                    '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
                 ).textContent;
-                fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
                 expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
                 fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
@@ -396,9 +404,13 @@ describe('EditorsDetailsForm', (): void => {
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
                 const selectedName = baseElement.querySelector(
-                    '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
                 ).textContent;
-                fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
                 expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
                 fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
@@ -457,7 +469,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
-                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
             fireEvent.click(
                 baseElement.querySelector(
