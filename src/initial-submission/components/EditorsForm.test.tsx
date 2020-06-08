@@ -4,6 +4,7 @@ import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import EditorsForm from './EditorsForm';
 import { Submission } from '../types';
 import appContainer from '../../../test-utils/appContainer';
+import routerWrapper from '../../../test-utils/routerWrapper';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -103,7 +104,7 @@ describe('EditorsDetailsForm', (): void => {
     });
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<EditorsForm initialValues={testInitialValues} />);
+            render(<EditorsForm initialValues={testInitialValues} />, { wrapper: routerWrapper() });
         }).not.toThrow();
     });
 
@@ -113,6 +114,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
@@ -128,6 +130,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
@@ -143,6 +146,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
@@ -160,6 +164,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
@@ -190,6 +195,7 @@ describe('EditorsDetailsForm', (): void => {
             it('renders with excluded senior editors section closed when no excluded senior editors or reason in initial values', () => {
                 const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 });
                 expect(getByText('editors.opposed-senior-editors-toggle-action-text')).toBeInTheDocument();
                 expect(container.querySelector('.opposed-senior-editors-picker')).not.toBeInTheDocument();
@@ -212,6 +218,7 @@ describe('EditorsDetailsForm', (): void => {
                     />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 expect(() => getByText('editors.opposed-senior-editors-toggle-action-text')).toThrow();
@@ -252,6 +259,7 @@ describe('EditorsDetailsForm', (): void => {
                     />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 fireEvent.click(getByText('TEST BUTTON'));
@@ -275,6 +283,7 @@ describe('EditorsDetailsForm', (): void => {
                     />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 expect(container.querySelectorAll('.opposed-senior-editors-picker .pod')).toHaveLength(2);
@@ -294,6 +303,7 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 fireEvent.click(getByText('editors.opposed-senior-editors-toggle-action-text'));
@@ -316,6 +326,7 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
@@ -353,6 +364,7 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
@@ -393,6 +405,7 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
@@ -434,6 +447,7 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 fireEvent.click(getByText('editors.opposed-reviewing-editors-toggle-action-text'));
@@ -461,6 +475,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
@@ -501,6 +516,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('James Bond')).toBeInTheDocument();
@@ -520,6 +536,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('Scaramanga')).toBeInTheDocument();
@@ -539,6 +556,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('Scaramanga')).toBeInTheDocument();
@@ -564,6 +582,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('James Bond')).toBeInTheDocument();
@@ -587,6 +606,7 @@ describe('EditorsDetailsForm', (): void => {
                             },
                         }}
                     />,
+                    { wrapper: routerWrapper() },
                 );
             }).not.toThrow();
         });
@@ -595,6 +615,7 @@ describe('EditorsDetailsForm', (): void => {
         it('renders a single empty row of name email fields', () => {
             const { getByLabelText } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
+                wrapper: routerWrapper(),
             });
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name')).toBeInTheDocument();
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email')).toBeInTheDocument();
@@ -619,6 +640,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             await waitFor(() => {});
@@ -659,6 +681,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
@@ -672,6 +695,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
 
@@ -703,6 +727,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -726,6 +751,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -750,6 +776,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -773,6 +800,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -785,6 +813,7 @@ describe('EditorsDetailsForm', (): void => {
         it('renders with opposed reviewers section closed when no opposed reviewers or reason in initial values', () => {
             const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
+                wrapper: routerWrapper(),
             });
             expect(getByText('editors.opposed-reviewers-toggle-action-text')).toBeInTheDocument();
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
@@ -808,6 +837,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(() => getByText('editors.opposed-reviewers-toggle-action-text')).toThrow();
@@ -835,6 +865,7 @@ describe('EditorsDetailsForm', (): void => {
         it('clicking opposed toggle displays opposed reviewers fields and reson textarea', async (): Promise<void> => {
             const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
+                wrapper: routerWrapper(),
             });
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
@@ -859,6 +890,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
 
@@ -894,6 +926,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(container.querySelectorAll('.opposedReviewers__inputs .expanding-email-field__row')).toHaveLength(2);
@@ -917,6 +950,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -941,6 +975,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -964,6 +999,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -986,6 +1022,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
