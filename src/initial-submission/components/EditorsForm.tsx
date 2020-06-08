@@ -371,7 +371,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 />
             </ExcludedToggle>
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
-            <span className="suggestedReviewers--diversity typography__body--secondary">
+            <span className="suggestedReviewers--diversity typography__body typography__body--secondary">
                 {t('editors.reviewers-diversity_1')}
                 <Link to="/author-guide" className="typography__body--link">
                     {t('editors.reviewers-diversity-link')}
