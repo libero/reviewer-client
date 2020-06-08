@@ -190,6 +190,135 @@ const JournalPolicies = (): JSX.Element => {
             <Paragraph type="writing">
                 <Interwave content={t('journal-policies.open-data.data.p5')} />
             </Paragraph>
+
+            <h3>{t('journal-policies.open-data.software.heading')}</h3>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.open-data.software.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.open-data.software.p2')} />
+            </Paragraph>
+
+            <h3>{t('journal-policies.open-data.research.heading')}</h3>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.open-data.research.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.open-data.research.p2')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.open-data.research.p3')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.open-data.research.p4')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.dual-use.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.dual-use.p1')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.integrity.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.integrity.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.integrity.p2')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.integrity.p3')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.image-acquisition.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.image-acquisition.p1')} />
+            </Paragraph>
+
+            <ul>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('journal-policies.image-acquisition.bullet1')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('journal-policies.image-acquisition.bullet2')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('journal-policies.image-acquisition.bullet3')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="writing">
+                        <Interwave content={t('journal-policies.image-acquisition.bullet4')} />
+                    </Paragraph>
+                </li>
+            </ul>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.image-acquisition.p3')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.licensing.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.licensing.p1')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.media-policy.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.media-policy.p1')} />
+            </Paragraph>
+
+            <h3>{t('journal-policies.media-policy.prior-work.heading')}</h3>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.media-policy.prior-work.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.media-policy.prior-work.p2')} />
+            </Paragraph>
+
+            <h3>{t('journal-policies.media-policy.embargo.heading')}</h3>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.media-policy.embargo.p1')} />
+            </Paragraph>
+
+            <h3>{t('journal-policies.media-policy.accessible.heading')}</h3>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.media-policy.accessible.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.media-policy.accessible.p2')} />
+            </Paragraph>
+
+            <h2>{t('journal-policies.nomenclature.heading')}</h2>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.nomenclature.p1')} />
+            </Paragraph>
+
+            <Paragraph type="writing">
+                <Interwave content={t('journal-policies.nomenclature.p2')} />
+            </Paragraph>
         </div>
     );
 };
