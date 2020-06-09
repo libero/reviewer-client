@@ -50,12 +50,12 @@ const RevisedSubmission = (): JSX.Element => {
                 <Interwave content={t('revised-submission.source-manuscript.figures.p4')} />
             </Paragraph>
 
-            <h3>{t('revised-submission.source-manuscript.digest.heading')}</h3>
+            <h2>{t('revised-submission.source-manuscript.digest.heading')}</h2>
             <Paragraph type="writing">
                 <Interwave content={t('revised-submission.source-manuscript.digest.p1')} />
             </Paragraph>
 
-            <h3>{t('revised-submission.source-manuscript.striking.heading')}</h3>
+            <h2>{t('revised-submission.source-manuscript.striking.heading')}</h2>
             <Paragraph type="writing">
                 <Interwave content={t('revised-submission.source-manuscript.striking.p1')} />
             </Paragraph>

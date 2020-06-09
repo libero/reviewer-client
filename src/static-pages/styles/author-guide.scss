@@ -29,9 +29,9 @@
         background-color: rgba(2, 136, 209, 0.125);
     }
 
-    ol {
+    ul, ol {
       li {
-        margin: 10px 0;
+        margin: 20px 0;
         .bullet-heading {
           font-weight: 600;
         }
