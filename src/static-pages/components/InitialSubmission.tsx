@@ -33,6 +33,10 @@ const InitialSubmission = (): JSX.Element => {
                 <Interwave content={t('initial-submission.manuscript.p2')} />
             </Paragraph>
 
+            <Paragraph type="writing">
+                <Interwave content={t('initial-submission.manuscript.p3')} />
+            </Paragraph>
+
             <ol>
                 <li>
                     <Paragraph type="writing">
