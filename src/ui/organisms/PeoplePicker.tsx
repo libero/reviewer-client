@@ -15,6 +15,7 @@ interface Props {
     setSelectedPeople: (selectedPeople: string[]) => void;
     className?: string;
     error?: string;
+    hideLabel?: boolean;
 }
 
 const PeoplePicker = ({
@@ -28,13 +29,14 @@ const PeoplePicker = ({
     setSelectedPeople,
     className,
     error,
+    hideLabel = false,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
     const filteredSelected = people.filter((person): boolean => selectedPeople.includes(person.id));
     return (
         <div className={`people-picker ${className ? className : ''}`}>
-            <h2 className="typography__heading typography__heading--h3">{label}</h2>
+            {!hideLabel && <h2 className="typography__heading typography__heading--h3">{label}</h2>}
             <SelectedPeopleList
                 people={filteredSelected}
                 required={required}

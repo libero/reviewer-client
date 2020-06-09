@@ -4,6 +4,7 @@ import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import EditorsForm from './EditorsForm';
 import { Submission } from '../types';
 import appContainer from '../../../test-utils/appContainer';
+import routerWrapper from '../../../test-utils/routerWrapper';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -103,7 +104,7 @@ describe('EditorsDetailsForm', (): void => {
     });
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<EditorsForm initialValues={testInitialValues} />);
+            render(<EditorsForm initialValues={testInitialValues} />, { wrapper: routerWrapper() });
         }).not.toThrow();
     });
 
@@ -113,6 +114,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
@@ -128,6 +130,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
@@ -143,6 +146,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
@@ -160,6 +164,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const seniorEditorPicker = container.querySelector('.senior-editors-picker');
@@ -168,7 +173,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
-                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
             fireEvent.click(
                 baseElement.querySelector(
@@ -190,6 +195,7 @@ describe('EditorsDetailsForm', (): void => {
             it('renders with excluded senior editors section closed when no excluded senior editors or reason in initial values', () => {
                 const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 });
                 expect(getByText('editors.opposed-senior-editors-toggle-action-text')).toBeInTheDocument();
                 expect(container.querySelector('.opposed-senior-editors-picker')).not.toBeInTheDocument();
@@ -212,6 +218,7 @@ describe('EditorsDetailsForm', (): void => {
                     />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 expect(() => getByText('editors.opposed-senior-editors-toggle-action-text')).toThrow();
@@ -252,6 +259,7 @@ describe('EditorsDetailsForm', (): void => {
                     />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 fireEvent.click(getByText('TEST BUTTON'));
@@ -275,6 +283,7 @@ describe('EditorsDetailsForm', (): void => {
                     />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 expect(container.querySelectorAll('.opposed-senior-editors-picker .pod')).toHaveLength(2);
@@ -288,6 +297,25 @@ describe('EditorsDetailsForm', (): void => {
                     '',
                 );
             });
+
+            it('should limit the user to adding 1 opposed senior editor', async (): Promise<void> => {
+                const { baseElement, container, getByText } = render(
+                    <EditorsForm initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                        wrapper: routerWrapper(),
+                    },
+                );
+                fireEvent.click(getByText('editors.opposed-senior-editors-toggle-action-text'));
+                fireEvent.click(container.querySelector('.people-picker.opposed-senior-editors-picker button'));
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelector('.modal__overlay .banner')).toBeInTheDocument();
+            });
         });
 
         describe('Excluded reviewing editors', () => {
@@ -298,30 +326,33 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
                 expect(excludeTooggle).toBeInTheDocument();
-                await fireEvent.click(excludeTooggle);
+                fireEvent.click(excludeTooggle);
                 const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
                 expect(opposedReviewingEditors).toBeInTheDocument();
-                await fireEvent.click(
-                    container.querySelector('.people-picker.opposed-reviewing-editors-picker button'),
-                );
+                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
                 const selectedName = baseElement.querySelector(
-                    '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
                 ).textContent;
-                fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
                 expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
-                await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+                fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
                 expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
                 expect(getByText(selectedName)).toBeInTheDocument();
                 const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
                 expect(reasonInput).toBeInTheDocument();
-                await fireEvent.change(reasonInput, { target: { value: 'reason' } });
+                fireEvent.change(reasonInput, { target: { value: 'reason' } });
                 await waitFor(() => {});
                 expect((reasonInput as HTMLInputElement).value).toBe('reason');
             });
@@ -333,25 +364,28 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
                 expect(excludeTooggle).toBeInTheDocument();
-                await fireEvent.click(excludeTooggle);
+                fireEvent.click(excludeTooggle);
                 const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
                 expect(opposedReviewingEditors).toBeInTheDocument();
-                await fireEvent.click(
-                    container.querySelector('.people-picker.opposed-reviewing-editors-picker button'),
-                );
+                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
                 const selectedName = baseElement.querySelector(
-                    '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
                 ).textContent;
-                await fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
                 expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
-                await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+                fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
                 expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
                 expect(getByText(selectedName)).toBeInTheDocument();
                 const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
@@ -359,7 +393,7 @@ describe('EditorsDetailsForm', (): void => {
                 expect(
                     container.querySelectorAll('.opposed-reviewing-editors-picker .selected_people_list__item').length,
                 ).toEqual(2);
-                await fireEvent.click(getByText('TEST BUTTON'));
+                fireEvent.click(getByText('TEST BUTTON'));
                 await waitFor(() => {});
                 expect(container.querySelector('.excluded-toggle__panel .typography__label--error').textContent).toBe(
                     'editors.validation.opposed-reviewing-editors-reason-required',
@@ -371,38 +405,66 @@ describe('EditorsDetailsForm', (): void => {
                     <EditorsForm initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
+                        wrapper: routerWrapper(),
                     },
                 );
                 const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
                 expect(excludeTooggle).toBeInTheDocument();
-                await fireEvent.click(excludeTooggle);
+                fireEvent.click(excludeTooggle);
                 const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
                 expect(opposedReviewingEditors).toBeInTheDocument();
-                await fireEvent.click(
-                    container.querySelector('.people-picker.opposed-reviewing-editors-picker button'),
-                );
+                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
                 const selectedName = baseElement.querySelector(
-                    '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
                 ).textContent;
-                fireEvent.click(baseElement.querySelector('.modal__overlay .pod:nth-child(1) .pod__button'));
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
                 expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
 
-                await fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+                fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
                 expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
                 expect(getByText(selectedName)).toBeInTheDocument();
                 const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
                 expect(reasonInput).toBeInTheDocument();
-                await fireEvent.change(reasonInput, { target: { value: 'reason' } });
+                fireEvent.change(reasonInput, { target: { value: 'reason' } });
                 await waitFor(() => {});
                 expect((reasonInput as HTMLInputElement).value).toBe('reason');
                 const closeButton = container.querySelector('.excluded-toggle__close-button');
                 expect(closeButton).toBeInTheDocument();
-                await fireEvent.click(closeButton);
+                fireEvent.click(closeButton);
                 expect(closeButton).not.toBeInTheDocument();
                 expect(reasonInput).not.toBeInTheDocument();
                 expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+            });
+
+            it('should limit the user to adding 2 opposed reviewing editor', async (): Promise<void> => {
+                const { baseElement, container, getByText } = render(
+                    <EditorsForm initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                        wrapper: routerWrapper(),
+                    },
+                );
+                fireEvent.click(getByText('editors.opposed-reviewing-editors-toggle-action-text'));
+                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(2) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelector('.modal__overlay .banner')).toBeInTheDocument();
             });
         });
 
@@ -413,6 +475,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             const reviewingEditorPicker = container.querySelector('.reviewing-editors-picker');
@@ -421,7 +484,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             const selectedName = baseElement.querySelector(
-                '.modal__overlay .pod:nth-child(1) .person-pod__text .typography__body--primary',
+                '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
             ).textContent;
             fireEvent.click(
                 baseElement.querySelector(
@@ -453,6 +516,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('James Bond')).toBeInTheDocument();
@@ -472,6 +536,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('Scaramanga')).toBeInTheDocument();
@@ -491,6 +556,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('Scaramanga')).toBeInTheDocument();
@@ -516,6 +582,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(getByText('James Bond')).toBeInTheDocument();
@@ -539,6 +606,7 @@ describe('EditorsDetailsForm', (): void => {
                             },
                         }}
                     />,
+                    { wrapper: routerWrapper() },
                 );
             }).not.toThrow();
         });
@@ -547,13 +615,14 @@ describe('EditorsDetailsForm', (): void => {
         it('renders a single empty row of name email fields', () => {
             const { getByLabelText } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
+                wrapper: routerWrapper(),
             });
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name')).toBeInTheDocument();
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email')).toBeInTheDocument();
             expect(() => getByLabelText('editors.reviewers-label-prefix 2 expanding-email-field.name')).toThrow();
         });
 
-        it('populates with multiple initial suggestedReviewers values', () => {
+        it('populates with multiple initial suggestedReviewers values', async (): Promise<void> => {
             const { getByLabelText, container } = render(
                 <EditorsForm
                     initialValues={{
@@ -571,8 +640,10 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
+            await waitFor(() => {});
             expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
                 4,
             );
@@ -610,6 +681,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
@@ -623,6 +695,7 @@ describe('EditorsDetailsForm', (): void => {
                 <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
 
@@ -654,6 +727,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -677,6 +751,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -701,6 +776,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -724,6 +800,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -736,6 +813,7 @@ describe('EditorsDetailsForm', (): void => {
         it('renders with opposed reviewers section closed when no opposed reviewers or reason in initial values', () => {
             const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
+                wrapper: routerWrapper(),
             });
             expect(getByText('editors.opposed-reviewers-toggle-action-text')).toBeInTheDocument();
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
@@ -759,6 +837,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(() => getByText('editors.opposed-reviewers-toggle-action-text')).toThrow();
@@ -783,17 +862,19 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
         });
 
-        it('clicking opposed toggle displays opposed reviewers fields and reson textarea', () => {
+        it('clicking opposed toggle displays opposed reviewers fields and reson textarea', async (): Promise<void> => {
             const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
                 container: appContainer(),
+                wrapper: routerWrapper(),
             });
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
             fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
+            await waitFor(() => {});
             expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
         });
-        it('clears opposed values and reason if toggle section is close', () => {
+        it('clears opposed values and reason if toggle section is close', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
                     initialValues={{
@@ -809,6 +890,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
 
@@ -821,6 +903,7 @@ describe('EditorsDetailsForm', (): void => {
             );
             fireEvent.click(container.querySelector('.excluded-toggle__close-button'));
             fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
+            await waitFor(() => {});
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].name"]').value).toBe('');
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].email"]').value).toBe('');
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewersReason"]').value).toBe('');
@@ -843,6 +926,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             expect(container.querySelectorAll('.opposedReviewers__inputs .expanding-email-field__row')).toHaveLength(2);
@@ -866,6 +950,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -890,6 +975,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -913,6 +999,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
@@ -935,6 +1022,7 @@ describe('EditorsDetailsForm', (): void => {
                 />,
                 {
                     container: appContainer(),
+                    wrapper: routerWrapper(),
                 },
             );
             fireEvent.click(getByText('TEST BUTTON'));
