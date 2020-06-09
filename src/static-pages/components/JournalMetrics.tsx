@@ -1,5 +1,5 @@
 import React from 'react';
-import Interwave from 'interweave';
+import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 import ChartEmbed from './ChartEmbed';
@@ -12,13 +12,13 @@ const JournalMetrics = (): JSX.Element => {
             <h1>{t('metrics.heading')}</h1>
 
             <Paragraph type="writing">
-                <Interwave content={t('metrics.p1')} />
+                <Interweave content={t('metrics.p1')} />
             </Paragraph>
 
             <h2>{t('metrics.no-of-submissions.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('metrics.no-of-submissions.p1')} />
+                <Interweave content={t('metrics.no-of-submissions.p1')} />
             </Paragraph>
             <ChartEmbed
                 height={358}
@@ -29,7 +29,7 @@ const JournalMetrics = (): JSX.Element => {
             <h2>{t('metrics.no-of-pubs.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('metrics.no-of-pubs.p1')} />
+                <Interweave content={t('metrics.no-of-pubs.p1')} />
             </Paragraph>
 
             <ChartEmbed
@@ -41,7 +41,7 @@ const JournalMetrics = (): JSX.Element => {
             <h2>{t('metrics.time-before-peer.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('metrics.time-before-peer.p1')} />
+                <Interweave content={t('metrics.time-before-peer.p1')} />
             </Paragraph>
 
             <ChartEmbed
@@ -53,7 +53,7 @@ const JournalMetrics = (): JSX.Element => {
             <h2>{t('metrics.time-after-peer.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('metrics.time-after-peer.p1')} />
+                <Interweave content={t('metrics.time-after-peer.p1')} />
             </Paragraph>
 
             <ChartEmbed
@@ -65,7 +65,7 @@ const JournalMetrics = (): JSX.Element => {
             <h2>{t('metrics.subs-to-publication.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('metrics.subs-to-publication.p1')} />
+                <Interweave content={t('metrics.subs-to-publication.p1')} />
             </Paragraph>
 
             <ChartEmbed

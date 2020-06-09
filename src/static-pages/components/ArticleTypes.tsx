@@ -1,5 +1,5 @@
 import React from 'react';
-import Interwave from 'interweave';
+import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 
@@ -11,18 +11,18 @@ const ArticleTypes = (): JSX.Element => {
             <h1>{t('article-types.heading')}</h1>
 
             <Paragraph type="writing">
-                <Interwave content={t('article-types.p1')} />
+                <Interweave content={t('article-types.p1')} />
             </Paragraph>
 
             <h2>{t('article-types.insights.heading')}</h2>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.insights.p1')} />
+                <Interweave content={t('article-types.insights.p1')} />
             </Paragraph>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.insights.p2')} />
+                <Interweave content={t('article-types.insights.p2')} />
             </Paragraph>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.insights.p3')} />
+                <Interweave content={t('article-types.insights.p3')} />
             </Paragraph>
 
             <h2>{t('article-types.research-articles.heading')}</h2>
@@ -33,21 +33,21 @@ const ArticleTypes = (): JSX.Element => {
 
             <h2>{t('article-types.tools.heading')}</h2>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.tools.p1')} />
+                <Interweave content={t('article-types.tools.p1')} />
             </Paragraph>
             <Paragraph type="writing">{t('article-types.tools.p2')}</Paragraph>
 
             <h2>{t('article-types.advances.heading')}</h2>
             <Paragraph type="writing">{t('article-types.advances.p1')}</Paragraph>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.advances.p2')} />
+                <Interweave content={t('article-types.advances.p2')} />
             </Paragraph>
             <Paragraph type="writing">{t('article-types.advances.p3')}</Paragraph>
 
             <h2>{t('article-types.review-articles.heading')}</h2>
             <Paragraph type="writing">{t('article-types.review-articles.p1')}</Paragraph>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.review-articles.p2')} />
+                <Interweave content={t('article-types.review-articles.p2')} />
             </Paragraph>
             <ol>
                 <li>
@@ -70,7 +70,7 @@ const ArticleTypes = (): JSX.Element => {
             <h2>{t('article-types.sci-correspondence.heading')}</h2>
             <Paragraph type="writing">{t('article-types.sci-correspondence.p1')}</Paragraph>
             <Paragraph type="writing">
-                <Interwave content={t('article-types.sci-correspondence.p2')} />
+                <Interweave content={t('article-types.sci-correspondence.p2')} />
             </Paragraph>
             <Paragraph type="writing">{t('article-types.sci-correspondence.p3')}</Paragraph>
             <Paragraph type="writing">{t('article-types.sci-correspondence.p4')}</Paragraph>
@@ -80,7 +80,7 @@ const ArticleTypes = (): JSX.Element => {
             <Paragraph type="writing">{t('article-types.sci-correspondence.p8')}</Paragraph>
             <div className="blue-box">
                 <Paragraph type="writing">
-                    <Interwave content={t('article-types.sci-correspondence.p9')} />
+                    <Interweave content={t('article-types.sci-correspondence.p9')} />
                 </Paragraph>
             </div>
 
@@ -92,7 +92,7 @@ const ArticleTypes = (): JSX.Element => {
             <ul>
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('article-types.special-issues.bullet1')} />
+                        <Interweave content={t('article-types.special-issues.bullet1')} />
                     </Paragraph>
                 </li>
             </ul>
@@ -100,12 +100,12 @@ const ArticleTypes = (): JSX.Element => {
             <ul>
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('article-types.special-issues.bullet2')} />
+                        <Interweave content={t('article-types.special-issues.bullet2')} />
                     </Paragraph>
                 </li>
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('article-types.special-issues.bullet3')} />
+                        <Interweave content={t('article-types.special-issues.bullet3')} />
                     </Paragraph>
                 </li>
             </ul>

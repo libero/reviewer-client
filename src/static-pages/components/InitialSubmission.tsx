@@ -1,5 +1,5 @@
 import React from 'react';
-import Interwave from 'interweave';
+import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 import RequiredInfoTable from './RequiredInfoTable';
@@ -12,99 +12,99 @@ const InitialSubmission = (): JSX.Element => {
             <h1>{t('initial-submission.heading')}</h1>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.p1')} />
+                <Interweave content={t('initial-submission.p1')} />
             </Paragraph>
 
             <div className="blue-box">
                 <h2>{t('initial-submission.pre-print.heading')}</h2>
                 <Paragraph type="writing">{t('initial-submission.pre-print.p1')}</Paragraph>
                 <Paragraph type="writing">
-                    <Interwave content={t('initial-submission.pre-print.p2')} />
+                    <Interweave content={t('initial-submission.pre-print.p2')} />
                 </Paragraph>
             </div>
 
             <h2>{t('initial-submission.manuscript.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.manuscript.p1')} />
+                <Interweave content={t('initial-submission.manuscript.p1')} />
             </Paragraph>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.manuscript.p2')} />
+                <Interweave content={t('initial-submission.manuscript.p2')} />
             </Paragraph>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.manuscript.p3')} />
+                <Interweave content={t('initial-submission.manuscript.p3')} />
             </Paragraph>
 
             <ol>
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.one')} />
+                        <Interweave content={t('initial-submission.manuscript.components.one')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.two')} />
+                        <Interweave content={t('initial-submission.manuscript.components.two')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.three')} />
+                        <Interweave content={t('initial-submission.manuscript.components.three')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <Interwave content={t('initial-submission.manuscript.components.four.p1')} />
+                    <Interweave content={t('initial-submission.manuscript.components.four.p1')} />
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.four.p2')} />
+                        <Interweave content={t('initial-submission.manuscript.components.four.p2')} />
                     </Paragraph>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.four.p3')} />
+                        <Interweave content={t('initial-submission.manuscript.components.four.p3')} />
                     </Paragraph>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.four.p4')} />
+                        <Interweave content={t('initial-submission.manuscript.components.four.p4')} />
                     </Paragraph>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.four.p5')} />
+                        <Interweave content={t('initial-submission.manuscript.components.four.p5')} />
                     </Paragraph>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.four.p6')} />
+                        <Interweave content={t('initial-submission.manuscript.components.four.p6')} />
                     </Paragraph>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.four.p7')} />
-                    </Paragraph>
-                </li>
-
-                <li>
-                    <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.five')} />
+                        <Interweave content={t('initial-submission.manuscript.components.four.p7')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.six')} />
+                        <Interweave content={t('initial-submission.manuscript.components.five')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <Interwave content={t('initial-submission.manuscript.components.seven.p1')} />
+                    <Paragraph type="writing">
+                        <Interweave content={t('initial-submission.manuscript.components.six')} />
+                    </Paragraph>
+                </li>
+
+                <li>
+                    <Interweave content={t('initial-submission.manuscript.components.seven.p1')} />
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.seven.p2')} />
+                        <Interweave content={t('initial-submission.manuscript.components.seven.p2')} />
                     </Paragraph>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.manuscript.components.seven.p3')} />
+                        <Interweave content={t('initial-submission.manuscript.components.seven.p3')} />
                     </Paragraph>
                 </li>
             </ol>
@@ -112,109 +112,109 @@ const InitialSubmission = (): JSX.Element => {
             <RequiredInfoTable />
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.manuscript.p4')} />
+                <Interweave content={t('initial-submission.manuscript.p4')} />
             </Paragraph>
 
             <h2>{t('initial-submission.figures.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.figures.p1')} />
+                <Interweave content={t('initial-submission.figures.p1')} />
             </Paragraph>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.figures.p2')} />
+                <Interweave content={t('initial-submission.figures.p2')} />
             </Paragraph>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.figures.p3')} />
+                <Interweave content={t('initial-submission.figures.p3')} />
             </Paragraph>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.figures.p4')} />
+                <Interweave content={t('initial-submission.figures.p4')} />
             </Paragraph>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.figures.p5')} />
+                <Interweave content={t('initial-submission.figures.p5')} />
             </Paragraph>
 
             <h2>{t('initial-submission.meta.heading')}</h2>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.meta.p1')} />
+                <Interweave content={t('initial-submission.meta.p1')} />
             </Paragraph>
 
             <ol>
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.one')} />
+                        <Interweave content={t('initial-submission.meta.data.one')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <Interwave content={t('initial-submission.meta.data.two.p1')} />
+                    <Interweave content={t('initial-submission.meta.data.two.p1')} />
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.two.p2')} />
+                        <Interweave content={t('initial-submission.meta.data.two.p2')} />
                     </Paragraph>
 
                     <ul>
                         <li>
-                            <Interwave content={t('initial-submission.meta.data.two.bullet1')} />
+                            <Interweave content={t('initial-submission.meta.data.two.bullet1')} />
                         </li>
                         <li>
-                            <Interwave content={t('initial-submission.meta.data.two.bullet2')} />
+                            <Interweave content={t('initial-submission.meta.data.two.bullet2')} />
                         </li>
                         <li>
-                            <Interwave content={t('initial-submission.meta.data.two.bullet3')} />
+                            <Interweave content={t('initial-submission.meta.data.two.bullet3')} />
                         </li>
                         <li>
-                            <Interwave content={t('initial-submission.meta.data.two.bullet4')} />
+                            <Interweave content={t('initial-submission.meta.data.two.bullet4')} />
                         </li>
                     </ul>
 
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.two.p3')} />
+                        <Interweave content={t('initial-submission.meta.data.two.p3')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.three')} />
+                        <Interweave content={t('initial-submission.meta.data.three')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.four')} />
+                        <Interweave content={t('initial-submission.meta.data.four')} />
                     </Paragraph>
                 </li>
                 <li>
-                    <Interwave content={t('initial-submission.meta.data.five.p1')} />
+                    <Interweave content={t('initial-submission.meta.data.five.p1')} />
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.five.p2')} />
-                    </Paragraph>
-                </li>
-
-                <li>
-                    <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.six')} />
+                        <Interweave content={t('initial-submission.meta.data.five.p2')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.six')} />
+                        <Interweave content={t('initial-submission.meta.data.six')} />
                     </Paragraph>
                 </li>
 
                 <li>
                     <Paragraph type="writing">
-                        <Interwave content={t('initial-submission.meta.data.seven')} />
+                        <Interweave content={t('initial-submission.meta.data.six')} />
+                    </Paragraph>
+                </li>
+
+                <li>
+                    <Paragraph type="writing">
+                        <Interweave content={t('initial-submission.meta.data.seven')} />
                     </Paragraph>
                 </li>
             </ol>
 
             <Paragraph type="writing">
-                <Interwave content={t('initial-submission.meta.p2')} />
+                <Interweave content={t('initial-submission.meta.p2')} />
             </Paragraph>
         </div>
     );
