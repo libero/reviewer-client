@@ -35,7 +35,7 @@ const PostDecision = (): JSX.Element => {
                 </li>
             </ul>
 
-            <h2>{t('post.publication-manuscript.heading')}</h2>
+            <h3>{t('post.publication-manuscript.heading')}</h3>
 
             <Paragraph type="writing">
                 <Interwave content={t('post.publication-manuscript.p1')} />
@@ -53,7 +53,7 @@ const PostDecision = (): JSX.Element => {
                 <Interwave content={t('post.publication-manuscript.p4')} />
             </Paragraph>
 
-            <h2>{t('post.final-version.heading')}</h2>
+            <h3>{t('post.final-version.heading')}</h3>
 
             <Paragraph type="writing">
                 <Interwave content={t('post.final-version.p1')} />
