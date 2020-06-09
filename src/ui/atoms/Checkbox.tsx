@@ -8,6 +8,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     invalid?: boolean;
     initialValue?: boolean;
     labelText: string;
+    register?: () => void;
 }
 
 const Checkbox = ({
@@ -17,6 +18,7 @@ const Checkbox = ({
     helperText,
     initialValue,
     onChange = (): void => {},
+    register,
     ...rest
 }: Props): JSX.Element => {
     const [checked, setChecked] = useState(initialValue);
@@ -33,6 +35,7 @@ const Checkbox = ({
                 type="checkbox"
                 onChange={onChangeCallback}
                 defaultChecked={initialValue}
+                ref={register}
                 {...rest}
             />
             <label
