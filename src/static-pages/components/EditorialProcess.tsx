@@ -7,7 +7,7 @@ const EditorialProcess = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
     return (
-        <div className="author-guide-content">
+        <div className="author-guide__contentt">
             <h1>{t('editorial.editorial.heading')}</h1>
 
             <Paragraph type="writing">

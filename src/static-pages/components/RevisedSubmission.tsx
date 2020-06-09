@@ -7,7 +7,7 @@ const RevisedSubmission = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
     return (
-        <div className="author-guide-content">
+        <div className="author-guide__contentt">
             <h1>{t('revised-submission.heading')}</h1>
 
             <h2>{t('revised-submission.decision-response.heading')}</h2>
