@@ -7,7 +7,7 @@ interface Props {
     width: number;
 }
 
-export default ({ src, style = { border: 0 }, height, width }: Props) => (
+const ChartEmbed = ({ src, style = { border: 0 }, height, width }: Props): JSX.Element => (
     <div id="chart_embed_one">
         <iframe
             allowFullScreen
@@ -20,3 +20,5 @@ export default ({ src, style = { border: 0 }, height, width }: Props) => (
         />
     </div>
 );
+
+export default ChartEmbed;
