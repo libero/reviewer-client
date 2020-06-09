@@ -130,7 +130,7 @@ const Fees = (): JSX.Element => {
                 <Interwave content={t('fees.question9.p2')} />
             </Paragraph>
 
-            <h2>{t('fees.question9.heading')}</h2>
+            <h2>{t('fees.waiver.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interwave content={t('fees.waiver.p1')} />
