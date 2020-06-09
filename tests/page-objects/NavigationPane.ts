@@ -38,7 +38,7 @@ export class NavigationPane {
         await this.assertNavItems();
         await t.click(this.menu.child(1));
         const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/author-guide');
+        await t.expect(windowLocation.pathname).eql('/author-guide/editorial-process');
     }
 
     public async navigateToReviewerGuide(): Promise<void> {
