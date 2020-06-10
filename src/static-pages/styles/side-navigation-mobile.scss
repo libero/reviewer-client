@@ -1,6 +1,7 @@
 .dropdown-nav {
     display: flex;
     padding-bottom: 1rem;
+    grid-area: static-nav;
     @include forSize('tabletPortraitUp') {
         display: none;
     }

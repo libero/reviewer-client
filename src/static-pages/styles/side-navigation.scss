@@ -1,0 +1,89 @@
+.dropdown-nav {
+    display: flex;
+    padding-bottom: 1rem;
+    grid-area: static-nav;
+    @include forSize('tabletPortraitUp') {
+        display: none;
+    }
+}
+
+.mobile-dropdown {
+    width: 100%;
+
+    .select-nav__value-container {
+        padding: 0 2rem;
+    }
+    .select-nav__menu {
+        margin-top: 0;
+        border: none;
+        border-top: 0;
+        border-radius: 0;
+        box-shadow: 0;
+        padding: 0;
+
+        .select-nav__menu-list {
+            padding: 0;
+            .select-nav__option {
+                padding: 1.5rem 2rem;
+            }
+        }
+
+        .select-nav__option--is-focused {
+            background-color: unset;
+        }
+
+        .select-nav__option {
+            color: rgb(136, 136, 136);
+        }
+
+        .select-nav__option--is-selected {
+            background-color: unset;
+            color: rgb(33, 33, 33);
+        }
+    }
+    .select-nav__indicator-separator {
+        display: none;
+    }
+    .select-nav__indicator.select-nav__clear-indicator {
+        display: none;
+    }
+    .select-nav__control {
+        min-height: 5rem;
+        border: 1px solid rgb(224, 224, 224);
+        border-radius: 0;
+
+        &.select-nav__control--menu-is-open {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border: none;
+            box-shadow: 0;
+        }
+    }
+}
+
+.side-bar-nav {
+    display: none;
+    flex-direction: column;
+    padding: 0 50px 0 0;
+
+    @include forSize('tabletPortraitUp') {
+        display: flex;
+    }
+
+    span {
+        padding: 10px 0px;
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            color: rgb(136, 136, 136);
+            white-space: nowrap;
+        }
+        a:hover {
+            color: rgb(33, 33, 33);
+            text-decoration: none;
+        }
+        a.active {
+            color: rgb(33, 33, 33);
+        }
+    }
+}

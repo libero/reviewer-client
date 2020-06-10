@@ -7,7 +7,7 @@ const EditorialStaff = (): JSX.Element => {
     const { t } = useTranslation('contact-us');
 
     return (
-        <div className="contact-us-content">
+        <div className="static-page__content">
             <h1>{t('editor.heading')}</h1>
 
             <Paragraph type="writing">{t('editor.paragraph-1')}</Paragraph>

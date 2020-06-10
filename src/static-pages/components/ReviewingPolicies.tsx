@@ -7,7 +7,7 @@ const ReviewingPolicies = (): JSX.Element => {
     const { t } = useTranslation('reviewer-guide');
 
     return (
-        <div className="reviewer-guide__content">
+        <div className="static-page__content">
             <h1>{t('reviewing-policies.heading')}</h1>
             <Paragraph type="writing">
                 <Interweave content={t('reviewing-policies.p1')} />

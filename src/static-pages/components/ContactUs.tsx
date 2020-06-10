@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
-import ContactUsNavigation from './SideNavigation';
+import SideNavigation from './SideNavigation';
+import SideNavigationMobile from './SideNavigationMobile';
 import ContactUsElife from './ContactUsElife';
 import EditorialStaff from './EditorialStaff';
 import ProductionStaff from './ProductionStaff';
@@ -13,8 +14,8 @@ const ContactUs = (): JSX.Element => {
     const currentPath = location.pathname;
 
     return (
-        <div className="contact-us-page">
-            <ContactUsNavigation
+        <React.Fragment>
+            <SideNavigationMobile
                 links={[
                     { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
                     { link: `${path}/editorial-staff`, label: t('links.editors-link') },
@@ -22,19 +23,29 @@ const ContactUs = (): JSX.Element => {
                 ]}
                 currentPath={currentPath}
             />
-            <Switch>
-                <Route path={`${path}/contact-elife`}>
-                    <ContactUsElife />
-                </Route>
-                <Route path={`${path}/editorial-staff`}>
-                    <EditorialStaff />
-                </Route>
-                <Route path={`${path}/production-staff`}>
-                    <ProductionStaff />
-                </Route>
-                <Redirect to={path + '/contact-elife'} />
-            </Switch>
-        </div>
+            <div className="static-page">
+                <SideNavigation
+                    links={[
+                        { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
+                        { link: `${path}/editorial-staff`, label: t('links.editors-link') },
+                        { link: `${path}/production-staff`, label: t('links.production-link') },
+                    ]}
+                    currentPath={currentPath}
+                />
+                <Switch>
+                    <Route path={`${path}/contact-elife`}>
+                        <ContactUsElife />
+                    </Route>
+                    <Route path={`${path}/editorial-staff`}>
+                        <EditorialStaff />
+                    </Route>
+                    <Route path={`${path}/production-staff`}>
+                        <ProductionStaff />
+                    </Route>
+                    <Redirect to={path + '/contact-elife'} />
+                </Switch>
+            </div>
+        </React.Fragment>
     );
 };
 

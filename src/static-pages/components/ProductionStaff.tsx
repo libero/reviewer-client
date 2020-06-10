@@ -7,7 +7,7 @@ const ProductionStaff = (): JSX.Element => {
     const { t } = useTranslation('contact-us');
 
     return (
-        <div className="contact-us-content">
+        <div className="static-page__content">
             <h1>{t('production.heading')}</h1>
             <Paragraph type="writing">{t('production.paragraph-1')}</Paragraph>
             <div className="person-grid">

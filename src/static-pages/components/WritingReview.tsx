@@ -7,7 +7,7 @@ const WritingReview = (): JSX.Element => {
     const { t } = useTranslation('reviewer-guide');
 
     return (
-        <div className="reviewer-guide__content">
+        <div className="static-page__content">
             <h1>{t('writing-review.heading')}</h1>
             <h2>{t('writing-review.selection.heading')}</h2>
             <Paragraph type="writing">
