@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
-import SideNavigation from './SideNavigation';
-import SideNavigationMobile from './SideNavigationMobile';
+import PageNavigation from './PageNavigation';
 import ContactUsElife from './ContactUsElife';
 import EditorialStaff from './EditorialStaff';
 import ProductionStaff from './ProductionStaff';
@@ -15,7 +14,7 @@ const ContactUs = (): JSX.Element => {
 
     return (
         <React.Fragment>
-            <SideNavigationMobile
+            <PageNavigation
                 links={[
                     { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
                     { link: `${path}/editorial-staff`, label: t('links.editors-link') },
@@ -24,14 +23,6 @@ const ContactUs = (): JSX.Element => {
                 currentPath={currentPath}
             />
             <div className="static-page">
-                <SideNavigation
-                    links={[
-                        { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
-                        { link: `${path}/editorial-staff`, label: t('links.editors-link') },
-                        { link: `${path}/production-staff`, label: t('links.production-link') },
-                    ]}
-                    currentPath={currentPath}
-                />
                 <Switch>
                     <Route path={`${path}/contact-elife`}>
                         <ContactUsElife />

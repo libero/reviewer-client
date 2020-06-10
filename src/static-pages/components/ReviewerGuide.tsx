@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
-import SideNavigation from './SideNavigation';
-import SideNavigationMobile from './SideNavigationMobile';
+import PageNavigation from './PageNavigation';
 import { useTranslation } from 'react-i18next';
 import WritingReview from './WritingReview';
 import ReviewingPolicies from './ReviewingPolicies';
@@ -15,7 +14,7 @@ const ReviewerGuide = (): JSX.Element => {
 
     return (
         <React.Fragment>
-            <SideNavigationMobile
+            <PageNavigation
                 links={[
                     { link: `${path}/review-process`, label: t('links.review-process') },
                     { link: `${path}/reviewing-policies`, label: t('links.reviewing-policies') },
@@ -24,14 +23,6 @@ const ReviewerGuide = (): JSX.Element => {
                 currentPath={currentPath}
             />
             <div className="static-page">
-                <SideNavigation
-                    links={[
-                        { link: `${path}/review-process`, label: t('links.review-process') },
-                        { link: `${path}/reviewing-policies`, label: t('links.reviewing-policies') },
-                        { link: `${path}/writing-the-review`, label: t('links.writing-the-review') },
-                    ]}
-                    currentPath={currentPath}
-                />
                 <Switch>
                     <Route path={`${path}/review-process`}>
                         <ReviewProcess />

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
-import SideNavigation from './SideNavigation';
-import SideNavigationMobile from './SideNavigationMobile';
+import PageNavigation from './PageNavigation';
 import { useTranslation } from 'react-i18next';
 import EditorialProcess from './EditorialProcess';
 import ArticleTypes from './ArticleTypes';
@@ -21,7 +20,7 @@ const AuthorGuide = (): JSX.Element => {
 
     return (
         <React.Fragment>
-            <SideNavigationMobile
+            <PageNavigation
                 links={[
                     { link: `${path}/editorial-process`, label: t('links.edit-process') },
                     { link: `${path}/types`, label: t('links.article-types') },
@@ -36,20 +35,6 @@ const AuthorGuide = (): JSX.Element => {
                 currentPath={currentPath}
             />
             <div className="static-page">
-                <SideNavigation
-                    links={[
-                        { link: `${path}/editorial-process`, label: t('links.edit-process') },
-                        { link: `${path}/types`, label: t('links.article-types') },
-                        { link: `${path}/initial`, label: t('links.initial-subs') },
-                        { link: `${path}/full`, label: t('links.full-subs') },
-                        { link: `${path}/revised`, label: t('links.revised-subs') },
-                        { link: `${path}/post`, label: t('links.post-decisions') },
-                        { link: `${path}/journal-policies`, label: t('links.journal-policies') },
-                        { link: `${path}/fees`, label: t('links.fees') },
-                        { link: `${path}/journal-metrics`, label: t('links.journal-metrics') },
-                    ]}
-                    currentPath={currentPath}
-                />
                 <Switch>
                     <Route path={`${path}/editorial-process`}>
                         <EditorialProcess />

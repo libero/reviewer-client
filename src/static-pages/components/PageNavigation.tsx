@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Select, { components } from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { Value } from '../../ui/atoms/SelectField';
@@ -58,21 +58,36 @@ const MobileNav = ({ id, values, defaultValue }: MobileNavProps): JSX.Element =>
     );
 };
 
-const SideNavigationMobile = ({ links, currentPath = '/' }: Props): JSX.Element => {
+const PageNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
     const isSelected = (path: string): boolean => {
         return path.toLocaleLowerCase().trim() === currentPath.toLocaleLowerCase().trim();
     };
     const dropdownLinks = links.map(l => ({ label: l.label, value: l.link }));
     return (
-        <div className="dropdown-nav">
-            <MobileNav
-                id="selectedNavigationItem"
-                values={dropdownLinks}
-                defaultValue={dropdownLinks.find(dl => isSelected(dl.value))}
-                searchable={false}
-            />
-        </div>
+        <React.Fragment>
+            <div className="dropdown-nav">
+                <MobileNav
+                    id="selectedNavigationItem"
+                    values={dropdownLinks}
+                    defaultValue={dropdownLinks.find(dl => isSelected(dl.value))}
+                    searchable={false}
+                />
+            </div>
+            <div className="side-bar-nav">
+                {links.map(l => (
+                    <span key={`${l.link}-container`}>
+                        <Link
+                            key={`${l.link}`}
+                            to={l.link}
+                            className={isSelected(l.link) ? 'typography__body--link active' : 'typography__body--link '}
+                        >
+                            {l.label}
+                        </Link>
+                    </span>
+                ))}
+            </div>
+        </React.Fragment>
     );
 };
 
-export default SideNavigationMobile;
+export default PageNavigation;
