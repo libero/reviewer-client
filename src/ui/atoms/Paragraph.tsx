@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-type ParagraphType = 'small' | 'reading' | 'writing' | 'footer';
+type ParagraphType = 'small' | 'reading' | 'small-reading' | 'writing' | 'footer';
 
 interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
     children?: ReactNode;
@@ -23,6 +23,11 @@ const Paragraph = ({ children, type, secondary, className, ...rest }: Props): JS
         case 'reading':
             classes = `${classes} paragraph typography__serif ${
                 secondary ? 'typography__serif--secondary' : 'typography__serif--primary'
+            }`;
+            break;
+        case 'small-reading':
+            classes = `${classes} paragraph typography__small typography__small--serif ${
+                secondary ? 'typography__small--secondary' : 'typography__small--primary'
             }`;
             break;
         case 'footer':

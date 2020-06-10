@@ -11,6 +11,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { getSubmissionQuery } from '../graphql';
 import * as H from 'history';
 import EditorsForm from './EditorsForm';
+import DisclosureForm from './DisclosureForm';
 
 interface Props {
     id: string;
@@ -99,14 +100,7 @@ const stepConfig: StepConfig[] = [
     {
         id: 'disclosure',
         label: 'Disclosure',
-        component: ({ ButtonComponent }: StepProps): JSX.Element => (
-            <div>
-                Disclosure Step{' '}
-                {ButtonComponent && (
-                    <ButtonComponent triggerValidation={(): Promise<boolean> => Promise.resolve(true)} />
-                )}
-            </div>
-        ),
+        component: DisclosureForm,
     },
 ];
 
