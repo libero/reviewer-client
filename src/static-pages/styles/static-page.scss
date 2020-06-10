@@ -1,17 +1,11 @@
-.author-guide-page {
-    grid-area: static-nav;
+.static-page {
+    grid-area: main;
     display: flex;
-    flex-direction: column;
-    @include forSize('tabletPortraitUp') {
-        flex-direction: unset;
-        justify-content: center;
-        grid-area: main;
-    }
     h1 {
         margin-top: 0;
     }
-    .author-guide__content {
-        padding: 0 2rem;
+    .static-page__content {
+        padding: 2rem 0;
         @include forSize('tabletPortraitUp') {
             padding: 0;
         }
@@ -37,4 +31,16 @@
         }
       }
     }
+}
+
+.person-grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  .person-grid-item {
+    @include forSize('desktopUp') {
+      width: 33.33%;
+    }
+  }
 }

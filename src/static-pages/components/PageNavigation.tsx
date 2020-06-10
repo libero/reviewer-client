@@ -58,7 +58,7 @@ const MobileNav = ({ id, values, defaultValue }: MobileNavProps): JSX.Element =>
     );
 };
 
-const ContactUsNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
+const PageNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
     const isSelected = (path: string): boolean => {
         return path.toLocaleLowerCase().trim() === currentPath.toLocaleLowerCase().trim();
     };
@@ -90,4 +90,4 @@ const ContactUsNavigation = ({ links, currentPath = '/' }: Props): JSX.Element =
     );
 };
 
-export default ContactUsNavigation;
+export default PageNavigation;

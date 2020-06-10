@@ -11,8 +11,8 @@
   margin-left: -0.75rem;
   grid-area: footer;
   align-self: center;
+  text-align: center;
   @include forSize('tabletLandscapeUp') {
     margin-left: 0.75rem;
-    text-align: center;
   }
 }

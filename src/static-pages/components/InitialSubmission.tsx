@@ -8,7 +8,7 @@ const InitialSubmission = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
     return (
-        <div className="author-guide__content">
+        <div className="static-page__content">
             <h1>{t('initial-submission.heading')}</h1>
 
             <Paragraph type="writing">

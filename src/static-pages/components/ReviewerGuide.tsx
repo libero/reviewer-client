@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
-import SideNavigation from './SideNavigation';
+import PageNavigation from './PageNavigation';
 import { useTranslation } from 'react-i18next';
 import WritingReview from './WritingReview';
 import ReviewingPolicies from './ReviewingPolicies';
@@ -13,8 +13,8 @@ const ReviewerGuide = (): JSX.Element => {
     const currentPath = location.pathname;
 
     return (
-        <div className="reviewer-guide-page">
-            <SideNavigation
+        <React.Fragment>
+            <PageNavigation
                 links={[
                     { link: `${path}/review-process`, label: t('links.review-process') },
                     { link: `${path}/reviewing-policies`, label: t('links.reviewing-policies') },
@@ -22,19 +22,21 @@ const ReviewerGuide = (): JSX.Element => {
                 ]}
                 currentPath={currentPath}
             />
-            <Switch>
-                <Route path={`${path}/review-process`}>
-                    <ReviewProcess />
-                </Route>
-                <Route path={`${path}/reviewing-policies`}>
-                    <ReviewingPolicies />
-                </Route>
-                <Route path={`${path}/writing-the-review`}>
-                    <WritingReview />
-                </Route>
-                <Redirect to={path + '/review-process'} />
-            </Switch>
-        </div>
+            <div className="static-page">
+                <Switch>
+                    <Route path={`${path}/review-process`}>
+                        <ReviewProcess />
+                    </Route>
+                    <Route path={`${path}/reviewing-policies`}>
+                        <ReviewingPolicies />
+                    </Route>
+                    <Route path={`${path}/writing-the-review`}>
+                        <WritingReview />
+                    </Route>
+                    <Redirect to={path + '/review-process'} />
+                </Switch>
+            </div>
+        </React.Fragment>
     );
 };
 

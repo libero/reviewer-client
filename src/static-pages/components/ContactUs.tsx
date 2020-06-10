@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, useRouteMatch, useLocation, Route, Redirect } from 'react-router-dom';
-import ContactUsNavigation from './SideNavigation';
+import PageNavigation from './PageNavigation';
 import ContactUsElife from './ContactUsElife';
 import EditorialStaff from './EditorialStaff';
 import ProductionStaff from './ProductionStaff';
@@ -13,8 +13,8 @@ const ContactUs = (): JSX.Element => {
     const currentPath = location.pathname;
 
     return (
-        <div className="contact-us-page">
-            <ContactUsNavigation
+        <React.Fragment>
+            <PageNavigation
                 links={[
                     { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
                     { link: `${path}/editorial-staff`, label: t('links.editors-link') },
@@ -22,19 +22,21 @@ const ContactUs = (): JSX.Element => {
                 ]}
                 currentPath={currentPath}
             />
-            <Switch>
-                <Route path={`${path}/contact-elife`}>
-                    <ContactUsElife />
-                </Route>
-                <Route path={`${path}/editorial-staff`}>
-                    <EditorialStaff />
-                </Route>
-                <Route path={`${path}/production-staff`}>
-                    <ProductionStaff />
-                </Route>
-                <Redirect to={path + '/contact-elife'} />
-            </Switch>
-        </div>
+            <div className="static-page">
+                <Switch>
+                    <Route path={`${path}/contact-elife`}>
+                        <ContactUsElife />
+                    </Route>
+                    <Route path={`${path}/editorial-staff`}>
+                        <EditorialStaff />
+                    </Route>
+                    <Route path={`${path}/production-staff`}>
+                        <ProductionStaff />
+                    </Route>
+                    <Redirect to={path + '/contact-elife'} />
+                </Switch>
+            </div>
+        </React.Fragment>
     );
 };
 
