@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Select, { components } from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { Value } from '../../ui/atoms/SelectField';

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface Props {
     links: Array<{ link: string; label: string }>;
@@ -10,7 +10,6 @@ const SideNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
     const isSelected = (path: string): boolean => {
         return path.toLocaleLowerCase().trim() === currentPath.toLocaleLowerCase().trim();
     };
-    const dropdownLinks = links.map(l => ({ label: l.label, value: l.link }));
     return (
         <div className="side-bar-nav">
             {links.map(l => (
