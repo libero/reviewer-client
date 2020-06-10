@@ -5,7 +5,6 @@ import DisclosureForm from './DisclosureForm';
 import { Submission } from '../types';
 
 const mutationMock = jest.fn();
-const testInitialValues: Submission = { id: 'foo', updated: Date.now(), articleType: '' };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
