@@ -178,3 +178,15 @@ export const getEditorsQuery = gql`
         }
     }
 `;
+
+export const saveDisclosurePageMutation = gql`
+    mutation SaveDisclosure($id: ID!, $details: DisclosureDetailsInput!) {
+        saveDisclosure(id: $id, details: $details) {
+            id
+            disclosure {
+                submitterSignature
+                disclosureConsent
+            }
+        }
+    }
+`;

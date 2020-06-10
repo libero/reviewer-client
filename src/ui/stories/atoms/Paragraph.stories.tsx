@@ -12,7 +12,7 @@ storiesOf('ui | atoms/Paragraph', module)
         'Paragraph',
         (): JSX.Element => {
             const secondary = boolean('Secondary?', false);
-            const type = select('Type', ['reading', 'writing', 'small'], 'reading');
+            const type = select('Type', ['reading', 'writing', 'small', 'small-reading'], 'reading');
             const paragraphText = text('Text', 'Some text for a paragraph');
             return (
                 <Paragraph type={type} secondary={secondary}>
