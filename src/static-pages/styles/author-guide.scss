@@ -4,7 +4,6 @@
     flex-direction: column;
     @include forSize('tabletPortraitUp') {
         flex-direction: unset;
-        justify-content: center;
         grid-area: main;
     }
     h1 {
@@ -13,6 +12,7 @@
     .author-guide__content {
         padding: 0 2rem;
         @include forSize('tabletPortraitUp') {
+            width: calc(100% - 100px);
             padding: 0;
         }
         a, a:visited, a:hover {
