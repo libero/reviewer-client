@@ -105,11 +105,4 @@ describe('DisclosureForm', (): void => {
             expect(getByText('disclosure.validation.signature')).toBeInTheDocument();
         });
     });
-    // it('should render correctly with all props', async (): Promise<void> => {
-    //     expect(
-    //         async (): Promise<void> => {
-    //             render(<DisclosureForm initialValues={initialValues} />);
-    //         },
-    //     ).not.toThrow();
-    // });
 });
