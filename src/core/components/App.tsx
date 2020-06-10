@@ -8,6 +8,7 @@ import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
 import ContactUs from '../../static-pages/components/ContactUs';
 import AuthorGuide from '../../static-pages/components/AuthorGuide';
+import ReviewerGuide from '../../static-pages/components/ReviewerGuide';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
@@ -32,6 +33,7 @@ const App: React.FC = (): JSX.Element => {
                     <DashboardRoutes />
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
+                    <Route component={ReviewerGuide} path="/reviewer-guide" />
                     <Footer />
                 </React.Suspense>
             </Router>
