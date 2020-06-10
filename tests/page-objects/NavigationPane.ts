@@ -45,7 +45,7 @@ export class NavigationPane {
         await this.assertNavItems();
         await t.click(this.menu.child(2));
         const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/reviewer-guide');
+        await t.expect(windowLocation.pathname).eql('/reviewer-guide/review-process');
     }
 
     public async navigateToContactUs(): Promise<void> {

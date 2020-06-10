@@ -11,26 +11,26 @@ const ReviewingPolicies = (): JSX.Element => {
             <h1>{t('review-policies.heading')}</h1>
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.p1')} />
-            </Paragraph>        
+            </Paragraph>
 
             <h2>{t('review-policies.confidentiality.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.confidentiality.p1')} />
-            </Paragraph>        
+            </Paragraph>
 
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.confidentiality.p2')} />
-            </Paragraph>        
+            </Paragraph>
 
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.confidentiality.p3')} />
-            </Paragraph>   
-                 
+            </Paragraph>
+
             <h2>{t('review-policies.anonymity.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.anonymity.p1')} />
-            </Paragraph>  
+            </Paragraph>
 
             <h2>{t('review-policies.competing-interests.heading')}</h2>
 
@@ -41,20 +41,37 @@ const ReviewingPolicies = (): JSX.Element => {
             <ul>
                 <li>
                     <Paragraph type="writing">
-                        <Interweave content={t('review-policies.competing-interests.p1')} />
+                        <Interweave content={t('review-policies.competing-interests.bullet1')} />
+                    </Paragraph>
+                </li>
+
+                <li>
+                    <Paragraph type="writing">
+                        <Interweave content={t('review-policies.competing-interests.bullet2')} />
+                    </Paragraph>
+                </li>
+
+                <li>
+                    <Paragraph type="writing">
+                        <Interweave content={t('review-policies.competing-interests.bullet3')} />
+                    </Paragraph>
+                </li>
+
+                <li>
+                    <Paragraph type="writing">
+                        <Interweave content={t('review-policies.competing-interests.bullet4')} />
                     </Paragraph>
                 </li>
             </ul>
 
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.competing-interests.p2')} />
-            </Paragraph>  
+            </Paragraph>
 
             <Paragraph type="writing">
                 <Interweave content={t('review-policies.competing-interests.p3')} />
-            </Paragraph>  
-
-    </div>
+            </Paragraph>
+        </div>
     );
 };
 
