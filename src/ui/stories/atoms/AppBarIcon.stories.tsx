@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, withKnobs } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
 import { AppBarIcon } from '../../atoms';
-import Logo from '../../../core/assets/elife-logo.png';
+import Logo from '../../../core/assets/elife-logo.svg';
 import '../../../core/styles/index.scss';
 
 storiesOf('ui | atoms/AppBarIcon', module)
