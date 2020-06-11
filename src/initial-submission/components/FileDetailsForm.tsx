@@ -153,20 +153,15 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />
-            <h2 className="typography__heading typography__heading--h2 files-step__title">Your manuscript file</h2>
-            <span className="typography__small typography__small--secondary">
-                Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
-                <a className="typography__small typography__small--link files-step__link--nested">Learn more</a>
-            </span>
+            <h2 className="typography__heading typography__heading--h2 files-step__title">
+                {t('files.manuscript-title')}
+            </h2>
+            <Interweave content={t('files.manuscript-guidance')} />
             <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
-                Supporting files (optional)
+                {t('files.supporting-title')}
             </h2>
-            <span className="typography__small typography__small--secondary">
-                Any videos, audio clips or interactive files you believe will assist in the initial assessment of your
-                submission should be uploaded as supporting files. You will be able to upload additional files at the
-                full submission stage if necessary.
-            </span>
+            <Interweave content={t('files.supporting-guidance')} />
             <div className="supporting-files">
                 <MultiFileUpload
                     onUpload={onSupportingFilesUpload}
