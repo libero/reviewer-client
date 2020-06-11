@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
+import Interweave from 'interweave';
 import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
@@ -142,16 +143,10 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
 
     return (
         <div className="files-step">
-            <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
-            <span className="typography__small typography__small--secondary">
-                Enter your cover letter below. Please help us evaluate your work by answering the following questions:
-            </span>
-            <ul className="cover-letter__list typography__small">
-                <li>How will your work make others in the field think differently and move the field forward?</li>
-                <li>How does your work relate to the current literature on the topic?</li>
-                <li>Who do you consider to be the most relevant audience for this work?</li>
-                <li>What do you think the work has achieved or not achieved?</li>
-            </ul>
+            <h2 className="typography__heading typography__heading--h2 files-step__title">
+                {t('files.coverletter-title')}
+            </h2>
+            <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
                 register={register}
