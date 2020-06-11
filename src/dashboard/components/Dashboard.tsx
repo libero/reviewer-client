@@ -48,7 +48,7 @@ const Dashboard = withRouter(
         if (isShowing) {
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
-        if (!loading && data.getSubmissions.length === 0) {
+        if (!loading && (typeof data === 'undefined' || (data && data.getSubmissions.length === 0))) {
             return <NoSubmissions onStartClick={toggle} />;
         } else {
             return (
@@ -58,9 +58,8 @@ const Dashboard = withRouter(
                             {t('new-submission')}
                         </Button>
                     </div>
-                    {loading ? (
-                        'loading'
-                    ) : (
+                    {loading && 'loading'}
+                    {data && data.getSubmissions && (
                         <SubmissionList submissions={data.getSubmissions} onDelete={deleteSubmission} />
                     )}
                 </div>
