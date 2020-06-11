@@ -13,6 +13,8 @@ const Dashboard = withRouter(
     ({ history }): JSX.Element => {
         const { isShowing, toggle } = useModal();
         const { loading, data } = useQuery(getSubmissionsQuery);
+        console.log('daya', data);
+        console.log('isloading', loading);
         const [startSubmission, { loading: loadingStartSubmission }] = useMutation(startSubmissionMutation, {
             update(cache, { data: { startSubmission } }) {
                 const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
@@ -48,7 +50,7 @@ const Dashboard = withRouter(
         if (isShowing) {
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
-        if (!loading && data.getSubmissions.length === 0) {
+        if (!loading && (typeof data === 'undefined' || (data && data.getSubmissions.length === 0))) {
             return <NoSubmissions onStartClick={toggle} />;
         } else {
             return (
@@ -58,9 +60,8 @@ const Dashboard = withRouter(
                             {t('new-submission')}
                         </Button>
                     </div>
-                    {loading ? (
-                        'loading'
-                    ) : (
+                    {loading && 'loading'}
+                    {data && data.getSubmissions && (
                         <SubmissionList submissions={data.getSubmissions} onDelete={deleteSubmission} />
                     )}
                 </div>
