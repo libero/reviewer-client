@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
+import Interweave from 'interweave';
 import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
@@ -142,36 +143,25 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
 
     return (
         <div className="files-step">
-            <h2 className="typography__heading typography__heading--h2 files-step__title">Your cover letter</h2>
-            <span className="typography__small typography__small--secondary">
-                Enter your cover letter below. Please help us evaluate your work by answering the following questions:
-            </span>
-            <ul className="cover-letter__list typography__small">
-                <li>How will your work make others in the field think differently and move the field forward?</li>
-                <li>How does your work relate to the current literature on the topic?</li>
-                <li>Who do you consider to be the most relevant audience for this work?</li>
-                <li>What do you think the work has achieved or not achieved?</li>
-            </ul>
+            <h2 className="typography__heading typography__heading--h2 files-step__title">
+                {t('files.coverletter-title')}
+            </h2>
+            <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
                 register={register}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />
-            <h2 className="typography__heading typography__heading--h2 files-step__title">Your manuscript file</h2>
-            <span className="typography__small typography__small--secondary">
-                Please include figures in your manuscript file. You do not need to upload figures separately.{' '}
-                <a className="typography__small typography__small--link files-step__link--nested">Learn more</a>
-            </span>
+            <h2 className="typography__heading typography__heading--h2 files-step__title">
+                {t('files.manuscript-title')}
+            </h2>
+            <Interweave content={t('files.manuscript-guidance')} />
             <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
-                Supporting files (optional)
+                {t('files.supporting-title')}
             </h2>
-            <span className="typography__small typography__small--secondary">
-                Any videos, audio clips or interactive files you believe will assist in the initial assessment of your
-                submission should be uploaded as supporting files. You will be able to upload additional files at the
-                full submission stage if necessary.
-            </span>
+            <Interweave content={t('files.supporting-guidance')} />
             <div className="supporting-files">
                 <MultiFileUpload
                     onUpload={onSupportingFilesUpload}
