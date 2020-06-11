@@ -3,7 +3,7 @@ import { AppBar, AppBarIcon } from '../../ui/atoms';
 import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import { useQuery } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../graphql';
-import Logo from '../assets/elife-logo.png';
+import Logo from '../assets/elife-logo.svg';
 import { User } from '../types';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
 
