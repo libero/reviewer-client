@@ -65,13 +65,14 @@
     display: none;
     flex-direction: column;
     grid-area: left-menu;
-    text-align: right;
+    align-items: flex-end;
 
     @include forSize('tabletPortraitUp') {
         display: flex;
     }
 
     span {
+        display: block;
         padding: 10px 50px 10px 0;
         a {
             cursor: pointer;
