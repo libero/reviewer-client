@@ -13,8 +13,6 @@ const Dashboard = withRouter(
     ({ history }): JSX.Element => {
         const { isShowing, toggle } = useModal();
         const { loading, data } = useQuery(getSubmissionsQuery);
-        console.log('daya', data);
-        console.log('isloading', loading);
         const [startSubmission, { loading: loadingStartSubmission }] = useMutation(startSubmissionMutation, {
             update(cache, { data: { startSubmission } }) {
                 const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
