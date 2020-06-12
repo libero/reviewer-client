@@ -3,7 +3,6 @@ import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import DisclosureForm from './DisclosureForm';
 import { Submission } from '../types';
-import appContainer from '../../../test-utils/appContainer';
 
 const mutationMock = jest.fn();
 
