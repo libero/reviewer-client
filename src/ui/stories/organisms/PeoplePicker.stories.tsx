@@ -48,11 +48,6 @@ const PeoplePickerStory = (): JSX.Element => {
         action(`Added person ${id}`)();
     };
 
-    const removePerson = (id: string): void => {
-        setSelectedPeople(selectedPeople.filter((personId: string): boolean => personId !== id));
-        action(`Removed person ${id}`)();
-    };
-
     const required = boolean('Required', false);
     const label = text('Label', 'People Picker');
     const min = number('Min', 2);
@@ -69,12 +64,11 @@ const PeoplePickerStory = (): JSX.Element => {
         <PeoplePicker
             required={required}
             people={filteredPeople}
-            selectedPeople={selectedPeople}
-            onRemove={removePerson}
+            initialSelectedPeople={selectedPeople}
             label={label}
             min={min}
             max={max}
-            setSelectedPeople={(selectedPeople: string[]): void => setSelectedPeople(selectedPeople)}
+            onChange={(selectedPeople: string[]): void => setSelectedPeople(selectedPeople)}
         />
     );
 };

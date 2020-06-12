@@ -59,7 +59,7 @@ storiesOf('ui | molecules/PeoplePickerSelector', module)
             return (
                 <PeoplePickerSelector
                     people={people}
-                    initialySelected={[]}
+                    initiallySelected={[]}
                     label={label}
                     onDone={action('Done')}
                     toggle={(): void => {}}

@@ -67,7 +67,7 @@ describe('PeoplePickerSelector', (): void => {
                 render(
                     <PeoplePickerSelector
                         people={people}
-                        initialySelected={['1']}
+                        initiallySelected={['1']}
                         onDone={jest.fn()}
                         label=" "
                         toggle={jest.fn()}
@@ -85,7 +85,7 @@ describe('PeoplePickerSelector', (): void => {
     it('it renders all of the passed people', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={people}
                 onDone={jest.fn()}
                 label=" "
@@ -104,7 +104,7 @@ describe('PeoplePickerSelector', (): void => {
         const { getByText } = render(
             <PeoplePickerSelector
                 people={people}
-                initialySelected={[]}
+                initiallySelected={[]}
                 onDone={jest.fn()}
                 label="SomeTestLabel"
                 toggle={jest.fn()}
@@ -122,7 +122,7 @@ describe('PeoplePickerSelector', (): void => {
         const { baseElement } = render(
             <PeoplePickerSelector
                 people={people}
-                initialySelected={['1', '3']}
+                initiallySelected={['1', '3']}
                 onDone={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
@@ -186,7 +186,7 @@ describe('PeoplePickerSelector', (): void => {
     it('it adds the selected people when clicked', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={people}
                 onDone={jest.fn()}
                 label=" "
@@ -209,7 +209,7 @@ describe('PeoplePickerSelector', (): void => {
         const doneMock = jest.fn();
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={people}
                 onDone={doneMock}
                 label=" "
@@ -230,7 +230,7 @@ describe('PeoplePickerSelector', (): void => {
         const doneMock = jest.fn();
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={people}
                 onDone={doneMock}
                 label=" "
@@ -250,7 +250,7 @@ describe('PeoplePickerSelector', (): void => {
     it('it should show the banner when the maximum selected has been reached', (): void => {
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={['1', '2', '3', '4']}
+                initiallySelected={['1', '2', '3', '4']}
                 people={people}
                 onDone={jest.fn()}
                 label=" "
@@ -266,10 +266,12 @@ describe('PeoplePickerSelector', (): void => {
         expect(baseElement.querySelector('.banner')).toBeInTheDocument();
     });
 
-    it('should disable the button if min is passed in and there are not enough people selected', (): void => {
-        const { baseElement, rerender } = render(
+    it('should disable the button if min is passed in and there are not enough people selected', async (): Promise<
+        void
+    > => {
+        const { baseElement: baseElementEmpty } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={people}
                 onDone={jest.fn()}
                 label=""
@@ -281,10 +283,11 @@ describe('PeoplePickerSelector', (): void => {
                 container: appContainer(),
             },
         );
-        expect(baseElement.querySelector('.button--primary')).not.toBeEnabled();
-        rerender(
+        expect(baseElementEmpty.querySelector('.button--primary')).toBeDisabled();
+        await cleanup();
+        const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={['1', '2']}
+                initiallySelected={['1', '2']}
                 people={people}
                 onDone={jest.fn()}
                 label=""
@@ -292,6 +295,9 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
                 min={2}
             />,
+            {
+                container: appContainer(),
+            },
         );
         expect(baseElement.querySelector('.button--primary')).toBeEnabled();
     });
@@ -300,7 +306,7 @@ describe('PeoplePickerSelector', (): void => {
         jest.useFakeTimers();
         const { baseElement, container, getByText } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={[
                     {
                         id: '1',
@@ -338,7 +344,7 @@ describe('PeoplePickerSelector', (): void => {
         jest.useFakeTimers();
         const { baseElement, container, getByText } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={[
                     {
                         id: '1',
@@ -380,7 +386,7 @@ describe('PeoplePickerSelector', (): void => {
         jest.useFakeTimers();
         const { baseElement, container, getByText } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={[
                     {
                         id: '1',
@@ -421,7 +427,7 @@ describe('PeoplePickerSelector', (): void => {
         jest.useFakeTimers();
         const { baseElement, container, getByText } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={[
                     {
                         id: '1',
@@ -462,7 +468,7 @@ describe('PeoplePickerSelector', (): void => {
     it('should add SelectedOption blocks for each selected person', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={[]}
+                initiallySelected={[]}
                 people={people}
                 onDone={jest.fn()}
                 label=" "
@@ -481,7 +487,7 @@ describe('PeoplePickerSelector', (): void => {
     it('should remove a selected person when SelectOption block button clicked', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector
-                initialySelected={['1']}
+                initiallySelected={['1']}
                 people={people}
                 onDone={jest.fn()}
                 label=" "

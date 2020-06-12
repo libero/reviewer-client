@@ -55,7 +55,7 @@ const Modal = (
             }`}
         >
             <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen main-content--centered' : ''}`}>
-                <Button onClick={(): void => cancel()}>Cancel</Button>
+                <Button onClick={(): void => cancel()}>{t('modal--cancel-button')}</Button>
                 <Button onClick={(): void => accept()} type={buttonType} disabled={buttonDisabled}>
                     {buttonText || t('modal--default-button')}
                 </Button>
