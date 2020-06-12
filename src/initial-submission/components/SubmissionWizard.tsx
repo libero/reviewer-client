@@ -12,6 +12,7 @@ import { getSubmissionQuery } from '../graphql';
 import * as H from 'history';
 import EditorsForm from './EditorsForm';
 import DisclosureForm from './DisclosureForm';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     id: string;
@@ -19,7 +20,11 @@ interface Props {
 
 export interface StepProps {
     initialValues: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function; triggerValidation: () => Promise<boolean> }) => JSX.Element;
+    ButtonComponent?: (props: {
+        saveFunction?: Function;
+        triggerValidation: () => Promise<boolean>;
+        onSubmit?: () => void;
+    }) => JSX.Element;
 }
 
 interface StepConfig {
@@ -40,11 +45,16 @@ const ButtonComponent = (
 ) => ({
     saveFunction,
     triggerValidation,
+    onSubmit,
 }: {
     saveFunction: Function;
     triggerValidation: () => Promise<boolean>;
+    onSubmit?: () => void;
 }): JSX.Element => {
     const [processing, setProcessing] = useState(false);
+    const { t } = useTranslation('wizard-form');
+    const lastPage = getCurrentStepPathIndex() === stepConfig.length - 1;
+    console.log(lastPage);
     return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
@@ -62,13 +72,15 @@ const ButtonComponent = (
                         }
                     }}
                 >
-                    back
+                    {t('navigation.back')}
                 </Button>
             )}
-            {getCurrentStepPathIndex() < stepConfig.length - 1 && (
-                <Button
-                    className="submission-wizard-next-button"
-                    onClick={async (): Promise<void> => {
+            <Button
+                className="submission-wizard-next-button"
+                onClick={async (): Promise<void> => {
+                    if (lastPage) {
+                        onSubmit();
+                    } else {
                         if (!processing) {
                             try {
                                 setProcessing(true);
@@ -82,12 +94,12 @@ const ButtonComponent = (
                                 setProcessing(false);
                             }
                         }
-                    }}
-                    type="primary"
-                >
-                    next
-                </Button>
-            )}
+                    }
+                }}
+                type="primary"
+            >
+                {lastPage ? t('navigation.submit') : t('navigation.next')}
+            </Button>
         </React.Fragment>
     );
 };
@@ -106,8 +118,9 @@ const stepConfig: StepConfig[] = [
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
-    const getCurrentStepPathIndex = (): number =>
-        stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
+    const getCurrentStepPathIndex = (): number => {
+        return stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
+    };
 
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
         variables: { id },
