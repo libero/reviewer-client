@@ -1,18 +1,19 @@
 /*eslint-disable react/display-name*/
 import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
-import { Button } from '../../ui/atoms';
+import { Button, Modal, Paragraph } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import FileDetailsStep from './FileDetailsForm';
 import DetailsForm from './DetailsForm';
-import { useQuery } from '@apollo/react-hooks';
-import { getSubmissionQuery } from '../graphql';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { getSubmissionQuery, submitSubmissionMutation } from '../graphql';
 import * as H from 'history';
 import EditorsForm from './EditorsForm';
 import DisclosureForm from './DisclosureForm';
 import { useTranslation } from 'react-i18next';
+import useModal from '../../ui/hooks/useModal';
 
 interface Props {
     id: string;
@@ -42,14 +43,13 @@ const ButtonComponent = (
     history: H.History,
     getCurrentStepPathIndex: Function,
     stepConfig: StepConfig[],
+    toggle: () => void,
 ) => ({
     saveFunction,
     triggerValidation,
-    onSubmit,
 }: {
     saveFunction: Function;
     triggerValidation: () => Promise<boolean>;
-    onSubmit?: () => void;
 }): JSX.Element => {
     const [processing, setProcessing] = useState(false);
     const { t } = useTranslation('wizard-form');
@@ -80,7 +80,7 @@ const ButtonComponent = (
                     if (lastPage) {
                         triggerValidation().then(async valid => {
                             if (valid) {
-                                onSubmit();
+                                toggle();
                             }
                         });
                     } else {
@@ -124,6 +124,8 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
     const getCurrentStepPathIndex = (): number => {
         return stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
     };
+    const [submitSubmission] = useMutation<Submission>(submitSubmissionMutation);
+    const { isShowing, toggle } = useModal();
 
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
         variables: { id },
@@ -157,6 +159,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                             history,
                                             getCurrentStepPathIndex,
                                             stepConfig,
+                                            toggle,
                                         )}
                                     />
                                 )
@@ -166,6 +169,18 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 )}
                 <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
+            <Modal
+                isShowing={isShowing}
+                hide={toggle}
+                buttonType="primary"
+                buttonText="Submit"
+                onAccept={(): void => {
+                    submitSubmission({ variables: { id: data.getSubmission.id } });
+                }}
+            >
+                <h2 className="typography__heading typography__heading--h2">Submit to eLife</h2>
+                <Paragraph type="writing">blahblahblahblah</Paragraph>
+            </Modal>
         </div>
     );
 };

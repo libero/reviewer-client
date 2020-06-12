@@ -1,22 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TextField, Checkbox, Paragraph, Modal } from '../../ui/atoms';
+import { TextField, Checkbox, Paragraph } from '../../ui/atoms';
 import * as yup from 'yup';
 import { Submission, DisclosureDetails } from '../types';
 import { useMutation } from '@apollo/react-hooks';
-import { saveDisclosurePageMutation, submitSubmissionMutation } from '../graphql';
+import { saveDisclosurePageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
 import { StepProps } from './SubmissionWizard';
 import Interweave from 'interweave';
 import moment from 'moment';
-import useModal from '../../ui/hooks/useModal';
 
 const DisclosureForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDisclosurePageMutation);
-    const [submitSubmission] = useMutation<Submission>(submitSubmissionMutation);
-    const { isShowing, toggle } = useModal();
     const schema = yup.object().shape({
         submitterSignature: yup.string().required(t('disclosure.validation.signature')),
         disclosureConsent: yup
@@ -87,21 +84,7 @@ const DisclosureForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Elem
                     register={register}
                 />
             </div>
-            {ButtonComponent && (
-                <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} onSubmit={toggle} />
-            )}
-            <Modal
-                isShowing={isShowing}
-                hide={toggle}
-                buttonType="primary"
-                buttonText="Submit"
-                onAccept={(): void => {
-                    submitSubmission({ variables: { id: initialValues.id } });
-                }}
-            >
-                <h2 className="typography__heading typography__heading--h2">Submit to eLife</h2>
-                <Paragraph type="writing">blahblahblahblah</Paragraph>
-            </Modal>
+            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </div>
     );
 };

@@ -1,8 +1,9 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult, act } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, act, waitFor } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
+import appContainer from '../../../test-utils/appContainer';
 
 let loading = false;
 jest.mock('@apollo/react-hooks', () => ({
@@ -19,6 +20,7 @@ jest.mock('@apollo/react-hooks', () => ({
                     updated: 42,
                     articleType: 'fiction',
                 },
+                getEditors: [],
             },
             loading: loading,
         };
@@ -160,6 +162,34 @@ describe('SubmissionWizard', (): void => {
         });
         it('clicking Back on Disclosure step takes you to Editors', () => {
             testNavigationButtons(backButtonText, 'disclosure', 'editors');
+        });
+    });
+
+    describe('submit modal', () => {
+        it('should show the modal when the page is valid', async () => {
+            const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByLabelText, getByText, baseElement } = render(component, {
+                wrapper: routerWrapper(['/submit/id/disclosure']),
+                container: appContainer(),
+            });
+            fireEvent.input(getByLabelText('disclosure.submitter-signature-input'), {
+                target: { value: 'Conker The Squirrel' },
+            });
+            fireEvent.click(getByLabelText('disclosure.disclosure-consent-input'));
+            fireEvent.click(getByText('navigation.submit'));
+            await waitFor(() => {});
+            expect(baseElement.querySelector('.modal')).toBeInTheDocument();
+        });
+
+        it('should not show the modal when the page is invalid', async () => {
+            const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByText, baseElement } = render(component, {
+                wrapper: routerWrapper(['/submit/id/disclosure']),
+                container: appContainer(),
+            });
+            fireEvent.click(getByText('navigation.submit'));
+            await waitFor(() => {});
+            expect(baseElement.querySelectorAll('.modal')).toHaveLength(0);
         });
     });
 });
