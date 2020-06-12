@@ -38,6 +38,7 @@
     "search-box--label": "Search",
     "search-box--helper": "Search...",
     "modal--default-button": "Accept",
+    "modal--cancel-button": "Cancel",
     "people_picker--open-selector": "Choose editor",
     "selected_people_list--open": "Open Picker",
     "validation--optional": "optional",

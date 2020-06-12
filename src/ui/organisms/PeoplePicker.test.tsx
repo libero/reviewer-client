@@ -7,9 +7,7 @@ import appContainer from '../../../test-utils/appContainer';
 describe('PeoplePicker', (): void => {
     afterEach(cleanup);
     it('should render correctly', (): void => {
-        expect(
-            (): RenderResult => render(<PeoplePicker onRemove={jest.fn()} label="" setSelectedPeople={jest.fn()} />),
-        ).not.toThrow();
+        expect((): RenderResult => render(<PeoplePicker onChange={jest.fn()} label="" />)).not.toThrow();
     });
 
     it('should render correctly with all props', (): void => {
@@ -18,25 +16,21 @@ describe('PeoplePicker', (): void => {
                 render(
                     <PeoplePicker
                         people={[{ id: '1', name: 'Bob 1' }]}
-                        selectedPeople={['1']}
+                        initialSelectedPeople={['1']}
                         required={true}
                         min={1}
                         max={2}
-                        onRemove={jest.fn()}
+                        onChange={jest.fn()}
                         label=""
-                        setSelectedPeople={jest.fn()}
                     />,
                 ),
         ).not.toThrow();
     });
 
     it('SelectedPeopleList button toggles the PeoplePickerSelector', async (): Promise<void> => {
-        const { getByText, baseElement } = render(
-            <PeoplePicker onRemove={jest.fn()} label="" setSelectedPeople={jest.fn()} />,
-            {
-                container: appContainer(),
-            },
-        );
+        const { getByText, baseElement } = render(<PeoplePicker onChange={jest.fn()} label="" />, {
+            container: appContainer(),
+        });
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
         fireEvent.click(getByText('selected_people_list--open'));
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
@@ -48,29 +42,24 @@ describe('PeoplePicker', (): void => {
                 render(
                     <PeoplePicker
                         people={[{ id: '1', name: 'Bob 1' }]}
-                        selectedPeople={['someunknownuser']}
+                        initialSelectedPeople={['someunknownuser']}
                         required={true}
                         min={1}
                         max={2}
-                        onRemove={jest.fn()}
+                        onChange={jest.fn()}
                         label=""
-                        setSelectedPeople={jest.fn()}
                     />,
                 ),
         ).not.toThrow();
     });
 
     it('should show the external label when hideLabel is not passed in or false', () => {
-        const { getByText } = render(
-            <PeoplePicker onRemove={jest.fn()} label="testLabel" setSelectedPeople={jest.fn()} />,
-        );
+        const { getByText } = render(<PeoplePicker onChange={jest.fn()} label="testLabel" />);
         expect(getByText('testLabel')).toBeInTheDocument();
     });
 
     it('should hide the external label when hideLabel is passed in', () => {
-        const { container, getByText } = render(
-            <PeoplePicker onRemove={jest.fn()} label="testLabel" setSelectedPeople={jest.fn()} />,
-        );
+        const { container, getByText } = render(<PeoplePicker onChange={jest.fn()} label="testLabel" />);
         expect(container.querySelector('typography__heading typography__heading--h3')).not.toBeInTheDocument();
         fireEvent.click(getByText('people_picker--open-selector', { exact: false }));
         expect(getByText('testLabel')).toBeInTheDocument();

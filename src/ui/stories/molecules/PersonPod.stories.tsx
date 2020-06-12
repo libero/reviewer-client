@@ -22,7 +22,7 @@ storiesOf('ui | molecules/PersonPod', module)
             return (
                 <PersonPod
                     id="id1"
-                    initialySelected={selected}
+                    initiallySelected={selected}
                     focuses={focuses}
                     expertises={expertises}
                     name={name}

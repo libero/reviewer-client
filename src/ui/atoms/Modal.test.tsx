@@ -97,7 +97,7 @@ describe('Modal', (): void => {
         const { getByText } = render(<Modal isShowing={true} hide={mockFn} />, {
             container: appContainer(),
         });
-        fireEvent.click(getByText('Cancel'));
+        fireEvent.click(getByText('modal--cancel-button'));
         expect(mockFn).toHaveBeenCalledTimes(1);
     });
 
@@ -127,7 +127,7 @@ describe('Modal', (): void => {
         const { getByText } = render(<Modal isShowing={true} hide={mockFn} onAccept={mockFn2} />, {
             container: appContainer(),
         });
-        fireEvent.click(getByText('Cancel'));
+        fireEvent.click(getByText('modal--cancel-button'));
         expect(mockFn).toHaveBeenCalledTimes(1);
         expect(mockFn2).not.toHaveBeenCalled();
     });

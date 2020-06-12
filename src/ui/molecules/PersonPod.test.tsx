@@ -27,7 +27,7 @@ describe('Button', (): void => {
     });
 
     it('should toggle the check if preselected is passed in', async (): Promise<void> => {
-        const { container } = render(<PersonPod toggleHandler={jest.fn()} initialySelected={true} id="" name="" />);
+        const { container } = render(<PersonPod toggleHandler={jest.fn()} initiallySelected={true} id="" name="" />);
         expect(container.querySelectorAll('[data-selected]').length).toBe(1);
     });
 
@@ -82,12 +82,12 @@ describe('Button', (): void => {
 
     it('should use an override select icon if passed', (): void => {
         const { container, rerender } = render(
-            <PersonPod initialySelected={true} toggleHandler={jest.fn()} id="" name="" />,
+            <PersonPod initiallySelected={true} toggleHandler={jest.fn()} id="" name="" />,
         );
         expect(container.querySelector('.pod__button').querySelector('.person-pod__selected_icon')).toBeInTheDocument();
         rerender(
             <PersonPod
-                initialySelected={true}
+                initiallySelected={true}
                 selectedButtonIcon={<div className="testIcon" />}
                 toggleHandler={jest.fn()}
                 id=""

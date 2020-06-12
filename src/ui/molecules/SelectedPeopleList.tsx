@@ -24,7 +24,7 @@ const SelectedPeopleList = ({ people = [], openSelectorText, required, onRemove,
                             {...person}
                             toggleHandler={onRemove}
                             selectedButtonIcon={<Delete />}
-                            initialySelected
+                            initiallySelected
                         />
                     </div>
                 ),

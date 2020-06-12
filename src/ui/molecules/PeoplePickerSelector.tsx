@@ -7,7 +7,7 @@ import { EditorAlias } from '../../initial-submission/types';
 
 interface Props {
     people?: EditorAlias[];
-    initialySelected?: string[];
+    initiallySelected?: string[];
     onDone: (selectedPeople: string[]) => void;
     label: string;
     toggle: Function;
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const PeoplePickerSelector = ({
-    initialySelected = [],
+    initiallySelected = [],
     people = [],
     onDone,
     label,
@@ -27,7 +27,7 @@ const PeoplePickerSelector = ({
     max,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
-    const [locallySelected, setLocallySelected] = useState(initialySelected);
+    const [locallySelected, setLocallySelected] = useState(initiallySelected);
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
     const [filteredPeople, setFilteredPeople] = useState(people);
@@ -56,8 +56,10 @@ const PeoplePickerSelector = ({
     const isFirstRender = useRef(true);
 
     useEffect((): void => {
-        setLocallySelected(initialySelected);
-    }, [initialySelected, isShowing]);
+        if (!isShowing) {
+            setLocallySelected(initiallySelected);
+        }
+    }, [initiallySelected, isShowing]);
 
     useEffect((): void => {
         if (isFirstRender.current) {
@@ -88,7 +90,7 @@ const PeoplePickerSelector = ({
             fullscreen={true}
             buttonType="primary"
             buttonText="Add"
-            buttonDisabled={min && locallySelected.length < min}
+            buttonDisabled={!!min && locallySelected.length < min}
         >
             {max && locallySelected.length >= max ? (
                 <Banner>{`${t('validation--peoplepicker_maximum-prefix')} ${max} ${t(
@@ -135,7 +137,7 @@ const PeoplePickerSelector = ({
                             const selected = locallySelected.includes(person.id);
                             return (
                                 <div key={person.id} className="people-picker__modal_list--item">
-                                    <PersonPod {...person} toggleHandler={togglePerson} initialySelected={selected} />
+                                    <PersonPod {...person} toggleHandler={togglePerson} initiallySelected={selected} />
                                 </div>
                             );
                         },

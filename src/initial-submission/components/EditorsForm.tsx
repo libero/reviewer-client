@@ -251,11 +251,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
                 people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
-                onRemove={(selected): void =>
-                    setValue('suggestedSeniorEditors', suggestedSeniorEditors.filter(personId => personId !== selected))
-                }
-                setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
-                selectedPeople={suggestedSeniorEditors}
+                onChange={(selected): void => {
+                    setValue('suggestedSeniorEditors', selected);
+                }}
+                initialSelectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
                 error={
                     errors && errors.suggestedSeniorEditors
@@ -278,14 +277,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                             ? []
                             : getSeniorEditors.getEditors.filter(ed => !suggestedSeniorEditors.includes(ed.id))
                     }
-                    onRemove={(selected): void =>
-                        setValue('opposedSeniorEditors', opposedSeniorEditors.filter(personId => personId !== selected))
-                    }
-                    setSelectedPeople={(selected): void => {
+                    onChange={(selected): void => {
                         setValue('opposedSeniorEditors', selected);
                         triggerValidation('opposedSeniorEditorsReason');
                     }}
-                    selectedPeople={opposedSeniorEditors}
+                    initialSelectedPeople={opposedSeniorEditors}
                     className="opposed-senior-editors-picker"
                     max={MAX_OPPOSED_SENIOR_EDITORS}
                     hideLabel={true}
@@ -308,14 +304,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                         ? []
                         : getReviewingEditors.getEditors.filter(ed => !opposedReviewingEditors.includes(ed.id))
                 }
-                onRemove={(selected): void =>
-                    setValue(
-                        'suggestedReviewingEditors',
-                        suggestedReviewingEditors.filter(personId => personId !== selected),
-                    )
-                }
-                setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
-                selectedPeople={suggestedReviewingEditors}
+                onChange={(selected): void => {
+                    setValue('suggestedReviewingEditors', selected);
+                }}
+                initialSelectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
                 error={
                     errors && errors.suggestedReviewingEditors
@@ -338,17 +330,11 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                             ? []
                             : getReviewingEditors.getEditors.filter(ed => !suggestedReviewingEditors.includes(ed.id))
                     }
-                    onRemove={(selected): void =>
-                        setValue(
-                            'opposedReviewingEditors',
-                            opposedReviewingEditors.filter(personId => personId !== selected),
-                        )
-                    }
-                    setSelectedPeople={(selected): void => {
+                    onChange={(selected): void => {
                         setValue('opposedReviewingEditors', selected);
                         triggerValidation('opposedReviewingEditorsReason');
                     }}
-                    selectedPeople={opposedReviewingEditors}
+                    initialSelectedPeople={opposedReviewingEditors}
                     className="opposed-reviewing-editors-picker"
                     max={MAX_OPPOSED_REVIEWING_EDITORS}
                     label={t('editors.opposed-reviewing-editors-people-picker-label')}
