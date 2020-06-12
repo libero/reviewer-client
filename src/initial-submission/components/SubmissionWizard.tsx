@@ -54,7 +54,6 @@ const ButtonComponent = (
     const [processing, setProcessing] = useState(false);
     const { t } = useTranslation('wizard-form');
     const lastPage = getCurrentStepPathIndex() === stepConfig.length - 1;
-    console.log(lastPage);
     return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (

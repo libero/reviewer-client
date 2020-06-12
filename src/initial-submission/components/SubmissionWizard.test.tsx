@@ -84,8 +84,8 @@ describe('SubmissionWizard', (): void => {
             expect(getProps().location.pathname).toBe(`/submit/id/${expectedNextStep}`);
         };
 
-        const nextButtonText = 'next';
-        const backButtonText = 'back';
+        const nextButtonText = 'navigation.next';
+        const backButtonText = 'navigation.back';
 
         it('clicking Next on Author step takes you to Files', (): void => {
             const enterDetails = (container: HTMLElement): void => {
