@@ -47,6 +47,7 @@ jobs:
   saucelabs-tests:
     needs: build
     runs-on: ubuntu-latest
+    if: "! contains(toJSON(github.event.commits.*.msg), '[skip-saucelabs]')"
     strategy:
       fail-fast: false
       max-parallel: 4

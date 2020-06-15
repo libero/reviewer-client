@@ -59,11 +59,12 @@ The project contains a [Makefile] which uses [Docker] for development.
 
 Browsertests will be run against SauceLabs for a variety of browsers but we also create a container that runs them against Chrome. Having containerized browsertests lets us run them easily in the umbrella repo or as part of a helm release.
 
-SauceLabs kindly grants us test capacity as part of their [OpenSauce](https://saucelabs.com/solutions/open-source) program. As such all test results are publically available.
+SauceLabs kindly grants us test capacity as part of their [OpenSauce](https://saucelabs.com/solutions/open-source) program.
 
-Links to the SauceLabs test results page are output as part of testcafe results.
-
-To allow browsertest containerization we need to inject a `BASE_URL` from an environment variable.
+- disable saucelabs on a commit by adding `[skip-saucelabs]` to your commit message
+- all test results are publically available
+- testcafe prints link to saucelabs test result to stdout
+- to allow browsertest containerization we need to inject a `BASE_URL` from an environment variable
 
 Make sure to include something like this for all browsertests:
 
