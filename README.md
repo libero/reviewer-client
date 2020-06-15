@@ -14,6 +14,10 @@ The client for "libero reviewer".
 
 The project contains a [Makefile] which uses [Docker] for development.
 
+[Browsertest results](https://app.saucelabs.com/open_sauce/user/libero_reviewer/builds)
+
+[![Testing Powered By SauceLabs](https://saucelabs.github.io/images/opensauce/powered-by-saucelabs-badge-gray.png "Testing Powered By SauceLabs")](https://app.saucelabs.com/open_sauce/user/libero_reviewer/builds)
+
 ## Development
 
 1. `make setup`
