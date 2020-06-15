@@ -180,13 +180,19 @@ export const getEditorsQuery = gql`
 `;
 
 export const saveDisclosurePageMutation = gql`
-    mutation SaveDisclosure($id: ID!, $details: DisclosureDetailsInput!) {
-        saveDisclosure(id: $id, details: $details) {
+    mutation SaveDisclosurePage($id: ID!, $details: DisclosureDetailsInput!) {
+        saveDisclosurePage(id: $id, details: $details) {
             id
             disclosure {
                 submitterSignature
                 disclosureConsent
             }
         }
+    }
+`;
+
+export const submitSubmissionMutation = gql`
+    mutation submit($id: ID!) {
+        id
     }
 `;

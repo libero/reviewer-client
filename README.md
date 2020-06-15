@@ -42,17 +42,36 @@ The project contains a [Makefile] which uses [Docker] for development.
    make run_ci
    ```
 
+   __CI-localhost:__ same as __CI__ but exposed on localhost
+   ```sh
+   make build_prod
+   make start_ci_localhost
+   ```
+
 3. Run tests:  
    - `make lint`: lint code
    - `make test`: unittests
-   - `make test_browser`: locally executed browsertests, use with `start_test` or `start_dev`
+   - `make test_browser`: locally executed browsertests, use with `start_test`, `start_dev` or `start_ci_localhost`
    - `make test_browser_containerized`: use with `build_prod ; start_ci`
+   - `make test_browser_saucelabs`: browsertests run against saucelabs, use with `start_test`, `start_dev` or `start_ci_localhost`
+
+  To use [saucelabs](https://saucelabs.com) you need an account and have to set `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env vars.
 
 3. `make stop` to teardown
 
 ## Adding Browsertests
 
-To allow browsertest containerization we need to inject a `BASE_URL` from an environment variable.
+Browsertests will be run against SauceLabs for a variety of browsers but we also create a container that runs them against Chrome. Having containerized browsertests lets us run them easily in the umbrella repo or as part of a helm release.
+
+SauceLabs kindly grants us test capacity as part of their [OpenSauce](https://saucelabs.com/solutions/open-source) program.
+
+- disable saucelabs on a PR by adding `[skip-saucelabs]` to your PR description 
+  - can't disable per commit because github [doesn't expose the commit message in its context](https://github.community/t/accessing-commit-message-in-pull-request-event/17158/2)
+  - saucelabs job will always be run on commit/merge to master
+- browsers to run are set in `.github/workflows/ci.yml`
+- all test results are publically available
+- testcafe prints link to saucelabs test result to stdout
+- to allow browsertest containerization we need to inject a `BASE_URL` from an environment variable
 
 Make sure to include something like this for all browsertests:
 
@@ -65,6 +84,8 @@ fixture`Getting Started`.page`${BASE_URL}`;
 test('assert nav bar', async() => {
   ...
 ```
+
+![Testing Powered By SauceLabs](https://saucelabs.github.io/images/opensauce/powered-by-saucelabs-badge-white.svg?sanitize=true "Testing Powered By SauceLabs")
 
 ## Use of `reviewer-mocks`
 
@@ -88,3 +109,4 @@ The compose files use `liberoadmin/reviewer-mocks:latest`.
 [Makefile]: Makefile
 [Node.js]: https://nodejs.org/
 [timeout]: http://man7.org/linux/man-pages/man1/timeout.1.html
+

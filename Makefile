@@ -7,6 +7,10 @@ DOCKER_COMPOSE_TEST = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.ym
 DOCKER_COMPOSE_CI = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.ci.yml
 DOCKER_COMPOSE_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
+export SAUCE_JOB=reviewer-client
+export SAUCE_BUILD ?= "local-$(shell date --utc +%Y%m%d.%H%M)"
+export SAUCE_API_HOST=eu-central-1.saucelabs.com
+
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
@@ -47,9 +51,15 @@ start_test: ## start with dev build image, reviewer-mocks mocking api, continuum
 	${DOCKER_COMPOSE_TEST} up -d nginx
 	${DOCKER_COMPOSE} logs -f reviewer-client
 
-start_ci: ## start with production build, with reviewer-mocks mocking api, continuum-adaptor and continuum
+start_ci: ## start with production build, everything mocked and reachable inside docker network for containerized browsertest 
 	${DOCKER_COMPOSE_CI} pull reviewer-mocks
 	${DOCKER_COMPOSE_CI} up -d reviewer-mocks reviewer-client nginx
+	./.scripts/docker/wait-healthy.sh reviewer-client_app 60
+	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 60
+
+start_ci_localhost: ## start with production build, everything mocked and exposed on localhost
+	${DOCKER_COMPOSE_CI} pull reviewer-mocks
+	${DOCKER_COMPOSE_CI} -f docker-compose.ci.localhost.yml up -d reviewer-mocks reviewer-client nginx
 	./.scripts/docker/wait-healthy.sh reviewer-client_app 60
 	./.scripts/docker/wait-healthy.sh reviewer-client_mocks 60
 
@@ -62,7 +72,7 @@ lint: install ## lint code
 test: yarn ## run unit tests
 	yarn test
 
-test_browser: ## run browser tests
+test_browser: ## run browser tests with local chrome
 	yarn wait-port localhost:9000
 	yarn test:browser-headless
 
@@ -79,6 +89,19 @@ test_firefox:
 		"firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
 
 test_browser_containerized: build_browsertest test_chromium 
+
+test_browser_saucelabs: yarn  # browsers run during ci are set in .github/workflows/ci.yml
+	yarn testcafe 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
+
+test_browser_saucelabs_serial: yarn  # browsers run during ci are set in .github/workflows/ci.yml
+	yarn testcafe 'saucelabs:Chrome@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
+	# old edge doesn't work, see https://github.com/libero/reviewer/issues/982
+	#yarn testcafe 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Safari@13:macOS 10.13' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Safari@12.0:macOS 10.14' 'tests/**/*.browser.ts'
+	yarn testcafe 'saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
 
 run_ci: ## run as if in ci
 	make lint

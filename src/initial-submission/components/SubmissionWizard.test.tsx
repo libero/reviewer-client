@@ -1,8 +1,9 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult, act } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, act, waitFor } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
+import appContainer from '../../../test-utils/appContainer';
 
 let loading = false;
 jest.mock('@apollo/react-hooks', () => ({
@@ -19,6 +20,7 @@ jest.mock('@apollo/react-hooks', () => ({
                     updated: 42,
                     articleType: 'fiction',
                 },
+                getEditors: [],
             },
             loading: loading,
         };
@@ -59,33 +61,34 @@ describe('SubmissionWizard', (): void => {
         expect(getByText('loading...')).toBeInTheDocument();
     });
 
+    // when we introduce form validation we should inject the schema at the Routes.tsx level this will allow these tests to work by passing an empty validation schema
+    const testNavigationButtons = async (
+        buttonText: string,
+        currentStep: string,
+        expectedNextStep: string,
+        enterDetails?: (container: HTMLElement) => void,
+    ): Promise<void> => {
+        const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+        const { getByText, container } = render(component, {
+            wrapper: routerWrapper([`/submit/id/${currentStep}`]),
+        });
+        expect(getProps().location.pathname).toBe(`/submit/id/${currentStep}`);
+        if (enterDetails) {
+            enterDetails(container);
+        }
+        await act(async () => await fireEvent.click(getByText(buttonText)));
+        expect(getProps().location.pathname).toBe(`/submit/id/${expectedNextStep}`);
+    };
+
+    const nextButtonText = 'navigation.next';
+    const backButtonText = 'navigation.back';
+
     describe('Step navigation', (): void => {
         it('should redirect to author step if no step path given', (): void => {
             const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
             render(component, { wrapper: routerWrapper(['/submit/id/author']) });
             expect(getProps().location.pathname).toBe('/submit/id/author');
         });
-        // when we introduce form validation we should inject the schema at the Routes.tsx level this will allow these tests to work by passing an empty validation schema
-        const testNavigationButtons = async (
-            buttonText: string,
-            currentStep: string,
-            expectedNextStep: string,
-            enterDetails?: (container: HTMLElement) => void,
-        ): Promise<void> => {
-            const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
-            const { getByText, container } = render(component, {
-                wrapper: routerWrapper([`/submit/id/${currentStep}`]),
-            });
-            expect(getProps().location.pathname).toBe(`/submit/id/${currentStep}`);
-            if (enterDetails) {
-                enterDetails(container);
-            }
-            await act(async () => await fireEvent.click(getByText(buttonText)));
-            expect(getProps().location.pathname).toBe(`/submit/id/${expectedNextStep}`);
-        };
-
-        const nextButtonText = 'next';
-        const backButtonText = 'back';
 
         it('clicking Next on Author step takes you to Files', (): void => {
             const enterDetails = (container: HTMLElement): void => {
@@ -146,6 +149,47 @@ describe('SubmissionWizard', (): void => {
         });
         it('clicking Back on Files step takes you to Author', (): void => {
             testNavigationButtons(backButtonText, 'files', 'author');
+        });
+    });
+    describe('submit', () => {
+        it('displays a Submit button when on the last step', () => {
+            const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByText } = render(component, {
+                wrapper: routerWrapper([`/submit/id/disclosure`]),
+            });
+            expect(() => getByText('navigation.next')).toThrow();
+            expect(getByText('navigation.submit')).toBeInTheDocument();
+        });
+        it('clicking Back on Disclosure step takes you to Editors', () => {
+            testNavigationButtons(backButtonText, 'disclosure', 'editors');
+        });
+    });
+
+    describe('submit modal', () => {
+        it('should show the modal when the page is valid', async () => {
+            const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByLabelText, getByText, baseElement } = render(component, {
+                wrapper: routerWrapper(['/submit/id/disclosure']),
+                container: appContainer(),
+            });
+            fireEvent.input(getByLabelText('disclosure.submitter-signature-input'), {
+                target: { value: 'Conker The Squirrel' },
+            });
+            fireEvent.click(getByLabelText('disclosure.disclosure-consent-input'));
+            fireEvent.click(getByText('navigation.submit'));
+            await waitFor(() => {});
+            expect(baseElement.querySelector('.modal')).toBeInTheDocument();
+        });
+
+        it('should not show the modal when the page is invalid', async () => {
+            const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
+            const { getByText, baseElement } = render(component, {
+                wrapper: routerWrapper(['/submit/id/disclosure']),
+                container: appContainer(),
+            });
+            fireEvent.click(getByText('navigation.submit'));
+            await waitFor(() => {});
+            expect(baseElement.querySelectorAll('.modal')).toHaveLength(0);
         });
     });
 });

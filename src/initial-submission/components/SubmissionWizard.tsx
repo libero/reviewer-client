@@ -1,17 +1,19 @@
 /*eslint-disable react/display-name*/
 import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
-import { Button } from '../../ui/atoms';
+import { Button, Modal, Paragraph } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import FileDetailsStep from './FileDetailsForm';
 import DetailsForm from './DetailsForm';
-import { useQuery } from '@apollo/react-hooks';
-import { getSubmissionQuery } from '../graphql';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { getSubmissionQuery, submitSubmissionMutation } from '../graphql';
 import * as H from 'history';
 import EditorsForm from './EditorsForm';
 import DisclosureForm from './DisclosureForm';
+import { useTranslation } from 'react-i18next';
+import useModal from '../../ui/hooks/useModal';
 
 interface Props {
     id: string;
@@ -19,7 +21,11 @@ interface Props {
 
 export interface StepProps {
     initialValues: Submission;
-    ButtonComponent?: (props: { saveFunction?: Function; triggerValidation: () => Promise<boolean> }) => JSX.Element;
+    ButtonComponent?: (props: {
+        saveFunction?: Function;
+        triggerValidation: () => Promise<boolean>;
+        onSubmit?: () => void;
+    }) => JSX.Element;
 }
 
 interface StepConfig {
@@ -37,6 +43,7 @@ const ButtonComponent = (
     history: H.History,
     getCurrentStepPathIndex: Function,
     stepConfig: StepConfig[],
+    toggle: () => void,
 ) => ({
     saveFunction,
     triggerValidation,
@@ -45,6 +52,8 @@ const ButtonComponent = (
     triggerValidation: () => Promise<boolean>;
 }): JSX.Element => {
     const [processing, setProcessing] = useState(false);
+    const { t } = useTranslation('wizard-form');
+    const lastPage = getCurrentStepPathIndex() === stepConfig.length - 1;
     return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
@@ -62,13 +71,19 @@ const ButtonComponent = (
                         }
                     }}
                 >
-                    back
+                    {t('navigation.back')}
                 </Button>
             )}
-            {getCurrentStepPathIndex() < stepConfig.length - 1 && (
-                <Button
-                    className="submission-wizard-next-button"
-                    onClick={async (): Promise<void> => {
+            <Button
+                className="submission-wizard-next-button"
+                onClick={async (): Promise<void> => {
+                    if (lastPage) {
+                        triggerValidation().then(async valid => {
+                            if (valid) {
+                                toggle();
+                            }
+                        });
+                    } else {
                         if (!processing) {
                             try {
                                 setProcessing(true);
@@ -82,12 +97,12 @@ const ButtonComponent = (
                                 setProcessing(false);
                             }
                         }
-                    }}
-                    type="primary"
-                >
-                    next
-                </Button>
-            )}
+                    }
+                }}
+                type="primary"
+            >
+                {lastPage ? t('navigation.submit') : t('navigation.next')}
+            </Button>
         </React.Fragment>
     );
 };
@@ -106,8 +121,12 @@ const stepConfig: StepConfig[] = [
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
-    const getCurrentStepPathIndex = (): number =>
-        stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
+    const { t } = useTranslation('wizard-form');
+    const getCurrentStepPathIndex = (): number => {
+        return stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
+    };
+    const [submitSubmission] = useMutation<Submission>(submitSubmissionMutation);
+    const { isShowing, toggle } = useModal();
 
     const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
         variables: { id },
@@ -141,6 +160,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                             history,
                                             getCurrentStepPathIndex,
                                             stepConfig,
+                                            toggle,
                                         )}
                                     />
                                 )
@@ -150,6 +170,18 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 )}
                 <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
+            <Modal
+                isShowing={isShowing}
+                hide={toggle}
+                buttonType="primary"
+                buttonText={t('submit.modal-confirm') as string}
+                onAccept={(): void => {
+                    submitSubmission({ variables: { id: data.getSubmission.id } });
+                }}
+            >
+                <h2 className="typography__heading typography__heading--h2">{t('submit.modal-title')}</h2>
+                <Paragraph type="writing">{t('submit.modal-text')}</Paragraph>
+            </Modal>
         </div>
     );
 };

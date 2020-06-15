@@ -58,9 +58,11 @@ const DisclosureForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Elem
             <h2 className="typography__heading typography__heading--h2">{t('disclosure.form-title')}</h2>
             <div className="disclosure__submission">
                 <h3 className="typography__heading typography__heading--h3 disclosure__submission--title">
-                    {initialValues.manuscriptDetails.title}
+                    {initialValues.manuscriptDetails ? initialValues.manuscriptDetails.title : ''}
                 </h3>
-                <span className="typography__body typography__body--primary disclosure__submission--name">{`${initialValues.author.firstName} ${initialValues.author.lastName}`}</span>
+                <span className="typography__body typography__body--primary disclosure__submission--name">
+                    {initialValues.author ? `${initialValues.author.firstName} ${initialValues.author.lastName}` : ''}
+                </span>
                 <span className="typography__small typography__small--secondary disclosure__submission--article-date">
                     {initialValues.articleType.toUpperCase().replace(/-+/g, ' ')} {' ' + date}
                 </span>
