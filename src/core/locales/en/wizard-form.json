@@ -4,6 +4,11 @@
         "back": "back",
         "submit": "submit"
     },
+    "submit": {
+        "modal-title": "Confirm submission?",
+        "modal-text": "Your initial submission will be sent for editorial assessment. You will be unable to make changes after this point.",
+        "modal-confirm": "Confirm"
+    },
     "author": {
         "prefill--link": "Pre-fill my details ",
         "prefill--text": "using ORCID",

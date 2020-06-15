@@ -121,6 +121,7 @@ const stepConfig: StepConfig[] = [
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
+    const { t } = useTranslation('wizard-form');
     const getCurrentStepPathIndex = (): number => {
         return stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
     };
@@ -173,13 +174,13 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 isShowing={isShowing}
                 hide={toggle}
                 buttonType="primary"
-                buttonText="Submit"
+                buttonText={t('submit.modal-confirm') as string}
                 onAccept={(): void => {
                     submitSubmission({ variables: { id: data.getSubmission.id } });
                 }}
             >
-                <h2 className="typography__heading typography__heading--h2">Submit to eLife</h2>
-                <Paragraph type="writing">blahblahblahblah</Paragraph>
+                <h2 className="typography__heading typography__heading--h2">{t('submit.modal-title')}</h2>
+                <Paragraph type="writing">{t('submit.modal-text')}</Paragraph>
             </Modal>
         </div>
     );
