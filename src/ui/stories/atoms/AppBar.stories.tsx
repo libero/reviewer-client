@@ -5,7 +5,7 @@ import { AppBar, AppBarIcon } from '../../atoms';
 import { BurgerMenu, Menu } from '../../molecules';
 import { LocationDescriptor } from 'history';
 import { MemoryRouter } from 'react-router';
-import Logo from '../../../core/assets/elife-logo.png';
+import Logo from '../../../core/assets/elife-logo.svg';
 import '../../../core/styles/index.scss';
 
 const historyLocation: LocationDescriptor[] = ['/'];

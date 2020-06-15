@@ -1,6 +1,7 @@
 .dropdown-nav {
     display: flex;
     padding-bottom: 1rem;
+    grid-area: static-nav;
     @include forSize('tabletPortraitUp') {
         display: none;
     }
@@ -63,14 +64,16 @@
 .side-bar-nav {
     display: none;
     flex-direction: column;
-    padding: 0 50px 0 0;
+    grid-area: left-menu;
+    align-items: flex-end;
 
     @include forSize('tabletPortraitUp') {
         display: flex;
     }
 
     span {
-        padding: 10px 0px;
+        display: block;
+        padding: 10px 50px 10px 0;
         a {
             cursor: pointer;
             text-decoration: none;

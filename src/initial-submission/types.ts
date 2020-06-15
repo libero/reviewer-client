@@ -14,6 +14,7 @@ export interface Submission {
     files?: FileDetails;
     editorDetails?: EditorsDetails;
     suggestions?: Array<Suggestion>;
+    disclosure?: DisclosureDetails;
 }
 
 export interface File {
@@ -83,4 +84,9 @@ export interface UploadInProgressData {
         type: string;
         submissionId: string;
     };
+}
+
+export interface DisclosureDetails {
+    submitterSignature?: string;
+    disclosureConsent?: boolean;
 }

@@ -11,12 +11,16 @@ import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField } from '../../ui/atoms';
 import { set } from 'lodash';
+import { Link } from 'react-router-dom';
 
 const MIN_SUGGESTED_SENIOR_EDITORS = 2;
 const MAX_SUGGESTED_SENIOR_EDITORS = 6;
 const MIN_SUGGESTED_REVIEWING_EDITORS = 2;
 const MAX_SUGGESTED_REVIEWING_EDITORS = 6;
 const MAX_SUGGESTED_REVIEWERS = 6;
+const MAX_OPPOSED_REVIEWERS = 2;
+const MAX_OPPOSED_REVIEWING_EDITORS = 2;
+const MAX_OPPOSED_SENIOR_EDITORS = 1;
 
 interface GetEditors {
     getEditors: EditorAlias[];
@@ -78,42 +82,46 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 ),
             )
             .max(MAX_SUGGESTED_REVIEWERS, t('editors.validation.suggested-reviewers-max')),
-        opposedReviewers: yup.array(
-            yup.object().shape(
-                {
-                    name: yup
-                        .string()
-                        .trim()
-                        .when('email', {
-                            is: email => email && email.length > 0,
-                            then: yup.string().required(t('editors.validation.reviewers-name-required')),
-                            otherwise: yup.string(),
-                        }),
-                    email: yup
-                        .string()
-                        .trim()
-                        .when('name', {
-                            is: name => name && name.length > 0,
-                            then: yup
-                                .string()
-                                .email(t('editors.validation.reviewers-email-valid'))
-                                .required(t('editors.validation.reviewers-email-required')),
-                            otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
-                        }),
-                },
-                [['name', 'email']],
-            ),
-        ),
+        opposedReviewers: yup
+            .array(
+                yup.object().shape(
+                    {
+                        name: yup
+                            .string()
+                            .trim()
+                            .when('email', {
+                                is: email => email && email.length > 0,
+                                then: yup.string().required(t('editors.validation.reviewers-name-required')),
+                                otherwise: yup.string(),
+                            }),
+                        email: yup
+                            .string()
+                            .trim()
+                            .when('name', {
+                                is: name => name && name.length > 0,
+                                then: yup
+                                    .string()
+                                    .email(t('editors.validation.reviewers-email-valid'))
+                                    .required(t('editors.validation.reviewers-email-required')),
+                                otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
+                            }),
+                    },
+                    [['name', 'email']],
+                ),
+            )
+            .max(MAX_OPPOSED_REVIEWERS),
         opposedReviewersReason: yup.string().when('opposedReviewers', {
             is: (editors: ReviewerAlias[]) => editors.some(editor => editor.name + editor.email !== ''),
             then: yup.string().required(t('editors.validation.opposed-reviewers-reason-required')),
         }),
-        opposedReviewingEditors: yup.array().max(2, t('editors.validation.opposed-reviewing-editors-max')),
+        opposedReviewingEditors: yup
+            .array()
+            .max(MAX_OPPOSED_REVIEWING_EDITORS, t('editors.validation.opposed-reviewing-editors-max')),
         opposedReviewingEditorsReason: yup.string().when('opposedReviewingEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-reviewing-editors-reason-required')),
         }),
-        opposedSeniorEditors: yup.array().max(1, t('opposed-senior-editors-max')),
+        opposedSeniorEditors: yup.array().max(MAX_OPPOSED_SENIOR_EDITORS, t('opposed-senior-editors-max')),
         opposedSeniorEditorsReason: yup.string().when('opposedSeniorEditors', {
             is: editors => !!editors.length,
             then: yup.string().required(t('editors.validation.opposed-senior-editors-reason-required')),
@@ -243,11 +251,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
                 people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
-                onRemove={(selected): void =>
-                    setValue('suggestedSeniorEditors', suggestedSeniorEditors.filter(personId => personId !== selected))
-                }
-                setSelectedPeople={(selected): void => setValue('suggestedSeniorEditors', selected)}
-                selectedPeople={suggestedSeniorEditors}
+                onChange={(selected): void => {
+                    setValue('suggestedSeniorEditors', selected);
+                }}
+                initialSelectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
                 error={
                     errors && errors.suggestedSeniorEditors
@@ -270,15 +277,15 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                             ? []
                             : getSeniorEditors.getEditors.filter(ed => !suggestedSeniorEditors.includes(ed.id))
                     }
-                    onRemove={(selected): void =>
-                        setValue('opposedSeniorEditors', opposedSeniorEditors.filter(personId => personId !== selected))
-                    }
-                    setSelectedPeople={(selected): void => {
+                    onChange={(selected): void => {
                         setValue('opposedSeniorEditors', selected);
                         triggerValidation('opposedSeniorEditorsReason');
                     }}
-                    selectedPeople={opposedSeniorEditors}
+                    initialSelectedPeople={opposedSeniorEditors}
                     className="opposed-senior-editors-picker"
+                    max={MAX_OPPOSED_SENIOR_EDITORS}
+                    hideLabel={true}
+                    label={t('editors.opposed-senior-editors-people-picker-label')}
                 />
                 <MultilineTextField
                     id="opposedSeniorEditorsReason"
@@ -297,14 +304,10 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                         ? []
                         : getReviewingEditors.getEditors.filter(ed => !opposedReviewingEditors.includes(ed.id))
                 }
-                onRemove={(selected): void =>
-                    setValue(
-                        'suggestedReviewingEditors',
-                        suggestedReviewingEditors.filter(personId => personId !== selected),
-                    )
-                }
-                setSelectedPeople={(selected): void => setValue('suggestedReviewingEditors', selected)}
-                selectedPeople={suggestedReviewingEditors}
+                onChange={(selected): void => {
+                    setValue('suggestedReviewingEditors', selected);
+                }}
+                initialSelectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
                 error={
                     errors && errors.suggestedReviewingEditors
@@ -327,18 +330,15 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                             ? []
                             : getReviewingEditors.getEditors.filter(ed => !suggestedReviewingEditors.includes(ed.id))
                     }
-                    onRemove={(selected): void =>
-                        setValue(
-                            'opposedReviewingEditors',
-                            opposedReviewingEditors.filter(personId => personId !== selected),
-                        )
-                    }
-                    setSelectedPeople={(selected): void => {
+                    onChange={(selected): void => {
                         setValue('opposedReviewingEditors', selected);
                         triggerValidation('opposedReviewingEditorsReason');
                     }}
-                    selectedPeople={opposedReviewingEditors}
+                    initialSelectedPeople={opposedReviewingEditors}
                     className="opposed-reviewing-editors-picker"
+                    max={MAX_OPPOSED_REVIEWING_EDITORS}
+                    label={t('editors.opposed-reviewing-editors-people-picker-label')}
+                    hideLabel={true}
                 />
                 <MultilineTextField
                     id="opposedReviewingEditorsReason"
@@ -356,10 +356,16 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                     }}
                 />
             </ExcludedToggle>
-            {/* TODO add exclude reviewer toggleable box */}
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
+            <span className="suggestedReviewers--diversity typography__body typography__body--secondary">
+                {t('editors.reviewers-diversity_1')}
+                <Link to="/author-guide" className="typography__body--link">
+                    {t('editors.reviewers-diversity-link')}
+                </Link>
+                {t('editors.reviewers-diversity_2')}
+            </span>
             <ExpandingEmailField
-                maxRows={6}
+                maxRows={MAX_SUGGESTED_REVIEWERS}
                 className="suggestedReviewers__inputs"
                 name="suggestedReviewers"
                 labelPrefix={t('editors.reviewers-label-prefix')}
@@ -377,7 +383,7 @@ const EditorsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element
                 open={opposedReviewers.length > 0 || opposedReviewersReason !== ''}
             >
                 <ExpandingEmailField
-                    maxRows={2}
+                    maxRows={MAX_OPPOSED_REVIEWERS}
                     className="opposedReviewers__inputs"
                     name="opposedReviewers"
                     labelPrefix={t('editors.opposed-reviewers-label-prefix')}

@@ -6,7 +6,7 @@ const ContactUsElife = (): JSX.Element => {
     const { t } = useTranslation('contact-us');
 
     return (
-        <div className="contact-us-content">
+        <div className="static-page__content">
             <h1>{t('contact-elife.heading')}</h1>
 
             <Paragraph type="writing">{t('contact-elife.paragraph-1')}</Paragraph>

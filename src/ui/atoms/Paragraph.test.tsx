@@ -26,6 +26,7 @@ describe('Paragraph', (): void => {
                 <Paragraph type="writing">writing</Paragraph>
                 <Paragraph type="reading">reading</Paragraph>
                 <Paragraph type="small">small</Paragraph>
+                <Paragraph type="small-reading">small-reading</Paragraph>
                 <Paragraph type="footer">footer</Paragraph>
                 <Paragraph type="small" secondary={true}>
                     secondary
@@ -35,6 +36,12 @@ describe('Paragraph', (): void => {
         expect(getByText('writing')).toHaveClass('paragraph', 'typography__body', 'typography__body--primary');
         expect(getByText('reading')).toHaveClass('paragraph', 'typography__serif', 'typography__serif--primary');
         expect(getByText('small')).toHaveClass('paragraph', 'typography__small', 'typography__small--primary');
+        expect(getByText('small-reading')).toHaveClass(
+            'paragraph',
+            'typography__small',
+            'typography__small--primary',
+            'typography__small--serif',
+        );
         expect(getByText('footer')).toHaveClass(
             'paragraph',
             'typography__small',

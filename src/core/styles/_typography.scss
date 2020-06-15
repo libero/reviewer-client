@@ -68,6 +68,10 @@
   font-family: $fontStrong;
 }
 
+@mixin typography__small--serif {
+    font-family: $altFontFamily;
+}
+
 @mixin typography__small--link {
   color: $colourPrimary;
   text-decoration: none;
@@ -239,6 +243,10 @@
 
 .typography__small--link {
   @include typography__small--link;
+}
+
+.typography__small--serif {
+  @include typography__small--serif;
 }
 
 //serif text
