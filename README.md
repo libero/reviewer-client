@@ -61,7 +61,9 @@ Browsertests will be run against SauceLabs for a variety of browsers but we also
 
 SauceLabs kindly grants us test capacity as part of their [OpenSauce](https://saucelabs.com/solutions/open-source) program.
 
-- disable saucelabs on a commit by adding `[skip-saucelabs]` to your commit message
+- disable saucelabs on a PR by adding `[skip-saucelabs]` to your PR description 
+  - can't disable per commit because github [doesn't expose the commit message in its context](https://github.community/t/accessing-commit-message-in-pull-request-event/17158/2)
+  - saucelabs job will always be run on commit/merge to master
 - all test results are publically available
 - testcafe prints link to saucelabs test result to stdout
 - to allow browsertest containerization we need to inject a `BASE_URL` from an environment variable
