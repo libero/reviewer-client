@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - run: echo "$GITHUB_CONTEXTO"
+      - run: echo "$GITHUB_CONTEXT"
       - run: echo "${{ contains(github.event.head_commit.message, '[skip-saucelabs]') }}"
       - uses: whoan/docker-build-with-cache-action@v5
         with:
