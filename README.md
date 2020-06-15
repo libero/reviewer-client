@@ -14,8 +14,6 @@ The client for "libero reviewer".
 
 The project contains a [Makefile] which uses [Docker] for development.
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/elife-saucelabs-bot)](https://saucelabs.com/u/elife-saucelabs-bot)
-
 ## Development
 
 1. `make setup`
