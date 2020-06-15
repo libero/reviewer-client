@@ -8,7 +8,7 @@ echo "Starting Test Suite: ${TEST_FIXTURE}"
 
 if [ ${TEST_FIXTURE} == "all" ]
 then
-  ${TEST} tests/**/*.browser.ts
+  ${TEST} 'tests/**/*.browser.ts'
 else
   ${TEST} tests -F "${TEST_FIXTURE}*"
 fi
