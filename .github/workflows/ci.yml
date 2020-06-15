@@ -11,7 +11,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.head_commit.message), '[skip-saucelabs]')"
+    if: "!contains(github.event.pull_request.body, '[skip-saucelabs]')"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -32,6 +32,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.pull_request.body, '[skip-saucelabs]')"
     steps:
       - uses: actions/checkout@v2
         with:
