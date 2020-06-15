@@ -90,13 +90,14 @@ test_firefox:
 
 test_browser_containerized: build_browsertest test_chromium 
 
-test_browser_saucelabs: yarn
+test_browser_saucelabs: yarn  # browsers run during ci are set in .github/workflows/ci.yml
 	yarn testcafe 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
 
-test_browser_saucelabs_serial: yarn
+test_browser_saucelabs_serial: yarn  # browsers run during ci are set in .github/workflows/ci.yml
 	yarn testcafe 'saucelabs:Chrome@latest:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
+	# old edge doesn't work, see https://github.com/libero/reviewer/issues/982
 	#yarn testcafe 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@13:macOS 10.13' 'tests/**/*.browser.ts'
 	yarn testcafe 'saucelabs:Safari@12.0:macOS 10.14' 'tests/**/*.browser.ts'
