@@ -14,6 +14,8 @@ The client for "libero reviewer".
 
 The project contains a [Makefile] which uses [Docker] for development.
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/elife-saucelabs-bot)](https://saucelabs.com/u/elife-saucelabs-bot)
+
 ## Development
 
 1. `make setup`
@@ -57,6 +59,7 @@ The project contains a [Makefile] which uses [Docker] for development.
 
 ## Adding Browsertests
 
+
 To allow browsertest containerization we need to inject a `BASE_URL` from an environment variable.
 
 Make sure to include something like this for all browsertests:
@@ -70,6 +73,8 @@ fixture`Getting Started`.page`${BASE_URL}`;
 test('assert nav bar', async() => {
   ...
 ```
+
+![Testing Powered By SauceLabs](https://saucelabs.github.io/images/opensauce/powered-by-saucelabs-badge-white.svg?sanitize=true "Testing Powered By SauceLabs")
 
 ## Use of `reviewer-mocks`
 
