@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
 import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
 import { Submission, ManuscriptDetails, Suggestion } from '../types';
 import { Toggle } from '../../ui/molecules';
@@ -31,39 +30,9 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
     return detail;
 };
 
-const DetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
+const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
-    const schema = yup.object().shape({
-        title: yup.string().required(t('details.validation.title-required')),
-        subjects: yup.array().when('articleType', {
-            is: (articleType: string) => articleType && articleType === 'feature',
-            then: yup
-                .array()
-                .of(yup.string())
-                .max(2, t('details.validation.subjects-max'))
-                .nullable(),
-            otherwise: yup
-                .array()
-                .of(yup.string())
-                .min(1, t('details.validation.subjects-min'))
-                .max(2, t('details.validation.subjects-max'))
-                .required(t('details.validation.subjects-required'))
-                .nullable(),
-        }),
-        previouslyDiscussed: yup
-            .string()
-            .notOneOf(['', undefined], t('details.validation.previously-discussed-required'))
-            .nullable(),
-        previouslySubmitted: yup
-            .string()
-            .notOneOf(['', undefined], t('details.validation.previously-submitted-required'))
-            .nullable(),
-        firstCosubmissionTitle: yup
-            .string()
-            .notOneOf(['', undefined], t('details.validation.cosubmission-required'))
-            .nullable(),
-    });
-
+    const schema = schemaFactory(t);
     const validationResolver = useCallback((data: ManuscriptDetails) => {
         try {
             schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });

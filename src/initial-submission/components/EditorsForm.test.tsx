@@ -5,6 +5,7 @@ import EditorsForm from './EditorsForm';
 import { Submission } from '../types';
 import appContainer from '../../../test-utils/appContainer';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import { EditorsSchema } from '../utils/validationSchemas';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -104,14 +105,16 @@ describe('EditorsDetailsForm', (): void => {
     });
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<EditorsForm initialValues={testInitialValues} />, { wrapper: routerWrapper() });
+            render(<EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />, {
+                wrapper: routerWrapper(),
+            });
         }).not.toThrow();
     });
 
     describe('PeoplePickers', (): void => {
         it('display a senior editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -127,7 +130,7 @@ describe('EditorsDetailsForm', (): void => {
 
         it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -143,7 +146,7 @@ describe('EditorsDetailsForm', (): void => {
 
         it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -161,7 +164,7 @@ describe('EditorsDetailsForm', (): void => {
             void
         > => {
             const { baseElement, container, getAllByText, getByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -193,10 +196,13 @@ describe('EditorsDetailsForm', (): void => {
 
         describe('Excluded senior editors', () => {
             it('renders with excluded senior editors section closed when no excluded senior editors or reason in initial values', () => {
-                const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                });
+                const { getByText, container } = render(
+                    <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                        wrapper: routerWrapper(),
+                    },
+                );
                 expect(getByText('editors.opposed-senior-editors-toggle-action-text')).toBeInTheDocument();
                 expect(container.querySelector('.opposed-senior-editors-picker')).not.toBeInTheDocument();
                 expect(container.querySelector('#opposedSeniorEditorsReason')).not.toBeInTheDocument();
@@ -206,6 +212,7 @@ describe('EditorsDetailsForm', (): void => {
             > => {
                 const { getByText, container, rerender } = render(
                     <EditorsForm
+                        schemaFactory={EditorsSchema}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -226,6 +233,7 @@ describe('EditorsDetailsForm', (): void => {
                 expect(container.querySelector('#opposedSeniorEditorsReason')).toBeInTheDocument();
                 rerender(
                     <EditorsForm
+                        schemaFactory={EditorsSchema}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -247,6 +255,7 @@ describe('EditorsDetailsForm', (): void => {
             > => {
                 const { getByText } = render(
                     <EditorsForm
+                        schemaFactory={EditorsSchema}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -270,6 +279,7 @@ describe('EditorsDetailsForm', (): void => {
             it('clears the excluded senior editors and reason when the toggle section is closed', () => {
                 const { getByText, container } = render(
                     <EditorsForm
+                        schemaFactory={EditorsSchema}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -300,7 +310,7 @@ describe('EditorsDetailsForm', (): void => {
 
             it('should limit the user to adding 1 opposed senior editor', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -323,7 +333,7 @@ describe('EditorsDetailsForm', (): void => {
                 void
             > => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -361,7 +371,11 @@ describe('EditorsDetailsForm', (): void => {
                 void
             > => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
+                    <EditorsForm
+                        schemaFactory={EditorsSchema}
+                        initialValues={testInitialValues}
+                        ButtonComponent={ButtonComponent}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -402,7 +416,7 @@ describe('EditorsDetailsForm', (): void => {
 
             it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -444,7 +458,7 @@ describe('EditorsDetailsForm', (): void => {
 
             it('should limit the user to adding 2 opposed reviewing editor', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -472,7 +486,7 @@ describe('EditorsDetailsForm', (): void => {
             void
         > => {
             const { baseElement, container, getAllByText, getByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -505,6 +519,7 @@ describe('EditorsDetailsForm', (): void => {
         it('displays initial value senior editors', () => {
             const { getByText } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -525,6 +540,7 @@ describe('EditorsDetailsForm', (): void => {
         it('displays initial value reviewing editors', () => {
             const { getByText } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -545,6 +561,7 @@ describe('EditorsDetailsForm', (): void => {
         it('removes a deleted reviewing editor', async (): Promise<void> => {
             const { container, getByText } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -571,6 +588,7 @@ describe('EditorsDetailsForm', (): void => {
         it('removes a deleted senior editor', async (): Promise<void> => {
             const { container, getByText } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -596,6 +614,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(async () => {
                 render(
                     <EditorsForm
+                        schemaFactory={EditorsSchema}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -613,10 +632,13 @@ describe('EditorsDetailsForm', (): void => {
     });
     describe('Suggested reviewers', () => {
         it('renders a single empty row of name email fields', () => {
-            const { getByLabelText } = render(<EditorsForm initialValues={testInitialValues} />, {
-                container: appContainer(),
-                wrapper: routerWrapper(),
-            });
+            const { getByLabelText } = render(
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name')).toBeInTheDocument();
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email')).toBeInTheDocument();
             expect(() => getByLabelText('editors.reviewers-label-prefix 2 expanding-email-field.name')).toThrow();
@@ -625,6 +647,7 @@ describe('EditorsDetailsForm', (): void => {
         it('populates with multiple initial suggestedReviewers values', async (): Promise<void> => {
             const { getByLabelText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -663,6 +686,7 @@ describe('EditorsDetailsForm', (): void => {
         it('limits the user to 6 entries', () => {
             const { getByLabelText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -692,7 +716,11 @@ describe('EditorsDetailsForm', (): void => {
 
         it('empty rows are valid', async (): Promise<void> => {
             const { getByText, getByLabelText, container } = render(
-                <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={testInitialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -715,6 +743,7 @@ describe('EditorsDetailsForm', (): void => {
         it('requires a email if name has value', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -739,6 +768,7 @@ describe('EditorsDetailsForm', (): void => {
         it('requires a name if email has value', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -764,6 +794,7 @@ describe('EditorsDetailsForm', (): void => {
         it('requires a valid email format if email is filled', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -788,6 +819,7 @@ describe('EditorsDetailsForm', (): void => {
         it('is valid if there is a name and valid email in a row', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -811,10 +843,13 @@ describe('EditorsDetailsForm', (): void => {
 
     describe('opposedReviewers', () => {
         it('renders with opposed reviewers section closed when no opposed reviewers or reason in initial values', () => {
-            const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
-                container: appContainer(),
-                wrapper: routerWrapper(),
-            });
+            const { getByText, container } = render(
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
             expect(getByText('editors.opposed-reviewers-toggle-action-text')).toBeInTheDocument();
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
@@ -825,6 +860,7 @@ describe('EditorsDetailsForm', (): void => {
         > => {
             const { getByText, container, rerender } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -845,6 +881,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
             rerender(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -863,10 +900,13 @@ describe('EditorsDetailsForm', (): void => {
         });
 
         it('clicking opposed toggle displays opposed reviewers fields and reson textarea', async (): Promise<void> => {
-            const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
-                container: appContainer(),
-                wrapper: routerWrapper(),
-            });
+            const { getByText, container } = render(
+                <EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
             fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
@@ -877,6 +917,7 @@ describe('EditorsDetailsForm', (): void => {
         it('clears opposed values and reason if toggle section is close', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -912,6 +953,7 @@ describe('EditorsDetailsForm', (): void => {
         it('limits the user to 2 opposed reviewers', () => {
             const { getByLabelText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -938,6 +980,7 @@ describe('EditorsDetailsForm', (): void => {
         it('requires a name if email has value', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -963,6 +1006,7 @@ describe('EditorsDetailsForm', (): void => {
         it('requires a valid email format if email is filled', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -987,6 +1031,7 @@ describe('EditorsDetailsForm', (): void => {
         it('requires a reason value if opposed reviewer has a value', async (): Promise<void> => {
             const { getByText } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -1009,6 +1054,7 @@ describe('EditorsDetailsForm', (): void => {
         it('is valid with opposed reviewers and a reason', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={EditorsSchema}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
