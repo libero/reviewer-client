@@ -85,8 +85,6 @@ test('assert nav bar', async() => {
   ...
 ```
 
-![Testing Powered By SauceLabs](https://saucelabs.github.io/images/opensauce/powered-by-saucelabs-badge-white.svg?sanitize=true "Testing Powered By SauceLabs")
-
 ## Use of `reviewer-mocks`
 
 The compose files use `liberoadmin/reviewer-mocks:latest`.
