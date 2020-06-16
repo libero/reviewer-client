@@ -2,7 +2,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
-import * as yup from 'yup';
 import { Submission, AuthorDetails } from '../types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../../core/graphql';
@@ -15,11 +14,7 @@ interface GetCurrentUser {
     getCurrentUser: User;
 }
 
-const AuthorDetailsForm = ({
-    initialValues,
-    schemaFactory,
-    ButtonComponent,
-}: StepProps): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);

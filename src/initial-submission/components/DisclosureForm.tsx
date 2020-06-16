@@ -2,7 +2,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField, Checkbox, Paragraph } from '../../ui/atoms';
-import * as yup from 'yup';
 import { Submission, DisclosureDetails } from '../types';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDisclosurePageMutation } from '../graphql';

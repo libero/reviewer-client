@@ -3,6 +3,7 @@ import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import * as yup from 'yup';
 
 const mutationMock = jest.fn(() => new Promise(() => {}));
 let subscriptionData: {};
@@ -60,7 +61,10 @@ describe('SupportingFiles upload', () => {
         );
 
         const { container } = render(
-            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            <FileDetailsForm
+                schemaFactory={(): yup.ObjectSchema => yup.object()}
+                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+            />,
             {
                 wrapper: routerWrapper(),
             },
@@ -118,7 +122,10 @@ describe('SupportingFiles upload', () => {
             );
 
         const { container } = render(
-            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            <FileDetailsForm
+                schemaFactory={(): yup.ObjectSchema => yup.object()}
+                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+            />,
             {
                 wrapper: routerWrapper(),
             },
@@ -178,7 +185,10 @@ describe('SupportingFiles upload', () => {
             );
 
         const { container } = render(
-            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            <FileDetailsForm
+                schemaFactory={(): yup.ObjectSchema => yup.object()}
+                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+            />,
             {
                 wrapper: routerWrapper(),
             },
@@ -204,7 +214,10 @@ describe('SupportingFiles upload', () => {
         mutationMock.mockImplementation(() => Promise.reject());
 
         const { container, getByText } = render(
-            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            <FileDetailsForm
+                schemaFactory={(): yup.ObjectSchema => yup.object()}
+                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+            />,
             {
                 wrapper: routerWrapper(),
             },
@@ -228,7 +241,10 @@ describe('SupportingFiles upload', () => {
         mutationMock.mockImplementation(() => Promise.reject());
 
         const { container, getByText } = render(
-            <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+            <FileDetailsForm
+                schemaFactory={(): yup.ObjectSchema => yup.object()}
+                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+            />,
             {
                 wrapper: routerWrapper(),
             },

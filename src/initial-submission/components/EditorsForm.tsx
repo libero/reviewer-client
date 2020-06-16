@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import * as yup from 'yup';
 import { getEditorsQuery, saveEditorsPageMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
 import { EditorAlias, EditorsDetails, ReviewerAlias, Submission } from '../types';
