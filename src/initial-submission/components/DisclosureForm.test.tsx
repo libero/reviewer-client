@@ -111,7 +111,7 @@ describe('DisclosureForm', (): void => {
     });
 
     describe('validation', () => {
-        it('shows error if signature is empty', async (): Promise<void> => {
+        it('shows error for empty signature and consent checkbox', async (): Promise<void> => {
             const { getByText, container } = render(
                 <DisclosureForm
                     schemaFactory={DisclosureSchema}
@@ -121,8 +121,9 @@ describe('DisclosureForm', (): void => {
             );
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});
-            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(1);
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(2);
             expect(getByText('disclosure.validation.signature')).toBeInTheDocument();
+            expect(getByText('disclosure.validation.consent')).toBeInTheDocument();
         });
     });
 });
