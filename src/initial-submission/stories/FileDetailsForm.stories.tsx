@@ -1,4 +1,5 @@
 import React from 'react';
+import * as yup from 'yup';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
 import FileDetailsForm from '../components/FileDetailsForm';
@@ -11,6 +12,7 @@ storiesOf('Initial Submission | steps/FileDetails', module)
         (): JSX.Element => {
             return (
                 <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: '42',
                         updated: Date.now(),

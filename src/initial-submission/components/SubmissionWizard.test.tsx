@@ -5,15 +5,22 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
 import SubmissionWizard from './SubmissionWizard';
 import appContainer from '../../../test-utils/appContainer';
+import {
+    AuthorDetailsSchema,
+    DetailsSchema,
+    DisclosureSchema,
+    EditorsSchema,
+    FileDetailsSchema,
+} from '../utils/validationSchemas';
+import AuthorDetailsForm from './AuthorDetailsForm';
 
-// jest.mock('../utils/validationSchemas');
-// import {
-//     AuthorDetailsSchema,
-//     DetailsSchema,
-//     DisclosureSchema,
-//     EditorsSchema,
-//     FileDetailsSchema,
-// } from '../utils/validationSchemas';
+jest.mock('../utils/validationSchemas', () => ({
+    AuthorDetailsSchema: jest.fn(() => yup.object()),
+    DetailsSchema: jest.fn(() => yup.object()),
+    DisclosureSchema: jest.fn(() => yup.object()),
+    EditorsSchema: jest.fn(() => yup.object()),
+    FileDetailsSchema: jest.fn(() => yup.object()),
+}));
 
 let loading = false;
 jest.mock('@apollo/react-hooks', () => ({
@@ -57,11 +64,6 @@ describe('SubmissionWizard', (): void => {
     afterEach(cleanup);
     beforeEach(() => {
         loading = false;
-        // (AuthorDetailsSchema as jest.Mock).mockReturnValue(yup.object());
-        // (DetailsSchema as jest.Mock).mockReturnValue(yup.object());
-        // (DisclosureSchema as jest.Mock).mockReturnValue(yup.object());
-        // (EditorsSchema as jest.Mock).mockReturnValue(yup.object());
-        // (FileDetailsSchema as jest.Mock).mockReturnValue(yup.object());
     });
 
     it('should render correctly', (): void => {
@@ -86,7 +88,7 @@ describe('SubmissionWizard', (): void => {
         expectedNextStep: string,
     ): Promise<void> => {
         const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
-        const { getByText, getAllByText } = render(component, {
+        const { getByText } = render(component, {
             wrapper: routerWrapper([`/submit/id/${currentStep}`]),
         });
         expect(getProps().location.pathname).toBe(`/submit/id/${currentStep}`);
@@ -96,8 +98,7 @@ describe('SubmissionWizard', (): void => {
     };
 
     describe.only('Step navigation', (): void => {
-        afterEach(cleanup);
-        it('should redirect to author step if no step path given', (): void => {
+        it.skip('should redirect to author step if no step path given', (): void => {
             const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
             render(component, { wrapper: routerWrapper(['/submit/id/author']) });
             expect(getProps().location.pathname).toBe('/submit/id/author');
@@ -106,7 +107,19 @@ describe('SubmissionWizard', (): void => {
         it('clicking Next on Author step takes you to Files', async (): Promise<void> => {
             await testNavigationButtons(nextButtonText, 'author', 'files');
         });
-        it('clicking Next on Author step remains on the Author page when invalid', async (): Promise<void> => {
+        it.only('clicking Next on Author step remains on the Author page when invalid', async (): Promise<void> => {
+            (AuthorDetailsSchema as jest.Mock).mockImplementation(() =>
+            yup.object().shape({
+                firstName: yup.string().required(),
+                lastName: yup.string().required(),
+                email: yup
+                    .string()
+                    .trim()
+                    .email()
+                    .required(),
+                institution: yup.string().required(),
+            })
+            );
             await testNavigationButtons(nextButtonText, 'author', 'author');
         });
         it('clicking Next on Files step takes you to Details', async (): Promise<void> => {

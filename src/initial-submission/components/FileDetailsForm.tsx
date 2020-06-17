@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import Interweave from 'interweave';
-import * as yup from 'yup';
 import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
@@ -26,7 +25,7 @@ type UploadInProgress = {
     fileName?: string;
 };
 
-const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
+const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
@@ -41,9 +40,7 @@ const FileDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Ele
             previewLink: files && files.manuscriptFile ? files.manuscriptFile.downloadLink : undefined,
         },
     });
-    const schema = yup.object().shape({
-        coverLetter: yup.string().required(t('files.validation.coverletter-required')),
-    });
+    const schema = schemaFactory(t);
 
     const { register, watch, errors, triggerValidation } = useForm<FileDetails>({
         defaultValues: {
