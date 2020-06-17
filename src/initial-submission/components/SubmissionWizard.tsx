@@ -14,6 +14,15 @@ import EditorsForm from './EditorsForm';
 import DisclosureForm from './DisclosureForm';
 import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
+import i18next from 'i18next';
+import * as yup from 'yup';
+import {
+    AuthorDetailsSchema,
+    DetailsSchema,
+    DisclosureSchema,
+    EditorsSchema,
+    FileDetailsSchema,
+} from '../utils/validationSchemas';
 
 interface Props {
     id: string;
@@ -21,6 +30,7 @@ interface Props {
 
 export interface StepProps {
     initialValues: Submission;
+    schemaFactory: (t?: i18next.TFunction) => yup.ObjectSchema;
     ButtonComponent?: (props: {
         saveFunction?: Function;
         triggerValidation: () => Promise<boolean>;
@@ -32,6 +42,7 @@ interface StepConfig {
     id: string;
     label: string;
     component: (props: StepProps) => JSX.Element;
+    schemaFactory: (t: i18next.TFunction) => yup.ObjectSchema;
 }
 
 interface GetSubmission {
@@ -108,14 +119,15 @@ const ButtonComponent = (
 };
 
 const stepConfig: StepConfig[] = [
-    { id: 'author', label: 'Author', component: AuthorDetailsForm },
-    { id: 'files', label: 'Files', component: FileDetailsStep },
-    { id: 'details', label: 'Details', component: DetailsForm },
-    { id: 'editors', label: 'Editors', component: EditorsForm },
+    { id: 'author', label: 'Author', component: AuthorDetailsForm, schemaFactory: AuthorDetailsSchema },
+    { id: 'files', label: 'Files', component: FileDetailsStep, schemaFactory: FileDetailsSchema },
+    { id: 'details', label: 'Details', component: DetailsForm, schemaFactory: DetailsSchema },
+    { id: 'editors', label: 'Editors', component: EditorsForm, schemaFactory: EditorsSchema },
     {
         id: 'disclosure',
         label: 'Disclosure',
         component: DisclosureForm,
+        schemaFactory: DisclosureSchema,
     },
 ];
 
@@ -155,6 +167,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 ) : (
                                     <config.component
                                         initialValues={data.getSubmission}
+                                        schemaFactory={config.schemaFactory}
                                         ButtonComponent={ButtonComponent(
                                             id,
                                             history,

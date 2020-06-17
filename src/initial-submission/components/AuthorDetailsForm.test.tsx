@@ -1,8 +1,10 @@
 import '../../../test-utils/i18n-mock';
 import React, { useEffect, useRef, DependencyList } from 'react';
+import * as yup from 'yup';
 import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import AuthorDetailsForm from './AuthorDetailsForm';
 import { Submission } from '../types';
+import { AuthorDetailsSchema } from '../utils/validationSchemas';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = { id: 'foo', updated: Date.now(), articleType: '' };
@@ -76,19 +78,34 @@ describe('Author Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<AuthorDetailsForm initialValues={initialValues} />);
+            render(
+                <AuthorDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={initialValues}
+                />,
+            );
         }).not.toThrow();
     });
 
     it('should render correctly with all props', async (): Promise<void> => {
         expect(
             async (): Promise<void> => {
-                render(<AuthorDetailsForm initialValues={initialValues} />);
+                render(
+                    <AuthorDetailsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={initialValues}
+                    />,
+                );
             },
         ).not.toThrow();
     });
     it('should fill the correct boxes with author information when the text is clicked', async (): Promise<void> => {
-        const { container, getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+        const { container, getByLabelText } = render(
+            <AuthorDetailsForm
+                schemaFactory={(): yup.ObjectSchema => yup.object()}
+                initialValues={testInitialValues}
+            />,
+        );
         await fireEvent.click(container.querySelector('.typography__body--link'));
         expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
     });
@@ -105,7 +122,9 @@ describe('Author Details Form', (): void => {
             articleType: '',
             updated: 0,
         };
-        const { getByLabelText } = render(<AuthorDetailsForm initialValues={initialValues} />);
+        const { getByLabelText } = render(
+            <AuthorDetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={initialValues} />,
+        );
         expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
         expect((getByLabelText('author.author-last-name') as HTMLInputElement).value).toBe('Blogs');
         expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
@@ -113,7 +132,12 @@ describe('Author Details Form', (): void => {
     });
     describe('autosave', () => {
         it('when a first name is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
 
             fireEvent.input(getByLabelText('author.author-first-name'), {
                 target: { value: 'test firstname' },
@@ -132,7 +156,12 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a last name is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
 
             fireEvent.input(getByLabelText('author.author-last-name'), {
                 target: { value: 'test lastname' },
@@ -151,7 +180,12 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a email is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
 
             fireEvent.input(getByLabelText('author.author-email'), {
                 target: { value: 'test@example.com' },
@@ -170,7 +204,12 @@ describe('Author Details Form', (): void => {
             });
         });
         it('when a email is entered it triggers the autosave', () => {
-            const { getByLabelText } = render(<AuthorDetailsForm initialValues={testInitialValues} />);
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
 
             fireEvent.input(getByLabelText('author.institution'), {
                 target: { value: 'test institution' },
@@ -204,6 +243,7 @@ describe('Author Details Form', (): void => {
                         articleType: '',
                         updated: 0,
                     }}
+                    schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
                 />,
             );
@@ -226,6 +266,7 @@ describe('Author Details Form', (): void => {
                         articleType: '',
                         updated: 0,
                     }}
+                    schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
                 />,
             );
@@ -248,6 +289,7 @@ describe('Author Details Form', (): void => {
                         articleType: '',
                         updated: 0,
                     }}
+                    schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
                 />,
             );
@@ -270,6 +312,7 @@ describe('Author Details Form', (): void => {
                         articleType: '',
                         updated: 0,
                     }}
+                    schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
                 />,
             );
@@ -292,6 +335,7 @@ describe('Author Details Form', (): void => {
                         articleType: '',
                         updated: 0,
                     }}
+                    schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
                 />,
             );
@@ -314,6 +358,7 @@ describe('Author Details Form', (): void => {
                         articleType: '',
                         updated: 0,
                     }}
+                    schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
                 />,
             );

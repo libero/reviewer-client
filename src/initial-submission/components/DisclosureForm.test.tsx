@@ -1,8 +1,10 @@
 import '../../../test-utils/i18n-mock';
+import * as yup from 'yup';
 import React, { useEffect, useRef, DependencyList } from 'react';
 import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import DisclosureForm from './DisclosureForm';
 import { Submission } from '../types';
+import { DisclosureSchema } from '../utils/validationSchemas';
 
 const mutationMock = jest.fn();
 
@@ -67,28 +69,42 @@ describe('DisclosureForm', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<DisclosureForm initialValues={initialValues} />);
+            render(
+                <DisclosureForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={initialValues} />,
+            );
         }).not.toThrow();
     });
 
     describe('Submission infomation', () => {
         it('should render the author name', () => {
             const { getByText } = render(
-                <DisclosureForm initialValues={initialValues} ButtonComponent={ButtonComponent} />,
+                <DisclosureForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={initialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
             );
             expect(getByText('Conker The Squirrel')).toBeInTheDocument();
         });
 
         it('should render the manuscript title', () => {
             const { getByText } = render(
-                <DisclosureForm initialValues={initialValues} ButtonComponent={ButtonComponent} />,
+                <DisclosureForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={initialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
             );
             expect(getByText('Squirrels Rule')).toBeInTheDocument();
         });
 
         it('should render the article type', () => {
             const { getByText } = render(
-                <DisclosureForm initialValues={initialValues} ButtonComponent={ButtonComponent} />,
+                <DisclosureForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={initialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
             );
             expect(getByText('Proclomation', { exact: false })).toBeInTheDocument();
         });
@@ -97,7 +113,11 @@ describe('DisclosureForm', (): void => {
     describe('validation', () => {
         it('shows error if signature is empty', async (): Promise<void> => {
             const { getByText, container } = render(
-                <DisclosureForm initialValues={initialValues} ButtonComponent={ButtonComponent} />,
+                <DisclosureForm
+                    schemaFactory={DisclosureSchema}
+                    initialValues={initialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
             );
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => {});

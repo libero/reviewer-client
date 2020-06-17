@@ -5,6 +5,8 @@ import EditorsForm from './EditorsForm';
 import { Submission } from '../types';
 import appContainer from '../../../test-utils/appContainer';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import { EditorsSchema } from '../utils/validationSchemas';
+import * as yup from 'yup';
 
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
@@ -104,14 +106,370 @@ describe('EditorsDetailsForm', (): void => {
     });
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<EditorsForm initialValues={testInitialValues} />, { wrapper: routerWrapper() });
+            render(<EditorsForm schemaFactory={EditorsSchema} initialValues={testInitialValues} />, {
+                wrapper: routerWrapper(),
+            });
         }).not.toThrow();
+    });
+
+    describe('validation', () => {
+        it('displays a validation message if no reason is given when there are excluded senior editors selected', async (): Promise<
+            void
+        > => {
+            const { getByText } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedSeniorEditors: ['1'],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(getByText('editors.validation.opposed-senior-editors-reason-required')).toBeInTheDocument();
+        });
+        it('displays a validation message if no reason is provided but editing reviewers are excluded', async (): Promise<
+            void
+        > => {
+            const { baseElement, container, getByText } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={testInitialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
+            expect(excludeTooggle).toBeInTheDocument();
+            fireEvent.click(excludeTooggle);
+            const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
+            expect(opposedReviewingEditors).toBeInTheDocument();
+            fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            const selectedName = baseElement.querySelector(
+                '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
+            ).textContent;
+            fireEvent.click(
+                baseElement.querySelector('.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button'),
+            );
+            expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+
+            fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
+            expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+            expect(getByText(selectedName)).toBeInTheDocument();
+            const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
+            expect(reasonInput).toBeInTheDocument();
+            expect(
+                container.querySelectorAll('.opposed-reviewing-editors-picker .selected_people_list__item').length,
+            ).toEqual(2);
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.excluded-toggle__panel .typography__label--error').textContent).toBe(
+                'editors.validation.opposed-reviewing-editors-reason-required',
+            );
+        });
+        it('limits the user to 6 entries', () => {
+            const { getByLabelText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [
+                                { name: 'name1', email: 'email@example.com' },
+                                { name: 'name2', email: 'email@example.com' },
+                                { name: 'name3', email: 'email@example.com' },
+                                { name: 'name4', email: 'email@example.com' },
+                                { name: 'name5', email: 'email@example.com' },
+                                { name: 'name6', email: 'email@example.com' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
+                6,
+            );
+            expect(() => getByLabelText('editors.reviewers-label-prefix 7 expanding-email-field.name')).toThrow();
+        });
+
+        it('empty rows are valid', async (): Promise<void> => {
+            const { getByText, getByLabelText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={testInitialValues}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name') as HTMLInputElement)
+                    .value,
+            ).toBe('');
+            expect(
+                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email') as HTMLInputElement)
+                    .value,
+            ).toBe('');
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
+        });
+
+        it('requires an email if name has value', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name1', email: '' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-email-required',
+            );
+        });
+        it('requires a name if email has value', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: '', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-name-required',
+            );
+        });
+
+        it('requires a valid email format if email is filled', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name1', email: 'notanemail' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-email-valid',
+            );
+        });
+        it('is valid if there is a name and valid email in a row', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
+        });
+        it('limits the user to 2 opposed reviewers', () => {
+            const { getByLabelText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [
+                                { name: 'name1', email: 'email@example.com' },
+                                { name: 'name2', email: 'email@example.com' },
+                            ],
+                        },
+                    }}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            expect(container.querySelectorAll('.opposedReviewers__inputs .expanding-email-field__row')).toHaveLength(2);
+            expect(() =>
+                getByLabelText('editors.opposed-reviewers-label-prefix 3 expanding-email-field.name'),
+            ).toThrow();
+        });
+
+        it('requires a name if email has value', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: '', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.opposedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-name-required',
+            );
+        });
+
+        it('requires a valid email format if email is filled', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'notanemail' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelector('.opposedReviewers__inputs .typography__label--error').textContent).toBe(
+                'editors.validation.reviewers-email-valid',
+            );
+        });
+        it('requires a reason value if opposed reviewer has a value', async (): Promise<void> => {
+            const { getByText } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(getByText('editors.validation.opposed-reviewers-reason-required')).toBeInTheDocument();
+        });
+        it('is valid with opposed reviewers and a reason', async (): Promise<void> => {
+            const { getByText, container } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'blah',
+                        articleType: '',
+                        updated: Date.now(),
+                        editorDetails: {
+                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
+                            opposedReviewersReason: 'some reason',
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(() => getByText('editors.validation.opposed-reviewers-reason-required')).toThrow();
+            expect(container.querySelectorAll('.opposedReviewers__inputs .typography__label--error')).toHaveLength(0);
+        });
     });
 
     describe('PeoplePickers', (): void => {
         it('display a senior editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -127,7 +485,7 @@ describe('EditorsDetailsForm', (): void => {
 
         it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -143,7 +501,7 @@ describe('EditorsDetailsForm', (): void => {
 
         it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -161,7 +519,7 @@ describe('EditorsDetailsForm', (): void => {
             void
         > => {
             const { baseElement, container, getAllByText, getByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -193,10 +551,16 @@ describe('EditorsDetailsForm', (): void => {
 
         describe('Excluded senior editors', () => {
             it('renders with excluded senior editors section closed when no excluded senior editors or reason in initial values', () => {
-                const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                });
+                const { getByText, container } = render(
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
+                    {
+                        container: appContainer(),
+                        wrapper: routerWrapper(),
+                    },
+                );
                 expect(getByText('editors.opposed-senior-editors-toggle-action-text')).toBeInTheDocument();
                 expect(container.querySelector('.opposed-senior-editors-picker')).not.toBeInTheDocument();
                 expect(container.querySelector('#opposedSeniorEditorsReason')).not.toBeInTheDocument();
@@ -206,6 +570,7 @@ describe('EditorsDetailsForm', (): void => {
             > => {
                 const { getByText, container, rerender } = render(
                     <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -226,6 +591,7 @@ describe('EditorsDetailsForm', (): void => {
                 expect(container.querySelector('#opposedSeniorEditorsReason')).toBeInTheDocument();
                 rerender(
                     <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -242,34 +608,10 @@ describe('EditorsDetailsForm', (): void => {
                 expect(container.querySelector('.opposed-senior-editors-picker')).toBeInTheDocument();
                 expect(container.querySelector('#opposedSeniorEditorsReason')).toBeInTheDocument();
             });
-            it('displays a validation message if no reason is given when there are excluded senior editors selected', async (): Promise<
-                void
-            > => {
-                const { getByText } = render(
-                    <EditorsForm
-                        initialValues={{
-                            id: 'blah',
-                            articleType: '',
-                            updated: Date.now(),
-                            editorDetails: {
-                                opposedSeniorEditors: ['1'],
-                            },
-                        }}
-                        ButtonComponent={ButtonComponent}
-                    />,
-                    {
-                        container: appContainer(),
-                        wrapper: routerWrapper(),
-                    },
-                );
-                fireEvent.click(getByText('TEST BUTTON'));
-                await waitFor(() => {});
-                expect(getByText('editors.validation.opposed-senior-editors-reason-required')).toBeInTheDocument();
-            });
-
             it('clears the excluded senior editors and reason when the toggle section is closed', () => {
                 const { getByText, container } = render(
                     <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -300,7 +642,10 @@ describe('EditorsDetailsForm', (): void => {
 
             it('should limit the user to adding 1 opposed senior editor', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -323,7 +668,10 @@ describe('EditorsDetailsForm', (): void => {
                 void
             > => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -357,52 +705,12 @@ describe('EditorsDetailsForm', (): void => {
                 expect((reasonInput as HTMLInputElement).value).toBe('reason');
             });
 
-            it('displays a validation message if no reason is provided but editing reviewers are excluded', async (): Promise<
-                void
-            > => {
-                const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
-                    {
-                        container: appContainer(),
-                        wrapper: routerWrapper(),
-                    },
-                );
-                const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
-                expect(excludeTooggle).toBeInTheDocument();
-                fireEvent.click(excludeTooggle);
-                const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
-                expect(opposedReviewingEditors).toBeInTheDocument();
-                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
-                expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
-                await waitFor(() => {});
-                const selectedName = baseElement.querySelector(
-                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
-                ).textContent;
-                fireEvent.click(
-                    baseElement.querySelector(
-                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
-                    ),
-                );
-                expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
-
-                fireEvent.click(baseElement.querySelector('.modal__overlay .modal__buttons .button--primary'));
-                expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
-                expect(getByText(selectedName)).toBeInTheDocument();
-                const reasonInput = container.querySelector('#opposedReviewingEditorsReason');
-                expect(reasonInput).toBeInTheDocument();
-                expect(
-                    container.querySelectorAll('.opposed-reviewing-editors-picker .selected_people_list__item').length,
-                ).toEqual(2);
-                fireEvent.click(getByText('TEST BUTTON'));
-                await waitFor(() => {});
-                expect(container.querySelector('.excluded-toggle__panel .typography__label--error').textContent).toBe(
-                    'editors.validation.opposed-reviewing-editors-reason-required',
-                );
-            });
-
             it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -444,7 +752,10 @@ describe('EditorsDetailsForm', (): void => {
 
             it('should limit the user to adding 2 opposed reviewing editor', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm initialValues={testInitialValues} />,
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -472,7 +783,7 @@ describe('EditorsDetailsForm', (): void => {
             void
         > => {
             const { baseElement, container, getAllByText, getByText } = render(
-                <EditorsForm initialValues={testInitialValues} />,
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
                     wrapper: routerWrapper(),
@@ -505,6 +816,7 @@ describe('EditorsDetailsForm', (): void => {
         it('displays initial value senior editors', () => {
             const { getByText } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -525,6 +837,7 @@ describe('EditorsDetailsForm', (): void => {
         it('displays initial value reviewing editors', () => {
             const { getByText } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -545,6 +858,7 @@ describe('EditorsDetailsForm', (): void => {
         it('removes a deleted reviewing editor', async (): Promise<void> => {
             const { container, getByText } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -571,6 +885,7 @@ describe('EditorsDetailsForm', (): void => {
         it('removes a deleted senior editor', async (): Promise<void> => {
             const { container, getByText } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -596,6 +911,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(async () => {
                 render(
                     <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'blah',
                             articleType: '',
@@ -613,10 +929,13 @@ describe('EditorsDetailsForm', (): void => {
     });
     describe('Suggested reviewers', () => {
         it('renders a single empty row of name email fields', () => {
-            const { getByLabelText } = render(<EditorsForm initialValues={testInitialValues} />, {
-                container: appContainer(),
-                wrapper: routerWrapper(),
-            });
+            const { getByLabelText } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name')).toBeInTheDocument();
             expect(getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email')).toBeInTheDocument();
             expect(() => getByLabelText('editors.reviewers-label-prefix 2 expanding-email-field.name')).toThrow();
@@ -625,6 +944,7 @@ describe('EditorsDetailsForm', (): void => {
         it('populates with multiple initial suggestedReviewers values', async (): Promise<void> => {
             const { getByLabelText, container } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -660,161 +980,17 @@ describe('EditorsDetailsForm', (): void => {
                     .value,
             ).toBe('name3');
         });
-        it('limits the user to 6 entries', () => {
-            const { getByLabelText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            suggestedReviewers: [
-                                { name: 'name1', email: 'email@example.com' },
-                                { name: 'name2', email: 'email@example.com' },
-                                { name: 'name3', email: 'email@example.com' },
-                                { name: 'name4', email: 'email@example.com' },
-                                { name: 'name5', email: 'email@example.com' },
-                                { name: 'name6', email: 'email@example.com' },
-                            ],
-                        },
-                    }}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            expect(container.querySelectorAll('.suggestedReviewers__inputs .expanding-email-field__row')).toHaveLength(
-                6,
-            );
-            expect(() => getByLabelText('editors.reviewers-label-prefix 7 expanding-email-field.name')).toThrow();
-        });
-
-        it('empty rows are valid', async (): Promise<void> => {
-            const { getByText, getByLabelText, container } = render(
-                <EditorsForm initialValues={testInitialValues} ButtonComponent={ButtonComponent} />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(
-                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.name') as HTMLInputElement)
-                    .value,
-            ).toBe('');
-            expect(
-                (getByLabelText('editors.reviewers-label-prefix 1 expanding-email-field.email') as HTMLInputElement)
-                    .value,
-            ).toBe('');
-            expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
-        });
-
-        it('requires a email if name has value', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            suggestedReviewers: [{ name: 'name1', email: '' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
-                'editors.validation.reviewers-email-required',
-            );
-        });
-        it('requires a name if email has value', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            suggestedReviewers: [{ name: '', email: 'email@example.com' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
-                'editors.validation.reviewers-name-required',
-            );
-        });
-
-        it('requires a valid email format if email is filled', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            suggestedReviewers: [{ name: 'name1', email: 'notanemail' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(container.querySelector('.suggestedReviewers__inputs .typography__label--error').textContent).toBe(
-                'editors.validation.reviewers-email-valid',
-            );
-        });
-        it('is valid if there is a name and valid email in a row', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            suggestedReviewers: [{ name: 'name1', email: 'email@example.com' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(container.querySelectorAll('.suggestedReviewers__inputs .typography__label--error')).toHaveLength(0);
-        });
     });
 
     describe('opposedReviewers', () => {
         it('renders with opposed reviewers section closed when no opposed reviewers or reason in initial values', () => {
-            const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
-                container: appContainer(),
-                wrapper: routerWrapper(),
-            });
+            const { getByText, container } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
             expect(getByText('editors.opposed-reviewers-toggle-action-text')).toBeInTheDocument();
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
@@ -825,6 +1001,7 @@ describe('EditorsDetailsForm', (): void => {
         > => {
             const { getByText, container, rerender } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -845,6 +1022,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
             rerender(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -863,10 +1041,13 @@ describe('EditorsDetailsForm', (): void => {
         });
 
         it('clicking opposed toggle displays opposed reviewers fields and reson textarea', async (): Promise<void> => {
-            const { getByText, container } = render(<EditorsForm initialValues={testInitialValues} />, {
-                container: appContainer(),
-                wrapper: routerWrapper(),
-            });
+            const { getByText, container } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
             expect(container.querySelector('.opposedReviewers__inputs')).not.toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).not.toBeInTheDocument();
             fireEvent.click(getByText('editors.opposed-reviewers-toggle-action-text'));
@@ -877,6 +1058,7 @@ describe('EditorsDetailsForm', (): void => {
         it('clears opposed values and reason if toggle section is close', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
                         articleType: '',
@@ -907,128 +1089,6 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].name"]').value).toBe('');
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewers[0].email"]').value).toBe('');
             expect(container.querySelector<HTMLInputElement>('[name="opposedReviewersReason"]').value).toBe('');
-        });
-
-        it('limits the user to 2 opposed reviewers', () => {
-            const { getByLabelText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            opposedReviewers: [
-                                { name: 'name1', email: 'email@example.com' },
-                                { name: 'name2', email: 'email@example.com' },
-                            ],
-                        },
-                    }}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            expect(container.querySelectorAll('.opposedReviewers__inputs .expanding-email-field__row')).toHaveLength(2);
-            expect(() =>
-                getByLabelText('editors.opposed-reviewers-label-prefix 3 expanding-email-field.name'),
-            ).toThrow();
-        });
-
-        it('requires a name if email has value', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            opposedReviewers: [{ name: '', email: 'email@example.com' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(container.querySelector('.opposedReviewers__inputs .typography__label--error').textContent).toBe(
-                'editors.validation.reviewers-name-required',
-            );
-        });
-
-        it('requires a valid email format if email is filled', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            opposedReviewers: [{ name: 'name1', email: 'notanemail' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(container.querySelector('.opposedReviewers__inputs .typography__label--error').textContent).toBe(
-                'editors.validation.reviewers-email-valid',
-            );
-        });
-        it('requires a reason value if opposed reviewer has a value', async (): Promise<void> => {
-            const { getByText } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(getByText('editors.validation.opposed-reviewers-reason-required')).toBeInTheDocument();
-        });
-        it('is valid with opposed reviewers and a reason', async (): Promise<void> => {
-            const { getByText, container } = render(
-                <EditorsForm
-                    initialValues={{
-                        id: 'blah',
-                        articleType: '',
-                        updated: Date.now(),
-                        editorDetails: {
-                            opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
-                            opposedReviewersReason: 'some reason',
-                        },
-                    }}
-                    ButtonComponent={ButtonComponent}
-                />,
-                {
-                    container: appContainer(),
-                    wrapper: routerWrapper(),
-                },
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(() => getByText('editors.validation.opposed-reviewers-reason-required')).toThrow();
-            expect(container.querySelectorAll('.opposedReviewers__inputs .typography__label--error')).toHaveLength(0);
         });
     });
 });

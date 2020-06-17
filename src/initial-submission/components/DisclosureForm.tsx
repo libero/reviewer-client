@@ -2,7 +2,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField, Checkbox, Paragraph } from '../../ui/atoms';
-import * as yup from 'yup';
 import { Submission, DisclosureDetails } from '../types';
 import { useMutation } from '@apollo/react-hooks';
 import { saveDisclosurePageMutation } from '../graphql';
@@ -11,16 +10,10 @@ import { StepProps } from './SubmissionWizard';
 import Interweave from 'interweave';
 import moment from 'moment';
 
-const DisclosureForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
+const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDisclosurePageMutation);
-    const schema = yup.object().shape({
-        submitterSignature: yup.string().required(t('disclosure.validation.signature')),
-        disclosureConsent: yup
-            .bool()
-            .required()
-            .oneOf([true], t('disclosure.validation.consent')),
-    });
+    const schema = schemaFactory(t);
     const { register, errors, getValues, watch, triggerValidation } = useForm<DisclosureDetails>({
         defaultValues: {
             submitterSignature:

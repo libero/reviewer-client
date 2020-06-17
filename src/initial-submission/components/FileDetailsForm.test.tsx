@@ -3,6 +3,8 @@ import { render, cleanup, fireEvent, act, waitFor } from '@testing-library/react
 import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
+import * as yup from 'yup';
+import { FileDetailsSchema } from '../utils/validationSchemas';
 
 //TODO: put this in config
 const maxSupportingFiles = 10;
@@ -76,13 +78,19 @@ describe('File Details Form', (): void => {
 
     it('should render correctly', async (): Promise<void> => {
         expect(async () => {
-            render(<FileDetailsForm initialValues={testInitialValues} />);
+            render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
         }).not.toThrow();
     });
     describe('coverLetter', () => {
         it('sets coverletter initial value to initialValues.coverLetter on load', async (): Promise<void> => {
             const { container } = render(
                 <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
@@ -99,7 +107,12 @@ describe('File Details Form', (): void => {
         it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
             expect(
                 (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
             ).toBe('');
@@ -108,7 +121,12 @@ describe('File Details Form', (): void => {
         it('should call the save mutation with correct variables when cover letter is changed', async (): Promise<
             void
         > => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
             fireEvent.input(container.querySelector('.cover-letter__input'), {
                 target: { value: 'test cover letter input' },
             });
@@ -122,7 +140,11 @@ describe('File Details Form', (): void => {
 
         it('shows validation message if left empty', async (): Promise<void> => {
             const { getByText } = render(
-                <FileDetailsForm initialValues={testInitialValues} ButtonComponent={testButton} />,
+                <FileDetailsForm
+                    schemaFactory={FileDetailsSchema}
+                    initialValues={testInitialValues}
+                    ButtonComponent={testButton}
+                />,
             );
             fireEvent.click(getByText('TEST BUTTON'));
             await waitFor(() => expect(getByText('files.validation.coverletter-required')).toBeInTheDocument());
@@ -130,6 +152,7 @@ describe('File Details Form', (): void => {
         it('shows no errors if coverletter has a value', async (): Promise<void> => {
             const { getByText } = render(
                 <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
@@ -191,12 +214,18 @@ describe('File Details Form', (): void => {
             );
         };
         it('should display an idle file upload if no file stored', () => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />);
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
             expect(container.querySelector('.file-upload__dropzone--idle')).toBeInTheDocument();
         });
         it('should display a complete file upload if a file is stored', () => {
             const { container } = render(
                 <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
                         articleType: '',
@@ -221,9 +250,15 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -255,9 +290,15 @@ describe('File Details Form', (): void => {
             });
             mutationMock.mockImplementation(() => mutationPromise);
 
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
             await dropFileEvent(createFile('application/pdf', 'file.pdf'), dropzone);
@@ -272,9 +313,15 @@ describe('File Details Form', (): void => {
         it('Should display a validation error if the upload file is of the wrong file type', async (): Promise<
             void
         > => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -298,9 +345,15 @@ describe('File Details Form', (): void => {
         });
 
         it('Should allow a new file to be uploaded', async (): Promise<void> => {
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -312,9 +365,15 @@ describe('File Details Form', (): void => {
         });
 
         it('Should clear status when a new file is dropped', async (): Promise<void> => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const dropzone = container.querySelector('.file-upload__dropzone');
 
@@ -333,9 +392,15 @@ describe('File Details Form', (): void => {
             });
 
             mutationMock.mockImplementation(() => mutationPromise);
-            const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             subscriptionData = {
                 fileUploadProgress: {
@@ -395,6 +460,7 @@ describe('File Details Form', (): void => {
         it('displays initialValues supporting files on load', () => {
             const { container, getByText } = render(
                 <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
                         updated: Date.now(),
@@ -420,16 +486,22 @@ describe('File Details Form', (): void => {
             expect(getByText('File2.png')).toBeInTheDocument();
         });
         it('queues a selected file for upload', async (): Promise<void> => {
-            const { container, getByText } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                wrapper: routerWrapper(),
-            });
+            const { container, getByText } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
 
             const file = new File(['§§§'], 'supercoolfile.png', { type: 'image/png' });
             const fileInput = container.querySelector('.multifile-upload__input');
             Object.defineProperty(fileInput, 'files', {
                 value: [file],
             });
-            await act(async () => await fireEvent.change(fileInput));
+            await act(async () => fireEvent.change(fileInput));
             expect(getByText('supercoolfile.png')).toBeInTheDocument();
         });
 
@@ -441,7 +513,10 @@ describe('File Details Form', (): void => {
 
             mutationMock.mockImplementation(() => mutationPromise);
             const { container } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                />,
                 {
                     wrapper: routerWrapper(),
                 },
@@ -452,7 +527,7 @@ describe('File Details Form', (): void => {
             Object.defineProperty(fileInput, 'files', {
                 value: [file],
             });
-            await act(async () => await fireEvent.change(fileInput));
+            await act(async () => fireEvent.change(fileInput));
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeNull();
             expect(container.querySelector('.multifile-upload__file-status--processing')).toBeInTheDocument();
             mutationResolve({
@@ -475,6 +550,7 @@ describe('File Details Form', (): void => {
             mutationMock.mockImplementation(() => Promise.resolve({ data: { deleteSupportingFile: 'penguin' } }));
             const { container } = render(
                 <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
                         updated: Date.now(),
@@ -505,9 +581,15 @@ describe('File Details Form', (): void => {
             it('when there are no existing supporting files', async (): Promise<void> => {
                 // this test only needs files in pending state so don't resolve promise.
                 mutationMock.mockImplementation(() => new Promise(() => {}));
-                const { container } = render(<FileDetailsForm initialValues={testInitialValues} />, {
-                    wrapper: routerWrapper(),
-                });
+                const { container } = render(
+                    <FileDetailsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
+                    {
+                        wrapper: routerWrapper(),
+                    },
+                );
 
                 const fileList = [];
                 for (let fileCount = 0; fileCount < maxSupportingFiles + 1; fileCount++) {
@@ -519,7 +601,7 @@ describe('File Details Form', (): void => {
                 Object.defineProperty(fileInput, 'files', {
                     value: fileList,
                 });
-                await act(async () => await fireEvent.change(fileInput));
+                await act(async () => fireEvent.change(fileInput));
                 expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
                     maxSupportingFiles,
                 );
@@ -529,6 +611,7 @@ describe('File Details Form', (): void => {
                 mutationMock.mockImplementation(() => new Promise(() => {}));
                 const { container } = render(
                     <FileDetailsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'test',
                             updated: Date.now(),
@@ -563,7 +646,7 @@ describe('File Details Form', (): void => {
                 Object.defineProperty(fileInput, 'files', {
                     value: fileList,
                 });
-                await act(async () => await fireEvent.change(fileInput));
+                await act(async () => fireEvent.change(fileInput));
                 expect(container.querySelectorAll('.multifile-upload__upload-list-item')).toHaveLength(
                     maxSupportingFiles,
                 );
@@ -571,7 +654,10 @@ describe('File Details Form', (): void => {
         });
         it('displays max files message when max files is reached', async (): Promise<void> => {
             const { container, getByText } = render(
-                <FileDetailsForm initialValues={{ id: 'test', updated: Date.now(), articleType: '' }} />,
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                />,
                 {
                     wrapper: routerWrapper(),
                 },
@@ -586,7 +672,7 @@ describe('File Details Form', (): void => {
                 value: Array(maxSupportingFiles).fill(file),
             });
 
-            await act(async () => await fireEvent.change(fileInput));
+            await act(async () => fireEvent.change(fileInput));
 
             expect(getByText('files.supporting-files-max')).toBeInTheDocument();
         });

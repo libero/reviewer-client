@@ -2,7 +2,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
-import * as yup from 'yup';
 import { Submission, AuthorDetails } from '../types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { getCurrentUserQuery } from '../../core/graphql';
@@ -15,20 +14,11 @@ interface GetCurrentUser {
     getCurrentUser: User;
 }
 
-const AuthorDetailsForm = ({ initialValues, ButtonComponent }: StepProps): JSX.Element => {
+const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
-    const schema = yup.object().shape({
-        firstName: yup.string().required(t('author.validation.first-name-required')),
-        lastName: yup.string().required(t('author.validation.last-name-required')),
-        email: yup
-            .string()
-            .trim()
-            .email(t('author.validation.email-format'))
-            .required(t('author.validation.email-required')),
-        institution: yup.string().required(t('author.validation.institution-required')),
-    });
+    const schema = schemaFactory(t);
     const { register, errors, getValues, watch, setValue, triggerValidation } = useForm<AuthorDetails>({
         defaultValues: {
             firstName: initialValues.author ? initialValues.author.firstName : '',
