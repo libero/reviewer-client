@@ -1,5 +1,5 @@
 import '../../../test-utils/i18n-mock';
-import { cleanup, render, fireEvent, RenderResult, act, waitFor } from '@testing-library/react';
+import { cleanup, render, fireEvent, RenderResult, waitFor } from '@testing-library/react';
 import * as yup from 'yup';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import routeWrapper from '../../../test-utils/routeWrapper';
@@ -12,7 +12,6 @@ import {
     EditorsSchema,
     FileDetailsSchema,
 } from '../utils/validationSchemas';
-import AuthorDetailsForm from './AuthorDetailsForm';
 
 jest.mock('../utils/validationSchemas', () => ({
     AuthorDetailsSchema: jest.fn(() => yup.object()),
@@ -97,8 +96,8 @@ describe('SubmissionWizard', (): void => {
         expect(getProps().location.pathname).toBe(`/submit/id/${expectedNextStep}`);
     };
 
-    describe.only('Step navigation', (): void => {
-        it.skip('should redirect to author step if no step path given', (): void => {
+    describe('Step navigation', (): void => {
+        it('should redirect to author step if no step path given', (): void => {
             const { component, getProps } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
             render(component, { wrapper: routerWrapper(['/submit/id/author']) });
             expect(getProps().location.pathname).toBe('/submit/id/author');
@@ -107,18 +106,11 @@ describe('SubmissionWizard', (): void => {
         it('clicking Next on Author step takes you to Files', async (): Promise<void> => {
             await testNavigationButtons(nextButtonText, 'author', 'files');
         });
-        it.only('clicking Next on Author step remains on the Author page when invalid', async (): Promise<void> => {
-            (AuthorDetailsSchema as jest.Mock).mockImplementation(() =>
-            yup.object().shape({
-                firstName: yup.string().required(),
-                lastName: yup.string().required(),
-                email: yup
-                    .string()
-                    .trim()
-                    .email()
-                    .required(),
-                institution: yup.string().required(),
-            })
+        it('clicking Next on Author step remains on the Author page when invalid', async (): Promise<void> => {
+            (AuthorDetailsSchema as jest.Mock).mockImplementationOnce(() =>
+                yup.object().shape({
+                    firstName: yup.string().test('fail', 'fail', () => false),
+                }),
             );
             await testNavigationButtons(nextButtonText, 'author', 'author');
         });
@@ -126,25 +118,49 @@ describe('SubmissionWizard', (): void => {
             await testNavigationButtons(nextButtonText, 'files', 'details');
         });
         it('clicking Next on Files step remains on the Files page when invalid', async (): Promise<void> => {
+            (FileDetailsSchema as jest.Mock).mockImplementationOnce(() =>
+                yup.object().shape({
+                    coverLetter: yup.string().test('fail', 'fail', () => false),
+                }),
+            );
             await testNavigationButtons(nextButtonText, 'files', 'files');
         });
         it('clicking Next on Details step takes you to Editors', async (): Promise<void> => {
             await testNavigationButtons(nextButtonText, 'details', 'editors');
         });
         it('clicking Next on Details step remains on the Details page when invalid', async (): Promise<void> => {
+            (DetailsSchema as jest.Mock).mockImplementationOnce(() =>
+                yup.object().shape({
+                    title: yup.string().test('fail', 'fail', () => false),
+                }),
+            );
             await testNavigationButtons(nextButtonText, 'details', 'details');
         });
         it('clicking Next on Editors step takes you to Disclosure', async (): Promise<void> => {
             await testNavigationButtons(nextButtonText, 'editors', 'disclosure');
         });
         it('clicking Next on Editors step remains on the Editors page when invalid', async (): Promise<void> => {
+            (EditorsSchema as jest.Mock).mockImplementationOnce(() =>
+                yup.object().shape({
+                    suggestedSeniorEditors: yup.string().test('fail', 'fail', () => false),
+                }),
+            );
             await testNavigationButtons(nextButtonText, 'editors', 'editors');
         });
 
-        it.skip('clicking Back on Details step takes you to Files', async (): Promise<void> => {
+        it('clicking Back on Disclosure step takes you to Editors', async (): Promise<void> => {
+            await testNavigationButtons(backButtonText, 'disclosure', 'editors');
+        });
+
+        it('clicking Back on Editors step takes you to Details', async (): Promise<void> => {
+            await testNavigationButtons(backButtonText, 'editors', 'details');
+        });
+
+        it('clicking Back on Details step takes you to Files', async (): Promise<void> => {
             await testNavigationButtons(backButtonText, 'details', 'files');
         });
-        it.skip('clicking Back on Files step takes you to Author', async (): Promise<void> => {
+
+        it('clicking Back on Files step takes you to Author', async (): Promise<void> => {
             await testNavigationButtons(backButtonText, 'files', 'author');
         });
     });
@@ -179,6 +195,11 @@ describe('SubmissionWizard', (): void => {
         });
 
         it('should not show the modal when the page is invalid', async () => {
+            (DisclosureSchema as jest.Mock).mockImplementationOnce(() =>
+                yup.object().shape({
+                    submitterSignature: yup.string().test('fail', 'fail', () => false),
+                }),
+            );
             const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
             const { getByText, baseElement } = render(component, {
                 wrapper: routerWrapper(['/submit/id/disclosure']),
