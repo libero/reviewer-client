@@ -75,6 +75,8 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepP
                     id="disclosureConsent"
                     labelText={t('disclosure.disclosure-consent-input')}
                     register={register}
+                    invalid={errors && errors.disclosureConsent !== undefined}
+                    helperText={errors && errors.disclosureConsent ? errors.disclosureConsent.message : null}
                 />
             </div>
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
