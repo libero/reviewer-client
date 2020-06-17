@@ -4,7 +4,6 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   outline: 0;
-  vertical-align: baseline;
   font-style: normal;
   min-height: 1.8rem;
   font-size: 1rem;
@@ -33,7 +32,6 @@
   display: block;
   padding-left: 2.4rem;
   outline: 0;
-  font-size: 1em;
   line-height: 1.5rem;
   &:before {
     position: absolute;

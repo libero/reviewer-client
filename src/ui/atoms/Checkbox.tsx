@@ -52,7 +52,7 @@ const Checkbox = ({
                     invalid ? 'typography__label--error' : 'typography__label--secondary'
                 }`}
             >
-                {invalid && <Close fontSize="default" />}
+                {invalid && <Close fontSize="small" />}
                 {helperText}
             </span>
         </div>
