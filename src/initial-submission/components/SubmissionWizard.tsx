@@ -48,7 +48,7 @@ interface StepConfig {
 interface GetSubmission {
     getSubmission: Submission;
 }
-// TODO add i18n for buttons
+
 const ButtonComponent = (
     id: string,
     history: H.History,
@@ -102,6 +102,8 @@ const ButtonComponent = (
                                     if (valid) {
                                         await saveFunction();
                                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                    } else {
+                                        setProcessing(false);
                                     }
                                 });
                             } catch (e) {
