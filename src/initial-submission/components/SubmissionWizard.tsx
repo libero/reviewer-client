@@ -1,5 +1,5 @@
 /*eslint-disable react/display-name*/
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button, Modal, Paragraph } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
@@ -37,7 +37,7 @@ interface StepConfig {
 interface GetSubmission {
     getSubmission: Submission;
 }
-// TODO add i18n for buttons
+
 const ButtonComponent = (
     id: string,
     history: H.History,
@@ -91,6 +91,8 @@ const ButtonComponent = (
                                     if (valid) {
                                         await saveFunction();
                                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                    } else {
+                                        setProcessing(false);
                                     }
                                 });
                             } catch (e) {
