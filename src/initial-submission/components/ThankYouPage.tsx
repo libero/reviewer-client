@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 import { Link, useParams } from 'react-router-dom';
 import { Submission } from '../types';
-import { getSubmissionQuery, submitSubmissionMutation } from '../graphql';
-import * as H from 'history';
+import { getSubmissionQuery } from '../graphql';
 import { useQuery } from '@apollo/react-hooks';
 
 interface Props {
