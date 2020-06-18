@@ -11,7 +11,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { getSubmissionQuery, submitSubmissionMutation } from '../graphql';
 import * as H from 'history';
 import EditorsForm from './EditorsForm';
-import ThankYouPage from './ThankYouPage';
 import DisclosureForm from './DisclosureForm';
 import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
@@ -187,12 +186,6 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                         />
                     ),
                 )}
-                <Route
-                    path={`/thankyou/${id}`}
-                    render={(): JSX.Element =>
-                        loading ? <span>loading... </span> : <ThankYouPage submission={data.getSubmission} />
-                    }
-                />
                 <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
             <Modal
