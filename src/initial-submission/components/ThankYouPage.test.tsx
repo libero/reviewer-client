@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import ThankYouPage from './ThankYouPage';
 import { Submission } from '../types';
 import routerWrapper from '../../../test-utils/routerWrapper';
