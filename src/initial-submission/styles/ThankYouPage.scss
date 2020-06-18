@@ -1,0 +1,18 @@
+.thank-you-page-step {
+    text-align: center;
+
+    p {
+        a,
+        a:visited,
+        a:hover {
+            background-color: transparent;
+            color: rgb(2, 136, 209);
+            text-decoration: none;
+            display: block;
+        }
+    }
+
+    .button {
+        text-decoration: none;
+    }
+}
