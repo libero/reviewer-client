@@ -1,17 +1,33 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Submission } from '../types';
+import { getSubmissionQuery } from '../graphql';
+import { useQuery } from '@apollo/react-hooks';
 
 interface Props {
     submission: Submission;
 }
 
-const ThankYouPage = ({ submission }: Props): JSX.Element => {
-    const { t } = useTranslation('thank-you-page');
+interface GetSubmission {
+    getSubmission: Submission;
+}
 
-    const { manuscriptDetails = {} } = submission;
+const ThankYouPage = (): JSX.Element => {
+    const { t } = useTranslation('thank-you-page');
+    const { id } = useParams();
+
+    const { data, loading } = useQuery<GetSubmission>(getSubmissionQuery, {
+        variables: { id },
+        returnPartialData: true,
+    });
+
+    if (loading) {
+        return <span>loading... </span>;
+    }
+
+    const { manuscriptDetails = {} } = data.getSubmission;
     const { title = '' } = manuscriptDetails;
 
     return (
