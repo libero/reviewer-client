@@ -192,6 +192,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 buttonText={t('submit.modal-confirm') as string}
                 onAccept={(): void => {
                     submitSubmission({ variables: { id: data.getSubmission.id } });
+                    history.push(`/survey/${id}`);
                 }}
             >
                 <h2 className="typography__heading typography__heading--h2">{t('submit.modal-title')}</h2>

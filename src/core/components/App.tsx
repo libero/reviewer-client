@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { default as DashboardRoutes } from '../../dashboard/components/Routes';
 import { default as InitialSubmissionRoutes } from '../../initial-submission/components/Routes';
+import { default as SurveyRoutes } from '../../survey/components/Routes';
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
@@ -30,6 +31,7 @@ const App: React.FC = (): JSX.Element => {
                     <Route component={Logout} exact path="/logout" />
                     <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
                     <InitialSubmissionRoutes />
+                    <SurveyRoutes />
                     <DashboardRoutes />
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
