@@ -4,29 +4,18 @@ import { cleanup, render, fireEvent, waitFor } from '@testing-library/react';
 import Survey from './Survey';
 import routerWrapper from '../../../test-utils/routerWrapper';
 
-//const mutationMock = jest.fn();
+const mutationMock = jest.fn();
 
-//jest.mock('@apollo/react-hooks', () => ({
-//    useQuery: (): object => {
-//        return {
-//            data: {
-//                getCurrentUser: {
-//                    name: 'Joe Bloggs',
-//                    email: 'joe@blogs.com',
-//                    aff: 'somewhere',
-//                },
-//            },
-//        };
-//    },
-//    useMutation: (): object[] => {
-//        return [
-//            mutationMock,
-//            {
-//                loading: false,
-//            },
-//        ];
-//    },
-//}));
+jest.mock('@apollo/react-hooks', () => ({
+    useMutation: (): object[] => {
+        return [
+            mutationMock,
+            {
+                loading: false,
+            },
+        ];
+    },
+}));
 
 describe('Survey', (): void => {
     afterEach(() => {

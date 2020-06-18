@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Paragraph, TextField, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
 import { useForm } from 'react-hook-form';
@@ -14,21 +14,25 @@ const Survey = (): JSX.Element => {
     const { t } = useTranslation('survey');
     const { id } = useParams();
     const answers = watch('answers');
-    const onSave = (): void => {
-        const response: SurveyInput = {
-            surveyId: 'demographicSurvey',
-            answers: answers.map((answer, index) => {
-                if (answer.answer) {
-                    return {
-                        answer: answer.answer,
-                        text: t(`question${index + 1}`),
-                        questionId: `question${index + 1}`,
-                    };
-                }
-            }),
-            submissionId: id,
-        };
-        saveCallback({ variables: response });
+    const history = useHistory();
+    const onClick = (): void => {
+        if (formState.dirty) {
+            const response: SurveyInput = {
+                surveyId: 'demographicSurvey',
+                answers: answers.map((answer, index) => {
+                    if (answer.answer) {
+                        return {
+                            answer: answer.answer,
+                            text: t(`question${index + 1}`),
+                            questionId: `question${index + 1}`,
+                        };
+                    }
+                }),
+                submissionId: id,
+            };
+            saveCallback({ variables: response });
+        }
+        history.push(`/thankyou/${id}`);
     };
 
     return (
@@ -43,12 +47,7 @@ const Survey = (): JSX.Element => {
             <TextField id="answers[0].answer" labelText={t('question1')} placeholder="enter here" register={register} />
             <TextField id="answers[1].answer" labelText={t('question2')} placeholder="enter here" register={register} />
             <TextField id="answers[2].answer" labelText={t('question3')} placeholder="enter here" register={register} />
-            <Button
-                type="primary"
-                onClick={(): void => {
-                    onSave();
-                }}
-            >
+            <Button type="primary" onClick={onClick}>
                 {formState.dirty ? t('navigation.done') : t('navigation.skip')}
             </Button>
         </div>
