@@ -1,13 +1,53 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useParams } from 'react-router-dom';
+import { Paragraph, TextField, Button } from '../../ui/atoms';
+import Interweave from 'interweave';
+import { useForm } from 'react-hook-form';
+import { SurveyResponse } from '../types';
 
 const Survey: React.FC<RouteComponentProps> = () => {
+    const { register, watch, formState } = useForm<SurveyResponse>();
     const { t } = useTranslation('survey');
+    const { id } = useParams();
+    const answers = watch('answers');
+    const onSave = (): void => {
+        const response: SurveyResponse = {
+            surveyId: 'demographicSurvey',
+            answers: answers.map((answer, index) => {
+                if (answer.answer) {
+                    return {
+                        answer: answer.answer,
+                        text: t(`question${index + 1}`),
+                        questionId: `question${index + 1}`,
+                    };
+                }
+            }),
+            submissionId: id,
+        };
+        console.log(response);
+    };
+
     return (
         <div className="survey">
             <h2 className="typography__heading typography__heading--h2">{t('title')}</h2>
-            <p>dfdfdffdsfdsfdsfdsfddfdsfdsfdsfsdfsdfdsfdsfdsffsdfds</p>
+            <Paragraph type="writing">
+                <Interweave content={t('survey-info')} />
+            </Paragraph>
+            <Paragraph type="writing">
+                <Interweave content={t('survey-info-2')} />
+            </Paragraph>
+            <TextField id="answers[0].answer" labelText={t('question1')} placeholder="enter here" register={register} />
+            <TextField id="answers[1].answer" labelText={t('question2')} placeholder="enter here" register={register} />
+            <TextField id="answers[2].answer" labelText={t('question3')} placeholder="enter here" register={register} />
+            <Button
+                type="primary"
+                onClick={(): void => {
+                    onSave();
+                }}
+            >
+                {formState.dirty ? t('navigation.done') : t('navigation.skip')}
+            </Button>
         </div>
     );
 };
