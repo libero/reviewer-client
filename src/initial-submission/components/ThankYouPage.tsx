@@ -26,9 +26,11 @@ const ThankYouPage = ({ submission }: Props): JSX.Element => {
                 <Link to="/">{t('link')}</Link>
             </Paragraph>
 
-            <Link to="/" className="button button--primary">
-                {t('finish')}
-            </Link>
+            <div>
+                <Link to="/" className="button button--primary">
+                    {t('finish')}
+                </Link>
+            </div>
         </div>
     );
 };
