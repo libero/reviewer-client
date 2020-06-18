@@ -188,7 +188,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                     ),
                 )}
                 <Route
-                    path={`/submit/${id}/thankyou`}
+                    path={`/thankyou/${id}`}
                     render={(): JSX.Element =>
                         loading ? <span>loading... </span> : <ThankYouPage submission={data.getSubmission} />
                     }
