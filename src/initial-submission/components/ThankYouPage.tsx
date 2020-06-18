@@ -17,16 +17,18 @@ const ThankYouPage = ({ submission }: Props): JSX.Element => {
     return (
         <div className="thank-you-page-step">
             <h1>{t('heading')}</h1>
-            <Paragraph type="writing">{t('heading').replace('@title', title)}</Paragraph>
+            <Paragraph type="writing">{t('p1', { title })}</Paragraph>
 
-            <Paragraph type="writing">{t('p1')}</Paragraph>
+            <Paragraph type="writing">{t('p2')}</Paragraph>
 
-            <Paragraph type="writing">
-                {t('p2')}
+            <Paragraph type="footer">
+                {t('p3')}
                 <Link to="/">{t('link')}</Link>
             </Paragraph>
 
-            <Link to="/">{t('finish')}</Link>
+            <Link to="/" className="button button--primary">
+                {t('finish')}
+            </Link>
         </div>
     );
 };

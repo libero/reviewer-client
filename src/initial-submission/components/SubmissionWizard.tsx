@@ -151,14 +151,17 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
 
     return (
         <div className="submission-wizard">
-            <ProgressBar
-                fixedWidthCentered
-                steps={stepConfig.map((step: StepConfig): { id: string; label: string } => ({
-                    id: step.id,
-                    label: step.label,
-                }))}
-                currentStep={step.toLocaleLowerCase()}
-            />
+            {getCurrentStepPathIndex() > -1 && (
+                <ProgressBar
+                    fixedWidthCentered
+                    steps={stepConfig.map((step: StepConfig): { id: string; label: string } => ({
+                        id: step.id,
+                        label: step.label,
+                    }))}
+                    currentStep={step.toLocaleLowerCase()}
+                />
+            )}
+
             <Switch>
                 {stepConfig.map(
                     (config): JSX.Element => (
@@ -185,6 +188,12 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                         />
                     ),
                 )}
+                <Route
+                    path={`/submit/${id}/thankyou`}
+                    render={(): JSX.Element =>
+                        loading ? <span>loading... </span> : <ThankYouPage submission={data.getSubmission} />
+                    }
+                />
                 <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
             </Switch>
             <Modal
