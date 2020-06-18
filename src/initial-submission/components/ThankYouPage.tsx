@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 import { Link } from 'react-router-dom';
+import { Submission } from '../types';
 
 interface Props {
-    title: string;
+    submission: Submission;
 }
 
-const ThankYouPage = ({ title }: Props): JSX.Element => {
+const ThankYouPage = ({ submission }: Props): JSX.Element => {
     const { t } = useTranslation('thank-you-page');
+
+    const { manuscriptDetails = {} } = submission;
+    const { title = '' } = manuscriptDetails;
 
     return (
         <div className="thank-you-page-step">
@@ -21,6 +25,8 @@ const ThankYouPage = ({ title }: Props): JSX.Element => {
                 {t('p2')}
                 <Link to="/">{t('link')}</Link>
             </Paragraph>
+
+            <Link to="/">{t('finish')}</Link>
         </div>
     );
 };
