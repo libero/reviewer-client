@@ -17,7 +17,9 @@ const ThankYouPage = ({ submission }: Props): JSX.Element => {
     return (
         <div className="thank-you-page-step">
             <h1>{t('heading')}</h1>
-            <Paragraph type="writing">{t('p1', { title })}</Paragraph>
+            <Paragraph type="writing" className="title">
+                {t('p1', { title })}
+            </Paragraph>
 
             <Paragraph type="writing">{t('p2')}</Paragraph>
 

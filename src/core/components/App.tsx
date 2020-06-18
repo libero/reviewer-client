@@ -10,7 +10,6 @@ import ContactUs from '../../static-pages/components/ContactUs';
 import AuthorGuide from '../../static-pages/components/AuthorGuide';
 import ReviewerGuide from '../../static-pages/components/ReviewerGuide';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
-import ThankYou from '../../initial-submission/components/ThankYouPage';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { Footer } from '../../ui/atoms';
@@ -35,7 +34,6 @@ const App: React.FC = (): JSX.Element => {
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    <Route component={ThankYou} path="/thankyou" />
                     <Footer />
                 </React.Suspense>
             </Router>

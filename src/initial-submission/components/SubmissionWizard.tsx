@@ -132,7 +132,6 @@ const stepConfig: StepConfig[] = [
         component: DisclosureForm,
         schemaFactory: DisclosureSchema,
     },
-    // { id: 'thank-you', label: 'Thank you', component: ThankYouPage },
 ];
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
