@@ -4,15 +4,18 @@ import { useParams } from 'react-router-dom';
 import { Paragraph, TextField, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
 import { useForm } from 'react-hook-form';
-import { SurveyResponse } from '../types';
+import { SurveyInput, SurveyResponse } from '../types';
+import { saveSurvey } from '../graphql';
+import { useMutation } from '@apollo/react-hooks';
 
 const Survey = (): JSX.Element => {
-    const { register, watch, formState } = useForm<SurveyResponse>();
+    const { register, watch, formState } = useForm<SurveyInput>();
+    const [saveCallback] = useMutation<SurveyResponse>(saveSurvey);
     const { t } = useTranslation('survey');
     const { id } = useParams();
     const answers = watch('answers');
     const onSave = (): void => {
-        const response: SurveyResponse = {
+        const response: SurveyInput = {
             surveyId: 'demographicSurvey',
             answers: answers.map((answer, index) => {
                 if (answer.answer) {
@@ -25,7 +28,7 @@ const Survey = (): JSX.Element => {
             }),
             submissionId: id,
         };
-        console.log(response);
+        saveCallback({ variables: response });
     };
 
     return (
