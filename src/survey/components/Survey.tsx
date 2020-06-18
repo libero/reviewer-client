@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Paragraph, TextField, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
 import { useForm } from 'react-hook-form';
 import { SurveyResponse } from '../types';
 
-const Survey: React.FC<RouteComponentProps> = () => {
+const Survey = (): JSX.Element => {
     const { register, watch, formState } = useForm<SurveyResponse>();
     const { t } = useTranslation('survey');
     const { id } = useParams();
