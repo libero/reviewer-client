@@ -15,7 +15,7 @@ storiesOf('Initial Submission | steps/FileDetails', module)
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: '42',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: 'fiction',
                     }}
                 />

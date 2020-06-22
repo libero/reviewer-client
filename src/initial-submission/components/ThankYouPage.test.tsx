@@ -13,7 +13,7 @@ let submission: Submission = {
         title: 'Science',
     },
     articleType: 'research-article',
-    updated: new Date().getTime(),
+    updated: new Date().toISOString(),
 };
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
@@ -80,7 +80,7 @@ describe('ThankYouPage', (): void => {
         submission = {
             id: 'id',
             articleType: 'research-article',
-            updated: new Date().getTime(),
+            updated: new Date().toISOString(),
         };
         const { container } = render(<ThankYouPage />, {
             wrapper: routerWrapper(),

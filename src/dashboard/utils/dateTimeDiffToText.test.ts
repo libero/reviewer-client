@@ -2,9 +2,9 @@ import dateTimeDiffToText from './dateTimeDiffToText';
 
 const MS_IN_DAY = 24 * 60 * 60 * 1000;
 
-const generatePastDateTime = (daysAgo: number): number => {
+const generatePastDateTime = (daysAgo: number): string => {
     const date = new Date(Date.now() - daysAgo * MS_IN_DAY);
-    return date.getTime();
+    return date.toISOString();
 };
 
 describe('dateTimeDiffToText', (): void => {
@@ -13,8 +13,8 @@ describe('dateTimeDiffToText', (): void => {
     });
     it('renders 0 days ago and a second less than a day as "Today"', (): void => {
         expect(dateTimeDiffToText(generatePastDateTime(0))).toBe('Today');
-        const oneSecondShortOfADay = MS_IN_DAY - 1000;
-        expect(dateTimeDiffToText(Date.now() - oneSecondShortOfADay)).toBe('Today');
+        const oneSecondShortOfYesterday = new Date(Date.now() - (MS_IN_DAY - 1000));
+        expect(dateTimeDiffToText(oneSecondShortOfYesterday.toISOString())).toBe('Today');
     });
     it('renders a date 1 day ago as "Yesterday"', (): void => {
         expect(dateTimeDiffToText(generatePastDateTime(1))).toBe('Yesterday');

@@ -55,7 +55,7 @@ const initialValues: Submission = {
     },
     id: 'foo',
     articleType: 'Proclomation',
-    updated: 0,
+    updated: new Date().toISOString(),
     manuscriptDetails: {
         title: 'Squirrels Rule',
     },

@@ -18,7 +18,7 @@ describe('SubmissionEntry', (): void => {
         },
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().getTime(),
+        updated: new Date().toISOString(),
     };
 
     const mockSubmissionNoTitle: Submission = {
@@ -29,7 +29,7 @@ describe('SubmissionEntry', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().getTime(),
+        updated: new Date().toISOString(),
         author: undefined,
     };
 
@@ -41,7 +41,7 @@ describe('SubmissionEntry', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: status,
-        updated: new Date().getTime(),
+        updated: new Date().toISOString(),
         author: undefined,
     });
 
@@ -56,7 +56,7 @@ describe('SubmissionEntry', (): void => {
             articleType: 'research-article',
             lastStepVisited: 'someStep',
             status: 'CONTINUE_SUBMISSION',
-            updated: date.getTime(),
+            updated: new Date().toISOString(),
             author: undefined,
         };
     };

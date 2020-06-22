@@ -11,7 +11,7 @@ const mutationMock = jest.fn();
 const testInitialValues: Submission = {
     id: 'blah',
     articleType: '',
-    updated: Date.now(),
+    updated: new Date().toISOString(),
 };
 
 jest.mock('../../core/utils/config', () => ({
@@ -232,7 +232,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             title: 'Test title',
@@ -275,7 +275,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             previouslyDiscussed: 'test value',
@@ -293,7 +293,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             previouslySubmitted: 'test value',
@@ -311,7 +311,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['test value'],
@@ -326,7 +326,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['', 'second test value'],
@@ -341,7 +341,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['first test value', 'second test value'],
@@ -359,7 +359,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['some value'],
@@ -376,7 +376,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['', 'second test value'],
@@ -394,7 +394,7 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType,
                     }}
                     schemaFactory={DetailsSchema}

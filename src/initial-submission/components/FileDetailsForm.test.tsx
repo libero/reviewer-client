@@ -11,7 +11,7 @@ const maxSupportingFiles = 10;
 
 const mutationMock = jest.fn();
 let subscriptionData: {};
-const testInitialValues = { id: 'test', updated: Date.now(), articleType: '' };
+const testInitialValues = { id: 'test', updated: new Date().toISOString(), articleType: '' };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -94,7 +94,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                     }}
                 />,
@@ -156,7 +156,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                     }}
                     ButtonComponent={testButton}
@@ -229,7 +229,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         files: {
                             manuscriptFile: {
                                 filename: 'testfile.pdf',
@@ -463,7 +463,7 @@ describe('File Details Form', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         files: {
                             supportingFiles: [
@@ -515,7 +515,7 @@ describe('File Details Form', (): void => {
             const { container } = render(
                 <FileDetailsForm
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                    initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
                 />,
                 {
                     wrapper: routerWrapper(),
@@ -553,7 +553,7 @@ describe('File Details Form', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
-                        updated: Date.now(),
+                        updated: new Date().toISOString(),
                         articleType: '',
                         files: {
                             supportingFiles: [
@@ -614,7 +614,7 @@ describe('File Details Form', (): void => {
                         schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'test',
-                            updated: Date.now(),
+                            updated: new Date().toISOString(),
                             articleType: '',
                             files: {
                                 supportingFiles: [
@@ -656,7 +656,7 @@ describe('File Details Form', (): void => {
             const { container, getByText } = render(
                 <FileDetailsForm
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                    initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
                 />,
                 {
                     wrapper: routerWrapper(),

@@ -63,7 +63,7 @@ describe('SupportingFiles upload', () => {
         const { container } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -124,7 +124,7 @@ describe('SupportingFiles upload', () => {
         const { container } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -187,7 +187,7 @@ describe('SupportingFiles upload', () => {
         const { container } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -216,7 +216,7 @@ describe('SupportingFiles upload', () => {
         const { container, getByText } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -243,7 +243,7 @@ describe('SupportingFiles upload', () => {
         const { container, getByText } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: Date.now(), articleType: '' }}
+                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),

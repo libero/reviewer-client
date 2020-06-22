@@ -5,7 +5,7 @@ export type Suggestion = {
 
 export interface Submission {
     id: string;
-    updated: number;
+    updated: string;
     articleType: string;
     lastStepVisited?: string;
     status?: string;
