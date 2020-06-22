@@ -151,7 +151,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
         setValue(opposedFieldName, []);
     };
 
-    const isRequired = () => initialValues.articleType !== 'feature';
+    const isRequired = (): boolean => initialValues.articleType !== 'feature';
 
     return (
         <div className="editors-step">
