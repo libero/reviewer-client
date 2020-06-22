@@ -5,6 +5,7 @@ import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import * as yup from 'yup';
 
+const nowISOString = new Date().toISOString();
 const mutationMock = jest.fn(() => new Promise(() => {}));
 let subscriptionData: {};
 
@@ -63,7 +64,7 @@ describe('SupportingFiles upload', () => {
         const { container } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -124,7 +125,7 @@ describe('SupportingFiles upload', () => {
         const { container } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -187,7 +188,7 @@ describe('SupportingFiles upload', () => {
         const { container } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -216,7 +217,7 @@ describe('SupportingFiles upload', () => {
         const { container, getByText } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),
@@ -243,7 +244,7 @@ describe('SupportingFiles upload', () => {
         const { container, getByText } = render(
             <FileDetailsForm
                 schemaFactory={(): yup.ObjectSchema => yup.object()}
-                initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
             />,
             {
                 wrapper: routerWrapper(),

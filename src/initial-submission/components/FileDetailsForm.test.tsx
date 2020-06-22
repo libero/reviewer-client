@@ -6,12 +6,13 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 import * as yup from 'yup';
 import { FileDetailsSchema } from '../utils/validationSchemas';
 
+const nowISOString = new Date().toISOString();
 //TODO: put this in config
 const maxSupportingFiles = 10;
 
 const mutationMock = jest.fn();
 let subscriptionData: {};
-const testInitialValues = { id: 'test', updated: new Date().toISOString(), articleType: '' };
+const testInitialValues = { id: 'test', updated: nowISOString, articleType: '' };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -94,7 +95,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                     }}
                 />,
@@ -156,7 +157,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         files: { coverLetter: 'some default value' },
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                     }}
                     ButtonComponent={testButton}
@@ -229,7 +230,7 @@ describe('File Details Form', (): void => {
                     initialValues={{
                         id: 'test',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         files: {
                             manuscriptFile: {
                                 filename: 'testfile.pdf',
@@ -463,7 +464,7 @@ describe('File Details Form', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         files: {
                             supportingFiles: [
@@ -515,7 +516,7 @@ describe('File Details Form', (): void => {
             const { container } = render(
                 <FileDetailsForm
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                    initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
                 />,
                 {
                     wrapper: routerWrapper(),
@@ -553,7 +554,7 @@ describe('File Details Form', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'test',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         files: {
                             supportingFiles: [
@@ -614,7 +615,7 @@ describe('File Details Form', (): void => {
                         schemaFactory={(): yup.ObjectSchema => yup.object()}
                         initialValues={{
                             id: 'test',
-                            updated: new Date().toISOString(),
+                            updated: nowISOString,
                             articleType: '',
                             files: {
                                 supportingFiles: [
@@ -656,7 +657,7 @@ describe('File Details Form', (): void => {
             const { container, getByText } = render(
                 <FileDetailsForm
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={{ id: 'test', updated: new Date().toISOString(), articleType: '' }}
+                    initialValues={{ id: 'test', updated: nowISOString, articleType: '' }}
                 />,
                 {
                     wrapper: routerWrapper(),

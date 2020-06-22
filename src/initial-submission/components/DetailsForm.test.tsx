@@ -7,11 +7,12 @@ import { Submission } from '../types';
 import * as config from '../../core/utils/config';
 import { DetailsSchema } from '../utils/validationSchemas';
 
+const nowISOString = new Date().toISOString();
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
     id: 'blah',
     articleType: '',
-    updated: new Date().toISOString(),
+    updated: nowISOString,
 };
 
 jest.mock('../../core/utils/config', () => ({
@@ -232,7 +233,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             title: 'Test title',
@@ -275,7 +276,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             previouslyDiscussed: 'test value',
@@ -293,7 +294,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             previouslySubmitted: 'test value',
@@ -311,7 +312,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['test value'],
@@ -326,7 +327,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['', 'second test value'],
@@ -341,7 +342,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['first test value', 'second test value'],
@@ -359,7 +360,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['some value'],
@@ -376,7 +377,7 @@ describe('DetailsForm', (): void => {
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType: '',
                         manuscriptDetails: {
                             cosubmission: ['', 'second test value'],
@@ -394,7 +395,7 @@ describe('DetailsForm', (): void => {
                 <DetailsForm
                     initialValues={{
                         id: 'blah',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                         articleType,
                     }}
                     schemaFactory={DetailsSchema}

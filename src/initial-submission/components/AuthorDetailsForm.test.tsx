@@ -6,8 +6,9 @@ import AuthorDetailsForm from './AuthorDetailsForm';
 import { Submission } from '../types';
 import { AuthorDetailsSchema } from '../utils/validationSchemas';
 
+const nowISOString = new Date().toISOString();
 const mutationMock = jest.fn();
-const testInitialValues: Submission = { id: 'foo', updated: new Date().toISOString(), articleType: '' };
+const testInitialValues: Submission = { id: 'foo', updated: nowISOString, articleType: '' };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
     const initialRender = useRef(true);
@@ -67,7 +68,7 @@ const initialValues: Submission = {
     },
     id: 'foo',
     articleType: '',
-    updated: new Date().toISOString(),
+    updated: nowISOString,
 };
 
 describe('Author Details Form', (): void => {
@@ -120,7 +121,7 @@ describe('Author Details Form', (): void => {
             },
             id: '',
             articleType: '',
-            updated: new Date().toISOString(),
+            updated: nowISOString,
         };
         const { getByLabelText } = render(
             <AuthorDetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={initialValues} />,
@@ -241,7 +242,7 @@ describe('Author Details Form', (): void => {
                         },
                         id: 'foo',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                     }}
                     schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
@@ -264,7 +265,7 @@ describe('Author Details Form', (): void => {
                         },
                         id: 'foo',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                     }}
                     schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
@@ -287,7 +288,7 @@ describe('Author Details Form', (): void => {
                         },
                         id: 'foo',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                     }}
                     schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
@@ -310,7 +311,7 @@ describe('Author Details Form', (): void => {
                         },
                         id: 'foo',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                     }}
                     schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
@@ -333,7 +334,7 @@ describe('Author Details Form', (): void => {
                         },
                         id: 'foo',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                     }}
                     schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}
@@ -356,7 +357,7 @@ describe('Author Details Form', (): void => {
                         },
                         id: 'foo',
                         articleType: '',
-                        updated: new Date().toISOString(),
+                        updated: nowISOString,
                     }}
                     schemaFactory={AuthorDetailsSchema}
                     ButtonComponent={ButtonComponent}

@@ -6,6 +6,8 @@ import { Submission } from '../../initial-submission/types';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import appContainer from '../../../test-utils/appContainer';
 
+const nowISOString = new Date().toISOString();
+
 describe('SubmissionEntry', (): void => {
     afterEach(cleanup);
 
@@ -18,7 +20,7 @@ describe('SubmissionEntry', (): void => {
         },
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().toISOString(),
+        updated: nowISOString,
     };
 
     const mockSubmissionNoTitle: Submission = {
@@ -29,7 +31,7 @@ describe('SubmissionEntry', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().toISOString(),
+        updated: nowISOString,
         author: undefined,
     };
 
@@ -41,7 +43,7 @@ describe('SubmissionEntry', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: status,
-        updated: new Date().toISOString(),
+        updated: nowISOString,
         author: undefined,
     });
 
