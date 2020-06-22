@@ -2,7 +2,6 @@ import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { render, cleanup, RenderResult, fireEvent } from '@testing-library/react';
 import SelectedPeopleList from './SelectedPeopleList';
-import { t } from 'i18next';
 
 describe('SelectedPeopleList', (): void => {
     afterEach(cleanup);
