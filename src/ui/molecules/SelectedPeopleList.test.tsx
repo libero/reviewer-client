@@ -109,4 +109,38 @@ describe('SelectedPeopleList', (): void => {
         await fireEvent.click(container.querySelectorAll('.pod__button')[0]);
         expect(onRemoveSpy).toHaveBeenCalled();
     });
+
+    it('should show required label if true', async (): Promise<void> => {
+        const onOpenSpy = jest.fn();
+        const { container } = render(
+            <SelectedPeopleList
+                people={[]}
+                openSelectorText="SomeTestText"
+                onRemove={jest.fn()}
+                onOpen={onOpenSpy}
+                required={true}
+            />,
+        );
+
+        expect(container.querySelector('.selected_people_list__pod-content').innerHTML).toBe(
+            'SomeTestText (validation--required)',
+        );
+    });
+
+    it('should show optional if required is false', async (): Promise<void> => {
+        const onOpenSpy = jest.fn();
+        const { container } = render(
+            <SelectedPeopleList
+                people={[]}
+                openSelectorText="SomeTestText"
+                onRemove={jest.fn()}
+                onOpen={onOpenSpy}
+                required={false}
+            />,
+        );
+
+        expect(container.querySelector('.selected_people_list__pod-content').innerHTML).toBe(
+            'SomeTestText (validation--optional)',
+        );
+    });
 });
