@@ -66,6 +66,7 @@
         "editors-people-picker-label": "Suggest Senior Editors",
         "reviewers-people-picker-label": "Suggest Reviewing Editors",
         "reviewers-title": "Suggest Reviewers (Optional)",
+        "reviewers-title-mandatory": "Suggest Reviewers",
         "reviewers-label-prefix": "Reviewer",
         "reviewers-diversity_1": "Please consider diversity when suggesting reviewers. See our",
         "reviewers-diversity-link": " author guide",

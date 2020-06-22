@@ -151,9 +151,14 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
         setValue(opposedFieldName, []);
     };
 
+    const isOptional = () => {
+        return initialValues.articleType === 'feature'
+    }
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
+            {/* need optional label here based on article type */}
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
                 people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
@@ -203,6 +208,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                     }
                 />
             </ExcludedToggle>
+            {/* need optional label here based on article type */}
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
                 people={
@@ -262,7 +268,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                     }}
                 />
             </ExcludedToggle>
-            <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
+            <h2 className="typography__heading typography__heading--h3">{isOptional() ? t('editors.reviewers-title') : t('editors.reviewers-title-mandatory')}</h2>
             <span className="suggestedReviewers--diversity typography__body typography__body--secondary">
                 {t('editors.reviewers-diversity_1')}
                 <Link to="/author-guide" className="typography__body--link">
