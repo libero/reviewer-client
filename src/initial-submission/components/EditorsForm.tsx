@@ -151,6 +151,8 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
         setValue(opposedFieldName, []);
     };
 
+    const isRequired = () => initialValues.articleType !== 'feature';
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -169,6 +171,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 }
                 min={MIN_SUGGESTED_SENIOR_EDITORS}
                 max={MAX_SUGGESTED_SENIOR_EDITORS}
+                required={isRequired()}
             />
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-senior-editors-toggle-prefix')}
@@ -222,6 +225,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 }
                 min={MIN_SUGGESTED_REVIEWING_EDITORS}
                 max={MAX_SUGGESTED_REVIEWING_EDITORS}
+                required={isRequired()}
             />
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-reviewing-editors-toggle-prefix')}
