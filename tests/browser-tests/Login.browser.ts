@@ -1,9 +1,18 @@
-import { DashboardPage, FilesPage, LoginPage, AuthorDetailsPage, DetailsPage, NavigationPane, EditorPage } from '../page-objects';
+import {
+    DashboardPage,
+    FilesPage,
+    LoginPage,
+    AuthorDetailsPage,
+    DetailsPage,
+    NavigationPane,
+    EditorPage,
+    DisclosurePage,
+} from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`;
 
-test('assert nav bar', async() => {
+test('assert nav bar', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
@@ -59,4 +68,8 @@ test('Happy path', async () => {
     await editorPage.assertOnPage();
     await editorPage.populateForm();
     await editorPage.next();
+
+    const disclosurePage = new DisclosurePage();
+    await disclosurePage.assertOnPage();
+    await disclosurePage.populateForm();
 });
