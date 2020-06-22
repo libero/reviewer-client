@@ -6,6 +6,8 @@ import { Submission } from '../../initial-submission/types';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import appContainer from '../../../test-utils/appContainer';
 
+const nowISOString = new Date().toISOString();
+
 describe('SubmissionEntry', (): void => {
     afterEach(cleanup);
 
@@ -18,7 +20,7 @@ describe('SubmissionEntry', (): void => {
         },
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().getTime(),
+        updated: nowISOString,
     };
 
     const mockSubmissionNoTitle: Submission = {
@@ -29,7 +31,7 @@ describe('SubmissionEntry', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().getTime(),
+        updated: nowISOString,
         author: undefined,
     };
 
@@ -41,7 +43,7 @@ describe('SubmissionEntry', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: status,
-        updated: new Date().getTime(),
+        updated: nowISOString,
         author: undefined,
     });
 
@@ -56,7 +58,7 @@ describe('SubmissionEntry', (): void => {
             articleType: 'research-article',
             lastStepVisited: 'someStep',
             status: 'CONTINUE_SUBMISSION',
-            updated: date.getTime(),
+            updated: date.toISOString(),
             author: undefined,
         };
     };
@@ -172,5 +174,18 @@ describe('SubmissionEntry', (): void => {
         expect(onDelete).not.toBeCalled();
         fireEvent.click(getByText('modal--default-button'));
         expect(onDelete).toBeCalled();
+    });
+
+    it('should output the updated value as `ddd D MMM YYYY`', () => {
+        const submissionWithDate = {
+            id: 'someId',
+            articleType: 'research-article',
+            updated: '2020-06-22T13:24:09.199Z',
+        };
+        const { getByText } = render(<SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />, {
+            wrapper: routerWrapper(['/link-1']),
+            container: appContainer(),
+        });
+        expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
     });
 });

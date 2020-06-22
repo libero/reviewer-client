@@ -32,7 +32,7 @@ storiesOf('Dashboard | Components/SubmissionList', module)
                     articleType: 'research-article',
                     lastStepVisited: 'author',
                     status: 'CONTINUE_SUBMISSION',
-                    updated: new Date().getTime(),
+                    updated: new Date().toISOString(),
                     author: undefined,
                     manuscriptDetails: {
                         title: 'Theory of Everything',

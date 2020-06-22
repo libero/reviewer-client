@@ -14,7 +14,7 @@ describe('SubmissionList', (): void => {
         articleType: 'research-article',
         lastStepVisited: 'someStep',
         status: 'CONTINUE_SUBMISSION',
-        updated: new Date().getTime(),
+        updated: new Date().toISOString(),
         author: undefined,
     };
 

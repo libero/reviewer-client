@@ -8,11 +8,12 @@ import routerWrapper from '../../../test-utils/routerWrapper';
 import { EditorsSchema } from '../utils/validationSchemas';
 import * as yup from 'yup';
 
+const nowISOString = new Date().toISOString();
 const mutationMock = jest.fn();
 const testInitialValues: Submission = {
     id: 'blah',
     articleType: '',
-    updated: Date.now(),
+    updated: nowISOString,
 };
 
 jest.mock('../hooks/useAutoSave', () => (cb: () => void, deps: DependencyList): void => {
@@ -122,7 +123,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedSeniorEditors: ['1'],
                         },
@@ -189,7 +190,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewers: [
                                 { name: 'name1', email: 'email@example.com' },
@@ -246,7 +247,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewers: [{ name: 'name1', email: '' }],
                         },
@@ -271,7 +272,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewers: [{ name: '', email: 'email@example.com' }],
                         },
@@ -297,7 +298,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewers: [{ name: 'name1', email: 'notanemail' }],
                         },
@@ -322,7 +323,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewers: [{ name: 'name1', email: 'email@example.com' }],
                         },
@@ -345,7 +346,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [
                                 { name: 'name1', email: 'email@example.com' },
@@ -372,7 +373,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [{ name: '', email: 'email@example.com' }],
                         },
@@ -398,7 +399,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [{ name: 'name1', email: 'notanemail' }],
                         },
@@ -423,7 +424,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
                         },
@@ -446,7 +447,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
                             opposedReviewersReason: 'some reason',
@@ -574,7 +575,7 @@ describe('EditorsDetailsForm', (): void => {
                         initialValues={{
                             id: 'blah',
                             articleType: '',
-                            updated: Date.now(),
+                            updated: nowISOString,
                             editorDetails: {
                                 opposedSeniorEditors: ['1'],
                             },
@@ -595,7 +596,7 @@ describe('EditorsDetailsForm', (): void => {
                         initialValues={{
                             id: 'blah',
                             articleType: '',
-                            updated: Date.now(),
+                            updated: nowISOString,
                             editorDetails: {
                                 opposedSeniorEditorsReason: 'some reason',
                             },
@@ -615,7 +616,7 @@ describe('EditorsDetailsForm', (): void => {
                         initialValues={{
                             id: 'blah',
                             articleType: '',
-                            updated: Date.now(),
+                            updated: nowISOString,
                             editorDetails: {
                                 opposedSeniorEditors: ['1'],
                                 opposedSeniorEditorsReason: 'some reason',
@@ -820,7 +821,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedSeniorEditors: ['1'],
                         },
@@ -841,7 +842,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewingEditors: ['4'],
                         },
@@ -862,7 +863,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewingEditors: ['4'],
                         },
@@ -889,7 +890,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedSeniorEditors: ['1'],
                         },
@@ -915,7 +916,7 @@ describe('EditorsDetailsForm', (): void => {
                         initialValues={{
                             id: 'blah',
                             articleType: '',
-                            updated: Date.now(),
+                            updated: nowISOString,
                             editorDetails: {
                                 suggestedSeniorEditors: ['apple'],
                                 suggestedReviewingEditors: ['pear'],
@@ -948,7 +949,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             suggestedReviewers: [
                                 { name: 'name1', email: 'email@example.com' },
@@ -1005,7 +1006,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
                         },
@@ -1026,7 +1027,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewersReason: 'some reason',
                         },
@@ -1062,7 +1063,7 @@ describe('EditorsDetailsForm', (): void => {
                     initialValues={{
                         id: 'blah',
                         articleType: '',
-                        updated: Date.now(),
+                        updated: nowISOString,
                         editorDetails: {
                             opposedReviewers: [{ name: 'name1', email: 'email@example.com' }],
                             opposedReviewersReason: 'some reason',

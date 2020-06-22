@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import Delete from '@material-ui/icons/Delete';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
@@ -37,7 +38,9 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                     </div>
                     <div className="submission-entry__dates">
                         <time>{dateTimeDiffToText(submission.updated)}</time>
-                        <time className="submission-entry__date">{submission.updated}</time>
+                        <time className="submission-entry__date">
+                            {moment(submission.updated).format('ddd D MMM YYYY')}
+                        </time>
                     </div>
                 </div>
             </Link>

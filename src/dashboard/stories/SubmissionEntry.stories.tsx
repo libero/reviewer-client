@@ -36,7 +36,7 @@ storiesOf('Dashboard | Components/SubmissionEntry', module)
                 articleType: 'research-article',
                 lastStepVisited: 'author',
                 status: select('Status', ['CONTINUE_SUBMISSION', 'SUBMITTED', 'REJECTED'], 'CONTINUE_SUBMISSION'),
-                updated: new Date().getTime(),
+                updated: new Date().toISOString(),
                 author: undefined,
                 manuscriptDetails: {
                     title: text('Title', 'Theory of Everything'),
