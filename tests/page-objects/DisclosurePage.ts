@@ -13,7 +13,7 @@ export class DisclosurePage {
 
     async populateForm(): Promise<void> {
         await this.setSubmitterSignature();
-        const currentConsent = this.getDisclosureConsent();
+        const currentConsent = await this.getDisclosureConsent();
         if (!currentConsent) {
             await this.toggleDisclosureConsent();
         }
