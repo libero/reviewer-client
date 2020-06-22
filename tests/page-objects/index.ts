@@ -5,4 +5,5 @@ export { FilesPage, FileStatus } from './FilesPage';
 export { DetailsPage } from './DetailsPage';
 export { NavigationPane } from './NavigationPane';
 export { EditorPage } from './EditorPage';
+export { DisclosurePage } from './DisclosurePage';
 
