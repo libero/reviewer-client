@@ -173,4 +173,17 @@ describe('SubmissionEntry', (): void => {
         fireEvent.click(getByText('modal--default-button'));
         expect(onDelete).toBeCalled();
     });
+
+    it('should output the updated value as `ddd D MMM YYYY`', () => {
+        const submissionWithDate = {
+            id: 'someId',
+            articleType: 'research-article',
+            updated: '2020-06-22T13:24:09.199Z',
+        };
+        const { getByText } = render(<SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />, {
+            wrapper: routerWrapper(['/link-1']),
+            container: appContainer(),
+        });
+        expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
+    });
 });
