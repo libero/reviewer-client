@@ -4,6 +4,19 @@ interface JwtToken {
     issuer: string;
 }
 
+export const setToken = (token: string): void => {
+    window.localStorage.setItem('token', token);
+};
+
+export const clearToken = (): void => {
+    window.localStorage.removeItem('token');
+};
+
+export const decodeToken = (token: string): JwtToken => {
+    const [, payload] = token.split('.');
+    return JSON.parse(atob(payload)) as JwtToken;
+};
+
 export const getToken = (): string => {
     try {
         const token = window.localStorage.getItem('token');
@@ -16,20 +29,6 @@ export const getToken = (): string => {
     } catch (e) {
         clearToken();
     }
-};
-
-export const setToken = (token: string): void => {
-    console.log('what on earth?!')
-    window.localStorage.setItem('token', token);
-};
-
-export const clearToken = (): void => {
-    window.localStorage.removeItem('token');
-};
-
-export const decodeToken = (token: string): JwtToken => {
-    const [, payload] = token.split('.');
-    return JSON.parse(atob(payload)) as JwtToken;
 };
 
 // parse JWT from the URL hash
