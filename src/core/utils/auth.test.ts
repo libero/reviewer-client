@@ -42,7 +42,7 @@ describe('auth', (): void => {
         it('doesnt set token if token present in url', (): void => {
             jest.spyOn(tokenUtils, 'getTokenFromUrl').mockImplementation((): string => 'token_from_url');
             jest.spyOn(tokenUtils, 'decodeToken').mockImplementation(() => ({
-                issuer: 'libero',
+                issuer: 'a',
                 iat: new Date().getTime() / 1000,
                 exp: new Date().getTime() / 1000 + 1000,
             }));
