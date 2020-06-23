@@ -22,8 +22,6 @@ export const getToken = (): string => {
     if (token) {
         try {
             const decodedToken = decodeToken(token);
-            console.log('decodedToken', decodedToken.exp);
-            console.log('new Date().getTime()', new Date().getTime());
             // Token is expired. Remove it. exp is in seconds so convert to milliseconds.
             if (decodedToken.exp * 1000 < new Date().getTime()) {
                 throw new Error('token invalid');
