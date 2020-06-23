@@ -8,9 +8,10 @@ export const getToken = (): string => {
     try {
         const token = window.localStorage.getItem('token');
         const decodedToken = decodeToken(token);
-        // Token is expired. Remove it.
+        // Token is expired. Remove it. exp is in seconds so convert to milliseconds.
         if (decodedToken.exp * 1000 < new Date().getTime()) {
-            throw new Error('token expired');
+            clearToken();
+            return ''
         }
         return token;
     } catch (e) {
