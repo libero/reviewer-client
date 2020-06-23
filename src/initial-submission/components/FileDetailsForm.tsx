@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import useAutoSave from '../hooks/useAutoSave';
 import { FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 import { StepProps } from './SubmissionWizard';
+import { set } from 'lodash';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -31,7 +32,10 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
     // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
     const [manuscriptStatus, setManuscriptStatus] = useState<{
-        fileStored?: {};
+        fileStored?: {
+            fileName: string;
+            previewLink: string;
+        };
         uploadInProgress?: UploadInProgress;
         error?: 'multiple' | 'validation' | 'server';
     }>({
@@ -42,13 +46,37 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     });
     const schema = schemaFactory(t);
 
+    const validationResolver = useCallback((data: FileDetails) => {
+        try {
+            schema.validateSync(
+                { ...data, manuscriptFile: manuscriptStatus.fileStored.fileName },
+                { abortEarly: false },
+            );
+            return { errors: {}, values: data };
+        } catch (errors) {
+            return {
+                errors: errors.inner.reduce(
+                    (
+                        errorObject: {},
+                        { path, message, type }: { path: string; message: string; type: string; inner: [] },
+                    ) => set(errorObject, path, { message, type }),
+                    {},
+                ),
+                values: data,
+            };
+        }
+    }, []);
+
     const { register, watch, errors, triggerValidation } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
         mode: 'onBlur',
-        validationSchema: schema,
+        validateCriteriaMode: 'all',
+        validationResolver,
     });
+
+    register({ name: 'manuscriptFile', type: 'custom' });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -154,7 +182,15 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                 {t('files.manuscript-title')}
             </h2>
             <Interweave content={t('files.manuscript-guidance')} />
-            <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
+            <FileUpload
+                onUpload={onManuscriptUpload}
+                state={manuscriptStatus}
+                validationError={
+                    errors && errors.manuscriptFile
+                        ? ((errors.manuscriptFile as unknown) as { message: string }).message
+                        : undefined
+                }
+            />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 {t('files.supporting-title')}
             </h2>

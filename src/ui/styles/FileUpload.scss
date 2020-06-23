@@ -12,6 +12,7 @@ $activeBorderColour: $colourPrimary;
     &:focus {
         outline: none;
     }
+  margin-bottom: 0.75rem;
 }
 
 .file-upload__content {
@@ -22,7 +23,7 @@ $activeBorderColour: $colourPrimary;
     border: 0.063rem solid $activeBorderColour;
 }
 
-.file-upload__dropzone--idle { 
+.file-upload__dropzone--idle {
     border: 0.125rem dashed $idleBorderColour;
 }
 
