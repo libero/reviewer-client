@@ -18,17 +18,22 @@ export const decodeToken = (token: string): JwtToken => {
 };
 
 export const getToken = (): string => {
-    try {
-        const token = window.localStorage.getItem('token');
-        const decodedToken = decodeToken(token);
-        // Token is expired. Remove it. exp is in seconds so convert to milliseconds.
-        if (decodedToken.exp * 1000 < new Date().getTime()) {
-            throw new Error('token invalid');
+    const token = window.localStorage.getItem('token');
+    if (token) {
+        try {
+            const decodedToken = decodeToken(token);
+            console.log('decodedToken', decodedToken.exp);
+            console.log('new Date().getTime()', new Date().getTime());
+            // Token is expired. Remove it. exp is in seconds so convert to milliseconds.
+            if (decodedToken.exp * 1000 < new Date().getTime()) {
+                throw new Error('token invalid');
+            }
+        } catch (e) {
+            clearToken();
         }
-        return token;
-    } catch (e) {
-        clearToken();
     }
+
+    return token;
 };
 
 // parse JWT from the URL hash
