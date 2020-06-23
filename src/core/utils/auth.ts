@@ -7,7 +7,7 @@ export const importToken = (): void => {
 
     if (token) {
         const decodedToken = decodeToken(token);
-        if ((decodedToken as { issuer: string }).issuer === 'libero') {
+        if (decodedToken.issuer === 'libero') {
             setToken(token);
         }
     }

@@ -1,6 +1,8 @@
-export const getToken = (): string => {
-    return window.localStorage.getItem('token');
-};
+interface JwtToken {
+    exp: number;
+    iat: number;
+    issuer: string;
+}
 
 export const setToken = (token: string): void => {
     window.localStorage.setItem('token', token);
@@ -10,9 +12,23 @@ export const clearToken = (): void => {
     window.localStorage.removeItem('token');
 };
 
-export const decodeToken = (token: string): {} => {
+export const decodeToken = (token: string): JwtToken => {
     const [, payload] = token.split('.');
-    return JSON.parse(atob(payload));
+    return JSON.parse(atob(payload)) as JwtToken;
+};
+
+export const getToken = (): string => {
+    const token = window.localStorage.getItem('token');
+    if (token) {
+        const decodedToken = decodeToken(token);
+        // Token is expired. Remove it. exp is in seconds so convert to milliseconds.
+        if (decodedToken.exp * 1000 < new Date().getTime()) {
+            clearToken();
+            throw new Error('token invalid, clearing');
+        }
+    }
+
+    return token;
 };
 
 // parse JWT from the URL hash
