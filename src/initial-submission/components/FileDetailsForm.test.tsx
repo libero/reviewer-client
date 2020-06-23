@@ -430,6 +430,27 @@ describe('File Details Form', (): void => {
             });
             await waitFor(() => {});
         });
+
+        it('Should validate after a file has been added', async (): Promise<void> => {
+            const { container, getByText } = render(
+                <FileDetailsForm
+                    schemaFactory={FileDetailsSchema}
+                    initialValues={testInitialValues}
+                    ButtonComponent={testButton}
+                />,
+                {
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('files.validation.manuscript-required')).toBeInTheDocument());
+            expect(getByText('files.validation.manuscript-required')).toBeInTheDocument();
+            const dropzone = container.querySelector('.file-upload__dropzone');
+            await dropFileEvent(createFile('application/pdf', 'file1.pdf'), dropzone);
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => expect(getByText('files.validation.manuscript-required')).toBeInTheDocument());
+            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+        });
     });
 
     describe('SupportingFiles', () => {
