@@ -161,6 +161,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
                 onChange={(selected): void => {
                     setValue('suggestedSeniorEditors', selected);
+                    triggerValidation('suggestedSeniorEditors');
                 }}
                 initialSelectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
@@ -215,6 +216,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 }
                 onChange={(selected): void => {
                     setValue('suggestedReviewingEditors', selected);
+                    triggerValidation('suggestedReviewingEditors');
                 }}
                 initialSelectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
