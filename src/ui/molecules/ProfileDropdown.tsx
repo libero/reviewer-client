@@ -26,9 +26,7 @@ const ProfileDropdown: React.FC<Props> = ({ user }: Props): JSX.Element => {
             </button>
             {expanded && (
                 <div className="profile_dropdown__panel">
-                    <div className="profile_dropdown__item profile_dropdown__panel_heading">
-                        {`${user.name}${user.role ? ` (${user.role})` : ''}`}
-                    </div>
+                    <div className="profile_dropdown__item profile_dropdown__panel_heading">{user.name}</div>
                     <ul className="profile_dropdown__list">
                         <li className="profile_dropdown__list_item">
                             <a

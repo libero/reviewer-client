@@ -57,10 +57,10 @@ describe('ProfileDropDown', (): void => {
         expect(container.querySelector('.profile_dropdown__panel')).not.toBeInTheDocument();
     });
 
-    it('displays name and role in the profile menu', (): void => {
+    it('displays name in the profile menu', (): void => {
         const { getByText, container } = renderDropDown();
         fireEvent.click(container.querySelector('.profile_dropdown__button'));
-        expect(getByText('Name (Role)')).toBeInTheDocument();
+        expect(getByText('Name')).toBeInTheDocument();
     });
 
     it('displays the ORCID and logout links in profile menu', (): void => {
