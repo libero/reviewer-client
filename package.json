@@ -12,7 +12,8 @@
         "prettier": "prettier --write 'src/**/*ts?'",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "test:browser": "yarn testcafe chrome 'tests/**/*.browser.ts'",
+        "test:browser": "yarn testcafe chrome tests/browser-tests/runner.js",
+        "test:browser-remote": "yarn testcafe remote tests/browser-tests/runner.ts",
         "test:browser-headless": "yarn testcafe chrome:headless 'tests/**/*.browser.ts'"
     },
     "husky": {

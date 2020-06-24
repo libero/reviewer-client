@@ -21,7 +21,6 @@ lib-cov
 coverage
 
 # Browser test compiled js files and output
-tests/**/*.js
 tests/output
 screenshots
 
