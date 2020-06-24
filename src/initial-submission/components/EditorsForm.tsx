@@ -153,6 +153,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
 
     const isRequired = (): boolean => initialValues.articleType !== 'feature';
 
+    console.log(errors);
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
@@ -161,6 +162,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
                 onChange={(selected): void => {
                     setValue('suggestedSeniorEditors', selected);
+                    triggerValidation('suggestedSeniorEditors');
                 }}
                 initialSelectedPeople={suggestedSeniorEditors}
                 className="senior-editors-picker"
@@ -215,6 +217,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 }
                 onChange={(selected): void => {
                     setValue('suggestedReviewingEditors', selected);
+                    triggerValidation('suggestedReviewingEditors');
                 }}
                 initialSelectedPeople={suggestedReviewingEditors}
                 className="reviewing-editors-picker"
