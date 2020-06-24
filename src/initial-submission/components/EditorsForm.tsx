@@ -153,7 +153,6 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
 
     const isRequired = (): boolean => initialValues.articleType !== 'feature';
 
-    console.log(errors);
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
