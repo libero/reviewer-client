@@ -278,6 +278,17 @@ describe('MultiFileUpload', () => {
             expect(getByText('multifile-upload.status-uploading 42%')).toBeInTheDocument();
         });
 
+        it('shows queued for queued items', () => {
+            const { getByText } = render(
+                <MultiFileUpload
+                    files={[{ uploadInProgress: { fileName: 'File 2.pdf', progress: null } }]}
+                    onUpload={jest.fn()}
+                    onDelete={jest.fn()}
+                />,
+            );
+            expect(getByText('multifile-upload.status-queued')).toBeInTheDocument();
+        });
+
         it('shows server error status text when ERROR and value is server', () => {
             const { getByText } = render(
                 <MultiFileUpload
