@@ -76,7 +76,7 @@ export class NavigationPane {
         await t.expect(profileSelector.child('.profile_dropdown__list').child(1).textContent).eql('Logout');
     }
 
-    public async assertUserName(input = 'Tamlyn Rhodes (author)') {
+    public async assertUserName(input = 'Tamlyn Rhodes') {
         const profileSelector = this.profileDropdown.child('.profile_dropdown__panel');
         await t.expect(this.profileDropdown.visible).ok();
         await t.expect(profileSelector.visible).notOk();
