@@ -4,11 +4,7 @@ import { render, RenderResult, fireEvent } from '@testing-library/react';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import NavBar from './NavBar';
 
-const expectedMenuItems = [
-    {
-        display: 'common:navbar.dashboard',
-        url: '/',
-    },
+const expectedStaticMenuItems = [
     {
         display: 'common:navbar.author-guide',
         url: '/author-guide',
@@ -23,6 +19,16 @@ const expectedMenuItems = [
     },
 ];
 
+const authenticatedExpectedMenuItems = [
+    {
+        display: 'common:navbar.dashboard',
+        url: '/',
+    },
+    ...expectedStaticMenuItems,
+];
+
+let isAuthenticated = true;
+
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
         return {
@@ -32,6 +38,7 @@ jest.mock('@apollo/react-hooks', () => ({
                     email: 'joe@blogs.com',
                     aff: 'somewhere',
                 },
+                isAuthenticated: isAuthenticated,
             },
         };
     },
@@ -47,11 +54,23 @@ describe('NavBar', (): void => {
         ).not.toThrow();
     });
 
+    it('should render a nonauthenticated menu with expected items', (): void => {
+        isAuthenticated = true;
+        const { container } = render(<NavBar />, {
+            wrapper: routerWrapper(),
+        });
+        for (const item of expectedStaticMenuItems) {
+            const element = container.querySelector('.menu__link[href="' + item.url + '"]');
+            expect(element).toBeInTheDocument();
+            expect(element.textContent).toBe(item.display);
+        }
+    });
+
     it('should render a menu with expected items', (): void => {
         const { container } = render(<NavBar />, {
             wrapper: routerWrapper(),
         });
-        for (const item of expectedMenuItems) {
+        for (const item of authenticatedExpectedMenuItems) {
             const element = container.querySelector('.menu__link[href="' + item.url + '"]');
             expect(element).toBeInTheDocument();
             expect(element.textContent).toBe(item.display);
@@ -63,7 +82,7 @@ describe('NavBar', (): void => {
         });
         fireEvent.click(container.querySelector('.burger_menu button'));
 
-        for (const item of expectedMenuItems) {
+        for (const item of authenticatedExpectedMenuItems) {
             const element = container.querySelector('.burger_menu__link[href="' + item.url + '"]');
             expect(element).toBeInTheDocument();
             expect(element.textContent).toBe(item.display);
