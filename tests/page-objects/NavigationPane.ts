@@ -12,7 +12,7 @@ export class NavigationPane {
         await t.expect(this.iconLink.visible).ok();
         await t.expect(this.burgerMenuContainer.visible).notOk();
         await t.expect(this.burgerMenuContent.visible).notOk();
-        await t.expect(this.menu.visible).notOk();
+        await t.expect(this.menu.visible).ok();
         await t.expect(this.burgerMenuButton.visible).notOk();
         await t.expect(this.profileDropdown.visible).notOk();
     }

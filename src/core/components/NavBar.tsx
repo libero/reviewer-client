@@ -43,7 +43,7 @@ const NavBar = (): JSX.Element => {
             <BurgerMenu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
             <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
             <Menu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
-            <ProfileDropdown user={loading ? null : data ? data.getCurrentUser : null} />
+            {authQuery.isAuthenticated && <ProfileDropdown user={loading ? null : data.getCurrentUser} />}
         </AppBar>
     );
 };
