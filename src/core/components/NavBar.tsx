@@ -11,11 +11,7 @@ interface GetCurrentUser {
     getCurrentUser: User;
 }
 
-const menuItems = [
-    {
-        display: 'common:navbar.dashboard',
-        url: '/',
-    },
+const staticMenuItems = [
     {
         display: 'common:navbar.author-guide',
         url: '/author-guide',
@@ -30,23 +26,24 @@ const menuItems = [
     },
 ];
 
+const menuItems = [
+    {
+        display: 'common:navbar.dashboard',
+        url: '/',
+    },
+    ...staticMenuItems,
+];
+
 const NavBar = (): JSX.Element => {
     const { data: authQuery = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
     const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !authQuery.isAuthenticated });
 
-    if (!data) {
-        return (
-            <AppBar>
-                <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
-            </AppBar>
-        );
-    }
     return (
         <AppBar>
-            <BurgerMenu items={menuItems} />
+            <BurgerMenu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
             <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
-            <Menu items={menuItems} />
-            <ProfileDropdown user={loading ? null : data.getCurrentUser} />
+            <Menu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
+            <ProfileDropdown user={loading ? null : data ? data.getCurrentUser : null} />
         </AppBar>
     );
 };
