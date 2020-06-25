@@ -1,3 +1,5 @@
+import { waitForReact } from 'testcafe-react-selectors';
+
 import {
     DashboardPage,
     FilesPage,
@@ -10,7 +12,9 @@ import {
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`Getting Started`.page`${BASE_URL}`;
+fixture`Getting Started`.page`${BASE_URL}`.beforeEach(async () => {
+    await waitForReact();
+});
 
 test('assert nav bar', async () => {
     const navigationPane = new NavigationPane();
