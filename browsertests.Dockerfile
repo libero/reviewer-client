@@ -1,15 +1,11 @@
 FROM testcafe/testcafe
 
+WORKDIR /app
+
 USER root
-
-ENV NODE_PATH=/opt:/usr/lib/node_modules:/opt/testcafe/node_modules
-
-RUN cd /opt/testcafe && npm install \
-  tsyringe@3.2.0 testcafe-reporter-html@1.4.4
-
+RUN npm install testcafe-react-selectors testcafe
 USER user
 
-WORKDIR /app
 
 COPY tests tests
 COPY test-utils test-utils
