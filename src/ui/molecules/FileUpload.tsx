@@ -53,6 +53,7 @@ const FileUploadContent = ({
                 </Fragment>
             );
         case 'UPLOADING':
+        case 'PROCESSING':
             return (
                 <Fragment>
                     <span className="typography__body file-upload__description">
