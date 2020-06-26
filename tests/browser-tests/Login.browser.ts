@@ -14,6 +14,7 @@ import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`.beforeEach(async () => {
     await waitForReact();
+    console.log('some test');
 });
 
 test('assert nav bar', async () => {
