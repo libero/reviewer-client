@@ -48,18 +48,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: "!contains(github.event.pull_request.body, '[skip-saucelabs]')"
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        browser: [
-          'saucelabs:Firefox@latest:Windows 10',
-          'saucelabs:Chrome@latest:Windows 10',
-          'saucelabs:MicrosoftEdge@latest:Windows 10',
-          'saucelabs:Safari@13:macOS 10.13',
-          'saucelabs:Safari@12.0:macOS 10.14',
-          'saucelabs:Safari@11.0:macOS 10.12'
-          ]
     env:
       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
@@ -89,8 +77,8 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: ${{ matrix.browser }}
-        run: yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
+      - name: browser tests
+        run: yarn testcafe 'saucelabs:Firefox@latest:Windows 10', 'saucelabs:Chrome@latest:Windows 10', 'saucelabs:MicrosoftEdge@latest:Windows 10', 'saucelabs:Safari@13:macOS 10.13', 'saucelabs:Safari@12.0:macOS 10.14', 'saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
 
   browsertest-container:
     needs: [test, build]
