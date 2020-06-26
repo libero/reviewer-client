@@ -78,7 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: browser tests
-        run: yarn testcafe saucelabs:Safari,saucelabs:Chrome,saucelabs:Firefox,saucelabs:MicrosoftEdge tests/**/*.browser.ts
+        run: yarn testcafe -c 1 saucelabs:Safari,saucelabs:Chrome,saucelabs:Firefox,saucelabs:MicrosoftEdge tests/**/*.browser.ts
 
   browsertest-container:
     needs: [test, build]
