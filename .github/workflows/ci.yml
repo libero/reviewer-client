@@ -78,7 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: browser tests
-        run: yarn testcafe 'saucelabs:Firefox@latest:Windows 10','saucelabs:Chrome@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@13:macOS 10.13','saucelabs:Safari@12.0:macOS 10.14', 'saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
+        run: yarn testcafe 'saucelabs:Firefox@latest:Windows 10','saucelabs:Chrome@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@13:macOS 10.13','saucelabs:Safari@12.0:macOS 10.14','saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
 
   browsertest-container:
     needs: [test, build]
