@@ -52,6 +52,10 @@ export const getSubmissionQuery = gql`
                 fieldName
                 value
             }
+            disclosure {
+                submitterSignature
+                disclosureConsent
+            }
         }
     }
 `;
