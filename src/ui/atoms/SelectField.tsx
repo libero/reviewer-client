@@ -27,6 +27,7 @@ interface Props {
     control?: Control<Record<string, any>>;
     setValue?: (name: string, value: unknown, trigger?: boolean) => void;
     className?: string;
+    limitReached?: boolean;
 }
 const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     <components.DropdownIndicator {...props}>
@@ -48,6 +49,7 @@ const SelectField = ({
     control,
     setValue,
     className,
+    limitReached = false,
 }: Props): JSX.Element => {
     const select = (
         <Select
@@ -55,12 +57,13 @@ const SelectField = ({
             className={`select-field__input ${invalid ? 'select-field--error' : ''}`}
             classNamePrefix="select-field"
             options={values}
-            components={{ DropdownIndicator }}
+            components={{ DropdownIndicator: limitReached ? null : DropdownIndicator }}
             placeholder={placeholder}
             onChange={onChange}
             isMulti={multi}
             defaultValue={defaultValue}
-            isSearchable={searchable}
+            isSearchable={limitReached ? false : searchable}
+            {...{ menuIsOpen: limitReached ? false : undefined }}
         />
     );
     return (
