@@ -89,11 +89,18 @@ const ButtonComponent = (
                 className="submission-wizard-next-button"
                 onClick={async (): Promise<void> => {
                     if (lastPage) {
-                        triggerValidation().then(async valid => {
-                            if (valid) {
-                                toggle();
-                            }
-                        });
+                        try {
+                            setProcessing(true);
+                            triggerValidation().then(async valid => {
+                                await saveFunction();
+                                setProcessing(false);
+                                if (valid) {
+                                    toggle();
+                                }
+                            });
+                        } catch (e) {
+                            setProcessing(false);
+                        }
                     } else {
                         if (!processing) {
                             try {
@@ -193,8 +200,8 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 hide={toggle}
                 buttonType="primary"
                 buttonText={t('submit.modal-confirm') as string}
-                onAccept={(): void => {
-                    submitSubmission({ variables: { id: data.getSubmission.id } });
+                onAccept={async (): Promise<void> => {
+                    await submitSubmission({ variables: { id } });
                     history.push(`/survey/${id}`);
                 }}
             >

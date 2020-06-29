@@ -14,17 +14,18 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepP
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDisclosurePageMutation);
     const schema = schemaFactory(t);
+    const defaultValues = {
+        submitterSignature:
+            initialValues.disclosure && initialValues.disclosure.submitterSignature
+                ? initialValues.disclosure.submitterSignature
+                : '',
+        disclosureConsent:
+            initialValues.disclosure && initialValues.disclosure.disclosureConsent
+                ? initialValues.disclosure.disclosureConsent
+                : false,
+    };
     const { register, errors, getValues, watch, triggerValidation } = useForm<DisclosureDetails>({
-        defaultValues: {
-            submitterSignature:
-                initialValues.disclosure && initialValues.disclosure.submitterSignature
-                    ? initialValues.disclosure.submitterSignature
-                    : '',
-            disclosureConsent:
-                initialValues.disclosure && initialValues.disclosure.disclosureConsent
-                    ? initialValues.disclosure.disclosureConsent
-                    : false,
-        },
+        defaultValues,
         mode: 'onBlur',
         validationSchema: schema,
     });
@@ -75,6 +76,7 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepP
                     id="disclosureConsent"
                     labelText={t('disclosure.disclosure-consent-input')}
                     register={register}
+                    initialValue={defaultValues.disclosureConsent}
                     invalid={errors && errors.disclosureConsent !== undefined}
                     helperText={errors && errors.disclosureConsent ? errors.disclosureConsent.message : null}
                 />
