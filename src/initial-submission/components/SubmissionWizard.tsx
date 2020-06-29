@@ -89,11 +89,18 @@ const ButtonComponent = (
                 className="submission-wizard-next-button"
                 onClick={async (): Promise<void> => {
                     if (lastPage) {
-                        triggerValidation().then(async valid => {
-                            if (valid) {
-                                toggle();
-                            }
-                        });
+                        try {
+                            setProcessing(true);
+                            triggerValidation().then(async valid => {
+                                await saveFunction();
+                                setProcessing(false);
+                                if (valid) {
+                                    toggle();
+                                }
+                            });
+                        } catch (e) {
+                            setProcessing(false);
+                        }
                     } else {
                         if (!processing) {
                             try {
