@@ -46,30 +46,40 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     });
     const schema = schemaFactory(t);
 
-    const validationResolver = useCallback((data: FileDetails) => {
-        try {
-            schema.validateSync(
-                { ...data, manuscriptFile: manuscriptStatus.fileStored.fileName },
-                { abortEarly: false },
-            );
-            return { errors: {}, values: data };
-        } catch (errors) {
-            return {
-                errors: errors.inner.reduce(
+    const validationResolver = useCallback(
+        (data: FileDetails) => {
+            try {
+                schema.validateSync(
+                    {
+                        coverLetter: data.coverLetter || '',
+                        manuscriptFile: manuscriptStatus.fileStored.fileName,
+                    },
+                    { abortEarly: false },
+                );
+                console.log('valid');
+                return { errors: {}, values: data };
+            } catch (errors) {
+                console.log('invalid');
+                const tempErrors = errors.inner.reduce(
                     (
                         errorObject: {},
                         { path, message, type }: { path: string; message: string; type: string; inner: [] },
                     ) => set(errorObject, path, { message, type }),
                     {},
-                ),
-                values: data,
-            };
-        }
-    }, []);
+                );
+                console.log('errors', tempErrors);
+                return {
+                    errors: tempErrors,
+                    values: data,
+                };
+            }
+        },
+        [manuscriptStatus],
+    );
 
     const { register, watch, errors, triggerValidation } = useForm<FileDetails>({
         defaultValues: {
-            coverLetter: files ? files.coverLetter : '',
+            coverLetter: files && files.coverLetter ? files.coverLetter : '',
         },
         mode: 'onBlur',
         validateCriteriaMode: 'all',
@@ -114,6 +124,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                         progress: parseInt(uploadProgressData.fileUploadProgress.percentage),
                     },
                 });
+                triggerValidation();
             }
         }
     }, [uploadProgressData, loading]);
@@ -154,6 +165,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     };
 
     const coverLetter = watch('coverLetter');
+    useEffect(() => console.log('coverLetter', coverLetter), [coverLetter]);
     const onSave = async (): Promise<void> => {
         const vars = {
             variables: {

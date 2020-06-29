@@ -98,14 +98,14 @@ const ButtonComponent = (
                         if (!processing) {
                             try {
                                 setProcessing(true);
-                                triggerValidation().then(async valid => {
-                                    if (valid) {
-                                        await saveFunction();
-                                        history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
-                                    } else {
-                                        setProcessing(false);
-                                    }
-                                });
+                                const valid = await triggerValidation();
+                                console.log('subwiz', valid);
+                                if (valid) {
+                                    await saveFunction();
+                                    history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
+                                } else {
+                                    setProcessing(false);
+                                }
                             } catch (e) {
                                 setProcessing(false);
                             }

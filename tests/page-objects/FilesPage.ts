@@ -62,7 +62,7 @@ export class FilesPage {
         return {
             status,
             text,
-            extraText
+            extraText,
         };
     }
 
@@ -128,6 +128,7 @@ export class FilesPage {
             text: 'Done! Preview or Replace your manuscript file.',
             extraText: 'dummy-manuscript.docx',
         });
+        await t.expect(await hasError(this.manuscriptDropzone)).notOk();
     }
 
     public async next(): Promise<void> {

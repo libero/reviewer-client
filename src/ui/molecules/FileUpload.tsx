@@ -133,6 +133,7 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {}, validationError }: 
         }
     }, [state]);
 
+    console.log('validationError', validationError);
     return (
         <div className="file-upload">
             <div

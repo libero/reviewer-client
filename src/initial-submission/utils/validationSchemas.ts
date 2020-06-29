@@ -161,8 +161,12 @@ const EditorsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
 
 const FileDetailsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
     yup.object().shape({
-        coverLetter: yup.string().required(t('files.validation.coverletter-required')),
-        manuscriptFile: yup.mixed().required(t('files.validation.manuscript-required')),
+        coverLetter: yup
+            .string()
+            .required(t('files.validation.coverletter-required'))
+            .min(1)
+            .email(),
+        manuscriptFile: yup.string().required(t('files.validation.manuscript-required')),
     });
 
 export { AuthorDetailsSchema, DetailsSchema, DisclosureSchema, EditorsSchema, FileDetailsSchema };

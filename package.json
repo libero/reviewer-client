@@ -52,7 +52,7 @@
         "@types/react-virtualized-auto-sizer": "^1.0.0",
         "@types/uuid": "^7.0.2",
         "@types/ws": "^7.2.3",
-        "@types/yup": "^0.26.30",
+        "@types/yup": "^0.29.3",
         "@typescript-eslint/eslint-plugin": "^2.7.0",
         "@typescript-eslint/parser": "^2.7.0",
         "apollo-cache-inmemory": "^1.6.3",
@@ -131,7 +131,7 @@
         "subscriptions-transport-ws": "^0.9.16",
         "testcafe-browser-provider-saucelabs": "^1.8.0",
         "uuid": "^7.0.2",
-        "yup": "^0.28.1"
+        "yup": "^0.29.1"
     },
     "engines": {
         "node": ">=12.15.0"
