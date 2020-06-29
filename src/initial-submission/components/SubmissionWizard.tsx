@@ -193,8 +193,8 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                 hide={toggle}
                 buttonType="primary"
                 buttonText={t('submit.modal-confirm') as string}
-                onAccept={(): void => {
-                    submitSubmission({ variables: { id: data.getSubmission.id } });
+                onAccept={async (): Promise<void> => {
+                    await submitSubmission({ variables: { id } });
                     history.push(`/survey/${id}`);
                 }}
             >

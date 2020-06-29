@@ -196,7 +196,9 @@ export const saveDisclosurePageMutation = gql`
 `;
 
 export const submitSubmissionMutation = gql`
-    mutation submit($id: ID!) {
-        id
+    mutation Submit($id: ID!) {
+        submit(id: $id) {
+            id
+        }
     }
 `;
