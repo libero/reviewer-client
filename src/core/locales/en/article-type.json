@@ -5,18 +5,33 @@
     "research-article": {
         "label": "Research Article",
         "paragraph-1": "Research Articles published by eLife are full-length studies that present important breakthroughs across the life sciences and biomedicine.",
-        "paragraph-2": "There is no maximum length and no limits on the number of display items, and is our most submitted type of article. For more information on our article types please read our "
+        "paragraph-2": "For submission guidelines please read our "
     },
     "feature": {
         "label": "Feature Article",
         "paragraph-1": "Feature Articles should offer fresh insights into topics of broad interest to readers working in the life and biomedical sciences and should be written in an active/engaging style.",
-        "paragraph-2": "There are no strict limits on length, but authors are advised to stay below 2000 words, two display items (figures, tables etc) and 20 references if possible.",
-        "paragraph-3": "For more information on our article types please read our "
+        "paragraph-2": "For submission guidelines please read our "
     },
     "research-advance": {
         "label": "Research Advance",
         "paragraph-1": "This format is for substantial developments that directly build upon a Research Article, Short Report or Tools and Resources article published previously by eLife.",
         "paragraph-2": "For more information on our article types please read our "
+    },
+    "short-report": {
+        "label": "Short Report",
+        "paragraph-1": "Short Reports can be used to report results of a single set of experiments, provided the conclusion is clear and justified, and the findings are novel and judged to be of high importance.",
+        "paragraph-2": "For submission guidelines please read our "
+    },
+    "tools-resources": {
+        "label": "Tools and Resources",
+        "paragraph-1": "Tools and Resources articles should highlight significant technological or methodological advances that have the potential to accelerate discovery in their respective fields.",
+        "paragraph-2": "We also welcome submission of important datasets, collections of resources, software tools, or similar.",
+        "paragraph-3": "For submission guidelines please read our "
+    },
+    "scientific-correspondence": {
+        "label": "Scientific Correspondence",
+        "paragraph-1": "Scientific Correspondence allows authors to challenge the central findings of a published paper, and gives the original authors an opportunity to respond. Please read <a href=\"https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife\" target=\"_blank\" rel=\"noopener noreferrer\">“Introducing Scientific Correspondence at eLife”</a> before submitting.",
+        "paragraph-2": "For submission guidelines please read our "
     },
     "cancel-button": "cancel",
     "confirm-button": "continue"
