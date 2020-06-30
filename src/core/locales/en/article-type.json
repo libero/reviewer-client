@@ -18,7 +18,9 @@
         "paragraph-2": "For more information on our article types please read our "
     },
     "short-report": {
-        "label": "Short Report"
+        "label": "Short Report",
+        "paragraph-1": "Short reports can be used to report results of a single set of experiments, provided the conclusion is clear and justified, and the findings are novel and judged to be of high importance.",
+        "paragraph-2": "For submission guidelines please read our "
     },
     "tools-resources": {
         "label": "Tools and Resources"

@@ -54,6 +54,24 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
         </Fragment>
     );
+    const shortReportCopy = (
+        <Fragment>
+            <Paragraph type="writing" secondary>
+                {t('short-report.paragraph-1')}
+            </Paragraph>
+            <Paragraph type="writing" secondary>
+                {t('short-report.paragraph-2')}
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
+                >
+                    {t('author-guide')}
+                </a>
+                .
+            </Paragraph>
+        </Fragment>
+    );
     const featureArticleCopy = (
         <Fragment>
             <Paragraph type="writing" secondary>
@@ -93,8 +111,9 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
     );
     const descriptionTypeMap: Record<string, JSX.Element> = {
         'research-article': researchArticleCopy,
+        'short-report': shortReportCopy,
         feature: featureArticleCopy,
-        'research-advance': researchAdvanceCopy,
+        // 'research-advance': researchAdvanceCopy,
     };
     const [selectedArticleType, setSelectedArticleType] = useState<Value>(articleTypes[0]);
 
