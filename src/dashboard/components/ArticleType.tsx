@@ -122,9 +122,6 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
             <Paragraph type="writing" secondary>
                 {t('feature.paragraph-2')}
-            </Paragraph>
-            <Paragraph type="writing" secondary>
-                {t('feature.paragraph-3')}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
