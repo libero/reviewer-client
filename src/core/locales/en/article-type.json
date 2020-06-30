@@ -19,14 +19,19 @@
     },
     "short-report": {
         "label": "Short Report",
-        "paragraph-1": "Short reports can be used to report results of a single set of experiments, provided the conclusion is clear and justified, and the findings are novel and judged to be of high importance.",
+        "paragraph-1": "Short Reports can be used to report results of a single set of experiments, provided the conclusion is clear and justified, and the findings are novel and judged to be of high importance.",
         "paragraph-2": "For submission guidelines please read our "
     },
     "tools-resources": {
-        "label": "Tools and Resources"
+        "label": "Tools and Resources",
+        "paragraph-1": "Tools and Resources articles should highlight significant technological or methodological advances that have the potential to accelerate discovery in their respective fields.",
+        "paragraph-2": "We also welcome submission of important datasets, collections of resources, software tools, or similar.",
+        "paragraph-3": "For submission guidelines please read our "
     },
     "scientific-correspondence": {
-        "label": "Scientific Correspondence"
+        "label": "Scientific Correspondence",
+        "paragraph-1": "Scientific Correspondence allows authors to challenge the central findings of a published paper, and gives the original authors an opportunity to respond. Please read <a href=\"https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife\" target=\"_blank\" rel=\"noopener noreferrer\">“Introducing Scientific Correspondence at eLife”</a> before submitting.",
+        "paragraph-2": "For submission guidelines please read our "
     },
     "cancel-button": "cancel",
     "confirm-button": "continue"

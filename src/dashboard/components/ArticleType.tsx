@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Interweave from 'interweave';
 import { SelectField, Paragraph, Button } from '../../ui/atoms';
 import { Value } from '../../ui/atoms/SelectField';
 
@@ -72,6 +73,48 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
         </Fragment>
     );
+
+    const toolsResourcesCopy = (
+        <Fragment>
+            <Paragraph type="writing" secondary>
+                {t('tools-resources.paragraph-1')}
+            </Paragraph>
+            <Paragraph type="writing" secondary>
+                {t('tools-resources.paragraph-2')}
+            </Paragraph>
+            <Paragraph type="writing" secondary>
+                {t('tools-resources.paragraph-3')}
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
+                >
+                    {t('author-guide')}
+                </a>
+                .
+            </Paragraph>
+        </Fragment>
+    );
+
+    const scientificCorrespondenceCopy = (
+        <Fragment>
+            <Paragraph type="writing" secondary>
+                <Interweave content={t('scientific-correspondence.paragraph-1')} />
+            </Paragraph>
+            <Paragraph type="writing" secondary>
+                {t('scientific-correspondence.paragraph-2')}
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
+                >
+                    {t('author-guide')}
+                </a>
+                .
+            </Paragraph>
+        </Fragment>
+    );
+
     const featureArticleCopy = (
         <Fragment>
             <Paragraph type="writing" secondary>
@@ -92,27 +135,29 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
         </Fragment>
     );
-    const researchAdvanceCopy = (
-        <Fragment>
-            <Paragraph type="writing" secondary>
-                {t('research-advance.paragraph-1')}
-            </Paragraph>
-            <Paragraph type="writing" secondary>
-                {t('research-advance.paragraph-2')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
-                    {t('author-guide')}
-                </a>
-            </Paragraph>
-        </Fragment>
-    );
+    // const researchAdvanceCopy = (
+    //     <Fragment>
+    //         <Paragraph type="writing" secondary>
+    //             {t('research-advance.paragraph-1')}
+    //         </Paragraph>
+    //         <Paragraph type="writing" secondary>
+    //             {t('research-advance.paragraph-2')}
+    //             <a
+    //                 target="_blank"
+    //                 rel="noopener noreferrer"
+    //                 href="https://reviewer.elifesciences.org/author-guide/editorial-process"
+    //             >
+    //                 {t('author-guide')}
+    //             </a>
+    //         </Paragraph>
+    //     </Fragment>
+    // );
     const descriptionTypeMap: Record<string, JSX.Element> = {
         'research-article': researchArticleCopy,
         'short-report': shortReportCopy,
+        'tools-resources': toolsResourcesCopy,
         feature: featureArticleCopy,
+        'scientific-correspondence': scientificCorrespondenceCopy,
         // 'research-advance': researchAdvanceCopy,
     };
     const [selectedArticleType, setSelectedArticleType] = useState<Value>(articleTypes[0]);
