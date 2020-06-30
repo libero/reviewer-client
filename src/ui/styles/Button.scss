@@ -8,6 +8,7 @@
   &:hover {
     background-color: darken($colourSecondary, 10%);
     transition: 0.2s ease;
+    cursor: pointer;
   }
 
   &:active {
@@ -91,8 +92,8 @@
 
   &:focus,
   &:hover {
-    border-color: darken($colourORCID, 30%);
-    background-color: darken($colourORCID, 30%);
+    border-color: $colourORCID_HOVER;
+    background-color: $colourORCID_HOVER
   }
 
   &:active {

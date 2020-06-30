@@ -1,6 +1,7 @@
 {
     "author-guide": "Author Guide",
     "heading": "What would you like to submit?",
+    "select-label": "Choose an article type",
     "research-article": {
         "label": "Research Article",
         "paragraph-1": "Research Articles published by eLife are full-length studies that present important breakthroughs across the life sciences and biomedicine.",
@@ -20,3 +21,4 @@
     "cancel-button": "cancel",
     "confirm-button": "continue"
 }
+
