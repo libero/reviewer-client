@@ -92,7 +92,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             <h1 className="typography__heading typography__heading--h1">{t('heading')}</h1>
             <div className="article-type__content">
                 <SelectField
-                    labelText="Choose an article type"
+                    labelText={t('select-label')}
                     id="articleType"
                     values={articleTypes}
                     onChange={(value: Value): void => setSelectedArticleType(value)}
