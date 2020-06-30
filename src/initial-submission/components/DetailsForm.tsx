@@ -141,6 +141,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 control={control}
                 formComponent={true}
                 multi
+                limitReached={unmappedSubjectsWatch && unmappedSubjectsWatch.length >= 2}
                 className="subject-area"
                 invalid={errors && errors.subjects !== undefined}
                 helperText={
@@ -211,7 +212,6 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                     </span>
                 )}
             </Toggle>
-
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </form>
     );
