@@ -16,13 +16,24 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             label: t('research-article.label'),
             value: 'research-article',
         },
+
+        {
+            label: t('short-report.label'),
+            value: 'short-report',
+        },
+
+        {
+            label: t('tools-resources.label'),
+            value: 'tools-resources',
+        },
+
+        {
+            label: t('scientific-correspondence.label'),
+            value: 'scientific-correspondence',
+        },
         {
             label: t('feature.label'),
             value: 'feature',
-        },
-        {
-            label: t('research-advance.label'),
-            value: 'research-advance',
         },
     ];
     const researchArticleCopy = (

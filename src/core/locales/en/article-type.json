@@ -17,6 +17,15 @@
         "paragraph-1": "This format is for substantial developments that directly build upon a Research Article, Short Report or Tools and Resources article published previously by eLife.",
         "paragraph-2": "For more information on our article types please read our "
     },
+    "short-report": {
+        "label": "Short Report"
+    },
+    "tools-resources": {
+        "label": "Tools and Resources"
+    },
+    "scientific-correspondence": {
+        "label": "Scientific Correspondence"
+    },
     "cancel-button": "cancel",
     "confirm-button": "continue"
 }
