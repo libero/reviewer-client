@@ -10,19 +10,21 @@ import { exampleSetup } from 'prosemirror-example-setup';
 storiesOf('ui | molecules/RichTextEditor', module).add(
     'RichTextEditor',
     (): JSX.Element => {
-        const mySchema = new Schema({
-            nodes: addListNodes(schema.spec.nodes as any, 'paragraph block*', 'block'),
+        const editorSchema = new Schema({
+            nodes: addListNodes((schema.spec.nodes as unknown) as any, 'paragraph block*', 'block'),
             marks: schema.spec.marks,
         });
 
+        const editorDiv = document.createElement('div');
+        document.querySelector('#app').appendChild(editorDiv);
+
         return (
             <div>
-                {/* <div id="content"></div> */}
                 <RichTextEditor
                     editorState={EditorState.create({
-                        doc: DOMParser.fromSchema(mySchema).parse(document.querySelector('#app')),
-                        schema: mySchema,
-                        plugins: exampleSetup({ schema: mySchema }),
+                        doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
+                        schema: editorSchema,
+                        plugins: exampleSetup({ schema: editorSchema }),
                     })}
                 />
             </div>
