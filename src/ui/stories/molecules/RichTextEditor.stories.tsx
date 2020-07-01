@@ -11,9 +11,9 @@ storiesOf('ui | molecules/RichTextEditor', module).add(
     'RichTextEditor',
     (): JSX.Element => {
         const mySchema = new Schema({
-            nodes: addListNodes(schema.spec.nodes as any, "paragraph block*", "block"),
-            marks: schema.spec.marks
-          })
+            nodes: addListNodes(schema.spec.nodes as any, 'paragraph block*', 'block'),
+            marks: schema.spec.marks,
+        });
 
         return (
             <div>
@@ -22,7 +22,7 @@ storiesOf('ui | molecules/RichTextEditor', module).add(
                     editorState={EditorState.create({
                         doc: DOMParser.fromSchema(mySchema).parse(document.querySelector('#app')),
                         schema: mySchema,
-                        plugins: exampleSetup({ schema: mySchema })
+                        plugins: exampleSetup({ schema: mySchema }),
                     })}
                 />
             </div>
