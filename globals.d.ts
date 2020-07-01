@@ -13,3 +13,4 @@ declare module '*.svg' {
     export default content;
 }
 
+declare module 'prosemirror-example-setup'

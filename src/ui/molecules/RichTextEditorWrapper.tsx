@@ -7,7 +7,7 @@ export interface RichTextEditorProps {
     editorState: EditorState;
     label?: string;
     name?: string;
-    onChange?: (change: Transaction, name: string) => void;
+    onChange?: (change: Transaction) => void;
     onFocus?: (state: EditorState, name: string) => void;
     onBlur?: (state: EditorState, name: string) => void;
 }
