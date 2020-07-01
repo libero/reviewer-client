@@ -3,7 +3,7 @@
 @import './AppBarIcon';
 @import './Banner';
 @import './Button';
-@import './Checkbox.scss';
+@import './Checkbox';
 @import './ImageWithAttributions';
 @import './MultilineTextField';
 @import './Paragraph';
@@ -14,22 +14,25 @@
 
 /* All molecule ui components should live here */
 @import './BurgerMenu';
-@import './CoverLetter.scss';
-@import'./ExpandingTextField.scss';
+@import './CoverLetter';
+@import'./ExpandingTextField';
 @import './ExcludedToggle';
 @import './ExpandingEmailField';
 @import './FileUpload';
 @import './Modal';
 @import './Menu';
-@import './MultiFileUpload.scss';
+@import './MultiFileUpload';
 @import './PersonInfo';
 @import './PersonPod';
 @import './ProfileDropdown';
 @import './ProgressBar';
 @import './SelectedOption';
 @import './SelectedPeopleList';
-@import './Toggle.scss';
-@import './UploadProgress.scss';
+@import './Toggle';
+@import './UploadProgress';
 
 /* All organism ui components should live here */
 @import './PeoplePicker';
+
+// @import 'prosemirror-view-css';
+@import '~prosemirror-view';
