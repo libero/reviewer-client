@@ -10,6 +10,7 @@ export { default as PersonInfo } from './PersonInfo';
 export { default as PeoplePickerSelector } from './PeoplePickerSelector';
 export { default as ProfileDropdown } from './ProfileDropdown';
 export { default as ProgressBar } from './ProgressBar';
+export { default as RichTextEditor } from './RichTextEditorWrapper';
 export { default as SearchField } from './SearchField';
 export { default as SelectedPeopleList } from './SelectedPeopleList';
 export { default as SelectedOption } from './SelectedOption';
