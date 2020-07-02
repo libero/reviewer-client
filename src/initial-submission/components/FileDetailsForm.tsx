@@ -3,12 +3,17 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import Interweave from 'interweave';
-import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
+import { CoverLetter, FileUpload, MultiFileUpload, RichTextEditor } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
 import { FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 import { StepProps } from './SubmissionWizard';
+import { EditorState } from 'prosemirror-state';
+import { addListNodes } from 'prosemirror-schema-list';
+import { schema as basicSchema } from 'prosemirror-schema-basic';
+import { Schema, DOMParser } from 'prosemirror-model';
+import { exampleSetup } from 'prosemirror-example-setup';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -28,6 +33,14 @@ type UploadInProgress = {
 const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
+    const editorSchema = new Schema({
+        nodes: addListNodes((basicSchema.spec.nodes as unknown) as any, 'paragraph block*', 'block'),
+        marks: basicSchema.spec.marks,
+    });
+
+    const editorDiv = document.createElement('div');
+    document.querySelector('#app').appendChild(editorDiv);
+
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
     // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
     const [manuscriptStatus, setManuscriptStatus] = useState<{
@@ -144,11 +157,18 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                 {t('files.coverletter-title')}
             </h2>
             <Interweave content={t('files.coverletter-guidance')} />
-            <CoverLetter
+            {/* <CoverLetter
                 id="coverLetter"
                 register={register}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
+            /> */}
+            <RichTextEditor
+                editorState={EditorState.create({
+                    doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
+                    schema: editorSchema,
+                    plugins: exampleSetup({ schema: editorSchema }),
+                })}
             />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 {t('files.manuscript-title')}
