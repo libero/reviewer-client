@@ -11,9 +11,12 @@ import useSupportingFileHook from '../hooks/useSupportingFileHook';
 import { StepProps } from './SubmissionWizard';
 import { EditorState } from 'prosemirror-state';
 import { addListNodes } from 'prosemirror-schema-list';
-import { schema as basicSchema } from 'prosemirror-schema-basic';
+import { schema as defaultSchema } from 'prosemirror-schema-basic';
 import { Schema, DOMParser } from 'prosemirror-model';
 import { exampleSetup } from 'prosemirror-example-setup';
+import { toggleMark, setBlockType, wrapIn } from 'prosemirror-commands';
+import { undo, redo, history } from 'prosemirror-history';
+import { menuBar, MenuItem, icons } from 'prosemirror-menu';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -34,8 +37,41 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     const editorSchema = new Schema({
-        nodes: addListNodes((basicSchema.spec.nodes as unknown) as any, 'paragraph block*', 'block'),
-        marks: basicSchema.spec.marks,
+        nodes: addListNodes((defaultSchema.spec.nodes as unknown) as any, 'paragraph block* heading', 'block'),
+        marks:
+            // defaultSchema.spec.marks
+            {
+                superscript: {
+                    parseDOM: [{ tag: 'sup' }, { style: 'vertical-align=super' }],
+                    toDOM: () => ['sup'],
+                },
+                subscript: {
+                    parseDOM: [{ tag: 'sub' }, { style: 'vertical-align=sub' }],
+                    toDOM: () => ['sub'],
+                },
+                underline: {
+                    parseDOM: [{ tag: 'u' }, { style: 'font-decoration=underline' }],
+                    toDOM: () => ['u'],
+                },
+                italic: {
+                    parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
+                    toDOM: () => ['i'],
+                },
+                bold: {
+                    parseDOM: [
+                        { tag: 'strong' },
+                        {
+                            getAttrs: (node: any) => node.style.fontWeight !== 'normal' && null,
+                            tag: 'b',
+                        },
+                        {
+                            getAttrs: (value: string) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
+                            style: 'font-weight',
+                        },
+                    ],
+                    toDOM: () => ['b'],
+                },
+            },
     });
 
     const editorDiv = document.createElement('div');
@@ -167,7 +203,24 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                 editorState={EditorState.create({
                     doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
                     schema: editorSchema,
-                    plugins: exampleSetup({ schema: editorSchema }),
+                    plugins: [
+                        history(),
+                        menuBar({
+                            floating: false,
+                            content: [
+                                [
+                                    new MenuItem({
+                                        title: 'test',
+                                        label: 'label',
+                                        icon: icons.bold,
+                                        active: () => true,
+                                        run: toggleMark(editorSchema.marks.bold),
+                                    }),
+                                ],
+                            ],
+                        }),
+                    ],
+                    //exampleSetup({ schema: editorSchema }),
                 })}
             />
             <h2 className="typography__heading typography__heading--h2 files-step__title">

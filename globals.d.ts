@@ -14,3 +14,4 @@ declare module '*.svg' {
 }
 
 declare module 'prosemirror-example-setup'
+declare module 'prosemirror-history'
