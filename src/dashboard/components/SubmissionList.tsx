@@ -18,9 +18,6 @@ const SubmissionList: React.FC<SubmissionListProps> = ({
                 <Tab className="dashboard__tab" key="active">
                     Submissions
                 </Tab>
-                <Tab className="dashboard__tab" key="archived">
-                    Archive
-                </Tab>
             </TabList>
             <TabPanel className="dashboard__tab_panel" key="active">
                 {submissions.length === 0 ? (
@@ -39,7 +36,6 @@ const SubmissionList: React.FC<SubmissionListProps> = ({
                         )
                 )}
             </TabPanel>
-            <TabPanel className="dashboard__tab_panel" key="archived" />
         </Tabs>
     );
 };
