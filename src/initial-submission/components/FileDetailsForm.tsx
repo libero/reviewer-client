@@ -10,12 +10,14 @@ import { FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 import { StepProps } from './SubmissionWizard';
 import { EditorState } from 'prosemirror-state';
-import { addListNodes } from 'prosemirror-schema-list';
+import { addListNodes, wrapInList, splitListItem, liftListItem, sinkListItem } from 'prosemirror-schema-list';
 import { schema as defaultSchema } from 'prosemirror-schema-basic';
 import { Schema, DOMParser, MarkType } from 'prosemirror-model';
-import { toggleMark } from 'prosemirror-commands';
+import { baseKeymap, toggleMark, setBlockType, chainCommands, exitCode, selectParentNode } from 'prosemirror-commands';
 import { undo, redo, history } from 'prosemirror-history';
 import { menuBar, MenuItem, icons } from 'prosemirror-menu';
+import { keymap } from 'prosemirror-keymap';
+import { undoInputRule } from 'prosemirror-inputrules';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -30,6 +32,34 @@ const maxFileSize = 104857600;
 type UploadInProgress = {
     progress?: number;
     fileName?: string;
+};
+
+const makeKeymap = (schema: Schema) => {
+    const keys: { [key: string]: any } = {
+        Backspace: undoInputRule,
+        'Ctrl-Enter': exitCode,
+        Escape: selectParentNode,
+        'Mod-Enter': exitCode,
+        'Shift-Enter': exitCode,
+        'Mod-z': undo,
+        'Mod-y': redo,
+        'Shift-Mod-z': redo,
+        'Shift-Ctrl-0': setBlockType(schema.nodes.paragraph),
+        'Shift-Ctrl-9': wrapInList(schema.nodes.ordered_list),
+        'Shift-Ctrl-8': wrapInList(schema.nodes.bullet_list),
+        'Mod-b': toggleMark(schema.marks.bold),
+        'Mod-i': toggleMark(schema.marks.italic),
+    };
+
+    Object.keys(baseKeymap).forEach(key => {
+        if (keys[key]) {
+            keys[key] = chainCommands(keys[key], baseKeymap[key]);
+        } else {
+            keys[key] = baseKeymap[key];
+        }
+    });
+
+    return keymap(keys);
 };
 
 const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
@@ -210,6 +240,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                         // undo(),
                         // redo(),
                         history(),
+                        makeKeymap(editorSchema),
                         menuBar({
                             floating: false,
                             content: [
