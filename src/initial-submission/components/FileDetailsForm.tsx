@@ -12,9 +12,8 @@ import { StepProps } from './SubmissionWizard';
 import { EditorState } from 'prosemirror-state';
 import { addListNodes } from 'prosemirror-schema-list';
 import { schema as defaultSchema } from 'prosemirror-schema-basic';
-import { Schema, DOMParser } from 'prosemirror-model';
-import { exampleSetup } from 'prosemirror-example-setup';
-import { toggleMark, setBlockType, wrapIn } from 'prosemirror-commands';
+import { Schema, DOMParser, MarkType } from 'prosemirror-model';
+import { toggleMark } from 'prosemirror-commands';
 import { undo, redo, history } from 'prosemirror-history';
 import { menuBar, MenuItem, icons } from 'prosemirror-menu';
 
@@ -187,6 +186,12 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
 
     useAutoSave(onSave, [coverLetter]);
 
+    const markActive = (type: MarkType<Schema>) => (state: EditorState): boolean => {
+        const { from, $from, to, empty } = state.selection;
+
+        return empty ? !!type.isInSet(state.storedMarks || $from.marks()) : state.doc.rangeHasMark(from, to, type);
+    };
+
     return (
         <div className="files-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">
@@ -210,11 +215,39 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                             content: [
                                 [
                                     new MenuItem({
-                                        title: 'test',
-                                        label: 'label',
+                                        title: 'bold',
+                                        label: 'bold',
                                         icon: icons.bold,
-                                        active: () => true,
+                                        active: markActive(editorSchema.marks.bold),
                                         run: toggleMark(editorSchema.marks.bold),
+                                    }),
+                                    new MenuItem({
+                                        title: 'italic',
+                                        label: 'italic',
+                                        icon: icons.bold,
+                                        active: markActive(editorSchema.marks.italic),
+                                        run: toggleMark(editorSchema.marks.italic),
+                                    }),
+                                    new MenuItem({
+                                        title: 'underline',
+                                        label: 'underline',
+                                        icon: icons.underline,
+                                        active: markActive(editorSchema.marks.underline),
+                                        run: toggleMark(editorSchema.marks.underline),
+                                    }),
+                                    new MenuItem({
+                                        title: 'subscript',
+                                        label: 'subscript',
+                                        icon: icons.subscript,
+                                        active: markActive(editorSchema.marks.subscript),
+                                        run: toggleMark(editorSchema.marks.subscript),
+                                    }),
+                                    new MenuItem({
+                                        title: 'superscript',
+                                        label: 'superscript',
+                                        icon: icons.superscript,
+                                        active: markActive(editorSchema.marks.superscript),
+                                        run: toggleMark(editorSchema.marks.superscript),
                                     }),
                                 ],
                             ],
