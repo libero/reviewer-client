@@ -39,11 +39,6 @@ const ThankYouPage = (): JSX.Element => {
 
             <Paragraph type="writing">{t('p2')}</Paragraph>
 
-            <Paragraph type="footer">
-                {t('p3')}
-                <Link to="/">{t('link')}</Link>
-            </Paragraph>
-
             <div>
                 <Link to="/" className="button button--primary">
                     {t('finish')}

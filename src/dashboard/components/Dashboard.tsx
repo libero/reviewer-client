@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery, startSubmissionMutation, deleteSubmissionMutation } from '../graphql';
 import NoSubmissions from './NoSubmissions';
-import { Button } from '../../ui/atoms';
+import { Button, Paragraph } from '../../ui/atoms';
 import useModal from '../../ui/hooks/useModal';
 import ArticleType from './ArticleType';
+import Interweave from 'interweave';
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
@@ -62,6 +63,9 @@ const Dashboard = withRouter(
                     {data && data.getSubmissions && (
                         <SubmissionList submissions={data.getSubmissions} onDelete={deleteSubmission} />
                     )}
+                    <Paragraph type="footer">
+                        <Interweave content={t('footer')} />
+                    </Paragraph>
                 </div>
             );
         }

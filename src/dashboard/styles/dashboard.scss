@@ -110,12 +110,18 @@
 
 .submission-entry__icon_container {
   width: 5%;
+  svg {
+      cursor: pointer;
+  }
 }
 
 .submission-entry__icon.MuiSvgIcon-root {
   margin-left: 1.5rem;
   display: none;
   fill: $colourTextLarge;
+  &:hover {
+    fill: $colourText;
+  }
 
   @include forSize('tabletPortraitUp') {
     display:inline-block;
