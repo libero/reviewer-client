@@ -18,6 +18,7 @@
     border-radius: $borderRadius;
     background-color: $white;
     width: 25.5rem;
+    cursor: pointer;
 
     &.select-field__control--menu-is-open {
       border-bottom-left-radius: 0;
@@ -68,18 +69,26 @@
     border-top: 0;
     border-radius: 0 0 $borderRadius $borderRadius;
     box-shadow: 0 0.125rem 0.5rem 0 rgba(0,0,0,0.33);
-
+    width: 25.5rem;
+    cursor: pointer;
+    
     .select-field__menu-list {
       padding: 0;
+      cursor: pointer;
+    }
+
+    .select-field__option {
+      cursor: pointer;
     }
 
     .select-field__option--is-focused {
-      background-color: $colourPrimary;
-      color: $white;
+      background-color: $colourPrimary !important;
+      color: $white !important;
     }
 
     .select-field__option--is-selected  {
-        background-color: $colourPrimary;
+      color: $colourText;
+      background-color: $white;
     }
   }
 }
