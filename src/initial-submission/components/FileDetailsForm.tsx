@@ -37,40 +37,38 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     const { files } = initialValues;
     const editorSchema = new Schema({
         nodes: addListNodes((defaultSchema.spec.nodes as unknown) as any, 'paragraph block* heading', 'block'),
-        marks:
-            // defaultSchema.spec.marks
-            {
-                superscript: {
-                    parseDOM: [{ tag: 'sup' }, { style: 'vertical-align=super' }],
-                    toDOM: () => ['sup'],
-                },
-                subscript: {
-                    parseDOM: [{ tag: 'sub' }, { style: 'vertical-align=sub' }],
-                    toDOM: () => ['sub'],
-                },
-                underline: {
-                    parseDOM: [{ tag: 'u' }, { style: 'font-decoration=underline' }],
-                    toDOM: () => ['u'],
-                },
-                italic: {
-                    parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
-                    toDOM: () => ['i'],
-                },
-                bold: {
-                    parseDOM: [
-                        { tag: 'strong' },
-                        {
-                            getAttrs: (node: any) => node.style.fontWeight !== 'normal' && null,
-                            tag: 'b',
-                        },
-                        {
-                            getAttrs: (value: string) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
-                            style: 'font-weight',
-                        },
-                    ],
-                    toDOM: () => ['b'],
-                },
+        marks: {
+            superscript: {
+                parseDOM: [{ tag: 'sup' }, { style: 'vertical-align=super' }],
+                toDOM: () => ['sup'],
             },
+            subscript: {
+                parseDOM: [{ tag: 'sub' }, { style: 'vertical-align=sub' }],
+                toDOM: () => ['sub'],
+            },
+            underline: {
+                parseDOM: [{ tag: 'u' }, { style: 'font-decoration=underline' }],
+                toDOM: () => ['u'],
+            },
+            italic: {
+                parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
+                toDOM: () => ['i'],
+            },
+            bold: {
+                parseDOM: [
+                    { tag: 'strong' },
+                    {
+                        getAttrs: (node: any) => node.style.fontWeight !== 'normal' && null,
+                        tag: 'b',
+                    },
+                    {
+                        getAttrs: (value: string) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
+                        style: 'font-weight',
+                    },
+                ],
+                toDOM: () => ['b'],
+            },
+        },
     });
 
     const editorDiv = document.createElement('div');
@@ -209,6 +207,8 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                     doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
                     schema: editorSchema,
                     plugins: [
+                        // undo(),
+                        // redo(),
                         history(),
                         menuBar({
                             floating: false,

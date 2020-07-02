@@ -90,6 +90,7 @@
         "preact": "^10.0.5",
         "prettier": "^1.18.2",
         "prop-types": "^15.7.2",
+        "prosemirror-example-setup": "^1.1.2",
         "react-virtualized-auto-sizer": "^1.0.2",
         "sass-loader": "^7.1.0",
         "source-map-loader": "^0.2.4",
