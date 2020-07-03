@@ -10,6 +10,7 @@ export interface RichTextEditorProps {
     onChange?: (change: Transaction) => void;
     onFocus?: (state: EditorState, name: string) => void;
     onBlur?: (state: EditorState, name: string) => void;
+    register?: () => void;
 }
 
 const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
@@ -34,7 +35,7 @@ const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
     return (
         <Fragment>
             {editorState ? (
-                <ProseMirrorEditorView options={options} editorState={editorState} onChange={onChange} />
+                <ProseMirrorEditorView ref={props.register} options={options} editorState={editorState} onChange={onChange} />
             ) : null}
         </Fragment>
     );

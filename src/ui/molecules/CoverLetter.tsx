@@ -98,6 +98,7 @@ const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: 
         <div className={`cover-letter${className ? ' ' + className : ''}`}>
             {/* <textarea className="cover-letter__input" id={id} name={id} ref={register} {...rest} /> */}
             <RichTextEditor
+                register={register}
                 editorState={EditorState.create({
                     doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
                     schema: editorSchema,
