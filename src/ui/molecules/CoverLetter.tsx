@@ -103,8 +103,6 @@ const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: 
                     doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
                     schema: editorSchema,
                     plugins: [
-                        // undo(),
-                        // redo(),
                         history(),
                         makeKeymap(editorSchema),
                         menuBar({
