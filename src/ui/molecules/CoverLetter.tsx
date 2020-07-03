@@ -3,14 +3,14 @@ import Close from '@material-ui/icons/Close';
 import { keymap } from 'prosemirror-keymap';
 import { undoInputRule } from 'prosemirror-inputrules';
 import { EditorState } from 'prosemirror-state';
-import { addListNodes, wrapInList} from 'prosemirror-schema-list';
+import { addListNodes, wrapInList } from 'prosemirror-schema-list';
 import { schema as defaultSchema } from 'prosemirror-schema-basic';
 import { Schema, DOMParser, MarkType } from 'prosemirror-model';
 import { baseKeymap, toggleMark, setBlockType, chainCommands, exitCode, selectParentNode } from 'prosemirror-commands';
 import { undo, redo, history } from 'prosemirror-history';
-import { menuBar, MenuItem, icons } from 'prosemirror-menu';
+import { menuBar, MenuItem } from 'prosemirror-menu';
 import RichTextEditor from './RichTextEditorWrapper';
-import test from '../../core/assets/editor/bold.svg';
+import editorIcon from '../atoms/EditorIcon';
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     helperText?: string;
@@ -47,7 +47,6 @@ const makeKeymap = (schema: Schema) => {
 
     return keymap(keys);
 };
-
 
 const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: Props): JSX.Element => {
     const editorSchema = new Schema({
@@ -114,43 +113,35 @@ const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: 
                                     new MenuItem({
                                         title: 'bold',
                                         label: 'bold',
-                                        icon: `<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                        <title>inputs/text-editor/buttons/bold</title>
-                                        <g id="inputs/text-editor/buttons/bold" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <g id="baseline-format_bold-24px">
-                                                <path d="M15.6,10.79 C16.57,10.12 17.25,9.02 17.25,8 C17.25,5.74 15.5,4 13.25,4 L7,4 L7,18 L14.04,18 C16.13,18 17.75,16.3 17.75,14.21 C17.75,12.69 16.89,11.39 15.6,10.79 Z M10,6.5 L13,6.5 C13.83,6.5 14.5,7.17 14.5,8 C14.5,8.83 13.83,9.5 13,9.5 L10,9.5 L10,6.5 Z M13.5,15.5 L10,15.5 L10,12.5 L13.5,12.5 C14.33,12.5 15,13.17 15,14 C15,14.83 14.33,15.5 13.5,15.5 Z" id="Shape" fill="#212121" fill-rule="nonzero"></path>
-                                                <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
-                                            </g>
-                                        </g>
-                                    </svg>` as any,
+                                        icon: { dom: editorIcon('bold') },
                                         active: markActive(editorSchema.marks.bold),
                                         run: toggleMark(editorSchema.marks.bold),
                                     }),
                                     new MenuItem({
                                         title: 'italic',
                                         label: 'italic',
-                                        icon: icons.bold,
+                                        icon: { dom: editorIcon('italic') },
                                         active: markActive(editorSchema.marks.italic),
                                         run: toggleMark(editorSchema.marks.italic),
                                     }),
                                     new MenuItem({
                                         title: 'underline',
                                         label: 'underline',
-                                        icon: icons.underline,
+                                        icon: { dom: editorIcon('underline') },
                                         active: markActive(editorSchema.marks.underline),
                                         run: toggleMark(editorSchema.marks.underline),
                                     }),
                                     new MenuItem({
                                         title: 'subscript',
                                         label: 'subscript',
-                                        icon: icons.subscript,
+                                        icon: { dom: editorIcon('subscript') },
                                         active: markActive(editorSchema.marks.subscript),
                                         run: toggleMark(editorSchema.marks.subscript),
                                     }),
                                     new MenuItem({
                                         title: 'superscript',
                                         label: 'superscript',
-                                        icon: icons.superscript,
+                                        icon: { dom: editorIcon('superscript') },
                                         active: markActive(editorSchema.marks.superscript),
                                         run: toggleMark(editorSchema.marks.superscript),
                                     }),

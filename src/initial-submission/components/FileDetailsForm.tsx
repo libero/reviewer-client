@@ -138,8 +138,6 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
 
     useAutoSave(onSave, [coverLetter]);
 
-
-
     return (
         <div className="files-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">
