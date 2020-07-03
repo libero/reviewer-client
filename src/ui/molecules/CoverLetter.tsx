@@ -10,6 +10,7 @@ import { baseKeymap, toggleMark, setBlockType, chainCommands, exitCode, selectPa
 import { undo, redo, history } from 'prosemirror-history';
 import { menuBar, MenuItem, icons } from 'prosemirror-menu';
 import RichTextEditor from './RichTextEditorWrapper';
+import test from '../../core/assets/editor/bold.svg';
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     helperText?: string;
@@ -113,7 +114,15 @@ const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: 
                                     new MenuItem({
                                         title: 'bold',
                                         label: 'bold',
-                                        icon: icons.bold,
+                                        icon: `<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <title>inputs/text-editor/buttons/bold</title>
+                                        <g id="inputs/text-editor/buttons/bold" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="baseline-format_bold-24px">
+                                                <path d="M15.6,10.79 C16.57,10.12 17.25,9.02 17.25,8 C17.25,5.74 15.5,4 13.25,4 L7,4 L7,18 L14.04,18 C16.13,18 17.75,16.3 17.75,14.21 C17.75,12.69 16.89,11.39 15.6,10.79 Z M10,6.5 L13,6.5 C13.83,6.5 14.5,7.17 14.5,8 C14.5,8.83 13.83,9.5 13,9.5 L10,9.5 L10,6.5 Z M13.5,15.5 L10,15.5 L10,12.5 L13.5,12.5 C14.33,12.5 15,13.17 15,14 C15,14.83 14.33,15.5 13.5,15.5 Z" id="Shape" fill="#212121" fill-rule="nonzero"></path>
+                                                <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                                            </g>
+                                        </g>
+                                    </svg>` as any,
                                         active: markActive(editorSchema.marks.bold),
                                         run: toggleMark(editorSchema.marks.bold),
                                     }),
