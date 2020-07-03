@@ -3,21 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import Interweave from 'interweave';
-import { CoverLetter, FileUpload, MultiFileUpload, RichTextEditor } from '../../ui/molecules';
+import { CoverLetter, FileUpload, MultiFileUpload } from '../../ui/molecules';
 import { fileUploadProgressSubscription, saveFilesPageMutation, uploadManuscriptMutation } from '../graphql';
 import useAutoSave from '../hooks/useAutoSave';
 import { FileDetails, UploadInProgressData } from '../types';
 import useSupportingFileHook from '../hooks/useSupportingFileHook';
 import { StepProps } from './SubmissionWizard';
-import { EditorState } from 'prosemirror-state';
-import { addListNodes, wrapInList, splitListItem, liftListItem, sinkListItem } from 'prosemirror-schema-list';
-import { schema as defaultSchema } from 'prosemirror-schema-basic';
-import { Schema, DOMParser, MarkType } from 'prosemirror-model';
-import { baseKeymap, toggleMark, setBlockType, chainCommands, exitCode, selectParentNode } from 'prosemirror-commands';
-import { undo, redo, history } from 'prosemirror-history';
-import { menuBar, MenuItem, icons } from 'prosemirror-menu';
-import { keymap } from 'prosemirror-keymap';
-import { undoInputRule } from 'prosemirror-inputrules';
 
 //TODO: these should live in config
 const allowedManuscriptFileTypes = [
@@ -34,76 +25,9 @@ type UploadInProgress = {
     fileName?: string;
 };
 
-const makeKeymap = (schema: Schema) => {
-    const keys: { [key: string]: any } = {
-        Backspace: undoInputRule,
-        'Ctrl-Enter': exitCode,
-        Escape: selectParentNode,
-        'Mod-Enter': exitCode,
-        'Shift-Enter': exitCode,
-        'Mod-z': undo,
-        'Mod-y': redo,
-        'Shift-Mod-z': redo,
-        'Shift-Ctrl-0': setBlockType(schema.nodes.paragraph),
-        'Shift-Ctrl-9': wrapInList(schema.nodes.ordered_list),
-        'Shift-Ctrl-8': wrapInList(schema.nodes.bullet_list),
-        'Mod-b': toggleMark(schema.marks.bold),
-        'Mod-i': toggleMark(schema.marks.italic),
-    };
-
-    Object.keys(baseKeymap).forEach(key => {
-        if (keys[key]) {
-            keys[key] = chainCommands(keys[key], baseKeymap[key]);
-        } else {
-            keys[key] = baseKeymap[key];
-        }
-    });
-
-    return keymap(keys);
-};
-
 const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
-    const editorSchema = new Schema({
-        nodes: addListNodes((defaultSchema.spec.nodes as unknown) as any, 'paragraph block* heading', 'block'),
-        marks: {
-            superscript: {
-                parseDOM: [{ tag: 'sup' }, { style: 'vertical-align=super' }],
-                toDOM: () => ['sup'],
-            },
-            subscript: {
-                parseDOM: [{ tag: 'sub' }, { style: 'vertical-align=sub' }],
-                toDOM: () => ['sub'],
-            },
-            underline: {
-                parseDOM: [{ tag: 'u' }, { style: 'font-decoration=underline' }],
-                toDOM: () => ['u'],
-            },
-            italic: {
-                parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
-                toDOM: () => ['i'],
-            },
-            bold: {
-                parseDOM: [
-                    { tag: 'strong' },
-                    {
-                        getAttrs: (node: any) => node.style.fontWeight !== 'normal' && null,
-                        tag: 'b',
-                    },
-                    {
-                        getAttrs: (value: string) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
-                        style: 'font-weight',
-                    },
-                ],
-                toDOM: () => ['b'],
-            },
-        },
-    });
-
-    const editorDiv = document.createElement('div');
-    document.querySelector('#app').appendChild(editorDiv);
-
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
     // TODO: Manual Test - when done check that the state is not overwritten when re-rendered.
     const [manuscriptStatus, setManuscriptStatus] = useState<{
@@ -214,11 +138,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
 
     useAutoSave(onSave, [coverLetter]);
 
-    const markActive = (type: MarkType<Schema>) => (state: EditorState): boolean => {
-        const { from, $from, to, empty } = state.selection;
 
-        return empty ? !!type.isInSet(state.storedMarks || $from.marks()) : state.doc.rangeHasMark(from, to, type);
-    };
 
     return (
         <div className="files-step">
@@ -226,66 +146,11 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                 {t('files.coverletter-title')}
             </h2>
             <Interweave content={t('files.coverletter-guidance')} />
-            {/* <CoverLetter
+            <CoverLetter
                 id="coverLetter"
                 register={register}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
-            /> */}
-            <RichTextEditor
-                editorState={EditorState.create({
-                    doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
-                    schema: editorSchema,
-                    plugins: [
-                        // undo(),
-                        // redo(),
-                        history(),
-                        makeKeymap(editorSchema),
-                        menuBar({
-                            floating: false,
-                            content: [
-                                [
-                                    new MenuItem({
-                                        title: 'bold',
-                                        label: 'bold',
-                                        icon: icons.bold,
-                                        active: markActive(editorSchema.marks.bold),
-                                        run: toggleMark(editorSchema.marks.bold),
-                                    }),
-                                    new MenuItem({
-                                        title: 'italic',
-                                        label: 'italic',
-                                        icon: icons.bold,
-                                        active: markActive(editorSchema.marks.italic),
-                                        run: toggleMark(editorSchema.marks.italic),
-                                    }),
-                                    new MenuItem({
-                                        title: 'underline',
-                                        label: 'underline',
-                                        icon: icons.underline,
-                                        active: markActive(editorSchema.marks.underline),
-                                        run: toggleMark(editorSchema.marks.underline),
-                                    }),
-                                    new MenuItem({
-                                        title: 'subscript',
-                                        label: 'subscript',
-                                        icon: icons.subscript,
-                                        active: markActive(editorSchema.marks.subscript),
-                                        run: toggleMark(editorSchema.marks.subscript),
-                                    }),
-                                    new MenuItem({
-                                        title: 'superscript',
-                                        label: 'superscript',
-                                        icon: icons.superscript,
-                                        active: markActive(editorSchema.marks.superscript),
-                                        run: toggleMark(editorSchema.marks.superscript),
-                                    }),
-                                ],
-                            ],
-                        }),
-                    ],
-                    //exampleSetup({ schema: editorSchema }),
-                })}
             />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 {t('files.manuscript-title')}
