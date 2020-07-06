@@ -5,6 +5,6 @@ import { CoverLetter } from '../../molecules';
 storiesOf('ui | molecules/CoverLetter', module).add(
     'CoverLetter',
     (): JSX.Element => {
-        return <CoverLetter id="someid" coverLetter="title" placeholder="Enter text here" />;
+        return <CoverLetter id="someid" coverLetter="title" />;
     },
 );

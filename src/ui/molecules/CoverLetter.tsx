@@ -1,27 +1,32 @@
-import React, { TextareaHTMLAttributes } from 'react';
+import React from 'react';
 import Close from '@material-ui/icons/Close';
 import { keymap } from 'prosemirror-keymap';
 import { undoInputRule } from 'prosemirror-inputrules';
 import { EditorState } from 'prosemirror-state';
 import { addListNodes, wrapInList } from 'prosemirror-schema-list';
 import { schema as defaultSchema } from 'prosemirror-schema-basic';
-import { Schema, DOMParser, MarkType, DOMSerializer, Fragment } from 'prosemirror-model';
+import { Schema, DOMParser, MarkType, DOMSerializer, Fragment, NodeSpec, DOMOutputSpec } from 'prosemirror-model';
 import { baseKeymap, toggleMark, setBlockType, chainCommands, exitCode, selectParentNode } from 'prosemirror-commands';
 import { undo, redo, history } from 'prosemirror-history';
 import { menuBar, MenuItem } from 'prosemirror-menu';
 import RichTextEditor from './RichTextEditorWrapper';
 import editorIcon from '../atoms/EditorIcon';
+import { OrderedMap } from 'ordermap';
 
-interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface Props {
     helperText?: string;
     id: string;
     coverLetter: string;
     invalid?: boolean;
-    onChange?: (val: any) => void;
+    onChange?: (val: string) => void;
     className?: string;
 }
 
+// exception as some modules' types are user defined.
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const makeKeymap = (schema: Schema) => {
+    // exception as some modules' types are user defined.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const keys: { [key: string]: any } = {
         Backspace: undoInputRule,
         'Ctrl-Enter': exitCode,
@@ -49,67 +54,69 @@ const makeKeymap = (schema: Schema) => {
     return keymap(keys);
 };
 
-const parser = (schema: Schema) => {
+const parser = (schema: Schema): Function => {
     const parser = DOMParser.fromSchema(schema);
 
-    return (content: string) => {
+    // exception as some modules' types are user defined.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (content: string): any => {
         const container = document.createElement('article');
         container.innerHTML = content;
         return parser.parse(container);
     };
 };
 
-const serializer = (schema: Schema) => {
+const serializer = (schema: Schema): Function => {
     const serializer = DOMSerializer.fromSchema(schema);
 
-    return (content: Fragment) => {
+    // exception as some modules' types are user defined.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (content: Fragment): any => {
         const container = document.createElement('article');
         container.appendChild(serializer.serializeFragment(content));
         return container.innerHTML;
     };
 };
 
-const CoverLetter = ({
-    coverLetter = '',
-    id,
-    className,
-    invalid,
-    helperText,
-    onChange,
-    ...rest
-}: Props): JSX.Element => {
+const CoverLetter = ({ coverLetter = '', id, className, invalid, helperText, onChange }: Props): JSX.Element => {
     const editorSchema = new Schema({
-        nodes: addListNodes((defaultSchema.spec.nodes as unknown) as any, 'paragraph block* heading', 'block'),
+        nodes: addListNodes(defaultSchema.spec.nodes as OrderedMap<NodeSpec>, 'paragraph block* heading', 'block'),
         marks: {
             superscript: {
                 parseDOM: [{ tag: 'sup' }, { style: 'vertical-align=super' }],
-                toDOM: () => ['sup'],
+                toDOM: (): DOMOutputSpec => ['sup'],
             },
             subscript: {
                 parseDOM: [{ tag: 'sub' }, { style: 'vertical-align=sub' }],
-                toDOM: () => ['sub'],
+                toDOM: (): DOMOutputSpec => ['sub'],
             },
             underline: {
                 parseDOM: [{ tag: 'u' }, { style: 'font-decoration=underline' }],
-                toDOM: () => ['u'],
+                toDOM: (): DOMOutputSpec => ['u'],
             },
             italic: {
                 parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
-                toDOM: () => ['i'],
+                toDOM: (): DOMOutputSpec => ['i'],
             },
             bold: {
                 parseDOM: [
                     { tag: 'strong' },
                     {
-                        getAttrs: (node: any) => node.style.fontWeight !== 'normal' && null,
+                        // LIFTED FROM XPUB - to reduce migration risk
+                        //exception as some modules' types are user defined.
+                        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+                        getAttrs: (node: Node) => (node as HTMLElement).style.fontWeight !== 'normal' && null,
                         tag: 'b',
                     },
                     {
+                        // LIFTED FROM XPUB - to reduce migration risk
+                        // exception as some modules' types are user defined.
+                        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
                         getAttrs: (value: string) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
                         style: 'font-weight',
                     },
                 ],
-                toDOM: () => ['b'],
+                toDOM: (): DOMOutputSpec => ['b'],
             },
         },
     });
@@ -124,10 +131,9 @@ const CoverLetter = ({
     };
 
     return (
-        <div className={`cover-letter${className ? ' ' + className : ''}`}>
-            {/* <textarea className="cover-letter__input" id={id} name={id} ref={register} {...rest} /> */}
+        <div id={id} className={`cover-letter${className ? ' ' + className : ''}`}>
             <RichTextEditor
-                onChange={(val: any) => {
+                onChange={(val: Fragment): void => {
                     onChange(serialize(val));
                 }}
                 editorState={EditorState.create({

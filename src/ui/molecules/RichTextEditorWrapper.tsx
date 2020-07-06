@@ -1,13 +1,14 @@
 import React, { useMemo, Fragment } from 'react';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, Transaction } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import { ProseMirrorEditorView } from './RichTextEditor';
+import { Fragment as EditorFragment } from 'prosemirror-model';
 
 export interface RichTextEditorProps {
     editorState: EditorState;
     label?: string;
     name?: string;
-    onChange?: (change: Transaction) => void;
+    onChange?: (val: EditorFragment) => void;
     onFocus?: (state: EditorState, name: string) => void;
     onBlur?: (state: EditorState, name: string) => void;
     register?: () => void;

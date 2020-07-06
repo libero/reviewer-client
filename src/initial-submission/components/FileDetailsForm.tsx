@@ -149,7 +149,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
             <CoverLetter
                 id="coverLetter"
                 coverLetter={initialValues.files.coverLetter}
-                onChange={(val: any) => setValue('coverLetter', val)}
+                onChange={(val: string): void => setValue('coverLetter', val)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />

@@ -4,14 +4,15 @@ import { RichTextEditor } from '../../molecules';
 import { EditorState } from 'prosemirror-state';
 import { addListNodes } from 'prosemirror-schema-list';
 import { schema } from 'prosemirror-schema-basic';
-import { Schema, DOMParser } from 'prosemirror-model';
+import { Schema, DOMParser, NodeSpec } from 'prosemirror-model';
 import { exampleSetup } from 'prosemirror-example-setup';
+import { OrderedMap } from 'ordermap';
 
 storiesOf('ui | molecules/RichTextEditor', module).add(
     'RichTextEditor',
     (): JSX.Element => {
         const editorSchema = new Schema({
-            nodes: addListNodes((schema.spec.nodes as unknown) as any, 'paragraph block*', 'block'),
+            nodes: addListNodes(schema.spec.nodes as OrderedMap<NodeSpec>, 'paragraph block*', 'block'),
             marks: schema.spec.marks,
         });
 
