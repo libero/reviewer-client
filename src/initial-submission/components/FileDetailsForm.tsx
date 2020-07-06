@@ -50,6 +50,8 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
         validationSchema: schema,
     });
 
+    register({ name: 'coverLetter', type: 'custom' });
+
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
 
@@ -146,7 +148,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
             <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
-                setValue={(val: any) => setValue('coverLetter', val)}
+                onChange={(val: any) => setValue('coverLetter', val)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />

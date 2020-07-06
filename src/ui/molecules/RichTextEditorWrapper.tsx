@@ -35,7 +35,7 @@ const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
     return (
         <Fragment>
             {editorState ? (
-                <ProseMirrorEditorView ref={props.register} options={options} editorState={editorState} onChange={onChange} />
+                <ProseMirrorEditorView options={options} editorState={editorState} onChange={onChange} />
             ) : null}
         </Fragment>
     );
