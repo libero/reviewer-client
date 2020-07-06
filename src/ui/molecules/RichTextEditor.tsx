@@ -39,5 +39,5 @@ export function ProseMirrorEditorView(props: ProseMirrorEditorViewProps): JSX.El
         return (): void => view.current.destroy();
     }, []);
 
-    return <div ref={viewHost} />;
+    return <div className={props.className} ref={viewHost} />;
 }

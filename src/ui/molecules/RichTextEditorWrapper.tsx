@@ -12,10 +12,11 @@ export interface RichTextEditorProps {
     onFocus?: (state: EditorState, name: string) => void;
     onBlur?: (state: EditorState, name: string) => void;
     register?: () => void;
+    className?: string;
 }
 
 const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
-    const { editorState, onChange, onFocus, onBlur, name } = props;
+    const { className, editorState, onChange, onFocus, onBlur, name } = props;
 
     const options = useMemo(
         () => ({
@@ -36,7 +37,12 @@ const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
     return (
         <Fragment>
             {editorState ? (
-                <ProseMirrorEditorView options={options} editorState={editorState} onChange={onChange} />
+                <ProseMirrorEditorView
+                    className={className}
+                    options={options}
+                    editorState={editorState}
+                    onChange={onChange}
+                />
             ) : null}
         </Fragment>
     );

@@ -133,6 +133,7 @@ const CoverLetter = ({ coverLetter = '', id, className, invalid, helperText, onC
     return (
         <div id={id} className={`cover-letter${className ? ' ' + className : ''}`}>
             <RichTextEditor
+                className="cover-letter__input"
                 onChange={(val: Fragment): void => {
                     onChange(serialize(val));
                 }}

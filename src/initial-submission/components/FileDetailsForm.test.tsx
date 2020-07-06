@@ -100,9 +100,7 @@ describe('File Details Form', (): void => {
                     }}
                 />,
             );
-            expect(
-                (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
-            ).toBe('some default value');
+            expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('some default value');
         });
 
         it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
@@ -114,9 +112,7 @@ describe('File Details Form', (): void => {
                     initialValues={testInitialValues}
                 />,
             );
-            expect(
-                (container.querySelector('.cover-letter__input') as TextareaHTMLAttributes<HTMLTextAreaElement>).value,
-            ).toBe('');
+            expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('');
         });
 
         it('should call the save mutation with correct variables when cover letter is changed', async (): Promise<
@@ -128,9 +124,10 @@ describe('File Details Form', (): void => {
                     initialValues={testInitialValues}
                 />,
             );
-            fireEvent.input(container.querySelector('.cover-letter__input'), {
-                target: { value: 'test cover letter input' },
+            fireEvent.blur(container.querySelector('#coverLetter .ProseMirror'), {
+                target: { innerHTML: 'test cover letter input' },
             });
+            await waitFor(() => {}, { timeout: 3000 });
             expect(mutationMock).toBeCalledWith({
                 variables: {
                     id: 'test',
