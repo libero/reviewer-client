@@ -51,7 +51,12 @@ export class ProseMirrorEditorView extends React.Component<ProseMirrorEditorView
             this.editorView = new EditorView(element, {
                 ...additionalOptions,
                 state: this.props.editorState,
-                dispatchTransaction: this.props.onChange,
+                dispatchTransaction: (transaction) => {
+                    const state = this.editorView.state.apply(transaction)
+                    console.log('state', state.doc.content);
+                    this.editorView.updateState(state)
+                    this.props.onChange && this.props.onChange(state.doc.content);
+                },
             });
         }
     };
