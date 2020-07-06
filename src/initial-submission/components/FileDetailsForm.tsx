@@ -42,7 +42,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     });
     const schema = schemaFactory(t);
 
-    const { register, watch, errors, triggerValidation } = useForm<FileDetails>({
+    const { register, watch, errors, triggerValidation, setValue } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
@@ -146,7 +146,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
             <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
-                register={register}
+                setValue={(val: any) => setValue('coverLetter', val)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />

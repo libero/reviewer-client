@@ -10,7 +10,7 @@ export interface ProseMirrorEditorViewProps {
     className?: string;
     editorState: EditorState;
     options?: Partial<EditorProps>;
-    onChange: (tx: Transaction) => void;
+    onChange: (content: any) => void;
 }
 
 export class ProseMirrorEditorView extends React.Component<ProseMirrorEditorViewProps, ProseMirrorEditorViewState> {

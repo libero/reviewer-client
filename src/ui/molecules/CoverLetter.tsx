@@ -16,7 +16,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     helperText?: string;
     id: string;
     invalid?: boolean;
-    register?: () => void;
+    setValue?: (val: any) => void;
     className?: string;
 }
 
@@ -48,7 +48,7 @@ const makeKeymap = (schema: Schema) => {
     return keymap(keys);
 };
 
-const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: Props): JSX.Element => {
+const CoverLetter = ({ id, className, invalid, helperText, setValue, ...rest }: Props): JSX.Element => {
     const editorSchema = new Schema({
         nodes: addListNodes((defaultSchema.spec.nodes as unknown) as any, 'paragraph block* heading', 'block'),
         marks: {
@@ -98,8 +98,7 @@ const CoverLetter = ({ id, className, invalid, register, helperText, ...rest }: 
         <div className={`cover-letter${className ? ' ' + className : ''}`}>
             {/* <textarea className="cover-letter__input" id={id} name={id} ref={register} {...rest} /> */}
             <RichTextEditor
-                // onFocus={() => console.log('focus')}
-                register={register}
+                onChange={(blah: any) => setValue(blah)}
                 editorState={EditorState.create({
                     doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
                     schema: editorSchema,
