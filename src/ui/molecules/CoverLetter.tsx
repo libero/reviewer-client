@@ -5,7 +5,7 @@ import { undoInputRule } from 'prosemirror-inputrules';
 import { EditorState } from 'prosemirror-state';
 import { addListNodes, wrapInList } from 'prosemirror-schema-list';
 import { schema as defaultSchema } from 'prosemirror-schema-basic';
-import { Schema, DOMParser, MarkType } from 'prosemirror-model';
+import { Schema, DOMParser, MarkType, DOMSerializer, Fragment } from 'prosemirror-model';
 import { baseKeymap, toggleMark, setBlockType, chainCommands, exitCode, selectParentNode } from 'prosemirror-commands';
 import { undo, redo, history } from 'prosemirror-history';
 import { menuBar, MenuItem } from 'prosemirror-menu';
@@ -15,6 +15,7 @@ import editorIcon from '../atoms/EditorIcon';
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     helperText?: string;
     id: string;
+    coverLetter: string;
     invalid?: boolean;
     onChange?: (val: any) => void;
     className?: string;
@@ -48,7 +49,35 @@ const makeKeymap = (schema: Schema) => {
     return keymap(keys);
 };
 
-const CoverLetter = ({ id, className, invalid, helperText, onChange, ...rest }: Props): JSX.Element => {
+const parser = (schema: Schema) => {
+    const parser = DOMParser.fromSchema(schema);
+
+    return (content: string) => {
+        const container = document.createElement('article');
+        container.innerHTML = content;
+        return parser.parse(container);
+    };
+};
+
+const serializer = (schema: Schema) => {
+    const serializer = DOMSerializer.fromSchema(schema);
+
+    return (content: Fragment) => {
+        const container = document.createElement('article');
+        container.appendChild(serializer.serializeFragment(content));
+        return container.innerHTML;
+    };
+};
+
+const CoverLetter = ({
+    coverLetter = '',
+    id,
+    className,
+    invalid,
+    helperText,
+    onChange,
+    ...rest
+}: Props): JSX.Element => {
     const editorSchema = new Schema({
         nodes: addListNodes((defaultSchema.spec.nodes as unknown) as any, 'paragraph block* heading', 'block'),
         marks: {
@@ -85,8 +114,8 @@ const CoverLetter = ({ id, className, invalid, helperText, onChange, ...rest }: 
         },
     });
 
-    const editorDiv = document.createElement('div');
-    document.querySelector('#app').appendChild(editorDiv);
+    const parse = parser(editorSchema);
+    const serialize = serializer(editorSchema);
 
     const markActive = (type: MarkType<Schema>) => (state: EditorState): boolean => {
         const { from, $from, to, empty } = state.selection;
@@ -98,9 +127,11 @@ const CoverLetter = ({ id, className, invalid, helperText, onChange, ...rest }: 
         <div className={`cover-letter${className ? ' ' + className : ''}`}>
             {/* <textarea className="cover-letter__input" id={id} name={id} ref={register} {...rest} /> */}
             <RichTextEditor
-                onChange={onChange}
+                onChange={(val: any) => {
+                    onChange(serialize(val));
+                }}
                 editorState={EditorState.create({
-                    doc: DOMParser.fromSchema(editorSchema).parse(editorDiv),
+                    doc: parse(coverLetter),
                     schema: editorSchema,
                     plugins: [
                         history(),

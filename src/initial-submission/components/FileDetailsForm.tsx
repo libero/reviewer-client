@@ -148,6 +148,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
             <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
+                coverLetter={initialValues.files.coverLetter}
                 onChange={(val: any) => setValue('coverLetter', val)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
