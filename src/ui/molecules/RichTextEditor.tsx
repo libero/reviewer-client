@@ -33,7 +33,7 @@ export function ProseMirrorEditorView(props: ProseMirrorEditorViewProps): JSX.El
             dispatchTransaction: (transaction): void => {
                 const state = view.current.state.apply(transaction);
                 view.current.updateState(state);
-                debounceRef();
+                view.current && props.onChange && props.onChange(view.current.state.doc.content);
             },
         });
         return (): void => view.current.destroy();
