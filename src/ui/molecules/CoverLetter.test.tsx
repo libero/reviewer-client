@@ -6,6 +6,6 @@ describe('CoverLetter', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<CoverLetter id="test" />)).not.toThrow();
+        expect((): RenderResult => render(<CoverLetter coverLetter="letter" id="test" />)).not.toThrow();
     });
 });

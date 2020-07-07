@@ -42,13 +42,15 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     });
     const schema = schemaFactory(t);
 
-    const { register, watch, errors, triggerValidation } = useForm<FileDetails>({
+    const { register, watch, errors, triggerValidation, setValue } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files ? files.coverLetter : '',
         },
         mode: 'onBlur',
         validationSchema: schema,
     });
+
+    register({ name: 'coverLetter', type: 'custom' });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -146,7 +148,8 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
             <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
-                register={register}
+                coverLetter={initialValues.files ? initialValues.files.coverLetter : ''}
+                onChange={(val: string): void => setValue('coverLetter', val)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />

@@ -37,6 +37,9 @@ jest.mock('@apollo/react-hooks', () => ({
                     articleType: 'fiction',
                 },
                 getEditors: [],
+                files: {
+                    coverLetter: '',
+                },
             },
             loading: loading,
         };
