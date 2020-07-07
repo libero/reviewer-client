@@ -33,8 +33,10 @@ export const getToken = (): string => {
 
 // parse JWT from the URL hash
 export const getTokenFromUrl = (): string => {
-    if (window.location && window.location.hash) {
-        return window.location.hash.substring(1);
+    let results;
+    if (window.location) {
+        const regex = new RegExp('[\\?&]token=([^&#]*)');
+        results = regex.exec(window.location.search);
     }
-    return null;
+    return !results ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
