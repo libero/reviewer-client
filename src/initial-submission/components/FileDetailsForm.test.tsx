@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import { render, cleanup, fireEvent, act, waitFor } from '@testing-library/react';
-import React, { TextareaHTMLAttributes, useEffect, useRef, DependencyList } from 'react';
+import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import * as yup from 'yup';
