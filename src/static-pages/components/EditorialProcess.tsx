@@ -62,37 +62,9 @@ const EditorialProcess = (): JSX.Element => {
                 <Interweave content={t('editorial.revised-sub.p1')} />
             </Paragraph>
 
-            <h2 id="scoop_protection">{t('editorial.faqs.heading')}</h2>
-
-            <h3>{t('editorial.faqs.question1')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer1')}</Paragraph>
-
-            <h3>{t('editorial.faqs.question2')}</h3>
-            <Paragraph type="writing">
-                <Interweave content={t('editorial.faqs.answer2')} />
-            </Paragraph>
-
-            <h3>{t('editorial.faqs.question3')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer3')}</Paragraph>
-
-            <h3>{t('editorial.faqs.question4')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer4')}</Paragraph>
-
-            <h3>{t('editorial.faqs.question5')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer5')}</Paragraph>
-
-            <h3>{t('editorial.faqs.question6')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer6')}</Paragraph>
-
-            <h3>{t('editorial.faqs.question7')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer7')}</Paragraph>
-
-            <h3>{t('editorial.faqs.question8')}</h3>
-            <Paragraph type="writing">{t('editorial.faqs.answer8')}</Paragraph>
-
             <div className="blue-box">
                 <Paragraph type="writing">
-                    <Interweave content={t('editorial.faqs.p1')} />
+                    <Interweave content={t('editorial.closing-bluebox')} />
                 </Paragraph>
             </div>
         </div>

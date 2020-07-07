@@ -7,6 +7,7 @@
         "revised-subs": "Revised Submissions",
         "post-decisions": "Post Decision",
         "journal-policies": "Journal Policies",
+        "journal-faqs": "Journal FAQs",
         "fees": "Publication Fees",
         "journal-metrics": "Journal Metrics"
     },
@@ -44,27 +45,7 @@
             "p1": "We will require a response to the essential revision requirements outlined in the decision letter. A response to minor comments is optional. In the event of acceptance, the substantive revision requests and the authors’ response will be published, under the terms of the <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>."
         },
 
-        "faqs": {
-            "heading": "FAQ on preprints and scoop protection",
-            "question1": "1. If I have uploaded my manuscript to a preprint server, can I also submit it to eLife?",
-            "answer1": "Yes, we encourage authors to post their manuscripts as preprints, and this can be done before submission, at the time of submission, or later. It is also possible to submit a manuscript to eLife and then post if directly to bioRxiv or Authorea as a preprint, and vice versa.",
-            "question2": "2. If I make an initial submission to eLife and a paper on a similar topic has recently been published in a peer-reviewed journal, will the other paper influence the treatment of my submission to eLife?",
-            "answer2": "The Editors always take the existing literature into account when making decisions about submissions, so situations like this are dealt with on a case-by-case basis. However, eLife does not subscribe to a 'winner-takes-all' philosophy, and does not automatically reject papers because they are not 'first' (please see<a href=\"https://elifesciences.org/articles/05770?_ga=2.156477752.2069272108.1540132848-2034406101.1537543708\" target=\"_blank\">Malhotra and Marder, 2015</a> and <a href=\"https://elifesciences.org/articles/30076\" target=\"_blank\">Marder, 2017</a>).",
-            "question3": "3. If I make an initial submission to eLife and a preprint on a similar topic has been posted on a recognized server, will the preprint influence the evaluation of my submission to eLife?",
-            "answer3": "No. However, in situations like this we would encourage you to post your initial submission as a preprint on a recognized server.",
-            "question4": "4. Does eLife offer \"scoop protection\"? In other words, if I make an initial submission to eLife and a paper on a similar topic is published in another peer-reviewed journal before a decision has been made on my initial submission, will the paper in the other journal influence the evaluation of my submission to eLife?",
-            "answer4": "eLife does offer \"scoop protection\" in the sense that your initial submission will not be rejected on the grounds that it lacks novelty because of the paper in the other journal. However, it is still possible that the initial submission will be rejected on other grounds.",
-            "question5": "5. If I make an initial submission to eLife and a preprint on a similar topic is posted on a recognized server before a decision has been made on my initial submission, will the preprint influence the evaluation of my submission to eLife?",
-            "answer5": "As in the previous case, your initial submission will not be rejected on the grounds that it lacks novelty because of the preprint. However, it is still possible that the initial submission will be rejected on other grounds.",
-            "question6": "6. If I make an initial submission to eLife and a manuscript on a similar topic is already being reviewed by eLife, or has been accepted for publication by eLife, will the other manuscript influence the evaluation of my submission to eLife?",
-            "answer6": "As in the previous case, your initial submission will not be rejected on the grounds that it lacks novelty because of the other manuscript. However, it is still possible that the initial submission will be rejected on other grounds.",
-            "question7": "7. If my initial submission to eLife is available as a preprint and it attracts negative/critical feedback (eg, in the form of comments and/or other preprints) before a decision has been made, will this feedback influence the evaluation of my submission?",
-            "answer7": "The Editors will primarily base their decision on the content of your submission, but public feedback on the work (positive or negative) might be taken into account. If a full submission is invited, you are advised to be open about the existence of such feedback in your cover letter.",
-            "question8": "8. Can I cite a preprint in my submission to eLife?",
-            "answer8": "Yes, providing it has been posted on a recognised public preprint server and has a persistent ID. Preprints should be cited as follows: - Author(s). Year. Title. Name of preprint server. doi or url For example: - Narasimhan VM et al. 2016. A direct multi-generational estimate of the human mutation rate from autozygous segments seen in thousands of parentally related individuals. bioRxiv. doi: https://doi.org/10.1101/059436 - Chung J, Gulcehre C, Cho K, Bengio Y. 2014. Empirical evaluation of gated recurrent neural networks on sequence modeling. arXiv. http://arxiv.abs/1412.3555",
-
-            "p1": "Authors can submit their research as one of several <a href=\"/author-guide/types\">article types</a>."
-        }
+        "closing-bluebox": "Authors can submit their research as one of several <a href=\"/author-guide/types\">article types</a>."
     },
 
     "article-types": {
@@ -130,7 +111,6 @@
             "p5": "Other Special Issues (submissions welcome on a rolling basis):",
             "bullet2": "<a href=\"https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue\" target=\"_blank\">Mechanistic Microbiome Studies</a>",
             "bullet3": "<a href=\"https://elifesciences.org/inside-elife/d81c2cd9/special-issue-call-for-papers-at-the-interface-of-cancer-biology-and-immunology\" target=\"_blank\">Discovery and Translation of Cancer Immunology</a>"
-
         }
     },
     "full-submission": {
@@ -298,7 +278,7 @@
             "p1": "Publishers have a responsibility to correct errors that have been discovered in published articles. Requests for corrections or retractions should be sent to the journal’s editorial staff for consideration and further advice.",
             "p2": "Corrections are limited to those that will affect the scientific integrity of the content.",
             "p3": "In the rare instance that there is a substantive error that requires a correction to an accepted manuscript before the final version is published, a second version of the accepted manuscript will be published. The first version will still be accessible and a description of the correction(s) will be included as a footnote within the PDF of the new version. A description of the correction(s) will also be added as a comment online.",
-            "p4": "Once the final version of record is published, a formal correction would need to be issued for any further changes. Formal corrections are published on the eLife website, with links to a corrected version of the relevant article. The previous version of the article is replaced and the published correction provides a clear record of the change. We will transmit corrections to PubMed Central and PubMed as well as other relevant indexes and repositories, although some services will not be able to present the correction or replace the content. If you have any concerns about a correction, please contact the editorial staff."   
+            "p4": "Once the final version of record is published, a formal correction would need to be issued for any further changes. Formal corrections are published on the eLife website, with links to a corrected version of the relevant article. The previous version of the article is replaced and the published correction provides a clear record of the change. We will transmit corrections to PubMed Central and PubMed as well as other relevant indexes and repositories, although some services will not be able to present the correction or replace the content. If you have any concerns about a correction, please contact the editorial staff."
         },
 
         "rejections": {
@@ -437,7 +417,7 @@
                 "p2": "More information for institutional press officers and journalists is available at <a href=\"https://elifesciences.org/for-the-press\" target=\"_blank\" >https://elifesciences.org/for-the-press</a>."
             }
         },
-        "nomenclature":  {
+        "nomenclature": {
             "heading": "Nomenclature",
             "p1": "Correct and established nomenclature should be used throughout the article, such as for gene names, species names and SI units. The appropriate nomenclature databases for correct gene names and symbols should be consulted. Helpful reference points for approved nomenclature include <a href=\"http://flybase.org/\" target=\"_blank\" >Genetic nomenclature for <em>Drosophila melanogaster</em></a>; <a href=\"http://www.wormbase.org/about/userguide/nomenclature\" target=\"_blank\" >Genetic Nomenclature for <em>Caenorhabditis elegans</em></a>; <a href=\"http://www.maizegdb.org/maize_nomenclature.php\" target=\"_blank\" >A Standard For Maize Genetics Nomenclature</a>; <a href=\"http://www.arabidopsis.org/portals/nomenclature/guidelines.jsp\" target=\"_blank\" >Arabidopsis Nomenclature</a>; <a href=\"http://www.genenames.org/about/guidelines\" target=\"_blank\" >Guidelines for Human Gene Nomenclature</a>; <a href=\"http://www.informatics.jax.org/mgihome/nomen/gene.shtml\" target=\"_blank\" >Rules for Nomenclature of Genes, Genetic Markers, Alleles, and Mutations in Mouse and Rat</a>; the <a href=\"http://www.xenbase.org/gene/static/geneNomenclature.jsp\" target=\"_blank\" >Xenopus Gene Nomenclature Guidelines</a>; and the <a href=\"https://wiki.zfin.org/display/general/ZFIN+Zebrafish+Nomenclature+Guidelines\" target=\"_blank\" >Zebrafish Nomenclature Guidelines</a>.",
             "p2": "Note that in the specific case of a study that reports a new taxon name, authors are required to follow the guidelines developed by PLOS for <a href=\"http://journals.plos.org/plosone/s/submission-guidelines\" target=\"_blank\" >zoological and botanical names</a>."
@@ -456,8 +436,53 @@
             "p5": "<strong>Research Conducted by eLife.</strong> As a way of improving our services, we periodically undertake research and surveys relating to eLife's submission and review process. Where appropriate we will share our findings so that others can benefit. Participation does not affect the decision on manuscripts under consideration, or our policies relating to the confidentiality of the review process. If you would like to opt out of eLife's research and/or surveys, please <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\" >contact the journal office</a>."
         }
     },
+    "journal-faqs": {
+        "heading": "Journal FAQs",
+        "scope": {
+            "heading": "FAQ on preprints and scoop protection",
+            "question1": "1. If I have uploaded my manuscript to a preprint server, can I also submit it to eLife?",
+            "answer1": "Yes, we encourage authors to post their manuscripts as preprints, and this can be done before submission, at the time of submission, or later. It is also possible to submit a manuscript to eLife and then post if directly to bioRxiv or Authorea as a preprint, and vice versa.",
+            "question2": "2. If I make an initial submission to eLife and a paper on a similar topic has recently been published in a peer-reviewed journal, will the other paper influence the treatment of my submission to eLife?",
+            "answer2": "The Editors always take the existing literature into account when making decisions about submissions, so situations like this are dealt with on a case-by-case basis. However, eLife does not subscribe to a 'winner-takes-all' philosophy, and does not automatically reject papers because they are not 'first' (please see<a href=\"https://elifesciences.org/articles/05770?_ga=2.156477752.2069272108.1540132848-2034406101.1537543708\" target=\"_blank\">Malhotra and Marder, 2015</a> and <a href=\"https://elifesciences.org/articles/30076\" target=\"_blank\">Marder, 2017</a>).",
+            "question3": "3. If I make an initial submission to eLife and a preprint on a similar topic has been posted on a recognized server, will the preprint influence the evaluation of my submission to eLife?",
+            "answer3": "No. However, in situations like this we would encourage you to post your initial submission as a preprint on a recognized server.",
+            "question4": "4. Does eLife offer \"scoop protection\"? In other words, if I make an initial submission to eLife and a paper on a similar topic is published in another peer-reviewed journal before a decision has been made on my initial submission, will the paper in the other journal influence the evaluation of my submission to eLife?",
+            "answer4": "eLife does offer \"scoop protection\" in the sense that your initial submission will not be rejected on the grounds that it lacks novelty because of the paper in the other journal. However, it is still possible that the initial submission will be rejected on other grounds.",
+            "question5": "5. If I make an initial submission to eLife and a preprint on a similar topic is posted on a recognized server before a decision has been made on my initial submission, will the preprint influence the evaluation of my submission to eLife?",
+            "answer5": "As in the previous case, your initial submission will not be rejected on the grounds that it lacks novelty because of the preprint. However, it is still possible that the initial submission will be rejected on other grounds.",
+            "question6": "6. If I make an initial submission to eLife and a manuscript on a similar topic is already being reviewed by eLife, or has been accepted for publication by eLife, will the other manuscript influence the evaluation of my submission to eLife?",
+            "answer6": "As in the previous case, your initial submission will not be rejected on the grounds that it lacks novelty because of the other manuscript. However, it is still possible that the initial submission will be rejected on other grounds.",
+            "question7": "7. If my initial submission to eLife is available as a preprint and it attracts negative/critical feedback (eg, in the form of comments and/or other preprints) before a decision has been made, will this feedback influence the evaluation of my submission?",
+            "answer7": "The Editors will primarily base their decision on the content of your submission, but public feedback on the work (positive or negative) might be taken into account. If a full submission is invited, you are advised to be open about the existence of such feedback in your cover letter.",
+            "question8": "8. Can I cite a preprint in my submission to eLife?",
+            "answer8": "Yes, providing it has been posted on a recognised public preprint server and has a persistent ID. Preprints should be cited as follows: - Author(s). Year. Title. Name of preprint server. doi or url For example: - Narasimhan VM et al. 2016. A direct multi-generational estimate of the human mutation rate from autozygous segments seen in thousands of parentally related individuals. bioRxiv. doi: https://doi.org/10.1101/059436 - Chung J, Gulcehre C, Cho K, Bengio Y. 2014. Empirical evaluation of gated recurrent neural networks on sequence modeling. arXiv. http://arxiv.abs/1412.3555"
+        },
+        "general": {
+            "heading": "General FAQs",
+            "question1": "1. Do you accept presubmission inquiries?",
+            "answer1": "No, rather than advise on suitability based on an abstract, we ask that you prepare an <a href=\"https://reviewer.elifesciences.org/author-guide/initial\" target=\"_blank\">initial submission</a>, so that the complete paper can be considered in a timely manner by the appropriate editors. Please note that hurdles in terms of formatting requirements and metadata are low for initial submissions, to make them as painless as possible. In the case of Review Articles, please see our <a href=\"https://reviewer.elifesciences.org/author-guide/types\" target=\"_blank\">Author Guide</a>.",
+            "question2": "2. What are the formatting requirements for submission?",
+            "answer2": "Authors generally do not need to format their paper for an <a href=\"https://reviewer.elifesciences.org/author-guide/initial\" target=\"_blank\">initial submission</a>, although we strongly encourage authors to embed figures and tables at appropriate places within the main text and we highly recommend including all authors for each reference in the reference list. For ease of submission, authors should submit a PDF of their work in the first instance. If a paper is encouraged for in-depth review, please consult the information about <a href=\"https://reviewer.elifesciences.org/author-guide/full\" target=\"_blank\">full submission</a>. If a paper is invited for revisions, please consult the section about <a href=\"https://reviewer.elifesciences.org/author-guide/revised\" target=\"_blank\">revised submission</a>.",
+            "question3": "3. When should I expect a decision?",
+            "answer3": "We provide average decision times, before and after peer review, in the <a href=\"https://submit.elifesciences.org/html/elife_author_instructions.html#metrics\" target=\"_blank\">Journal Metrics</a> section. Unfortunately, submissions can sometimes be delayed, often due to factors outside of our control. The staff monitor delayed submissions regularly. If you are worried about the time it is taking to receive a decision, it can sometimes help to send additional suggestions for editors or potential referees. We also encourage authors to post a preprint to ensure that work is disseminated in a timely manner (preprints can be posted before or during peer review).",
+            "question4": "4. Is there a publication fee?",
+            "answer4": "Yes, information about the publication fee (also known as an Article Processing Charge or APC) for Research Articles, Short Reports, Tools and Resources, and Research Advances is included in the <a href=\"https://submit.elifesciences.org/html/elife_author_instructions.html#fees\" target=\"_blank\">Publication Fees</a> section, along with information about waiver requests. Prospective authors who would like to request a waiver can do so online during the full submission process.",
+            "question5": "5. When should I expect to receive a proof?",
+            "answer5": "For papers that have been accepted, various factors can determine when a proof will be sent, including the file types (LaTeX submissions can take longer to process), whether we are preparing an eLife digest, whether a press release is being planned, and the time it takes to prepare the Decision Letter and Author Response. Questions about papers in the production process can be directed to production [at] elifesciences.org.",
+            "question6": "6. What should I do if I want to be considered for an eLife digest?",
+            "answer6": "All Research Articles, Short Reports or Tools and Resources are considered for an eLife digest. If you are the author of one of these article types that is currently under revision, you can improve the chances of your paper being selected for an eLife digest by uploading some answers to the questions in <a href=\"https://elifesciences.org/inside-elife/85518309/plain-language-summaries-how-to-write-an-elife-digest\" target=\"_blank\">this blogpost</a> when you submit your revised manuscript. You can do this using the file type named \"Answers for the eLife digest\". If your paper is selected for an eLife digest, our Features team will contact you within five working days of your paper's acceptance. For more information about this process, please see “<a href=\"https://elifesciences.org/articles/25410\" target=\"_blank\">An inside guide to eLife digests</a>”.",
+            "question7": "7. Where should I send a striking image to accompany my accepted submission?",
+            "answer7": "If you have a striking colour image we could potentially use to promote your article on the eLife homepage or social media, please email it to our production team (production [at] elifesciences.org). Images should be in landscape format, at least 1800 pixels wide, and must be available under the terms of the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> license. To get a flavour of the kind of images we're looking for, please see our <a href=\"https://elifesciences.org/archive/2020\" target=\"_blank\">monthly archive</a>. (PNG, TIFF or JPEG formats are preferred.)",
+            "question8": "8. Can I reproduce a figure from an eLife article?",
+            "answer8": "eLife articles are published under a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> license (unless specified otherwise) that permits unrestricted use and redistribution provided that the original author and source are credited. Therefore you do not need to seek permission to reproduce an original figure from an eLife paper, but please cite the original author and source, and include the link to the corresponding license. If there are restrictions on the use/reuse of a figure, these will be noted in the legend.",
+            "question9": "9. Can I use text, figures, and tables from the paper I published in eLife in a thesis or dissertation?",
+            "answer9": "Yes, you can. Please include a reference to the eLife paper and include a statement to say that the eLife article is distributed under the terms of a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> License that permits unrestricted use and redistribution provided that the original author and source are credited.",
+            "question10": "10. I would like to reproduce a figure from a previously published article in an eLife submission. What should I do?",
+            "answer10": "It is fine to include figures that have been published under a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> license; please cite the original author and source, and include a link to the corresponding licence. In other cases, please seek permission from the copyright holder to reuse the figure under the terms of a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> licence."
+        }
+    },
     "fees": {
-        "heading": "Publication Fees FAQs",
+        "heading": "Publication Fees",
         "p1": "A fee of $2,500* is collected for published research papers; however, authors with insufficient funding to pay the fee are eligible for a fee waiver.",
         "p2": "* If the fee is invoiced to an individual, rather than a business, then VAT of 20% is added to the fee.",
         "p3": "The publication fee (also referred to as an \"open-access\" or \"article-processing\" fee) is a charge collected by many open-access publishers to help recover the costs of publication while providing free and open access for readers to use and re-use results. eLife provides open access to all content.",
@@ -556,7 +581,6 @@
                     "p1": "<strong>References: </strong>",
                     "p2": "Accepted and published works, datasets (newly generated and previously published), program code, and previously published methods must be appropriately cited and included in the reference list to ensure that a wide range of research objects are afforded recognition through citation.",
                     "p3": "Please find below the information we require for each type of reference. Please note, authors do not need to spend time formatting their references and can submit manuscripts formatted in a variety of reference styles, including Harvard, Vancouver, and Chicago. Wherever possible, please do not truncate the number of authors in the references list, but please do provide a DOI if possible."
-                    
                 }
             },
             "table": {
@@ -595,7 +619,6 @@
                     "bullet4": "§ Full publication date required - day/month/year.",
                     "bullet5": "‡ Please refer to the software citation principles when citing software. If a site suggests a citation should contain a date range, we suggest the publication date should be interpreted as the software having been developed during the date range, but published at the end of the range. Please provide a version of the software."
                 }
-
             }
         },
         "figures": {
@@ -639,12 +662,12 @@
             "heading": "1. Number of eLife submissions",
             "p1": "This shows the number of initial submissions received each quarter."
         },
-        "no-of-pubs": { 
+        "no-of-pubs": {
             "heading": "2. Number of research publications",
             "p1": "This shows the number of research publications each quarter."
         },
 
-        "time-before-peer": { 
+        "time-before-peer": {
             "heading": "3. Decision times before peer review",
             "p1": "This shows the number of days between receiving the initial submission and making a decision on the initial submission (25th, 50th, and 75th percentiles)."
         },
@@ -660,6 +683,5 @@
         },
 
         "chart-title": "Number of eLife submissions"
-
     }
 }
