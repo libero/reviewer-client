@@ -22,7 +22,7 @@ export class FilesPage {
     private readonly nextButton = Selector('.submission-wizard-next-button');
     private readonly stepWrapper = Selector('.files-step');
     private readonly coverLetterContainer = Selector('.cover-letter');
-    private readonly coverLetterInput = Selector('.cover-letter__input');
+    private readonly coverLetterInput = Selector('.cover-letter__input .ProseMirror');
     private readonly manuscriptInput = Selector('.file-upload__dropzone > input');
     private readonly supportingInput = Selector('.multifile-upload__input');
     private readonly manuscriptDropzone = Selector('.file-upload__dropzone');
