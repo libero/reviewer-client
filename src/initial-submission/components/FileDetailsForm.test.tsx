@@ -115,27 +115,6 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('');
         });
 
-        it.skip('should call the save mutation with correct variables when cover letter is changed', async (): Promise<
-            void
-        > => {
-            const { container } = render(
-                <FileDetailsForm
-                    schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={testInitialValues}
-                />,
-            );
-            fireEvent.change(container.querySelector('#coverLetter .ProseMirror'), {
-                target: { innerHTML: 'test cover letter input' },
-            });
-            await waitFor(() => {}, { timeout: 3000 });
-            expect(mutationMock).toBeCalledWith({
-                variables: {
-                    id: 'test',
-                    coverLetter: 'test cover letter input',
-                },
-            });
-        });
-
         it('shows validation message if left empty', async (): Promise<void> => {
             const { getByText } = render(
                 <FileDetailsForm
