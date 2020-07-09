@@ -23,7 +23,7 @@ const InitialSubmission = (): JSX.Element => {
                 </Paragraph>
             </div>
 
-            <h2>{t('initial-submission.manuscript.heading')}</h2>
+            <h2 id="single-manuscript">{t('initial-submission.manuscript.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('initial-submission.manuscript.p1')} />
