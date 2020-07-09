@@ -1,10 +1,23 @@
+.details-page__title {
+  margin-bottom: 2.25rem;
+}
+
 .subject-area {
   margin-bottom: 2.25rem;
+
+  .select-field__input {
+    margin-bottom: 0.5rem;
+  }
+
   .select-field__control {
     width: 100%;
   }
 
   .select-field__menu {
     width: 100%;
+  }
+
+  .select-field__value-container {
+    padding: 0.125rem;
   }
 }
