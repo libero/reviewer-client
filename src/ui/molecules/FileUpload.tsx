@@ -118,7 +118,10 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
         if (state.error && status !== 'ERROR') {
             return 'ERROR';
         }
-        if (state.uploadInProgress && state.uploadInProgress.progress === 0) {
+        if (
+            state.uploadInProgress &&
+            (state.uploadInProgress.progress === 0 || state.uploadInProgress.progress === 100)
+        ) {
             return 'PROCESSING';
         }
         if (state.uploadInProgress && status !== 'UPLOADING') {
