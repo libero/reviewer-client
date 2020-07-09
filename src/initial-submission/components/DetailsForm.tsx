@@ -125,7 +125,9 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
 
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
-            <h2 className="typography__heading typography__heading--h2">{t('details.form-title')}</h2>
+            <h2 className="typography__heading typography__heading--h2 details-page__title">
+                {t('details.form-title')}
+            </h2>
             <ExpandingTextField
                 id="title"
                 register={register}
@@ -147,6 +149,8 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 helperText={
                     errors && errors.subjects
                         ? ((errors.subjects as unknown) as { message: string }).message
+                        : unmappedSubjectsWatch && unmappedSubjectsWatch.length >= 2
+                        ? t('details.subjects-helper-text-max')
                         : t('details.subjects-helper-text')
                 }
             />
