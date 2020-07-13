@@ -14,7 +14,7 @@ const JournalAuthRedirect = (): JSX.Element => {
         return <div>Missing token</div>;
     }
 
-    window.location.href = `/auth/${token}`;
+    window.location.href = `/auth?token=${token}`;
 
     return null;
 };
