@@ -45,6 +45,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             <Paragraph type="writing" secondary>
                 {t('research-article.paragraph-2')}
                 <a
+                    className="typography__serif--link"
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://reviewer.elifesciences.org/author-guide/editorial-process"

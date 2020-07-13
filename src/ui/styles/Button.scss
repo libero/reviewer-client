@@ -61,6 +61,8 @@
 .button--primary {
   background: $colourPrimary;
   color: $colourTextReverse;
+  border: none;
+
   &:focus,
   &:hover {
     background-color: darken($colourPrimary, 10%);
