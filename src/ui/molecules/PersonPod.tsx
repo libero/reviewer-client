@@ -3,6 +3,7 @@ import { Pod, Modal } from '../atoms';
 import PersonInfo from './PersonInfo';
 import Add from '@material-ui/icons/Add';
 import CheckCircle from '@material-ui/icons/CheckCircle';
+import TickIcon from '../atoms/TickIcon';
 import Info from '@material-ui/icons/Info';
 import useModal from '../../ui/hooks/useModal';
 import { EditorAlias } from '../../initial-submission/types';
@@ -21,7 +22,7 @@ const PersonPod = ({
     name,
     focuses = [],
     expertises = [],
-    selectedButtonIcon = <CheckCircle data-selected="true" fontSize="large" className="person-pod__selected_icon" />,
+    selectedButtonIcon = <TickIcon data-selected="true" fontSize="large" className="person-pod__selected_icon" />,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
 
