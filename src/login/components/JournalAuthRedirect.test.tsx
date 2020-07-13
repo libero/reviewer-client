@@ -35,7 +35,7 @@ describe('JournalAuthRedirect', (): void => {
             </MemoryRouter>,
         );
 
-        expect(window.location.href).toBe('/auth/token');
+        expect(window.location.href).toBe('/auth?token=token');
     });
 
     it('should show an error without a token', (): void => {
