@@ -40,6 +40,7 @@
     "modal--default-button": "Accept",
     "modal--cancel-button": "Cancel",
     "people_picker--open-selector": "Choose editor",
+    "people_picker--search-placeholder": "Search by name, institution or keyword",
     "selected_people_list--open": "Open Picker",
     "validation--optional": "optional",
     "validation--required": "required",

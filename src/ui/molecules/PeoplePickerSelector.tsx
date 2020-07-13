@@ -102,6 +102,7 @@ const PeoplePickerSelector = ({
                 <div className="people-picker__search_box">
                     <SearchField
                         id="peoplePickerSearch"
+                        placeholder={t('people_picker--search-placeholder')}
                         onChange={(event: React.FormEvent<HTMLInputElement>): void => {
                             setSearchTerm(event.currentTarget.value);
                         }}
