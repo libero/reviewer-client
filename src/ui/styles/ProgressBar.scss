@@ -36,15 +36,18 @@ $progressBarTextWidth: 7.5rem;
   border-radius: $borderRadiusRounded;
   border-color: $borderColour;
   border-width: $progressBarLineWidth;
+  color: $colourTextSecondary;
 }
 
 .progress_bar__step--activated {
   background-color: $white;
   border-color: $colourPrimary;
+  color: $colourText;
 }
 .progress_bar__step--current {
   background-color: $white;
   border-color: $colourPrimary;
+  color: $colourText;
 }
 .progress_bar__bullet {
   background-color: inherit;
@@ -88,7 +91,6 @@ $progressBarTextWidth: 7.5rem;
   width: $progressBarTextWidth;
   line-height: $lineHeightBaseSmall;
   font-size: $fontSizeSmall;
-  color: $borderColour;
 }
 
 .progress_bar__text--current {
