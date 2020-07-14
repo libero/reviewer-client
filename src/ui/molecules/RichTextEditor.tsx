@@ -21,8 +21,8 @@ export function ProseMirrorEditorView(props: ProseMirrorEditorViewProps): JSX.El
         () => {
             view.current && props.onChange && props.onChange(view.current.state.doc.content);
         },
-        1000,
-        { maxWait: 5000 },
+        200,
+        { maxWait: 1000 },
     );
 
     useEffect(() => {
