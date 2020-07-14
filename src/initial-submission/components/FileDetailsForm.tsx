@@ -44,7 +44,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
 
     const { register, watch, errors, triggerValidation, setValue } = useForm<FileDetails>({
         defaultValues: {
-            coverLetter: files ? files.coverLetter : '',
+            coverLetter: files && files.coverLetter ? files.coverLetter : '',
         },
         mode: 'onBlur',
         validationSchema: schema,
@@ -137,7 +137,6 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
         };
         await saveCallback(vars);
     };
-
     useAutoSave(onSave, [coverLetter]);
 
     return (
@@ -148,7 +147,9 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
             <Interweave content={t('files.coverletter-guidance')} />
             <CoverLetter
                 id="coverLetter"
-                coverLetter={initialValues.files ? initialValues.files.coverLetter : ''}
+                coverLetter={
+                    initialValues.files && initialValues.files.coverLetter ? initialValues.files.coverLetter : ''
+                }
                 onChange={(val: string): void => setValue('coverLetter', val)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
