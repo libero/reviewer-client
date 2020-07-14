@@ -48,6 +48,8 @@ export class FilesPage {
         value = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     ): Promise<void> {
         await t.typeText(this.coverLetterInput, value);
+        // This is to allow the coverletter debounced onchange to be called.
+        await t.wait(500);
     }
 
     public async getManuscriptDropzoneStatus(): Promise<DropzoneStatus> {
@@ -62,7 +64,7 @@ export class FilesPage {
         return {
             status,
             text,
-            extraText
+            extraText,
         };
     }
 
