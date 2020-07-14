@@ -118,6 +118,7 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
         if (state.error && status !== 'ERROR') {
             return 'ERROR';
         }
+        // less than ideal way of waiting for science beam to be done.
         if (
             state.uploadInProgress &&
             (state.uploadInProgress.progress === 0 || state.uploadInProgress.progress === 100)
