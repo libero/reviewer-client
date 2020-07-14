@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from './index';
 import { useTranslation } from 'react-i18next';
@@ -48,6 +48,13 @@ const Modal = (
         }
         hide();
     };
+    useEffect(() => {
+        if (isShowing) {
+            document.body.setAttribute('style', 'overflow: hidden;');
+        } else {
+            document.body.setAttribute('style', '');
+        }
+    }, [isShowing]);
     const controls = (
         <div
             className={`modal__buttons_container ${
@@ -55,10 +62,12 @@ const Modal = (
             }`}
         >
             <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen main-content--centered' : ''}`}>
-                <Button onClick={(): void => cancel()}>{t('modal--cancel-button')}</Button>
-                <Button onClick={(): void => accept()} type={buttonType} disabled={buttonDisabled}>
-                    {buttonText || t('modal--default-button')}
-                </Button>
+                <div>
+                    <Button onClick={(): void => cancel()}>{t('modal--cancel-button')}</Button>
+                    <Button onClick={(): void => accept()} type={buttonType} disabled={buttonDisabled}>
+                        {buttonText || t('modal--default-button')}
+                    </Button>
+                </div>
             </div>
         </div>
     );
