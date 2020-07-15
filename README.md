@@ -48,7 +48,7 @@ The project contains a [Makefile] which uses [Docker] for development.
    make start_ci_localhost
    ```
 
-3. Run tests:  
+3. Run tests:
    - `make lint`: lint code
    - `make test`: unittests
    - `make test_browser`: locally executed browsertests, use with `start_test`, `start_dev` or `start_ci_localhost`
