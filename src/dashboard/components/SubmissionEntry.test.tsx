@@ -131,7 +131,7 @@ describe('SubmissionEntry', (): void => {
         const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
-        expect(container.querySelector('span.submission-entry__title')).toHaveTextContent('(no title)');
+        expect(container.querySelector('span.submission-entry__title')).toHaveTextContent('no-title');
     });
 
     it('should render the submissions updated time as a readable string', (): void => {

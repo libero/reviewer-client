@@ -31,7 +31,7 @@ describe('SubmissionList', (): void => {
         const { getByText } = render(<SubmissionList submissions={[]} onDelete={jest.fn} />, {
             wrapper: routerWrapper(['/link-1']),
         });
-        expect(getByText("You don't have any submissions. Maybe you should make one?")).toBeInTheDocument();
+        expect(getByText('empty-submissions')).toBeInTheDocument();
     });
 
     it('should pass the correct options object to each entries onDelete function', (): void => {

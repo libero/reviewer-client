@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Submission } from '../../initial-submission/types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import SubmissionEntry from './SubmissionEntry';
@@ -12,16 +13,17 @@ const SubmissionList: React.FC<SubmissionListProps> = ({
     submissions = [],
     onDelete,
 }: SubmissionListProps): JSX.Element => {
+    const { t } = useTranslation('dashboard');
     return (
         <Tabs className="dashboard__tabs">
             <TabList className="dashboard__tabs_list">
                 <Tab className="dashboard__tab" key="active">
-                    Submissions
+                    {t('submissions-tab')}
                 </Tab>
             </TabList>
             <TabPanel className="dashboard__tab_panel" key="active">
                 {submissions.length === 0 ? (
-                    <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
+                    <div>{t('empty-submissions')}</div>
                 ) : (
                     submissions
                         .reverse()
