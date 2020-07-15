@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Delete from '@material-ui/icons/Delete';
+import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
 import { Submission } from '../../initial-submission/types';
@@ -14,13 +15,13 @@ interface Props {
 
 const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-
+    const { t } = useTranslation('dashboard');
     const getTitle = (submission: Submission): string =>
         submission.manuscriptDetails &&
         submission.manuscriptDetails.title &&
         submission.manuscriptDetails.title.length !== 0
             ? submission.manuscriptDetails.title
-            : '(no title)';
+            : t('no-title');
 
     const status = submission.status ? submission.status.toLowerCase() : '';
     return (
@@ -34,7 +35,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                         {getTitle(submission)}
                     </span>
                     <div className={`submission-entry__link_text submission-entry__link_text--${status}`}>
-                        <span>Continue Submission</span>
+                        <span>{t('continue-submission')}</span>
                     </div>
                     <div className="submission-entry__dates">
                         <time>{dateTimeDiffToText(submission.updated)}</time>
@@ -46,11 +47,11 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
             </Link>
             <div className="submission-entry__icon_container">
                 <Modal hide={toggle} isShowing={isShowing} onAccept={onDelete}>
-                    <h2>Confirm delete submission?</h2>
+                    <h2>{t('delete-modal-title')}</h2>
                     <p>
-                        Your submission &quot;
+                        {t('delete-text-prefix')}
                         {getTitle(submission)}
-                        &quot; will be deleted permanently
+                        {t('delete-text-suffix')}
                     </p>
                 </Modal>
                 <Delete

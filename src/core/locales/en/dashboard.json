@@ -1,4 +1,11 @@
 {
     "new-submission": "New Submission",
+    "submissions-tab": "Submissions",
+    "empty-submissions": "You don't have any submissions. Maybe you should make one?",
+    "no-title": "(no title)",
+    "continue-submission": "Continue Submission",
+    "delete-modal-title": "Confirm delete submission?",
+    "delete-text-prefix": "Your submission \"",
+    "delete-text-suffix": "\" will be deleted permanently",
     "footer": "To find existing submissions or to submit a <a class=\"typography typography__small--link\" href=\"/author-guide/types\"> Research Advance </a> please visit our <a class=\"typography typography__small--link\" href=\"https://submit.elifesciences.org\"> full peer review and submissions system</a>"
 }
