@@ -9,6 +9,7 @@ import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
 
 export default (): ApolloClient<unknown> => {
+    let client: ApolloClient<unknown>;
     const host = `${window.location.protocol}//${window.location.host}`;
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
@@ -40,12 +41,14 @@ export default (): ApolloClient<unknown> => {
             );
 
             if (authenticationError) {
+                client.writeData({ data: { message: 'Your login session appears to have expired. We will refresh the page.' } });
                 clearToken();
                 window.location.reload();
             }
         }
 
         if (networkError) {
+            client.writeData({ data: { message: 'An unexpected error occured. Please copy your unsaved worked and refresh the page.' } });
             console.log(`[Network error]: ${networkError}`);
         }
     });
@@ -75,7 +78,7 @@ export default (): ApolloClient<unknown> => {
         httpLink,
     );
 
-    return new ApolloClient({
+    client = new ApolloClient({
         cache: new InMemoryCache(),
         link,
         resolvers: {
@@ -86,4 +89,5 @@ export default (): ApolloClient<unknown> => {
             },
         },
     });
+    return client;
 };
