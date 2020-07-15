@@ -41,14 +41,28 @@ export default (): ApolloClient<unknown> => {
             );
 
             if (authenticationError) {
-                client.writeData({ data: { message: 'Your login session appears to have expired. We will refresh the page.' } });
+                client.writeData({
+                    data: {
+                        error: true,
+                        message: 'You were logged out but your progress was saved. Please log in again to continue.',
+                    },
+                });
                 clearToken();
                 window.location.reload();
+            } else {
+                client.writeData({
+                    data: {
+                        error: true,
+                        message: 'There is a problem with your submission. Please contact us for help.',
+                    },
+                });
             }
         }
 
         if (networkError) {
-            client.writeData({ data: { message: 'An unexpected error occured. Please copy your unsaved worked and refresh the page.' } });
+            client.writeData({
+                data: { error: true, message: 'Connection to the server was lost. Please refresh before continuing.' },
+            });
             console.log(`[Network error]: ${networkError}`);
         }
     });

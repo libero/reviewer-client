@@ -24,17 +24,17 @@ const Feedback = (): JSX.Element => {
         };
     }, []);
 
-    // const { data } = useQuery(APPLICATION_ERROR);
+    const { data } = useQuery(APPLICATION_ERROR);
 
-    // if (!data || !data.message) {
-    //     return <React.Fragment />;
-    // }
-    // return <div className={`banner error`}>{data.message}</div>;
+    if (!data || !data.message) {
+        return <React.Fragment />;
+    }
+
     return (
         <React.Fragment>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback error ${isSticky && 'stick'}`} ref={ref}>
-                An unexpected error occured. Please copy your unsaved worked and refresh the page.
+                {data.message}
             </div>
         </React.Fragment>
     );
