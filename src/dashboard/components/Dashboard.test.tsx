@@ -110,6 +110,7 @@ describe('Dashboard', (): void => {
             submissions = [
                 {
                     id: 'A',
+                    lastStepVisited: '/submit/A/author',
                     manuscriptDetails: {
                         title: 'Submission - A',
                     },
@@ -117,6 +118,7 @@ describe('Dashboard', (): void => {
                 },
                 {
                     id: 'B',
+                    lastStepVisited: '/submit/B/author',
                     manuscriptDetails: {
                         title: 'Submission - B',
                     },

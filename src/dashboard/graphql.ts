@@ -4,6 +4,7 @@ export const getSubmissionsQuery = gql`
     query GetSubmissions {
         getSubmissions {
             id
+            lastStepVisited
             manuscriptDetails {
                 title
             }
@@ -17,6 +18,7 @@ export const startSubmissionMutation = gql`
     mutation StartSubmision($articleType: String!) {
         startSubmission(articleType: $articleType) {
             id
+            lastStepVisited
             manuscriptDetails {
                 title
             }
