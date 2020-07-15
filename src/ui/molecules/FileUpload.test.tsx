@@ -45,6 +45,14 @@ describe('FileUpload', (): void => {
             expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
         });
 
+        // less than ideal way of waiting for science beam to be done.
+        it('should have the processing class for the border', () => {
+            const { container } = render(
+                <FileUpload state={{ uploadInProgress: { fileName: 'bob', progress: 100 } }} onUpload={jest.fn} />,
+            );
+            expect(container.querySelector('.file-upload__dropzone--processing')).toBeInTheDocument();
+        });
+
         it('should have the uploading class for the border', () => {
             const { container } = render(
                 <FileUpload state={{ uploadInProgress: { fileName: 'bob', progress: 42 } }} onUpload={jest.fn} />,
