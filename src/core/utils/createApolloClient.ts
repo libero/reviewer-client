@@ -44,6 +44,7 @@ export default (): ApolloClient<unknown> => {
                 client.writeData({
                     data: {
                         error: true,
+                        dismissable: true,
                         message: 'You were logged out but your progress was saved. Please log in again to continue.',
                     },
                 });
@@ -53,6 +54,7 @@ export default (): ApolloClient<unknown> => {
                 client.writeData({
                     data: {
                         error: true,
+                        dismissable: false,
                         message: 'There is a problem with your submission. Please contact us for help.',
                     },
                 });
@@ -61,7 +63,11 @@ export default (): ApolloClient<unknown> => {
 
         if (networkError) {
             client.writeData({
-                data: { error: true, message: 'Connection to the server was lost. Please refresh before continuing.' },
+                data: {
+                    dismissable: true,
+                    error: true,
+                    message: 'Connection to the server was lost. Please refresh before continuing.',
+                },
             });
             console.log(`[Network error]: ${networkError}`);
         }
