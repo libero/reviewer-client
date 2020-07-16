@@ -12,6 +12,7 @@ const Feedback = (): JSX.Element => {
             window.scrollY > ref.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
         }
     };
+    
     const clearErrorHandler = async () => {
         await clearError();
     };
@@ -29,14 +30,14 @@ const Feedback = (): JSX.Element => {
         return <React.Fragment />;
     }
 
-    const { message, error, dismissable } = data.feedback;
+    // dismissable: indicates if this feedback can be dismissed.
+    const { message, error } = data.feedback;
 
     return (
         <div>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
                 {message}
-                {dismissable && <button onClick={clearErrorHandler}>clear</button>}
             </div>
         </div>
     );
