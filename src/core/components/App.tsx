@@ -23,7 +23,7 @@ const App: React.FC = (): JSX.Element => {
         Auth.importToken();
     }, []);
     return (
-        <ApolloProvider client={createApolloClient(t)}>
+        <ApolloProvider client={createApolloClient()}>
             <Router>
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
