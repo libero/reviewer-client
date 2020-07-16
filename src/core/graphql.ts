@@ -23,3 +23,10 @@ export const configQuery = gql`
         config @client(always: true)
     }
 `;
+
+export const SET_LOGOUT_ERROR = gql`
+    mutation SetLogoutError {
+        setLogoutError @client
+    }
+`;
+

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 const { t } = useTranslation('ui');
 
 export default (): ApolloClient<unknown> => {
-    const client: ApolloClient<unknown>;
+    let client: ApolloClient<unknown>;
     const host = `${window.location.protocol}//${window.location.host}`;
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
@@ -45,18 +45,8 @@ export default (): ApolloClient<unknown> => {
             );
 
             if (authenticationError) {
-                client.writeQuery({
-                    query: APPLICATION_ERROR,
-                    data: {
-                        feedback: {
-                            error: true,
-                            dismissable: true,
-                            message: t('feedback.auth-timeout'),
-                        },
-                    },
-                });
                 clearToken();
-                window.location.reload();
+                window.location.href = `${window.location.protocol}//${window.location.host}/login?loginTimeout=true`;
             } else {
                 client.writeQuery({
                     query: APPLICATION_ERROR,

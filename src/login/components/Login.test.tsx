@@ -5,13 +5,21 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/react-testing';
 
 import Login from './Login';
-import { isUserAuthenticatedQuery } from '../../core/graphql';
+import { isUserAuthenticatedQuery, SET_LOGOUT_ERROR } from '../../core/graphql';
 
 describe('Login', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', async done => {
         const mocks = [
+            {
+                request: {
+                    query: SET_LOGOUT_ERROR,
+                },
+                result: {
+                    data: {},
+                },
+            },
             {
                 request: {
                     query: isUserAuthenticatedQuery,
@@ -40,6 +48,14 @@ describe('Login', (): void => {
         const mocks = [
             {
                 request: {
+                    query: SET_LOGOUT_ERROR,
+                },
+                result: {
+                    data: {},
+                },
+            },
+            {
+                request: {
                     query: isUserAuthenticatedQuery,
                 },
                 result: {
@@ -50,6 +66,9 @@ describe('Login', (): void => {
             },
         ];
         const resolvers = {
+            Mutation: {
+                setLogoutError(): void {},
+            },
             Query: {
                 isAuthenticated(): boolean {
                     return true;
@@ -78,6 +97,14 @@ describe('Login', (): void => {
         const mocks = [
             {
                 request: {
+                    query: SET_LOGOUT_ERROR,
+                },
+                result: {
+                    data: {},
+                },
+            },
+            {
+                request: {
                     query: isUserAuthenticatedQuery,
                 },
                 result: {
@@ -88,6 +115,9 @@ describe('Login', (): void => {
             },
         ];
         const resolvers = {
+            Mutation: {
+                setLogoutError(): void {},
+            },
             Query: {
                 isAuthenticated(): boolean {
                     return false;

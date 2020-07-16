@@ -15,21 +15,22 @@ function useQueryParams(): URLSearchParams {
 }
 
 const Login = (): JSX.Element => {
-    const query = useQueryParams();
     const { t } = useTranslation('login');
-    const loginTimeout = query.get('loginTimeout');
+    const query = useQueryParams();
     const [setLogoutError] = useMutation(SET_LOGOUT_ERROR);
     const { data = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
+    const loginTimeout = query.get('loginTimeout');
 
-    if (data.isAuthenticated) {
-        return <Redirect to="/" />;
-    }
-
+    // on mount check to see if a logged out event has occured.
     useEffect(() => {
         if (loginTimeout) {
             setLogoutError();
         }
-    }, [loginTimeout]);
+    }, []);
+
+    if (data.isAuthenticated) {
+        return <Redirect to="/" />;
+    }
 
     return (
         <div className="login-page">
