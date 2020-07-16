@@ -47,7 +47,7 @@ const Feedback = (): JSX.Element => {
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
                 {message}
-                {dismissable && <button onClick={clearErrorHandler}></button>}
+                {dismissable && <button onClick={clearErrorHandler}>clear</button>}
             </div>
         </React.Fragment>
     );
