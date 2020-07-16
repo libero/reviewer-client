@@ -33,7 +33,7 @@ const Feedback = (): JSX.Element => {
     return (
         <React.Fragment>
             {isSticky && <div className="fixed-padding" />}
-            <div className={`feedback error ${isSticky && 'stick'}`} ref={ref}>
+            <div className={`feedback ${data.error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
                 {data.feedback.message}
             </div>
         </React.Fragment>
