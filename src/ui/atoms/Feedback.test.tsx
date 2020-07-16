@@ -11,7 +11,7 @@ const message = {
     feedback: {
         error: true,
         dismissable: false,
-        message: 'error',
+        message: 'super error',
     },
 };
 
@@ -20,6 +20,9 @@ jest.mock('@apollo/react-hooks', () => ({
         return {
             data: message,
         };
+    },
+    useMutation: (): object => {
+        return [() => {}];
     },
 }));
 
@@ -34,45 +37,17 @@ describe('Feedback', (): void => {
         done();
     });
 
-    it.only('should display error message', async done => {
+    it('should display error message', async done => {
         const { container, getByText } = render(<Feedback />);
         await waitFor(() => {});
         expect(container.querySelector('.feedback')).toBeDefined();
-        console.log('container', container.querySelector('.feedback'));
         expect(getByText('super error')).toBeDefined();
         expect(container.textContent).toBeDefined();
         done();
     });
 
     it('should have error class', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: APPLICATION_ERROR,
-                },
-                result: {
-                    data: {
-                        feedback: {
-                            error: true,
-                            dismissable: false,
-                            message: 'super error',
-                        },
-                    },
-                },
-            },
-        ];
-
-        const resolvers = {
-            Query: {
-                ApplicationError: (): void => {},
-            },
-        };
-
-        const { container, getByText } = render(
-            <MockedProvider mocks={mocks} addTypename={false}>
-                <Feedback />
-            </MockedProvider>,
-        );
+        const { container, getByText } = render(<Feedback />);
         await waitFor(() => {});
         expect(container.querySelector('.feedback')).toBeDefined();
         expect(container.querySelector('.error')).toBeDefined();
@@ -82,30 +57,11 @@ describe('Feedback', (): void => {
     });
 
     it('should have not error class if type is not error', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: APPLICATION_ERROR,
-                },
-                result: {
-                    data: {
-                        feedback: {
-                            error: false,
-                            dismissable: false,
-                            message: 'super error',
-                        },
-                    },
-                },
-            },
-        ];
-        const { container, getByText } = render(
-            <MockedProvider mocks={mocks} addTypename={false} resolvers={{}}>
-                <Feedback />
-            </MockedProvider>,
-        );
+        message.feedback.error = false;
+        const { container, getByText } = render(<Feedback />);
         await waitFor(() => {});
         expect(container.querySelector('.feedback')).toBeDefined();
-        expect(container.querySelector('.error')).not.toBeDefined();
+        expect(container.querySelector('.error')).toBeNull();
         expect(getByText('super error')).toBeDefined();
         expect(container.textContent).toBeDefined();
         done();
