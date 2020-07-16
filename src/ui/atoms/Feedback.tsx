@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 const APPLICATION_ERROR = gql`
     query ApplicationError {
-        message @client
+        feedback @client
     }
 `;
 
@@ -26,7 +26,7 @@ const Feedback = (): JSX.Element => {
 
     const { data } = useQuery(APPLICATION_ERROR);
 
-    if (!data || !data.message) {
+    if (!data || !data.feedback) {
         return <React.Fragment />;
     }
 
@@ -34,7 +34,7 @@ const Feedback = (): JSX.Element => {
         <React.Fragment>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback error ${isSticky && 'stick'}`} ref={ref}>
-                {data.message}
+                {data.feedback.message}
             </div>
         </React.Fragment>
     );

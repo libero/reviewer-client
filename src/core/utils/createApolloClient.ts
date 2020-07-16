@@ -43,9 +43,12 @@ export default (): ApolloClient<unknown> => {
             if (authenticationError) {
                 client.writeData({
                     data: {
-                        error: true,
-                        dismissable: true,
-                        message: 'You were logged out but your progress was saved. Please log in again to continue.',
+                        feedback: {
+                            error: true,
+                            dismissable: true,
+                            message:
+                                'You were logged out but your progress was saved. Please log in again to continue.',
+                        },
                     },
                 });
                 clearToken();
@@ -53,9 +56,11 @@ export default (): ApolloClient<unknown> => {
             } else {
                 client.writeData({
                     data: {
-                        error: true,
-                        dismissable: false,
-                        message: 'There is a problem with your submission. Please contact us for help.',
+                        feedback: {
+                            error: true,
+                            dismissable: false,
+                            message: 'There is a problem with your submission. Please contact us for help.',
+                        },
                     },
                 });
             }
@@ -64,9 +69,11 @@ export default (): ApolloClient<unknown> => {
         if (networkError) {
             client.writeData({
                 data: {
-                    dismissable: true,
-                    error: true,
-                    message: 'Connection to the server was lost. Please refresh before continuing.',
+                    feedback: {
+                        dismissable: true,
+                        error: true,
+                        message: 'Connection to the server was lost. Please refresh before continuing.',
+                    },
                 },
             });
             console.log(`[Network error]: ${networkError}`);
