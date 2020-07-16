@@ -32,13 +32,13 @@ const Feedback = (): JSX.Element => {
     const { message, error, dismissable } = data.feedback;
 
     return (
-        <React.Fragment>
+        <div>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
                 {message}
                 {dismissable && <button onClick={clearErrorHandler}>clear</button>}
             </div>
-        </React.Fragment>
+        </div>
     );
 };
 export default Feedback;

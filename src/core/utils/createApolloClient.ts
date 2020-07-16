@@ -8,7 +8,9 @@ import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
 import { APPLICATION_ERROR } from '../../initial-submission/graphql';
+import { useTranslation } from 'react-i18next';
 
+const { t } = useTranslation('ui');
 
 export default (): ApolloClient<unknown> => {
     let client: ApolloClient<unknown>;
@@ -50,7 +52,7 @@ export default (): ApolloClient<unknown> => {
                             error: true,
                             dismissable: true,
                             message:
-                                'You were logged out but your progress was saved. Please log in again to continue.',
+                                t('feedback.auth-timeout'),
                         },
                     },
                 });
@@ -63,7 +65,7 @@ export default (): ApolloClient<unknown> => {
                         feedback: {
                             error: true,
                             dismissable: false,
-                            message: 'There is a problem with your submission. Please contact us for help.',
+                            message: t('feedback.submission-error'),
                         },
                     },
                 });
@@ -77,7 +79,7 @@ export default (): ApolloClient<unknown> => {
                     feedback: {
                         dismissable: true,
                         error: true,
-                        message: 'Connection to the server was lost. Please refresh before continuing.',
+                        message: t('feedback.server-lost'),
                     },
                 },
             });
@@ -126,16 +128,6 @@ export default (): ApolloClient<unknown> => {
             },
             Query: {
                 isAuthenticated(): boolean {
-                    client.writeQuery({
-                        query: APPLICATION_ERROR,
-                        data: {
-                            feedback: {
-                                dismissable: true,
-                                error: true,
-                                message: 'Connection to the server was lost. Please refresh before continuing.',
-                            },
-                        },
-                    });
                     return getToken() !== null;
                 },
             },
