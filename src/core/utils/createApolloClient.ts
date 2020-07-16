@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 const { t } = useTranslation('ui');
 
 export default (): ApolloClient<unknown> => {
-    let client: ApolloClient<unknown>;
+    const client: ApolloClient<unknown>;
     const host = `${window.location.protocol}//${window.location.host}`;
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
@@ -51,8 +51,7 @@ export default (): ApolloClient<unknown> => {
                         feedback: {
                             error: true,
                             dismissable: true,
-                            message:
-                                t('feedback.auth-timeout'),
+                            message: t('feedback.auth-timeout'),
                         },
                     },
                 });
@@ -77,7 +76,7 @@ export default (): ApolloClient<unknown> => {
                 query: APPLICATION_ERROR,
                 data: {
                     feedback: {
-                        dismissable: true,
+                        dismissable: false,
                         error: true,
                         message: t('feedback.server-lost'),
                     },
@@ -125,19 +124,21 @@ export default (): ApolloClient<unknown> => {
                         },
                     });
                 },
-            },
-            Query: {
-                isAuthenticated(): boolean {
+                setLogoutError(): void {
                     client.writeQuery({
                         query: APPLICATION_ERROR,
                         data: {
                             feedback: {
-                                dismissable: true,
                                 error: true,
-                                message: t('feedback.server-lost'),
+                                dismissable: true,
+                                message: t('feedback.auth-timeout'),
                             },
                         },
                     });
+                },
+            },
+            Query: {
+                isAuthenticated(): boolean {
                     return getToken() !== null;
                 },
             },

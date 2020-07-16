@@ -1,18 +1,35 @@
-import React from 'react';
-import { Redirect } from 'react-router';
+import React, { useEffect } from 'react';
+import { Redirect, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/welcome.jpg';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { SET_LOGOUT_ERROR } from '../../initial-submission/graphql';
+
+// https://reactrouter.com/web/example/query-parameters
+// A custom hook that builds on useLocation to parse
+// the query string for you.
+function useQueryParams(): URLSearchParams {
+    return new URLSearchParams(useLocation().search);
+}
 
 const Login = (): JSX.Element => {
+    const query = useQueryParams();
     const { t } = useTranslation('login');
+    const loginTimeout = query.get('loginTimeout');
+    const [setLogoutError] = useMutation(SET_LOGOUT_ERROR);
     const { data = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
 
     if (data.isAuthenticated) {
         return <Redirect to="/" />;
     }
+
+    useEffect(() => {
+        if (loginTimeout) {
+            setLogoutError();
+        }
+    }, [loginTimeout]);
 
     return (
         <div className="login-page">

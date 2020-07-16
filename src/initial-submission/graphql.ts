@@ -214,3 +214,9 @@ export const CLEAR_ERROR = gql`
         clearError @client
     }
 `;
+
+export const SET_LOGOUT_ERROR = gql`
+    mutation SetLogoutError {
+        setLogoutError @client
+    }
+`;
