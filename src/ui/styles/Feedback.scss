@@ -6,6 +6,10 @@
     text-align: center;
     z-index: 1000;
     grid-area: feedback;
+    min-height: 48px;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 0 14px;
 
     &.stick {
         top: 72px;

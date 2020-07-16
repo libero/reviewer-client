@@ -128,6 +128,16 @@ export default (): ApolloClient<unknown> => {
             },
             Query: {
                 isAuthenticated(): boolean {
+                    client.writeQuery({
+                        query: APPLICATION_ERROR,
+                        data: {
+                            feedback: {
+                                dismissable: true,
+                                error: true,
+                                message: t('feedback.server-lost'),
+                            },
+                        },
+                    });
                     return getToken() !== null;
                 },
             },
