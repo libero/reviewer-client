@@ -7,31 +7,27 @@ import Feedback from './Feedback';
 import { APPLICATION_ERROR } from '../../core/graphql';
 import { MemoryRouter } from 'react-router-dom';
 
+const message = {
+    feedback: {
+        error: true,
+        dismissable: false,
+        message: 'error',
+    },
+};
+
+jest.mock('@apollo/react-hooks', () => ({
+    useQuery: (): object => {
+        return {
+            data: message,
+        };
+    },
+}));
+
 describe('Feedback', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: APPLICATION_ERROR,
-                },
-                result: {
-                    data: {
-                        feedback: {
-                            error: true,
-                            dismissable: false,
-                            message: 'error',
-                        },
-                    },
-                },
-            },
-        ];
-        const { container } = render(
-            <MockedProvider mocks={mocks} addTypename={false} resolvers={{}}>
-                <Feedback />
-            </MockedProvider>,
-        );
+        const { container } = render(<Feedback />);
         await waitFor(() => {});
         expect(container.querySelector('.feedback')).toBeDefined();
         expect(container.textContent).toBeDefined();
@@ -39,29 +35,7 @@ describe('Feedback', (): void => {
     });
 
     it.only('should display error message', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: APPLICATION_ERROR,
-                },
-                result: {
-                    data: {
-                        feedback: {
-                            error: true,
-                            dismissable: false,
-                            message: 'super error',
-                        },
-                    },
-                },
-            },
-        ];
-        const { container, getByText } = render(
-            <MockedProvider mocks={mocks}>
-                <MemoryRouter>
-                    <Feedback />
-                </MemoryRouter>
-            </MockedProvider>,
-        );
+        const { container, getByText } = render(<Feedback />);
         await waitFor(() => {});
         expect(container.querySelector('.feedback')).toBeDefined();
         console.log('container', container.querySelector('.feedback'));
@@ -90,11 +64,10 @@ describe('Feedback', (): void => {
 
         const resolvers = {
             Query: {
-                ApplicationError: (): void => {
-                }
+                ApplicationError: (): void => {},
             },
         };
-        
+
         const { container, getByText } = render(
             <MockedProvider mocks={mocks} addTypename={false}>
                 <Feedback />
