@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 const APPLICATION_ERROR = gql`
     query ApplicationError {
@@ -8,13 +8,23 @@ const APPLICATION_ERROR = gql`
     }
 `;
 
+const CLEAR_ERROR = gql`
+    mutation ClearError {
+        clearError @client
+    }
+`;
+
 const Feedback = (): JSX.Element => {
     const [isSticky, setSticky] = useState(false);
+    const [clearError] = useMutation(CLEAR_ERROR);
     const ref = useRef(null);
     const handleScroll = () => {
         if (ref.current) {
             window.scrollY > ref.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
         }
+    };
+    const clearErrorHandler = async () => {
+        await clearError();
     };
 
     useEffect(() => {
@@ -30,11 +40,14 @@ const Feedback = (): JSX.Element => {
         return <React.Fragment />;
     }
 
+    const { message, error, dismissable } = data.feedback;
+
     return (
         <React.Fragment>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback ${data.error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
-                {data.feedback.message}
+                {message}
+                {dismissable && <button onClick={clearErrorHandler}></button>}
             </div>
         </React.Fragment>
     );

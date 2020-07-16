@@ -7,6 +7,13 @@ import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
+import gql from 'graphql-tag';
+
+const APPLICATION_ERROR = gql`
+    query ApplicationError {
+        feedback @client
+    }
+`;
 
 export default (): ApolloClient<unknown> => {
     let client: ApolloClient<unknown>;
@@ -41,7 +48,8 @@ export default (): ApolloClient<unknown> => {
             );
 
             if (authenticationError) {
-                client.writeData({
+                client.writeQuery({
+                    query: APPLICATION_ERROR,
                     data: {
                         feedback: {
                             error: true,
@@ -54,7 +62,8 @@ export default (): ApolloClient<unknown> => {
                 clearToken();
                 window.location.reload();
             } else {
-                client.writeData({
+                client.writeQuery({
+                    query: APPLICATION_ERROR,
                     data: {
                         feedback: {
                             error: true,
@@ -67,7 +76,8 @@ export default (): ApolloClient<unknown> => {
         }
 
         if (networkError) {
-            client.writeData({
+            client.writeQuery({
+                query: APPLICATION_ERROR,
                 data: {
                     feedback: {
                         dismissable: true,
@@ -109,12 +119,33 @@ export default (): ApolloClient<unknown> => {
         cache: new InMemoryCache(),
         link,
         resolvers: {
+            Mutation: {
+                clearError(): void {
+                    client.writeQuery({
+                        query: APPLICATION_ERROR,
+                        data: {
+                            feedback: null,
+                        },
+                    });
+                },
+            },
             Query: {
                 isAuthenticated(): boolean {
+                    client.writeQuery({
+                        query: APPLICATION_ERROR,
+                        data: {
+                            feedback: {
+                                dismissable: true,
+                                error: true,
+                                message: 'Connection to the server was lost. Please refresh before continuing.',
+                            },
+                        },
+                    });
                     return getToken() !== null;
                 },
             },
         },
     });
+
     return client;
 };
