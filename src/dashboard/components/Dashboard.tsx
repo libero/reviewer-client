@@ -40,9 +40,7 @@ const Dashboard = withRouter(
 
         const onArticleTypeConfirm = (articleType: string): void => {
             startSubmission({ variables: { articleType } }).then(data => {
-                history.push(
-                    `/submit/${data.data.startSubmission.id}/${data.data.startSubmission.lastStepVisited || 'author'}`,
-                );
+                history.push(data.data.startSubmission.lastStepVisited);
             });
         };
         const { t } = useTranslation('dashboard');

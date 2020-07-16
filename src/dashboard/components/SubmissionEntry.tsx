@@ -28,7 +28,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
         <div className="submission-entry" data-id={submission.id}>
             <Link
                 className={`submission-entry__link submission-entry__link--${status}`}
-                to={`/submit/${submission.id}/${submission.lastStepVisited || 'author'}`}
+                to={submission.lastStepVisited}
             >
                 <div className="submission-entry__content">
                     <span className={`submission-entry__title submission-entry__title--${status}`}>

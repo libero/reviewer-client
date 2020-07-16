@@ -18,7 +18,7 @@ describe('SubmissionEntry', (): void => {
         manuscriptDetails: {
             title: 'testSubmission',
         },
-        lastStepVisited: 'someStep',
+        lastStepVisited: '/submit/someId/someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: nowISOString,
     };
@@ -29,7 +29,7 @@ describe('SubmissionEntry', (): void => {
             title: '',
         },
         articleType: 'research-article',
-        lastStepVisited: 'someStep',
+        lastStepVisited: '/submit/someId/someStep',
         status: 'CONTINUE_SUBMISSION',
         updated: nowISOString,
         author: undefined,
@@ -41,7 +41,7 @@ describe('SubmissionEntry', (): void => {
             title: '',
         },
         articleType: 'research-article',
-        lastStepVisited: 'someStep',
+        lastStepVisited: '/submit/someId/someStep',
         status: status,
         updated: nowISOString,
         author: undefined,
@@ -56,7 +56,7 @@ describe('SubmissionEntry', (): void => {
                 title: '',
             },
             articleType: 'research-article',
-            lastStepVisited: 'someStep',
+            lastStepVisited: '/submit/someId/someStep',
             status: 'CONTINUE_SUBMISSION',
             updated: date.toISOString(),
             author: undefined,
@@ -114,7 +114,7 @@ describe('SubmissionEntry', (): void => {
         });
         expect(container.querySelector('a.submission-entry__link')).toHaveAttribute(
             'href',
-            `/submit/${mockSubmission.id}/${mockSubmission.lastStepVisited}`,
+            mockSubmission.lastStepVisited,
         );
     });
 
@@ -179,6 +179,7 @@ describe('SubmissionEntry', (): void => {
     it('should output the updated value as `ddd D MMM YYYY`', () => {
         const submissionWithDate = {
             id: 'someId',
+            lastStepVisited: '/submit/someId/someStep',
             articleType: 'research-article',
             updated: '2020-06-22T13:24:09.199Z',
         };

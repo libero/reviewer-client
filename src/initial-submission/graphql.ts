@@ -5,6 +5,7 @@ export const getSubmissionQuery = gql`
         getSubmission(id: $id) {
             id
             articleType
+            lastStepVisited
             manuscriptDetails {
                 title
                 subjects
@@ -64,6 +65,7 @@ export const saveAuthorPageMutation = gql`
     mutation SaveAuthorPage($id: ID!, $details: AuthorDetailsInput!) {
         saveAuthorPage(id: $id, details: $details) {
             id
+            lastStepVisited
             author {
                 firstName
                 lastName
@@ -78,6 +80,7 @@ export const saveFilesPageMutation = gql`
     mutation SaveFilesPage($id: ID!, $coverLetter: String) {
         saveFilesPage(id: $id, coverLetter: $coverLetter) {
             id
+            lastStepVisited
             files {
                 coverLetter
             }
@@ -118,6 +121,7 @@ export const saveDetailsPageMutation = gql`
     mutation SaveDetailsPage($id: ID!, $details: ManuscriptDetailsInput!) {
         saveDetailsPage(id: $id, details: $details) {
             id
+            lastStepVisited
             manuscriptDetails {
                 title
                 subjects
@@ -150,6 +154,7 @@ export const saveEditorsPageMutation = gql`
     mutation SaveEditorPage($id: ID!, $details: EditorDetailsInput!) {
         saveEditorPage(id: $id, details: $details) {
             id
+            lastStepVisited
             editorDetails {
                 suggestedSeniorEditors
                 opposedSeniorEditors
@@ -187,6 +192,7 @@ export const saveDisclosurePageMutation = gql`
     mutation SaveDisclosurePage($id: ID!, $details: DisclosureDetailsInput!) {
         saveDisclosurePage(id: $id, details: $details) {
             id
+            lastStepVisited
             disclosure {
                 submitterSignature
                 disclosureConsent
