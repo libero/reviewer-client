@@ -30,3 +30,8 @@ export const SET_LOGOUT_ERROR = gql`
     }
 `;
 
+export const APPLICATION_ERROR = gql`
+    query ApplicationError {
+        feedback @client
+    }
+`;

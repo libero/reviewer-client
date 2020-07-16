@@ -30,7 +30,7 @@ const Feedback = (): JSX.Element => {
         return <React.Fragment />;
     }
 
-    // dismissable: indicates if this feedback can be dismissed.
+    // dismissable: indicates if this feedback can be dismissed. Parked pending styling discussion.
     const { message, error } = data.feedback;
 
     return (
