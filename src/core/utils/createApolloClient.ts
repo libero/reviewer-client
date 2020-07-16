@@ -7,13 +7,8 @@ import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
-import gql from 'graphql-tag';
+import { APPLICATION_ERROR } from '../../initial-submission/graphql';
 
-const APPLICATION_ERROR = gql`
-    query ApplicationError {
-        feedback @client
-    }
-`;
 
 export default (): ApolloClient<unknown> => {
     let client: ApolloClient<unknown>;

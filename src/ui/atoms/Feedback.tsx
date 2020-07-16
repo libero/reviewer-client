@@ -1,18 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { CLEAR_ERROR, APPLICATION_ERROR } from '../../initial-submission/graphql';
 
-const APPLICATION_ERROR = gql`
-    query ApplicationError {
-        feedback @client
-    }
-`;
-
-const CLEAR_ERROR = gql`
-    mutation ClearError {
-        clearError @client
-    }
-`;
 
 const Feedback = (): JSX.Element => {
     const [isSticky, setSticky] = useState(false);
