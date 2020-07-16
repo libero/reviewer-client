@@ -59,7 +59,8 @@
         "supporting-title": "Supporting files (optional)",
         "supporting-guidance": "<span class=\"typography__small typography__small--secondary\">Any videos, audio clips or interactive files you believe will assist in the initial assessment of your submission should be uploaded as supporting files. You will be able to upload additional files at the full submission stage if necessary.</span>",
         "validation": {
-            "coverletter-required": "Please write or paste in your cover letter"
+            "coverletter-required": "Please write or paste in your cover letter",
+            "manuscript-required": "Please upload a manuscript"
         }
     },
     "editors": {

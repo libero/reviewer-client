@@ -162,6 +162,13 @@ const EditorsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
 const FileDetailsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
     yup.object().shape({
         coverLetter: yup.string().required(t('files.validation.coverletter-required')),
+        manuscriptFile: yup
+            .object()
+            .required(t('files.validation.manuscript-required'))
+            .shape({
+                fileName: yup.string().required(t('files.validation.manuscript-required')),
+            })
+            .nullable(),
     });
 
 export { AuthorDetailsSchema, DetailsSchema, DisclosureSchema, EditorsSchema, FileDetailsSchema };

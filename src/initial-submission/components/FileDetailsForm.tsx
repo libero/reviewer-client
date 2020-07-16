@@ -45,12 +45,15 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
     const { register, watch, errors, triggerValidation, setValue } = useForm<FileDetails>({
         defaultValues: {
             coverLetter: files && files.coverLetter ? files.coverLetter : '',
+            manuscriptFile:
+                files && files.manuscriptFile && files.manuscriptFile.filename ? files.manuscriptFile : null,
         },
         mode: 'onBlur',
         validationSchema: schema,
     });
 
     register({ name: 'coverLetter', type: 'custom' });
+    register({ name: 'manuscriptFile', type: 'custom' });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -121,6 +124,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                         previewLink,
                     },
                 });
+                setValue('manuscriptFile', data.uploadManuscript.files.manuscriptFile);
             })
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
@@ -158,7 +162,15 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                 {t('files.manuscript-title')}
             </h2>
             <Interweave content={t('files.manuscript-guidance')} />
-            <FileUpload onUpload={onManuscriptUpload} state={manuscriptStatus} />
+            <FileUpload
+                validationError={
+                    errors && errors.manuscriptFile
+                        ? ((errors.manuscriptFile as unknown) as { message: string }).message
+                        : undefined
+                }
+                onUpload={onManuscriptUpload}
+                state={manuscriptStatus}
+            />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 {t('files.supporting-title')}
             </h2>
