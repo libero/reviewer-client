@@ -15,15 +15,17 @@ import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { Footer, Feedback } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
+import { useTranslation } from 'react-i18next';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => {
+    const { t } = useTranslation('ui');
     useEffect(() => {
         Auth.importToken();
     }, []);
     return (
-        <ApolloProvider client={createApolloClient()}>
+        <ApolloProvider client={createApolloClient(t)}>
             <Router>
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />

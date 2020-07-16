@@ -67,7 +67,9 @@ describe('Login', (): void => {
         ];
         const resolvers = {
             Mutation: {
-                setLogoutError(): void {},
+                setLogoutError(): boolean {
+                    return false;
+                },
             },
             Query: {
                 isAuthenticated(): boolean {
@@ -116,7 +118,9 @@ describe('Login', (): void => {
         ];
         const resolvers = {
             Mutation: {
-                setLogoutError(): void {},
+                setLogoutError(): boolean {
+                    return false;
+                },
             },
             Query: {
                 isAuthenticated(): boolean {

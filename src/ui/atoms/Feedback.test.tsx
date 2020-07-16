@@ -1,11 +1,8 @@
 import '../../../test-utils/i18n-mock';
 import React from 'react';
 import { cleanup, render, waitFor } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing';
 
 import Feedback from './Feedback';
-import { APPLICATION_ERROR } from '../../core/graphql';
-import { MemoryRouter } from 'react-router-dom';
 
 const message = {
     feedback: {
@@ -22,7 +19,7 @@ jest.mock('@apollo/react-hooks', () => ({
         };
     },
     useMutation: (): object => {
-        return [() => {}];
+        return [(): void => {}];
     },
 }));
 

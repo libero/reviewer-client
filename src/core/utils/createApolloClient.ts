@@ -8,11 +8,10 @@ import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
 import { APPLICATION_ERROR } from '../../initial-submission/graphql';
-import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
-const { t } = useTranslation('ui');
-
-export default (): ApolloClient<unknown> => {
+export default (t: i18next.TFunction): ApolloClient<unknown> => {
+    // eslint-disable-next-line prefer-const
     let client: ApolloClient<unknown>;
     const host = `${window.location.protocol}//${window.location.host}`;
     const apiLink = createUploadLink({
