@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useTranslation } from 'react-i18next';
+import Interweave from 'interweave';
+
 import { CLEAR_ERROR, APPLICATION_ERROR } from '../../initial-submission/graphql';
+
+const { t } = useTranslation('ui');
 
 const Feedback = (): JSX.Element => {
     const [isSticky, setSticky] = useState(false);
@@ -37,7 +42,7 @@ const Feedback = (): JSX.Element => {
         <React.Fragment>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
-                {message}
+                <Interweave content={t(message)} />
             </div>
         </React.Fragment>
     );
