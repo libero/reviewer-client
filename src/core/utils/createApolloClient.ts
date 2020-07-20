@@ -52,7 +52,7 @@ export default (): ApolloClient<unknown> => {
                         feedback: {
                             error: true,
                             dismissable: false,
-                            message: t('feedback.submission-error'),
+                            message: 'feedback.submission-error',
                         },
                     },
                 });
@@ -66,7 +66,7 @@ export default (): ApolloClient<unknown> => {
                     feedback: {
                         dismissable: false,
                         error: true,
-                        message: t('feedback.server-lost'),
+                        message: 'feedback.server-lost',
                     },
                 },
             });
@@ -119,7 +119,7 @@ export default (): ApolloClient<unknown> => {
                             feedback: {
                                 error: true,
                                 dismissable: true,
-                                message: t('feedback.auth-timeout'),
+                                message: 'feedback.auth-timeout',
                             },
                         },
                     });
