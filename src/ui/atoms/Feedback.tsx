@@ -5,9 +5,8 @@ import Interweave from 'interweave';
 
 import { CLEAR_ERROR, APPLICATION_ERROR } from '../../initial-submission/graphql';
 
-const { t } = useTranslation('ui');
-
 const Feedback = (): JSX.Element => {
+    const { t } = useTranslation('ui');
     const [isSticky, setSticky] = useState(false);
     const [clearError] = useMutation(CLEAR_ERROR);
     const ref = useRef(null);
@@ -42,7 +41,9 @@ const Feedback = (): JSX.Element => {
         <React.Fragment>
             {isSticky && <div className="fixed-padding" />}
             <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
-                <Interweave content={t(message)} />
+                <div className="feedback__content">
+                    <Interweave content={t(message)} />
+                </div>
             </div>
         </React.Fragment>
     );

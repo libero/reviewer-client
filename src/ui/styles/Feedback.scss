@@ -4,14 +4,16 @@
     background-color: $colourPrimary;
     color: $white;
     text-align: center;
-    z-index: 1000;
     grid-area: feedback;
     min-height: 48px;
     line-height: 20px;
     font-size: 14px;
     padding: 0 14px;
+    display: flex;
+    align-items: center;
 
     &.stick {
+        z-index: 1000;
         top: 72px;
         position: fixed;
         top: 0;
@@ -22,6 +24,10 @@
     &.error {
         background-color: $colourError;
         color: $white;
+    }
+
+    .feedback__content {
+        width: 100%;
     }
 }
 
