@@ -1,0 +1,36 @@
+.feedback {
+    width: 100%;
+    padding: 1rem;
+    background-color: $colourPrimary;
+    color: $white;
+    text-align: center;
+    grid-area: feedback;
+    min-height: 48px;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+
+    &.stick {
+        z-index: 1000;
+        top: 72px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        animation: 3s ease-in 1s 2 reverse both paused slidein;
+    }
+
+    &.error {
+        background-color: $colourError;
+        color: $white;
+    }
+
+    .feedback__content {
+        width: 100%;
+    }
+}
+
+.fixed-padding {
+    height: 48px;
+}

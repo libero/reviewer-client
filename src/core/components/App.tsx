@@ -13,7 +13,7 @@ import ReviewerGuide from '../../static-pages/components/ReviewerGuide';
 import JournalAuthRedirect from '../../login/components/JournalAuthRedirect';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
-import { Footer } from '../../ui/atoms';
+import { Footer, Feedback } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
@@ -27,6 +27,7 @@ const App: React.FC = (): JSX.Element => {
             <Router>
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
+                    <Feedback />
                     <Route component={Login} exact path="/login" />
                     <Route component={Logout} exact path="/logout" />
                     <Route component={JournalAuthRedirect} exact path="/auth-redirect" />

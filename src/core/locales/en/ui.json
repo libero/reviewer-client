@@ -1,5 +1,10 @@
 {
     "image-attribution": "Illustration by ",
+    "feedback": {
+        "auth-timeout": "You were logged out but your progress was saved. Please log in again to continue.",
+        "server-lost": "Connection to the server was lost. Please refresh before continuing.",
+        "submission-error": "There is a problem with your submission. Please contact us for help."
+    },
     "file-upload": {
         "idle-upload": "Upload",
         "idle-message": " your manuscript or drag it here.",
@@ -7,16 +12,15 @@
         "error-pre-content": " Oops! ",
         "error-upload": "try again",
         "error-message": {
-            "multiple" : "Only one manuscript file can be uploaded.",
+            "multiple": "Only one manuscript file can be uploaded.",
             "validation": "That file is not supported.",
             "server": "There was a problem uploading your file."
         },
         "error-extra": {
-            "multiple" : "Files should be in .docx or .pdf format and no larger than 100MB.",
+            "multiple": "Files should be in .docx or .pdf format and no larger than 100MB.",
             "validation": "Files should be in .docx or .pdf format and no larger than 100MB.",
             "server": "If the problem continues please ",
             "contact-us": "contact us"
-
         },
         "uploading-message": "Upload manuscript ",
         "complete-prefix": "Done! ",
@@ -49,8 +53,7 @@
     "validation--peoplepicker_maximum-prefix": "Maximum",
     "validation--peoplepicker_maximum-suffix": "people selected",
     "expanding-email-field": {
-       "name": "name",
+        "name": "name",
         "email": "email"
     }
 }
-

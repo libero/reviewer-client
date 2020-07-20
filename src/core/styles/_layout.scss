@@ -1,10 +1,11 @@
 #app {
   display: grid;
   grid-template-columns: 16.666% auto 16.666%;
-  grid-template-rows: 4.5rem 4.5rem 1fr 4.5rem 4.5rem;
+  grid-template-rows: 4.5rem auto 4.5rem 1fr 4.5rem 4.5rem;
   min-height: 100vh;
   grid-template-areas:
           "header header header"
+          "feedback feedback feedback"
           "static-nav static-nav static-nav"
           "left-menu main ."
           ". . ."

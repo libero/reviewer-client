@@ -208,3 +208,21 @@ export const submitSubmissionMutation = gql`
         }
     }
 `;
+
+export const APPLICATION_ERROR = gql`
+    query ApplicationError {
+        feedback @client
+    }
+`;
+
+export const CLEAR_ERROR = gql`
+    mutation ClearError {
+        clearError @client
+    }
+`;
+
+export const SET_LOGOUT_ERROR = gql`
+    mutation SetLogoutError {
+        setLogoutError @client
+    }
+`;

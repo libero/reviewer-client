@@ -7,8 +7,11 @@ import { split, ApolloLink } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { getToken, clearToken } from '../../login/utils/tokenUtils';
 import { createUploadLink } from 'apollo-upload-client';
+import { APPLICATION_ERROR } from '../../initial-submission/graphql';
 
 export default (): ApolloClient<unknown> => {
+    // eslint-disable-next-line prefer-const
+    let client: ApolloClient<unknown>;
     const host = `${window.location.protocol}//${window.location.host}`;
     const apiLink = createUploadLink({
         uri: `${host}/graphql`, // use https for secure endpoint,
@@ -41,11 +44,32 @@ export default (): ApolloClient<unknown> => {
 
             if (authenticationError) {
                 clearToken();
-                window.location.reload();
+                window.location.href = `${window.location.protocol}//${window.location.host}/login?loginTimeout=true`;
+            } else {
+                client.writeQuery({
+                    query: APPLICATION_ERROR,
+                    data: {
+                        feedback: {
+                            error: true,
+                            dismissable: false,
+                            message: 'feedback.submission-error',
+                        },
+                    },
+                });
             }
         }
 
         if (networkError) {
+            client.writeQuery({
+                query: APPLICATION_ERROR,
+                data: {
+                    feedback: {
+                        dismissable: false,
+                        error: true,
+                        message: 'feedback.server-lost',
+                    },
+                },
+            });
             console.log(`[Network error]: ${networkError}`);
         }
     });
@@ -75,10 +99,32 @@ export default (): ApolloClient<unknown> => {
         httpLink,
     );
 
-    return new ApolloClient({
+    client = new ApolloClient({
         cache: new InMemoryCache(),
         link,
         resolvers: {
+            Mutation: {
+                clearError(): void {
+                    client.writeQuery({
+                        query: APPLICATION_ERROR,
+                        data: {
+                            feedback: null,
+                        },
+                    });
+                },
+                setLogoutError(): void {
+                    client.writeQuery({
+                        query: APPLICATION_ERROR,
+                        data: {
+                            feedback: {
+                                error: true,
+                                dismissable: true,
+                                message: 'feedback.auth-timeout',
+                            },
+                        },
+                    });
+                },
+            },
             Query: {
                 isAuthenticated(): boolean {
                     return getToken() !== null;
@@ -86,4 +132,6 @@ export default (): ApolloClient<unknown> => {
             },
         },
     });
+
+    return client;
 };

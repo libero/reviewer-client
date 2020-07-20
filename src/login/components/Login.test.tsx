@@ -5,24 +5,33 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/react-testing';
 
 import Login from './Login';
-import { isUserAuthenticatedQuery } from '../../core/graphql';
+import { isUserAuthenticatedQuery, SET_LOGOUT_ERROR } from '../../core/graphql';
 
 describe('Login', (): void => {
     afterEach(cleanup);
 
-    it('should render correctly', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: isUserAuthenticatedQuery,
-                },
-                result: {
-                    data: {
-                        isAuthenticated: true,
-                    },
+    const mocks = [
+        {
+            request: {
+                query: SET_LOGOUT_ERROR,
+            },
+            result: {
+                data: {},
+            },
+        },
+        {
+            request: {
+                query: isUserAuthenticatedQuery,
+            },
+            result: {
+                data: {
+                    isAuthenticated: true,
                 },
             },
-        ];
+        },
+    ];
+
+    it('should render correctly', async done => {
         const { container } = render(
             <MockedProvider mocks={mocks} addTypename={false} resolvers={{}}>
                 <MemoryRouter initialEntries={['/login']}>
@@ -37,19 +46,12 @@ describe('Login', (): void => {
     });
 
     it('should redirect if authenticated', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: isUserAuthenticatedQuery,
-                },
-                result: {
-                    data: {
-                        isAuthenticated: true,
-                    },
+        const resolvers = {
+            Mutation: {
+                setLogoutError(): boolean {
+                    return false;
                 },
             },
-        ];
-        const resolvers = {
             Query: {
                 isAuthenticated(): boolean {
                     return true;
@@ -75,19 +77,12 @@ describe('Login', (): void => {
     });
 
     it('should render login page if not authenticated', async done => {
-        const mocks = [
-            {
-                request: {
-                    query: isUserAuthenticatedQuery,
-                },
-                result: {
-                    data: {
-                        isAuthenticated: false,
-                    },
+        const resolvers = {
+            Mutation: {
+                setLogoutError(): boolean {
+                    return false;
                 },
             },
-        ];
-        const resolvers = {
             Query: {
                 isAuthenticated(): boolean {
                     return false;
