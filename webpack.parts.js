@@ -14,7 +14,7 @@ exports.devServer = () => ({
             logging: 'verbose',
         },
         historyApiFallback: {
-            disableDotRule: true
+            disableDotRule: true,
         },
         port: process.env.CLIENT_PORT || 9000,
         disableHostCheck: true,
@@ -30,10 +30,10 @@ exports.loaders = () => ({
             {
                 test: /\.scss$/,
                 use: [
-                    {loader: 'style-loader', options: {sourceMap: true}},
-                    {loader: 'css-loader', options: {sourceMap: true}},
-                    {loader: 'sass-loader', options: {sourceMap: true}},
-                ]
+                    { loader: 'style-loader', options: { sourceMap: true } },
+                    { loader: 'css-loader', options: { sourceMap: true } },
+                    { loader: 'sass-loader', options: { sourceMap: true } },
+                ],
             },
             {
                 test: /\.ts(x?)$/,
@@ -48,32 +48,36 @@ exports.loaders = () => ({
                 enforce: 'pre',
                 test: /\.js$/,
                 loader: 'source-map-loader',
-                exclude: path.resolve(__dirname, "node_modules"),
+                exclude: path.resolve(__dirname, 'node_modules'),
             },
             {
                 test: /\.(png|jpg|gif)$/,
-                use: [
-                    { loader: 'file-loader' },
-                ],
+                use: [{ loader: 'file-loader' }],
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
-                {
-                    loader: 'url-loader',
-                    options: {
-                    limit: 10000,
-                    mimetype: 'image/svg+xml'
-                    }
-                }
-                ]
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/svg+xml',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.ico$/,
+                use: {
+                    loader: 'file-loader?name=[name].[ext]',
+                },
             },
             {
                 test: /\.(ttf|eot|woff|woff2)$/,
                 use: {
-                    loader: "file-loader",
+                    loader: 'file-loader',
                     options: {
-                        name: "assets/fonts/[name].[ext]",
+                        name: 'assets/fonts/[name].[ext]',
                     },
                 },
             },
@@ -85,7 +89,11 @@ exports.loaders = () => ({
                     },
                 ],
             },
-            { test: /\.(js)$/, exclude: [/node_modules\/(?!(react-hook-form)\/).*/], use: [ { loader: "babel-loader" } ] },
+            {
+                test: /\.(js)$/,
+                exclude: [/node_modules\/(?!(react-hook-form)\/).*/],
+                use: [{ loader: 'babel-loader' }],
+            },
         ],
     },
 });
@@ -107,18 +115,18 @@ exports.minifyCSS = () => ({
             canPrint: false,
         }),
     ],
-})
+});
 
 exports.minifyJS = () => ({
     optimization: {
         minimizer: [new TerserPlugin({ sourceMap: true })],
-    }
-})
+    },
+});
 
 exports.splitBundles = () => ({
     plugins: [
         // Ignore all locale files of moment.js
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /uk/)
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /uk/),
     ],
     optimization: {
         runtimeChunk: 'single',
@@ -136,34 +144,35 @@ exports.splitBundles = () => ({
                 },
             },
         },
-    }
-})
+    },
+});
 
 exports.output = ({ filename }) => ({
     output: {
         publicPath: '/',
         path: path.resolve(__dirname, 'dist'),
         filename,
-    }
-})
+    },
+});
 
 exports.copyFiles = () => ({
     plugins: [
         new CopyPlugin([
-            { from: './src/core/locales', to: path.resolve(__dirname, 'dist', 'locales') }
-        ])
-    ]
-})
+            { from: './src/core/locales', to: path.resolve(__dirname, 'dist', 'locales') },
+            { from: './src/core/assets/favico', to: path.resolve(__dirname, 'dist', 'assets') },
+        ]),
+    ],
+});
 
 exports.generateSourceMaps = ({ type }) => ({
-    devtool: type
-})
+    devtool: type,
+});
 
 exports.newRelic = () => ({
     plugins: [
         new HtmlInjectNewRelicPlugin({
             license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
-            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID
+            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID,
         }),
     ],
-})
+});
