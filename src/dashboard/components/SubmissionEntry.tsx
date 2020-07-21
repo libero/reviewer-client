@@ -43,7 +43,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                         {status === 'continue_submission' ? (
                             <span>{t('continue-submission')}</span>
                         ) : (
-                            'Submitted: Check e-mail'
+                            <span>{t('submitted')}</span>
                         )}
                     </div>
                     <div className="submission-entry__dates">
