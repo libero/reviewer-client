@@ -54,6 +54,7 @@ const FileUploadContent = ({
                 </Fragment>
             );
         case 'UPLOADING':
+        case 'PROCESSING':
             return (
                 <Fragment>
                     <span className="typography__body file-upload__description">
@@ -119,7 +120,10 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
         if (state.error && status !== 'ERROR') {
             return 'ERROR';
         }
-        if (state.uploadInProgress && state.uploadInProgress.progress === 0) {
+        if (
+            state.uploadInProgress &&
+            (state.uploadInProgress.progress === 0 || state.uploadInProgress.progress === 100)
+        ) {
             return 'PROCESSING';
         }
         if (state.uploadInProgress && status !== 'UPLOADING') {

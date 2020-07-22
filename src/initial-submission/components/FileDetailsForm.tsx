@@ -124,7 +124,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                         previewLink,
                     },
                 });
-                setValue('manuscriptFile', data.uploadManuscript.files.manuscriptFile);
+                setValue('manuscriptFile', data.uploadManuscript.files.manuscriptFile, true);
             })
             .catch(() => {
                 setManuscriptStatus({ error: 'server' });
@@ -154,7 +154,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
                 coverLetter={
                     initialValues.files && initialValues.files.coverLetter ? initialValues.files.coverLetter : ''
                 }
-                onChange={(val: string): void => setValue('coverLetter', val)}
+                onChange={(val: string): void => setValue('coverLetter', val, true)}
                 invalid={errors && errors.coverLetter !== undefined}
                 helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />
