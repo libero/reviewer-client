@@ -211,7 +211,7 @@ describe('SubmissionEntry', (): void => {
             articleType: 'research-article',
             updated: 1592832249199,
         };
-        const { getByText, container } = render(
+        const { getByText } = render(
             <SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />,
             {
                 wrapper: routerWrapper(['/link-1']),
