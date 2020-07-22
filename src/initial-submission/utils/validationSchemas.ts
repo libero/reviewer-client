@@ -165,9 +165,6 @@ const FileDetailsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
         manuscriptFile: yup
             .object()
             .required(t('files.validation.manuscript-required'))
-            .shape({
-                fileName: yup.string().required(t('files.validation.manuscript-required')),
-            })
             .nullable(),
     });
 
