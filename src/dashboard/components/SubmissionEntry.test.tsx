@@ -211,13 +211,10 @@ describe('SubmissionEntry', (): void => {
             articleType: 'research-article',
             updated: 1592832249199,
         };
-        const { getByText } = render(
-            <SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />,
-            {
-                wrapper: routerWrapper(['/link-1']),
-                container: appContainer(),
-            },
-        );
+        const { getByText } = render(<SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />, {
+            wrapper: routerWrapper(['/link-1']),
+            container: appContainer(),
+        });
 
         expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
     });
