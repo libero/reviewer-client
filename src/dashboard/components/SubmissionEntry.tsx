@@ -29,7 +29,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
             <Link
                 className={`submission-entry__link submission-entry__link--${status}`}
                 to={submission.lastStepVisited}
-                onClick={e => {
+                onClick={(e: React.MouseEvent): void => {
                     if (status !== 'continue_submission') {
                         e.preventDefault();
                     }
