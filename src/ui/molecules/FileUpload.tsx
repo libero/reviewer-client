@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDropzone, DropEvent } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
+import Close from '@material-ui/icons/Close';
 
 type UploadErrors = 'multiple' | 'validation' | 'server';
 type UploadInProgress = {
@@ -108,9 +109,10 @@ interface Props {
         error?: UploadErrors;
         fileStored?: FileStored;
     };
+    validationError?: string;
 }
 
-const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Element => {
+const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Element => {
     const onDrop = useCallback(onUpload, []);
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
@@ -118,7 +120,6 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
         if (state.error && status !== 'ERROR') {
             return 'ERROR';
         }
-        // less than ideal way of waiting for science beam to be done.
         if (
             state.uploadInProgress &&
             (state.uploadInProgress.progress === 0 || state.uploadInProgress.progress === 100)
@@ -156,6 +157,12 @@ const FileUpload: React.FC<Props> = ({ onUpload, state = {} }: Props): JSX.Eleme
                     />
                 </div>
             </div>
+            {validationError && (
+                <span className="typography__label typography__label--helper-text typography__label--error">
+                    <Close fontSize="small" />
+                    {validationError}
+                </span>
+            )}
         </div>
     );
 };

@@ -23,6 +23,11 @@ describe('FileUpload', (): void => {
             expect(getByText('file-upload.idle-message')).toBeInTheDocument();
             expect(getByText('file-upload.idle-extra')).toBeInTheDocument();
         });
+
+        it('should display the validation text', () => {
+            const { getByText } = render(<FileUpload onUpload={jest.fn} validationError="test_error" />);
+            expect(getByText('test_error')).toBeInTheDocument();
+        });
     });
 
     describe('Uploading state', () => {
