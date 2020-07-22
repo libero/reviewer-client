@@ -48,10 +48,6 @@ const Fees = (): JSX.Element => {
                 <Interweave content={t('fees.question1.p1')} />
             </Paragraph>
 
-            <Paragraph type="writing">
-                <Interweave content={t('fees.question1.p2')} />
-            </Paragraph>
-
             <h3>{t('fees.question2.heading')}</h3>
 
             <Paragraph type="writing">
