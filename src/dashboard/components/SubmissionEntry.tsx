@@ -47,7 +47,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                         )}
                     </div>
                     <div className="submission-entry__dates">
-                        <time>{dateTimeDiffToText(submission.updated)}</time>
+                        <time>{dateTimeDiffToText(submission.updated.toString())}</time>
                         <time className="submission-entry__date">
                             {moment(new Date(submission.updated)).format('ddd D MMM YYYY')}
                         </time>

@@ -203,4 +203,22 @@ describe('SubmissionEntry', (): void => {
         });
         expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
     });
+
+    it.only('should output the updated value as `ddd D MMM YYYY` given unix timestamp', () => {
+        const submissionWithDate = {
+            id: 'someId',
+            lastStepVisited: '/submit/someId/someStep',
+            articleType: 'research-article',
+            updated: 1592832249199,
+        };
+        const { getByText, container } = render(
+            <SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+                container: appContainer(),
+            },
+        );
+
+        expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
+    });
 });
