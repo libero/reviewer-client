@@ -96,6 +96,20 @@ describe('SubmissionEntry', (): void => {
         expect(container.querySelector('.submission-entry__link_text--submitted')).toBeInTheDocument();
     });
 
+    it('on click should be prevented for submitted submissions', (): void => {
+        const { container } = render(
+            <SubmissionEntry submission={getMockSubmissionForStatus('SUBMITTED')} onDelete={jest.fn} />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
+        expect(container.querySelector('.submission-entry__link--submitted')).toBeInTheDocument();
+        expect(container.querySelector('.submission-entry__title--submitted')).toBeInTheDocument();
+        expect(container.querySelector('.submission-entry__link_text--submitted')).toBeInTheDocument();
+        fireEvent.click(container.querySelector('.submission-entry__link--submitted'));
+        expect(container.querySelector('.submission-entry__link--submitted')).toBeInTheDocument();
+    });
+
     it('should render the correct classes for rejected submissions', (): void => {
         const { container } = render(
             <SubmissionEntry submission={getMockSubmissionForStatus('REJECTED')} onDelete={jest.fn} />,
