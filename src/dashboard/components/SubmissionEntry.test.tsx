@@ -204,7 +204,7 @@ describe('SubmissionEntry', (): void => {
         expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
     });
 
-    it.only('should output the updated value as `ddd D MMM YYYY` given unix timestamp', () => {
+    it('should output the updated value as `ddd D MMM YYYY` given unix timestamp', () => {
         const submissionWithDate = {
             id: 'someId',
             lastStepVisited: '/submit/someId/someStep',
