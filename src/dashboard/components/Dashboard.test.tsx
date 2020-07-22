@@ -115,6 +115,7 @@ describe('Dashboard', (): void => {
                         title: 'Submission - A',
                     },
                     updated: Date.now(),
+                    status: 'CONTINUE_SUBMISSION',
                 },
                 {
                     id: 'B',
@@ -123,6 +124,7 @@ describe('Dashboard', (): void => {
                         title: 'Submission - B',
                     },
                     updated: Date.now(),
+                    status: 'CONTINUE_SUBMISSION',
                 },
             ];
         });

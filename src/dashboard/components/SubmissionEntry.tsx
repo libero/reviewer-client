@@ -29,13 +29,22 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
             <Link
                 className={`submission-entry__link submission-entry__link--${status}`}
                 to={submission.lastStepVisited}
+                onClick={(e: React.MouseEvent): void => {
+                    if (status !== 'continue_submission') {
+                        e.preventDefault();
+                    }
+                }}
             >
                 <div className="submission-entry__content">
                     <span className={`submission-entry__title submission-entry__title--${status}`}>
                         {getTitle(submission)}
                     </span>
                     <div className={`submission-entry__link_text submission-entry__link_text--${status}`}>
-                        <span>{t('continue-submission')}</span>
+                        {status === 'continue_submission' ? (
+                            <span>{t('continue-submission')}</span>
+                        ) : (
+                            <span>{t('submitted')}</span>
+                        )}
                     </div>
                     <div className="submission-entry__dates">
                         <time>{dateTimeDiffToText(submission.updated)}</time>
@@ -54,13 +63,15 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                         {t('delete-text-suffix')}
                     </p>
                 </Modal>
-                <Delete
-                    onClick={(): void => toggle()}
-                    className="submission-entry__icon"
-                    height="24"
-                    width="24"
-                    viewBox="3 3 18 18"
-                />
+                {status === 'continue_submission' && (
+                    <Delete
+                        onClick={(): void => toggle()}
+                        className="submission-entry__icon"
+                        height="24"
+                        width="24"
+                        viewBox="3 3 18 18"
+                    />
+                )}
             </div>
         </div>
     );

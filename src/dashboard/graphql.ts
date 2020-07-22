@@ -10,6 +10,7 @@ export const getSubmissionsQuery = gql`
             }
             updated
             articleType
+            status
         }
     }
 `;
