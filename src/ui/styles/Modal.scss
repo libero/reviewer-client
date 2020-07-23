@@ -92,10 +92,13 @@
 }
 
 .modal__buttons--fullscreen {
+    grid-template-rows: 1fr 4.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     @include forSize('tabletLandscapeUp') {
         grid-template-columns: auto 55.5rem auto;
+        padding: 0;
     }
-    grid-template-rows: 1fr 4.5rem;
     div {
         grid-area: center;
         display: flex;
