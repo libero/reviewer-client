@@ -67,8 +67,7 @@
 }
 
 .modal__buttons_container--fullscreen {
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0 -1.5rem 0 -1.5rem;
     border-top: 1px solid $borderColour;
     position: fixed;
     padding-top: 2.25rem;
@@ -80,23 +79,26 @@
 .modal__buttons {
     display: grid;
     grid-template-columns: 0 auto 0;
-    grid-template-rows: 1fr 4.5rem;
     grid-template-areas: '. center .';
     @include forSize('tabletPortraitUp') {
         grid-template-columns: 0 1fr 0;
     }
-    @include forSize('tabletLandscapeUp') {
-        grid-template-columns: auto 55.5rem auto;
-    }
     div {
         grid-area: center;
-        display: flex;
-        justify-content: flex-start;
+    }
+    button:first-child {
+        margin-right: 1.5rem;
     }
 }
 
 .modal__buttons--fullscreen {
-    button {
-        margin-right: 1.5rem;
+    @include forSize('tabletLandscapeUp') {
+        grid-template-columns: auto 55.5rem auto;
+    }
+    grid-template-rows: 1fr 4.5rem;
+    div {
+        grid-area: center;
+        display: flex;
+        justify-content: flex-start;
     }
 }
