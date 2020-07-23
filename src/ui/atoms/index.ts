@@ -2,6 +2,7 @@ export { default as AppBar } from './AppBar';
 export { default as AppBarIcon } from './AppBarIcon';
 export { default as Banner } from './Banner';
 export { default as Button } from './Button';
+export { default as CookieBanner } from './CookieBanner';
 export { default as Footer } from './Footer';
 export { default as TextField } from './TextField';
 export { default as ExpandingTextField } from './ExpandingTextField';
