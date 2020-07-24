@@ -17,15 +17,21 @@
         "paragraph-1": "Our Editorial Staff are happy to help with any enquiries arising post-acceptance.",
         "person-1": {
             "name": "James Gilbert",
-            "position": "Senior Production Assistant",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2017-07%2Fjames.jpg/0,81,1000,566/502,284/0/default.jpg",
+            "position": "Production Editor",
+            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/james.jpg",
             "number": "+44 [0]1223 855346"
         },
         "person-2": {
-            "name": "Molly Shrimpton",
-            "position": "Production Assistant",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2018-04%2Fmolly_copy.jpeg/0,103,1577,893/502,284/0/default.jpg",
+            "name": "Fred Atherden",
+            "position": "Production Editor",
+            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/fred.jpg",
             "number": "+44 [0]1223 855370"
+        },
+        "person-3": {
+            "name": "Becky Collins",
+            "position": "Production Assistant",
+            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/becky_0.jpg",
+            "number": "+44 [0]1223 755808"
         }
     },
     "editor": {

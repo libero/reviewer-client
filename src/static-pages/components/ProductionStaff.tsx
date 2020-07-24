@@ -23,6 +23,12 @@ const ProductionStaff = (): JSX.Element => {
                     name={t('production.person-2.name')}
                     photo={t('production.person-2.photo')}
                 />
+                <PersonCard
+                    number={t('production.person-3.number')}
+                    position={t('production.person-3.position')}
+                    name={t('production.person-3.name')}
+                    photo={t('production.person-3.photo')}
+                />
             </div>
         </div>
     );
