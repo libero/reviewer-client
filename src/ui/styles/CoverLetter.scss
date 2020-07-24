@@ -3,13 +3,49 @@
     font-family: $fontWriting;
     font-size: 1rem;
     line-height: 1.5rem;
-    padding: 0.75rem;
-    border: $border;
-    border-radius: 0.188rem;
+    // padding: 0.75rem;
+    // border: $border;
+    // border-radius: 0.188rem;
     width: 100%;
-  
+
     &::placeholder {
-      color: $colourTextPlaceholder;
+        color: $colourTextPlaceholder;
     }
-  }
-  
+
+    .ProseMirror-menubar-wrapper {
+        align-items: baseline;
+        display: flex;
+        // margin-top: 2em;
+        flex-direction: column;
+        background-color: rgb(247, 247, 247);
+        margin-bottom: 0px;
+        line-height: 12px;
+        border-width: 1px 1px 1px;
+        border-style: solid solid none;
+        border-color: rgb(224, 224, 224) rgb(224, 224, 224) rgb(224, 224, 224);
+        border-image: initial;
+        border-radius: 3px 3px 0px 0px;
+        border-bottom: none;
+
+        .ProseMirror-menubar {
+            width: 100%;
+            display: block;
+            color: rgb(33, 33, 33);
+            padding: 6px;
+            background-color: rgb(247, 247, 247);
+        }
+
+        .ProseMirror {
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            
+            white-space: pre-wrap;
+            min-height: 12em;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(224, 224, 224);
+            padding: 6px;
+            border-radius: 0px 0px 3px 3px;
+        }
+    }
+}
