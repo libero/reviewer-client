@@ -88,7 +88,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Saucelabs Browsertests
-        run: yarn testcafe "${BROWSERS}" 'tests/**/*.browser.ts'
+        run: yarn testcafe ${BROWSERS} 'tests/**/*.browser.ts'
 
   browsertest-container:
     needs: [test, build]
