@@ -138,6 +138,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
   notify-slack-if-master-fails:
+    needs: [test, build, saucelabs-tests, browsertest-and-push-images]
     runs-on: ubuntu-latest
     steps:
       - name: Notify slack
