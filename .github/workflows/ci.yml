@@ -47,20 +47,18 @@ jobs:
   saucelabs-tests:
     needs: build
     runs-on: ubuntu-latest
-    if: "!contains(github.event.pull_request.body, '[skip-saucelabs]')"
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        browser: [
+    # Only run if on master or if '[run-saucelabs]' is part of PR message
+    if: >
+      contains(github.event.pull_request.body, '[run-saucelabs]')
+      || github.ref == 'refs/heads/master'
+    env:
+      BROWSERS: >
           'saucelabs:Firefox@latest:Windows 10',
           'saucelabs:Chrome@latest:Windows 10',
           'saucelabs:MicrosoftEdge@latest:Windows 10',
           'saucelabs:Safari@13:macOS 10.13',
           'saucelabs:Safari@12.0:macOS 10.14',
           'saucelabs:Safari@11.0:macOS 10.12'
-          ]
-    env:
       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
       SAUCE_JOB: "reviewer-client"
@@ -89,8 +87,8 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: ${{ matrix.browser }}
-        run: yarn testcafe '${{ matrix.browser }}' 'tests/**/*.browser.ts'
+      - name: Saucelabs Browsertests
+        run: yarn testcafe "${BROWSERS}" 'tests/**/*.browser.ts'
 
   browsertest-container:
     needs: [test, build]
