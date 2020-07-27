@@ -65,7 +65,7 @@ Browsertests will be run against SauceLabs for a variety of browsers but we also
 
 SauceLabs kindly grants us test capacity as part of their [OpenSauce](https://saucelabs.com/solutions/open-source) program.
 
-- disable saucelabs on a PR by adding `[skip-saucelabs]` to your PR description 
+- enable saucelabs on a PR by adding `[run-saucelabs]` to your PR description 
   - can't disable per commit because github [doesn't expose the commit message in its context](https://github.community/t/accessing-commit-message-in-pull-request-event/17158/2)
   - saucelabs job will always be run on commit/merge to master
 - browsers to run are set in `.github/workflows/ci.yml`
