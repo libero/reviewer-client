@@ -136,6 +136,7 @@
         "uuid": "^7.0.2",
         "yup": "^0.28.1"
     },
+    "proxy": "http://localhost:3003",
     "engines": {
         "node": ">=12.15.0"
     },
