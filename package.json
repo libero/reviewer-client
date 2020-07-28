@@ -4,16 +4,20 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --env production",
-        "start": "echo \"There is no start command as we use nginx.\" ",
-        "start:dev": "webpack-dev-server --env development",
-        "test": "jest",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "start:dev": "react-scripts start",
         "lint": "eslint --ext .js,.ts,.tsx src/",
         "prettier": "prettier --write 'src/**/*ts?'",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
         "test:browser": "yarn testcafe chrome 'tests/**/*.browser.ts'",
         "test:browser-headless": "yarn testcafe chrome:headless 'tests/**/*.browser.ts'"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
     },
     "husky": {
         "hooks": {
@@ -23,9 +27,6 @@
     },
     "devDependencies": {
         "@apollo/react-testing": "3.0.0",
-        "@babel/core": "^7.9.6",
-        "@babel/plugin-transform-runtime": "^7.9.6",
-        "@babel/preset-env": "^7.9.6",
         "@storybook/addon-a11y": "^5.3.13",
         "@storybook/addon-actions": "^5.3.13",
         "@storybook/addon-centered": "^5.3.13",
@@ -68,47 +69,28 @@
         "apollo-cache-inmemory": "^1.6.3",
         "apollo-link": "^1.2.13",
         "awesome-typescript-loader": "^5.2.1",
-        "babel-loader": "^8.0.6",
         "chromedriver": "^80.0.1",
-        "clean-webpack-plugin": "^3.0.0",
-        "copy-webpack-plugin": "^5.0.4",
-        "css-loader": "^3.1.0",
-        "cssnano": "^4.1.10",
         "dotenv": "^8.2.0",
         "dotenv-cli": "^3.0.0",
-        "eslint": "^6.0.1",
-        "eslint-config-prettier": "^6.0.0",
-        "eslint-plugin-prettier": "^3.1.0",
-        "eslint-plugin-react": "^7.14.2",
-        "file-loader": "^4.1.0",
-        "html-loader": "^0.5.5",
-        "html-webpack-plugin": "^3.2.0",
         "husky": "^3.0.9",
         "jest": "^24.8.0",
         "mithril": "^2.0.4",
         "mutationobserver-shim": "^0.3.3",
         "node-sass": "^4.12.0",
-        "optimize-css-assets-webpack-plugin": "^5.0.3",
         "preact": "^10.0.5",
         "prettier": "^1.18.2",
         "prop-types": "^15.7.2",
         "prosemirror-example-setup": "^1.1.2",
         "react-virtualized-auto-sizer": "^1.0.2",
-        "sass-loader": "^7.1.0",
         "source-map-loader": "^0.2.4",
         "storybook-dark-mode": "^0.1.7",
         "style-loader": "^0.23.1",
-        "terser-webpack-plugin": "^1.3.0",
         "testcafe": "^1.8.4",
         "testcafe-react-selectors": "^4.0.0",
         "ts-jest": "^24.0.2",
         "typescript": "~3.6.0",
         "url-loader": "^2.1.0",
         "wait-port": "^0.2.6",
-        "webpack": "^4.35.3",
-        "webpack-cli": "^3.3.6",
-        "webpack-dev-server": "^3.7.2",
-        "webpack-merge": "^4.2.1",
         "whatwg-fetch": "^3.0.0"
     },
     "dependencies": {
@@ -146,6 +128,7 @@
         "react-hook-form": "^4.8.2",
         "react-i18next": "^10.12.2",
         "react-router-dom": "^5.0.1",
+        "react-scripts": "^3.4.1",
         "react-select": "^3.0.4",
         "react-tabs": "^3.0.0",
         "subscriptions-transport-ws": "^0.9.16",
@@ -155,5 +138,17 @@
     },
     "engines": {
         "node": ">=12.15.0"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
 }
