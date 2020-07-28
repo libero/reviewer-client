@@ -1,0 +1,114 @@
+{
+    "navigation": {
+        "next": "next",
+        "back": "back",
+        "submit": "submit"
+    },
+    "submit": {
+        "modal-title": "Confirm submission?",
+        "modal-text": "Your initial submission will be sent for editorial assessment. You will be unable to make changes after this point.",
+        "modal-confirm": "Confirm"
+    },
+    "author": {
+        "prefill--link": "Pre-fill my details ",
+        "prefill--text": "using ORCID",
+        "author-first-name": "First name",
+        "author-last-name": "Last name",
+        "author-email": "Email (correspondence)",
+        "institution": "Institution",
+        "validation": {
+            "first-name-required": "First name is required",
+            "last-name-required": "Last name is required",
+            "email-required": "Email is required",
+            "email-format": "Must be a valid email address",
+            "institution-required": "Institution is required"
+        }
+    },
+    "details": {
+        "form-title": "Help us get your work seen by the right people",
+        "title-label": "Manuscript title",
+        "previously-discussed-toggle": "This manuscript has been discussed with an eLife editor",
+        "previously-discussed-label": "What did you discuss with whom?",
+        "previously-submitted-toggle": "This manuscript has been previously considered by eLife",
+        "previously-submitted-label": "Please give details (including previous article title and tracking number)",
+        "cosubmission-toggle": "This manuscript is part of a co-submission",
+        "cosubmission-title-label": "Co-submission article title",
+        "second-cosubmission-title-label": "Second co-submission article title (optional)",
+        "second-cosubmission-toggle-prefix": "Would you like to ",
+        "second-cosubmission-toggle-link": "add another",
+        "second-cosubmission-toggle-suffix": " co-submission?",
+        "subjects-helper-text": "Choose up to 2 subject areas",
+        "subjects-helper-text-max": "Maximum 2 subject areas already chosen",
+        "subject-areas": "Subject area(s)",
+        "validation": {
+            "title-required": "Title is required",
+            "subjects-max": "No more than 2 subject areas",
+            "subjects-min": "Choose at least 1 subject area",
+            "subjects-required": "Subject area(s) required",
+            "previously-discussed-required": "Please describe your previous interaction",
+            "previously-submitted-required": "Article title is required",
+            "cosubmission-required": "Article title is required"
+        }
+    },
+    "files": {
+        "supporting-files-max": "Maximum 10 supporting files",
+        "coverletter-title": "Your cover letter",
+        "coverletter-guidance": "<span class=\"typography__small typography__small--secondary\">Enter your cover letter below. Please help us evaluate your work by answering the following questions:</span><ul class=\"cover-letter__list typography__small\"><li>How will your work make others in the field think differently and move the field forward?</li><li>How does your work relate to the current literature on the topic?</li><li>Who do you consider to be the most relevant audience for this work?</li><li>What do you think the work has achieved or not achieved?</li></ul><h3 class=\"typography__heading typography__heading--h3\">Preprint Review</h3><p class=\"typography__small\">If you&apos;ve posted your manuscript as a preprint you can now have it peer reviewed directly on bioR&chi;iv while it is also considered for publication in eLife. Submissions to our new Preprint Review service will go directly to peer review, provided we have appropriate expertise and capacity on our editorial board. To opt-in to this service please include this intention in your cover letter along with a link to your preprint on bioR&chi;iv. <a class=\"typography__small typography__small--link\" href=\"https://elifesciences.org/inside-elife/d0c5d114/new-from-elife-invitation-to-submit-to-preprint-review\" target=\"_blank\">Read more about Preprint Review.</a></p>",
+        "manuscript-title": "Your manuscript file",
+        "manuscript-guidance": "<span class=\"typography__small typography__small--secondary\">Please include figures in your manuscript file. You do not need to upload figures separately. <a class=\"typography__small typography__small--link files-step__link--nested\" href=\"/author-guide/initial#single-manuscript\" target=\"_blank\">Learn more</a></span>",
+        "supporting-title": "Supporting files (optional)",
+        "supporting-guidance": "<span class=\"typography__small typography__small--secondary\">Any videos, audio clips or interactive files you believe will assist in the initial assessment of your submission should be uploaded as supporting files. You will be able to upload additional files at the full submission stage if necessary.</span>",
+        "validation": {
+            "coverletter-required": "Please write or paste in your cover letter",
+            "manuscript-required": "Please upload a manuscript"
+        }
+    },
+    "editors": {
+        "title": "Who should review your work?",
+        "editors-people-picker-label": "Suggest Senior Editors",
+        "reviewers-people-picker-label": "Suggest Reviewing Editors",
+        "reviewers-title": "Suggest Reviewers (Optional)",
+        "reviewers-label-prefix": "Reviewer",
+        "reviewers-diversity_1": "Please consider diversity when suggesting reviewers. See our",
+        "reviewers-diversity-link": " author guide",
+        "reviewers-diversity_2": " for more information.",
+        "opposed-reviewing-editors-people-picker-label": "Exclude a Reviewing Editor",
+        "opposed-reviewing-editors-reason-label": "Reason for exclusion",
+        "opposed-reviewing-editors-toggle-prefix": "Would you like to ",
+        "opposed-reviewing-editors-toggle-action-text": "exclude a reviewing editor",
+        "opposed-senior-editors-people-picker-label": "Exclude a Senior Editor",
+        "opposed-senior-editors-reason-label": "Reason for exclusion",
+        "opposed-senior-editors-toggle-prefix": "Would you like to ",
+        "opposed-senior-editors-toggle-action-text": "exclude a senior editor",
+        "opposed-reviewers-title": "Exclude Reviewers",
+        "opposed-reviewers-label-prefix": "Excluded reviewer",
+        "opposed-reviewers-toggle-prefix": "Would you like to ",
+        "opposed-reviewers-toggle-action-text": "exclude a reviewer",
+        "opposed-reviewers-reason-label": "Reason for exclusion",
+        "validation": {
+            "opposed-reviewing-editors-reason-required": "Please provide a reason for exclusion",
+            "opposed-reviewing-editors-max": "Please suggest no more than 2 editors",
+            "suggested-senior-editors-max": "Please suggest no more than 6 editors",
+            "suggested-senior-editors-min": "Please suggest at least 2 editors",
+            "suggested-reviewers-max": "Please suggest no more than 6 editors",
+            "suggested-reviewing-editors-max": "Please suggest no more than 6 editors",
+            "suggested-reviewing-editors-min": "Please suggest at least 2 editors",
+            "opposed-senior-editors-reason-required": "Please provide a reason for exclusion",
+            "opposed-senior-editors-max": "Please suggest no more than 1 editors",
+            "opposed-reviewers-reason-required": "Please provide a reason for exclusion",
+            "reviewers-name-required": "Name is required",
+            "reviewers-email-required": "Email is required",
+            "reviewers-email-valid": "Must be a valid email"
+        }
+    },
+    "disclosure": {
+        "form-title": "Disclosure of data to editors",
+        "submitter-signature-input": "Acknowledged by (name)",
+        "disclosure-consent-input": "I agree on behalf of all authors of this paper",
+        "copy": "Our <a class=\"typography__serif--link\" href=\"https://elifesciences.org/privacy-notice\">privacy policy</a> explains that we share your personal information with various third parties to enable us to review and publish your manuscript, and that we protect your data with detailed contractual arrangements with those parties. One of the groups we need to share your data with is our international editors, guest editors, and potentially peer reviewers. Since they are carrying out their roles as individuals, it is impracticable for us to have such comprehensive contractual protection for your data with them as we have with other third parties. This means that your personal data is unlikely to have the same level of protection as it would if those editors and guest reviewers were based in the UK. Because of this risk, we ask for your explicit consent to share your personal data with them, which you can withdraw at any time (by emailing <a class=\"typography__serif--link\" href=\"mailto:data@elifesciences.org\">data@elifesciences.org</a>). Please enter your name and check the box below to give this consent. Without this consent we will not be able to evaluate your submission.",
+        "validation": {
+            "signature": "Please enter your name to acknowldge this statement",
+            "consent": "We are unable to proceed without this consent"
+        }
+    }
+}

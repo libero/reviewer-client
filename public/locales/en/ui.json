@@ -1,0 +1,64 @@
+{
+    "cookie-banner": {
+        "button-text": "Got It",
+        "copy": "This site uses cookies to deliver its services and analyse traffic. By using this site, you agree to its use of cookies.",
+        "link-text": "Learn More"
+    },
+    "image-attribution": "Illustration by ",
+    "feedback": {
+        "auth-timeout": "You were logged out but your progress was saved. Please log in again to continue.",
+        "server-lost": "Connection to the server was lost. Please refresh before continuing.",
+        "submission-error": "There is a problem with your submission. Please contact us for help."
+    },
+    "file-upload": {
+        "idle-upload": "Upload",
+        "idle-message": " your manuscript or drag it here.",
+        "idle-extra": "Please note that files larger than 10MB may result in review delays.",
+        "error-pre-content": " Oops! ",
+        "error-upload": "try again",
+        "error-message": {
+            "multiple": "Only one manuscript file can be uploaded.",
+            "validation": "That file is not supported.",
+            "server": "There was a problem uploading your file."
+        },
+        "error-extra": {
+            "multiple": "Files should be in .docx or .pdf format and no larger than 100MB.",
+            "validation": "Files should be in .docx or .pdf format and no larger than 100MB.",
+            "server": "If the problem continues please ",
+            "contact-us": "contact us"
+        },
+        "uploading-message": "Upload manuscript ",
+        "complete-prefix": "Done! ",
+        "complete-preview": "Preview",
+        "complete-message": " or ",
+        "complete-replace": "Replace",
+        "complete-suffix": " your manuscript file."
+    },
+    "multifile-upload": {
+        "label-files": "Add more supporting files",
+        "label-no-files": "Add supporting files",
+        "status-error": {
+            "server": "There was a problem uploading your file.",
+            "validation": "Must be less than 100MB."
+        },
+        "status-queued": "queued",
+        "status-uploading": "uploading"
+    },
+    "search-box--label": "Search",
+    "search-box--helper": "Search...",
+    "modal--default-button": "Accept",
+    "modal--cancel-button": "Cancel",
+    "people_picker--open-selector": "Choose editor",
+    "people_picker--search-placeholder": "Search by name, institution or keyword",
+    "selected_people_list--open": "Open Picker",
+    "validation--optional": "optional",
+    "validation--required": "required",
+    "validation--peoplepicker_guidance-prefix": "At least",
+    "validation--peoplepicker_guidance-suffix": "suggestions required",
+    "validation--peoplepicker_maximum-prefix": "Maximum",
+    "validation--peoplepicker_maximum-suffix": "people selected",
+    "expanding-email-field": {
+        "name": "name",
+        "email": "email"
+    }
+}
