@@ -1,6 +1,9 @@
 import React, { useEffect, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { default as DashboardRoutes } from '../../dashboard/components/Routes';
+import { default as InitialSubmissionRoutes } from '../../initial-submission/components/Routes';
+import { default as SurveyRoutes } from '../../survey/components/Routes';
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import '../styles/index.scss';
@@ -13,9 +16,6 @@ const Login =  lazy(() => import('../../login/components/Login'));
 const ContactUs =  lazy(() => import('../../static-pages/components/ContactUs'));
 const AuthorGuide =  lazy(() => import('../../static-pages/components/AuthorGuide'));
 const ReviewerGuide =  lazy(() => import('../../static-pages/components/ReviewerGuide'));
-const DashboardRoutes = lazy(() => import('../../dashboard/components/Routes'));
-const InitialSubmissionRoutes = lazy(() => import('../../initial-submission/components/Routes'));
-const SurveyRoutes = lazy(() => import('../../survey/components/Routes'));
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
