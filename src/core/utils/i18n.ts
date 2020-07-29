@@ -6,7 +6,7 @@ import Backend from 'i18next-xhr-backend';
 export default function(options = {}): void {
     const i18nOptions: InitOptions = {
         lng: 'en',
-        // load: 'currentOnly',
+        load: 'currentOnly',
         keySeparator: '.',
         ns: ['article-type', 'common', 'dashboard', 'login', 'no-submission', 'survey', 'wizard-form', 'ui'],
         fallbackLng: 'en',
