@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Switch } from 'react-router-dom';
-import SubmissionWizard from './SubmissionWizard';
-import AuthRoute from '../../core/components/AuthRoute';
-import ThankYouPage from './ThankYouPage';
+const SubmissionWizard = lazy(() => import('./SubmissionWizard'));
+const AuthRoute = lazy(() => import('../../core/components/AuthRoute'));
+const ThankYouPage = lazy(() => import('./ThankYouPage'));
 
 const Routes: React.FC = (): JSX.Element => (
     <Switch>
