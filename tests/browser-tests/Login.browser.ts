@@ -9,6 +9,7 @@ import {
     NavigationPane,
     EditorPage,
     DisclosurePage,
+    SurveyPage,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
@@ -76,4 +77,8 @@ test('Happy path', async () => {
     const disclosurePage = new DisclosurePage();
     await disclosurePage.assertOnPage();
     await disclosurePage.populateForm();
+
+    const surveyPage = new SurveyPage();
+    await surveyPage.assertOnPage();
+    await surveyPage.populateForm();
 });

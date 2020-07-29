@@ -5,7 +5,7 @@ export class DisclosurePage {
     private readonly submitterSignature = Selector('#submitterSignature');
     private readonly disclosureConsent = Selector('#disclosureConsent');
     private readonly modalOverlay = Selector('.modal__overlay');
-    private readonly modalAcceptButton = Selector('.modal__buttons button__primary');
+    private readonly modalAcceptButton = Selector('.modal__buttons .button--primary');
     private readonly nextButton = Selector('.submission-wizard-next-button');
     private readonly backButton = Selector('.submission-wizard-back-button');
 
@@ -19,7 +19,7 @@ export class DisclosurePage {
         if (!currentConsent) {
             await this.toggleDisclosureConsent();
         }
-        this.submit();
+        await this.submit();
     }
 
     public async setSubmitterSignature(input = 'Bob Ross'): Promise<void> {
@@ -38,12 +38,13 @@ export class DisclosurePage {
     }
 
     public async getDisclosureConsent(): Promise<boolean> {
-        return !!this.disclosureConsent.value;
+        return this.disclosureConsent.checked;
     }
 
     public async submit(): Promise<void> {
         await this.next();
         await t.expect(this.modalOverlay.visible).ok();
+        await t.expect(this.modalAcceptButton.visible).ok();
         await t.click(this.modalAcceptButton);
     }
 
