@@ -6,4 +6,4 @@ export { DetailsPage } from './DetailsPage';
 export { NavigationPane } from './NavigationPane';
 export { EditorPage } from './EditorPage';
 export { DisclosurePage } from './DisclosurePage';
-
+export { SurveyPage } from './SurveyPage';
