@@ -6,7 +6,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test --env=node --watchAll=false",
+        "test": "jest",
         "eject": "react-scripts eject",
         "start:dev": "react-scripts start",
         "lint": "eslint --ext .js,.ts,.tsx src/",
