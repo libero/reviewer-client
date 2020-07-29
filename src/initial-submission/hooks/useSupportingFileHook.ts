@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState, useMemo } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { v4 } from 'uuid';
