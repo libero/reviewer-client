@@ -13,9 +13,9 @@ import * as Auth from '../utils/auth';
 import Login from '../../login/components/Login';
 
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
-const ContactUs =  lazy(() => import('../../static-pages/components/ContactUs'));
-const AuthorGuide =  lazy(() => import('../../static-pages/components/AuthorGuide'));
-const ReviewerGuide =  lazy(() => import('../../static-pages/components/ReviewerGuide'));
+const ContactUs = lazy(() => import('../../static-pages/components/ContactUs'));
+const AuthorGuide = lazy(() => import('../../static-pages/components/AuthorGuide'));
+const ReviewerGuide = lazy(() => import('../../static-pages/components/ReviewerGuide'));
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
@@ -33,7 +33,7 @@ const App: React.FC = (): JSX.Element => {
                     <InitialSubmissionRoutes /> {/* uses Switch internally */}
                     <SurveyRoutes /> {/* uses Switch internally */}
                     <DashboardRoutes /> {/* uses Switch internally */}
-                    <Switch> 
+                    <Switch>
                         <Route component={Login} exact path="/login" />
                         <Route component={Logout} exact path="/logout" />
                         <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
