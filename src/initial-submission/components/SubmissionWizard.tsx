@@ -1,4 +1,5 @@
 /*eslint-disable react/display-name*/
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { Button, Modal, Paragraph } from '../../ui/atoms';

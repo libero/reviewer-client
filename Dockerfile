@@ -13,22 +13,16 @@ COPY package.json \
 
 RUN yarn install
 
-COPY globals.d.ts \
-    index.ejs \
-    index.tsx \
-    .eslintrc.js \
+COPY .eslintrc.js \
     .eslintignore \
     .prettierrc.js \
-    babel.config.json \
-    webpack.parts.js \
     jest.config.js \
     tsconfig.json \
-    webpack.config.js \
     ./
 COPY tests/ tests/
 COPY test-utils/ test-utils/
 COPY src/ src/
-COPY webpack/ webpack/
+COPY public/ public/
 
 #
 # Stage: Production build
@@ -55,4 +49,4 @@ HEALTHCHECK --interval=5s --timeout=1s \
 	CMD echo -e "GET /health\n\n" | nc localhost:80
 
 COPY config/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build-prod /app/dist dist
+COPY --from=build-prod /app/build dist

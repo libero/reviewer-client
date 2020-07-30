@@ -6,12 +6,12 @@ services:
       context: './'
       target: dev
     image: libero/reviewer-client:${IMAGE_TAG:-local}
+    stdin_open: true
     environment: 
-      CLIENT_PORT: 9000
+      PORT: 9000
       NEW_RELIC_CLIENT_LICENSE_KEY: ''
       NEW_RELIC_CLIENT_APP_ID: ''
     volumes:
-      - ./globals.d.ts:/app/globals.d.ts
       - ./.eslintignore:/app/.eslintignore
       - ./.eslintrc.js:/app/.eslintrc.js
       - ./.prettierrc.js:/app/.prettierrc.js
@@ -20,12 +20,9 @@ services:
       - ./package.json:/app/package.json
       - ./yarn.lock:/app/yarn.lock
       - ./tests/:/app/tests
+      - ./public/:/app/public
       - ./tsconfig.json:/app/tsconfig.json
       - ./index.ts:/app/index.ts
-      - ./index.ejs:/app/index.ejs
-      - ./babelrc:/app/babelrc
-      - ./webpack.parts.js:/app/webpack.parts.js
-      - ./webpack.config.js:/app/webpack.config.js
     networks:
       - "reviewer"
 
