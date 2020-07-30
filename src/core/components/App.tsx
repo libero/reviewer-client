@@ -10,9 +10,9 @@ import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
 import { CookieBanner, Footer, Feedback } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
+import Login from '../../login/components/Login';
 
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
-const Login =  lazy(() => import('../../login/components/Login'));
 const ContactUs =  lazy(() => import('../../static-pages/components/ContactUs'));
 const AuthorGuide =  lazy(() => import('../../static-pages/components/AuthorGuide'));
 const ReviewerGuide =  lazy(() => import('../../static-pages/components/ReviewerGuide'));
