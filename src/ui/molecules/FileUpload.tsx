@@ -113,7 +113,7 @@ interface Props {
 }
 
 const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Element => {
-    const onDrop = useCallback(onUpload, []);
+    const onDrop = useCallback(onUpload, [onUpload]);
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
     const status = useMemo(() => {

@@ -82,7 +82,7 @@ const ExpandingEmailField = ({
                 addEmptyRow();
             }
         }
-    }, [peopleArray]);
+    }, [peopleArray, addEmptyRow, getTrailingBlankReviewerCount, maxRows, minRows, onChange]);
 
     const updatePeople = (index: number, field: 'name' | 'email', value: string): void => {
         const newPeople = [...peopleArray];

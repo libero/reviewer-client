@@ -26,7 +26,7 @@ const Login = (): JSX.Element => {
         if (loginTimeout) {
             setLogoutError();
         }
-    }, []);
+    }, [loginTimeout, setLogoutError]);
 
     if (data.isAuthenticated) {
         return <Redirect to="/" />;

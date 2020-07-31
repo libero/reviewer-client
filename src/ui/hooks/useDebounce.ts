@@ -10,7 +10,7 @@ export default function useDebounce<T>(value: T, delay: number): T {
             clearTimeout(handler);
         };
     };
-    useEffect(effect, [value]);
+    useEffect(effect, [value, delay]);
 
     return debouncedValue;
 }

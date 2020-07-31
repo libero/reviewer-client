@@ -57,11 +57,11 @@ const ExpandingTextField = ({
             setFlag(false);
             calculateHeight();
         }
-    }, [flag]);
+    }, [flag, calculateHeight]);
 
     useEffect(() => {
         calculateHeight();
-    }, []);
+    }, [calculateHeight]);
 
     return (
         <div className={`expanding-text-field${className ? ' ' + className : ''}`}>

@@ -67,7 +67,7 @@ const PeoplePickerSelector = ({
             return;
         }
         onSearch(debouncedSearchTerm);
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, onSearch]);
 
     useEffect(() => setFilteredPeople(people), [people]);
 
