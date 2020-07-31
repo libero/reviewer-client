@@ -41,7 +41,7 @@ export class FilesPage {
     }
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.stepWrapper.visible).ok();
+        await t.expect(this.stepWrapper.visible).ok({ timeout: 500 });
     }
 
     public async fillCoverLetterInput(

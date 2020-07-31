@@ -10,7 +10,7 @@ export class DisclosurePage {
     private readonly backButton = Selector('.submission-wizard-back-button');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.disclosureStep.visible).ok();
+        await t.expect(this.disclosureStep.visible).ok({ timeout: 500 });
     }
 
     async populateForm(): Promise<void> {

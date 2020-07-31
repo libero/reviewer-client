@@ -18,7 +18,7 @@ export class DetailsPage {
     private readonly backButton = Selector('.submission-wizard-back-button');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.titleInput.visible).ok();
+        await t.expect(this.titleInput.visible).ok({ timeout: 500 });
         await t.expect(this.subjectsContainer.visible).ok();
         await t.expect(this.previouslyDiscussedToggle.exists).ok();
         await t.expect(this.previouslyDiscussedInput.exists).notOk();

@@ -28,7 +28,7 @@ export class EditorPage {
     private readonly opposedReviewersReason = Selector('#opposedReviewersReason');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.editorsStep.visible).ok();
+        await t.expect(this.editorsStep.visible).ok({ timeout: 500 });
         await t.expect(this.seniorEditorsPicker.visible).ok();
         await t.expect(this.suggestedReviewingEditorsPicker.visible).ok();
         await t.expect(this.nextButton.visible).ok();

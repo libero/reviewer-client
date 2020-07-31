@@ -8,7 +8,7 @@ export class StaticPage {
     private readonly title: Selector = Selector('.static-page__content h1');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.pageWrapper.visible).ok();
+        await t.expect(this.pageWrapper.visible).ok({ timeout: 500 });
     }
 
     public async assertOnStaticPage(pageTitle: string): Promise<void> {

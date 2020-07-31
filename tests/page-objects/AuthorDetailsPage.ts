@@ -10,7 +10,7 @@ export class AuthorDetailsPage {
     private readonly prefillInput = Selector('.author-step__prefill');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.firstNameInput.visible).ok();
+        await t.expect(this.firstNameInput.visible).ok({ timeout: 500 });
         await t.expect(this.lastNameInput.visible).ok();
         await t.expect(this.emailInput.visible).ok();
         await t.expect(this.institutionInput.visible).ok();

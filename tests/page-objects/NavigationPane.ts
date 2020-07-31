@@ -11,7 +11,7 @@ export class NavigationPane {
     private readonly profileDropdown = Selector('.profile_dropdown');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.iconLink.visible).ok();
+        await t.expect(this.iconLink.visible).ok({ timeout: 500 });
         await t.expect(this.burgerMenuContainer.visible).notOk();
         await t.expect(this.burgerMenuContent.visible).notOk();
         await t.expect(this.menu.visible).ok();
@@ -20,7 +20,7 @@ export class NavigationPane {
     }
 
     public async assertOnPageAuthenticated(): Promise<void> {
-        await t.expect(this.iconLink.visible).ok();
+        await t.expect(this.iconLink.visible).ok({ timeout: 500 });
         await t.expect(this.menu.visible).ok();
         await t.expect(this.profileDropdown.visible).ok();
         // should only appear in responsive mode
