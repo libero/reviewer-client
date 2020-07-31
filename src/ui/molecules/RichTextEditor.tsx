@@ -37,7 +37,7 @@ export function ProseMirrorEditorView(props: ProseMirrorEditorViewProps): JSX.El
             },
         });
         return (): void => view.current.destroy();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return <div className={props.className} ref={viewHost} />;
 }
