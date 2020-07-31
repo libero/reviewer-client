@@ -19,6 +19,7 @@ const ReviewerGuide = lazy(() => import('../../static-pages/components/ReviewerG
 
 const Loader = (): JSX.Element => <div>Loading...</div>;
 
+// Suspense and lazy loading are used together for reduce bundle sizes.
 const App: React.FC = (): JSX.Element => {
     useEffect(() => {
         Auth.importToken();
