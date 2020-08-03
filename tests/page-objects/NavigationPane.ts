@@ -1,5 +1,7 @@
 import { Selector, t, ClientFunction } from 'testcafe';
 
+const getPageUrl = ClientFunction(() => window.location.href);
+
 export class NavigationPane {
     private readonly iconLink = Selector('.app-bar__icon-link');
     private readonly burgerMenuContainer = Selector('.burger_menu');
@@ -37,22 +39,19 @@ export class NavigationPane {
     public async navigateToAuthorGuide(): Promise<void> {
         await this.assertNavItems();
         await t.click(this.menu.child(1));
-        const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/author-guide/editorial-process');
+        await t.expect(getPageUrl()).contains('/author-guide/editorial-process', { timeout: 5000 });
     }
 
     public async navigateToReviewerGuide(): Promise<void> {
         await this.assertNavItems();
         await t.click(this.menu.child(2));
-        const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/reviewer-guide/review-process');
+        await t.expect(getPageUrl()).contains('/reviewer-guide/review-process', { timeout: 5000 });
     }
 
     public async navigateToContactUs(): Promise<void> {
         await this.assertNavItems();
         await t.click(this.menu.child(3));
-        const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/contact-us/contact-elife');
+        await t.expect(getPageUrl()).contains('/contact-us/contact-elife', { timeout: 5000 });
     }
 
     public async assertNavItems(): Promise<void> {
@@ -93,7 +92,6 @@ export class NavigationPane {
         await t.click(this.profileDropdown.child('button'));
         await t.expect(profileSelector.visible).ok();
         await t.click(Selector('.profile_dropdown__logout'));
-        const windowLocation = await ClientFunction(() => window.location)();
-        await t.expect(windowLocation.pathname).eql('/login');
+        await t.expect(getPageUrl()).contains('/login', { timeout: 5000 });
     }
 }
