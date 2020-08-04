@@ -8,3 +8,5 @@ export { EditorPage } from './EditorPage';
 export { DisclosurePage } from './DisclosurePage';
 export { StaticPage } from './StaticPage';
 export { SurveyPage } from './SurveyPage';
+
+export { ValidationHelper } from './validationHelper';
