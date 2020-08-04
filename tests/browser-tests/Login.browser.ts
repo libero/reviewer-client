@@ -16,7 +16,7 @@ import {
 import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`.beforeEach(async () => {
-    await waitForReact(52000);
+    await waitForReact();
 });
 
 test('static pages', async () => {
@@ -100,7 +100,7 @@ test('Happy path', async () => {
     await surveyPage.populateForm();
 });
 
-test.skip('validation', async () => {
+test('validation', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
     const loginPage = new LoginPage();
@@ -116,5 +116,9 @@ test.skip('validation', async () => {
     await authorDetailsPage.assertOnPage();
     await authorDetailsPage.next();
     const validationHelper = new ValidationHelper();
-    console.log(await validationHelper.getAllErrors());
+    await validationHelper.assertNumberOfErrors(4);
+    await validationHelper.assertErrorMessage('.author-step__firstName', 'First name is required');
+    await validationHelper.assertErrorMessage('.author-step__lastName', 'Last name is required');
+    await validationHelper.assertErrorMessage('.author-step__email', 'Email is required');
+    await validationHelper.assertErrorMessage('.author-step__institution', 'Institution is required');
 });
