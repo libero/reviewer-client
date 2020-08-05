@@ -34,17 +34,18 @@ export class EditorPage {
         await t.expect(this.nextButton.visible).ok();
     }
 
-    async populateAllFields():Promise<void> {
-        await this.populateMinimalFields();
-    }
-    
-    public async populateMinimalFields(): Promise<void> {
+    async populateAllFields(): Promise<void> {
         await this.addSeniorEditors();
         await this.addOpposingSeniorEditor();
         await this.addReviewingEditors();
         await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
         await this.addOpposingReviewer();
+    }
+
+    public async populateMinimalFields(): Promise<void> {
+        await this.addSeniorEditors();
+        await this.addReviewingEditors();
     }
 
     private async addPersonToPeoplePicker(picker: Selector, number = 1): Promise<void> {
