@@ -78,8 +78,8 @@ export class EditorPage {
         await t.expect(picker.find('.selected_people_list__item').count).eql(number + 1);
     }
 
-    public async addSeniorEditors(electionCount = this.minSeniorEditors): Promise<void> {
-        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, electionCount);
+    public async addSeniorEditors(selectionCount = this.minSeniorEditors): Promise<void> {
+        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, selectionCount);
     }
 
     public async assertPeoplePickerSearch(): Promise<void> {
