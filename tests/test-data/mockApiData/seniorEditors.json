@@ -1,0 +1,81 @@
+[
+  {
+      "id": "0aa30b85",
+      "name": "Reviewer1",
+      "aff": "Rev1 Uni",
+      "focuses": [
+          "f1a",
+          "f1b"
+      ],
+      "expertises": ["e1a", "e1b"]
+  },
+  {
+      "id": "0aa30b86",
+      "name": "Reviewer2",
+      "aff": "Rev2 Uni",
+      "focuses": [
+          "f2a",
+          "f2b"
+      ],
+      "expertises": ["e2a", "e2b"]
+  },
+  {
+      "id": "0aa30b87",
+      "name": "Reviewer3",
+      "aff": "Rev3 Uni",
+      "focuses": [
+          "f3a",
+          "f3b"
+      ],
+      "expertises": ["e3a", "e3b"]
+  },
+  {
+      "id": "0aa30b88",
+      "name": "Reviewer4",
+      "aff": "Rev4 Uni",
+      "focuses": [
+          "f4a",
+          "f4b"
+      ],
+      "expertises": ["e4a", "e4b"]
+  },
+  {
+      "id": "0aa30b89",
+      "name": "Reviewer5",
+      "aff": "Rev5 Uni",
+      "focuses": [
+          "f5a",
+          "f5b"
+      ],
+      "expertises": ["e5a", "e5b"]
+  },
+  {
+      "id": "0aa30b90",
+      "name": "Reviewer6",
+      "aff": "Rev6 Uni",
+      "focuses": [
+          "f6a",
+          "f6b"
+      ],
+      "expertises": ["e6a", "e6b"]
+  },  {
+    "id": "0aa30b91",
+    "name": "Reviewer7",
+    "aff": "Rev7 Uni",
+    "focuses": [
+        "f7a",
+        "f7b"
+    ],
+    "expertises": ["e7a", "e7b"]
+  },
+  {
+      "id": "0aa30b92",
+      "name": "Reviewer8",
+      "aff": "Rev8 Uni",
+      "focuses": [
+          "f8a",
+          "f8b"
+      ],
+      "expertises": ["e8a", "e8b"]
+  }
+]
