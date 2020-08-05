@@ -8,7 +8,7 @@ import {
     LoginPage,
     SurveyPage,
 } from '.';
-
+import { t } from 'testcafe';
 export class NavigationHelper {
     public async navigateToDashboard(): Promise<void> {
         const loginPage = new LoginPage();

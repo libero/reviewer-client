@@ -19,7 +19,6 @@ export class DisclosurePage {
         if (!currentConsent) {
             await this.toggleDisclosureConsent();
         }
-        await this.submit();
     }
 
     public async setSubmitterSignature(input = 'Bob Ross'): Promise<void> {
