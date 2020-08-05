@@ -10,3 +10,4 @@ export { StaticPage } from './StaticPage';
 export { SurveyPage } from './SurveyPage';
 
 export { ValidationHelper } from './validationHelper';
+export { NavigationHelper } from './NavigationHelper';
