@@ -30,7 +30,11 @@ export class DetailsPage {
         await t.expect(this.secondCosubmissionButton.exists).notOk();
     }
 
-    async populateForm(): Promise<void> {
+    async populateAllFields():Promise<void> {
+        await this.populateMinimalFields();
+    }
+    
+    async populateMinimalFields(): Promise<void> {
         // might be pre-populated
         await t.selectText(this.titleInput).pressKey('delete');
         await this.setTitle();

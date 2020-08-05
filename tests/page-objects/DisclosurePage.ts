@@ -13,7 +13,11 @@ export class DisclosurePage {
         await t.expect(this.disclosureStep.visible).ok();
     }
 
-    async populateForm(): Promise<void> {
+    async populateAllFields():Promise<void> {
+        await this.populateMinimalFields();
+    }
+    
+    async populateMinimalFields(): Promise<void> {
         await this.setSubmitterSignature();
         const currentConsent = await this.getDisclosureConsent();
         if (!currentConsent) {

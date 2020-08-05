@@ -34,7 +34,11 @@ export class EditorPage {
         await t.expect(this.nextButton.visible).ok();
     }
 
-    public async populateForm(): Promise<void> {
+    async populateAllFields():Promise<void> {
+        await this.populateMinimalFields();
+    }
+    
+    public async populateMinimalFields(): Promise<void> {
         await this.addSeniorEditors();
         await this.addOpposingSeniorEditor();
         await this.addReviewingEditors();

@@ -132,9 +132,7 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
         if (state.fileStored && state.fileStored.fileName && status !== 'COMPLETE') {
             return 'COMPLETE';
         }
-        if (status !== 'IDLE') {
-            return 'IDLE';
-        }
+        return 'IDLE';
     }, [state]);
 
     return (

@@ -5,6 +5,7 @@ export enum FileStatus {
     Success = 0,
     Uploading = 1,
     Error = 2,
+    Processing = 3
 }
 
 interface DropzoneStatus {
@@ -30,18 +31,37 @@ export class FilesPage {
     private readonly supportFilesList = Selector('.multifile-upload__upload-list-item');
 
     private stringToFileStatus(status: string): FileStatus {
-        if (status == 'success' || status == 'complete') {
+        if (status === 'success' || status === 'complete') {
             return FileStatus.Success;
-        } else if (status == 'error') {
+        } else if (status === 'error') {
             return FileStatus.Error;
-        } else if (status == 'uploading') {
+        } else if (status === 'uploading') {
             return FileStatus.Uploading;
+        } else if (status === 'processing') {
+            return FileStatus.Processing;
         }
         throw new Error(`${status} this value is an unknown file status!`);
     }
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.stepWrapper.visible).ok();
+    }
+
+    public async populateAllFields(): Promise<void> {
+        await this.populateMinimalFields();
+        await this.uploadSupportingFiles(Array(10).fill('../test-data/dummy-manuscript.docx'));
+    }
+
+    public async populateMinimalFields(): Promise<void> {
+        await this.fillCoverLetterInput();
+        await t.expect(await hasError(this.coverLetterContainer)).notOk();
+        await this.uploadManuscriptFile('../test-data/dummy-manuscript.docx');
+        const dropzoneStatus = await this.getManuscriptDropzoneStatus();
+        await t.expect(dropzoneStatus).eql({
+            status: FileStatus.Success,
+            text: 'Done! Preview or Replace your manuscript file.',
+            extraText: 'dummy-manuscript.docx',
+        });
     }
 
     public async fillCoverLetterInput(
@@ -118,18 +138,6 @@ export class FilesPage {
         const icon = await supportingFile.find('.multifile-upload__delete');
         await t.click(icon);
         await t.expect(initialCount).gt(await this.supportFilesList.count);
-    }
-
-    public async populateForm(): Promise<void> {
-        await this.fillCoverLetterInput();
-        await t.expect(await hasError(this.coverLetterContainer)).notOk();
-        await this.uploadManuscriptFile('../test-data/dummy-manuscript.docx');
-        const dropzoneStatus = await this.getManuscriptDropzoneStatus();
-        await t.expect(dropzoneStatus).eql({
-            status: FileStatus.Success,
-            text: 'Done! Preview or Replace your manuscript file.',
-            extraText: 'dummy-manuscript.docx',
-        });
     }
 
     public async next(): Promise<void> {
