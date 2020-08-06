@@ -7,6 +7,7 @@ import {
     DashboardPage,
     FilesPage,
     DetailsPage,
+    EditorPage,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { t } from 'testcafe';
@@ -45,7 +46,7 @@ test('Return to Files Step', async () => {
     await filesPage.assertPopulatedValues();
 });
 
-test.only('Return to Details Step', async () => {
+test('Return to Details Step', async () => {
     const navigationHelper = new NavigationHelper();
     const dashboardPage = new DashboardPage();
     const navigationPane = new NavigationPane();
@@ -59,4 +60,18 @@ test.only('Return to Details Step', async () => {
     await dashboardPage.openSubmission(submissionId);
     await detailsPage.assertOnPage();
     await detailsPage.assertPopulatedValues();
+});
+
+test.only('Return to Editors Step', async () => {
+    const navigationHelper = new NavigationHelper();
+    const dashboardPage = new DashboardPage();
+    const navigationPane = new NavigationPane();
+    const editorsPage = new EditorPage();
+    const submissionId = await navigationHelper.navigateToEditorsPage();
+    await editorsPage.populateMinimalFields();
+    await navigationPane.navigateToDashboard();
+    await dashboardPage.assertOnPage();
+    await dashboardPage.openSubmission(submissionId);
+    await editorsPage.assertOnPage();
+    await editorsPage.assertPopulatedValues();
 });

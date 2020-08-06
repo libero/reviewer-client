@@ -55,6 +55,17 @@ export class EditorPage {
         await this.addReviewingEditors();
     }
 
+    public async assertPopulatedValues(
+        values = { seniorEditorsCount: this.minSeniorEditors, reviewingEditorsCount: this.minReviewingEditors },
+    ): Promise<void> {
+        await t
+            .expect(this.seniorEditorsPicker.find('.selected_people_list__item').count)
+            .eql(values.seniorEditorsCount + 1);
+        await t
+            .expect(this.suggestedReviewingEditorsPicker.find('.selected_people_list__item').count)
+            .eql(values.seniorEditorsCount + 1);
+    }
+
     private async addPersonToPeoplePicker(picker: Selector, number = 1): Promise<void> {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         const addButton = picker.find('.pod__button');
