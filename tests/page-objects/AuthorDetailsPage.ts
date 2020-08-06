@@ -19,10 +19,12 @@ export class AuthorDetailsPage {
 
     public async prefill(): Promise<void> {
         await t.click(this.prefillInput);
-        await t.expect(await this.getFirstName()).eql('Tamlyn');
-        await t.expect(await this.getLastName()).eql('Rhodes');
-        await t.expect(await this.getEmail()).eql('test@email.com');
-        await t.expect(await this.getInstitution()).eql('somewhere');
+        await this.assertPopulatedValues({
+            first: 'Tamlyn',
+            last: 'Rhodes',
+            email: 'test@email.com',
+            inst: 'somewhere',
+        });
     }
     public async populateAllFields(): Promise<void> {
         await this.populateMinimalFields();
@@ -33,6 +35,15 @@ export class AuthorDetailsPage {
         await this.setLastName('last');
         await this.setEmail('email@elifesciences.org');
         await this.setInstitution('institution');
+    }
+
+    public async assertPopulatedValues(
+        values = { first: 'first', last: 'last', email: 'email@elifesciences.org', inst: 'institution' },
+    ): Promise<void> {
+        await t.expect(await this.getFirstName()).eql(values.first);
+        await t.expect(await this.getLastName()).eql(values.last);
+        await t.expect(await this.getEmail()).eql(values.email);
+        await t.expect(await this.getInstitution()).eql(values.inst);
     }
 
     public async setEmail(input = 'email@elifesciences.org'): Promise<void> {
