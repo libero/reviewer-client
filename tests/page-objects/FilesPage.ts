@@ -62,6 +62,20 @@ export class FilesPage {
             text: 'Done! Preview or Replace your manuscript file.',
             extraText: 'dummy-manuscript.docx',
         });
+        await this.assertPopulatedValues();
+    }
+
+    // editablecontent component from prosemirror outputs spaces as nbsp characters so we need to parse to compare input to value
+    private processProsemirrorTextContent(rawString: string): string {
+        return unescape(escape(rawString).replace(/%A0/g, '%20'));
+    }
+
+    public async assertPopulatedValues(
+        values = { coverLetter: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+    ): Promise<void> {
+        await t
+            .expect(this.processProsemirrorTextContent(await this.coverLetterInput.textContent))
+            .eql(values.coverLetter);
     }
 
     public async fillCoverLetterInput(
