@@ -8,8 +8,8 @@ fixture`Complete Path`.page`${BASE_URL}`.beforeEach(async () => {
 });
 
 test('Complete Path', async () => {
-  const navigationHelper = new NavigationHelper();
-  const surveyPage = new SurveyPage();
-  await navigationHelper.navigateToSurveyPage(true);
-  await surveyPage.populateForm();
+    const navigationHelper = new NavigationHelper();
+    const surveyPage = new SurveyPage();
+    await navigationHelper.navigateToSurveyPage(true);
+    await surveyPage.populateForm();
 });
