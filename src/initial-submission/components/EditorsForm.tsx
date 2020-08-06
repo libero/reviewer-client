@@ -46,9 +46,12 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
     const schema = schemaFactory(t);
     const validationResolver = useCallback((data: EditorsDetails) => {
         try {
+            console.log('custom validator start');
             schema.validateSync({ ...data, articleType: initialValues.articleType }, { abortEarly: false });
+            console.log('custom validator no error end');
             return { errors: {}, values: data };
         } catch (errors) {
+            console.log('custom validator found error');
             return {
                 errors: errors.inner.reduce(
                     (
