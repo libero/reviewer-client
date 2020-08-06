@@ -8,6 +8,7 @@ import {
     FilesPage,
     DetailsPage,
     EditorPage,
+    DisclosurePage,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { t } from 'testcafe';
@@ -62,7 +63,7 @@ test('Return to Details Step', async () => {
     await detailsPage.assertPopulatedValues();
 });
 
-test.only('Return to Editors Step', async () => {
+test('Return to Editors Step', async () => {
     const navigationHelper = new NavigationHelper();
     const dashboardPage = new DashboardPage();
     const navigationPane = new NavigationPane();
@@ -74,4 +75,20 @@ test.only('Return to Editors Step', async () => {
     await dashboardPage.openSubmission(submissionId);
     await editorsPage.assertOnPage();
     await editorsPage.assertPopulatedValues();
+});
+
+test.only('Return to Disclosure Step', async () => {
+    const navigationHelper = new NavigationHelper();
+    const dashboardPage = new DashboardPage();
+    const navigationPane = new NavigationPane();
+    const disclosurePage = new DisclosurePage();
+    const submissionId = await navigationHelper.navigateToDisclosurePage();
+    await disclosurePage.populateMinimalFields();
+    // allow autosave to catch up
+    await t.wait(2000);
+    await navigationPane.navigateToDashboard();
+    await dashboardPage.assertOnPage();
+    await dashboardPage.openSubmission(submissionId);
+    await disclosurePage.assertOnPage();
+    await disclosurePage.assertPopulatedValues();
 });
