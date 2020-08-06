@@ -8,8 +8,14 @@ import {
     LoginPage,
     SurveyPage,
 } from '.';
+import { ClientFunction } from 'testcafe';
 
 export class NavigationHelper {
+    private async getIdFromUrl(): Promise<string> {
+        const getWindowLocation = ClientFunction(() => window.location);
+        const location = await getWindowLocation();
+        return location.href.split('/')[4];
+    }
     public async navigateToDashboard(): Promise<void> {
         const loginPage = new LoginPage();
         await loginPage.assertOnPage();
@@ -18,15 +24,16 @@ export class NavigationHelper {
         await dashboardPage.assertOnPage();
     }
 
-    public async navigateToAuthorPage(): Promise<void> {
+    public async navigateToAuthorPage(): Promise<string> {
         await this.navigateToDashboard();
         const dashboardPage = new DashboardPage();
         await dashboardPage.newSubmission('Feature Article');
         const authorPage = new AuthorDetailsPage();
         await authorPage.assertOnPage();
+        return this.getIdFromUrl();
     }
 
-    public async navigateToFilesPage(complete: boolean = false): Promise<void> {
+    public async navigateToFilesPage(complete = false): Promise<string> {
         await this.navigateToAuthorPage();
         const authorPage = new AuthorDetailsPage();
         if (complete) {
@@ -37,9 +44,10 @@ export class NavigationHelper {
         await authorPage.next();
         const filesPage = new FilesPage();
         await filesPage.assertOnPage();
+        return this.getIdFromUrl();
     }
 
-    public async navigateToDetailsPage(complete: boolean = false): Promise<void> {
+    public async navigateToDetailsPage(complete = false): Promise<string> {
         await this.navigateToFilesPage(complete);
         const filesPage = new FilesPage();
         if (complete) {
@@ -50,9 +58,10 @@ export class NavigationHelper {
         await filesPage.next();
         const detailsPage = new DetailsPage();
         await detailsPage.assertOnPage();
+        return this.getIdFromUrl();
     }
 
-    public async navigateToEditorsPage(complete: boolean = false): Promise<void> {
+    public async navigateToEditorsPage(complete = false): Promise<string> {
         await this.navigateToDetailsPage(complete);
         const detailsPage = new DetailsPage();
         if (complete) {
@@ -63,9 +72,10 @@ export class NavigationHelper {
         await detailsPage.next();
         const editorPage = new EditorPage();
         await editorPage.assertOnPage();
+        return this.getIdFromUrl();
     }
 
-    public async navigateToDisclosurePage(complete: boolean = false): Promise<void> {
+    public async navigateToDisclosurePage(complete = false): Promise<string> {
         await this.navigateToEditorsPage(complete);
         const editorPage = new EditorPage();
         if (complete) {
@@ -76,9 +86,10 @@ export class NavigationHelper {
         await editorPage.next();
         const disclosurePage = new DisclosurePage();
         await disclosurePage.assertOnPage();
+        return this.getIdFromUrl();
     }
 
-    public async navigateToSurveyPage(complete: boolean = false): Promise<void> {
+    public async navigateToSurveyPage(complete = false): Promise<string> {
         await this.navigateToDisclosurePage(complete);
         const disclosurePage = new DisclosurePage();
         if (complete) {
@@ -89,5 +100,6 @@ export class NavigationHelper {
         await disclosurePage.submit();
         const surveyPage = new SurveyPage();
         await surveyPage.assertOnPage();
+        return this.getIdFromUrl();
     }
 }

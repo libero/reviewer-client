@@ -38,7 +38,7 @@ export class DashboardPage {
         }
     }
 
-    public async getState(): Promise<DashboardState> {
+    public async getDashboardState(): Promise<DashboardState> {
         const dashboard = await this.withSubmissions.visible;
         const noSubmissions = await this.noSubmissions.visible;
         if (dashboard) {
@@ -50,8 +50,18 @@ export class DashboardPage {
         }
     }
 
+    public async getSubmissionStatusText(id: string): Promise<string> {
+        const submissionSelector = this.submissionEntry.withAttribute('data-id', id);
+        return submissionSelector.find('.submission-entry__link_text').textContent;
+    }
+
+    public async assertSubmissionStatus(id: string, status: 'continue' | 'submitted'): Promise<void> {
+        const statusText = await this.getSubmissionStatusText(id);
+        await t.expect(statusText.toLowerCase()).contains(status);
+    }
+
     public async getSubmissions(): Promise<DashboardSubmission[]> {
-        const state = await this.getState();
+        const state = await this.getDashboardState();
         switch (state) {
             case DashboardState.WithSubmissions:
                 const submissions = await this.submissionEntry;
@@ -82,11 +92,11 @@ export class DashboardPage {
     }
 
     public async deleteSubmission(id: string): Promise<void> {
-        if ((await this.getState()) !== DashboardState.WithSubmissions) {
+        if ((await this.getDashboardState()) !== DashboardState.WithSubmissions) {
             console.warn('no submissions to delete');
             return;
         }
-        const submissionSelector = await this.submissionEntry.withAttribute('data-id', id); //TODO replace with with
+        const submissionSelector = await this.submissionEntry.withAttribute('data-id', id);
         await t.click(submissionSelector.find('.submission-entry__icon'));
         await t.click(this.confirmDeleteButton);
     }
