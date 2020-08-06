@@ -1,0 +1,80 @@
+[
+  {
+    "id": "0da30b85",
+    "name": "Ivan Dikic",
+    "aff": "Goethe University Frankfurt",
+    "focuses": [
+        "ubiquitination",
+        "autophagy",
+        "endocytosis",
+        "inflammation",
+        "cancer biology"
+    ],
+    "expertises": ["Biochemistry and Chemical Biology", "Cell Biology"]
+  },
+  {
+      "id": "007",
+      "name": "James Bond",
+      "aff": "MI6",
+      "focuses": [
+          "death",
+          "destruction"
+      ],
+      "expertises": ["Firearms", "Spying"]
+  },
+  {
+      "id": "006",
+      "name": "Alec Trevelyan",
+      "aff": "MI6",
+      "focuses": [
+          "self",
+          "theft"
+      ],
+      "expertises": ["Lying", "Deceit"]
+  },
+  {
+      "id": "005",
+      "name": "Henry James Pearce",
+      "aff": "MI5",
+      "focuses": [
+          "espionage"
+      ],
+      "expertises": ["Leadership"]
+  },
+  {
+      "id": "004",
+      "name": "A. Mapper",
+      "aff": "MI4",
+      "focuses": [
+          "maps"
+      ],
+      "expertises": ["Topography"]
+  },
+  {
+      "id": "003",
+      "name": "B. Altic",
+      "aff": "MI3",
+      "focuses": [
+          "maps"
+      ],
+      "expertises": ["Topography"]
+  },
+  {
+      "id": "002",
+      "name": "A. Nother Mapper",
+      "aff": "MI2",
+      "focuses": [
+          "maps"
+      ],
+      "expertises": ["Topography"]
+  },
+  {
+      "id": "001",
+      "name": "Fred Flintstone",
+      "aff": "MI1",
+      "focuses": [
+          "administration"
+      ],
+      "expertises": ["Desk Work"]
+  }
+]

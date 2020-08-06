@@ -24,8 +24,11 @@ services:
     image: liberoadmin/reviewer-mocks:latest
     ports:
       - "3003:3003"
+    environment:
+      DATA_DIRECTORY_PATH: /etc/reviewer/mock-data/
     volumes:
       - ./config/reviewer-mocks/config.ci.json:/etc/reviewer/config.json
+      - ./tests/test-data/mockApiData:/etc/reviewer/mock-data
     networks:
       - "reviewer"
     healthcheck:

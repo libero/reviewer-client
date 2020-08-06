@@ -30,15 +30,21 @@ export class DetailsPage {
         await t.expect(this.secondCosubmissionButton.exists).notOk();
     }
 
-    async populateForm(): Promise<void> {
-        // might be pre-populated
+    async populateAllFields(): Promise<void> {
         await t.selectText(this.titleInput).pressKey('delete');
         await this.setTitle();
-        await this.setSubjects();
+        await this.setSubjects(['Cell Biology', 'Ecology']);
         await this.setPreviouslyDiscussed();
         await this.setPreviouslyConsidered();
         await this.setCosubmission();
         await this.setSecondCosubmission();
+    }
+
+    async populateMinimalFields(): Promise<void> {
+        // might be pre-populated
+        await t.selectText(this.titleInput).pressKey('delete');
+        await this.setTitle();
+        await this.setSubjects();
     }
 
     public async setTitle(input = 'title'): Promise<void> {
@@ -51,11 +57,13 @@ export class DetailsPage {
         return await this.titleInput.value;
     }
 
-    public async setSubjects(input = 'Cell Biology'): Promise<void> {
+    public async setSubjects(inputs = ['Cell Biology']): Promise<void> {
         await t.expect(this.subjectsContainer.visible).ok();
-        await t.click(this.subjectOptionsTypSelect);
-        await t.click(this.subjectOptions.withText(input));
-        await t.expect(this.subjectValue.textContent).eql(input);
+        for (let i = 0; i < inputs.length; i++) {
+            await t.click(this.subjectOptionsTypSelect);
+            await t.click(this.subjectOptions.withText(inputs[i]));
+            await t.expect(this.subjectValue.nth(i).textContent).contains(inputs[i]);
+        }
     }
 
     public async getSubjects(): Promise<string> {
@@ -86,7 +94,7 @@ export class DetailsPage {
         await this.previouslySubmittedInput.value;
     }
 
-    public async setCosubmission(input: string = 'first co'): Promise<void> {
+    public async setCosubmission(input = 'first co'): Promise<void> {
         await t.expect(this.CosubmissionToggle.visible).ok();
         await t.click(this.CosubmissionToggle);
         await t.typeText(this.firstCosubmissionTitleInput, input);

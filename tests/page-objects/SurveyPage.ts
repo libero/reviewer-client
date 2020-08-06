@@ -39,7 +39,6 @@ export class SurveyPage {
         await this.answerQuestion(1);
         await this.answerQuestion(2);
         await this.answerQuestion(3);
-        await this.skipOrFinish();
     }
 
     public async skipOrFinish(): Promise<void> {

@@ -24,8 +24,11 @@ export class AuthorDetailsPage {
         await t.expect(await this.getEmail()).eql('test@email.com');
         await t.expect(await this.getInstitution()).eql('somewhere');
     }
+    public async populateAllFields(): Promise<void> {
+        await this.populateMinimalFields();
+    }
 
-    public async populateForm(): Promise<void> {
+    public async populateMinimalFields(): Promise<void> {
         await this.setFirstName('first');
         await this.setLastName('last');
         await this.setEmail('email@elifesciences.org');

@@ -5,6 +5,9 @@ services:
       - ./config/nginx-proxies/nginx.ci.localhost.conf:/etc/nginx/nginx.conf
 
   reviewer-mocks:
+    environment:
+      DATA_DIRECTORY_PATH: /etc/reviewer/mock-data/
     volumes:
       - ./config/reviewer-mocks/config.default.json:/etc/reviewer/config.json
+      - ./tests/test-data/mockApiData:/etc/reviewer/mock-data
       
