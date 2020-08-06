@@ -77,7 +77,7 @@ test('Return to Editors Step', async () => {
     await editorsPage.assertPopulatedValues();
 });
 
-test.only('Return to Disclosure Step', async () => {
+test('Return to Disclosure Step', async () => {
     const navigationHelper = new NavigationHelper();
     const dashboardPage = new DashboardPage();
     const navigationPane = new NavigationPane();
