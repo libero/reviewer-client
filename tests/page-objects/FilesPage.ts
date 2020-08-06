@@ -5,7 +5,7 @@ export enum FileStatus {
     Success = 0,
     Uploading = 1,
     Error = 2,
-    Processing = 3
+    Processing = 3,
 }
 
 interface DropzoneStatus {
