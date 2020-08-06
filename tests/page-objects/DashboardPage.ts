@@ -60,6 +60,11 @@ export class DashboardPage {
         await t.expect(statusText.toLowerCase()).contains(status);
     }
 
+    public async openSubmission(id: string): Promise<void> {
+        const submissionSelector = this.submissionEntry.withAttribute('data-id', id);
+        await t.click(submissionSelector.find('.submission-entry__link'));
+    }
+
     public async getSubmissions(): Promise<DashboardSubmission[]> {
         const state = await this.getDashboardState();
         switch (state) {

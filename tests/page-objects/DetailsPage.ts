@@ -40,13 +40,19 @@ export class DetailsPage {
         await this.setSecondCosubmission();
     }
 
-    async populateMinimalFields(): Promise<void> {
+    public async populateMinimalFields(): Promise<void> {
         // might be pre-populated
         await t.selectText(this.titleInput).pressKey('delete');
         await this.setTitle();
         await this.setSubjects();
     }
 
+    public async assertPopulatedValues(values = { title: 'title', subjects: ['Cell Biology'] }): Promise<void> {
+        await t.expect(this.titleInput.value).eql(values.title);
+        for (let index = 0; index < values.subjects.length; index++) {
+            await t.expect(this.subjectValue.nth(index).textContent).contains(values.subjects[index]);
+        }
+    }
     public async setTitle(input = 'title'): Promise<void> {
         await t.expect(this.titleInput.visible).ok();
         await t.typeText(this.titleInput, input);

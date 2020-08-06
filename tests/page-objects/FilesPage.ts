@@ -5,7 +5,7 @@ export enum FileStatus {
     Success = 0,
     Uploading = 1,
     Error = 2,
-    Processing = 3
+    Processing = 3,
 }
 
 interface DropzoneStatus {
@@ -62,6 +62,19 @@ export class FilesPage {
             text: 'Done! Preview or Replace your manuscript file.',
             extraText: 'dummy-manuscript.docx',
         });
+        await this.assertPopulatedValues();
+    }
+
+    // editablecontent component from prosemirror outputs spaces as nbsp characters so we need to parse to compare input to value
+    private processProsemirrorTextContent(rawString: string): string {
+        return unescape(escape(rawString).replace(/%A0/g, '%20'));
+    }
+
+    public async assertPopulatedValues(
+        values = { coverLetter: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+    ): Promise<void> {
+        const coverLetterContent = await this.coverLetterInput.textContent;
+        await t.expect(this.processProsemirrorTextContent(coverLetterContent)).eql(values.coverLetter);
     }
 
     public async fillCoverLetterInput(

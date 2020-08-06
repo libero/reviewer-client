@@ -13,10 +13,15 @@ export class DisclosurePage {
         await t.expect(this.disclosureStep.visible).ok();
     }
 
-    async populateAllFields():Promise<void> {
+    public async populateAllFields(): Promise<void> {
         await this.populateMinimalFields();
     }
-    
+
+    public async assertPopulatedValues(values = { signature: 'Bob Ross', consent: true }): Promise<void> {
+        await t.expect(this.submitterSignature.value).eql(values.signature);
+        await t.expect(this.disclosureConsent.checked).eql(values.consent);
+    }
+
     async populateMinimalFields(): Promise<void> {
         await this.setSubmitterSignature();
         const currentConsent = await this.getDisclosureConsent();

@@ -8,7 +8,7 @@ const save = (onSave: Function): void => {
     onSave();
 };
 
-const saveThrottle = throttle(save, 5000, { leading: false });
+const saveThrottle = throttle(save, 1000);
 
 export default (onSave: () => void, watchArray: DependencyList): void => {
     const initialRender = useRef(true);
@@ -21,7 +21,7 @@ export default (onSave: () => void, watchArray: DependencyList): void => {
             initialRender.current = false;
         }
         prevValues.current = cloneDeep(watchArray);
-    }, watchArray);
+    }, [onSave, watchArray]);
 
     useEffect(
         () => (): void => {
