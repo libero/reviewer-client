@@ -73,9 +73,8 @@ export class FilesPage {
     public async assertPopulatedValues(
         values = { coverLetter: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
     ): Promise<void> {
-        await t
-            .expect(this.processProsemirrorTextContent(await this.coverLetterInput.textContent))
-            .eql(values.coverLetter);
+        const coverLetterContent = await this.coverLetterInput.textContent;
+        await t.expect(this.processProsemirrorTextContent(coverLetterContent)).eql(values.coverLetter);
     }
 
     public async fillCoverLetterInput(

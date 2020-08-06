@@ -60,7 +60,7 @@ export class AuthorDetailsPage {
     public async setFirstName(input = 'first'): Promise<void> {
         await t.expect(this.firstNameInput.visible).ok();
         await t.typeText(this.firstNameInput, input);
-        await t.expect(await this.firstNameInput.value).eql(input);
+        await t.expect(this.firstNameInput.value).eql(input);
     }
 
     public async getFirstName(): Promise<string> {
