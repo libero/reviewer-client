@@ -17,7 +17,7 @@ export interface Props {
 const Menu: React.FC<Props> = ({
     items = [],
     rootClassName = 'menu',
-    onLinkClick = (): void => {},
+    onLinkClick = (): void => {}, // eslint-disable-line @typescript-eslint/no-empty-function
 }: Props): JSX.Element => {
     const { t } = useTranslation();
 
