@@ -83,7 +83,7 @@ describe('DetailsForm', (): void => {
     describe.only('optional fields', () => {
         it('should clear the data from the previously discussed field when un-ticked', () => {
             const { container, getByLabelText } = render(
-                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues}/>,
+                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
             );
             fireEvent.click(container.querySelector('#previouslyDiscussedContainer-toggle'));
             fireEvent.input(getByLabelText('details.previously-discussed-label'), {
@@ -98,7 +98,7 @@ describe('DetailsForm', (): void => {
 
         it('should clear the data from the previously considered field when un-ticked', () => {
             const { container, getByLabelText } = render(
-                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues}/>,
+                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
             );
             fireEvent.click(container.querySelector('#previouslyConsideredContainer-toggle'));
             fireEvent.input(getByLabelText('details.previously-submitted-label'), {
@@ -113,7 +113,7 @@ describe('DetailsForm', (): void => {
 
         it('should clear the data from the co-submissions fields when un-ticked', () => {
             const { container, getByLabelText } = render(
-                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues}/>,
+                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
             );
             fireEvent.click(container.querySelector('#cosubmission-toggle'));
             fireEvent.input(getByLabelText('details.cosubmission-title-label'), {
