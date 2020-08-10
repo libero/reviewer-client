@@ -80,6 +80,53 @@ describe('DetailsForm', (): void => {
         expect(config.getConfig).toHaveBeenCalledTimes(1);
     });
 
+    describe.only('optional fields', () => {
+        it('should clear the data from the previously discussed field when un-ticked', () => {
+            const { container, getByLabelText } = render(
+                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues}/>,
+            );
+            fireEvent.click(container.querySelector('#previouslyDiscussedContainer-toggle'));
+            fireEvent.input(getByLabelText('details.previously-discussed-label'), {
+                target: { value: 'pd' },
+            });
+            fireEvent.click(container.querySelector('#previouslyDiscussedContainer-toggle'));
+            expect(container.querySelector('#previouslyDiscussed')).not.toBeInTheDocument();
+            fireEvent.click(container.querySelector('#previouslyDiscussedContainer-toggle'));
+            expect(container.querySelector('#previouslyDiscussed')).toBeInTheDocument();
+            expect(container.querySelector('#previouslyDiscussed')).toHaveValue('');
+        });
+
+        it('should clear the data from the previously considered field when un-ticked', () => {
+            const { container, getByLabelText } = render(
+                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues}/>,
+            );
+            fireEvent.click(container.querySelector('#previouslyConsideredContainer-toggle'));
+            fireEvent.input(getByLabelText('details.previously-submitted-label'), {
+                target: { value: 'pc' },
+            });
+            fireEvent.click(container.querySelector('#previouslyConsideredContainer-toggle'));
+            expect(container.querySelector('#previouslySubmitted')).not.toBeInTheDocument();
+            fireEvent.click(container.querySelector('#previouslyConsideredContainer-toggle'));
+            expect(container.querySelector('#previouslySubmitted')).toBeInTheDocument();
+            expect(container.querySelector('#previouslySubmitted')).toHaveValue('');
+        });
+
+        it('should clear the data from the co-submissions fields when un-ticked', () => {
+            const { container, getByLabelText } = render(
+                <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues}/>,
+            );
+            fireEvent.click(container.querySelector('#cosubmission-toggle'));
+            fireEvent.input(getByLabelText('details.cosubmission-title-label'), {
+                target: { value: 'cs' },
+            });
+            fireEvent.click(container.querySelector('#cosubmission-toggle'));
+            expect(container.querySelector('#firstCosubmissionTitle')).not.toBeInTheDocument();
+            fireEvent.click(container.querySelector('#cosubmission-toggle'));
+            expect(container.querySelector('#firstCosubmissionTitle')).toBeInTheDocument();
+            expect(container.querySelector('#firstCosubmissionTitle')).toHaveValue('');
+        });
+    });
+
     describe('autosave', () => {
         it('when a title is entered it triggers the autosave', () => {
             const { container } = render(
