@@ -17,7 +17,7 @@ const Checkbox = ({
     invalid,
     helperText,
     initialValue,
-    onChange = (): void => {},
+    onChange = (): void => {}, // eslint-disable-line @typescript-eslint/no-empty-function
     register,
     ...rest
 }: Props): JSX.Element => {

@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "EXTEND_ESLINT=true react-scripts build",
         "test": "jest",
         "eject": "react-scripts eject",
         "start:dev": "react-scripts start",
@@ -19,12 +19,15 @@
     "eslintConfig": {
         "parser": "@typescript-eslint/parser",
         "extends": [
-            "react-app",
             "plugin:react/recommended",
             "plugin:@typescript-eslint/recommended",
             "prettier/@typescript-eslint",
             "plugin:prettier/recommended"
         ],
+        "rules": {
+            "react-hooks/rules-of-hooks": "off",
+            "@typescript-eslint/no-empty-function": "off"
+        },
         "parserOptions": {
             "ecmaVersion": "2018",
             "sourceType": "module",
@@ -94,7 +97,6 @@
         "eslint-config-prettier": "6.0.0",
         "eslint-plugin-prettier": "3.1.0",
         "eslint-plugin-react": "7.14.2",
-        "eslint-plugin-react-hooks": "^4.0.8",
         "husky": "^3.0.9",
         "jest": "^24.8.0",
         "mithril": "^2.0.4",
