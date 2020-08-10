@@ -20,8 +20,8 @@ export class LoginPage {
 
     public async login(): Promise<void> {
         await t.click(this.loginButton);
-        if (this.isCookieBannerVisible) {
-            this.dismissCookieBanner();
+        if (await this.isCookieBannerVisible()) {
+            await this.dismissCookieBanner();
         }
     }
 }
