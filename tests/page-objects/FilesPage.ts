@@ -49,7 +49,8 @@ export class FilesPage {
 
     public async populateAllFields(): Promise<void> {
         await this.populateMinimalFields();
-        await this.uploadSupportingFiles(Array(10).fill('../test-data/dummy-manuscript.docx'));
+        await this.uploadSupportingFiles(Array(10).fill('../test-data/supporting-file.docx'));
+        await this.assertSupportingFilesCount(10);
     }
 
     public async populateMinimalFields(): Promise<void> {
@@ -128,9 +129,28 @@ export class FilesPage {
         await t.expect(await this.manuscriptReplaceButton.withText('Replace').visible).ok();
     }
 
+    public async assertManuscriptStored(fileName: string): Promise<void> {
+        const { extraText, status } = await this.getManuscriptDropzoneStatus();
+        await t.expect(extraText).eql(fileName);
+        await t.expect(status).eql(FileStatus.Success);
+    }
+
     public async uploadSupportingFiles(filesPath: string[]): Promise<void> {
         await t.setFilesToUpload(this.supportingInput, filesPath);
         await this.waitForUploads();
+    }
+
+    public async assertSupportingFileExists(fileName: string, toExist = true): Promise<void> {
+        const statuses = await this.getSupportingFilesStatus();
+        const fileEntry = statuses.find(entry => entry.filename === fileName);
+        if (toExist) {
+            await t.expect(fileEntry).ok();
+        } else {
+            await t.expect(fileEntry).notOk();
+        }
+    }
+    public async assertSupportingFilesCount(count: number): Promise<void> {
+        await t.expect(this.supportFilesList.count).eql(count);
     }
 
     public async waitForUploads(retries = 0): Promise<void> {

@@ -1,6 +1,6 @@
 import { waitForReact } from 'testcafe-react-selectors';
 
-import { DashboardPage, LoginPage, NavigationPane} from '../page-objects';
+import { DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Getting Started`.page`${BASE_URL}`.beforeEach(async () => {
