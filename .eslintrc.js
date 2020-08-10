@@ -1,7 +1,6 @@
 module.exports =  {
   parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
   extends:  [
-    'plugin:react-hooks/recommended',
     'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
     'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
     'prettier/@typescript-eslint',  // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
