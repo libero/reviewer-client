@@ -17,7 +17,7 @@ fixture`Persistence`.page`${BASE_URL}`.beforeEach(async () => {
     await waitForReact();
 });
 
-test.only('Return to Author Step from Dashboard', async () => {
+test('Return to Author Step from Dashboard', async () => {
     const navigationHelper = new NavigationHelper();
     const dashboardPage = new DashboardPage();
     const navigationPane = new NavigationPane();

@@ -59,6 +59,10 @@ export class DetailsPage {
         await t.expect(this.titleInput.value).eql(input);
     }
 
+    public async clearTitle(): Promise<void> {
+        await t.selectText(this.titleInput).pressKey('delete');
+    }
+
     public async getTitle(): Promise<string> {
         return await this.titleInput.value;
     }
@@ -76,9 +80,13 @@ export class DetailsPage {
         return await this.subjectValue.textContent;
     }
 
-    public async setPreviouslyDiscussed(input = 'previous'): Promise<void> {
+    public async togglePreviouslyDiscussed(): Promise<void> {
         await t.expect(this.previouslyDiscussedToggle.visible).ok();
         await t.click(this.previouslyDiscussedToggle);
+    }
+
+    public async setPreviouslyDiscussed(input = 'previous'): Promise<void> {
+        await this.togglePreviouslyDiscussed();
         await t.typeText(this.previouslyDiscussedInput, input);
         await t.expect(this.previouslyDiscussedInput.value).eql(input);
     }
@@ -88,9 +96,13 @@ export class DetailsPage {
         await this.previouslyDiscussedInput.value;
     }
 
-    public async setPreviouslyConsidered(input = 'previous'): Promise<void> {
+    public async togglePreviouslyConsidered(): Promise<void> {
         await t.expect(this.previouslyConsideredToggle.visible).ok();
         await t.click(this.previouslyConsideredToggle);
+    }
+
+    public async setPreviouslyConsidered(input = 'previous'): Promise<void> {
+        await this.togglePreviouslyConsidered();
         await t.typeText(this.previouslySubmittedInput, input);
         await t.expect(this.previouslySubmittedInput.value).eql(input);
     }
@@ -100,9 +112,13 @@ export class DetailsPage {
         await this.previouslySubmittedInput.value;
     }
 
-    public async setCosubmission(input = 'first co'): Promise<void> {
+    public async toggleCosubmission(): Promise<void> {
         await t.expect(this.CosubmissionToggle.visible).ok();
         await t.click(this.CosubmissionToggle);
+    }
+
+    public async setCosubmission(input = 'first co'): Promise<void> {
+        await this.toggleCosubmission();
         await t.typeText(this.firstCosubmissionTitleInput, input);
         await t.expect(this.firstCosubmissionTitleInput.value).eql(input);
     }

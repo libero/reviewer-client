@@ -1,7 +1,7 @@
 import { Selector, t } from 'testcafe';
 
 export class ValidationHelper {
-    private readonly errorCss: string = 'span.typography__label--error';
+    private readonly errorCss: string = '.typography__label--error';
     private readonly errors: Selector = Selector(this.errorCss);
 
     public async assertNumberOfErrors(count: number): Promise<void> {
