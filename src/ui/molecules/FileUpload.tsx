@@ -117,7 +117,7 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
     const status = useMemo(() => {
-        if (state.error && status !== 'ERROR') {
+        if (state.error) {
             return 'ERROR';
         }
         if (
@@ -126,10 +126,10 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
         ) {
             return 'PROCESSING';
         }
-        if (state.uploadInProgress && status !== 'UPLOADING') {
+        if (state.uploadInProgress) {
             return 'UPLOADING';
         }
-        if (state.fileStored && state.fileStored.fileName && status !== 'COMPLETE') {
+        if (state.fileStored && state.fileStored.fileName) {
             return 'COMPLETE';
         }
         return 'IDLE';
