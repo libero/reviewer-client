@@ -48,7 +48,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
                     className="typography__serif--link"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
+                    href="/author-guide/types"
                 >
                     {t('author-guide')}
                 </a>
