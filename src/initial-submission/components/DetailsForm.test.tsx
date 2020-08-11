@@ -80,7 +80,7 @@ describe('DetailsForm', (): void => {
         expect(config.getConfig).toHaveBeenCalledTimes(1);
     });
 
-    describe.only('optional fields', () => {
+    describe('optional fields', () => {
         it('should clear the data from the previously discussed field when un-ticked', () => {
             const { container, getByLabelText } = render(
                 <DetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
