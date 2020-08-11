@@ -9,6 +9,7 @@ import {
     SurveyPage,
 } from '.';
 import { ClientFunction } from 'testcafe';
+import { ArticleType } from './DashboardPage';
 
 export class NavigationHelper {
     private async getIdFromUrl(): Promise<string> {
@@ -24,17 +25,17 @@ export class NavigationHelper {
         await dashboardPage.assertOnPage();
     }
 
-    public async navigateToAuthorPage(): Promise<string> {
+    public async navigateToAuthorPage(articleType: ArticleType = 'Feature Article'): Promise<string> {
         await this.navigateToDashboard();
         const dashboardPage = new DashboardPage();
-        await dashboardPage.newSubmission('Feature Article');
+        await dashboardPage.newSubmission(articleType);
         const authorPage = new AuthorDetailsPage();
         await authorPage.assertOnPage();
         return this.getIdFromUrl();
     }
 
-    public async navigateToFilesPage(complete = false): Promise<string> {
-        await this.navigateToAuthorPage();
+    public async navigateToFilesPage(complete = false, articleType: ArticleType = 'Feature Article'): Promise<string> {
+        await this.navigateToAuthorPage(articleType);
         const authorPage = new AuthorDetailsPage();
         if (complete) {
             await authorPage.populateAllFields();
@@ -47,8 +48,11 @@ export class NavigationHelper {
         return this.getIdFromUrl();
     }
 
-    public async navigateToDetailsPage(complete = false): Promise<string> {
-        await this.navigateToFilesPage(complete);
+    public async navigateToDetailsPage(
+        complete = false,
+        articleType: ArticleType = 'Feature Article',
+    ): Promise<string> {
+        await this.navigateToFilesPage(complete, articleType);
         const filesPage = new FilesPage();
         if (complete) {
             await filesPage.populateAllFields();
@@ -61,8 +65,11 @@ export class NavigationHelper {
         return this.getIdFromUrl();
     }
 
-    public async navigateToEditorsPage(complete = false): Promise<string> {
-        await this.navigateToDetailsPage(complete);
+    public async navigateToEditorsPage(
+        complete = false,
+        articleType: ArticleType = 'Feature Article',
+    ): Promise<string> {
+        await this.navigateToDetailsPage(complete, articleType);
         const detailsPage = new DetailsPage();
         if (complete) {
             await detailsPage.populateAllFields();
@@ -75,8 +82,11 @@ export class NavigationHelper {
         return this.getIdFromUrl();
     }
 
-    public async navigateToDisclosurePage(complete = false): Promise<string> {
-        await this.navigateToEditorsPage(complete);
+    public async navigateToDisclosurePage(
+        complete = false,
+        articleType: ArticleType = 'Feature Article',
+    ): Promise<string> {
+        await this.navigateToEditorsPage(complete, articleType);
         const editorPage = new EditorPage();
         if (complete) {
             await editorPage.populateAllFields();
@@ -89,8 +99,8 @@ export class NavigationHelper {
         return this.getIdFromUrl();
     }
 
-    public async navigateToSurveyPage(complete = false): Promise<string> {
-        await this.navigateToDisclosurePage(complete);
+    public async navigateToSurveyPage(complete = false, articleType: ArticleType = 'Feature Article'): Promise<string> {
+        await this.navigateToDisclosurePage(complete, articleType);
         const disclosurePage = new DisclosurePage();
         if (complete) {
             await disclosurePage.populateAllFields();

@@ -15,6 +15,13 @@ export interface DashboardSubmission {
 
 const MAX_ASSERT_ON_PAGE_RETRIES = 5;
 
+export type ArticleType =
+    | 'Research Article'
+    | 'Short Report'
+    | 'Tools and Resources'
+    | 'Scientific Correspondence'
+    | 'Feature Article';
+
 export class DashboardPage {
     private readonly withSubmissions = Selector('.dashboard');
     private readonly noSubmissions = Selector('.no-submissions');
@@ -87,7 +94,7 @@ export class DashboardPage {
         }
     }
 
-    public async newSubmission(articleType: string): Promise<void> {
+    public async newSubmission(articleType: ArticleType): Promise<void> {
         await t.click(this.newSubmissionButton);
         await t.expect(this.newSubmissionContainer.exists).ok();
         await t.click(this.articleTypeSelect);

@@ -1,10 +1,10 @@
 import {
     AuthorDetailsPage,
-    DetailsPage,
+    DetailsPage, DisclosurePage,
     EditorPage,
     FilesPage,
     NavigationHelper,
-    ValidationHelper
+    ValidationHelper,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { waitForReact } from 'testcafe-react-selectors';
@@ -44,9 +44,9 @@ test('files page', async () => {
     await validationHelper.assertNumberOfErrors(0);
 });
 
-test.only('details page', async () => {
+test('details page', async () => {
     const navigationHelper = new NavigationHelper();
-    await navigationHelper.navigateToDetailsPage();
+    await navigationHelper.navigateToDetailsPage(false, 'Research Article');
     const detailsPage = new DetailsPage();
     await detailsPage.assertOnPage();
     await detailsPage.clearTitle();
@@ -54,34 +54,47 @@ test.only('details page', async () => {
     await detailsPage.togglePreviouslyDiscussed();
     await detailsPage.toggleCosubmission();
     await detailsPage.next();
-    await detailsPage.next();
     const validationHelper = new ValidationHelper();
-    await t.debug();
-    console.log(await validationHelper.getAllErrors());
     await validationHelper.assertNumberOfErrors(5);
     await validationHelper.assertErrorMessage('.expanding-text-field', 'Title is required');
     await validationHelper.assertErrorMessage('.subject-area', 'Subject area(s) required');
     await validationHelper.assertErrorMessage(
-        '.multiline-text-field:first-child()',
+        '.multiline-text-field:first-child',
         'Please describe your previous interaction',
     );
-    await validationHelper.assertErrorMessage('.multiline-text-field:nth-child(2)', 'Article title is required');
+    await validationHelper.assertErrorMessage('.expanding-text-field', 'Title is required');
     await validationHelper.assertErrorMessage('.text-field', 'Article title is required');
-    await detailsPage.populateMinimalFields();
+    await detailsPage.togglePreviouslyConsidered();
+    await detailsPage.togglePreviouslyDiscussed();
+    await detailsPage.toggleCosubmission();
+    await detailsPage.populateAllFields();
     await validationHelper.assertNumberOfErrors(0);
 });
 
-test.skip('editors page', async () => {
+test('editors page', async () => {
     const navigationHelper = new NavigationHelper();
-    await navigationHelper.navigateToEditorsPage();
+    await navigationHelper.navigateToEditorsPage(false, 'Research Article');
     const editorsPage = new EditorPage();
     await editorsPage.assertOnPage();
-    await t.debug();
     await editorsPage.next();
     const validationHelper = new ValidationHelper();
     await validationHelper.assertNumberOfErrors(2);
     await validationHelper.assertErrorMessage('.senior-editors-picker', 'Please suggest at least 2 editors');
     await validationHelper.assertErrorMessage('.reviewing-editors-picker', 'Please suggest at least 2 editors');
     await editorsPage.populateMinimalFields();
+    await validationHelper.assertNumberOfErrors(0);
+});
+
+test('disclosure page', async () => {
+    const navigationHelper = new NavigationHelper();
+    await navigationHelper.navigateToDisclosurePage(false, 'Research Article');
+    const disclosurePage = new DisclosurePage();
+    await disclosurePage.assertOnPage();
+    await disclosurePage.next();
+    const validationHelper = new ValidationHelper();
+    await validationHelper.assertNumberOfErrors(2);
+    await validationHelper.assertErrorMessage('.text-field', 'Please enter your name to acknowledge this statement');
+    await validationHelper.assertErrorMessage('.disclosure__consent', 'We are unable to proceed without this consent');
+    await disclosurePage.populateMinimalFields();
     await validationHelper.assertNumberOfErrors(0);
 });
