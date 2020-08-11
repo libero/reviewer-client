@@ -8,9 +8,4 @@ const main = async (): Promise<void> => {
 };
 
 main();
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('app'),
-);
+ReactDOM.render(<App />, document.getElementById('app'));
