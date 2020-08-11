@@ -4,11 +4,11 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "react-scripts start",
+        "start": "EXTEND_ESLINT=true react-scripts start",
         "build": "EXTEND_ESLINT=true react-scripts build",
         "test": "jest",
         "eject": "react-scripts eject",
-        "start:dev": "react-scripts start",
+        "start:dev": "EXTEND_ESLINT=true react-scripts start",
         "lint": "EXTEND_ESLINT=true eslint --ext .js,.ts,.tsx src/",
         "prettier": "prettier --write 'src/**/*ts?'",
         "storybook": "start-storybook -p 6006",

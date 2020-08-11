@@ -26,7 +26,10 @@ const SubmissionList: React.FC<SubmissionListProps> = ({
                     <div>{t('empty-submissions')}</div>
                 ) : (
                     submissions
-                        .reverse()
+                        .slice()
+                        .sort(
+                            (subOne, subTwo) => new Date(subTwo.updated).getTime() - new Date(subOne.updated).getTime(),
+                        )
                         .map(
                             (sub: Submission, index: number): JSX.Element => (
                                 <SubmissionEntry
