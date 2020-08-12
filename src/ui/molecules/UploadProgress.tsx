@@ -23,7 +23,7 @@ const UploadProgress = ({ progress = 0, status = 'IDLE', small }: Props): JSX.El
         }
     };
     const className = `upload-progress upload-progress--${status.toLowerCase()} progress--${
-        status === 'PROCESSING' ? 25 : status === 'UPLOADING' ? progress : status === 'IDLE' ? '' : 100
+        status === 'PROCESSING' ? 25 : status === 'UPLOADING' ? progress : status === 'IDLE' ? 0 : 100
     } ${small ? 'upload-progress--small' : ''}`;
 
     return (
