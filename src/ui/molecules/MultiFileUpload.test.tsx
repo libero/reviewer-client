@@ -212,7 +212,7 @@ describe('MultiFileUpload', () => {
             expect(items[0].querySelector('.multifile-upload__file-name--uploading')).toBeInTheDocument();
             expect(items[1].querySelector('.multifile-upload__file-name--complete')).toBeInTheDocument();
             expect(items[2].querySelector('.multifile-upload__file-name--error')).toBeInTheDocument();
-            expect(items[3].querySelector('.multifile-upload__file-name--processing')).toBeInTheDocument();
+            expect(items[3].querySelector('.multifile-upload__file-name--idle')).toBeInTheDocument();
         });
 
         it('uses fileStored name when FileItem is in COMPLETE state', () => {

@@ -16,13 +16,14 @@ const UploadProgress = ({ progress = 0, status = 'IDLE', small }: Props): JSX.El
             case 'ERROR':
                 return <Close className="upload-progress__icon--error" />;
             case 'PROCESSING':
+            case 'IDLE':
                 return null;
             default:
                 return <UploadIcon />;
         }
     };
     const className = `upload-progress upload-progress--${status.toLowerCase()} progress--${
-        status === 'PROCESSING' ? 25 : status === 'UPLOADING' ? progress : status === 'IDLE' ? 0 : 100
+        status === 'PROCESSING' ? 25 : status === 'UPLOADING' ? progress : status === 'IDLE' ? '' : 100
     } ${small ? 'upload-progress--small' : ''}`;
 
     return (
