@@ -59,7 +59,9 @@ const FileUploadContent = ({
                 <Fragment>
                     <span className="typography__body file-upload__description">
                         {t('file-upload.uploading-message')}
-                        <span className="file-upload__progress-percentage">{uploadInProgress.progress}%</span>
+                        <span className="file-upload__progress-percentage">
+                            {uploadInProgress.progress > 0 ? `${uploadInProgress.progress}%` : ''}
+                        </span>
                     </span>
                     <span className="typography__small typography__small--secondary file-upload__extra">
                         {uploadInProgress.fileName}
@@ -117,7 +119,7 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
     const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
 
     const status = useMemo(() => {
-        if (state.error && status !== 'ERROR') {
+        if (state.error) {
             return 'ERROR';
         }
         if (
@@ -126,10 +128,10 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
         ) {
             return 'PROCESSING';
         }
-        if (state.uploadInProgress && status !== 'UPLOADING') {
+        if (state.uploadInProgress) {
             return 'UPLOADING';
         }
-        if (state.fileStored && state.fileStored.fileName && status !== 'COMPLETE') {
+        if (state.fileStored && state.fileStored.fileName) {
             return 'COMPLETE';
         }
         return 'IDLE';
