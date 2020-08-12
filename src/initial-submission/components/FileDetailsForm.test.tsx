@@ -506,7 +506,7 @@ describe('File Details Form', (): void => {
             });
             await act(async () => fireEvent.change(fileInput));
             expect(container.querySelector('.multifile-upload__file-name--complete')).toBeNull();
-            expect(container.querySelector('.multifile-upload__file-status--processing')).toBeInTheDocument();
+            expect(container.querySelector('.multifile-upload__file-status--idle')).toBeInTheDocument();
             mutationResolve({
                 data: {
                     uploadSupportingFile: {
