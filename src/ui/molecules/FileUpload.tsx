@@ -58,11 +58,16 @@ const FileUploadContent = ({
             return (
                 <Fragment>
                     <span className="typography__body file-upload__description">
-                        {t('file-upload.uploading-message')}
+                        {uploadInProgress.progress === 100
+                            ? t('file-upload.processing-message')
+                            : t('file-upload.uploading-message')}
                         <span className="file-upload__progress-percentage">
-                            {uploadInProgress.progress > 0 ? `${uploadInProgress.progress}%` : ''}
+                            {uploadInProgress.progress === 0 || uploadInProgress.progress === 100
+                                ? ''
+                                : `${uploadInProgress.progress}%`}
                         </span>
                     </span>
+
                     <span className="typography__small typography__small--secondary file-upload__extra">
                         {uploadInProgress.fileName}
                     </span>

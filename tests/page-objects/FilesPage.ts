@@ -6,6 +6,7 @@ export enum FileStatus {
     Uploading = 1,
     Error = 2,
     Processing = 3,
+    Idle = 4
 }
 
 interface DropzoneStatus {
@@ -39,6 +40,8 @@ export class FilesPage {
             return FileStatus.Uploading;
         } else if (status === 'processing') {
             return FileStatus.Processing;
+        } else if (status === 'idle') {
+            return FileStatus.Idle;
         }
         throw new Error(`${status} this value is an unknown file status!`);
     }

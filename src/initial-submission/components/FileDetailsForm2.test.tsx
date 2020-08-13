@@ -80,7 +80,7 @@ describe('SupportingFiles upload', () => {
 
         await fireEvent.change(fileInput);
         expect(container.querySelectorAll('.multifile-upload__file-name--complete')).toHaveLength(0);
-        expect(container.querySelectorAll('.multifile-upload__file-status--processing')).toHaveLength(1);
+        expect(container.querySelectorAll('.multifile-upload__file-status--idle')).toHaveLength(1);
 
         mutationResolve1({
             data: {

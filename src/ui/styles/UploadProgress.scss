@@ -36,6 +36,10 @@ $circleThicknessSmall: 0.125rem;
   }
 }
 
+.upload-progress--idle {
+  --progressColour: none;
+}
+
 .upload-progress--small {
   --circleCircumference: #{$circlecircumferenceSmall};
   --circleThickness: #{$circleThicknessSmall};
@@ -44,7 +48,7 @@ $circleThicknessSmall: 0.125rem;
   }
 }
 
-.upload-progress__content {
+  .upload-progress__content {
   position: absolute;
   display:flex;
   width: 100%;

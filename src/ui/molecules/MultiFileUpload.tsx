@@ -38,22 +38,24 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
     const { t } = useTranslation('ui');
     const progress = uploadInProgress ? uploadInProgress.progress : null;
     const status = useMemo(() => {
-        if (error && status !== 'ERROR') {
+        if (error) {
             return 'ERROR';
         }
         // give us the spinner
-        if (uploadInProgress && uploadInProgress.progress === null && status !== 'PROCESSING') {
-            return 'PROCESSING';
-        }
-        if (uploadInProgress && uploadInProgress.progress !== null && status !== 'UPLOADING') {
-            return 'UPLOADING';
-        }
-        if (fileStored && status !== 'COMPLETE') {
-            return 'COMPLETE';
-        }
-        if (status !== 'IDLE') {
+        if (uploadInProgress && uploadInProgress.progress === null) {
             return 'IDLE';
         }
+
+        if (uploadInProgress && uploadInProgress.progress !== null && uploadInProgress.progress === 0) {
+            return 'PROCESSING';
+        }
+        if (uploadInProgress && uploadInProgress.progress !== null) {
+            return 'UPLOADING';
+        }
+        if (fileStored) {
+            return 'COMPLETE';
+        }
+        return 'IDLE';
     }, [progress, error, fileStored]);
 
     return (
@@ -70,11 +72,13 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
                         className={`multifile-upload__file-status multifile-upload__file-status--${status.toLowerCase()}`}
                     >
                         {' '}
-                        {status === 'UPLOADING' || status === 'PROCESSING'
-                            ? uploadInProgress.progress === null
-                                ? t('multifile-upload.status-queued')
-                                : `${t('multifile-upload.status-uploading')} ${uploadInProgress.progress}%`
-                            : `${t(`multifile-upload.status-error.${error}`)}`}
+                        {status === 'IDLE' && t('multifile-upload.status-queued')}
+                        {status === 'UPLOADING' &&
+                            `${t('multifile-upload.status-uploading')} ${
+                                uploadInProgress.progress > 0 ? `${uploadInProgress.progress}%` : ''
+                            }`}
+                        {status === 'PROCESSING' && `${t('multifile-upload.status-uploading')}`}
+                        {status === 'ERROR' && `${t(`multifile-upload.status-error.${error}`)}`}
                     </span>
                 ) : null}
             </span>

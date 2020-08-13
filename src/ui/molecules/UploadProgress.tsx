@@ -17,6 +17,8 @@ const UploadProgress = ({ progress = 0, status = 'IDLE', small }: Props): JSX.El
                 return <Close className="upload-progress__icon--error" />;
             case 'PROCESSING':
                 return null;
+            case 'IDLE':
+                return small ? null : <UploadIcon />;
             default:
                 return <UploadIcon />;
         }

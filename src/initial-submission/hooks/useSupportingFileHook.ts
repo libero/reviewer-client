@@ -90,19 +90,36 @@ const hook = (
             });
         }
     };
+
+    const onSupportingUploadStart = (file: { file: File; id: string }): void => {
+        const thisFilesIndex = supportingFilesStatus.findIndex(
+            (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
+        );
+        // patch previous value rather than overriding it completely.
+        if (thisFilesIndex !== -1) {
+            setSupportingFilesStatus(previous => {
+                previous[thisFilesIndex].uploadInProgress.progress = 0;
+                return previous;
+            });
+        }
+    };
     const onSupportingUploadError = (file: { file: File; id: string }): void => {
         const thisFilesIndex = supportingFilesStatus.findIndex(
             (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
         );
-        const stateClone = [...supportingFilesStatus];
-        stateClone[thisFilesIndex].error = 'server';
-        setSupportingFilesStatus(stateClone);
+        if (thisFilesIndex !== -1) {
+            setSupportingFilesStatus(previous => {
+                previous[thisFilesIndex].error = 'server';
+                return previous;
+            });
+        }
     };
 
     useEffect(() => {
         if (!files.length) return;
 
         if (index < files.length) {
+            onSupportingUploadStart(files[index]);
             uploadSupportingFile({
                 variables: {
                     id: initialValues.id,
