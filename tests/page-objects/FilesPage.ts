@@ -40,7 +40,7 @@ export class FilesPage {
             return FileStatus.Uploading;
         } else if (status === 'processing') {
             return FileStatus.Processing;
-        } else if (status ===' idle') {
+        } else if (status === 'idle') {
             return FileStatus.Idle;
         }
         throw new Error(`${status} this value is an unknown file status!`);
