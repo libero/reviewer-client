@@ -78,6 +78,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
                                 uploadInProgress.progress > 0 ? `${uploadInProgress.progress}%` : ''
                             }`}
                         {status === 'PROCESSING' && `${t('multifile-upload.status-uploading')}`}
+                        {status === 'ERROR' && `${t(`multifile-upload.status-error.${error}`)}`}
                     </span>
                 ) : null}
             </span>

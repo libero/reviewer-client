@@ -107,9 +107,12 @@ const hook = (
         const thisFilesIndex = supportingFilesStatus.findIndex(
             (state: FileState) => state.uploadInProgress && state.uploadInProgress.id === file.id,
         );
-        const stateClone = [...supportingFilesStatus];
-        stateClone[thisFilesIndex].error = 'server';
-        setSupportingFilesStatus(stateClone);
+        if (thisFilesIndex !== -1) {
+            setSupportingFilesStatus(previous => {
+                previous[thisFilesIndex].error = 'server';
+                return previous;
+            });
+        }
     };
 
     useEffect(() => {
