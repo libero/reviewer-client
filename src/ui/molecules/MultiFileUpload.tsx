@@ -56,7 +56,7 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
             return 'COMPLETE';
         }
         return 'IDLE';
-    }, [progress]);
+    }, [progress, error, fileStored]);
 
     return (
         <div className="multifile-upload__upload-list-item">
