@@ -89,8 +89,7 @@ jobs:
       - name: Dump logs on failure
         if: failure()
         run: |
-          docker-compose -f docker-compose.infra.yml logs
-          docker-compose -f docker-compose.yml logs
+          docker-compose -f docker-compose.ci.yml -f docker-compose.ci.localhost.yml logs
       - name: Notify slack on failure
         if: failure() && github.ref == 'refs/heads/master'
         env:
