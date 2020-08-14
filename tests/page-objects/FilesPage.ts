@@ -47,6 +47,7 @@ export class FilesPage {
     }
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.stepWrapper.exists).ok();
         await t.expect(this.stepWrapper.visible).ok();
     }
 
@@ -129,6 +130,7 @@ export class FilesPage {
 
     public async uploadManuscriptFile(filePath: string): Promise<void> {
         await t.setFilesToUpload(this.manuscriptInput, filePath);
+        await t.expect(await this.manuscriptReplaceButton.withText('Replace').exists).ok();
         await t.expect(await this.manuscriptReplaceButton.withText('Replace').visible).ok();
     }
 
