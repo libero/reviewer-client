@@ -11,7 +11,6 @@ export class LoginPage {
     }
 
     public async isCookieBannerVisible(): Promise<boolean> {
-        await t.expect(this.cookieBanner.exists).ok();
         return this.cookieBanner.visible;
     }
 
