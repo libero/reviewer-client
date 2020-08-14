@@ -35,6 +35,11 @@ export class EditorPage {
     private readonly maxReviewingEditors = 6;
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.editorsStep.exists).ok();
+        await t.expect(this.seniorEditorsPicker.exists).ok();
+        await t.expect(this.suggestedReviewingEditorsPicker.exists).ok();
+        await t.expect(this.nextButton.exists).ok();
+
         await t.expect(this.editorsStep.visible).ok();
         await t.expect(this.seniorEditorsPicker.visible).ok();
         await t.expect(this.suggestedReviewingEditorsPicker.visible).ok();
