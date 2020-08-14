@@ -1,7 +1,7 @@
 #!/bin/sh
 set -xe
 
-TEST="testcafe -q --sf chromium:headless  --no-sandbox --disable-dev-shm-usage "
+TEST="testcafe --sf chromium:headless  --no-sandbox --disable-dev-shm-usage "
 TEST_FIXTURE=${TEST_FIXTURE:-all}
 
 echo "Starting Test Suite: ${TEST_FIXTURE}"
