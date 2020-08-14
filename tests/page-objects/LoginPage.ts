@@ -6,10 +6,12 @@ export class LoginPage {
     private readonly cookieBannerButton: Selector = Selector('.cookie-banner__button');
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.loginButton.exists).ok();
         await t.expect(this.loginButton.visible).ok();
     }
 
     public async isCookieBannerVisible(): Promise<boolean> {
+        await t.expect(this.cookieBanner.exists).ok();
         return this.cookieBanner.visible;
     }
 
