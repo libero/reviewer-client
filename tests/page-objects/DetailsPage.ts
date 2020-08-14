@@ -72,6 +72,8 @@ export class DetailsPage {
         for (let i = 0; i < inputs.length; i++) {
             await t.click(this.subjectOptionsTypSelect);
             await t.click(this.subjectOptions.withText(inputs[i]));
+            // NOTE: as a result of warning
+            await t.expect(this.subjectValue.nth(i).exists).ok();
             await t.expect(this.subjectValue.nth(i).textContent).contains(inputs[i]);
         }
     }
