@@ -17,7 +17,7 @@ export class NavigationPane {
         await t.expect(this.burgerMenuContent.exists).notOk();
         await t.expect(this.menu.exists).ok();
         await t.expect(this.burgerMenuButton.exists).ok();
-        await t.expect(this.burgerMenuButton.visible).ok();
+        await t.expect(this.burgerMenuButton.visible).notOk();
         await t.expect(this.profileDropdown.exists).notOk();
 
         await t.expect(this.iconLink.visible).ok();
