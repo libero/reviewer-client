@@ -5,6 +5,7 @@ export class ThankYouPage {
 	private readonly finishButton: Selector = Selector('.button.button--primary');
 
 	public async assertOnPage(): Promise<void> {
+		await t.expect(this.pageWrapper.exists).ok();
         await t.expect(this.pageWrapper.visible).ok();
 	}
 	
