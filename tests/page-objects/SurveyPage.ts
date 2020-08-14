@@ -8,6 +8,11 @@ export class SurveyPage {
     private readonly doneSkipButton: Selector = Selector('.button.button--primary');
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.pageWrapper.exists).ok();
+        await t.expect(this.answer1Input.exists).ok();
+        await t.expect(this.answer2Input.exists).ok();
+        await t.expect(this.answer3Input.exists).ok();
+
         await t.expect(this.pageWrapper.visible).ok();
         await t.expect(this.answer1Input.visible).ok();
         await t.expect(this.answer2Input.visible).ok();
