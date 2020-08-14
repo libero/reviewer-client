@@ -1,7 +1,6 @@
 import { Selector, t } from 'testcafe';
 
 export class DetailsPage {
-    private readonly detailsStep = Selector('.details-page-step');
     private readonly titleInput = Selector('#title');
     private readonly subjectsContainer = Selector('.subject-area');
     private readonly subjectOptionsTypSelect: Selector = Selector('.select-field__control');
@@ -19,9 +18,8 @@ export class DetailsPage {
     private readonly backButton = Selector('.submission-wizard-back-button');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.detailsStep.exists).ok();
-        await t.expect(this.titleInput.exists).ok();
-        await t.expect(this.subjectsContainer.exists).ok();
+        await t.expect(this.titleInput.visible).ok();
+        await t.expect(this.subjectsContainer.visible).ok();
         await t.expect(this.previouslyDiscussedToggle.exists).ok();
         await t.expect(this.previouslyDiscussedInput.exists).notOk();
         await t.expect(this.previouslyConsideredToggle.exists).ok();
@@ -30,9 +28,6 @@ export class DetailsPage {
         await t.expect(this.firstCosubmissionTitleInput.exists).notOk();
         await t.expect(this.secondCosubmissionTitleInput.exists).notOk();
         await t.expect(this.secondCosubmissionButton.exists).notOk();
-
-        await t.expect(this.subjectsContainer.visible).ok();
-        await t.expect(this.titleInput.visible).ok();
     }
 
     async populateAllFields(): Promise<void> {
@@ -150,12 +145,10 @@ export class DetailsPage {
     public async next(): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
         await t.click(this.nextButton);
-        await t.expect(this.detailsStep.exists).notOk();
     }
 
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
         await t.click(this.backButton);
-        await t.expect(this.detailsStep.exists).notOk();
     }
 }

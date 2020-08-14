@@ -55,7 +55,6 @@ export class DisclosurePage {
         await t.expect(this.modalOverlay.visible).ok();
         await t.expect(this.modalAcceptButton.visible).ok();
         await t.click(this.modalAcceptButton);
-        // todo: can an assert suggest this page no longer exists?
     }
 
     public async next(): Promise<void> {
@@ -66,6 +65,5 @@ export class DisclosurePage {
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
         await t.click(this.backButton);
-        await t.expect(this.disclosureStep.exists).notOk();
     }
 }

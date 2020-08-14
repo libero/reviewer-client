@@ -125,7 +125,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
 
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
-            <h2 className="typography__heading typography__heading--h2 details-page__title details-page-step">
+            <h2 className="typography__heading typography__heading--h2 details-page__title">
                 {t('details.form-title')}
             </h2>
             <ExpandingTextField

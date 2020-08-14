@@ -1,8 +1,6 @@
 import { Selector, t } from 'testcafe';
 
 export class AuthorDetailsPage {
-    private readonly authorStep = Selector('.author-step');
-
     private readonly nextButton = Selector('.submission-wizard-next-button');
 
     private readonly firstNameInput = Selector('.author-step__firstName input');
@@ -12,14 +10,12 @@ export class AuthorDetailsPage {
     private readonly prefillInput = Selector('.author-step__prefill');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.authorStep.exists).ok();
         await t.expect(this.firstNameInput.exists).ok();
         await t.expect(this.lastNameInput.exists).ok();
         await t.expect(this.emailInput.exists).ok();
         await t.expect(this.institutionInput.exists).ok();
         await t.expect(this.nextButton.exists).ok();
 
-        await t.expect(this.authorStep.visible).ok();
         await t.expect(this.firstNameInput.visible).ok();
         await t.expect(this.lastNameInput.visible).ok();
         await t.expect(this.emailInput.visible).ok();
@@ -103,6 +99,5 @@ export class AuthorDetailsPage {
     public async next(): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
         await t.click(this.nextButton);
-        await t.expect(this.authorStep.exists).notOk();
     }
 }
