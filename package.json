@@ -109,7 +109,7 @@
         "react-virtualized-auto-sizer": "^1.0.2",
         "source-map-loader": "0.2.4",
         "storybook-dark-mode": "^0.1.7",
-        "testcafe": "^1.8.4",
+        "testcafe": "1.9.1",
         "testcafe-react-selectors": "^4.0.0",
         "ts-jest": "^24.0.2",
         "typescript": "~3.6.0",
