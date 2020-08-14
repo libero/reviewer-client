@@ -178,8 +178,10 @@ export class FilesPage {
         await t.expect(initialCount).gt(await this.supportFilesList.count);
     }
 
+    // TODO: does this need a back button?
     public async next(): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
         await t.click(this.nextButton);
+        await t.expect(this.stepWrapper.exists).notOk();
     }
 }

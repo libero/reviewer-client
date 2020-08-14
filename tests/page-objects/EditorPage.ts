@@ -167,9 +167,11 @@ export class EditorPage {
 
     public async back(): Promise<void> {
         await t.click(this.backButton);
+        await t.expect(this.editorsStep.exists).notOk();
     }
 
     public async next(): Promise<void> {
         await t.click(this.nextButton);
+        await t.expect(this.editorsStep.exists).notOk();
     }
 }
