@@ -10,6 +10,12 @@ export class AuthorDetailsPage {
     private readonly prefillInput = Selector('.author-step__prefill');
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.firstNameInput.exists).ok();
+        await t.expect(this.lastNameInput.exists).ok();
+        await t.expect(this.emailInput.exists).ok();
+        await t.expect(this.institutionInput.exists).ok();
+        await t.expect(this.nextButton.exists).ok();
+
         await t.expect(this.firstNameInput.visible).ok();
         await t.expect(this.lastNameInput.visible).ok();
         await t.expect(this.emailInput.visible).ok();
