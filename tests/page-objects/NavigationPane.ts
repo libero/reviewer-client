@@ -12,7 +12,8 @@ export class NavigationPane {
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.iconLink.exists).ok();
-        await t.expect(this.burgerMenuContainer.exists).notOk();
+        await t.expect(this.burgerMenuContainer.exists).ok();
+        await t.expect(this.burgerMenuContainer.visible).notOk();
         await t.expect(this.burgerMenuContent.exists).notOk();
         await t.expect(this.menu.exists).ok();
         await t.expect(this.burgerMenuButton.exists).notOk();
