@@ -11,6 +11,13 @@ export class NavigationPane {
     private readonly profileDropdown = Selector('.profile_dropdown');
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.iconLink.exists).ok();
+        await t.expect(this.burgerMenuContainer.exists).notOk();
+        await t.expect(this.burgerMenuContent.exists).notOk();
+        await t.expect(this.menu.exists).ok();
+        await t.expect(this.burgerMenuButton.exists).notOk();
+        await t.expect(this.profileDropdown.exists).notOk();
+
         await t.expect(this.iconLink.visible).ok();
         await t.expect(this.burgerMenuContainer.visible).notOk();
         await t.expect(this.burgerMenuContent.visible).notOk();
