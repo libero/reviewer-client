@@ -35,9 +35,6 @@ export class DashboardPage {
     private readonly confirmDeleteButton = Selector('.button--danger');
 
     public async assertOnPage(retries = 0): Promise<void> {
-        await t.expect(this.withSubmissions.exists).ok();
-        await t.expect(this.noSubmissions.exists).ok();
-
         const dashboard = await this.withSubmissions.visible;
         const noSubmissions = await this.noSubmissions.visible;
 
