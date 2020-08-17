@@ -6,6 +6,7 @@ import { getCurrentUserQuery } from '../graphql';
 import Logo from '../assets/elife-logo.svg';
 import { User } from '../types';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
+import { Link } from 'react-router-dom';
 
 interface GetCurrentUser {
     getCurrentUser: User;
@@ -44,6 +45,7 @@ const NavBar = (): JSX.Element => {
             <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
             <Menu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
             {authQuery.isAuthenticated && <ProfileDropdown user={loading ? null : data.getCurrentUser} />}
+            {!authQuery.isAuthenticated && <Link to="/auth-login">Login</Link>}
         </AppBar>
     );
 };
