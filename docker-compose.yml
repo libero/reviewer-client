@@ -39,10 +39,13 @@ services:
   reviewer-mocks:
     container_name: reviewer-client_mocks
     image: liberoadmin/reviewer-mocks:latest
+    environment:
+      DATA_DIRECTORY_PATH: /etc/reviewer/mock-data/
     ports:
       - "3003:3003"
     volumes:
       - ./config/reviewer-mocks/config.default.json:/etc/reviewer/config.json
+      - ./tests/test-data/mockApiData:/etc/reviewer/mock-data
     networks:
       - "reviewer"
     healthcheck:

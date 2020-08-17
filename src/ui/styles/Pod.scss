@@ -1,10 +1,13 @@
 .pod {
+  display: grid;
+  grid-template-columns: 1fr 2.625rem;
+  grid-template-areas:
+        "body button";
   border: $border;
   border-radius: 0.188rem;
   background-color: $colourSecondary;
   height: 7.5rem;
-  display: flex;
-  justify-content: space-between
+  padding: 0.75rem;
 }
 
 .pod__error {
@@ -13,8 +16,8 @@
 
 .pod__body {
   padding: 0.75rem;
-  flex-grow: 1;
-  max-width: 90%;
+  grid-area: body;
+  overflow: hidden;
 }
 
 .pod__button {
@@ -24,4 +27,5 @@
   background-color: transparent;
   cursor: pointer;
   color: $colourTextSecondary;
+  grid-area: button;
 }
