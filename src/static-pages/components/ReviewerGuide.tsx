@@ -10,13 +10,14 @@ const ReviewerGuide = (): JSX.Element => {
     const { t } = useTranslation('reviewer-guide');
     const { path } = useRouteMatch();
     const location = useLocation();
-    const currentPath = location.pathname;
+    const initialPath = `${path}/review-process`;
+    const currentPath = location.pathname === path ? initialPath : location.pathname;
 
     return (
         <React.Fragment>
             <PageNavigation
                 links={[
-                    { link: `${path}/review-process`, label: t('links.review-process') },
+                    { link: initialPath, label: t('links.review-process') },
                     { link: `${path}/reviewing-policies`, label: t('links.reviewing-policies') },
                     { link: `${path}/writing-the-review`, label: t('links.writing-the-review') },
                 ]}
@@ -33,7 +34,7 @@ const ReviewerGuide = (): JSX.Element => {
                     <Route path={`${path}/writing-the-review`}>
                         <WritingReview />
                     </Route>
-                    <Redirect to={path + '/review-process'} />
+                    <Redirect to={initialPath} />
                 </Switch>
             </div>
         </React.Fragment>

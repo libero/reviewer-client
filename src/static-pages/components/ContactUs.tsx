@@ -10,13 +10,14 @@ const ContactUs = (): JSX.Element => {
     const { t } = useTranslation('contact-us');
     const { path } = useRouteMatch();
     const location = useLocation();
-    const currentPath = location.pathname;
+    const initialPath = `${path}/contact-elife`;
+    const currentPath = location.pathname === path ? initialPath : location.pathname;
 
     return (
         <React.Fragment>
             <PageNavigation
                 links={[
-                    { link: `${path}/contact-elife`, label: t('links.contact-elife-link') },
+                    { link: initialPath, label: t('links.contact-elife-link') },
                     { link: `${path}/editorial-staff`, label: t('links.editors-link') },
                     { link: `${path}/production-staff`, label: t('links.production-link') },
                 ]}
@@ -33,7 +34,7 @@ const ContactUs = (): JSX.Element => {
                     <Route path={`${path}/production-staff`}>
                         <ProductionStaff />
                     </Route>
-                    <Redirect to={path + '/contact-elife'} />
+                    <Redirect to={initialPath} />
                 </Switch>
             </div>
         </React.Fragment>
