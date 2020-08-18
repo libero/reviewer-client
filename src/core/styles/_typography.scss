@@ -192,6 +192,12 @@
   }
 }
 
+@mixin typographyEllipsisWrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 //body text
 .typography__body {

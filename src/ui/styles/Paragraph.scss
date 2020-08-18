@@ -8,10 +8,10 @@
 }
 
 .paragraph--footer {
-  margin-left: -0.75rem;
   grid-area: footer;
   align-self: center;
   text-align: center;
+  margin: 0 1.5rem 1.5rem 1.5rem !important;
   @include forSize('tabletLandscapeUp') {
     margin-left: 0.75rem;
   }

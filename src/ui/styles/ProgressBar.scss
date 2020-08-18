@@ -15,6 +15,10 @@ $progressBarTextWidth: 7.5rem;
   flex-direction: row;
   justify-content: space-between;
   margin: $progressBarSpacing;
+  max-width: 31.25rem;
+  @include forSize('phoneDown') {
+    padding: 0 1.5rem 0 1.5rem;
+  }
 }
 
 .progress_bar--fixed_width_centered {
@@ -91,8 +95,14 @@ $progressBarTextWidth: 7.5rem;
   width: $progressBarTextWidth;
   line-height: $lineHeightBaseSmall;
   font-size: $fontSizeSmall;
+  @include forSize('phoneDown') {
+    display: none;
+  }
 }
 
 .progress_bar__text--current {
   color: $colourText;
+  @include forSize('phoneDown') {
+    display: block;
+  }
 }

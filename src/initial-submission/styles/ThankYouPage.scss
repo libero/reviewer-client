@@ -1,6 +1,12 @@
 .thank-you-page-step {
-    grid-area: main;
+    @include standardGrid;
+    align-self: center;
     text-align: center;
+    grid-row: 1 / span 2;
+    @include forSize('tabletPortraitDown') {
+        align-self: start;
+        grid-row: 2;
+    }
 
     p {
         a,
