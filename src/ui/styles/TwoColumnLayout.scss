@@ -1,16 +1,20 @@
 .two-column-layout {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
   margin-bottom: 3rem;
-  @include forSize('desktopUp') {
-    margin-bottom: 7.5rem;
+  @include forSize('tabletLandscapeUp') {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-.two-column-layout__item {
-  @include forSize('tabletLandscapeUp') {
-    width: 50%;
-  }
+.two-column-layout__left {
+  grid-column: 1;
+}
+
+.two-column-layout__right {
+  grid-column: 2;
+}
+
+.two-column-layout__full_column {
+  grid-row: 1 / span 3;
 }

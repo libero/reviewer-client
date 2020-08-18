@@ -1,5 +1,15 @@
 .static-page {
-    grid-area: main;
+    grid-row: 2;
+    grid-column: 4 / span 6;
+    @include forSize('desktopDown') {
+      grid-column: 5 / span 6;
+    }
+  @include forSize('tabletLandscapeDown') {
+      grid-column: 5 / span 7;
+    }
+    @include forSize('tabletPortraitDown') {
+      grid-column: 1 / span 12;
+    }
     display: flex;
     h1 {
         margin-top: 0;

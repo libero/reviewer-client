@@ -1,5 +1,5 @@
 .submission-wizard {
-  grid-area: main;
+  @include standardGrid;
 }
 
 .submission-wizard-back-button {

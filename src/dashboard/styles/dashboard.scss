@@ -3,7 +3,7 @@
 
 .dashboard {
   font-family: Noto Sans, Arial, Helvetica, sans-serif, sans-serif;
-  grid-area: main;
+  @include standardGrid;
 }
 
 .dashboard__new_submission {
