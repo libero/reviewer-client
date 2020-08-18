@@ -54,7 +54,7 @@ $messageColour: rgb(98,159,67);
     content: '-';
   }
   @include typography__body--secondary;
-  @include forSize('phoneOnly') {
+  @include forSize('phoneDown') {
     @include typography__small;
     @include typography__small--secondary;
     display: block;

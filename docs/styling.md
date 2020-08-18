@@ -26,7 +26,7 @@ All variables in `_config.scss` are defined with `!default` so they may be easil
 `forSize` can be used to wrap styling in media queries, which are important for adding responsive behaviour to the app. The mixin works off of the breakpoint variables found in `_config.scss` and can be used like so:
 
 ```scss
-   @include forSize(phoneOnly) {    
+   @include forSize(phoneDown) {    
       display: none;
    }
 ```

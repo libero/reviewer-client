@@ -35,38 +35,37 @@ const Login = (): JSX.Element => {
     return (
         <div className="login-page">
             <TwoColumnLayout>
-                <div>
-                    <h1 className="typography__heading typography__heading--h1">{t('welcome')}</h1>
+                <h1 className="typography__heading typography__heading--h1 two-column-layout__left">{t('welcome')}</h1>
 
-                    <div className="login-page__text">
-                        <Paragraph type="writing">{t('mission-1')}</Paragraph>
-                        <Paragraph type="writing">{t('mission-2')}</Paragraph>
-                        <Paragraph type="writing">
-                            {t('author-guide-message')}
-                            <a
-                                className="typography typography__body--link"
-                                href="https://reviewer.elifesciences.org/author-guide"
-                            >
-                                {t('author-guide-link')}
-                            </a>
-                            .
-                        </Paragraph>
-                    </div>
-
-                    <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href="/auth-login">
-                            <Button type="orcid">{t('login-orcid')}</Button>
+                <div className="login-page__text two-column-layout__left">
+                    <Paragraph type="writing">{t('mission-1')}</Paragraph>
+                    <Paragraph type="writing">{t('mission-2')}</Paragraph>
+                    <Paragraph type="writing">
+                        {t('author-guide-message')}
+                        <a
+                            className="typography typography__body--link"
+                            href="https://reviewer.elifesciences.org/author-guide"
+                        >
+                            {t('author-guide-link')}
                         </a>
-                        <Paragraph type="writing">
-                            {t('sign-up-message-1')}
-                            <a className="typography typography__body--link" href="https://orcid.org/register">
-                                {t('sign-up-link')}
-                            </a>
-                            {t('sign-up-message-2')}
-                        </Paragraph>
-                    </div>
+                        .
+                    </Paragraph>
+                </div>
+
+                <div className="login-page__buttons two-column-layout__left">
+                    <a className="login-page__buttons--orcid" href="/auth-login">
+                        <Button type="orcid">{t('login-orcid')}</Button>
+                    </a>
+                    <Paragraph type="writing">
+                        {t('sign-up-message-1')}
+                        <a className="typography typography__body--link" href="https://orcid.org/register">
+                            {t('sign-up-link')}
+                        </a>
+                        {t('sign-up-message-2')}
+                    </Paragraph>
                 </div>
                 <ImageWithAttribution
+                    className="two-column-layout__right two-column-layout__full_column"
                     image={Image}
                     artistName={t('image-artist')}
                     artistUrl="http://www.davidebonazzi.com/"

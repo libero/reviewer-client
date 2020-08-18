@@ -1,26 +1,75 @@
 #app {
   display: grid;
-  grid-template-columns: 16.666% auto 16.666%;
-  grid-template-rows: 4.5rem auto 4.5rem 1fr 4.5rem 4.5rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: 4.5rem auto 1fr 4.5rem 4.5rem;
   min-height: 100vh;
   grid-template-areas:
-          "header header header"
-          "feedback feedback feedback"
-          "static-nav static-nav static-nav"
-          "left-menu main ."
-          ". . ."
-          "footer footer footer";
+          "header"
+          "feedback"
+          "main"
+          "."
+          "footer";
+}
 
-  @include forSize('phoneUp') {
-    grid-template-columns: 1.5rem auto 1.5rem;
+.grid {
+  grid-area: main;
+  display: grid;
+  grid-template-rows: 4.5rem 1fr;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 76.5rem;
+
+  @include forSize('desktopDown') {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    max-width: none;
   }
-  @include forSize('tabletPortraitUp') {
-    grid-template-columns: auto 28.375rem auto;
+
+  @include forSize('tabletPortraitDown') {
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
-  @include forSize('tabletLandscapeUp') {
-    grid-template-columns: auto 49.125rem auto;
+
+  @include forSize('phoneDown') {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
   }
-  @include forSize('desktopUp') {
-    grid-template-columns: auto 52.5rem auto;
+
+}
+
+@mixin standardGrid {
+  grid-column: 3 / span 8;
+  grid-row: 2;
+
+  @include forSize('tabletLandscapeDown') {
+    grid-column: 2 / span 10;
+  }
+
+  @include forSize('tabletPortraitDown') {
+    grid-column: 1 / span 12;
+  }
+}
+
+@mixin welcomePages {
+  justify-content: center;
+  grid-column: 3 / span 8;
+  grid-row: 2;
+  align-self: center;
+  h1.typography__heading.typography__heading--h1 {
+    margin-top: 0;
+  }
+
+  @include forSize('desktopDown') {
+    grid-column: 2 / span 10;
+  }
+  @include forSize('tabletLandscapeDown') {
+    grid-column: 3 / span 8;
+  }
+
+  @include forSize('tabletPortraitDown') {
+    grid-column: 1 / span 12;
+    align-self: start;
   }
 }
