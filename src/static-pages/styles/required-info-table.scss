@@ -1,5 +1,14 @@
 .table-guide {
-    overflow-x: auto;
+    overflow-x: scroll;
+
+    @include forSize('tabletPortraitDown') {
+      max-width: calc(100vw - 6rem);
+    }
+
+    @include forSize('phoneDown') {
+      max-width: calc(100vw - 3rem);
+    }
+
     table {
       border-collapse: collapse;
       border-spacing: 0;

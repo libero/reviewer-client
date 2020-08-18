@@ -20,7 +20,12 @@
 
     .select-nav__value-container {
         padding: 0;
-        padding-left: 2rem;
+        padding-left: 3rem;
+    }
+    @include forSize('phoneDown') {
+        .select-nav__value-container {
+            padding-left: 1.5rem;
+        }
     }
     .select-nav__menu {
         border: none;
@@ -86,7 +91,6 @@
 
     span {
         display: block;
-        padding: 10px 50px 10px 0;
         a {
             cursor: pointer;
             text-decoration: none;

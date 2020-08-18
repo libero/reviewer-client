@@ -8,67 +8,67 @@ const ReviewProcess = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading--h1">{t('review-process.heading')}</h1>
-            <Paragraph type="writing">
+            <h1 className="typography__heading typography__heading--h1">{t('review-process.heading')}</h1>
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.p1')} />
             </Paragraph>
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.p2')} />
             </Paragraph>
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.p3')} />
             </Paragraph>
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.p4')} />
             </Paragraph>
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.p5')} />
             </Paragraph>
 
-            <h2 className="typography__heading--h2">{t('review-process.peer.heading')}</h2>
-            <Paragraph type="writing">
+            <h2 className="typography__heading typography__heading--h2">{t('review-process.peer.heading')}</h2>
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.peer.p1')} />
             </Paragraph>
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.peer.p2')} />
             </Paragraph>
             <ul>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('review-process.peer.bullet1')} />
                     </Paragraph>
                 </li>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('review-process.peer.bullet2')} />
                     </Paragraph>
                 </li>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('review-process.peer.bullet3')} />
                     </Paragraph>
                 </li>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('review-process.peer.bullet4')} />
                     </Paragraph>
                 </li>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('review-process.peer.bullet5')} />
                     </Paragraph>
                 </li>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('review-process.peer.bullet6')} />
                     </Paragraph>
                 </li>
             </ul>
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.peer.p3')} />
             </Paragraph>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('review-process.peer.p4')} />
             </Paragraph>
         </div>

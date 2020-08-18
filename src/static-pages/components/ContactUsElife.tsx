@@ -7,16 +7,16 @@ const ContactUsElife = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading--h1">{t('contact-elife.heading')}</h1>
+            <h1 className="typography__heading typography__heading--h1">{t('contact-elife.heading')}</h1>
 
-            <Paragraph type="writing">{t('contact-elife.paragraph-1')}</Paragraph>
+            <Paragraph type="reading">{t('contact-elife.paragraph-1')}</Paragraph>
 
             <ul>
                 <li>{t('contact-elife.editor-email')}</li>
                 <li>{t('contact-elife.production-email')}</li>
             </ul>
 
-            <Paragraph type="writing">{t('contact-elife.media-inquiries-paragraph')}</Paragraph>
+            <Paragraph type="reading">{t('contact-elife.media-inquiries-paragraph')}</Paragraph>
 
             <ul>
                 <li>{t('contact-elife.press-email')}</li>
