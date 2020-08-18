@@ -11,10 +11,10 @@
     width: 100%;
 
     .select-nav__value-container {
-        padding: 0 2rem;
+        padding: 0;
+        padding-left: 2rem;
     }
     .select-nav__menu {
-        margin-top: 0;
         border: none;
         border-top: 0;
         border-radius: 0;
@@ -23,6 +23,7 @@
 
         .select-nav__menu-list {
             padding: 0;
+            max-height: 100%;
             .select-nav__option {
                 padding: 1.5rem 2rem;
             }
@@ -50,6 +51,8 @@
     .select-nav__control {
         min-height: 5rem;
         border: 1px solid rgb(224, 224, 224);
+        border-left: none;
+        border-right: none;
         border-radius: 0;
 
         &.select-nav__control--menu-is-open {

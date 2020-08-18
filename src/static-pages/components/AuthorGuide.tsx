@@ -17,13 +17,14 @@ const AuthorGuide = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
     const { path } = useRouteMatch();
     const location = useLocation();
-    const currentPath = location.pathname;
+    const initialPath = `${path}/editorial-process`;
+    const currentPath = location.pathname === path ? initialPath : location.pathname;
 
     return (
         <React.Fragment>
             <PageNavigation
                 links={[
-                    { link: `${path}/editorial-process`, label: t('links.edit-process') },
+                    { link: initialPath, label: t('links.edit-process') },
                     { link: `${path}/types`, label: t('links.article-types') },
                     { link: `${path}/initial`, label: t('links.initial-subs') },
                     { link: `${path}/full`, label: t('links.full-subs') },
@@ -68,7 +69,7 @@ const AuthorGuide = (): JSX.Element => {
                     <Route path={`${path}/journal-metrics`}>
                         <JournalMetrics />
                     </Route>
-                    <Redirect to={path + '/editorial-process'} />
+                    <Redirect to={initialPath} />
                 </Switch>
             </div>
         </React.Fragment>
