@@ -30,17 +30,19 @@ const App: React.FC = (): JSX.Element => {
                     <CookieBanner />
                     <NavBar />
                     <Feedback />
-                    <InitialSubmissionRoutes /> {/* uses Switch internally */}
-                    <SurveyRoutes /> {/* uses Switch internally */}
-                    <DashboardRoutes /> {/* uses Switch internally */}
-                    <Switch>
-                        <Route component={Login} exact path="/login" />
-                        <Route component={Logout} exact path="/logout" />
-                        <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
-                        <Route component={ContactUs} path="/contact-us" />
-                        <Route component={AuthorGuide} path="/author-guide" />
-                        <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    </Switch>
+                    <div className="grid">
+                        <InitialSubmissionRoutes /> {/* uses Switch internally */}
+                        <SurveyRoutes /> {/* uses Switch internally */}
+                        <DashboardRoutes /> {/* uses Switch internally */}
+                        <Switch>
+                            <Route component={Login} exact path="/login" />
+                            <Route component={Logout} exact path="/logout" />
+                            <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
+                            <Route component={ContactUs} path="/contact-us" />
+                            <Route component={AuthorGuide} path="/author-guide" />
+                            <Route component={ReviewerGuide} path="/reviewer-guide" />
+                        </Switch>
+                    </div>
                     <Footer />
                 </React.Suspense>
             </Router>

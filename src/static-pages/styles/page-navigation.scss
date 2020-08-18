@@ -1,9 +1,17 @@
 .dropdown-nav {
-    display: flex;
+    display: none;
     padding-bottom: 1rem;
-    grid-area: static-nav;
-    @include forSize('tabletPortraitUp') {
-        display: none;
+    grid-row: 1;
+    grid-column: 1 / span 12;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    @include forSize('phoneUp') {
+        margin-left: -3rem;
+        margin-right: -3rem;
+    }
+
+    @include forSize('tabletPortraitDown') {
+        display: flex;
     }
 }
 
@@ -62,13 +70,15 @@
 }
 
 .side-bar-nav {
-    display: none;
-    flex-direction: column;
-    grid-area: left-menu;
-    align-items: flex-end;
+    display: block;
+    grid-row: 2;
+    grid-column: 2 / span 2;
 
-    @include forSize('tabletPortraitUp') {
-        display: flex;
+    @include forSize('desktopDown') {
+        grid-column: 2 / span 2;
+    }
+    @include forSize('tabletPortraitDown') {
+        display: none;
     }
 
     span {

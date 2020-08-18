@@ -20,6 +20,10 @@
     width: 25.5rem;
     cursor: pointer;
 
+    @include forSize('phoneDown') {
+      width: 100%;
+    }
+
     &.select-field__control--menu-is-open {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
@@ -71,6 +75,10 @@
     box-shadow: 0 0.125rem 0.5rem 0 rgba(0,0,0,0.33);
     width: 25.5rem;
     cursor: pointer;
+
+    @include forSize('phoneDown') {
+      width: 100%;
+    }
 
     .select-field__menu-list {
       padding: 0;
