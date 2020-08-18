@@ -9,13 +9,13 @@ const JournalMetrics = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('metrics.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('metrics.heading')}</h1>
 
             <Paragraph type="writing">
                 <Interweave content={t('metrics.p1')} />
             </Paragraph>
 
-            <h2>{t('metrics.no-of-submissions.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('metrics.no-of-submissions.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('metrics.no-of-submissions.p1')} />
@@ -26,7 +26,7 @@ const JournalMetrics = (): JSX.Element => {
                 width={668}
             />
 
-            <h2>{t('metrics.no-of-pubs.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('metrics.no-of-pubs.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('metrics.no-of-pubs.p1')} />
@@ -38,7 +38,7 @@ const JournalMetrics = (): JSX.Element => {
                 width={668}
             />
 
-            <h2>{t('metrics.time-before-peer.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('metrics.time-before-peer.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('metrics.time-before-peer.p1')} />
@@ -50,7 +50,7 @@ const JournalMetrics = (): JSX.Element => {
                 width={668}
             />
 
-            <h2>{t('metrics.time-after-peer.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('metrics.time-after-peer.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('metrics.time-after-peer.p1')} />
@@ -62,7 +62,7 @@ const JournalMetrics = (): JSX.Element => {
                 width={668}
             />
 
-            <h2>{t('metrics.subs-to-publication.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('metrics.subs-to-publication.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('metrics.subs-to-publication.p1')} />

@@ -8,13 +8,13 @@ const FullSubmission = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('full-submission.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('full-submission.heading')}</h1>
 
             <Paragraph type="writing">
                 <Interweave content={t('full-submission.p1')} />
             </Paragraph>
 
-            <h2>{t('full-submission.files.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('full-submission.files.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('full-submission.files.p1')} />
@@ -108,7 +108,7 @@ const FullSubmission = (): JSX.Element => {
                 </li>
             </ol>
 
-            <h2>{t('full-submission.meta.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('full-submission.meta.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('full-submission.meta.p1')} />
             </Paragraph>

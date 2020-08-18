@@ -8,7 +8,7 @@ const EditorialStaff = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('editor.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('editor.heading')}</h1>
 
             <Paragraph type="writing">{t('editor.paragraph-1')}</Paragraph>
 

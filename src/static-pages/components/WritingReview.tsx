@@ -8,13 +8,13 @@ const WritingReview = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('writing-review.heading')}</h1>
-            <h2>{t('writing-review.selection.heading')}</h2>
+            <h1 className="typography__heading--h1">{t('writing-review.heading')}</h1>
+            <h2 className="typography__heading--h2">{t('writing-review.selection.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('writing-review.selection.p1')} />
             </Paragraph>
 
-            <h2>{t('writing-review.review.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('writing-review.review.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('writing-review.review.p1')} />
             </Paragraph>
@@ -63,7 +63,7 @@ const WritingReview = (): JSX.Element => {
                 <Interweave content={t('writing-review.review.p4')} />
             </Paragraph>
 
-            <h2>{t('writing-review.submit.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('writing-review.submit.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('writing-review.submit.p1')} />

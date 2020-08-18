@@ -8,7 +8,7 @@ const ReviewProcess = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('review-process.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('review-process.heading')}</h1>
             <Paragraph type="writing">
                 <Interweave content={t('review-process.p1')} />
             </Paragraph>
@@ -25,7 +25,7 @@ const ReviewProcess = (): JSX.Element => {
                 <Interweave content={t('review-process.p5')} />
             </Paragraph>
 
-            <h2>{t('review-process.peer.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('review-process.peer.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('review-process.peer.p1')} />
             </Paragraph>

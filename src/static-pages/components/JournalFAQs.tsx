@@ -8,7 +8,7 @@ const JournalFAQs = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('journal-faqs.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('journal-faqs.heading')}</h1>
 
             <h2 id="scoop_protection">{t('journal-faqs.scope.heading')}</h2>
 

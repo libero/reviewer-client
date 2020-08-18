@@ -8,7 +8,7 @@ const EditorialProcess = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('editorial.editorial.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('editorial.editorial.heading')}</h1>
 
             <Paragraph type="writing">
                 <Interweave content={t('editorial.editorial.p1')} />
@@ -18,7 +18,7 @@ const EditorialProcess = (): JSX.Element => {
             </Paragraph>
 
             <div className="blue-box">
-                <h2>{t('editorial.editorial.pre-print.heading')}</h2>
+                <h2 className="typography__heading--h2">{t('editorial.editorial.pre-print.heading')}</h2>
                 <Paragraph type="writing">{t('editorial.editorial.pre-print.p1')}</Paragraph>
                 <Paragraph type="writing">
                     <Interweave content={t('editorial.editorial.pre-print.p2')} />
@@ -42,7 +42,7 @@ const EditorialProcess = (): JSX.Element => {
                 <Interweave content={t('editorial.editorial.p6')} />
             </Paragraph>
 
-            <h2>{t('editorial.initial-sub.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('editorial.initial-sub.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('editorial.initial-sub.p1')} />
             </Paragraph>
@@ -52,12 +52,12 @@ const EditorialProcess = (): JSX.Element => {
                 <li>{t('editorial.initial-sub.bullet3')}</li>
             </ul>
 
-            <h2>{t('editorial.full-sub.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('editorial.full-sub.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('editorial.full-sub.p1')} />
             </Paragraph>
 
-            <h2>{t('editorial.revised-sub.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('editorial.revised-sub.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('editorial.revised-sub.p1')} />
             </Paragraph>

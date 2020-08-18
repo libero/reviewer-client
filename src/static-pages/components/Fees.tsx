@@ -8,7 +8,7 @@ const Fees = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('fees.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('fees.heading')}</h1>
 
             <Paragraph type="writing">
                 <Interweave content={t('fees.p1')} />
@@ -126,7 +126,7 @@ const Fees = (): JSX.Element => {
                 <Interweave content={t('fees.question9.p2')} />
             </Paragraph>
 
-            <h2>{t('fees.waiver.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('fees.waiver.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('fees.waiver.p1')} />

@@ -8,9 +8,9 @@ const PostDecision = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('post.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('post.heading')}</h1>
 
-            <h2>{t('post.acceptance.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('post.acceptance.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('post.acceptance.p1')} />
@@ -63,7 +63,7 @@ const PostDecision = (): JSX.Element => {
                 <Interweave content={t('post.final-version.p2')} />
             </Paragraph>
 
-            <h2>{t('post.corrections.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('post.corrections.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('post.corrections.p1')} />
@@ -81,7 +81,7 @@ const PostDecision = (): JSX.Element => {
                 <Interweave content={t('post.corrections.p4')} />
             </Paragraph>
 
-            <h2>{t('post.rejections.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('post.rejections.heading')}</h2>
 
             <h3>{t('post.rejections.peers.heading')}</h3>
 

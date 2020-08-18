@@ -8,12 +8,12 @@ const ReviewingPolicies = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('reviewing-policies.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('reviewing-policies.heading')}</h1>
             <Paragraph type="writing">
                 <Interweave content={t('reviewing-policies.p1')} />
             </Paragraph>
 
-            <h2>{t('reviewing-policies.confidentiality.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('reviewing-policies.confidentiality.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('reviewing-policies.confidentiality.p1')} />
@@ -27,12 +27,12 @@ const ReviewingPolicies = (): JSX.Element => {
                 <Interweave content={t('reviewing-policies.confidentiality.p3')} />
             </Paragraph>
 
-            <h2>{t('reviewing-policies.anonymity.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('reviewing-policies.anonymity.heading')}</h2>
             <Paragraph type="writing">
                 <Interweave content={t('reviewing-policies.anonymity.p1')} />
             </Paragraph>
 
-            <h2>{t('reviewing-policies.competing-interests.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('reviewing-policies.competing-interests.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('reviewing-policies.competing-interests.p1')} />

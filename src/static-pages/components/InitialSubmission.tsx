@@ -9,14 +9,14 @@ const InitialSubmission = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('initial-submission.heading')}</h1>
+            <h1 className="typography__heading--h1">{t('initial-submission.heading')}</h1>
 
             <Paragraph type="writing">
                 <Interweave content={t('initial-submission.p1')} />
             </Paragraph>
 
             <div className="blue-box">
-                <h2>{t('initial-submission.pre-print.heading')}</h2>
+                <h2 className="typography__heading--h2">{t('initial-submission.pre-print.heading')}</h2>
                 <Paragraph type="writing">{t('initial-submission.pre-print.p1')}</Paragraph>
                 <Paragraph type="writing">
                     <Interweave content={t('initial-submission.pre-print.p2')} />
@@ -115,7 +115,7 @@ const InitialSubmission = (): JSX.Element => {
                 <Interweave content={t('initial-submission.manuscript.p4')} />
             </Paragraph>
 
-            <h2>{t('initial-submission.figures.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('initial-submission.figures.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('initial-submission.figures.p1')} />
@@ -137,7 +137,7 @@ const InitialSubmission = (): JSX.Element => {
                 <Interweave content={t('initial-submission.figures.p5')} />
             </Paragraph>
 
-            <h2>{t('initial-submission.meta.heading')}</h2>
+            <h2 className="typography__heading--h2">{t('initial-submission.meta.heading')}</h2>
 
             <Paragraph type="writing">
                 <Interweave content={t('initial-submission.meta.p1')} />
