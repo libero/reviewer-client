@@ -6,12 +6,14 @@
     margin-bottom: 0;
   }
 }
-
+//paragraph typography__small typography__small--secondary
 .paragraph--footer {
+  @include typography__small;
+  @include typography__small--secondary;
   grid-area: footer;
   align-self: center;
   text-align: center;
-  margin: 0 1.5rem 1.5rem 1.5rem !important;
+  margin: 0 1.5rem 1.5rem 1.5rem;
   @include forSize('tabletLandscapeUp') {
     margin-left: 0.75rem;
   }
