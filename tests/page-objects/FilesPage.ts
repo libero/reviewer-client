@@ -179,9 +179,11 @@ export class FilesPage {
     }
 
     // TODO: does this need a back button?
-    public async next(): Promise<void> {
+    public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
         await t.click(this.nextButton);
-        await t.expect(this.stepWrapper.exists).notOk();
+        if (!expectFailure) {
+            await t.expect(this.stepWrapper.exists).notOk({ timeout: 5000 });
+        }
     }
 }

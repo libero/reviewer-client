@@ -66,6 +66,6 @@ export class DisclosurePage {
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
         await t.click(this.backButton);
-        await t.expect(this.disclosureStep.exists).notOk();
+        await t.expect(this.disclosureStep.exists).notOk({ timeout: 5000 });
     }
 }

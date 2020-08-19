@@ -21,7 +21,7 @@ test('author page', async () => {
     await navigationHelper.navigateToAuthorPage();
     const authorDetailsPage = new AuthorDetailsPage();
     await authorDetailsPage.assertOnPage();
-    await authorDetailsPage.next();
+    await authorDetailsPage.next(true);
     const validationHelper = new ValidationHelper();
     await validationHelper.assertNumberOfErrors(4);
     await validationHelper.assertErrorMessage('.author-step__firstName', 'First name is required');
@@ -37,7 +37,7 @@ test('files page', async () => {
     await navigationHelper.navigateToFilesPage();
     const filesPage = new FilesPage();
     await filesPage.assertOnPage();
-    await filesPage.next();
+    await filesPage.next(true);
     const validationHelper = new ValidationHelper();
     await validationHelper.assertNumberOfErrors(2);
     await validationHelper.assertErrorMessage('.cover-letter', 'Please write or paste in your cover letter');
@@ -55,7 +55,7 @@ test('details page', async () => {
     await detailsPage.togglePreviouslyConsidered();
     await detailsPage.togglePreviouslyDiscussed();
     await detailsPage.toggleCosubmission();
-    await detailsPage.next();
+    await detailsPage.next(true);
     const validationHelper = new ValidationHelper();
     await validationHelper.assertNumberOfErrors(5);
     await validationHelper.assertErrorMessage('.expanding-text-field', 'Title is required');
@@ -78,7 +78,7 @@ test('editors page', async () => {
     await navigationHelper.navigateToEditorsPage(false, 'Research Article');
     const editorsPage = new EditorPage();
     await editorsPage.assertOnPage();
-    await editorsPage.next();
+    await editorsPage.next(true);
     const validationHelper = new ValidationHelper();
     await validationHelper.assertNumberOfErrors(2);
     await validationHelper.assertErrorMessage('.senior-editors-picker', 'Please suggest at least 2 editors');

@@ -147,15 +147,17 @@ export class DetailsPage {
         await this.secondCosubmissionTitleInput.value;
     }
 
-    public async next(): Promise<void> {
+    public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
         await t.click(this.nextButton);
-        await t.expect(this.detailsStep.exists).notOk();
+        if (!expectFailure) {
+            await t.expect(this.detailsStep.exists).notOk();
+        }
     }
 
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
         await t.click(this.backButton);
-        await t.expect(this.detailsStep.exists).notOk();
+        await t.expect(this.detailsStep.exists).notOk({ timeout: 5000 });
     }
 }
