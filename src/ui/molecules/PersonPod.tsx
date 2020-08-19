@@ -45,8 +45,12 @@ const PersonPod = ({
                 <PersonInfo name={name} aff={aff} focuses={focuses} expertises={expertises} />
             </Modal>
             <div className="person-pod__text">
-                <span className="typography__body typography__body--primary typography__body--no-margin">{name}</span>
-                <span className="typography__small typography__small--primary typography__small--no-margin">{aff}</span>
+                <span className="typography__body typography__body--primary typography__body--no-margin person-pod__text--row">
+                    {name}
+                </span>
+                <span className="typography__small typography__small--primary typography__small--no-margin person-pod__text--row">
+                    {aff}
+                </span>
                 <div className="person-pod__inline_text">
                     <Info
                         aria-label="Info"

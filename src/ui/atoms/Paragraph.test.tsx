@@ -42,12 +42,7 @@ describe('Paragraph', (): void => {
             'typography__small--primary',
             'typography__small--serif',
         );
-        expect(getByText('footer')).toHaveClass(
-            'paragraph',
-            'typography__small',
-            'typography__small--secondary',
-            'paragraph--footer',
-        );
+        expect(getByText('footer')).toHaveClass('paragraph--footer');
         expect(getByText('secondary')).toHaveClass('paragraph', 'typography__small', 'typography__small--secondary');
     });
 

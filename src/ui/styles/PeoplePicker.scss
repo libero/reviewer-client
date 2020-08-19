@@ -3,9 +3,8 @@
 }
 
 .people-picker__modal_list {
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
   @include twoColumnGrid;
+  grid-gap: 1.5rem;
 }
 .people-picker__selector_container {
   padding-top: 2rem;
@@ -13,9 +12,6 @@
 }
 
 .people-picker__modal_list--item {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  margin-bottom: 1.5rem;
   overflow: hidden;
 }
 

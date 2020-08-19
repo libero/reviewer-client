@@ -1,11 +1,9 @@
 .selected_people_list {
-  margin-left: -0.75rem;
-  margin-right: -0.75rem;
   @include twoColumnGrid;
+  grid-gap: 1.5rem;
 }
 
 .selected_people_list__item {
-  padding: 0.75rem;
   overflow: hidden;
   display: inline-block;
 }

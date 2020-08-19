@@ -2,6 +2,10 @@
      text-align: left;
 }
 
+.person-pod__text--row {
+    display: block;
+    @include typographyEllipsisWrap
+}
 .person-pod__selected_icon {
     color: $colourPrimary;
 }
@@ -15,9 +19,7 @@
 
     span {
         margin-left: 0.563rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        @include typographyEllipsisWrap
     }
 }
 
