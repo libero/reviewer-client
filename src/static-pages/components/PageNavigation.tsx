@@ -80,9 +80,7 @@ const PageNavigation = ({ links, currentPath = '/' }: Props): JSX.Element => {
                             <Link
                                 key={`${l.link}`}
                                 to={l.link}
-                                className={
-                                    isSelected(l.link) ? 'typography__body--link active' : 'typography__body--link '
-                                }
+                                className={isSelected(l.link) ? 'typography__small active' : 'typography__small'}
                             >
                                 {l.label}
                             </Link>

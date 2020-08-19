@@ -11,9 +11,6 @@
       grid-column: 1 / span 12;
     }
     display: flex;
-    h1 {
-        margin-top: 0;
-    }
     .static-page__content {
         padding: 2rem 0;
         @include forSize('tabletPortraitUp') {

@@ -8,67 +8,71 @@ const ReviewingPolicies = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('reviewing-policies.heading')}</h1>
-            <Paragraph type="writing">
+            <h1 className="typography__heading typography__heading--h1">{t('reviewing-policies.heading')}</h1>
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.p1')} />
             </Paragraph>
 
-            <h2>{t('reviewing-policies.confidentiality.heading')}</h2>
+            <h2 className="typography__heading typography__heading--h2">
+                {t('reviewing-policies.confidentiality.heading')}
+            </h2>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.confidentiality.p1')} />
             </Paragraph>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.confidentiality.p2')} />
             </Paragraph>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.confidentiality.p3')} />
             </Paragraph>
 
-            <h2>{t('reviewing-policies.anonymity.heading')}</h2>
-            <Paragraph type="writing">
+            <h2 className="typography__heading typography__heading--h2">{t('reviewing-policies.anonymity.heading')}</h2>
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.anonymity.p1')} />
             </Paragraph>
 
-            <h2>{t('reviewing-policies.competing-interests.heading')}</h2>
+            <h2 className="typography__heading typography__heading--h2">
+                {t('reviewing-policies.competing-interests.heading')}
+            </h2>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.competing-interests.p1')} />
             </Paragraph>
 
             <ul>
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('reviewing-policies.competing-interests.bullet1')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('reviewing-policies.competing-interests.bullet2')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('reviewing-policies.competing-interests.bullet3')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <Paragraph type="writing">
+                    <Paragraph type="reading">
                         <Interweave content={t('reviewing-policies.competing-interests.bullet4')} />
                     </Paragraph>
                 </li>
             </ul>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.competing-interests.p2')} />
             </Paragraph>
 
-            <Paragraph type="writing">
+            <Paragraph type="reading">
                 <Interweave content={t('reviewing-policies.competing-interests.p3')} />
             </Paragraph>
         </div>

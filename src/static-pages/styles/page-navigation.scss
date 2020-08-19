@@ -20,20 +20,36 @@
 
     .select-nav__value-container {
         padding: 0;
-        padding-left: 2rem;
+        padding-left: 3rem;
+        @include forSize('phoneDown') {
+            padding-left: 1.5rem;
+        }
     }
+
+    .select-nav__indicators {
+        padding: 0;
+        padding-right: 3rem;
+        @include forSize('phoneDown') {
+            padding-right: 1.5rem;
+        }
+    }
+
     .select-nav__menu {
         border: none;
         border-top: 0;
         border-radius: 0;
         box-shadow: 0;
         padding: 0;
+        top: 4.5rem;
 
         .select-nav__menu-list {
             padding: 0;
             max-height: 100%;
             .select-nav__option {
-                padding: 1.5rem 2rem;
+                padding: 1.5rem 3rem;
+                @include forSize('phoneDown') {
+                    padding: 1.5rem;
+                }
             }
         }
 
@@ -76,6 +92,7 @@
     display: block;
     grid-row: 2;
     grid-column: 2 / span 2;
+    margin-top: 1.5rem;
 
     @include forSize('desktopDown') {
         grid-column: 2 / span 2;
@@ -86,7 +103,6 @@
 
     span {
         display: block;
-        padding: 10px 50px 10px 0;
         a {
             cursor: pointer;
             text-decoration: none;

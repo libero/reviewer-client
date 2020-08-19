@@ -8,8 +8,8 @@ const ProductionStaff = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1>{t('production.heading')}</h1>
-            <Paragraph type="writing">{t('production.paragraph-1')}</Paragraph>
+            <h1 className="typography__heading typography__heading--h1">{t('production.heading')}</h1>
+            <Paragraph type="reading">{t('production.paragraph-1')}</Paragraph>
             <div className="person-grid">
                 <PersonCard
                     number={t('production.person-1.number')}
