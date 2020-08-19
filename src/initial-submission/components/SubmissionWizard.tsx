@@ -8,7 +8,7 @@ import AuthorDetailsForm from './AuthorDetailsForm';
 import FileDetailsStep from './FileDetailsForm';
 import DetailsForm from './DetailsForm';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { getSubmissionQuery, submitSubmissionMutation } from '../graphql';
+import { getSubmissionQuery, submitSubmissionMutation, CLEAR_ERROR, SET_VALIDATION_ERROR } from '../graphql';
 import * as H from 'history';
 import EditorsForm from './EditorsForm';
 import DisclosureForm from './DisclosureForm';
@@ -65,6 +65,8 @@ const ButtonComponent = (
     const [processing, setProcessing] = useState(false);
     const { t } = useTranslation('wizard-form');
     const lastPage = getCurrentStepPathIndex() === stepConfig.length - 1;
+    const [clearError] = useMutation(CLEAR_ERROR);
+    const [setError] = useMutation(SET_VALIDATION_ERROR);
     return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
@@ -96,6 +98,9 @@ const ButtonComponent = (
                                 setProcessing(false);
                                 if (valid) {
                                     toggle();
+                                    clearError();
+                                } else {
+                                    setError();
                                 }
                             });
                         } catch (e) {
@@ -107,10 +112,12 @@ const ButtonComponent = (
                                 setProcessing(true);
                                 triggerValidation().then(async valid => {
                                     if (valid) {
+                                        clearError();
                                         await saveFunction();
                                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
                                     } else {
                                         setProcessing(false);
+                                        setError();
                                     }
                                 });
                             } catch (e) {
