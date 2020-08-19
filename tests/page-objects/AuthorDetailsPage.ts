@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickNext } from './formHelper';
 
 export class AuthorDetailsPage {
     private readonly authorStep = Selector('.author-step');
@@ -102,7 +103,7 @@ export class AuthorDetailsPage {
 
     public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
         if (!expectFailure) {
             await t.expect(this.authorStep.exists).notOk({ timeout: 5000 });
         }

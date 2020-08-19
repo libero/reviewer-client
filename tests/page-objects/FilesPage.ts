@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { hasError } from './formHelper';
+import { clickNext, hasError } from './formHelper';
 
 export enum FileStatus {
     Success = 0,
@@ -181,7 +181,7 @@ export class FilesPage {
     // TODO: does this need a back button?
     public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
         if (!expectFailure) {
             await t.expect(this.stepWrapper.exists).notOk({ timeout: 5000 });
         }

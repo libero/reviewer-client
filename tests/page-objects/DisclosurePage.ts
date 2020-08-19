@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickNext } from './formHelper';
 
 export class DisclosurePage {
     private readonly disclosureStep = Selector('.disclosure-step');
@@ -60,7 +61,7 @@ export class DisclosurePage {
 
     public async next(): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
     }
 
     public async back(): Promise<void> {

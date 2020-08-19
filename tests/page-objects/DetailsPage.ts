@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickNext } from './formHelper';
 
 export class DetailsPage {
     private readonly detailsStep = Selector('.details-page-step');
@@ -149,7 +150,7 @@ export class DetailsPage {
 
     public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
         if (!expectFailure) {
             await t.expect(this.detailsStep.exists).notOk();
         }
