@@ -1,4 +1,4 @@
-import { waitForReact } from 'testcafe-react-selectors';
+// import { waitForReact } from 'testcafe-react-selectors';
 
 import {
     NavigationHelper,
@@ -13,9 +13,10 @@ import {
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { t } from 'testcafe';
 
-fixture`Persistence`.page`${BASE_URL}`.beforeEach(async () => {
-    await waitForReact();
-});
+fixture`Persistence`.page`${BASE_URL}`;
+// .beforeEach(async () => {
+//     await waitForReact();
+// });
 
 test('Return to Author Step from Dashboard', async () => {
     const navigationHelper = new NavigationHelper();

@@ -2,9 +2,11 @@ import { LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { waitForReact } from 'testcafe-react-selectors';
 
-fixture`Navigation`.page`${BASE_URL}`.beforeEach(async () => {
-    await waitForReact();
-});
+fixture`Navigation`.page`${BASE_URL}`;
+
+// .beforeEach(async () => {
+//     await waitForReact();
+// });
 
 test('assert nav bar', async () => {
     const navigationPane = new NavigationPane();
