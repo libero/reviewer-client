@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField, Checkbox, Paragraph } from '../../ui/atoms';
@@ -10,7 +10,7 @@ import { StepProps } from './SubmissionWizard';
 import Interweave from 'interweave';
 import moment from 'moment';
 
-const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErrorBar }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDisclosurePageMutation);
     const schema = schemaFactory(t);
@@ -46,6 +46,12 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepP
 
     useAutoSave(onSave, [submitterSignature, disclosureConsent]);
     const date = moment(new Date()).format('MMM D, YYYY');
+
+    useEffect(() => {
+        if (Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [submitterSignature, disclosureConsent, errors]);
 
     return (
         <div className="disclosure-step">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -14,7 +14,12 @@ interface GetCurrentUser {
     getCurrentUser: User;
 }
 
-const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const AuthorDetailsForm = ({
+    initialValues,
+    schemaFactory,
+    ButtonComponent,
+    toggleErrorBar,
+}: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
@@ -47,6 +52,12 @@ const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: St
     const institution = watch('institution');
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
+
+    useEffect(() => {
+        if (Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [authorFirstName, authorLastName, authorEmail, institution, errors]);
 
     const getDetails = (): void => {
         const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);

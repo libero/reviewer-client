@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ interface GetEditors {
     getEditors: EditorAlias[];
 }
 
-const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErrorBar }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { editorDetails } = initialValues;
     const { data: getSeniorEditors, loading: loadingSeniorEditors } = useQuery<GetEditors>(getEditorsQuery, {
@@ -144,6 +144,23 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
         opposedReviewingEditorsReason,
         opposedReviewers,
         opposedReviewersReason,
+    ]);
+
+    useEffect(() => {
+        if (Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [
+        suggestedSeniorEditors,
+        opposedSeniorEditors,
+        opposedSeniorEditorsReason,
+        suggestedReviewingEditors,
+        suggestedReviewers,
+        opposedReviewingEditors,
+        opposedReviewingEditorsReason,
+        opposedReviewers,
+        opposedReviewersReason,
+        errors,
     ]);
 
     const closeOpposedReviewers = (reasonFieldName: string, opposedFieldName: string): void => {

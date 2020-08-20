@@ -25,7 +25,7 @@ type UploadInProgress = {
     fileName?: string;
 };
 
-const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErrorBar }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { files } = initialValues;
     // this might be better placed in its own hook or wrapper component so changes don't cause whole page re-render.
@@ -142,6 +142,12 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: Step
         await saveCallback(vars);
     };
     useAutoSave(onSave, [coverLetter]);
+
+    useEffect(() => {
+        if (Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [coverLetter, errors]);
 
     return (
         <div className="files-step">

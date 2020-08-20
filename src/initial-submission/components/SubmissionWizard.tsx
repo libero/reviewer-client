@@ -36,6 +36,7 @@ export interface StepProps {
         triggerValidation: () => Promise<boolean>;
         onSubmit?: () => void;
     }) => JSX.Element;
+    toggleErrorBar?: (showError: boolean) => Promise<void>;
 }
 
 interface StepConfig {
@@ -43,6 +44,7 @@ interface StepConfig {
     label: string;
     component: (props: StepProps) => JSX.Element;
     schemaFactory: (t: i18next.TFunction) => yup.ObjectSchema;
+    toggleErrorBar?: (showError: boolean) => Promise<void>;
 }
 
 interface GetSubmission {
@@ -206,6 +208,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                             toggle,
                                             toggleErrorBar,
                                         )}
+                                        toggleErrorBar={toggleErrorBar}
                                     />
                                 )
                             }
