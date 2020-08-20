@@ -5,10 +5,6 @@ import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Happy Path`.page`${BASE_URL}`;
 
-// .beforeEach(async () => {
-//     await waitForReact();
-// });
-
 test('Happy path', async () => {
     const navigationHelper = new NavigationHelper();
     const surveyPage = new SurveyPage();

@@ -22,6 +22,7 @@ export class StaticPage {
         for (let i = 0; i < authorKeys.length; i++) {
             const subPage = AuthorGuide[authorKeys[i]];
             await this.assertOnPage();
+            // for now, leave .click due to complexity
             await this.clickLink(subPage.linkText);
             await this.assertOnStaticPage(subPage.title);
         }
@@ -32,6 +33,7 @@ export class StaticPage {
         for (let i = 0; i < reviewerKeys.length; i++) {
             const subPage = ReviewerGuide[reviewerKeys[i]];
             await this.assertOnPage();
+            // for now, leave .click due to complexity
             await this.clickLink(subPage.linkText);
             await this.assertOnStaticPage(subPage.title);
         }
@@ -42,6 +44,7 @@ export class StaticPage {
         for (let i = 0; i < contactKeys.length; i++) {
             const subPage = ContactUs[contactKeys[i]];
             await this.assertOnPage();
+            // for now, leave .click due to complexity
             await this.clickLink(subPage.linkText);
             await this.assertOnStaticPage(subPage.title);
         }
@@ -58,6 +61,7 @@ export class StaticPage {
     }
 
     public async clickLink(linkText: string): Promise<void> {
+        // for now, leave .click due to complexity
         await t.click(this.link.withText(linkText));
     }
 }

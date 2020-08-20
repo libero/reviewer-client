@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickSelector } from './formHelper';
 
 export class LoginPage {
     private readonly loginButton: Selector = Selector('.button--orcid');
@@ -15,12 +16,12 @@ export class LoginPage {
     }
 
     public async dismissCookieBanner(): Promise<void> {
-        await t.click(this.cookieBannerButton);
+        await clickSelector('.cookie-banner__button');
         await t.expect(this.cookieBannerButton.visible).notOk();
     }
 
     public async login(): Promise<void> {
-        await t.click(this.loginButton);
+        await clickSelector('.button--orcid');
         if (await this.isCookieBannerVisible()) {
             await this.dismissCookieBanner();
         }

@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { clickNext } from './formHelper';
+import { clickNext, clickSelector } from './formHelper';
 
 export class AuthorDetailsPage {
     private readonly authorStep = Selector('.author-step');
@@ -10,7 +10,7 @@ export class AuthorDetailsPage {
     private readonly lastNameInput = Selector('.author-step__lastName input');
     private readonly emailInput = Selector('.author-step__email input');
     private readonly institutionInput = Selector('.author-step__institution input');
-    private readonly prefillInput = Selector('.author-step__prefill');
+    private readonly prefillInput = '.author-step__prefill';
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.authorStep.exists).ok();
@@ -29,7 +29,7 @@ export class AuthorDetailsPage {
     }
 
     public async prefill(): Promise<void> {
-        await t.click(this.prefillInput);
+        await clickSelector(this.prefillInput);
         await this.assertPopulatedValues({
             first: 'Tamlyn',
             last: 'Rhodes',

@@ -170,6 +170,7 @@ export class FilesPage {
     }
 
     public async deleteSupportingFile(index: number): Promise<void> {
+        // Leave click for now due to complexity
         const supportingFiles = await this.supportFilesList;
         const initialCount = await supportingFiles.count;
         const supportingFile = await supportingFiles.nth(index);

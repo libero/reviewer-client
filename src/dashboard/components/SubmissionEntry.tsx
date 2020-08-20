@@ -64,13 +64,9 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                     </p>
                 </Modal>
                 {status === 'continue_submission' && (
-                    <Delete
-                        onClick={(): void => toggle()}
-                        className="submission-entry__icon"
-                        height="24"
-                        width="24"
-                        viewBox="3 3 18 18"
-                    />
+                    <span className="submission-entry__icon" onClick={(): void => toggle()}>
+                        <Delete height="24" width="24" viewBox="3 3 18 18" />
+                    </span>
                 )}
             </div>
         </div>

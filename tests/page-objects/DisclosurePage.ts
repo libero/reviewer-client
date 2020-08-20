@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { clickNext } from './formHelper';
+import { clickNext, clickBack, clickSelector } from './formHelper';
 
 export class DisclosurePage {
     private readonly disclosureStep = Selector('.disclosure-step');
@@ -44,7 +44,7 @@ export class DisclosurePage {
 
     public async toggleDisclosureConsent(): Promise<void> {
         await t.expect(this.disclosureConsent.visible).ok();
-        await t.click(this.disclosureConsent);
+        await clickSelector('#disclosureConsent');
     }
 
     public async getDisclosureConsent(): Promise<boolean> {
@@ -55,8 +55,7 @@ export class DisclosurePage {
         await this.next();
         await t.expect(this.modalOverlay.visible).ok();
         await t.expect(this.modalAcceptButton.visible).ok();
-        await t.click(this.modalAcceptButton);
-        // todo: can an assert suggest this page no longer exists?
+        await clickSelector('.modal__buttons .button--primary');
     }
 
     public async next(): Promise<void> {
@@ -66,7 +65,7 @@ export class DisclosurePage {
 
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
-        await t.click(this.backButton);
+        await clickBack();
         await t.expect(this.disclosureStep.exists).notOk({ timeout: 5000 });
     }
 }

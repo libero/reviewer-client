@@ -14,4 +14,21 @@ async function clickNext(): Promise<void> {
     })();
 }
 
-export { hasError, clickNext };
+async function clickBack(): Promise<void> {
+    await ClientFunction(() => {
+        (document.querySelector('.submission-wizard-back-buttonn') as HTMLElement).click();
+    })();
+}
+
+async function clickSelector(selector: string): Promise<void> {
+    await ClientFunction((s: string) => {
+        const element = document.querySelector(s) as HTMLElement;
+        if (element) {
+            element.click();
+        } else {
+            throw new Error('Element not present');
+        }
+    })(selector); // this needs to be here since Client function needs the selector passed in.
+}
+
+export { hasError, clickNext, clickSelector, clickBack };

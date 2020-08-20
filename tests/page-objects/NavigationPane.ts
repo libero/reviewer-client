@@ -1,4 +1,5 @@
 import { Selector, t, ClientFunction } from 'testcafe';
+import { clickSelector } from './formHelper';
 
 const getPageUrl = ClientFunction(() => window.location.href);
 
@@ -39,6 +40,7 @@ export class NavigationPane {
     }
 
     public async navigateToDashboard(): Promise<void> {
+        // for now, leave .click due to complexity
         await this.assertNavItems();
         await t.click(this.menu.child(0));
         const windowLocation = await ClientFunction(() => window.location)();
@@ -46,18 +48,21 @@ export class NavigationPane {
     }
 
     public async navigateToAuthorGuide(): Promise<void> {
+        // for now, leave .click due to complexity
         await this.assertNavItems();
         await t.click(this.menu.child(1));
         await t.expect(getPageUrl()).contains('/author-guide/editorial-process', { timeout: 5000 });
     }
 
     public async navigateToReviewerGuide(): Promise<void> {
+        // for now, leave .click due to complexity
         await this.assertNavItems();
         await t.click(this.menu.child(2));
         await t.expect(getPageUrl()).contains('/reviewer-guide/review-process', { timeout: 5000 });
     }
 
     public async navigateToContactUs(): Promise<void> {
+        // for now, leave .click due to complexity
         await this.assertNavItems();
         await t.click(this.menu.child(3));
         await t.expect(getPageUrl()).contains('/contact-us/contact-elife', { timeout: 5000 });
@@ -76,7 +81,7 @@ export class NavigationPane {
         const profileSelector = this.profileDropdown.child('.profile_dropdown__panel');
         await t.expect(this.profileDropdown.visible).ok();
         await t.expect(profileSelector.visible).notOk();
-        await t.click(this.profileDropdown.child('button'));
+        await clickSelector('.profile_dropdown__button');
         await t.expect(profileSelector.visible).ok();
         await t.expect(profileSelector.child('.profile_dropdown__panel_heading').visible).ok();
         await t.expect(profileSelector.child('.profile_dropdown__list').child().count).eql(2);
@@ -88,18 +93,20 @@ export class NavigationPane {
         const profileSelector = this.profileDropdown.child('.profile_dropdown__panel');
         await t.expect(this.profileDropdown.visible).ok();
         await t.expect(profileSelector.visible).notOk();
-        await t.click(this.profileDropdown.child('button'));
+        await clickSelector('.profile_dropdown__button');
         await t.expect(profileSelector.visible).ok();
         await t.expect(profileSelector.child('.profile_dropdown__panel_heading').textContent).eql(input);
-        await t.click(this.profileDropdown);
+        await clickSelector('.profile_dropdown__button');
     }
 
     public async logout(): Promise<void> {
         const profileSelector = this.profileDropdown.child('.profile_dropdown__panel');
+        await t.expect(Selector('.profile_dropdown__button').exists).ok();
         await t.expect(this.profileDropdown.visible).ok();
         await t.expect(profileSelector.visible).notOk();
-        await t.click(this.profileDropdown.child('button'));
+        await clickSelector('.profile_dropdown__button');
         await t.expect(profileSelector.visible).ok();
-        await t.click(Selector('.profile_dropdown__logout'));
+        await t.expect(Selector('.profile_dropdown__logout').exists).ok();
+        await clickSelector('.profile_dropdown__logout');
     }
 }

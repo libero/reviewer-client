@@ -7,14 +7,8 @@ import {
     ValidationHelper,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
-// import { waitForReact } from 'testcafe-react-selectors';
-// import { t } from 'testcafe';
 
 fixture`Validation`.page`${BASE_URL}`;
-
-// .beforeEach(async () => {
-//     await waitForReact();
-// });
 
 test('author page', async () => {
     const navigationHelper = new NavigationHelper();

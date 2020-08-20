@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { clickNext } from './formHelper';
+import { clickNext, clickSelector, clickBack } from './formHelper';
 
 interface NameEmail {
     name: string;
@@ -73,6 +73,7 @@ export class EditorPage {
     }
 
     private async addPersonToPeoplePicker(picker: Selector, number = 1): Promise<void> {
+        // For now, leave using click due to complexity
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         const addButton = picker.find('.pod__button');
         await t.click(addButton);
@@ -116,12 +117,14 @@ export class EditorPage {
     }
 
     public async addOpposingSeniorEditor(): Promise<void> {
+        // Leave click for now due to withText
         await t.click(this.toggleOpposedSeniorEditorsPicker);
         await this.addPersonToPeoplePicker(this.opposedSeniorEditorsPicker, this.maxOpposingSeniorEditors);
         await this.setOpposedReason(this.opposedSeniorEditorsReason);
     }
 
     public async addOpposingReviewingEditor(): Promise<void> {
+        // Leave click for now due to withText
         await t.click(this.toggleOpposedReviewingEditorsPicker);
         await this.addPersonToPeoplePicker(this.opposedReviewingEditorsPicker, this.maxOpposingReviewingEditors);
         await this.setOpposedReason(this.opposedReviewingEditorsReason);
@@ -160,6 +163,7 @@ export class EditorPage {
     }
 
     public async addOpposingReviewer(inputs?: NameEmail[], reason = 'Hates squirrels'): Promise<void> {
+        // Leave click for now due to withText
         await t.click(this.toggleOpposedReviewerPicker);
         await this.setNameEmailFields(this.opposedReviewers, 'opposedReviewers', inputs);
         await t.typeText(this.opposedReviewersReason, reason);
@@ -167,7 +171,8 @@ export class EditorPage {
     }
 
     public async back(): Promise<void> {
-        await t.click(this.backButton);
+        await t.expect(this.backButton.visible).ok();
+        await clickBack();
         await t.expect(this.editorsStep.exists).notOk();
     }
 
