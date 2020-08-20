@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { TextField } from '../atoms';
 import Search from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
@@ -15,7 +15,7 @@ const SearchField = ({ id, onChange, showHelpText = false, placeholder }: Props)
     const { t } = useTranslation('ui');
     const [search, setSearch] = useState('');
     const [empty, setEmpty] = useState(true);
-    const change = (event: React.FormEvent<HTMLInputElement>): void => {
+    const change = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (onChange) {
             event.persist();
             onChange(event);
@@ -25,6 +25,7 @@ const SearchField = ({ id, onChange, showHelpText = false, placeholder }: Props)
     };
 
     const clearSearch = (): void => {
+        onChange(({ currentTarget: { value: '' } } as unknown) as React.ChangeEvent<HTMLInputElement>);
         setSearch('');
         setEmpty(true);
     };
