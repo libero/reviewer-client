@@ -55,6 +55,7 @@ const ButtonComponent = (
     getCurrentStepPathIndex: Function,
     stepConfig: StepConfig[],
     toggle: () => void,
+    toggleErrorBar: (showError: boolean) => Promise<void>,
 ) => ({
     saveFunction,
     triggerValidation,
@@ -65,8 +66,6 @@ const ButtonComponent = (
     const [processing, setProcessing] = useState(false);
     const { t } = useTranslation('wizard-form');
     const lastPage = getCurrentStepPathIndex() === stepConfig.length - 1;
-    const [clearError] = useMutation(CLEAR_ERROR);
-    const [setError] = useMutation(SET_VALIDATION_ERROR);
     return (
         <React.Fragment>
             {getCurrentStepPathIndex() > 0 && (
@@ -98,9 +97,9 @@ const ButtonComponent = (
                                 setProcessing(false);
                                 if (valid) {
                                     toggle();
-                                    clearError();
+                                    toggleErrorBar(false);
                                 } else {
-                                    setError();
+                                    toggleErrorBar(true);
                                 }
                             });
                         } catch (e) {
@@ -112,12 +111,12 @@ const ButtonComponent = (
                                 setProcessing(true);
                                 triggerValidation().then(async valid => {
                                     if (valid) {
-                                        clearError();
+                                        toggleErrorBar(false);
                                         await saveFunction();
                                         history.push(`/submit/${id}/${stepConfig[getCurrentStepPathIndex() + 1].id}`);
                                     } else {
                                         setProcessing(false);
-                                        setError();
+                                        toggleErrorBar(true);
                                     }
                                 });
                             } catch (e) {
@@ -150,6 +149,9 @@ const stepConfig: StepConfig[] = [
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
     const { id, step } = useParams();
     const { t } = useTranslation('wizard-form');
+    const [clearError] = useMutation(CLEAR_ERROR);
+    const [setError] = useMutation(SET_VALIDATION_ERROR);
+    const [errorBar, setErrorBar] = useState(false);
     const getCurrentStepPathIndex = (): number => {
         return stepConfig.findIndex((config): boolean => config.id === step.toLocaleLowerCase());
     };
@@ -160,6 +162,15 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
         variables: { id },
         returnPartialData: true,
     });
+
+    const toggleErrorBar = async (showError: boolean): Promise<void> => {
+        if (showError) {
+            await setError();
+        } else {
+            await clearError();
+        }
+        setErrorBar(errorBar);
+    };
 
     return (
         <div className="submission-wizard">
@@ -193,6 +204,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                             getCurrentStepPathIndex,
                                             stepConfig,
                                             toggle,
+                                            toggleErrorBar,
                                         )}
                                     />
                                 )
