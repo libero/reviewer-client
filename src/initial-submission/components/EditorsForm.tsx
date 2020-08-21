@@ -147,7 +147,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     ]);
 
     useEffect(() => {
-        if (Object.keys(errors).length === 0) {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
             toggleErrorBar(false);
         }
     }, [

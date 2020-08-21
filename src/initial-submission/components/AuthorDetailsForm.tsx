@@ -54,7 +54,7 @@ const AuthorDetailsForm = ({
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
 
     useEffect(() => {
-        if (Object.keys(errors).length === 0) {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
             toggleErrorBar(false);
         }
     }, [authorFirstName, authorLastName, authorEmail, institution, errors]);

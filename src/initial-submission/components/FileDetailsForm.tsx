@@ -144,7 +144,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
     useAutoSave(onSave, [coverLetter]);
 
     useEffect(() => {
-        if (Object.keys(errors).length === 0) {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
             toggleErrorBar(false);
         }
     }, [coverLetter, errors]);

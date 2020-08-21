@@ -48,7 +48,7 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent, toggleE
     const date = moment(new Date()).format('MMM D, YYYY');
 
     useEffect(() => {
-        if (Object.keys(errors).length === 0) {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
             toggleErrorBar(false);
         }
     }, [submitterSignature, disclosureConsent, errors]);
