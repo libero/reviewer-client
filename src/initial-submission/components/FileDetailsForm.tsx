@@ -147,7 +147,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
         if (toggleErrorBar && Object.keys(errors).length === 0) {
             toggleErrorBar(false);
         }
-    }, [coverLetter, errors]);
+    }, [coverLetter, manuscriptStatus, errors]);
 
     return (
         <div className="files-step">
