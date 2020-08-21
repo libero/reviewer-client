@@ -21,10 +21,10 @@ const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: St
     const schema = schemaFactory(t);
     const { register, errors, getValues, watch, setValue, triggerValidation } = useForm<AuthorDetails>({
         defaultValues: {
-            firstName: initialValues.author ? initialValues.author.firstName : '',
-            lastName: initialValues.author ? initialValues.author.lastName : '',
-            email: initialValues.author ? initialValues.author.email : '',
-            institution: initialValues.author ? initialValues.author.institution : '',
+            firstName: initialValues && initialValues.author ? initialValues.author.firstName : '',
+            lastName: initialValues && initialValues.author ? initialValues.author.lastName : '',
+            email: initialValues && initialValues.author ? initialValues.author.email : '',
+            institution: initialValues && initialValues.author ? initialValues.author.institution : '',
         },
         mode: 'onBlur',
         validationSchema: schema,
