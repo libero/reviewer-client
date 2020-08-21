@@ -59,6 +59,7 @@ export class EditorPage {
     public async populateMinimalFields(): Promise<void> {
         await this.addSeniorEditors();
         await this.addReviewingEditors();
+        await t.wait(1000);
     }
 
     public async assertPopulatedValues(

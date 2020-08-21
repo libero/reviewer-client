@@ -46,6 +46,7 @@ export class AuthorDetailsPage {
         await this.setLastName('last');
         await this.setEmail('email@elifesciences.org');
         await this.setInstitution('institution');
+        await t.wait(1000);
     }
 
     public async assertPopulatedValues(

@@ -51,6 +51,7 @@ export class DetailsPage {
         await t.selectText(this.titleInput).pressKey('delete');
         await this.setTitle();
         await this.setSubjects();
+        await t.wait(1000);
     }
 
     public async assertPopulatedValues(values = { title: 'title', subjects: ['Cell Biology'] }): Promise<void> {

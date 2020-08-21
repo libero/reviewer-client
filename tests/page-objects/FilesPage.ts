@@ -68,6 +68,7 @@ export class FilesPage {
             extraText: 'dummy-manuscript.docx',
         });
         await this.assertPopulatedValues();
+        await t.wait(1000);
     }
 
     // editablecontent component from prosemirror outputs spaces as nbsp characters so we need to parse to compare input to value

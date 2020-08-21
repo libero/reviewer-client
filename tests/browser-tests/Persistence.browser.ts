@@ -59,7 +59,7 @@ test('Return to Details Step from Dashboard', async () => {
     await detailsPage.assertPopulatedValues();
 });
 
-test.only('Return to Editors Step from Dashboard', async () => {
+test('Return to Editors Step from Dashboard', async () => {
     const navigationHelper = new NavigationHelper();
     const dashboardPage = new DashboardPage();
     const navigationPane = new NavigationPane();
