@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { clickNext, hasError } from './formHelper';
+import { clickNext, hasError, clickSelector } from './formHelper';
 
 export enum FileStatus {
     Success = 0,
@@ -170,12 +170,9 @@ export class FilesPage {
     }
 
     public async deleteSupportingFile(index: number): Promise<void> {
-        // Leave click for now due to complexity
         const supportingFiles = await this.supportFilesList;
         const initialCount = await supportingFiles.count;
-        const supportingFile = await supportingFiles.nth(index);
-        const icon = await supportingFile.find('.multifile-upload__delete');
-        await t.click(icon);
+        await clickSelector(`.multifile-upload__upload-list-item:nth-child(${index+1}) .multifile-upload__delete--container`);
         await t.expect(initialCount).gt(await this.supportFilesList.count);
     }
 

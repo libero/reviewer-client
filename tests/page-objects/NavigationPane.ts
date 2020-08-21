@@ -40,9 +40,8 @@ export class NavigationPane {
     }
 
     public async navigateToDashboard(): Promise<void> {
-        // for now, leave .click due to complexity
         await this.assertNavItems();
-        await t.click(this.menu.child(0));
+        await clickSelector('.menu__list .menu__item:nth-child(1) a');
         const windowLocation = await ClientFunction(() => window.location)();
         await t.expect(windowLocation.pathname).eql('/');
     }
@@ -50,21 +49,21 @@ export class NavigationPane {
     public async navigateToAuthorGuide(): Promise<void> {
         // for now, leave .click due to complexity
         await this.assertNavItems();
-        await t.click(this.menu.child(1));
+        await clickSelector('.menu__list .menu__item:nth-child(2) a');
         await t.expect(getPageUrl()).contains('/author-guide/editorial-process', { timeout: 5000 });
     }
 
     public async navigateToReviewerGuide(): Promise<void> {
         // for now, leave .click due to complexity
         await this.assertNavItems();
-        await t.click(this.menu.child(2));
+        await clickSelector('.menu__list .menu__item:nth-child(3) a');
         await t.expect(getPageUrl()).contains('/reviewer-guide/review-process', { timeout: 5000 });
     }
 
     public async navigateToContactUs(): Promise<void> {
         // for now, leave .click due to complexity
         await this.assertNavItems();
-        await t.click(this.menu.child(3));
+        await clickSelector('.menu__list .menu__item:nth-child(4) a');
         await t.expect(getPageUrl()).contains('/contact-us/contact-elife', { timeout: 5000 });
     }
 

@@ -31,4 +31,17 @@ async function clickSelector(selector: string): Promise<void> {
     })(selector); // this needs to be here since Client function needs the selector passed in.
 }
 
-export { hasError, clickNext, clickSelector, clickBack };
+async function clickWithSelectorAndText(selector: string, text: string): Promise<void> {
+    await ClientFunction((s: string, t: string) => {
+        const element = Array.prototype.slice.call(document.querySelectorAll(s)).filter(function(el) {
+            return el.textContent.includes(t);
+        })[0];
+        if (element) {
+            element.click();
+        } else {
+            throw new Error('Element not present');
+        }
+    })(selector, text); // this needs to be here since Client function needs the selector passed in.
+}
+
+export { hasError, clickNext, clickSelector, clickWithSelectorAndText, clickBack };

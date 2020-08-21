@@ -1,5 +1,3 @@
-// import { waitForReact } from 'testcafe-react-selectors';
-
 import {
     NavigationHelper,
     NavigationPane,
@@ -14,9 +12,6 @@ import { BASE_URL } from '../../test-utils/baseUrl';
 import { t } from 'testcafe';
 
 fixture`Persistence`.page`${BASE_URL}`;
-// .beforeEach(async () => {
-//     await waitForReact();
-// });
 
 test('Return to Author Step from Dashboard', async () => {
     const navigationHelper = new NavigationHelper();
@@ -64,7 +59,7 @@ test('Return to Details Step from Dashboard', async () => {
     await detailsPage.assertPopulatedValues();
 });
 
-test('Return to Editors Step from Dashboard', async () => {
+test.only('Return to Editors Step from Dashboard', async () => {
     const navigationHelper = new NavigationHelper();
     const dashboardPage = new DashboardPage();
     const navigationPane = new NavigationPane();

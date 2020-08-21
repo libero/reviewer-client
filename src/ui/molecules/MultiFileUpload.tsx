@@ -83,11 +83,11 @@ const FileItem = ({ uploadInProgress, error, fileStored, onDelete, disableDelete
                 ) : null}
             </span>
             {!disableDelete && (status === 'COMPLETE' || status === 'ERROR') ? (
-                <div>
-                    <Delete
-                        className="multifile-upload__delete"
-                        onClick={(): void => onDelete(fileStored ? fileStored.id : uploadInProgress.id)}
-                    />
+                <div
+                    className="multifile-upload__container"
+                    onClick={(): void => onDelete(fileStored ? fileStored.id : uploadInProgress.id)}
+                >
+                    <Delete className="multifile-upload__delete" />
                 </div>
             ) : null}
         </div>

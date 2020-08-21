@@ -97,7 +97,7 @@ export class DashboardPage {
     public async newSubmission(articleType: ArticleType): Promise<void> {
         await clickSelector(this.newSubmissionButton);
         await t.expect(this.newSubmissionContainer.exists).ok();
-        await t.click(this.articleTypeSelect); // must keep due to withText not being on the client function.
+        await t.click(this.articleTypeSelect);// Keeping .click due to react-select click handling
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
         await clickSelector(this.continueButton);

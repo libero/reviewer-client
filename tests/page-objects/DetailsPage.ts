@@ -76,7 +76,7 @@ export class DetailsPage {
     public async setSubjects(inputs = ['Cell Biology']): Promise<void> {
         await t.expect(this.subjectsContainer.visible).ok();
         for (let i = 0; i < inputs.length; i++) {
-            // Keeping .click due to withText use
+            // Keeping .click due to react-select click handling
             await t.click(this.subjectOptionsTypSelect);
             await t.click(this.subjectOptions.withText(inputs[i]));
             await t.expect(this.subjectValue.nth(i).exists).ok();
