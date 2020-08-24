@@ -139,7 +139,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
 
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
-            <h2 className="typography__heading typography__heading--h2 details-page__title">
+            <h2 className="typography__heading typography__heading--h2 details-page__title details-page-step">
                 {t('details.form-title')}
             </h2>
             <ExpandingTextField

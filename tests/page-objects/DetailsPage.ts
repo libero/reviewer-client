@@ -1,6 +1,8 @@
 import { Selector, t } from 'testcafe';
+import { clickNext, clickSelector, clickBack } from './formHelper';
 
 export class DetailsPage {
+    private readonly detailsStep = Selector('.details-page-step');
     private readonly titleInput = Selector('#title');
     private readonly subjectsContainer = Selector('.subject-area');
     private readonly subjectOptionsTypSelect: Selector = Selector('.select-field__control');
@@ -18,8 +20,9 @@ export class DetailsPage {
     private readonly backButton = Selector('.submission-wizard-back-button');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.titleInput.visible).ok();
-        await t.expect(this.subjectsContainer.visible).ok();
+        await t.expect(this.detailsStep.exists).ok();
+        await t.expect(this.titleInput.exists).ok();
+        await t.expect(this.subjectsContainer.exists).ok();
         await t.expect(this.previouslyDiscussedToggle.exists).ok();
         await t.expect(this.previouslyDiscussedInput.exists).notOk();
         await t.expect(this.previouslyConsideredToggle.exists).ok();
@@ -28,6 +31,9 @@ export class DetailsPage {
         await t.expect(this.firstCosubmissionTitleInput.exists).notOk();
         await t.expect(this.secondCosubmissionTitleInput.exists).notOk();
         await t.expect(this.secondCosubmissionButton.exists).notOk();
+
+        await t.expect(this.subjectsContainer.visible).ok();
+        await t.expect(this.titleInput.visible).ok();
     }
 
     async populateAllFields(): Promise<void> {
@@ -45,6 +51,7 @@ export class DetailsPage {
         await t.selectText(this.titleInput).pressKey('delete');
         await this.setTitle();
         await this.setSubjects();
+        await t.wait(1000);
     }
 
     public async assertPopulatedValues(values = { title: 'title', subjects: ['Cell Biology'] }): Promise<void> {
@@ -70,8 +77,10 @@ export class DetailsPage {
     public async setSubjects(inputs = ['Cell Biology']): Promise<void> {
         await t.expect(this.subjectsContainer.visible).ok();
         for (let i = 0; i < inputs.length; i++) {
+            // Keeping .click due to react-select click handling
             await t.click(this.subjectOptionsTypSelect);
             await t.click(this.subjectOptions.withText(inputs[i]));
+            await t.expect(this.subjectValue.nth(i).exists).ok();
             await t.expect(this.subjectValue.nth(i).textContent).contains(inputs[i]);
         }
     }
@@ -82,7 +91,7 @@ export class DetailsPage {
 
     public async togglePreviouslyDiscussed(): Promise<void> {
         await t.expect(this.previouslyDiscussedToggle.visible).ok();
-        await t.click(this.previouslyDiscussedToggle);
+        await clickSelector('#previouslyDiscussedContainer-toggle');
     }
 
     public async setPreviouslyDiscussed(input = 'previous'): Promise<void> {
@@ -98,7 +107,7 @@ export class DetailsPage {
 
     public async togglePreviouslyConsidered(): Promise<void> {
         await t.expect(this.previouslyConsideredToggle.visible).ok();
-        await t.click(this.previouslyConsideredToggle);
+        await clickSelector('#previouslyConsideredContainer-toggle');
     }
 
     public async setPreviouslyConsidered(input = 'previous'): Promise<void> {
@@ -114,7 +123,7 @@ export class DetailsPage {
 
     public async toggleCosubmission(): Promise<void> {
         await t.expect(this.CosubmissionToggle.visible).ok();
-        await t.click(this.CosubmissionToggle);
+        await clickSelector('#cosubmission-toggle');
     }
 
     public async setCosubmission(input = 'first co'): Promise<void> {
@@ -130,7 +139,7 @@ export class DetailsPage {
 
     public async setSecondCosubmission(input = 'second co'): Promise<void> {
         await t.expect(this.secondCosubmissionButton.visible).ok();
-        await t.click(this.secondCosubmissionButton);
+        await clickSelector('#secondCosubmissionTitleButton');
         await t.typeText(this.secondCosubmissionTitleInput, input);
         await t.expect(this.secondCosubmissionTitleInput.value).eql(input);
     }
@@ -140,13 +149,17 @@ export class DetailsPage {
         await this.secondCosubmissionTitleInput.value;
     }
 
-    public async next(): Promise<void> {
+    public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
+        if (!expectFailure) {
+            await t.expect(this.detailsStep.exists).notOk();
+        }
     }
 
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
-        await t.click(this.backButton);
+        await clickBack();
+        await t.expect(this.detailsStep.exists).notOk({ timeout: 5000 });
     }
 }

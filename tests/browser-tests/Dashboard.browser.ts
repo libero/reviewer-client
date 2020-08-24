@@ -1,11 +1,12 @@
-import { waitForReact } from 'testcafe-react-selectors';
+// import { waitForReact } from 'testcafe-react-selectors';
 import { t } from 'testcafe';
 import { DashboardPage, NavigationHelper, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`Dashboard`.page`${BASE_URL}`.beforeEach(async () => {
-    await waitForReact();
-});
+fixture`Dashboard`.page`${BASE_URL}`;
+// .beforeEach(async () => {
+//     await waitForReact();
+// });
 
 test('User can delete a submission', async () => {
     const navigationHelper = new NavigationHelper();

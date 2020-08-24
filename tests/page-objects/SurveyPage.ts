@@ -1,13 +1,19 @@
 import { Selector, t } from 'testcafe';
+import { clickSelector } from './formHelper';
 
 export class SurveyPage {
     private readonly pageWrapper: Selector = Selector('.survey');
     private readonly answer1Input: Selector = Selector('[name="answers[0].answer"]');
     private readonly answer2Input: Selector = Selector('[name="answers[1].answer"]');
     private readonly answer3Input: Selector = Selector('[name="answers[2].answer"]');
-    private readonly doneSkipButton: Selector = Selector('.button.button--primary');
+    private readonly doneSkipButton = '.button.button--primary';
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.pageWrapper.exists).ok();
+        await t.expect(this.answer1Input.exists).ok();
+        await t.expect(this.answer2Input.exists).ok();
+        await t.expect(this.answer3Input.exists).ok();
+
         await t.expect(this.pageWrapper.visible).ok();
         await t.expect(this.answer1Input.visible).ok();
         await t.expect(this.answer2Input.visible).ok();
@@ -42,6 +48,6 @@ export class SurveyPage {
     }
 
     public async skipOrFinish(): Promise<void> {
-        await t.click(this.doneSkipButton);
+        await clickSelector(this.doneSkipButton);
     }
 }

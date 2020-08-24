@@ -31,7 +31,7 @@ const Paragraph = ({ children, type, secondary, className, ...rest }: Props): JS
             }`;
             break;
         case 'footer':
-            classes = `${classes} paragraph typography__small typography__small--secondary paragraph--footer`;
+            classes = `${classes} paragraph--footer`;
             break;
     }
 

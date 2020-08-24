@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { hasError } from './formHelper';
+import { clickNext, hasError, clickSelector } from './formHelper';
 
 export enum FileStatus {
     Success = 0,
@@ -47,6 +47,7 @@ export class FilesPage {
     }
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.stepWrapper.exists).ok();
         await t.expect(this.stepWrapper.visible).ok();
     }
 
@@ -67,6 +68,7 @@ export class FilesPage {
             extraText: 'dummy-manuscript.docx',
         });
         await this.assertPopulatedValues();
+        await t.wait(1000);
     }
 
     // editablecontent component from prosemirror outputs spaces as nbsp characters so we need to parse to compare input to value
@@ -129,7 +131,8 @@ export class FilesPage {
 
     public async uploadManuscriptFile(filePath: string): Promise<void> {
         await t.setFilesToUpload(this.manuscriptInput, filePath);
-        await t.expect(await this.manuscriptReplaceButton.withText('Replace').visible).ok();
+        await t.expect(this.manuscriptReplaceButton.withText('Replace').exists).ok();
+        await t.expect(this.manuscriptReplaceButton.withText('Replace').visible).ok();
     }
 
     public async assertManuscriptStored(fileName: string): Promise<void> {
@@ -170,14 +173,16 @@ export class FilesPage {
     public async deleteSupportingFile(index: number): Promise<void> {
         const supportingFiles = await this.supportFilesList;
         const initialCount = await supportingFiles.count;
-        const supportingFile = await supportingFiles.nth(index);
-        const icon = await supportingFile.find('.multifile-upload__delete');
-        await t.click(icon);
+        await clickSelector(`.multifile-upload__upload-list-item:nth-child(${index+1}) .multifile-upload__delete--container`);
         await t.expect(initialCount).gt(await this.supportFilesList.count);
     }
 
-    public async next(): Promise<void> {
+    // TODO: does this need a back button?
+    public async next(expectFailure = false): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
+        if (!expectFailure) {
+            await t.expect(this.stepWrapper.exists).notOk({ timeout: 5000 });
+        }
     }
 }
