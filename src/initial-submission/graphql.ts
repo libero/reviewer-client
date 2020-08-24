@@ -205,6 +205,7 @@ export const submitSubmissionMutation = gql`
     mutation Submit($id: ID!) {
         submit(id: $id) {
             id
+            status
         }
     }
 `;
