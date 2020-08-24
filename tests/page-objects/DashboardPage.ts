@@ -36,8 +36,8 @@ export class DashboardPage {
     private readonly confirmDeleteButton = '.button--danger';
 
     public async assertOnPage(retries = 0): Promise<void> {
-        const dashboard = await this.withSubmissions.visible;
-        const noSubmissions = await this.noSubmissions.visible;
+        const dashboard = await this.withSubmissions.exists;
+        const noSubmissions = await this.noSubmissions.exists;
 
         if (!dashboard && !noSubmissions && retries < MAX_ASSERT_ON_PAGE_RETRIES) {
             await this.assertOnPage(retries + 1);

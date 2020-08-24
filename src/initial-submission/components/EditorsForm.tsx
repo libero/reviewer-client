@@ -283,8 +283,8 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
                 labelPrefix={t('editors.reviewers-label-prefix')}
                 initialRows={suggestedReviewers}
                 errors={errors && errors.suggestedReviewers}
-                onChange={(personArray): void => {
-                    setValue('suggestedReviewers', personArray, true);
+                onChange={(personArray, triggerValidation = false): void => {
+                    setValue('suggestedReviewers', personArray, triggerValidation);
                 }}
             />
             <ExcludedToggle

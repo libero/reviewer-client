@@ -18,7 +18,7 @@ interface Props {
     labelPrefix?: string;
     initialRows: NameEmail[];
     errors?: { email?: ValidationError; name?: ValidationError }[];
-    onChange: (personArray: NameEmail[]) => void;
+    onChange: (personArray: NameEmail[], triggerValidation?: boolean) => void;
     className?: string;
 }
 
@@ -86,8 +86,13 @@ const ExpandingEmailField = ({
 
     const updatePeople = (index: number, field: 'name' | 'email', value: string): void => {
         const newPeople = [...peopleArray];
+        // one way could be to check previous value e.g. person.name.length > 0 && person.name !== value
+        const person = newPeople[index];
         newPeople[index][field] = value;
-        onChange(newPeople);
+        // another way could be to check field name
+        const validate = field === 'email' ? true : false;
+        // can we verify only one property at a time with the yup schema?
+        onChange(newPeople, true);
         setPeopleArray(newPeople);
     };
 
@@ -115,6 +120,9 @@ const ExpandingEmailField = ({
                         invalid={!!(errors[index] && errors[index].email)}
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
                         defaultValue={person.email}
+                        onBlur={(e): void => {
+                            updatePeople(index, 'email', e.target.value);
+                        }}
                         onChange={(e): void => {
                             updatePeople(index, 'email', e.target.value);
                         }}

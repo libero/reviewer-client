@@ -110,22 +110,13 @@ const EditorsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
                         name: yup
                             .string()
                             .trim()
-                            .when('email', {
-                                is: email => email && email.length > 0,
-                                then: yup.string().required(t('editors.validation.reviewers-name-required')),
-                                otherwise: yup.string(),
-                            }),
+                            .required(t('editors.validation.reviewers-name-required')),
                         email: yup
                             .string()
                             .trim()
-                            .when('name', {
-                                is: name => name && name.length > 0,
-                                then: yup
-                                    .string()
-                                    .email(t('editors.validation.reviewers-email-valid'))
-                                    .required(t('editors.validation.reviewers-email-required')),
-                                otherwise: yup.string().email(t('editors.validation.reviewers-email-valid')),
-                            }),
+                            .email()
+                            .required()
+                            .email(t('editors.validation.reviewers-email-valid')),
                     },
                     [['name', 'email']],
                 ),
