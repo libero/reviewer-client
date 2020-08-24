@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
@@ -30,7 +30,7 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
     return detail;
 };
 
-const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErrorBar }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const schema = schemaFactory(t);
     const validationResolver = useCallback((data: ManuscriptDetails) => {
@@ -121,6 +121,20 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
         previouslySubmittedWatch,
         firstCosubmissionWatch,
         secondCosubmissionWatch,
+    ]);
+
+    useEffect(() => {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [
+        titleWatch,
+        unmappedSubjectsWatch,
+        previouslyDiscussedWatch,
+        previouslySubmittedWatch,
+        firstCosubmissionWatch,
+        secondCosubmissionWatch,
+        errors,
     ]);
 
     return (

@@ -226,3 +226,9 @@ export const SET_LOGOUT_ERROR = gql`
         setLogoutError @client
     }
 `;
+
+export const SET_VALIDATION_ERROR = gql`
+    mutation SetValidationError {
+        setValidationError @client
+    }
+`;

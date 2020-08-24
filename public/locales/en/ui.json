@@ -8,7 +8,8 @@
     "feedback": {
         "auth-timeout": "You were logged out but your progress was saved. Please log in again to continue.",
         "server-lost": "Connection to the server was lost. Please refresh before continuing.",
-        "submission-error": "There is a problem with your submission. Please contact us for help."
+        "submission-error": "There is a problem with your submission. Please contact us for help.",
+        "validation-error": "These are errors that need fixing before you can continue."
     },
     "file-upload": {
         "idle-upload": "Upload",
