@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickNext, clickBack, clickSelector } from './formHelper';
 
 export class DisclosurePage {
     private readonly disclosureStep = Selector('.disclosure-step');
@@ -10,6 +11,7 @@ export class DisclosurePage {
     private readonly backButton = Selector('.submission-wizard-back-button');
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.disclosureStep.exists).ok();
         await t.expect(this.disclosureStep.visible).ok();
     }
 
@@ -42,7 +44,7 @@ export class DisclosurePage {
 
     public async toggleDisclosureConsent(): Promise<void> {
         await t.expect(this.disclosureConsent.visible).ok();
-        await t.click(this.disclosureConsent);
+        await clickSelector('#disclosureConsent');
     }
 
     public async getDisclosureConsent(): Promise<boolean> {
@@ -53,16 +55,17 @@ export class DisclosurePage {
         await this.next();
         await t.expect(this.modalOverlay.visible).ok();
         await t.expect(this.modalAcceptButton.visible).ok();
-        await t.click(this.modalAcceptButton);
+        await clickSelector('.modal__buttons .button--primary');
     }
 
     public async next(): Promise<void> {
         await t.expect(this.nextButton.visible).ok();
-        await t.click(this.nextButton);
+        await clickNext();
     }
 
     public async back(): Promise<void> {
         await t.expect(this.backButton.visible).ok();
-        await t.click(this.backButton);
+        await clickBack();
+        await t.expect(this.disclosureStep.exists).notOk({ timeout: 5000 });
     }
 }

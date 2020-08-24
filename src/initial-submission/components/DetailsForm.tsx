@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectField, TextField, ExpandingTextField, MultilineTextField } from '../../ui/atoms';
@@ -30,7 +30,7 @@ const defaultManuscriptDetails = (values: ManuscriptDetails): ManuscriptDetails 
     return detail;
 };
 
-const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErrorBar }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const schema = schemaFactory(t);
     const validationResolver = useCallback((data: ManuscriptDetails) => {
@@ -123,9 +123,23 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProp
         secondCosubmissionWatch,
     ]);
 
+    useEffect(() => {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [
+        titleWatch,
+        unmappedSubjectsWatch,
+        previouslyDiscussedWatch,
+        previouslySubmittedWatch,
+        firstCosubmissionWatch,
+        secondCosubmissionWatch,
+        errors,
+    ]);
+
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
-            <h2 className="typography__heading typography__heading--h2 details-page__title">
+            <h2 className="typography__heading typography__heading--h2 details-page__title details-page-step">
                 {t('details.form-title')}
             </h2>
             <ExpandingTextField

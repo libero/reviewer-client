@@ -124,6 +124,18 @@ export default (): ApolloClient<unknown> => {
                         },
                     });
                 },
+                setValidationError(): void {
+                    client.writeQuery({
+                        query: APPLICATION_ERROR,
+                        data: {
+                            feedback: {
+                                error: true,
+                                dismissable: true,
+                                message: 'feedback.validation-error',
+                            },
+                        },
+                    });
+                },
             },
             Query: {
                 isAuthenticated(): boolean {

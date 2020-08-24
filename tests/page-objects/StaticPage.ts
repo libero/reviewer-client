@@ -1,5 +1,6 @@
 import { Selector, t } from 'testcafe';
 import { AuthorGuide, ReviewerGuide, ContactUs } from './StaticPages';
+import { clickWithSelectorAndText } from './formHelper';
 
 export class StaticPage {
     private readonly pageWrapper: Selector = Selector('.static-page');
@@ -8,10 +9,12 @@ export class StaticPage {
     private readonly title: Selector = Selector('.static-page__content h1');
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.pageWrapper.exists).ok();
         await t.expect(this.pageWrapper.visible).ok();
     }
 
     public async assertOnStaticPage(pageTitle: string): Promise<void> {
+        await t.expect(this.title.exists).ok();
         await t.expect(this.title.textContent).eql(pageTitle);
     }
 
@@ -20,7 +23,7 @@ export class StaticPage {
         for (let i = 0; i < authorKeys.length; i++) {
             const subPage = AuthorGuide[authorKeys[i]];
             await this.assertOnPage();
-            await this.clickLink(subPage.linkText);
+            await this.clickLink('.side-bar-nav a', subPage.linkText);
             await this.assertOnStaticPage(subPage.title);
         }
     }
@@ -30,7 +33,7 @@ export class StaticPage {
         for (let i = 0; i < reviewerKeys.length; i++) {
             const subPage = ReviewerGuide[reviewerKeys[i]];
             await this.assertOnPage();
-            await this.clickLink(subPage.linkText);
+            await this.clickLink('.side-bar-nav a', subPage.linkText);
             await this.assertOnStaticPage(subPage.title);
         }
     }
@@ -40,7 +43,7 @@ export class StaticPage {
         for (let i = 0; i < contactKeys.length; i++) {
             const subPage = ContactUs[contactKeys[i]];
             await this.assertOnPage();
-            await this.clickLink(subPage.linkText);
+            await this.clickLink('.side-bar-nav a', subPage.linkText);
             await this.assertOnStaticPage(subPage.title);
         }
     }
@@ -55,7 +58,7 @@ export class StaticPage {
         return linksText;
     }
 
-    public async clickLink(linkText: string): Promise<void> {
-        await t.click(this.link.withText(linkText));
+    public async clickLink(selector: string, linkText: string): Promise<void> {
+        await clickWithSelectorAndText(selector, linkText);
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField, Checkbox, Paragraph } from '../../ui/atoms';
@@ -10,17 +10,17 @@ import { StepProps } from './SubmissionWizard';
 import Interweave from 'interweave';
 import moment from 'moment';
 
-const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErrorBar }: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const [saveCallback] = useMutation<Submission>(saveDisclosurePageMutation);
     const schema = schemaFactory(t);
     const defaultValues = {
         submitterSignature:
-            initialValues.disclosure && initialValues.disclosure.submitterSignature
+            initialValues && initialValues.disclosure && initialValues.disclosure.submitterSignature
                 ? initialValues.disclosure.submitterSignature
                 : '',
         disclosureConsent:
-            initialValues.disclosure && initialValues.disclosure.disclosureConsent
+            initialValues && initialValues.disclosure && initialValues.disclosure.disclosureConsent
                 ? initialValues.disclosure.disclosureConsent
                 : false,
     };
@@ -47,18 +47,26 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent }: StepP
     useAutoSave(onSave, [submitterSignature, disclosureConsent]);
     const date = moment(new Date()).format('MMM D, YYYY');
 
+    useEffect(() => {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [submitterSignature, disclosureConsent, errors]);
+
     return (
         <div className="disclosure-step">
             <h2 className="typography__heading typography__heading--h2">{t('disclosure.form-title')}</h2>
             <div className="disclosure__submission">
                 <h3 className="typography__heading typography__heading--h3 disclosure__submission--title">
-                    {initialValues.manuscriptDetails ? initialValues.manuscriptDetails.title : ''}
+                    {initialValues && initialValues.manuscriptDetails ? initialValues.manuscriptDetails.title : ''}
                 </h3>
                 <span className="typography__body typography__body--primary disclosure__submission--name">
-                    {initialValues.author ? `${initialValues.author.firstName} ${initialValues.author.lastName}` : ''}
+                    {initialValues && initialValues.author
+                        ? `${initialValues.author.firstName} ${initialValues.author.lastName}`
+                        : ''}
                 </span>
                 <span className="typography__small typography__small--secondary disclosure__submission--article-date">
-                    {initialValues.articleType.toUpperCase().replace(/-+/g, ' ')} {' ' + date}
+                    {initialValues && initialValues.articleType.toUpperCase().replace(/-+/g, ' ')} {' ' + date}
                 </span>
             </div>
             <Paragraph type="small-reading">
