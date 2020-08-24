@@ -1,6 +1,6 @@
 import '../../../test-utils/i18n-mock';
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent, waitFor } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import PeoplePicker from './PeoplePicker';
 import appContainer from '../../../test-utils/appContainer';
 
