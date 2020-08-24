@@ -49,7 +49,8 @@ const PeoplePicker = ({
             {!hideLabel && <h2 className="typography__heading typography__heading--h3">{label}</h2>}
             <SelectedPeopleList
                 people={filteredSelected}
-                required={required}
+                required={required && filteredSelected.length < min}
+                hideSelector={filteredSelected.length === max}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}
                 openSelectorText={t('people_picker--open-selector')}

@@ -143,4 +143,17 @@ describe('SelectedPeopleList', (): void => {
             'SomeTestText (validation--optional)',
         );
     });
+
+    it('Hides open button when hideSelector is true', () => {
+        const { getByText } = render(
+            <SelectedPeopleList
+                people={[]}
+                openSelectorText="SomeTestText"
+                onRemove={jest.fn()}
+                onOpen={jest.fn()}
+                hideSelector={true}
+            />,
+        );
+        expect(() => getByText('selected_people_list--open')).toThrow();
+    });
 });

@@ -10,10 +10,18 @@ interface Props {
     people?: EditorAlias[];
     openSelectorText: string;
     required?: boolean;
+    hideSelector?: boolean;
     onRemove: (personId: string) => void;
     onOpen: () => void;
 }
-const SelectedPeopleList = ({ people = [], openSelectorText, required, onRemove, onOpen }: Props): JSX.Element => {
+const SelectedPeopleList = ({
+    people = [],
+    openSelectorText,
+    required,
+    onRemove,
+    onOpen,
+    hideSelector,
+}: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
         <div className="selected_people_list">
@@ -29,13 +37,15 @@ const SelectedPeopleList = ({ people = [], openSelectorText, required, onRemove,
                     </div>
                 ),
             )}
-            <div className="selected_people_list__item">
-                <Pod onClick={onOpen} buttonIcon={<Add />} buttonText={t('selected_people_list--open')}>
-                    <div className="selected_people_list__pod-content">
-                        {openSelectorText} ({required ? t('validation--required') : t('validation--optional')})
-                    </div>
-                </Pod>
-            </div>
+            {!hideSelector && (
+                <div className="selected_people_list__item">
+                    <Pod onClick={onOpen} buttonIcon={<Add />} buttonText={t('selected_people_list--open')}>
+                        <div className="selected_people_list__pod-content">
+                            {openSelectorText} ({required ? t('validation--required') : t('validation--optional')})
+                        </div>
+                    </Pod>
+                </div>
+            )}
         </div>
     );
 };
