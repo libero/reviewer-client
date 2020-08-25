@@ -5,16 +5,16 @@
     color: $white;
     text-align: center;
     grid-area: feedback;
-    min-height: 48px;
-    line-height: 20px;
-    font-size: 14px;
-    padding: 0 14px;
+    min-height: 3rem;
+    line-height: 1.25rem;
+    font-size: 0.875rem;
+    padding: 0 0.875rem;
     display: flex;
     align-items: center;
 
     &.stick {
         z-index: 1000;
-        top: 72px;
+        top: 4.5rem;
         position: fixed;
         top: 0;
         left: 0;
@@ -32,5 +32,5 @@
 }
 
 .fixed-padding {
-    height: 48px;
+    height: 3rem;
 }
