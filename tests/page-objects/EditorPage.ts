@@ -48,9 +48,9 @@ export class EditorPage {
     }
 
     async populateAllFields(): Promise<void> {
-        await this.addSeniorEditors(this.maxSeniorEditors);
+        await this.addSeniorEditors(this.maxSeniorEditors, false);
         await this.addOpposingSeniorEditor();
-        await this.addReviewingEditors(this.maxReviewingEditors);
+        await this.addReviewingEditors(this.maxReviewingEditors, false);
         await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
         await this.addOpposingReviewer();
@@ -73,7 +73,12 @@ export class EditorPage {
             .eql(values.seniorEditorsCount + 1);
     }
 
-    private async addPersonToPeoplePicker(picker: Selector, number = 1, pickerQuerySelector: string): Promise<void> {
+    private async addPersonToPeoplePicker(
+        picker: Selector,
+        number = 1,
+        pickerQuerySelector: string,
+        includeOpenPodInSelectedCount = true,
+    ): Promise<void> {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         await clickSelector(`${pickerQuerySelector} .pod__button`);
         await t.expect(Selector('.modal__overlay').count).eql(1);
@@ -90,13 +95,23 @@ export class EditorPage {
         await t
             .expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count)
             .eql(number);
-        await clickSelector('.modal__buttons_container .button--primary')
+        await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
-        await t.expect(picker.find('.selected_people_list__item').count).eql(number + 1);
+        await t
+            .expect(picker.find('.selected_people_list__item').count)
+            .eql(number + (includeOpenPodInSelectedCount ? 1 : 0));
     }
 
-    public async addSeniorEditors(selectionCount = this.minSeniorEditors): Promise<void> {
-        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, selectionCount, '.senior-editors-picker');
+    public async addSeniorEditors(
+        selectionCount = this.minSeniorEditors,
+        includeOpenPodInSelectedCount = true,
+    ): Promise<void> {
+        await this.addPersonToPeoplePicker(
+            this.seniorEditorsPicker,
+            selectionCount,
+            '.senior-editors-picker',
+            includeOpenPodInSelectedCount,
+        );
     }
 
     public async assertPeoplePickerSearch(): Promise<void> {
@@ -111,19 +126,37 @@ export class EditorPage {
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
     }
 
-    public async addReviewingEditors(selectionCount = this.minReviewingEditors): Promise<void> {
-        await this.addPersonToPeoplePicker(this.suggestedReviewingEditorsPicker, selectionCount, '.reviewing-editors-picker');
+    public async addReviewingEditors(
+        selectionCount = this.minReviewingEditors,
+        includeOpenPodInSelectedCount = true,
+    ): Promise<void> {
+        await this.addPersonToPeoplePicker(
+            this.suggestedReviewingEditorsPicker,
+            selectionCount,
+            '.reviewing-editors-picker',
+            includeOpenPodInSelectedCount,
+        );
     }
 
     public async addOpposingSeniorEditor(): Promise<void> {
         await clickWithSelectorAndText('.excluded-toggle__action', 'exclude a senior editor');
-        await this.addPersonToPeoplePicker(this.opposedSeniorEditorsPicker, this.maxOpposingSeniorEditors, '.opposed-senior-editors-picker');
+        await this.addPersonToPeoplePicker(
+            this.opposedSeniorEditorsPicker,
+            this.maxOpposingSeniorEditors,
+            '.opposed-senior-editors-picker',
+            false,
+        );
         await this.setOpposedReason(this.opposedSeniorEditorsReason);
     }
 
     public async addOpposingReviewingEditor(): Promise<void> {
         await clickWithSelectorAndText('.excluded-toggle__action', 'exclude a reviewing editor');
-        await this.addPersonToPeoplePicker(this.opposedReviewingEditorsPicker, this.maxOpposingReviewingEditors, '.opposed-reviewing-editors-picker');
+        await this.addPersonToPeoplePicker(
+            this.opposedReviewingEditorsPicker,
+            this.maxOpposingReviewingEditors,
+            '.opposed-reviewing-editors-picker',
+            false,
+        );
         await this.setOpposedReason(this.opposedReviewingEditorsReason);
     }
 

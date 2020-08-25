@@ -629,7 +629,7 @@ describe('EditorsDetailsForm', (): void => {
                         wrapper: routerWrapper(),
                     },
                 );
-                expect(container.querySelectorAll('.opposed-senior-editors-picker .pod')).toHaveLength(2);
+                expect(container.querySelectorAll('.opposed-senior-editors-picker .pod')).toHaveLength(1);
                 expect(container.querySelector<HTMLTextAreaElement>('[name="opposedSeniorEditorsReason"]').value).toBe(
                     'some reason',
                 );
