@@ -171,12 +171,14 @@ export class FilesPage {
     }
 
     public async deleteSupportingFile(index: number): Promise<void> {
-        const deleteQuerySelector = `.multifile-upload__upload-list-item:nth-child(${index +
-            1}) .multifile-upload__delete--container`;
+        const initialCount = await this.supportFilesList.count;
+        const domIndex = index + 1;
+        const deleteQuerySelector = `.multifile-upload__upload-list-item:nth-child(${domIndex}) .multifile-upload__delete--container`;
         await t.expect(Selector(deleteQuerySelector).exists).ok();
         await clickSelector(deleteQuerySelector);
         await t.wait(100);
-        await t.expect(Selector(deleteQuerySelector).exists).notOk();
+        const afterDeleteCount = await this.supportFilesList.count;
+        await t.expect(initialCount).gt(afterDeleteCount);
     }
 
     // TODO: does this need a back button?
