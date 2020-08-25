@@ -42,9 +42,9 @@ export class EditorPage {
     }
 
     async populateAllFields(): Promise<void> {
-        await this.addSeniorEditors(this.maxSeniorEditors);
+        await this.addSeniorEditors(this.maxSeniorEditors, false);
         await this.addOpposingSeniorEditor();
-        await this.addReviewingEditors(this.maxReviewingEditors);
+        await this.addReviewingEditors(this.maxReviewingEditors, false);
         await this.addOpposingReviewingEditor();
         await this.addSuggestedReviewers();
         await this.addOpposingReviewer();
@@ -66,7 +66,7 @@ export class EditorPage {
             .eql(values.seniorEditorsCount + 1);
     }
 
-    private async addPersonToPeoplePicker(picker: Selector, number = 1): Promise<void> {
+    private async addPersonToPeoplePicker(picker: Selector, number = 1, includeOpenPodInSelectedCount = true): Promise<void> {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         const addButton = picker.find('.pod__button');
         await t.click(addButton);
@@ -86,11 +86,16 @@ export class EditorPage {
             .eql(number);
         await t.click(Selector('.modal__buttons_container').find('.button--primary'));
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
-        await t.expect(picker.find('.selected_people_list__item').count).eql(number + 1);
+        await t
+            .expect(picker.find('.selected_people_list__item').count)
+            .eql(number + (includeOpenPodInSelectedCount ? 1 : 0));
     }
 
-    public async addSeniorEditors(selectionCount = this.minSeniorEditors): Promise<void> {
-        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, selectionCount);
+    public async addSeniorEditors(
+        selectionCount = this.minSeniorEditors,
+        includeOpenPodInSelectedCount = true,
+    ): Promise<void> {
+        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, selectionCount, includeOpenPodInSelectedCount);
     }
 
     public async assertPeoplePickerSearch(): Promise<void> {
@@ -105,19 +110,26 @@ export class EditorPage {
         await t.expect(peopleList.child('.people-picker__modal_list--item').count).gt(0);
     }
 
-    public async addReviewingEditors(selectionCount = this.minReviewingEditors): Promise<void> {
-        await this.addPersonToPeoplePicker(this.suggestedReviewingEditorsPicker, selectionCount);
+    public async addReviewingEditors(
+        selectionCount = this.minReviewingEditors,
+        includeOpenPodInSelectedCount = true,
+    ): Promise<void> {
+        await this.addPersonToPeoplePicker(
+            this.suggestedReviewingEditorsPicker,
+            selectionCount,
+            includeOpenPodInSelectedCount,
+        );
     }
 
     public async addOpposingSeniorEditor(): Promise<void> {
         await t.click(this.toggleOpposedSeniorEditorsPicker);
-        await this.addPersonToPeoplePicker(this.opposedSeniorEditorsPicker, this.maxOpposingSeniorEditors);
+        await this.addPersonToPeoplePicker(this.opposedSeniorEditorsPicker, this.maxOpposingSeniorEditors, false);
         await this.setOpposedReason(this.opposedSeniorEditorsReason);
     }
 
     public async addOpposingReviewingEditor(): Promise<void> {
         await t.click(this.toggleOpposedReviewingEditorsPicker);
-        await this.addPersonToPeoplePicker(this.opposedReviewingEditorsPicker, this.maxOpposingReviewingEditors);
+        await this.addPersonToPeoplePicker(this.opposedReviewingEditorsPicker, this.maxOpposingReviewingEditors, false);
         await this.setOpposedReason(this.opposedReviewingEditorsReason);
     }
 
