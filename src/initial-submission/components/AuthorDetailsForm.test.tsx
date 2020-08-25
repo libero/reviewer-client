@@ -367,5 +367,25 @@ describe('Author Details Form', (): void => {
             await waitFor(() => {});
             expect(container.querySelectorAll('.typography__label--error')).toHaveLength(0);
         });
+
+        it('Should validate when using pre-fill', async (): Promise<void> => {
+            const toggleErrorBarMock = jest.fn(() => Promise.resolve());
+            const { getByText, container } = render(
+                <AuthorDetailsForm
+                    schemaFactory={AuthorDetailsSchema}
+                    initialValues={testInitialValues}
+                    toggleErrorBar={toggleErrorBarMock}
+                    ButtonComponent={ButtonComponent}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(container.querySelectorAll('.typography__label--error')).toHaveLength(4);
+
+            fireEvent.click(getByText('author.prefill--link'));
+            await waitFor(() => {});
+
+            expect(toggleErrorBarMock).toBeCalledWith(false);
+        });
     });
 });
