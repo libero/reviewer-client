@@ -6,7 +6,7 @@ export enum FileStatus {
     Uploading = 1,
     Error = 2,
     Processing = 3,
-    Idle = 4
+    Idle = 4,
 }
 
 interface DropzoneStatus {
@@ -171,10 +171,14 @@ export class FilesPage {
     }
 
     public async deleteSupportingFile(index: number): Promise<void> {
-        const supportingFiles = await this.supportFilesList;
-        const initialCount = await supportingFiles.count;
-        await clickSelector(`.multifile-upload__upload-list-item:nth-child(${index+1}) .multifile-upload__delete--container`);
-        await t.expect(initialCount).gt(await this.supportFilesList.count);
+        const initialCount = await this.supportFilesList.count;
+        const domIndex = index + 1;
+        const deleteQuerySelector = `.multifile-upload__upload-list-item:nth-child(${domIndex}) .multifile-upload__delete--container`;
+        await t.expect(Selector(deleteQuerySelector).exists).ok();
+        await clickSelector(deleteQuerySelector);
+        await t.wait(100);
+        const afterDeleteCount = await this.supportFilesList.count;
+        await t.expect(initialCount).gt(afterDeleteCount);
     }
 
     // TODO: does this need a back button?
