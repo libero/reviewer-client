@@ -59,12 +59,13 @@ const AuthorDetailsForm = ({
         }
     }, [authorFirstName, authorLastName, authorEmail, institution, errors]);
 
-    const getDetails = (): void => {
+    const getDetails = async (): Promise<void> => {
         const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
         setValue('firstName', firstName);
         setValue('lastName', lastName);
         setValue('email', data.getCurrentUser.email);
         setValue('institution', data.getCurrentUser.aff);
+        await triggerValidation();
     };
 
     return (
