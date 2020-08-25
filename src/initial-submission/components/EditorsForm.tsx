@@ -34,6 +34,12 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
         },
     });
 
+    const { data: getLeadership, loading: loadingLeadership } = useQuery<GetEditors>(getEditorsQuery, {
+        variables: {
+            role: 'leadership',
+        },
+    });
+
     const { data: getReviewingEditors, loading: loadingReviewingEditors } = useQuery<GetEditors>(getEditorsQuery, {
         variables: {
             role: 'reviewingEditor',
@@ -175,7 +181,11 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
-                people={loadingSeniorEditors ? [] : getSeniorEditors.getEditors}
+                people={
+                    loadingSeniorEditors || loadingLeadership
+                        ? []
+                        : [...getSeniorEditors.getEditors, ...getLeadership.getEditors]
+                }
                 onChange={(selected): void => {
                     setValue('suggestedSeniorEditors', selected);
                     triggerValidation('suggestedSeniorEditors');
@@ -200,9 +210,11 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
             >
                 <PeoplePicker
                     people={
-                        loadingSeniorEditors
+                        loadingSeniorEditors || loadingLeadership
                             ? []
-                            : getSeniorEditors.getEditors.filter(ed => !suggestedSeniorEditors.includes(ed.id))
+                            : [...getSeniorEditors.getEditors, ...getLeadership.getEditors].filter(
+                                  ed => !suggestedSeniorEditors.includes(ed.id),
+                              )
                     }
                     onChange={(selected): void => {
                         setValue('opposedSeniorEditors', selected);

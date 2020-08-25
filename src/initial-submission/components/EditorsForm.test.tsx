@@ -52,6 +52,28 @@ jest.mock('@apollo/react-hooks', () => ({
                 },
                 loading: false,
             };
+        } else if (options.variables.role === 'leadership') {
+            return {
+                data: {
+                    getEditors: [
+                        {
+                            id: '5',
+                            name: 'Deputy James Bond',
+                            aff: 'MI6',
+                            focuses: ['Spying', 'Vodka'],
+                            expertises: ['Marksmanship', 'One Liners'],
+                        },
+                        {
+                            id: '6',
+                            name: 'Deputy Blofeld',
+                            aff: 'Spectre',
+                            focuses: ['World Domination', 'Money', 'Evil'],
+                            expertises: ['White Cats'],
+                        },
+                    ],
+                },
+                loading: false,
+            };
         }
         return {
             data: {
