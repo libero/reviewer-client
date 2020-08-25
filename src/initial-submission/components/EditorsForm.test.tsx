@@ -52,6 +52,28 @@ jest.mock('@apollo/react-hooks', () => ({
                 },
                 loading: false,
             };
+        } else if (options.variables.role === 'leadership') {
+            return {
+                data: {
+                    getEditors: [
+                        {
+                            id: '5',
+                            name: 'Deputy James Bond',
+                            aff: 'MI6',
+                            focuses: ['Spying', 'Vodka'],
+                            expertises: ['Marksmanship', 'One Liners'],
+                        },
+                        {
+                            id: '6',
+                            name: 'Deputy Blofeld',
+                            aff: 'Spectre',
+                            focuses: ['World Domination', 'Money', 'Evil'],
+                            expertises: ['White Cats'],
+                        },
+                    ],
+                },
+                loading: false,
+            };
         }
         return {
             data: {
@@ -482,6 +504,22 @@ describe('EditorsDetailsForm', (): void => {
             expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
             await waitFor(() => {});
             expect(getByText('James Bond')).toBeInTheDocument();
+        });
+
+        it('display a deputy editors with senior editors', async () => {
+            const { baseElement, container, getByText, getAllByText } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            const seniorEditorPicker = container.querySelector('.senior-editors-picker');
+            expect(seniorEditorPicker).toBeInTheDocument();
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            expect(getByText('Deputy James Bond')).toBeInTheDocument();
         });
 
         it('display a reviewing editors when picker is clicked', async () => {
