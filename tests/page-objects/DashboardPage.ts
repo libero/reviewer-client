@@ -42,7 +42,13 @@ export class DashboardPage {
         if (!dashboard && !noSubmissions && retries < MAX_ASSERT_ON_PAGE_RETRIES) {
             await this.assertOnPage(retries + 1);
         } else {
-            await t.expect(dashboard !== noSubmissions).ok({ timeout: 1000 });
+            if (dashboard) {
+                await t.expect(noSubmissions).notOk();
+                await t.expect(dashboard).ok();
+            } else {
+                await t.expect(dashboard).notOk();
+                await t.expect(noSubmissions).ok();
+            }
         }
     }
 
@@ -97,7 +103,7 @@ export class DashboardPage {
     public async newSubmission(articleType: ArticleType): Promise<void> {
         await clickSelector(this.newSubmissionButton);
         await t.expect(this.newSubmissionContainer.exists).ok();
-        await t.click(this.articleTypeSelect);// Keeping .click due to react-select click handling
+        await t.click(this.articleTypeSelect); // Keeping .click due to react-select click handling
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
         await clickSelector(this.continueButton);
