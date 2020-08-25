@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickNext, clickSelector, clickBack, clickWithSelectorAndText } from './formHelper';
 
 interface NameEmail {
     name: string;
@@ -35,6 +36,11 @@ export class EditorPage {
     private readonly maxReviewingEditors = 6;
 
     public async assertOnPage(): Promise<void> {
+        await t.expect(this.editorsStep.exists).ok();
+        await t.expect(this.seniorEditorsPicker.exists).ok();
+        await t.expect(this.suggestedReviewingEditorsPicker.exists).ok();
+        await t.expect(this.nextButton.exists).ok();
+
         await t.expect(this.editorsStep.visible).ok();
         await t.expect(this.seniorEditorsPicker.visible).ok();
         await t.expect(this.suggestedReviewingEditorsPicker.visible).ok();
@@ -53,6 +59,7 @@ export class EditorPage {
     public async populateMinimalFields(): Promise<void> {
         await this.addSeniorEditors();
         await this.addReviewingEditors();
+        await t.wait(1000);
     }
 
     public async assertPopulatedValues(
@@ -66,10 +73,14 @@ export class EditorPage {
             .eql(values.seniorEditorsCount + 1);
     }
 
-    private async addPersonToPeoplePicker(picker: Selector, number = 1, includeOpenPodInSelectedCount = true): Promise<void> {
+    private async addPersonToPeoplePicker(
+        picker: Selector,
+        number = 1,
+        pickerQuerySelector: string,
+        includeOpenPodInSelectedCount = true,
+    ): Promise<void> {
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
-        const addButton = picker.find('.pod__button');
-        await t.click(addButton);
+        await clickSelector(`${pickerQuerySelector} .pod__button`);
         await t.expect(Selector('.modal__overlay').count).eql(1);
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
@@ -78,13 +89,13 @@ export class EditorPage {
         for (let i = 0; i < number; i++) {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
-            await t.click(button);
+            await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
         }
 
         await t
             .expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count)
             .eql(number);
-        await t.click(Selector('.modal__buttons_container').find('.button--primary'));
+        await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
         await t
             .expect(picker.find('.selected_people_list__item').count)
@@ -95,7 +106,12 @@ export class EditorPage {
         selectionCount = this.minSeniorEditors,
         includeOpenPodInSelectedCount = true,
     ): Promise<void> {
-        await this.addPersonToPeoplePicker(this.seniorEditorsPicker, selectionCount, includeOpenPodInSelectedCount);
+        await this.addPersonToPeoplePicker(
+            this.seniorEditorsPicker,
+            selectionCount,
+            '.senior-editors-picker',
+            includeOpenPodInSelectedCount,
+        );
     }
 
     public async assertPeoplePickerSearch(): Promise<void> {
@@ -117,19 +133,30 @@ export class EditorPage {
         await this.addPersonToPeoplePicker(
             this.suggestedReviewingEditorsPicker,
             selectionCount,
+            '.reviewing-editors-picker',
             includeOpenPodInSelectedCount,
         );
     }
 
     public async addOpposingSeniorEditor(): Promise<void> {
-        await t.click(this.toggleOpposedSeniorEditorsPicker);
-        await this.addPersonToPeoplePicker(this.opposedSeniorEditorsPicker, this.maxOpposingSeniorEditors, false);
+        await clickWithSelectorAndText('.excluded-toggle__action', 'exclude a senior editor');
+        await this.addPersonToPeoplePicker(
+            this.opposedSeniorEditorsPicker,
+            this.maxOpposingSeniorEditors,
+            '.opposed-senior-editors-picker',
+            false,
+        );
         await this.setOpposedReason(this.opposedSeniorEditorsReason);
     }
 
     public async addOpposingReviewingEditor(): Promise<void> {
-        await t.click(this.toggleOpposedReviewingEditorsPicker);
-        await this.addPersonToPeoplePicker(this.opposedReviewingEditorsPicker, this.maxOpposingReviewingEditors, false);
+        await clickWithSelectorAndText('.excluded-toggle__action', 'exclude a reviewing editor');
+        await this.addPersonToPeoplePicker(
+            this.opposedReviewingEditorsPicker,
+            this.maxOpposingReviewingEditors,
+            '.opposed-reviewing-editors-picker',
+            false,
+        );
         await this.setOpposedReason(this.opposedReviewingEditorsReason);
     }
 
@@ -166,17 +193,23 @@ export class EditorPage {
     }
 
     public async addOpposingReviewer(inputs?: NameEmail[], reason = 'Hates squirrels'): Promise<void> {
-        await t.click(this.toggleOpposedReviewerPicker);
+        await clickWithSelectorAndText('.excluded-toggle__action', 'exclude a reviewer');
         await this.setNameEmailFields(this.opposedReviewers, 'opposedReviewers', inputs);
         await t.typeText(this.opposedReviewersReason, reason);
         await t.expect(this.opposedReviewersReason.value).eql(reason);
     }
 
     public async back(): Promise<void> {
-        await t.click(this.backButton);
+        await t.expect(this.backButton.visible).ok();
+        await clickBack();
+        await t.expect(this.editorsStep.exists).notOk();
     }
 
-    public async next(): Promise<void> {
-        await t.click(this.nextButton);
+    public async next(expectFailure = false): Promise<void> {
+        await t.expect(this.nextButton.visible).ok();
+        await clickNext();
+        if (!expectFailure) {
+            await t.expect(this.editorsStep.exists).notOk({ timeout: 5000 });
+        }
     }
 }

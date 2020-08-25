@@ -205,6 +205,7 @@ export const submitSubmissionMutation = gql`
     mutation Submit($id: ID!) {
         submit(id: $id) {
             id
+            status
         }
     }
 `;
@@ -224,5 +225,11 @@ export const CLEAR_ERROR = gql`
 export const SET_LOGOUT_ERROR = gql`
     mutation SetLogoutError {
         setLogoutError @client
+    }
+`;
+
+export const SET_VALIDATION_ERROR = gql`
+    mutation SetValidationError {
+        setValidationError @client
     }
 `;

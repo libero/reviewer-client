@@ -1,11 +1,7 @@
-import { waitForReact } from 'testcafe-react-selectors';
-
 import { DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`Authentication`.page`${BASE_URL}`.beforeEach(async () => {
-    await waitForReact();
-});
+fixture`Authentication`.page`${BASE_URL}`;
 
 test('User can login', async () => {
     const loginPage = new LoginPage();

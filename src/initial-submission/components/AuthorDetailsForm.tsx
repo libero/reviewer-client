@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '../../ui/atoms';
@@ -14,17 +14,22 @@ interface GetCurrentUser {
     getCurrentUser: User;
 }
 
-const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: StepProps): JSX.Element => {
+const AuthorDetailsForm = ({
+    initialValues,
+    schemaFactory,
+    ButtonComponent,
+    toggleErrorBar,
+}: StepProps): JSX.Element => {
     const { t } = useTranslation('wizard-form');
     const { data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { fetchPolicy: 'cache-only' });
     const [saveCallback] = useMutation<Submission>(saveAuthorPageMutation);
     const schema = schemaFactory(t);
     const { register, errors, getValues, watch, setValue, triggerValidation } = useForm<AuthorDetails>({
         defaultValues: {
-            firstName: initialValues.author ? initialValues.author.firstName : '',
-            lastName: initialValues.author ? initialValues.author.lastName : '',
-            email: initialValues.author ? initialValues.author.email : '',
-            institution: initialValues.author ? initialValues.author.institution : '',
+            firstName: initialValues && initialValues.author ? initialValues.author.firstName : '',
+            lastName: initialValues && initialValues.author ? initialValues.author.lastName : '',
+            email: initialValues && initialValues.author ? initialValues.author.email : '',
+            institution: initialValues && initialValues.author ? initialValues.author.institution : '',
         },
         mode: 'onBlur',
         validationSchema: schema,
@@ -48,12 +53,19 @@ const AuthorDetailsForm = ({ initialValues, schemaFactory, ButtonComponent }: St
 
     useAutoSave(onSave, [authorFirstName, authorLastName, authorEmail, institution]);
 
-    const getDetails = (): void => {
+    useEffect(() => {
+        if (toggleErrorBar && Object.keys(errors).length === 0) {
+            toggleErrorBar(false);
+        }
+    }, [authorFirstName, authorLastName, authorEmail, institution, errors]);
+
+    const getDetails = async (): Promise<void> => {
         const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
         setValue('firstName', firstName);
         setValue('lastName', lastName);
         setValue('email', data.getCurrentUser.email);
         setValue('institution', data.getCurrentUser.aff);
+        await triggerValidation();
     };
 
     return (

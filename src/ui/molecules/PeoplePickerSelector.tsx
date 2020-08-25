@@ -33,7 +33,8 @@ const PeoplePickerSelector = ({
     const [filteredPeople, setFilteredPeople] = useState(people);
 
     const onSearch = (searchTerm: string): void => {
-        if (!searchTerm) {
+        const processedSearchTerm = searchTerm.trim().toLowerCase();
+        if (!processedSearchTerm) {
             setFilteredPeople(people);
             return;
         }
@@ -43,10 +44,10 @@ const PeoplePickerSelector = ({
                 const searchableExpertises = person.expertises ? person.expertises.join(' ') : '';
                 const searchableFocuses = person.focuses ? person.focuses.join(' ') : '';
                 return (
-                    person.name.toLowerCase().includes(searchTerm) ||
-                    (person.aff && person.aff.toLowerCase().includes(searchTerm)) ||
-                    searchableFocuses.toLowerCase().includes(searchTerm) ||
-                    searchableExpertises.toLowerCase().includes(searchTerm)
+                    person.name.toLowerCase().includes(processedSearchTerm) ||
+                    (person.aff && person.aff.toLowerCase().includes(processedSearchTerm)) ||
+                    searchableFocuses.toLowerCase().includes(processedSearchTerm) ||
+                    searchableExpertises.toLowerCase().includes(processedSearchTerm)
                 );
             }),
         );
@@ -103,7 +104,7 @@ const PeoplePickerSelector = ({
                     <SearchField
                         id="peoplePickerSearch"
                         placeholder={t('people_picker--search-placeholder')}
-                        onChange={(event: React.FormEvent<HTMLInputElement>): void => {
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>): void => {
                             setSearchTerm(event.currentTarget.value);
                         }}
                     />

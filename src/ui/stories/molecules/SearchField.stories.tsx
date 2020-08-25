@@ -10,7 +10,7 @@ storiesOf('ui | molecules/SeachField', module)
     .add(
         'SearchField',
         (): JSX.Element => {
-            const onChange = (event: React.FormEvent<HTMLInputElement>): Promise<void> => {
+            const onChange = (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
                 action('changed')(event.currentTarget.value);
                 return Promise.resolve();
             };

@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { clickSelector } from './formHelper';
 
 export enum DashboardState {
     WithSubmissions = 'WithSubmissions',
@@ -25,18 +26,18 @@ export type ArticleType =
 export class DashboardPage {
     private readonly withSubmissions = Selector('.dashboard');
     private readonly noSubmissions = Selector('.no-submissions');
-    private readonly newSubmissionButton = Selector('#new-submission-button');
-    private readonly continueButton = Selector('.article-type__buttons > .button--primary');
+    private readonly newSubmissionButton = '#new-submission-button';
+    private readonly continueButton = '.article-type__buttons > .button--primary';
     private readonly submissionEntry = Selector('.submission-entry');
     private readonly newSubmissionContainer: Selector = Selector('.article-type');
     private readonly articleTypeSelect: Selector = Selector('.select-field__control');
     private readonly articleTypeValue: Selector = Selector('.select-field__single-value');
     private readonly articleTypeOptions: Selector = Selector('.select-field__option');
-    private readonly confirmDeleteButton = Selector('.button--danger');
+    private readonly confirmDeleteButton = '.button--danger';
 
     public async assertOnPage(retries = 0): Promise<void> {
-        const dashboard = await this.withSubmissions.visible;
-        const noSubmissions = await this.noSubmissions.visible;
+        const dashboard = await this.withSubmissions.exists;
+        const noSubmissions = await this.noSubmissions.exists;
 
         if (!dashboard && !noSubmissions && retries < MAX_ASSERT_ON_PAGE_RETRIES) {
             await this.assertOnPage(retries + 1);
@@ -46,8 +47,8 @@ export class DashboardPage {
     }
 
     public async getDashboardState(): Promise<DashboardState> {
-        const dashboard = await this.withSubmissions.visible;
-        const noSubmissions = await this.noSubmissions.visible;
+        const dashboard = await this.withSubmissions.exists;
+        const noSubmissions = await this.noSubmissions.exists;
         if (dashboard) {
             return DashboardState.WithSubmissions;
         } else if (noSubmissions) {
@@ -68,8 +69,7 @@ export class DashboardPage {
     }
 
     public async openSubmission(id: string): Promise<void> {
-        const submissionSelector = this.submissionEntry.withAttribute('data-id', id);
-        await t.click(submissionSelector.find('.submission-entry__link'));
+        await clickSelector(`.submission-entry[data-id="${id}"] .submission-entry__link`);
     }
 
     public async getSubmissions(): Promise<DashboardSubmission[]> {
@@ -95,12 +95,12 @@ export class DashboardPage {
     }
 
     public async newSubmission(articleType: ArticleType): Promise<void> {
-        await t.click(this.newSubmissionButton);
+        await clickSelector(this.newSubmissionButton);
         await t.expect(this.newSubmissionContainer.exists).ok();
-        await t.click(this.articleTypeSelect);
+        await t.click(this.articleTypeSelect);// Keeping .click due to react-select click handling
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
-        await t.click(this.continueButton);
+        await clickSelector(this.continueButton);
     }
 
     public async deleteSubmission(id: string): Promise<void> {
@@ -108,8 +108,7 @@ export class DashboardPage {
             console.warn('no submissions to delete');
             return;
         }
-        const submissionSelector = await this.submissionEntry.withAttribute('data-id', id);
-        await t.click(submissionSelector.find('.submission-entry__icon'));
-        await t.click(this.confirmDeleteButton);
+        await clickSelector(`.submission-entry[data-id="${id}"] .submission-entry__icon`);
+        await clickSelector(this.confirmDeleteButton);
     }
 }
