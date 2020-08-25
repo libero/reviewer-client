@@ -506,6 +506,22 @@ describe('EditorsDetailsForm', (): void => {
             expect(getByText('James Bond')).toBeInTheDocument();
         });
 
+        it('display a deputy editors with senior editors', async () => {
+            const { baseElement, container, getByText, getAllByText } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            const seniorEditorPicker = container.querySelector('.senior-editors-picker');
+            expect(seniorEditorPicker).toBeInTheDocument();
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            expect(getByText('Deputy James Bond')).toBeInTheDocument();
+        });
+
         it('display a reviewing editors when picker is clicked', async () => {
             const { baseElement, container, getByText, getAllByText } = render(
                 <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
