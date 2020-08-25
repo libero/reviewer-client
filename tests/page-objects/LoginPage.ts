@@ -25,5 +25,6 @@ export class LoginPage {
         if (await this.isCookieBannerVisible()) {
             await this.dismissCookieBanner();
         }
+        await t.expect(this.loginButton.exists).notOk();
     }
 }
