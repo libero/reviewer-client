@@ -1,17 +1,11 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-declare global {
-    interface Window {
-        gtag?: any;
-    }
-}
-
-export default function useTrackingHook() {
+export default function useTrackingHook(): void {
     const { listen } = useHistory();
 
     useEffect(() => {
-        const unregister = listen(location => {
+        const unregister = listen((location): void => {
             if (window.gtag) {
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 window.gtag('config', 'UA-176153230-1', { page_path: location.pathname });
