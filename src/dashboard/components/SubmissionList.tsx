@@ -7,11 +7,15 @@ import SubmissionEntry from './SubmissionEntry';
 interface SubmissionListProps {
     submissions: Submission[];
     onDelete: (options: {}) => void;
+    toggle: () => void;
+    setNoArticleTypeId: (id: string) => void;
 }
 
 const SubmissionList: React.FC<SubmissionListProps> = ({
     submissions = [],
     onDelete,
+    toggle,
+    setNoArticleTypeId,
 }: SubmissionListProps): JSX.Element => {
     const { t } = useTranslation('dashboard');
     return (
@@ -36,6 +40,8 @@ const SubmissionList: React.FC<SubmissionListProps> = ({
                                     key={index}
                                     submission={sub}
                                     onDelete={(): void => onDelete({ variables: { id: sub.id } })}
+                                    toggleArticleType={toggle}
+                                    setNoArticleTypeId={setNoArticleTypeId}
                                 />
                             ),
                         )

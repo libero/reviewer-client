@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import SubmissionList from './SubmissionList';
-import { getSubmissionsQuery, startSubmissionMutation, deleteSubmissionMutation } from '../graphql';
+import { getSubmissionsQuery, startSubmissionMutation, deleteSubmissionMutation, saveArticleType } from '../graphql';
 import NoSubmissions from './NoSubmissions';
 import { Button, Paragraph } from '../../ui/atoms';
 import useModal from '../../ui/hooks/useModal';
@@ -13,7 +13,9 @@ import Interweave from 'interweave';
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
         const { isShowing, toggle } = useModal();
+        const [noArticleTypeId, setNoArticleTypeId] = useState<string>();
         const { loading, data } = useQuery(getSubmissionsQuery);
+        const [saveArticleTypeMutation] = useMutation(saveArticleType);
         const [startSubmission, { loading: loadingStartSubmission }] = useMutation(startSubmissionMutation, {
             update(cache, { data: { startSubmission } }) {
                 const { getSubmissions } = cache.readQuery({ query: getSubmissionsQuery });
@@ -39,9 +41,15 @@ const Dashboard = withRouter(
         });
 
         const onArticleTypeConfirm = (articleType: string): void => {
-            startSubmission({ variables: { articleType } }).then(data => {
-                history.push(data.data.startSubmission.lastStepVisited);
-            });
+            if (noArticleTypeId) {
+                saveArticleTypeMutation({ variables: { id: noArticleTypeId, articleType } }).then(data => {
+                    history.push(data.data.startSubmission.lastStepVisited);
+                });
+            } else {
+                startSubmission({ variables: { articleType } }).then(data => {
+                    history.push(data.data.startSubmission.lastStepVisited);
+                });
+            }
         };
         const { t } = useTranslation('dashboard');
         if (isShowing) {
@@ -59,7 +67,12 @@ const Dashboard = withRouter(
                     </div>
                     {loading && 'loading'}
                     {data && data.getSubmissions && (
-                        <SubmissionList submissions={data.getSubmissions} onDelete={deleteSubmission} />
+                        <SubmissionList
+                            submissions={data.getSubmissions}
+                            onDelete={deleteSubmission}
+                            toggle={toggle}
+                            setNoArticleTypeId={setNoArticleTypeId}
+                        />
                     )}
                     <Paragraph type="footer">
                         <Interweave content={t('footer')} />

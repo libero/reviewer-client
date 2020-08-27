@@ -34,3 +34,9 @@ export const deleteSubmissionMutation = gql`
         deleteSubmission(id: $id)
     }
 `;
+
+export const saveArticleType = gql`
+    mutation SaveArticleType($id: ID!, $articleType: String!) {
+        saveArticleType(id: $id, articleType: $articleType)
+    }
+`;
