@@ -61,7 +61,7 @@ const Dashboard = withRouter(
                     {data && data.getSubmissions && (
                         <SubmissionList submissions={data.getSubmissions} onDelete={deleteSubmission} />
                     )}
-                    <Paragraph type="footer">
+                    <Paragraph className="dashboard__footer" type="footer">
                         <Interweave content={t('footer')} />
                     </Paragraph>
                 </div>

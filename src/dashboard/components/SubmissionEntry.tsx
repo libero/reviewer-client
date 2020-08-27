@@ -41,7 +41,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                     </span>
                     <div className={`submission-entry__link_text submission-entry__link_text--${status}`}>
                         {status === 'continue_submission' ? (
-                            <span>{t('continue-submission')}</span>
+                            <span className="typography__body--link">{t('continue-submission')}</span>
                         ) : (
                             <span>{t('submitted')}</span>
                         )}
