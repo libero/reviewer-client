@@ -39,7 +39,7 @@ const AppRoutes: React.FC = (): JSX.Element => {
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    <ErrorPage error="404: page not found" />
+                    <ErrorPage />
                 </Switch>
             </div>
             <Footer />

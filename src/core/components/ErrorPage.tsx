@@ -2,29 +2,30 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import errorImage from '../assets/error.svg';
 
-const formatErrorMessage = error => {
+const formatErrorMessage = (error: string | number | Error): string => {
     if (error instanceof Error) {
         return error.message;
     }
     if (['string', 'number'].includes(typeof error)) {
-        return error;
+        return error.toString();
     }
     return '';
 };
 
 interface Props {
-    error?: Error | string;
+    error?: Error | string | number;
 }
 
-const ErrorPage = ({ error }: Props) => {
-    const { t } = useTranslation('contact-us');
+const ErrorPage = (props: Props): JSX.Element => {
+    const { t } = useTranslation('error-page');
+    const { error = `${t('404')}` } = props;
     return (
-        <div>
-            <img alt="Test tube experiment" src={errorImage} />
-            <h1 className="typography__heading typography__heading--h1">{t('Oops')}</h1>
-            <h2 className="typography__heading typography__heading--h2">{t('Something is wrong')}</h2>
+        <div className="error-page">
+            <img className="error-page__image" alt="Test tube experiment" src={errorImage} />
+            <h1 className="typography__heading typography__heading--h1">{t('oops')}</h1>
+            <h2 className="typography__heading typography__heading--h2">{t('went-wrong')}</h2>
             <pre>{formatErrorMessage(error)}</pre>
-            <a href="/">Back to homepage</a>
+            <a href="/">{t('back')}</a>
         </div>
     );
 };
