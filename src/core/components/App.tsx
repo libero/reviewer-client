@@ -12,6 +12,7 @@ import { CookieBanner, Footer, Feedback } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
 import Login from '../../login/components/Login';
 import useTrackingHook from './useTrackingHook';
+import ErrorPage from './ErrorPage';
 
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
 const ContactUs = lazy(() => import('../../static-pages/components/ContactUs'));
@@ -38,6 +39,7 @@ const AppRoutes: React.FC = (): JSX.Element => {
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
+                    <ErrorPage error="404: page not found" />
                 </Switch>
             </div>
             <Footer />
