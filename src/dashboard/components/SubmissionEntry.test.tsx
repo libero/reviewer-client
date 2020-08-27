@@ -306,4 +306,57 @@ describe('SubmissionEntry', (): void => {
         );
         expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
     });
+
+    it('calls setNoArticleTypeId and toggleArticleType when submission has no articleType', () => {
+        const submissionWithNoArticleType = {
+            id: 'someId',
+            lastStepVisited: '/submit/someId/someStep',
+            updated: '2020-06-22T13:24:09.199Z',
+        };
+        const toggleArticleTypeMock = jest.fn();
+        const setNoArticleTypeIdMock = jest.fn();
+
+        const { container } = render(
+            <SubmissionEntry
+                submission={submissionWithNoArticleType}
+                onDelete={jest.fn()}
+                toggleArticleType={toggleArticleTypeMock}
+                setNoArticleTypeId={setNoArticleTypeIdMock}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+                container: appContainer(),
+            },
+        );
+        fireEvent.click(container.querySelector('.submission-entry__link'));
+        expect(setNoArticleTypeIdMock).toBeCalledWith('someId');
+        expect(toggleArticleTypeMock).toBeCalled();
+    });
+
+    it("calls doesn't call setNoArticleTypeId and toggleArticleType when submission has articleType", () => {
+        const submissionWithNoArticleType = {
+            id: 'someId',
+            articleType: 'articleType',
+            lastStepVisited: '/submit/someId/someStep',
+            updated: '2020-06-22T13:24:09.199Z',
+        };
+        const toggleArticleTypeMock = jest.fn();
+        const setNoArticleTypeIdMock = jest.fn();
+
+        const { container } = render(
+            <SubmissionEntry
+                submission={submissionWithNoArticleType}
+                onDelete={jest.fn()}
+                toggleArticleType={toggleArticleTypeMock}
+                setNoArticleTypeId={setNoArticleTypeIdMock}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+                container: appContainer(),
+            },
+        );
+        fireEvent.click(container.querySelector('.submission-entry__link'));
+        expect(setNoArticleTypeIdMock).not.toBeCalled();
+        expect(toggleArticleTypeMock).not.toBeCalled();
+    });
 });
