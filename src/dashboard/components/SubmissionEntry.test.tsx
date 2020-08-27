@@ -66,15 +66,28 @@ describe('SubmissionEntry', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
-                    wrapper: routerWrapper(['/link-1']),
-                }),
+                render(
+                    <SubmissionEntry
+                        submission={mockSubmission}
+                        onDelete={jest.fn}
+                        toggleArticleType={jest.fn()}
+                        setNoArticleTypeId={jest.fn()}
+                    />,
+                    {
+                        wrapper: routerWrapper(['/link-1']),
+                    },
+                ),
         ).not.toThrow();
     });
 
     it('should render the correct classes for unfinished submissions', (): void => {
         const { container } = render(
-            <SubmissionEntry submission={getMockSubmissionForStatus('CONTINUE_SUBMISSION')} onDelete={jest.fn} />,
+            <SubmissionEntry
+                submission={getMockSubmissionForStatus('CONTINUE_SUBMISSION')}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
             {
                 wrapper: routerWrapper(['/link-1']),
             },
@@ -86,7 +99,12 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct classes for submitted submissions', (): void => {
         const { container } = render(
-            <SubmissionEntry submission={getMockSubmissionForStatus('SUBMITTED')} onDelete={jest.fn} />,
+            <SubmissionEntry
+                submission={getMockSubmissionForStatus('SUBMITTED')}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
             {
                 wrapper: routerWrapper(['/link-1']),
             },
@@ -98,7 +116,12 @@ describe('SubmissionEntry', (): void => {
 
     it('on click should be prevented for submitted submissions', (): void => {
         const { container } = render(
-            <SubmissionEntry submission={getMockSubmissionForStatus('SUBMITTED')} onDelete={jest.fn} />,
+            <SubmissionEntry
+                submission={getMockSubmissionForStatus('SUBMITTED')}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
             {
                 wrapper: routerWrapper(['/link-1']),
             },
@@ -112,7 +135,12 @@ describe('SubmissionEntry', (): void => {
 
     it('should render the correct classes for rejected submissions', (): void => {
         const { container } = render(
-            <SubmissionEntry submission={getMockSubmissionForStatus('REJECTED')} onDelete={jest.fn} />,
+            <SubmissionEntry
+                submission={getMockSubmissionForStatus('REJECTED')}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
             {
                 wrapper: routerWrapper(['/link-1']),
             },
@@ -123,9 +151,17 @@ describe('SubmissionEntry', (): void => {
     });
 
     it('should render the correct route for the submission', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { container } = render(
+            <SubmissionEntry
+                submission={mockSubmission}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(container.querySelector('a.submission-entry__link')).toHaveAttribute(
             'href',
             mockSubmission.lastStepVisited,
@@ -133,57 +169,116 @@ describe('SubmissionEntry', (): void => {
     });
 
     it('should render the correct title for the submission', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { container } = render(
+            <SubmissionEntry
+                submission={mockSubmission}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent(
             mockSubmission.manuscriptDetails.title,
         );
     });
 
     it('should render the correct title if the submission has none', (): void => {
-        const { container } = render(<SubmissionEntry submission={mockSubmissionNoTitle} onDelete={jest.fn} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { container } = render(
+            <SubmissionEntry
+                submission={mockSubmissionNoTitle}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(container.querySelector('span.submission-entry__title')).toHaveTextContent('no-title');
     });
 
     it('should render the submissions updated time as a readable string', (): void => {
         const { container, rerender } = render(
-            <SubmissionEntry submission={mockSubmissionNoTitle} onDelete={jest.fn} />,
+            <SubmissionEntry
+                submission={mockSubmissionNoTitle}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
             {
                 wrapper: routerWrapper(['/link-1']),
             },
         );
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Today');
-        rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(1)} onDelete={jest.fn} />);
+        rerender(
+            <SubmissionEntry
+                submission={getMockSubmissionForDaysAgo(1)}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+        );
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('Yesterday');
-        rerender(<SubmissionEntry submission={getMockSubmissionForDaysAgo(14)} onDelete={jest.fn} />);
+        rerender(
+            <SubmissionEntry
+                submission={getMockSubmissionForDaysAgo(14)}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+        );
         expect(container.querySelector('.submission-entry__dates > time:first-child')).toHaveTextContent('2 weeks ago');
     });
 
     it('should not render the modal on first render', (): void => {
-        const { baseElement } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { baseElement } = render(
+            <SubmissionEntry
+                submission={mockSubmission}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
     });
 
     it('should render the modal on delete click', (): void => {
-        const { baseElement } = render(<SubmissionEntry submission={mockSubmission} onDelete={jest.fn} />, {
-            wrapper: routerWrapper(['/link-1']),
-            container: appContainer(),
-        });
+        const { baseElement } = render(
+            <SubmissionEntry
+                submission={mockSubmission}
+                onDelete={jest.fn}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+                container: appContainer(),
+            },
+        );
         fireEvent.click(baseElement.querySelector('.submission-entry__icon'));
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
     });
 
     it('should call onDelete function on modal button click', (): void => {
         const onDelete = jest.fn();
-        const { baseElement, getByText } = render(<SubmissionEntry submission={mockSubmission} onDelete={onDelete} />, {
-            wrapper: routerWrapper(['/link-1']),
-            container: appContainer(),
-        });
+        const { baseElement, getByText } = render(
+            <SubmissionEntry
+                submission={mockSubmission}
+                onDelete={onDelete}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+                container: appContainer(),
+            },
+        );
         fireEvent.click(baseElement.querySelector('.submission-entry__icon'));
         expect(onDelete).not.toBeCalled();
         fireEvent.click(getByText('modal--default-button'));
@@ -197,10 +292,18 @@ describe('SubmissionEntry', (): void => {
             articleType: 'research-article',
             updated: '2020-06-22T13:24:09.199Z',
         };
-        const { getByText } = render(<SubmissionEntry submission={submissionWithDate} onDelete={jest.fn()} />, {
-            wrapper: routerWrapper(['/link-1']),
-            container: appContainer(),
-        });
+        const { getByText } = render(
+            <SubmissionEntry
+                submission={submissionWithDate}
+                onDelete={jest.fn()}
+                toggleArticleType={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+                container: appContainer(),
+            },
+        );
         expect(getByText('Mon 22 Jun 2020')).toBeInTheDocument();
     });
 });
