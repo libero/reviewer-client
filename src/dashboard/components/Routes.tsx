@@ -4,9 +4,9 @@ const Dashboard = lazy(() => import('./Dashboard'));
 const AuthRoute = lazy(() => import('../../core/components/AuthRoute'));
 
 const Routes: React.FC = (): JSX.Element => (
-    <Switch>
+    // <Switch>
         <AuthRoute exact path="/" component={Dashboard} />
-    </Switch>
+    // </Switch>
 );
 
 export default Routes;
