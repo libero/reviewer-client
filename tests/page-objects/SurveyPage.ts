@@ -50,6 +50,7 @@ export class SurveyPage {
     public async skipOrFinish(): Promise<void> {
         await t.expect(Selector(this.doneSkipButton).exists).ok();
         await clickSelector(this.doneSkipButton);
+        await t.wait(2000);
         await t.expect(this.pageWrapper.exists).notOk();
     }
 }

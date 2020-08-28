@@ -12,5 +12,6 @@ export class ThankYouPage {
 	
 	public async finish(): Promise<void> {
 		await clickSelector(this.finishButton);
+		await t.wait(1000);
 	}
 }
