@@ -37,7 +37,7 @@ describe('ErrorBoundary', (): void => {
     });
 
     it('should render correctly render error', (): void => {
-        const ComponentThatThrows = ({ someInput }: { someInput: Number }): JSX.Element => {
+        const ComponentThatThrows = ({ someInput }: { someInput: number }): JSX.Element => {
             if (someInput === 1) {
                 throw new Error('test error');
             }

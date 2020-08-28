@@ -3,7 +3,7 @@ import { BASE_URL } from '../../test-utils/baseUrl';
 
 fixture`Complete Path`.page`${BASE_URL}`;
 
-test.only('Complete Path', async () => {
+test('Complete Path', async () => {
     const navigationHelper = new NavigationHelper();
     const surveyPage = new SurveyPage();
     const thankYouPage = new ThankYouPage();
