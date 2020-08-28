@@ -19,11 +19,13 @@ class ErrorBoundary extends React.Component<Props, State> {
         return { error };
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+        // we could log here to new relic etc
         this.setState({ error });
     }
 
-    render() {
+    render(): JSX.Element {
         if (this.state.error) {
             return (
                 <div className="error-boundary">
