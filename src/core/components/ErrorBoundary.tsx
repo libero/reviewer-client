@@ -1,5 +1,7 @@
 import React, { ErrorInfo } from 'react';
 import ErrorPage from './ErrorPage';
+import { AppBar, AppBarIcon, Footer } from '../../ui/atoms';
+import Logo from '../assets/elife-logo.svg';
 
 interface State {
     error?: Error;
@@ -23,7 +25,19 @@ class ErrorBoundary extends React.Component<Props, State> {
 
     render() {
         if (this.state.error) {
-            return <ErrorPage error={this.state.error} />;
+            return (
+                <div className="error-boundary">
+                    <AppBar>
+                        <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
+                    </AppBar>
+                    <div className="grid">
+                        <div className="error-page">
+                            <ErrorPage error={this.state.error} />
+                        </div>
+                    </div>
+                    <Footer />
+                </div>
+            );
         }
 
         return this.props.children;

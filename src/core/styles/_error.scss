@@ -1,8 +1,11 @@
+.error-boundary {
+    text-align: center;
+}
+
 .error-page {
     @include welcomePages;
     text-align: center;
 }
-  
 
 .error-page__image {
     max-height: 25vh;

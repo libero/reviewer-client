@@ -41,8 +41,6 @@ const NavBar = (): JSX.Element => {
     const { data: authQuery = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
     const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !authQuery.isAuthenticated });
 
-    // throw new Error('h');
-
     return (
         <AppBar>
             <BurgerMenu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
