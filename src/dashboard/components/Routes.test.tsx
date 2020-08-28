@@ -27,9 +27,6 @@ const renderRoutesWithPath = (route = ''): RenderResult =>
     });
 
 describe('DashboardRoutes', (): void => {
-    it('should render correctly', (): void => {
-        expect(renderRoutesWithPath).not.toThrow();
-    });
     it('should render / route correctly', (): void => {
         expect((): RenderResult => renderRoutesWithPath('/')).not.toThrow();
     });
