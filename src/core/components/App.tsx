@@ -13,6 +13,7 @@ import * as Auth from '../utils/auth';
 import Login from '../../login/components/Login';
 import useTrackingHook from './useTrackingHook';
 import ErrorPage from './ErrorPage';
+import ErrorBoundary from './ErrorBoundary';
 
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
 const ContactUs = lazy(() => import('../../static-pages/components/ContactUs'));
@@ -39,7 +40,7 @@ const AppRoutes: React.FC = (): JSX.Element => {
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    <ErrorPage />
+                    <Route component={ErrorPage} /> {/* default not found route */}
                 </Switch>
             </div>
             <Footer />
@@ -52,11 +53,13 @@ const App: React.FC = (): JSX.Element => {
         Auth.importToken();
     }, []);
     return (
-        <ApolloProvider client={createApolloClient()}>
-            <Router>
-                <AppRoutes />
-            </Router>
-        </ApolloProvider>
+        <ErrorBoundary>
+            <ApolloProvider client={createApolloClient()}>
+                <Router>
+                    <AppRoutes />
+                </Router>
+            </ApolloProvider>
+        </ErrorBoundary>
     );
 };
 
