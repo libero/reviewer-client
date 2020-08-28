@@ -32,15 +32,15 @@ const AppRoutes: React.FC = (): JSX.Element => {
             <div className="grid">
                 <InitialSubmissionRoutes /> {/* uses Switch internally */}
                 <SurveyRoutes /> {/* uses Switch internally */}
-                <DashboardRoutes /> {/* uses Switch internally */}
                 <Switch>
+                    <DashboardRoutes /> {/* uses Switch internally */}
                     <Route component={Login} exact path="/login" />
                     <Route component={Logout} exact path="/logout" />
                     <Route component={JournalAuthRedirect} exact path="/auth-redirect" />
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    <Route component={ErrorPage} /> {/* default not found route */}
+                    <Route component={ErrorPage} exact /> {/* default not found route */}
                 </Switch>
             </div>
             <Footer />
