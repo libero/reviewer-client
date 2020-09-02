@@ -7,20 +7,18 @@ import appContainer from '../../../test-utils/appContainer';
 import Dashboard from './Dashboard';
 
 let submissions: object[] = [];
-const mockMutation = jest.fn(
-    async (): Promise<object> => ({
-        data: {
-            startSubmission: {
-                id: 'testid',
-                manuscriptDetails: {
-                    title: '',
-                },
-                updated: '2020-01-01T00:00:00.000Z',
-                articleType: 'research-article',
+const mockMutation = jest.fn().mockResolvedValue({
+    data: {
+        startSubmission: {
+            id: 'testid',
+            manuscriptDetails: {
+                title: '',
             },
+            updated: '2020-01-01T00:00:00.000Z',
+            articleType: 'research-article',
         },
-    }),
-);
+    },
+});
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
@@ -213,6 +211,24 @@ describe('Dashboard', (): void => {
         });
 
         it('calls savearticleType with the correct params', async (): Promise<void> => {
+            mockMutation.mockImplementation(
+                () =>
+                    new Promise(resolve =>
+                        resolve({
+                            data: {
+                                startSubmission: {
+                                    id: 'testid',
+                                    manuscriptDetails: {
+                                        title: '',
+                                    },
+                                    updated: '2020-01-01T00:00:00.000Z',
+                                    articleType: 'research-article',
+                                    lastStepVisited: '/submit/testid/somewhere',
+                                },
+                            },
+                        }),
+                    ),
+            );
             const { container, getByText } = render(<Dashboard />, {
                 container: appContainer(),
                 wrapper: routerWrapper(['/link-1']),
@@ -224,7 +240,8 @@ describe('Dashboard', (): void => {
             await waitFor((): Element => getByText('feature.label'));
             fireEvent.click(getByText('feature.label'));
             fireEvent.click(getByText('confirm-button'));
-            expect(container.querySelector('.article-type')).not.toBeInTheDocument();
+            await waitFor(() => {});
+            expect(mockMutation).toHaveBeenCalledWith({ variables: { articleType: 'feature', id: 'A' } });
         });
     });
 });
