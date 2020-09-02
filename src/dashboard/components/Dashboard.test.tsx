@@ -7,21 +7,7 @@ import appContainer from '../../../test-utils/appContainer';
 import Dashboard from './Dashboard';
 
 let submissions: object[] = [];
-const mockMutation = jest.fn().mockImplementation(
-    (): Promise<object> =>
-        Promise.resolve({
-            data: {
-                startSubmission: {
-                    id: 'testid',
-                    manuscriptDetails: {
-                        title: '',
-                    },
-                    updated: '2020-01-01T00:00:00.000Z',
-                    articleType: 'research-article',
-                },
-            },
-        }),
-);
+const mockMutation = jest.fn();
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
@@ -111,6 +97,7 @@ describe('Dashboard', (): void => {
                 {
                     id: 'A',
                     lastStepVisited: '/submit/A/author',
+                    articleType: 'foo',
                     manuscriptDetails: {
                         title: 'Submission - A',
                     },
@@ -120,6 +107,7 @@ describe('Dashboard', (): void => {
                 {
                     id: 'B',
                     lastStepVisited: '/submit/B/author',
+                    articleType: 'foo',
                     manuscriptDetails: {
                         title: 'Submission - B',
                     },
@@ -180,6 +168,69 @@ describe('Dashboard', (): void => {
             });
             await waitFor(() => {});
             expect(mockMutation).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe('No articleType dashboard entry', () => {
+        beforeEach(() => {
+            submissions = [
+                {
+                    id: 'A',
+                    lastStepVisited: '/submit/A/author',
+                    manuscriptDetails: {
+                        title: 'Submission - A',
+                    },
+                    updated: Date.now(),
+                    status: 'CONTINUE_SUBMISSION',
+                },
+            ];
+        });
+
+        it('displays the article type page on click of a submission if no articleType exists', async (): Promise<
+            void
+        > => {
+            const { container } = render(<Dashboard />, {
+                container: appContainer(),
+                wrapper: routerWrapper(['/link-1']),
+            });
+            await waitFor(() => {});
+            expect(container.querySelector('.article-type')).not.toBeInTheDocument();
+            fireEvent.click(container.querySelectorAll('.submission-entry__link')[0]);
+            expect(container.querySelector('.article-type')).toBeInTheDocument();
+        });
+
+        it('calls savearticleType with the correct params', async (): Promise<void> => {
+            mockMutation.mockImplementation(
+                () =>
+                    new Promise(resolve =>
+                        resolve({
+                            data: {
+                                saveArticleType: {
+                                    id: 'testid',
+                                    manuscriptDetails: {
+                                        title: '',
+                                    },
+                                    updated: '2020-01-01T00:00:00.000Z',
+                                    articleType: 'research-article',
+                                    lastStepVisited: '/submit/testid/somewhere',
+                                },
+                            },
+                        }),
+                    ),
+            );
+            const { container, getByText } = render(<Dashboard />, {
+                container: appContainer(),
+                wrapper: routerWrapper(['/link-1']),
+            });
+            await waitFor(() => {});
+            expect(container.querySelector('.article-type')).not.toBeInTheDocument();
+            fireEvent.click(container.querySelectorAll('.submission-entry__link')[0]);
+            fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'ArrowDown', keyCode: 40 });
+            await waitFor((): Element => getByText('feature.label'));
+            fireEvent.click(getByText('feature.label'));
+            fireEvent.click(getByText('confirm-button'));
+            await waitFor(() => {});
+            expect(mockMutation).toHaveBeenCalledWith({ variables: { articleType: 'feature', id: 'A' } });
         });
     });
 });

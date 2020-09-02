@@ -21,23 +21,39 @@ describe('SubmissionList', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<SubmissionList submissions={[mockSubmission]} onDelete={jest.fn} />, {
-                    wrapper: routerWrapper(['/link-1']),
-                }),
+                render(
+                    <SubmissionList
+                        submissions={[mockSubmission]}
+                        onDelete={jest.fn}
+                        toggle={jest.fn()}
+                        setNoArticleTypeId={jest.fn()}
+                    />,
+                    {
+                        wrapper: routerWrapper(['/link-1']),
+                    },
+                ),
         ).not.toThrow();
     });
 
     it('should render empty list message correctly', (): void => {
-        const { getByText } = render(<SubmissionList submissions={[]} onDelete={jest.fn} />, {
-            wrapper: routerWrapper(['/link-1']),
-        });
+        const { getByText } = render(
+            <SubmissionList submissions={[]} onDelete={jest.fn} toggle={jest.fn()} setNoArticleTypeId={jest.fn()} />,
+            {
+                wrapper: routerWrapper(['/link-1']),
+            },
+        );
         expect(getByText('empty-submissions')).toBeInTheDocument();
     });
 
     it('should pass the correct options object to each entries onDelete function', (): void => {
         const onDelete = jest.fn();
         const { baseElement, getByText } = render(
-            <SubmissionList submissions={[mockSubmission]} onDelete={onDelete} />,
+            <SubmissionList
+                submissions={[mockSubmission]}
+                onDelete={onDelete}
+                toggle={jest.fn()}
+                setNoArticleTypeId={jest.fn()}
+            />,
             {
                 wrapper: routerWrapper(['/link-1']),
                 container: appContainer(),

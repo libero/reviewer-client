@@ -11,9 +11,16 @@ import dateTimeDiffToText from '../utils/dateTimeDiffToText';
 interface Props {
     submission: Submission;
     onDelete: () => void;
+    toggleArticleType: () => void;
+    setNoArticleTypeId: (id: string) => void;
 }
 
-const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.Element => {
+const SubmissionEntry: React.FC<Props> = ({
+    submission,
+    onDelete,
+    toggleArticleType,
+    setNoArticleTypeId,
+}: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('dashboard');
     const getTitle = (submission: Submission): string =>
@@ -30,8 +37,16 @@ const SubmissionEntry: React.FC<Props> = ({ submission, onDelete }: Props): JSX.
                 className={`submission-entry__link submission-entry__link--${status}`}
                 to={submission.lastStepVisited}
                 onClick={(e: React.MouseEvent): void => {
-                    if (status !== 'continue_submission') {
+                    if (
+                        status !== 'continue_submission' ||
+                        (!submission.articleType || submission.articleType === '')
+                    ) {
                         e.preventDefault();
+                    }
+
+                    if (!submission.articleType || submission.articleType === '') {
+                        setNoArticleTypeId(submission.id);
+                        toggleArticleType();
                     }
                 }}
             >
