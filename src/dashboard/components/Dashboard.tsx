@@ -43,7 +43,7 @@ const Dashboard = withRouter(
         const onArticleTypeConfirm = (articleType: string): void => {
             if (noArticleTypeId) {
                 saveArticleTypeMutation({ variables: { id: noArticleTypeId, articleType } }).then(data => {
-                    history.push(data.data.startSubmission.lastStepVisited);
+                    history.push(data.data.saveArticleType.lastStepVisited);
                 });
             } else {
                 startSubmission({ variables: { articleType } }).then(data => {
