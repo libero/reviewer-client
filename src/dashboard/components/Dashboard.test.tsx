@@ -7,18 +7,7 @@ import appContainer from '../../../test-utils/appContainer';
 import Dashboard from './Dashboard';
 
 let submissions: object[] = [];
-const mockMutation = jest.fn().mockResolvedValue({
-    data: {
-        startSubmission: {
-            id: 'testid',
-            manuscriptDetails: {
-                title: '',
-            },
-            updated: '2020-01-01T00:00:00.000Z',
-            articleType: 'research-article',
-        },
-    },
-});
+const mockMutation = jest.fn();
 
 jest.mock('@apollo/react-hooks', () => ({
     useQuery: (): object => {
@@ -216,7 +205,7 @@ describe('Dashboard', (): void => {
                     new Promise(resolve =>
                         resolve({
                             data: {
-                                startSubmission: {
+                                saveArticleType: {
                                     id: 'testid',
                                     manuscriptDetails: {
                                         title: '',
