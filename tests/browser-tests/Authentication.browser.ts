@@ -13,7 +13,7 @@ test('User can login', async () => {
     await navigationPane.assertOnPageAuthenticated();
 });
 
-test.only('User can logout then login again', async () => {
+test('User can logout then login again', async () => {
     const loginPage = new LoginPage();
     const navigationPane = new NavigationPane();
     await loginPage.assertOnPage();
