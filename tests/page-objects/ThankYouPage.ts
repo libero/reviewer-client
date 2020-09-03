@@ -3,7 +3,7 @@ import { clickSelector } from './formHelper';
 
 export class ThankYouPage {
 	private readonly pageWrapper: Selector = Selector('.thank-you-page-step');
-	private readonly finishButton = '.button.button--primary';
+	private readonly finishButton = '.thank-you-page-step .button';
 
 	public async assertOnPage(): Promise<void> {
 		await t.expect(this.pageWrapper.exists).ok();
@@ -12,5 +12,6 @@ export class ThankYouPage {
 	
 	public async finish(): Promise<void> {
 		await clickSelector(this.finishButton);
+		await t.wait(1000);
 	}
 }

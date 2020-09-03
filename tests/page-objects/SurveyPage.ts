@@ -6,7 +6,7 @@ export class SurveyPage {
     private readonly answer1Input: Selector = Selector('[name="answers[0].answer"]');
     private readonly answer2Input: Selector = Selector('[name="answers[1].answer"]');
     private readonly answer3Input: Selector = Selector('[name="answers[2].answer"]');
-    private readonly doneSkipButton = '.button.button--primary';
+    private readonly doneSkipButton = '.survey button';
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.pageWrapper.exists).ok();
@@ -48,6 +48,10 @@ export class SurveyPage {
     }
 
     public async skipOrFinish(): Promise<void> {
+        await t.expect(Selector(this.doneSkipButton).exists).ok();
+        await t.expect(Selector(this.doneSkipButton).visible).ok();
         await clickSelector(this.doneSkipButton);
+        await t.wait(500);
+        await t.expect(Selector(this.doneSkipButton).exists).notOk();
     }
 }
