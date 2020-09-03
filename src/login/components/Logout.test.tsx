@@ -4,10 +4,21 @@ import * as tokenUtils from '../utils/tokenUtils';
 import Logout from './Logout';
 import { MemoryRouter, Route } from 'react-router';
 
+const resetStoreMock = jest.fn();
+
+jest.mock('@apollo/react-hooks', () => ({
+    useApolloClient: (): object => {
+        return {
+            resetStore: resetStoreMock,
+        };
+    },
+}));
+
 describe('Logout', () => {
     beforeEach(() => {
-        window.location.reload = jest.fn();
+        window.location.assign = jest.fn();
     });
+
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
@@ -37,11 +48,11 @@ describe('Logout', () => {
         const { container } = render(
             <MemoryRouter initialEntries={['/logout']}>
                 <Route component={Logout} exact path="/logout"></Route>
-                <Route exact path="/" render={(): string => 'Root'} />
+                <Route exact path="/auth-logout" render={(): string => 'Root'} />
             </MemoryRouter>,
         );
 
         expect(container.textContent).toBe('');
-        expect(window.location.reload).toHaveBeenCalled();
+        expect(resetStoreMock).toHaveBeenCalled();
     });
 });

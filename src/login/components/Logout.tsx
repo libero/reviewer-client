@@ -7,7 +7,7 @@ const Logout = (): JSX.Element => {
     useEffect(() => {
         clearToken();
         client.resetStore();
-        window.location.pathname = '/auth-logout';
+        window.location.assign('/auth-logout');
     }, []);
 
     return <div />;
