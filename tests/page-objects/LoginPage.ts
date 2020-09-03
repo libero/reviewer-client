@@ -5,6 +5,10 @@ export class LoginPage {
     private readonly loginButton: Selector = Selector('.button--orcid');
     private readonly cookieBanner: Selector = Selector('.cookie-banner');
     private readonly cookieBannerButton: Selector = Selector('.cookie-banner__button');
+    private readonly orcidPage: Selector = Selector('.personal-account-login > .title');
+    private readonly orcidIDInput: Selector = Selector('#userId');
+    private readonly orcidPasswordInput: Selector = Selector('#password');
+    private readonly orcidLoginButton: Selector = Selector('#form-sign-in-button');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.loginButton.exists).ok();
@@ -26,5 +30,27 @@ export class LoginPage {
             await this.dismissCookieBanner();
         }
         await t.expect(this.loginButton.exists).notOk();
+        if (process.env.ORCID_LOGIN_REQUIRED && process.env.ORCID_LOGIN_NAME && process.env.ORCID_LOGIN_PASSWORD) {
+            await this.assertOnOrcidPage();
+            await this.enterORCIDId(process.env.ORCID_LOGIN_NAME);
+            await this.enterORCIDPassword(process.env.ORCID_LOGIN_PASSWORD);
+            await this.orcidLogin();
+        }
+    }
+
+    public async assertOnOrcidPage(): Promise<void> {
+        await t.expect(this.orcidPage.textContent).eql('Sign in with your ORCID account');
+    }
+
+    public async enterORCIDId(orcidId: string): Promise<void> {
+        await t.typeText(this.orcidIDInput, orcidId);
+    }
+
+    public async enterORCIDPassword(password: string): Promise<void> {
+        await t.typeText(this.orcidPasswordInput, password);
+    }
+
+    public async orcidLogin(): Promise<void> {
+        await t.click(this.orcidLoginButton);
     }
 }
