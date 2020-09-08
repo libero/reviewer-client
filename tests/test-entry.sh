@@ -10,6 +10,6 @@ if [ ${TEST_FIXTURE} == "all" ]
 then
   ${TEST} 'tests/**/*.browser.ts'
 else
-  ${TEST} tests -F "${TEST_FIXTURE}*"
+  ${TEST} tests -fixture-meta fixtureID=${TEST_FIXTURE}
 fi
 
