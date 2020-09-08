@@ -1,12 +1,7 @@
-// import { waitForReact } from 'testcafe-react-selectors';
-
 import { NavigationHelper, FilesPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`Replace and remove files`.page`${BASE_URL}`;
-// .beforeEach(async () => {
-//     await waitForReact();
-// });
+fixture`Replace and remove files`.page`${BASE_URL}`.meta('fixtureID', 'staging');
 
 test('Replace manuscript', async () => {
     const navigationHelper = new NavigationHelper();

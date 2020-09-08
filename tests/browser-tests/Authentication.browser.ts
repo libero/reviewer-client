@@ -1,7 +1,7 @@
 import { DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`Authentication`.page`${BASE_URL}`;
+fixture`Authentication`.page`${BASE_URL}`.meta('fixtureID', 'umbrella');
 
 test('User can login', async () => {
     const loginPage = new LoginPage();

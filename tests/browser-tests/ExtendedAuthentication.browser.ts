@@ -1,7 +1,7 @@
 import { DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 
-fixture`ExtendedAuthentication`.page`${BASE_URL}`;
+fixture`ExtendedAuthentication`.page`${BASE_URL}`.meta('fixtureID', 'staging');
 
 test('User can login', async () => {
     const loginPage = new LoginPage();
