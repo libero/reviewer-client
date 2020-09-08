@@ -6,7 +6,7 @@ const Logout = (): JSX.Element => {
     const client = useApolloClient();
     useEffect(() => {
         clearToken();
-        client.resetStore();
+        client.clearStore();
         window.location.assign('/auth-logout');
     }, []);
 

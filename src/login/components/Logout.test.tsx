@@ -4,12 +4,12 @@ import * as tokenUtils from '../utils/tokenUtils';
 import Logout from './Logout';
 import { MemoryRouter, Route } from 'react-router';
 
-const resetStoreMock = jest.fn();
+const clearStoreMock = jest.fn();
 
 jest.mock('@apollo/react-hooks', () => ({
     useApolloClient: (): object => {
         return {
-            resetStore: resetStoreMock,
+            clearStore: clearStoreMock,
         };
     },
 }));
@@ -53,6 +53,6 @@ describe('Logout', () => {
         );
 
         expect(container.textContent).toBe('');
-        expect(resetStoreMock).toHaveBeenCalled();
+        expect(clearStoreMock).toHaveBeenCalled();
     });
 });
