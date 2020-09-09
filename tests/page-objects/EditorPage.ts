@@ -85,6 +85,7 @@ export class EditorPage {
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
         const addButtonSelector = Selector('.people-picker__modal_list--item .pod__button');
+        await t.expect(Selector('.people-picker__modal_list--item').count).gte(number);
 
         for (let i = 0; i < number; i++) {
             const button = addButtonSelector.nth(i);
