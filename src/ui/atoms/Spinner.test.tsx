@@ -10,7 +10,7 @@ describe('Spinner', (): void => {
     });
 
     it('class should be present', async (): Promise<void> => {
-        const { container, getByText } = render(<Spinner />);
+        const { container } = render(<Spinner />);
         expect(container.querySelector('.spinner')).toBeInTheDocument();
     });
 });
