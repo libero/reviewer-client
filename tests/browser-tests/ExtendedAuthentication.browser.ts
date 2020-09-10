@@ -1,5 +1,6 @@
 import { DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { t } from 'testcafe';
 
 fixture`ExtendedAuthentication`.page`${BASE_URL}`.meta('fixtureID', 'staging');
 
@@ -20,7 +21,10 @@ test('User can logout then login again', async () => {
     await loginPage.login();
     await navigationPane.assertOnPageAuthenticated();
     await navigationPane.logout();
+    if (process.env.ORCID_LOGIN_REQUIRED) {
+        await t.navigateTo(BASE_URL);
+    }
     await loginPage.assertOnPage();
-    await loginPage.login();
+    await loginPage.login(true);
     await navigationPane.assertOnPageAuthenticated();
 });

@@ -24,13 +24,15 @@ export class LoginPage {
         await t.expect(this.cookieBannerButton.visible).notOk();
     }
 
-    public async login(): Promise<void> {
+    public async login(orcidLoginOptional = false): Promise<void> {
         await clickSelector('.button--orcid');
         if (await this.isCookieBannerVisible()) {
             await this.dismissCookieBanner();
         }
         await t.expect(this.loginButton.exists).notOk();
         if (process.env.ORCID_LOGIN_REQUIRED && process.env.ORCID_LOGIN_NAME && process.env.ORCID_LOGIN_PASSWORD) {
+            const orcidPageVisible = await this.orcidPage.exists;
+            if (orcidLoginOptional && !orcidPageVisible) return;
             await this.assertOnOrcidPage();
             await this.enterORCIDId(process.env.ORCID_LOGIN_NAME);
             await this.enterORCIDPassword(process.env.ORCID_LOGIN_PASSWORD);
