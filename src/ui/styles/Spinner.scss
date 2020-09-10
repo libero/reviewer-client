@@ -1,0 +1,23 @@
+.spinner {
+    height: 4.5rem;
+    width: 4.5rem;
+    border-width: 4px;
+    border-radius: 50%;
+    border-style: solid;
+    display: block;
+    flex-shrink: 0;
+    border-color: $borderColour;
+    border-top-color: $colourPrimary;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 750ms;
+    animation-name: rotating;
+    @keyframes rotating {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
