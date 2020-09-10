@@ -4,6 +4,7 @@ import { PersonPod, SearchField, SelectedOption } from '.';
 import { Modal, Banner } from '../atoms';
 import useDebounce from '../hooks/useDebounce';
 import { EditorAlias } from '../../initial-submission/types';
+import Spinner from '../atoms/Spinner';
 
 interface Props {
     people?: EditorAlias[];
@@ -14,6 +15,7 @@ interface Props {
     isShowing: boolean;
     min?: number;
     max?: number;
+    loading: boolean;
 }
 
 const PeoplePickerSelector = ({
@@ -25,8 +27,10 @@ const PeoplePickerSelector = ({
     toggle,
     min,
     max,
+    loading,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
+    // derive using a useEffect.
     const [locallySelected, setLocallySelected] = useState(initiallySelected);
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
@@ -117,7 +121,7 @@ const PeoplePickerSelector = ({
                     </span>
                 </div>
                 <div className="people-picker__selected-tabs">
-                    {locallySelected.map(
+                    {!loading && locallySelected.map(
                         (selectedPersonId): JSX.Element => {
                             const selectedPerson = people.find((person): boolean => person.id === selectedPersonId);
                             return (
@@ -134,16 +138,22 @@ const PeoplePickerSelector = ({
                     )}
                 </div>
                 <div className="people-picker__modal_list">
-                    {filteredPeople.map(
-                        (person): React.ReactNode => {
-                            const selected = locallySelected.includes(person.id);
-                            return (
-                                <div key={person.id} className="people-picker__modal_list--item">
-                                    <PersonPod {...person} toggleHandler={togglePerson} initiallySelected={selected} />
-                                </div>
-                            );
-                        },
-                    )}
+                    {loading && <Spinner />}
+                    {!loading &&
+                        filteredPeople.map(
+                            (person): React.ReactNode => {
+                                const selected = locallySelected.includes(person.id);
+                                return (
+                                    <div key={person.id} className="people-picker__modal_list--item">
+                                        <PersonPod
+                                            {...person}
+                                            toggleHandler={togglePerson}
+                                            initiallySelected={selected}
+                                        />
+                                    </div>
+                                );
+                            },
+                        )}
                 </div>
             </div>
         </Modal>
