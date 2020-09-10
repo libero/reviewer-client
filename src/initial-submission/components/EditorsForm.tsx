@@ -209,7 +209,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 open={opposedSeniorEditors.length > 0 || opposedSeniorEditorsReason !== ''}
                 panelHeading={t('editors.opposed-senior-editors-people-picker-label')}
             >
-                {/* <PeoplePicker
+                <PeoplePicker
                     people={
                         loadingSeniorEditors || loadingLeadership
                             ? []
@@ -227,7 +227,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                     max={MAX_OPPOSED_SENIOR_EDITORS}
                     hideLabel={true}
                     label={t('editors.opposed-senior-editors-people-picker-label')}
-                /> */}
+                />
                 <MultilineTextField
                     id="opposedSeniorEditorsReason"
                     register={register}
@@ -238,7 +238,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                     }
                 />
             </ExcludedToggle>
-            {/* <PeoplePicker
+            <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
                 loading={loadingReviewingEditors}
                 people={
@@ -260,7 +260,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 min={MIN_SUGGESTED_REVIEWING_EDITORS}
                 max={MAX_SUGGESTED_REVIEWING_EDITORS}
                 required={isRequired()}
-            /> */}
+            />
             <ExcludedToggle
                 togglePrefixText={t('editors.opposed-reviewing-editors-toggle-prefix')}
                 toggleActionText={t('editors.opposed-reviewing-editors-toggle-action-text')}
@@ -268,7 +268,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 open={opposedReviewingEditors.length > 0 || opposedReviewingEditorsReason !== ''}
                 panelHeading={t('editors.opposed-reviewing-editors-people-picker-label')}
             >
-                {/* <PeoplePicker
+                <PeoplePicker
                     loading={loadingReviewingEditors}
                     people={
                         loadingReviewingEditors
@@ -284,7 +284,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                     max={MAX_OPPOSED_REVIEWING_EDITORS}
                     label={t('editors.opposed-reviewing-editors-people-picker-label')}
                     hideLabel={true}
-                /> */}
+                />
                 <MultilineTextField
                     id="opposedReviewingEditorsReason"
                     register={register}

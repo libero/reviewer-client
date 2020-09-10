@@ -37,10 +37,10 @@ const PeoplePicker = ({
     const [filteredSelected, setFilteredSelected] = useState([]);
 
     useEffect(() => {
-        setFilteredSelected(people.filter((person): boolean => selectedPeople.includes(person.id)));
-    }, [people, initialSelectedPeople]);
-
-    console.log('filteredSelected', filteredSelected);
+        if (initialSelectedPeople.length > 0) {
+            setFilteredSelected(people.filter((person): boolean => selectedPeople.includes(person.id)));
+        }
+    }, [people, initialSelectedPeople, loading]);
 
     const setPeople = (peopleToSet: string[]): void => {
         setSelectedPeople(peopleToSet);

@@ -27,14 +27,17 @@ const PeoplePickerSelector = ({
     toggle,
     min,
     max,
-    loading,
+    loading = true,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
-    // derive using a useEffect.
     const [locallySelected, setLocallySelected] = useState(initiallySelected);
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
     const [filteredPeople, setFilteredPeople] = useState(people);
+
+    useEffect(() => {
+        setLocallySelected(initiallySelected);
+    }, [initiallySelected, loading]);
 
     const onSearch = (searchTerm: string): void => {
         const processedSearchTerm = searchTerm.trim().toLowerCase();
@@ -121,21 +124,22 @@ const PeoplePickerSelector = ({
                     </span>
                 </div>
                 <div className="people-picker__selected-tabs">
-                    {!loading && locallySelected.map(
-                        (selectedPersonId): JSX.Element => {
-                            const selectedPerson = people.find((person): boolean => person.id === selectedPersonId);
-                            return (
-                                <div className="people-picker__selected-tab" key={selectedPersonId}>
-                                    <SelectedOption
-                                        text={selectedPerson.name}
-                                        onClose={(): void => {
-                                            togglePerson(selectedPersonId, false);
-                                        }}
-                                    />
-                                </div>
-                            );
-                        },
-                    )}
+                    {!loading &&
+                        locallySelected.map(
+                            (selectedPersonId): JSX.Element => {
+                                const selectedPerson = people.find((person): boolean => person.id === selectedPersonId);
+                                return (
+                                    <div className="people-picker__selected-tab" key={selectedPersonId}>
+                                        <SelectedOption
+                                            text={selectedPerson.name}
+                                            onClose={(): void => {
+                                                togglePerson(selectedPersonId, false);
+                                            }}
+                                        />
+                                    </div>
+                                );
+                            },
+                        )}
                 </div>
                 <div className="people-picker__modal_list">
                     {loading && <Spinner />}
