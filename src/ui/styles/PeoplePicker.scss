@@ -5,6 +5,10 @@
 .people-picker__modal_list {
   @include twoColumnGrid;
   grid-gap: 1.5rem;
+  .spinner {
+    position: fixed;
+    left: 50%;
+  }
 }
 .people-picker__selector_container {
   padding-top: 2rem;

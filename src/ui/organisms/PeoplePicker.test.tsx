@@ -7,7 +7,9 @@ import appContainer from '../../../test-utils/appContainer';
 describe('PeoplePicker', (): void => {
     afterEach(cleanup);
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<PeoplePicker onChange={jest.fn()} label="" />)).not.toThrow();
+        expect(
+            (): RenderResult => render(<PeoplePicker loading={false} onChange={jest.fn()} label="" />),
+        ).not.toThrow();
     });
 
     it('should render correctly with all props', (): void => {
@@ -15,6 +17,7 @@ describe('PeoplePicker', (): void => {
             (): RenderResult =>
                 render(
                     <PeoplePicker
+                        loading={false}
                         people={[{ id: '1', name: 'Bob 1' }]}
                         initialSelectedPeople={['1']}
                         required={true}
@@ -28,7 +31,7 @@ describe('PeoplePicker', (): void => {
     });
 
     it('SelectedPeopleList button toggles the PeoplePickerSelector', async (): Promise<void> => {
-        const { getByText, baseElement } = render(<PeoplePicker onChange={jest.fn()} label="" />, {
+        const { getByText, baseElement } = render(<PeoplePicker loading={false} onChange={jest.fn()} label="" />, {
             container: appContainer(),
         });
         expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
@@ -36,11 +39,22 @@ describe('PeoplePicker', (): void => {
         expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
     });
 
+    it('Expect spinner if loading', async (): Promise<void> => {
+        const { getByText, baseElement } = render(<PeoplePicker loading={true} onChange={jest.fn()} label="" />, {
+            container: appContainer(),
+        });
+        expect(baseElement.querySelector('.modal__overlay')).not.toBeInTheDocument();
+        fireEvent.click(getByText('selected_people_list--open'));
+        expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+        expect(baseElement.querySelector('.spinner')).toBeInTheDocument();
+    });
+
     it('handles selected people not in the peoples prop', () => {
         expect(
             (): RenderResult =>
                 render(
                     <PeoplePicker
+                        loading={false}
                         people={[{ id: '1', name: 'Bob 1' }]}
                         initialSelectedPeople={['someunknownuser']}
                         required={true}
@@ -54,12 +68,14 @@ describe('PeoplePicker', (): void => {
     });
 
     it('should show the external label when hideLabel is not passed in or false', () => {
-        const { getByText } = render(<PeoplePicker onChange={jest.fn()} label="testLabel" />);
+        const { getByText } = render(<PeoplePicker loading={false} onChange={jest.fn()} label="testLabel" />);
         expect(getByText('testLabel')).toBeInTheDocument();
     });
 
     it('should hide the external label when hideLabel is passed in', () => {
-        const { container, getByText } = render(<PeoplePicker onChange={jest.fn()} label="testLabel" />);
+        const { container, getByText } = render(
+            <PeoplePicker loading={false} onChange={jest.fn()} label="testLabel" />,
+        );
         expect(container.querySelector('typography__heading typography__heading--h3')).not.toBeInTheDocument();
         fireEvent.click(getByText('people_picker--open-selector', { exact: false }));
         expect(getByText('testLabel')).toBeInTheDocument();
@@ -68,6 +84,7 @@ describe('PeoplePicker', (): void => {
     it("Sould show picker as required when the min hasn't been met", () => {
         const { container } = render(
             <PeoplePicker
+                loading={false}
                 people={[{ id: '1', name: 'Bob 1' }, { id: '2', name: 'Bob 2' }]}
                 initialSelectedPeople={['1']}
                 required={true}
@@ -85,6 +102,7 @@ describe('PeoplePicker', (): void => {
     it('Sould show picker as optional when the min has been met', () => {
         const { container } = render(
             <PeoplePicker
+                loading={false}
                 people={[{ id: '1', name: 'Bob 1' }, { id: '2', name: 'Bob 2' }, { id: '3', name: 'Bob 3' }]}
                 initialSelectedPeople={['1', '2']}
                 required={true}

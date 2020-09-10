@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PeoplePickerSelector, SelectedPeopleList } from '../molecules';
 import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
@@ -15,6 +15,7 @@ interface Props {
     className?: string;
     error?: string;
     hideLabel?: boolean;
+    loading: boolean;
 }
 
 const PeoplePicker = ({
@@ -28,11 +29,19 @@ const PeoplePicker = ({
     className,
     error,
     hideLabel = false,
+    loading = true,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
     const [selectedPeople, setSelectedPeople] = useState(initialSelectedPeople);
-    const filteredSelected = people.filter((person): boolean => selectedPeople.includes(person.id));
+    const [filteredSelected, setFilteredSelected] = useState([]);
+
+    useEffect(() => {
+        const filtered = people.filter((person): boolean => selectedPeople.includes(person.id));
+        if (filteredSelected.length !== filtered.length) {
+            setFilteredSelected(filtered);
+        }
+    }, [people, initialSelectedPeople, loading]);
 
     const setPeople = (peopleToSet: string[]): void => {
         setSelectedPeople(peopleToSet);
@@ -56,6 +65,7 @@ const PeoplePicker = ({
                 openSelectorText={t('people_picker--open-selector')}
             />
             <PeoplePickerSelector
+                loading={loading}
                 people={people}
                 initiallySelected={filteredSelected.map(selected => selected.id)}
                 onDone={setPeople}
