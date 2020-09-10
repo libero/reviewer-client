@@ -117,4 +117,8 @@ export class DashboardPage {
         await clickSelector(`.submission-entry[data-id="${id}"] .submission-entry__icon`);
         await clickSelector(this.confirmDeleteButton);
     }
+
+    public async getSubmissionItem(id: string): Promise<Selector> {
+        return this.submissionEntry.withAttribute('data-id', id);
+    }
 }
