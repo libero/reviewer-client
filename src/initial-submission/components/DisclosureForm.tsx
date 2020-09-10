@@ -44,7 +44,7 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent, toggleE
     const submitterSignature = watch('submitterSignature');
     const disclosureConsent = watch('disclosureConsent');
 
-    useAutoSave(onSave, [submitterSignature, disclosureConsent]);
+    const autoSaveCancel = useAutoSave(onSave, [submitterSignature, disclosureConsent]);
     const date = moment(new Date()).format('MMM D, YYYY');
 
     useEffect(() => {
@@ -89,7 +89,13 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent, toggleE
                     helperText={errors && errors.disclosureConsent ? errors.disclosureConsent.message : null}
                 />
             </div>
-            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
+            {ButtonComponent && (
+                <ButtonComponent
+                    preSaveCb={autoSaveCancel}
+                    saveFunction={onSave}
+                    triggerValidation={triggerValidation}
+                />
+            )}
         </div>
     );
 };

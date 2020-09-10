@@ -10,7 +10,7 @@ const save = (onSave: Function): void => {
 
 const saveThrottle = throttle(save, 1000);
 
-export default (onSave: () => void, watchArray: DependencyList): void => {
+export default (onSave: () => void, watchArray: DependencyList): (() => void) => {
     const initialRender = useRef(true);
     const prevValues = useRef<DependencyList>();
 
@@ -29,4 +29,5 @@ export default (onSave: () => void, watchArray: DependencyList): void => {
         },
         [],
     );
+    return saveThrottle.cancel;
 };
