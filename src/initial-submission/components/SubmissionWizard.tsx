@@ -33,6 +33,7 @@ export interface StepProps {
     schemaFactory: (t?: i18next.TFunction) => yup.ObjectSchema;
     ButtonComponent?: (props: {
         saveFunction?: Function;
+        preSaveCb?: Function;
         triggerValidation: () => Promise<boolean>;
         onSubmit?: () => void;
     }) => JSX.Element;
@@ -61,9 +62,11 @@ const ButtonComponent = (
 ) => ({
     saveFunction,
     triggerValidation,
+    preSaveCb,
 }: {
     saveFunction: Function;
     triggerValidation: () => Promise<boolean>;
+    preSaveCb?: Function;
 }): JSX.Element => {
     const [processing, setProcessing] = useState(false);
     const { t } = useTranslation('wizard-form');
@@ -95,6 +98,7 @@ const ButtonComponent = (
                         try {
                             setProcessing(true);
                             triggerValidation().then(async valid => {
+                                preSaveCb();
                                 await saveFunction();
                                 setProcessing(false);
                                 if (valid) {
