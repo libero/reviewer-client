@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent, waitFor } from '@testing-library/react';
+import { cleanup, render, RenderResult } from '@testing-library/react';
 import Spinner from './Spinner';
 
 describe('Spinner', (): void => {
