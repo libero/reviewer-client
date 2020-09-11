@@ -94,7 +94,7 @@ export class EditorPage {
         }
 
         const selectedCount = await ClientFunction(
-            () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-ta').length,
+            () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
         )();
 
         await t.expect(selectedCount).eql(number);
