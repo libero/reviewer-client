@@ -49,7 +49,7 @@ export class AuthorDetailsPage {
     }
 
     public async assertPopulatedValues(
-        values = { first: 'first', last: 'last', email: 'email@elifesciences.org', inst: 'institution' },
+        values = { first: 'reviewer', last: 'libero', email: 'email@elifesciences.org', inst: 'institution' },
     ): Promise<void> {
         await t.expect(await this.getFirstName()).eql(values.first);
         await t.expect(await this.getLastName()).eql(values.last);
