@@ -42,8 +42,7 @@ export class AuthorDetailsPage {
     }
 
     public async populateMinimalFields(): Promise<void> {
-        await this.setFirstName('first');
-        await this.setLastName('last');
+        await this.prefill();
         await this.setEmail('email@elifesciences.org');
         await this.setInstitution('institution');
         await t.wait(1000);
