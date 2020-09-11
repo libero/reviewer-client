@@ -1,4 +1,4 @@
-import { Selector, t } from 'testcafe';
+import { ClientFunction, Selector, t } from 'testcafe';
 import { clickNext, clickSelector, clickBack, clickWithSelectorAndText } from './formHelper';
 
 interface NameEmail {
@@ -94,9 +94,11 @@ export class EditorPage {
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
         }
 
-        await t
-            .expect(Selector('.people-picker__selected-tabs').child('.people-picker__selected-tab').count)
-            .eql(number);
+        const selectedCount = await ClientFunction(
+            () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
+        )();
+
+        await t.expect(selectedCount).eql(number);
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
         await t
