@@ -30,6 +30,9 @@ export class NavigationPane {
     }
 
     public async assertOnPageAuthenticated(): Promise<void> {
+        await t.expect(this.iconLink.exists).ok();
+        await t.expect(this.menu.exists).ok();
+        await t.expect(this.profileDropdown.exists).ok();
         await t.expect(this.iconLink.visible).ok();
         await t.expect(this.menu.visible).ok();
         await t.expect(this.profileDropdown.visible).ok();
@@ -68,6 +71,7 @@ export class NavigationPane {
     }
 
     public async assertNavItems(): Promise<void> {
+        await t.expect(this.menu.exists).ok();
         await t.expect(this.menu.visible).ok();
         await t.expect(this.menu.child().count).eql(4);
         await t.expect(this.menu.child(0).innerText).eql('Dashboard');
