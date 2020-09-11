@@ -42,15 +42,14 @@ export class AuthorDetailsPage {
     }
 
     public async populateMinimalFields(): Promise<void> {
-        await this.setFirstName('first');
-        await this.setLastName('last');
+        await this.prefill();
         await this.setEmail('email@elifesciences.org');
         await this.setInstitution('institution');
         await t.wait(1000);
     }
 
     public async assertPopulatedValues(
-        values = { first: 'first', last: 'last', email: 'email@elifesciences.org', inst: 'institution' },
+        values = { first: 'reviewer', last: 'libero', email: 'email@elifesciences.org', inst: 'institution' },
     ): Promise<void> {
         await t.expect(await this.getFirstName()).eql(values.first);
         await t.expect(await this.getLastName()).eql(values.last);
