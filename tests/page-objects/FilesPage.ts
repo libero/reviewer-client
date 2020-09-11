@@ -177,8 +177,7 @@ export class FilesPage {
         await t.expect(Selector(deleteQuerySelector).exists).ok();
         await clickSelector(deleteQuerySelector);
         await t.wait(100);
-        const afterDeleteCount = await this.supportFilesList.count;
-        await t.expect(initialCount).gt(afterDeleteCount);
+        await t.expect(this.supportFilesList.count).lt(initialCount);
     }
 
     // TODO: does this need a back button?
