@@ -31,10 +31,10 @@ export class AuthorDetailsPage {
     public async prefill(): Promise<void> {
         await clickSelector(this.prefillInput);
         await this.assertPopulatedValues({
-            first: 'Tamlyn',
-            last: 'Rhodes',
-            email: 'test@email.com',
-            inst: 'somewhere',
+            first: 'reviewer',
+            last: 'libero',
+            email: '',
+            inst: '',
         });
     }
     public async populateAllFields(): Promise<void> {
