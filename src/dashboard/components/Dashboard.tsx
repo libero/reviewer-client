@@ -66,7 +66,7 @@ const Dashboard = withRouter(
                             {t('new-submission')}
                         </Button>
                     </div>
-                    {!loading && (
+                    {loading && (
                         <div className="spinner-center">
                             <Spinner />
                         </div>
