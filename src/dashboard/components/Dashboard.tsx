@@ -9,6 +9,7 @@ import { Button, Paragraph } from '../../ui/atoms';
 import useModal from '../../ui/hooks/useModal';
 import ArticleType from './ArticleType';
 import Interweave from 'interweave';
+import { Spinner } from '../../ui/atoms';
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
@@ -65,7 +66,11 @@ const Dashboard = withRouter(
                             {t('new-submission')}
                         </Button>
                     </div>
-                    {loading && 'loading'}
+                    {!loading && (
+                        <div className="spinner-center">
+                            <Spinner />
+                        </div>
+                    )}
                     {data && data.getSubmissions && (
                         <SubmissionList
                             submissions={data.getSubmissions}
