@@ -12,6 +12,7 @@
     }
     display: flex;
     .static-page__content {
+        width: 100%;
         padding: 2rem 0;
         @include forSize('tabletPortraitUp') {
             padding: 0;
