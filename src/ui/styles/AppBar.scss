@@ -1,12 +1,20 @@
 .app-bar {
-  grid-area: header;
-  display: flex;
-  align-items: center;
-  height: 4.5rem;
-  border-bottom: 0.063rem solid $borderColour;
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    height: 4.5rem;
+    border-bottom: 0.063rem solid $borderColour;
 
-  justify-content: space-between;
-  margin-bottom: 4.5rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 4.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.app-spinner {
+    .spinner {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+    }
 }
