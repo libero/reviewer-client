@@ -11,6 +11,7 @@ import Login from '../../login/components/Login';
 import useTrackingHook from './useTrackingHook';
 import ErrorPage from './ErrorPage';
 import ErrorBoundary from './ErrorBoundary';
+import Spinner from '../../ui/atoms/Spinner';
 
 const AuthRoute = lazy(() => import('./AuthRoute'));
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
@@ -22,7 +23,11 @@ const Survey = lazy(() => import('../../survey/components/Survey'));
 const ThankYouPage = lazy(() => import('../../initial-submission/components/ThankYouPage'));
 const SubmissionWizard = lazy(() => import('../../initial-submission/components/SubmissionWizard'));
 
-const Loader = (): JSX.Element => <div>Loading...</div>;
+const Loader = (): JSX.Element => (
+    <div className="app-spinner">
+        <Spinner />
+    </div>
+);
 
 const AppRoutes: React.FC = (): JSX.Element => {
     useTrackingHook();
