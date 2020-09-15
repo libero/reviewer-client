@@ -18,19 +18,19 @@
         "person-1": {
             "name": "James Gilbert",
             "position": "Production Editor",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/james.jpg",
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fjames.jpg/full/502,358/0/default.webp",
             "number": "+44 [0]1223 855346"
         },
         "person-2": {
             "name": "Fred Atherden",
             "position": "Production Editor",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/fred.jpg",
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Ffred.jpg/full/502,358/0/default.webp",
             "number": "+44 [0]1223 855370"
         },
         "person-3": {
             "name": "Becky Collins",
             "position": "Production Assistant",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/becky_0.jpg",
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fbecky_0.jpg/full/502,358/0/default.webp",
             "number": "+44 [0]1223 755808"
         }
     },
@@ -41,41 +41,41 @@
             "name": "Wei Mun Chan",
             "position": "Editorial Manager",
             "number": "+44 [0]1223 855379",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/weimun.jpg"
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fweimun.jpg/full/502,358/0/default.webp"
         },
 
         "person-2": {
             "name": "Maria Guerreiro",
             "position": "Journal Development Editor",
             "number": "+44 (0)1223 750665",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/maria.jpg"
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fmaria.jpg/full/502,358/0/default.webp"
         },
 
         "person-3": {
             "name": "Milly McConnell",
             "position": "Senior Editorial Assistant",
             "number": "+44 (0)1223 855348",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/milly.jpg"
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fmilly.jpg/full/502,358/0/default.webp"
         },
 
         "person-4": {
             "name": "Emma Smith",
             "position": "Senior Editorial Assistant",
             "number": "+44 (0)1223 855376",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-02/emma-smith.jpg"
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Femma-smith.jpg/full/502,358/0/default.webp"
         },
 
         "person-5": {
             "name": "Fiona Bryant",
             "position": "Editorial Assistant",
             "number": "+44 (0)1223 855372",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-06/Fiona3.jpg"
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-06%2FFiona3.jpg/full/502,358/0/default.webp"
         },
 
         "person-6": {
             "name": "Nicola Adamson",
             "position": "Editorial Assistant",
-            "photo": "https://prod--journal-cms.elifesciences.org/sites/default/files/iiif/person/2019-11/nicola1_0.jpg"
+            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-11%2Fnicola1_0.jpg/full/502,358/0/default.webp"
         }
     }
 }
