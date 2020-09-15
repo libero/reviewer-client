@@ -1,7 +1,7 @@
 import React from 'react';
 import Delete from '@material-ui/icons/Delete';
 import Add from '@material-ui/icons/Add';
-import { Pod, Spinner } from '../atoms';
+import { Pod } from '../atoms';
 import { PersonPod } from '.';
 import { useTranslation } from 'react-i18next';
 import { EditorAlias } from '../../initial-submission/types';
@@ -13,7 +13,6 @@ interface Props {
     hideSelector?: boolean;
     onRemove: (personId: string) => void;
     onOpen: () => void;
-    loading: boolean;
 }
 const SelectedPeopleList = ({
     people = [],
@@ -22,12 +21,10 @@ const SelectedPeopleList = ({
     onRemove,
     onOpen,
     hideSelector,
-    loading,
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
         <React.Fragment>
-            {loading && <Spinner />}
             <div className="selected_people_list">
                 {people.map(
                     (person: EditorAlias): JSX.Element => (

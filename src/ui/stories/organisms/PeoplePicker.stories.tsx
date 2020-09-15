@@ -62,7 +62,6 @@ const PeoplePickerStory = (): JSX.Element => {
 
     return (
         <PeoplePicker
-            loading={false}
             required={required}
             people={filteredPeople}
             initialSelectedPeople={selectedPeople}

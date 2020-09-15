@@ -15,7 +15,6 @@ interface Props {
     className?: string;
     error?: string;
     hideLabel?: boolean;
-    loading: boolean;
 }
 
 const PeoplePicker = ({
@@ -29,7 +28,6 @@ const PeoplePicker = ({
     className,
     error,
     hideLabel = false,
-    loading = true,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
     const { t } = useTranslation('ui');
@@ -41,7 +39,7 @@ const PeoplePicker = ({
         if (filteredSelected.length !== filtered.length) {
             setFilteredSelected(filtered);
         }
-    }, [people, initialSelectedPeople, loading]);
+    }, [people, initialSelectedPeople]);
 
     const setPeople = (peopleToSet: string[]): void => {
         setSelectedPeople(peopleToSet);
@@ -52,12 +50,11 @@ const PeoplePicker = ({
         const newSelectedPeople = selectedPeople.filter(personId => personId !== personToRemove);
         setPeople(newSelectedPeople);
     };
-
     return (
         <div className={`people-picker ${className ? className : ''}`}>
             {!hideLabel && <h2 className="typography__heading typography__heading--h3">{label}</h2>}
+
             <SelectedPeopleList
-                loading={loading}
                 people={filteredSelected}
                 required={required && filteredSelected.length < min}
                 hideSelector={filteredSelected.length === max}
@@ -66,7 +63,6 @@ const PeoplePicker = ({
                 openSelectorText={t('people_picker--open-selector')}
             />
             <PeoplePickerSelector
-                loading={loading}
                 people={people}
                 initiallySelected={filteredSelected.map(selected => selected.id)}
                 onDone={setPeople}
