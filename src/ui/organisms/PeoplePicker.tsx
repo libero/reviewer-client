@@ -57,6 +57,7 @@ const PeoplePicker = ({
         <div className={`people-picker ${className ? className : ''}`}>
             {!hideLabel && <h2 className="typography__heading typography__heading--h3">{label}</h2>}
             <SelectedPeopleList
+                loading={loading}
                 people={filteredSelected}
                 required={required && filteredSelected.length < min}
                 hideSelector={filteredSelected.length === max}

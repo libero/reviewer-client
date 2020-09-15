@@ -37,6 +37,7 @@ storiesOf('ui | molecules/SelectedPeopleList', module)
             ]);
             return (
                 <SelectedPeopleList
+                    loading={false}
                     required={required}
                     openSelectorText={openSelectorText}
                     people={people}
