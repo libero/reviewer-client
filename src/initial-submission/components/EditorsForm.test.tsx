@@ -79,18 +79,18 @@ jest.mock('@apollo/react-hooks', () => ({
             data: {
                 getEditors: [
                     {
-                        id: '3',
-                        name: 'Alec Trevelyan',
-                        aff: 'MI6',
-                        focuses: ['Space Based Ion Weaponry', 'Money'],
-                        expertises: ['Betrayal', 'One Liners'],
-                    },
-                    {
                         id: '4',
                         name: 'Scaramanga',
                         aff: 'None',
                         focuses: ['Dueling', 'Gunsmithing'],
                         expertises: ['Marksmanship'],
+                    },
+                    {
+                        id: '3',
+                        name: 'Alec Trevelyan',
+                        aff: 'MI6',
+                        focuses: ['Space Based Ion Weaponry', 'Money'],
+                        expertises: ['Betrayal', 'One Liners'],
                     },
                 ],
             },
@@ -762,6 +762,37 @@ describe('EditorsDetailsForm', (): void => {
                 fireEvent.change(reasonInput, { target: { value: 'reason' } });
                 await waitFor(() => {});
                 expect((reasonInput as HTMLInputElement).value).toBe('reason');
+            });
+
+            it('displays list of reviewing editors to exclude sorted by name', async (): Promise<void> => {
+                const { baseElement, container, getByText } = render(
+                    <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                        wrapper: routerWrapper(),
+                    },
+                );
+                const excludeTooggle = getByText('editors.opposed-reviewing-editors-toggle-action-text');
+                expect(excludeTooggle).toBeInTheDocument();
+                fireEvent.click(excludeTooggle);
+                const opposedReviewingEditors = container.querySelector('.opposed-reviewing-editors-picker');
+                expect(opposedReviewingEditors).toBeInTheDocument();
+                fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+                expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+                await waitFor(() => {});
+                const selectedName = baseElement.querySelector(
+                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
+                ).textContent;
+                fireEvent.click(
+                    baseElement.querySelector(
+                        '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
+                    ),
+                );
+                expect(baseElement.querySelectorAll('.modal__overlay svg.person-pod__selected_icon')).toHaveLength(1);
+                await waitFor(() => {});
+                const editors = Array.from(baseElement.querySelectorAll('.people-picker__modal_list--item'));
+                expect(editors[0].querySelector('.person-pod__text span').innerHTML).toBe('Alec Trevelyan');
+                expect(editors[1].querySelector('.person-pod__text span').innerHTML).toBe('Scaramanga');
             });
 
             it('selecting cancel on oppopsed reviewing editors should clear values', async (): Promise<void> => {
