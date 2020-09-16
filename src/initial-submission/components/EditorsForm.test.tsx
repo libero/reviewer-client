@@ -588,6 +588,26 @@ describe('EditorsDetailsForm', (): void => {
             expect(getByText(selectedName)).toBeInTheDocument();
         });
 
+        it('displays list of senior editors sorted by name', async (): Promise<void> => {
+            const { baseElement, container, getAllByText, getByText } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            const seniorEditorPicker = container.querySelector('.senior-editors-picker');
+            expect(seniorEditorPicker).toBeInTheDocument();
+            fireEvent.click(getAllByText('selected_people_list--open')[0]);
+            expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
+            await waitFor(() => {});
+            const editors = Array.from(baseElement.querySelectorAll('.people-picker__modal_list--item'));
+            expect(editors[0].querySelector('.person-pod__text span').innerHTML).toBe('Blofeld');
+            expect(editors[1].querySelector('.person-pod__text span').innerHTML).toBe('Deputy Blofeld');
+            expect(editors[2].querySelector('.person-pod__text span').innerHTML).toBe('Deputy James Bond');
+            expect(editors[3].querySelector('.person-pod__text span').innerHTML).toBe('James Bond');
+        });
+
         describe('Excluded senior editors', () => {
             it('renders with excluded senior editors section closed when no excluded senior editors or reason in initial values', () => {
                 const { getByText, container } = render(
