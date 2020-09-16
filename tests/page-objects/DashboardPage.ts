@@ -36,6 +36,7 @@ export class DashboardPage {
     private readonly confirmDeleteButton = '.button--danger';
 
     public async assertOnPage(retries = 0): Promise<void> {
+        await t.expect(Selector('.submission-wizard .spinner-center .spinner').exists).notOk();
         const dashboard = await this.withSubmissions.exists;
         const noSubmissions = await this.noSubmissions.exists;
 
