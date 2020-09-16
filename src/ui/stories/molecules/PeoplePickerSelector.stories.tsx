@@ -58,7 +58,6 @@ storiesOf('ui | molecules/PeoplePickerSelector', module)
             button('Add Person', addPerson);
             return (
                 <PeoplePickerSelector
-                    loading={false}
                     people={people}
                     initiallySelected={[]}
                     label={label}

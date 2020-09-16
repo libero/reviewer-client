@@ -8,7 +8,7 @@ import { EditorAlias, EditorsDetails, ReviewerAlias, Submission } from '../types
 import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
-import { MultilineTextField } from '../../ui/atoms';
+import { MultilineTextField, Spinner } from '../../ui/atoms';
 import { set } from 'lodash';
 import { Link } from 'react-router-dom';
 
@@ -176,12 +176,25 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
 
     const isRequired = (): boolean => initialValues.articleType !== 'feature';
 
+    if (
+        loadingSeniorEditors ||
+        loadingLeadership ||
+        loadingSeniorEditors ||
+        loadingReviewingEditors ||
+        loadingReviewingEditors
+    ) {
+        return (
+            <div className="spinner-center">
+                <Spinner />
+            </div>
+        );
+    }
+
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
-                loading={loadingSeniorEditors || loadingLeadership}
                 people={
                     loadingSeniorEditors || loadingLeadership
                         ? []
@@ -217,7 +230,6 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                                   ed => !suggestedSeniorEditors.includes(ed.id),
                               )
                     }
-                    loading={loadingSeniorEditors || loadingLeadership}
                     onChange={(selected): void => {
                         setValue('opposedSeniorEditors', selected);
                         triggerValidation('opposedSeniorEditorsReason');
@@ -240,7 +252,6 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
             </ExcludedToggle>
             <PeoplePicker
                 label={t('editors.reviewers-people-picker-label')}
-                loading={loadingReviewingEditors}
                 people={
                     loadingReviewingEditors
                         ? []
@@ -269,7 +280,6 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 panelHeading={t('editors.opposed-reviewing-editors-people-picker-label')}
             >
                 <PeoplePicker
-                    loading={loadingReviewingEditors}
                     people={
                         loadingReviewingEditors
                             ? []

@@ -76,8 +76,8 @@ describe('SubmissionWizard', (): void => {
     it('should display loading text when the query is still loading', (): void => {
         loading = true;
         const { component } = routeWrapper(SubmissionWizard, { path: '/submit/:id/:step' });
-        const { getByText } = render(component, { wrapper: routerWrapper(['/submit/id/author']) });
-        expect(getByText('loading...')).toBeInTheDocument();
+        const { container } = render(component, { wrapper: routerWrapper(['/submit/id/author']) });
+        expect(container.querySelector('.spinner')).toBeInTheDocument();
     });
 
     const nextButtonText = 'navigation.next';

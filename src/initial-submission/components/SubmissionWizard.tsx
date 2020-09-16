@@ -1,7 +1,7 @@
 /*eslint-disable react/display-name*/
 import React, { useState } from 'react';
 import { useParams, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
-import { Button, Modal, Paragraph } from '../../ui/atoms';
+import { Button, Modal, Paragraph, Spinner } from '../../ui/atoms';
 import { ProgressBar } from '../../ui/molecules';
 import { Submission } from '../types';
 import AuthorDetailsForm from './AuthorDetailsForm';
@@ -199,7 +199,9 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                             path={`/submit/${id}/${config.id}`}
                             render={(): JSX.Element =>
                                 loading ? (
-                                    <span>loading... </span>
+                                    <div className="spinner-center">
+                                        <Spinner />
+                                    </div>
                                 ) : (
                                     <config.component
                                         initialValues={data.getSubmission}

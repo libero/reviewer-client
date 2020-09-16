@@ -24,29 +24,31 @@ const SelectedPeopleList = ({
 }: Props): JSX.Element => {
     const { t } = useTranslation('ui');
     return (
-        <div className="selected_people_list">
-            {people.map(
-                (person: EditorAlias): JSX.Element => (
-                    <div key={person.id} className="selected_people_list__item">
-                        <PersonPod
-                            {...person}
-                            toggleHandler={onRemove}
-                            selectedButtonIcon={<Delete />}
-                            initiallySelected
-                        />
-                    </div>
-                ),
-            )}
-            {!hideSelector && (
-                <div className="selected_people_list__item">
-                    <Pod onClick={onOpen} buttonIcon={<Add />} buttonText={t('selected_people_list--open')}>
-                        <div className="selected_people_list__pod-content">
-                            {openSelectorText} ({required ? t('validation--required') : t('validation--optional')})
+        <React.Fragment>
+            <div className="selected_people_list">
+                {people.map(
+                    (person: EditorAlias): JSX.Element => (
+                        <div key={person.id} className="selected_people_list__item">
+                            <PersonPod
+                                {...person}
+                                toggleHandler={onRemove}
+                                selectedButtonIcon={<Delete />}
+                                initiallySelected
+                            />
                         </div>
-                    </Pod>
-                </div>
-            )}
-        </div>
+                    ),
+                )}
+                {!hideSelector && (
+                    <div className="selected_people_list__item">
+                        <Pod onClick={onOpen} buttonIcon={<Add />} buttonText={t('selected_people_list--open')}>
+                            <div className="selected_people_list__pod-content">
+                                {openSelectorText} ({required ? t('validation--required') : t('validation--optional')})
+                            </div>
+                        </Pod>
+                    </div>
+                )}
+            </div>
+        </React.Fragment>
     );
 };
 
