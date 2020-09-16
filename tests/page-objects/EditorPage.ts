@@ -92,6 +92,7 @@ export class EditorPage {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
+            await t.wait(100);
         }
 
         await t.wait(1000);
