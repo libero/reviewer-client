@@ -9,7 +9,7 @@ import { StepProps } from './SubmissionWizard';
 import { PeoplePicker } from '../../ui/organisms';
 import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField, Spinner } from '../../ui/atoms';
-import { set } from 'lodash';
+import { set, sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
 
 const MIN_SUGGESTED_SENIOR_EDITORS = 2;
@@ -198,7 +198,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 people={
                     loadingSeniorEditors || loadingLeadership
                         ? []
-                        : [...getSeniorEditors.getEditors, ...getLeadership.getEditors]
+                        : sortBy([...getSeniorEditors.getEditors, ...getLeadership.getEditors], 'name')
                 }
                 onChange={(selected): void => {
                     setValue('suggestedSeniorEditors', selected);
@@ -226,8 +226,11 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                     people={
                         loadingSeniorEditors || loadingLeadership
                             ? []
-                            : [...getSeniorEditors.getEditors, ...getLeadership.getEditors].filter(
-                                  ed => !suggestedSeniorEditors.includes(ed.id),
+                            : sortBy(
+                                  [...getSeniorEditors.getEditors, ...getLeadership.getEditors].filter(
+                                      ed => !suggestedSeniorEditors.includes(ed.id),
+                                  ),
+                                  'name',
                               )
                     }
                     onChange={(selected): void => {
@@ -255,7 +258,10 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 people={
                     loadingReviewingEditors
                         ? []
-                        : getReviewingEditors.getEditors.filter(ed => !opposedReviewingEditors.includes(ed.id))
+                        : sortBy(
+                              getReviewingEditors.getEditors.filter(ed => !opposedReviewingEditors.includes(ed.id)),
+                              'name',
+                          )
                 }
                 onChange={(selected): void => {
                     setValue('suggestedReviewingEditors', selected);
@@ -283,7 +289,12 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                     people={
                         loadingReviewingEditors
                             ? []
-                            : getReviewingEditors.getEditors.filter(ed => !suggestedReviewingEditors.includes(ed.id))
+                            : sortBy(
+                                  getReviewingEditors.getEditors.filter(
+                                      ed => !suggestedReviewingEditors.includes(ed.id),
+                                  ),
+                                  'name',
+                              )
                     }
                     onChange={(selected): void => {
                         setValue('opposedReviewingEditors', selected);
