@@ -720,6 +720,25 @@ describe('EditorsDetailsForm', (): void => {
                 );
                 expect(baseElement.querySelector('.modal__overlay .banner')).toBeInTheDocument();
             });
+
+            it('displays list of senior editors to exclude sorted by name', async (): Promise<void> => {
+                const { baseElement, container, getByText } = render(
+                    <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                    {
+                        container: appContainer(),
+                        wrapper: routerWrapper(),
+                    },
+                );
+                fireEvent.click(getByText('editors.opposed-senior-editors-toggle-action-text'));
+                fireEvent.click(container.querySelector('.people-picker.opposed-senior-editors-picker button'));
+                expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+                await waitFor(() => {});
+                const editors = Array.from(baseElement.querySelectorAll('.people-picker__modal_list--item'));
+                expect(editors[0].querySelector('.person-pod__text span').innerHTML).toBe('Blofeld');
+                expect(editors[1].querySelector('.person-pod__text span').innerHTML).toBe('Deputy Blofeld');
+                expect(editors[2].querySelector('.person-pod__text span').innerHTML).toBe('Deputy James Bond');
+                expect(editors[3].querySelector('.person-pod__text span').innerHTML).toBe('James Bond');
+            });
         });
 
         describe('Excluded reviewing editors', () => {
