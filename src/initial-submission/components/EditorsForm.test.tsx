@@ -589,7 +589,7 @@ describe('EditorsDetailsForm', (): void => {
         });
 
         it('displays list of senior editors sorted by name', async (): Promise<void> => {
-            const { baseElement, container, getAllByText, getByText } = render(
+            const { baseElement, container, getAllByText } = render(
                 <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
                     container: appContainer(),
@@ -723,7 +723,10 @@ describe('EditorsDetailsForm', (): void => {
 
             it('displays list of senior editors to exclude sorted by name', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -785,7 +788,10 @@ describe('EditorsDetailsForm', (): void => {
 
             it('displays list of reviewing editors to exclude sorted by name', async (): Promise<void> => {
                 const { baseElement, container, getByText } = render(
-                    <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                    <EditorsForm
+                        schemaFactory={(): yup.ObjectSchema => yup.object()}
+                        initialValues={testInitialValues}
+                    />,
                     {
                         container: appContainer(),
                         wrapper: routerWrapper(),
@@ -799,9 +805,6 @@ describe('EditorsDetailsForm', (): void => {
                 fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
                 expect(baseElement.querySelector('.modal__overlay')).toBeInTheDocument();
                 await waitFor(() => {});
-                const selectedName = baseElement.querySelector(
-                    '.modal__overlay .people-picker__modal_list--item:nth-child(1) .person-pod__text .typography__body--primary',
-                ).textContent;
                 fireEvent.click(
                     baseElement.querySelector(
                         '.modal__overlay .people-picker__modal_list--item:nth-child(1) .pod__button',
@@ -1149,7 +1152,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
         });
 
-        it('clicking opposed toggle displays opposed reviewers fields and reson textarea', async (): Promise<void> => {
+        it('clicking opposed toggle displays opposed reviewers fields and reason textarea', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
@@ -1163,6 +1166,22 @@ describe('EditorsDetailsForm', (): void => {
             await waitFor(() => {});
             expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
+        });
+        it.only('displays list of reviewing editors to exclude sorted by name', async (): Promise<void> => {
+            const { baseElement, container, getByText } = render(
+                <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('editors.opposed-reviewing-editors-toggle-action-text'));
+            fireEvent.click(container.querySelector('.people-picker.opposed-reviewing-editors-picker button'));
+            expect(baseElement.querySelector('.modal__overlay .banner')).not.toBeInTheDocument();
+            await waitFor(() => {});
+            const editors = Array.from(baseElement.querySelectorAll('.people-picker__modal_list--item'));
+            expect(editors[0].querySelector('.person-pod__text span').innerHTML).toBe('Alec Trevelyan');
+            expect(editors[1].querySelector('.person-pod__text span').innerHTML).toBe('Scaramanga');
         });
         it('clears opposed values and reason if toggle section is close', async (): Promise<void> => {
             const { getByText, container } = render(
