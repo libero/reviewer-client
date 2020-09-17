@@ -151,7 +151,9 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
             />
             <SelectField
                 id="subjects"
-                labelText={t('details.subject-areas')}
+                labelText={`${t('details.subject-areas')}${
+                    initialValues.articleType === 'feature' ? t('details.subject-areas--optional') : ''
+                }`}
                 values={selectOptions}
                 setValue={setValue}
                 control={control}

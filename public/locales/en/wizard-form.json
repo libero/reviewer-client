@@ -40,6 +40,7 @@
         "subjects-helper-text": "Choose up to 2 subject areas",
         "subjects-helper-text-max": "Maximum 2 subject areas already chosen",
         "subject-areas": "Subject area(s)",
+        "subject-areas--optional": " (optional)",
         "validation": {
             "title-required": "Title is required",
             "subjects-max": "No more than 2 subject areas",
