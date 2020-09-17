@@ -166,6 +166,7 @@ const FileDetailsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
             .object()
             .required(t('files.validation.manuscript-required'))
             .nullable(),
+        uploadingSupportingFiles: yup.boolean().oneOf([false], t('files.validation.uploading-supporting-files')),
     });
 
 export { AuthorDetailsSchema, DetailsSchema, DisclosureSchema, EditorsSchema, FileDetailsSchema };
