@@ -184,7 +184,7 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
         loadingReviewingEditors
     ) {
         return (
-            <div className="spinner-center">
+            <div className="editors-step spinner-center">
                 <Spinner />
             </div>
         );

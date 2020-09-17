@@ -79,20 +79,23 @@ export class EditorPage {
         pickerQuerySelector: string,
         includeOpenPodInSelectedCount = true,
     ): Promise<void> {
+        await t.expect(Selector('.editors-step.spinner-center .spinner').exists).notOk();
         await t.expect(picker.find('.selected_people_list__item').count).eql(1);
         await clickSelector(`${pickerQuerySelector} .pod__button`);
         await t.expect(Selector('.modal__overlay').count).eql(1);
         await t.expect(Selector('.typography__heading--h2').visible).ok();
         await t.expect(Selector('#peoplePickerSearch').visible).ok();
         const addButtonSelector = Selector('.people-picker__modal_list--item .pod__button');
-        await t.expect(Selector('.people-picker__modal_list .spinner').exists).notOk();
         await t.expect(Selector('.people-picker__modal_list--item').count).gte(number);
 
         for (let i = 0; i < number; i++) {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
+            await t.wait(100);
         }
+
+        await t.wait(1000);
 
         const selectedCount = await ClientFunction(
             () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
