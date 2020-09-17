@@ -74,13 +74,21 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
         filesStoredCount,
     ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize, uploadProgressData);
 
+    const isUploadingSupportingFile = (): boolean =>
+        uploadProgressData &&
+        uploadProgressData.fileUploadProgress &&
+        uploadProgressData.fileUploadProgress.type === 'SUPPORTING_FILE';
+
     useEffect(() => {
-        const uploadInPogress = supportingFilesStatus.some(
-            filestatus => typeof filestatus.uploadInProgress !== 'undefined' && typeof filestatus.error === 'undefined',
-        );
-        setValue('uploadingSupportingFiles', uploadInPogress);
-        if (!uploadInPogress) {
-            triggerValidation();
+        if (supportingFilesStatus.length > 0 && isUploadingSupportingFile()) {
+            const uploadInPogress = supportingFilesStatus.some(
+                filestatus =>
+                    typeof filestatus.uploadInProgress !== 'undefined' && typeof filestatus.error === 'undefined',
+            );
+            setValue('uploadingSupportingFiles', uploadInPogress);
+            if (!uploadInPogress && errors && errors.uploadingSupportingFiles) {
+                triggerValidation();
+            }
         }
     }, [JSON.stringify(supportingFilesStatus)]);
 
