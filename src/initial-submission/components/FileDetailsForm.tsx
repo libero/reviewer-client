@@ -54,6 +54,7 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
 
     register({ name: 'coverLetter', type: 'custom' });
     register({ name: 'manuscriptFile', type: 'custom' });
+    register({ name: 'uploadingSupportingFiles', type: 'custom' });
 
     const [saveCallback] = useMutation(saveFilesPageMutation);
     const [uploadManuscriptFile] = useMutation(uploadManuscriptMutation);
@@ -72,6 +73,24 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
         supportingUploadDisabled,
         filesStoredCount,
     ] = useSupportingFileHook(initialValues, maxSupportingFiles, maxFileSize, uploadProgressData);
+
+    const isUploadingSupportingFile = (): boolean =>
+        uploadProgressData &&
+        uploadProgressData.fileUploadProgress &&
+        uploadProgressData.fileUploadProgress.type === 'SUPPORTING_FILE';
+
+    useEffect(() => {
+        if (supportingFilesStatus.length > 0 && isUploadingSupportingFile()) {
+            const uploadInPogress = supportingFilesStatus.some(
+                filestatus =>
+                    typeof filestatus.uploadInProgress !== 'undefined' && typeof filestatus.error === 'undefined',
+            );
+            setValue('uploadingSupportingFiles', uploadInPogress);
+            if (!uploadInPogress && errors && errors.uploadingSupportingFiles) {
+                triggerValidation();
+            }
+        }
+    }, [JSON.stringify(supportingFilesStatus)]);
 
     useEffect(() => {
         if (
@@ -190,6 +209,11 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
                     disableUpload={supportingUploadDisabled || filesStoredCount === maxSupportingFiles}
                     extraMessage={filesStoredCount === maxSupportingFiles && t('files.supporting-files-max')}
                 />
+                {errors && errors.uploadingSupportingFiles && (
+                    <span className={'typography__label typography__label--helper-text typography__label--error'}>
+                        {((errors.uploadingSupportingFiles as unknown) as { message: string }).message}
+                    </span>
+                )}
             </div>
             {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
         </div>

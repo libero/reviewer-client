@@ -1167,7 +1167,7 @@ describe('EditorsDetailsForm', (): void => {
             expect(container.querySelector('.opposedReviewers__inputs')).toBeInTheDocument();
             expect(container.querySelector('#opposedReviewersReason')).toBeInTheDocument();
         });
-        it.only('displays list of reviewing editors to exclude sorted by name', async (): Promise<void> => {
+        it('displays list of reviewing editors to exclude sorted by name', async (): Promise<void> => {
             const { baseElement, container, getByText } = render(
                 <EditorsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={testInitialValues} />,
                 {
