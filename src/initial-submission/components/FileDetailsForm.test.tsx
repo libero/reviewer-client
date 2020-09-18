@@ -313,7 +313,7 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
             // .doc
             await dropFileEvent(createFile('application/msword', 'ping.doc'), dropzone);
-            expect(container.querySelector('.file-upload__dropzone--complete')).toBeInTheDocument();
+            expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
 
             // .png
             await dropFileEvent(createFile('image/png', 'ping.png'), dropzone);
