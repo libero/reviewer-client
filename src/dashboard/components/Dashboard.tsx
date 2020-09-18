@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import SubmissionList from './SubmissionList';
@@ -10,12 +10,23 @@ import useModal from '../../ui/hooks/useModal';
 import ArticleType from './ArticleType';
 import Interweave from 'interweave';
 import { Spinner } from '../../ui/atoms';
+import { CLEAR_ERROR } from '../../initial-submission/graphql';
+
+// https://reactrouter.com/web/example/query-parameters
+// A custom hook that builds on useLocation to parse
+// the query string for you.
+function useQueryParams(): URLSearchParams {
+    return new URLSearchParams(useLocation().search);
+}
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
+        const query = useQueryParams();
         const { isShowing, toggle } = useModal();
         const [noArticleTypeId, setNoArticleTypeId] = useState<string>();
         const { loading, data } = useQuery(getSubmissionsQuery);
+        const [clearError] = useMutation(CLEAR_ERROR);
+        const alreadySubmitted = query.get('alreadySubmitted');
         const [saveArticleTypeMutation] = useMutation(saveArticleType);
         const [startSubmission, { loading: loadingStartSubmission }] = useMutation(startSubmissionMutation, {
             update(cache, { data: { startSubmission } }) {
@@ -53,6 +64,13 @@ const Dashboard = withRouter(
             }
         };
         const { t } = useTranslation('dashboard');
+
+        useEffect(() => {
+            if (alreadySubmitted) {
+                clearError();
+            }
+        }, [alreadySubmitted]);
+
         if (isShowing) {
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
