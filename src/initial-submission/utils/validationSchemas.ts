@@ -161,7 +161,10 @@ const EditorsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
 
 const FileDetailsSchema = (t: i18next.TFunction): yup.ObjectSchema =>
     yup.object().shape({
-        coverLetter: yup.string().required(t('files.validation.coverletter-required')),
+        coverLetter: yup
+            .string()
+            .required(t('files.validation.coverletter-required'))
+            .notOneOf(['<p></p>'], t('files.validation.coverletter-required')),
         manuscriptFile: yup
             .object()
             .required(t('files.validation.manuscript-required'))
