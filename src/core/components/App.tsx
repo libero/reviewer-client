@@ -1,6 +1,6 @@
 import React, { useEffect, lazy } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
+import { ApolloProvider, useMutation } from '@apollo/react-hooks';
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import '../styles/index.scss';
@@ -12,6 +12,7 @@ import useTrackingHook from './useTrackingHook';
 import ErrorPage from './ErrorPage';
 import ErrorBoundary from './ErrorBoundary';
 import Spinner from '../../ui/atoms/Spinner';
+import { CLEAR_ERROR } from '../../initial-submission/graphql';
 
 const AuthRoute = lazy(() => import('./AuthRoute'));
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
@@ -30,7 +31,17 @@ const Loader = (): JSX.Element => (
 );
 
 const AppRoutes: React.FC = (): JSX.Element => {
+    const query = new URLSearchParams(useLocation().search);
+    const [clearError] = useMutation(CLEAR_ERROR);
     useTrackingHook();
+
+    useEffect(() => {
+        if (query.toString().length === 0) {
+            console.log('clear');
+            clearError();
+        }
+    }, [window.location.href]);
+
     return (
         <React.Suspense fallback={<Loader />}>
             <CookieBanner />

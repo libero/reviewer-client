@@ -7,16 +7,9 @@ import { isUserAuthenticatedQuery } from '../../core/graphql';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { SET_LOGOUT_ERROR } from '../../initial-submission/graphql';
 
-// https://reactrouter.com/web/example/query-parameters
-// A custom hook that builds on useLocation to parse
-// the query string for you.
-function useQueryParams(): URLSearchParams {
-    return new URLSearchParams(useLocation().search);
-}
-
 const Login = (): JSX.Element => {
     const { t } = useTranslation('login');
-    const query = useQueryParams();
+    const query = new URLSearchParams(useLocation().search);
     const [setLogoutError] = useMutation(SET_LOGOUT_ERROR);
     const { data = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
     const loginTimeout = query.get('loginTimeout');
@@ -29,7 +22,7 @@ const Login = (): JSX.Element => {
     }, []);
 
     if (data.isAuthenticated) {
-        return <Redirect to="/" />;
+        return <Redirect to="/?loginTimeout=true" />;
     }
 
     return (
