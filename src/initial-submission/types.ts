@@ -28,6 +28,7 @@ export interface FileDetails {
     coverLetter?: string;
     manuscriptFile?: File | null;
     supportingFiles?: Array<File>;
+    uploadingSupportingFiles?: boolean;
 }
 
 export interface EditorsDetails {
