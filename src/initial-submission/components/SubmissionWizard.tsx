@@ -23,7 +23,6 @@ import {
     EditorsSchema,
     FileDetailsSchema,
 } from '../utils/validationSchemas';
-import ErrorBoundary from '../../core/components/ErrorBoundary';
 
 interface Props {
     id: string;
@@ -184,66 +183,64 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
     }
 
     return (
-        <ErrorBoundary>
-            <div className="submission-wizard">
-                {getCurrentStepPathIndex() > -1 && (
-                    <ProgressBar
-                        fixedWidthCentered
-                        steps={stepConfig.map((step: StepConfig): { id: string; label: string } => ({
-                            id: step.id,
-                            label: step.label,
-                        }))}
-                        currentStep={step.toLocaleLowerCase()}
-                    />
-                )}
+        <div className="submission-wizard">
+            {getCurrentStepPathIndex() > -1 && (
+                <ProgressBar
+                    fixedWidthCentered
+                    steps={stepConfig.map((step: StepConfig): { id: string; label: string } => ({
+                        id: step.id,
+                        label: step.label,
+                    }))}
+                    currentStep={step.toLocaleLowerCase()}
+                />
+            )}
 
-                <Switch>
-                    {stepConfig.map(
-                        (config): JSX.Element => (
-                            <Route
-                                key={config.id}
-                                path={`/submit/${id}/${config.id}`}
-                                render={(): JSX.Element =>
-                                    loading ? (
-                                        <div className="spinner-center">
-                                            <Spinner />
-                                        </div>
-                                    ) : (
-                                        <config.component
-                                            initialValues={data.getSubmission}
-                                            schemaFactory={config.schemaFactory}
-                                            ButtonComponent={ButtonComponent(
-                                                id,
-                                                history,
-                                                getCurrentStepPathIndex,
-                                                stepConfig,
-                                                toggle,
-                                                toggleErrorBar,
-                                            )}
-                                            toggleErrorBar={toggleErrorBar}
-                                        />
-                                    )
-                                }
-                            />
-                        ),
-                    )}
-                    <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
-                </Switch>
-                <Modal
-                    isShowing={isShowing}
-                    hide={toggle}
-                    buttonType="primary"
-                    buttonText={t('submit.modal-confirm') as string}
-                    onAccept={async (): Promise<void> => {
-                        await submitSubmission({ variables: { id } });
-                        history.push(`/survey/${id}`);
-                    }}
-                >
-                    <h2 className="typography__heading typography__heading--h2">{t('submit.modal-title')}</h2>
-                    <Paragraph type="writing">{t('submit.modal-text')}</Paragraph>
-                </Modal>
-            </div>
-        </ErrorBoundary>
+            <Switch>
+                {stepConfig.map(
+                    (config): JSX.Element => (
+                        <Route
+                            key={config.id}
+                            path={`/submit/${id}/${config.id}`}
+                            render={(): JSX.Element =>
+                                loading ? (
+                                    <div className="spinner-center">
+                                        <Spinner />
+                                    </div>
+                                ) : (
+                                    <config.component
+                                        initialValues={data.getSubmission}
+                                        schemaFactory={config.schemaFactory}
+                                        ButtonComponent={ButtonComponent(
+                                            id,
+                                            history,
+                                            getCurrentStepPathIndex,
+                                            stepConfig,
+                                            toggle,
+                                            toggleErrorBar,
+                                        )}
+                                        toggleErrorBar={toggleErrorBar}
+                                    />
+                                )
+                            }
+                        />
+                    ),
+                )}
+                <Redirect from="/submit/:id" to={`/submit/${id}/author`} />
+            </Switch>
+            <Modal
+                isShowing={isShowing}
+                hide={toggle}
+                buttonType="primary"
+                buttonText={t('submit.modal-confirm') as string}
+                onAccept={async (): Promise<void> => {
+                    await submitSubmission({ variables: { id } });
+                    history.push(`/survey/${id}`);
+                }}
+            >
+                <h2 className="typography__heading typography__heading--h2">{t('submit.modal-title')}</h2>
+                <Paragraph type="writing">{t('submit.modal-text')}</Paragraph>
+            </Modal>
+        </div>
     );
 };
 export default SubmissionWizard;
