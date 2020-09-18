@@ -121,7 +121,12 @@ interface Props {
 
 const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Element => {
     const onDrop = useCallback(onUpload, []);
-    const { getRootProps, getInputProps, open, isDragActive } = useDropzone({ onDrop, noClick: true });
+    const acceptedFiles = 'application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
+        onDrop,
+        noClick: true,
+        accept: acceptedFiles,
+    });
 
     const status = useMemo(() => {
         if (state.error) {

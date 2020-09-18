@@ -115,7 +115,11 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
     }, [uploadProgressData, loading]);
 
     const onManuscriptUpload = (filesList: File[]): void => {
-        if (!allowedManuscriptFileTypes.includes(filesList[0].type) || filesList[0].size > maxFileSize) {
+        if (
+            !filesList.length ||
+            !allowedManuscriptFileTypes.includes(filesList[0].type) ||
+            filesList[0].size > maxFileSize
+        ) {
             setManuscriptStatus({ error: 'validation' });
             return;
         }
