@@ -12,16 +12,9 @@ import Interweave from 'interweave';
 import { Spinner } from '../../ui/atoms';
 import { CLEAR_ERROR } from '../../initial-submission/graphql';
 
-// https://reactrouter.com/web/example/query-parameters
-// A custom hook that builds on useLocation to parse
-// the query string for you.
-function useQueryParams(): URLSearchParams {
-    return new URLSearchParams(useLocation().search);
-}
-
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
-        const query = useQueryParams();
+        const query = new URLSearchParams(useLocation().search);
         const { isShowing, toggle } = useModal();
         const [noArticleTypeId, setNoArticleTypeId] = useState<string>();
         const { loading, data } = useQuery(getSubmissionsQuery);
