@@ -10,6 +10,7 @@ import { Value } from '../../ui/atoms/SelectField';
 import useAutoSave from '../hooks/useAutoSave';
 import { StepProps } from './SubmissionWizard';
 import { getConfig } from '../../core/utils/config';
+import ErrorBoundary from '../../core/components/ErrorBoundary';
 
 const majorSubjectAreas = getConfig().client.majorSubjectAreas;
 const selectOptions = Object.keys(majorSubjectAreas).map(key => ({ label: majorSubjectAreas[key], value: key }));
@@ -138,102 +139,106 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     ]);
 
     return (
-        <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
-            <h2 className="typography__heading typography__heading--h2 details-page__title details-page-step">
-                {t('details.form-title')}
-            </h2>
-            <ExpandingTextField
-                id="title"
-                register={register}
-                labelText={t('details.title-label')}
-                invalid={errors && errors.title !== undefined}
-                helperText={errors && errors.title ? errors.title.message : null}
-            />
-            <SelectField
-                id="subjects"
-                labelText={`${t('details.subject-areas')}${
-                    initialValues.articleType === 'feature' ? t('details.subject-areas--optional') : ''
-                }`}
-                values={selectOptions}
-                setValue={setValue}
-                control={control}
-                formComponent={true}
-                multi
-                limitReached={unmappedSubjectsWatch && unmappedSubjectsWatch.length >= 2}
-                className="subject-area"
-                invalid={errors && errors.subjects !== undefined}
-                helperText={
-                    errors && errors.subjects
-                        ? ((errors.subjects as unknown) as { message: string }).message
-                        : unmappedSubjectsWatch && unmappedSubjectsWatch.length >= 2
-                        ? t('details.subjects-helper-text-max')
-                        : t('details.subjects-helper-text')
-                }
-            />
-            <Toggle
-                id="previouslyDiscussedContainer"
-                toggleLabel={t('details.previously-discussed-toggle')}
-                open={!!previouslyDiscussed}
-            >
-                <MultilineTextField
-                    id="previouslyDiscussed"
+        <ErrorBoundary>
+            <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
+                <h2 className="typography__heading typography__heading--h2 details-page__title details-page-step">
+                    {t('details.form-title')}
+                </h2>
+                <ExpandingTextField
+                    id="title"
                     register={register}
-                    labelText={t('details.previously-discussed-label')}
-                    invalid={errors && errors.previouslyDiscussed !== undefined}
-                    helperText={errors && errors.previouslyDiscussed ? errors.previouslyDiscussed.message : null}
+                    labelText={t('details.title-label')}
+                    invalid={errors && errors.title !== undefined}
+                    helperText={errors && errors.title ? errors.title.message : null}
                 />
-            </Toggle>
-            <Toggle
-                id="previouslyConsideredContainer"
-                toggleLabel={t('details.previously-submitted-toggle')}
-                open={!!previouslySubmitted}
-            >
-                <MultilineTextField
-                    id="previouslySubmitted"
-                    register={register}
-                    labelText={t('details.previously-submitted-label')}
-                    invalid={errors && errors.previouslySubmitted !== undefined}
-                    helperText={errors && errors.previouslySubmitted ? errors.previouslySubmitted.message : null}
+                <SelectField
+                    id="subjects"
+                    labelText={`${t('details.subject-areas')}${
+                        initialValues.articleType === 'feature' ? t('details.subject-areas--optional') : ''
+                    }`}
+                    values={selectOptions}
+                    setValue={setValue}
+                    control={control}
+                    formComponent={true}
+                    multi
+                    limitReached={unmappedSubjectsWatch && unmappedSubjectsWatch.length >= 2}
+                    className="subject-area"
+                    invalid={errors && errors.subjects !== undefined}
+                    helperText={
+                        errors && errors.subjects
+                            ? ((errors.subjects as unknown) as { message: string }).message
+                            : unmappedSubjectsWatch && unmappedSubjectsWatch.length >= 2
+                            ? t('details.subjects-helper-text-max')
+                            : t('details.subjects-helper-text')
+                    }
                 />
-            </Toggle>
-            <Toggle
-                id="cosubmission"
-                toggleLabel={t('details.cosubmission-toggle')}
-                open={!!firstCosubmissionTitle || !!secondCosubmissionTitle}
-            >
-                <TextField
-                    id="firstCosubmissionTitle"
-                    register={register}
-                    labelText={t('details.cosubmission-title-label')}
-                    invalid={errors && errors.firstCosubmissionTitle !== undefined}
-                    helperText={errors && errors.firstCosubmissionTitle ? errors.firstCosubmissionTitle.message : null}
-                />
-                {hasSecondCosubmission ? (
-                    <TextField
-                        id="secondCosubmissionTitle"
+                <Toggle
+                    id="previouslyDiscussedContainer"
+                    toggleLabel={t('details.previously-discussed-toggle')}
+                    open={!!previouslyDiscussed}
+                >
+                    <MultilineTextField
+                        id="previouslyDiscussed"
                         register={register}
-                        labelText={t('details.second-cosubmission-title-label')}
-                        invalid={errors && errors.secondCosubmissionTitle !== undefined}
+                        labelText={t('details.previously-discussed-label')}
+                        invalid={errors && errors.previouslyDiscussed !== undefined}
+                        helperText={errors && errors.previouslyDiscussed ? errors.previouslyDiscussed.message : null}
+                    />
+                </Toggle>
+                <Toggle
+                    id="previouslyConsideredContainer"
+                    toggleLabel={t('details.previously-submitted-toggle')}
+                    open={!!previouslySubmitted}
+                >
+                    <MultilineTextField
+                        id="previouslySubmitted"
+                        register={register}
+                        labelText={t('details.previously-submitted-label')}
+                        invalid={errors && errors.previouslySubmitted !== undefined}
+                        helperText={errors && errors.previouslySubmitted ? errors.previouslySubmitted.message : null}
+                    />
+                </Toggle>
+                <Toggle
+                    id="cosubmission"
+                    toggleLabel={t('details.cosubmission-toggle')}
+                    open={!!firstCosubmissionTitle || !!secondCosubmissionTitle}
+                >
+                    <TextField
+                        id="firstCosubmissionTitle"
+                        register={register}
+                        labelText={t('details.cosubmission-title-label')}
+                        invalid={errors && errors.firstCosubmissionTitle !== undefined}
                         helperText={
-                            errors && errors.secondCosubmissionTitle ? errors.secondCosubmissionTitle.message : null
+                            errors && errors.firstCosubmissionTitle ? errors.firstCosubmissionTitle.message : null
                         }
                     />
-                ) : (
-                    <span className="typography__small">
-                        {t('details.second-cosubmission-toggle-prefix')}
-                        <span
-                            className="typography__body--link"
-                            id="secondCosubmissionTitleButton"
-                            onClick={(): void => setCosubmissionState(true)}
-                        >
-                            {t('details.second-cosubmission-toggle-link')}
+                    {hasSecondCosubmission ? (
+                        <TextField
+                            id="secondCosubmissionTitle"
+                            register={register}
+                            labelText={t('details.second-cosubmission-title-label')}
+                            invalid={errors && errors.secondCosubmissionTitle !== undefined}
+                            helperText={
+                                errors && errors.secondCosubmissionTitle ? errors.secondCosubmissionTitle.message : null
+                            }
+                        />
+                    ) : (
+                        <span className="typography__small">
+                            {t('details.second-cosubmission-toggle-prefix')}
+                            <span
+                                className="typography__body--link"
+                                id="secondCosubmissionTitleButton"
+                                onClick={(): void => setCosubmissionState(true)}
+                            >
+                                {t('details.second-cosubmission-toggle-link')}
+                            </span>
+                            {t('details.second-cosubmission-toggle-suffix')}
                         </span>
-                        {t('details.second-cosubmission-toggle-suffix')}
-                    </span>
-                )}
-            </Toggle>
-            {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
-        </form>
+                    )}
+                </Toggle>
+                {ButtonComponent && <ButtonComponent saveFunction={onSave} triggerValidation={triggerValidation} />}
+            </form>
+        </ErrorBoundary>
     );
 };
 

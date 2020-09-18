@@ -7,6 +7,7 @@ import Logo from '../assets/elife-logo.svg';
 import { User } from '../types';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
 import { useTranslation } from 'react-i18next';
+import ErrorBoundary from './ErrorBoundary';
 
 interface GetCurrentUser {
     getCurrentUser: User;
@@ -42,17 +43,19 @@ const NavBar = (): JSX.Element => {
     const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !authQuery.isAuthenticated });
 
     return (
-        <AppBar>
-            <BurgerMenu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
-            <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
-            <Menu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
-            {authQuery.isAuthenticated && <ProfileDropdown user={loading ? null : data.getCurrentUser} />}
-            {!authQuery.isAuthenticated && (
-                <a className="typography typography__body--link" href="/auth-login">
-                    {t('navbar.login')}
-                </a>
-            )}
-        </AppBar>
+        <ErrorBoundary>
+            <AppBar>
+                <BurgerMenu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
+                <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
+                <Menu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
+                {authQuery.isAuthenticated && <ProfileDropdown user={loading ? null : data.getCurrentUser} />}
+                {!authQuery.isAuthenticated && (
+                    <a className="typography typography__body--link" href="/auth-login">
+                        {t('navbar.login')}
+                    </a>
+                )}
+            </AppBar>
+        </ErrorBoundary>
     );
 };
 
