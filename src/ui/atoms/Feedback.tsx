@@ -1,24 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import Interweave from 'interweave';
 
-import { CLEAR_ERROR, APPLICATION_ERROR } from '../../initial-submission/graphql';
+import { APPLICATION_ERROR } from '../../initial-submission/graphql';
 
 const Feedback = (): JSX.Element => {
     const { t } = useTranslation('ui');
     const [isSticky, setSticky] = useState(false);
-    const [clearError] = useMutation(CLEAR_ERROR);
     const ref = useRef(null);
+
+    const { data } = useQuery(APPLICATION_ERROR);
+    const { feedback = {} } = data && data.feedback ? data : {};
+
+    const { message = undefined, error = undefined } = feedback;
+
     const handleScroll = (): void => {
         if (ref.current) {
-            window.scrollY > ref.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
+            window.pageYOffset > ref.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
         }
-    };
-
-    //eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const clearErrorHandler = async (): Promise<void> => {
-        await clearError();
     };
 
     useEffect(() => {
@@ -28,19 +28,10 @@ const Feedback = (): JSX.Element => {
         };
     }, []);
 
-    const { data } = useQuery(APPLICATION_ERROR);
-
-    if (!data || !data.feedback) {
-        return <React.Fragment />;
-    }
-
-    // dismissable: indicates if this feedback can be dismissed. Parked pending styling discussion.
-    const { message, error } = data.feedback;
-
     return (
         <React.Fragment>
-            {isSticky && <div className="fixed-padding" />}
-            <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
+            {isSticky && error && <div className="fixed-padding" />}
+            <div className={`feedback ${error ? 'error' : 'hide'} ${isSticky ? 'stick' : ''}`} ref={ref}>
                 <div className="feedback__content">
                     <Interweave content={t(message)} />
                 </div>
