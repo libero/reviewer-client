@@ -13,11 +13,11 @@ const Feedback = (): JSX.Element => {
     const { data } = useQuery(APPLICATION_ERROR);
     const { feedback = {} } = data && data.feedback ? data : {};
 
-    const { message = null, error = null } = feedback;
+    const { message = undefined, error = undefined } = feedback;
 
     const handleScroll = (): void => {
-        console.log('ref.current', ref.current);
-        if (ref.current && error) {
+        console.log('ref.current', ref.current, error);
+        if (ref.current) {
             window.pageYOffset > ref.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
         }
     };
@@ -27,12 +27,12 @@ const Feedback = (): JSX.Element => {
         return (): void => {
             window.removeEventListener('scroll', () => handleScroll);
         };
-    }, [error]);
+    }, []);
 
     return (
         <React.Fragment>
-            {isSticky && <div className="fixed-padding" />}
-            <div className={`feedback ${error && 'error'} ${isSticky && 'stick'}`} ref={ref}>
+            {isSticky && error && <div className="fixed-padding" />}
+            <div className={`feedback ${error ? 'error' : 'hide'} ${isSticky ? 'stick' : ''}`} ref={ref}>
                 <div className="feedback__content">
                     <Interweave content={t(message)} />
                 </div>
