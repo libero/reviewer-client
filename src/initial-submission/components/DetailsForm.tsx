@@ -92,7 +92,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     const firstCosubmissionWatch = watch('firstCosubmissionTitle');
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
     const onSave = async (): Promise<void> => {
-        const cosubmission = [firstCosubmissionWatch, secondCosubmissionWatch].filter(item => item.length);
+        const cosubmission = [firstCosubmissionWatch, secondCosubmissionWatch].filter(item => item && item.length);
         const subjectsWatch = unmappedSubjectsWatch
             ? (unmappedSubjectsWatch as []).map((subject: Value) => subject.value)
             : null;
