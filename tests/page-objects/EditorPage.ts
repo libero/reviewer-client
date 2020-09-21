@@ -92,10 +92,10 @@ export class EditorPage {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
-            await t.wait(150);
+            await t.wait(200);
         }
 
-        await t.wait(3000);
+        await t.wait(4000);
 
         const selectedCount = await ClientFunction(
             () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
