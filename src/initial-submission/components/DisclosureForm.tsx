@@ -26,7 +26,7 @@ const DisclosureForm = ({ initialValues, schemaFactory, ButtonComponent, toggleE
     };
     const { register, errors, getValues, watch, triggerValidation } = useForm<DisclosureDetails>({
         defaultValues,
-        mode: 'onBlur',
+        mode: 'onChange',
         validationSchema: schema,
     });
 
