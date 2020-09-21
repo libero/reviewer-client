@@ -16,7 +16,6 @@ const Feedback = (): JSX.Element => {
     const { message = undefined, error = undefined } = feedback;
 
     const handleScroll = (): void => {
-        console.log('ref.current', ref.current, error);
         if (ref.current) {
             window.pageYOffset > ref.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
         }
