@@ -95,7 +95,7 @@ export class EditorPage {
             await t.wait(200);
         }
 
-        await t.wait(4000);
+        await t.wait(10000);
 
         const selectedCount = await ClientFunction(
             () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
