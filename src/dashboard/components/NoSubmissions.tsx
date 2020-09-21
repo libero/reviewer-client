@@ -35,10 +35,7 @@ const NoSubmissions = ({ onStartClick }: Props): JSX.Element => {
                     </Paragraph>
                     <Paragraph type="writing">
                         {t('new-system-4')}
-                        <a
-                            className="typography typography__body--link"
-                            href="https://reviewer.elifesciences.org/contact-us/contact-elife"
-                        >
+                        <a className="typography typography__body--link" href="/contact-us/contact-elife">
                             {t('contact')}
                         </a>
                     </Paragraph>

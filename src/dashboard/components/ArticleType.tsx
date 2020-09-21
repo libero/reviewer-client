@@ -63,11 +63,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
             <Paragraph type="writing" secondary>
                 {t('short-report.paragraph-2')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
+                <a target="_blank" rel="noopener noreferrer" href="/author-guide/editorial-process">
                     {t('author-guide')}
                 </a>
                 .
@@ -85,11 +81,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
             <Paragraph type="writing" secondary>
                 {t('tools-resources.paragraph-3')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
+                <a target="_blank" rel="noopener noreferrer" href="/author-guide/editorial-process">
                     {t('author-guide')}
                 </a>
                 .
@@ -104,11 +96,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
             <Paragraph type="writing" secondary>
                 {t('scientific-correspondence.paragraph-2')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
+                <a target="_blank" rel="noopener noreferrer" href="/author-guide/editorial-process">
                     {t('author-guide')}
                 </a>
                 .
@@ -123,11 +111,7 @@ const ArticleType = ({ loading, onCancel, onConfirm }: Props): JSX.Element => {
             </Paragraph>
             <Paragraph type="writing" secondary>
                 {t('feature.paragraph-2')}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://reviewer.elifesciences.org/author-guide/editorial-process"
-                >
+                <a target="_blank" rel="noopener noreferrer" href="/author-guide/editorial-process">
                     {t('author-guide')}
                 </a>
             </Paragraph>
