@@ -178,6 +178,10 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
         setErrorBar(errorBar);
     };
 
+    if (!loading && !data.getSubmission) {
+        return <Redirect to="/?alreadySubmitted=true" />;
+    }
+
     return (
         <div className="submission-wizard">
             {getCurrentStepPathIndex() > -1 && (
