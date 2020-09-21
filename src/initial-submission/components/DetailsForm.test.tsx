@@ -232,7 +232,7 @@ describe('DetailsForm', (): void => {
                 variables: {
                     id: 'blah',
                     details: {
-                        cosubmission: ['test cosubmission', ''],
+                        cosubmission: ['test cosubmission'],
                         previouslyDiscussed: '',
                         previouslySubmitted: '',
                         subjects: [],
