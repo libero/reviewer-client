@@ -37,7 +37,6 @@ const AppRoutes: React.FC = (): JSX.Element => {
 
     useEffect(() => {
         if (query.toString().length === 0) {
-            console.log('clear');
             clearError();
         }
     }, [window.location.href]);
