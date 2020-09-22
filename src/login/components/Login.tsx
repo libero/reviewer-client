@@ -35,10 +35,7 @@ const Login = (): JSX.Element => {
                     <Paragraph type="writing">{t('mission-2')}</Paragraph>
                     <Paragraph type="writing">
                         {t('author-guide-message')}
-                        <a
-                            className="typography typography__body--link"
-                            href="https://reviewer.elifesciences.org/author-guide"
-                        >
+                        <a className="typography typography__body--link" href="/author-guide">
                             {t('author-guide-link')}
                         </a>
                         .
