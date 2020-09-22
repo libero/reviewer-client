@@ -91,6 +91,7 @@ export class EditorPage {
         const tabs = Selector('.people-picker__selected-tabs .people-picker__selected-tab');
         await t.expect(tabs.count).eql(0);
 
+        console.log(`Using selector: ${pickerQuerySelector}`);
         for (let i = 0; i < number; i++) {
             console.log(`Ticking person: ${i}`);
             const button = addButtonSelector.nth(i);
@@ -100,7 +101,7 @@ export class EditorPage {
                 `.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button .person-pod__selected_icon`,
             );
             await t.expect(clickedSelector.exists).ok({ timeout: 5000 });
-            await t.expect(tabs.count).eql(i + 1);
+            await t.expect(tabs.count).eql(i + 1, { timeout: 2000 });
             console.log(`Finished Ticking person: ${i}`);
         }
 
