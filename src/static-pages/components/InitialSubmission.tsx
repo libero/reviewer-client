@@ -202,12 +202,6 @@ const InitialSubmission = (): JSX.Element => {
                     </Paragraph>
                 </li>
 
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.meta.data.six')} />
-                    </Paragraph>
-                </li>
-
                 <li id="diversity">
                     <Paragraph type="reading">
                         <Interweave content={t('initial-submission.meta.data.seven')} />
