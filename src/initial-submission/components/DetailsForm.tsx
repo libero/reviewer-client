@@ -171,6 +171,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="previouslyDiscussedContainer"
                 toggleLabel={t('details.previously-discussed-toggle')}
                 open={!!previouslyDiscussed}
+                onToggle={() => console.log('clear values here')}
             >
                 <MultilineTextField
                     id="previouslyDiscussed"
