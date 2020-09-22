@@ -98,7 +98,7 @@ export class EditorPage {
             await t.expect(clickedSelector.exists).ok({ timeout: 5000 });
         }
 
-        await t.wait(3000);
+        await t.wait(5000);
 
         const selectedCount = await ClientFunction(
             () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
