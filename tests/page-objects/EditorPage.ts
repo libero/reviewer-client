@@ -97,11 +97,9 @@ export class EditorPage {
 
         await t.wait(3000);
 
-        const selectedCount = await ClientFunction(
-            () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
-        )();
+        const selectedCount = Selector('.people-picker__selected-tabs .people-picker__selected-tab');
 
-        await t.expect(selectedCount).eql(number);
+        await t.expect(selectedCount.count).eql(number, { timeout: 10000 });
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
         await t
