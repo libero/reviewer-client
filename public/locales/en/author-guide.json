@@ -135,7 +135,7 @@
                 "p3": "Authors should provide information about data processing and analysis in their figure legends, including any statistical tests applied, with exact sample number, p values of tests, criteria for data inclusion or exclusion, and details of replicates. In some cases, it might be unwieldy to have this information in the legend of a figure, in which case the information can be provided in a source data file – see below.",
                 "p4": "Although we understand that authors sometimes need to provide composite figures as main figures, we urge authors not to make such figures (and their legends) too large to avoid the figure and its legend extending beyond one page in the PDF. We also encourage authors to avoid composite figure supplements wherever possible.",
                 "p5": "When preparing figures, we recommend that authors follow the principles of <a href=\"http://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\">Colour Universal Design</a> (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
-                "p6": "Figures can be uploaded individually in the following formats: TIFF, GIF, JPG, EPS, AI, PDF and Corel Draw. If you would like to supply PDF images please ensure that they are saved in a Vector image format."
+                "p6": "Figures can be uploaded individually in the following formats: TIFF, GIF, JPG, EPS, AI, and PDF. If you would like to supply PDF images please ensure that they are saved in a Vector image format."
             },
             "data": {
                 "heading": "Source Data Files, for Figures and Tables:",
@@ -228,7 +228,7 @@
 
             "figures": {
                 "heading": "Figures and Figure Supplements",
-                "p1": "Each figure and each figure supplement should be uploaded as an individual file: each image should be labelled Figure 1, Figure 2, and so on. Figures and figure supplements can be uploaded in the following formats: TIFF, GIF, JPG, EPS, AI, PDF and Corel Draw.",
+                "p1": "Each figure and each figure supplement should be uploaded as an individual file: each image should be labelled Figure 1, Figure 2, and so on. Figures and figure supplements can be uploaded in the following formats: TIFF, GIF, JPG, EPS, AI, and PDF.",
                 "p2": "All figures must be uploaded at a minimum dpi of 300 and a minimum physical width size of 10cm. If you anticipate any figures being the equivalent width of a full typeset page, they must be uploaded at a minimum physical width of 20cm and remain at 300 dpi.",
                 "p3": "At the revised submission stage, please ensure that whitespace around figures is minimised, especially in PDF images.",
                 "p4": "Figures in revised manuscripts may be screened to ensure that they have not been adjusted in any way that could lead to misinterpretation of the information present in the original image."
