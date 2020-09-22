@@ -92,8 +92,10 @@ export class EditorPage {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
-            const clickedSelector = Selector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button svg`);
-            await t.expect(clickedSelector.hasClass('.person-pod__selected_icon')).ok();
+            const clickedSelector = Selector(
+                `.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button .person-pod__selected_icon`,
+            );
+            await t.expect(clickedSelector.exists).ok({ timeout: 1000 });
         }
 
         await t.wait(3000);
