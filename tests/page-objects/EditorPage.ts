@@ -95,7 +95,7 @@ export class EditorPage {
             const clickedSelector = Selector(
                 `.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button .person-pod__selected_icon`,
             );
-            await t.expect(clickedSelector.exists).ok({ timeout: 1000 });
+            await t.expect(clickedSelector.exists).ok({ timeout: 5000 });
         }
 
         await t.wait(3000);
