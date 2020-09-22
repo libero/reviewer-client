@@ -92,12 +92,17 @@ export class EditorPage {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
-            await t.wait(150);
+            const clickedSelector = Selector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button svg`);
+            await t.expect(clickedSelector.hasClass('.person-pod__selected_icon')).ok();
         }
 
-        const selectedCount = Selector('.people-picker__selected-tabs .people-picker__selected-tab');
+        await t.wait(3000);
 
-        await t.expect(selectedCount.count).eql(number, { timeout: 10000 });
+        const selectedCount = await ClientFunction(
+            () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
+        )();
+
+        await t.expect(selectedCount).eql(number);
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
         await t
