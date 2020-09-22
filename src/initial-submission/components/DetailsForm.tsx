@@ -171,7 +171,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="previouslyDiscussedContainer"
                 toggleLabel={t('details.previously-discussed-toggle')}
                 open={!!previouslyDiscussed}
-                onToggle={() => console.log('clear values here')}
+                onToggle={() => setValue('previouslyDiscussed', '')}
             >
                 <MultilineTextField
                     id="previouslyDiscussed"
@@ -185,6 +185,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="previouslyConsideredContainer"
                 toggleLabel={t('details.previously-submitted-toggle')}
                 open={!!previouslySubmitted}
+                onToggle={() => setValue('previouslySubmitted', '')}
             >
                 <MultilineTextField
                     id="previouslySubmitted"
@@ -198,6 +199,10 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="cosubmission"
                 toggleLabel={t('details.cosubmission-toggle')}
                 open={!!firstCosubmissionTitle || !!secondCosubmissionTitle}
+                onToggle={() => {
+                    setValue('firstCosubmissionTitle', '');
+                    setValue('secondCosubmissionTitle', '');
+                }}
             >
                 <TextField
                     id="firstCosubmissionTitle"
