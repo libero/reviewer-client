@@ -92,8 +92,10 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     const firstCosubmissionWatch = watch('firstCosubmissionTitle');
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
     const onSave = async (): Promise<void> => {
-        console.log('getValues', getValues());
-        const cosubmission = [firstCosubmissionWatch, secondCosubmissionWatch].filter(item => item && item.length);
+        const values = getValues();
+        const cosubmission = [values.firstCosubmissionTitle, values.secondCosubmissionTitle].filter(
+            item => item && item.length,
+        );
         const subjectsWatch = unmappedSubjectsWatch
             ? (unmappedSubjectsWatch as []).map((subject: Value) => subject.value)
             : null;
@@ -103,8 +105,8 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 details: {
                     title: titleWatch,
                     subjects: subjectsWatch,
-                    previouslyDiscussed: previouslyDiscussedWatch,
-                    previouslySubmitted: previouslySubmittedWatch,
+                    previouslyDiscussed: values.previouslyDiscussed,
+                    previouslySubmitted: values.previouslySubmitted,
                     cosubmission,
                 },
             },
@@ -172,7 +174,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="previouslyDiscussedContainer"
                 toggleLabel={t('details.previously-discussed-toggle')}
                 open={!!previouslyDiscussed}
-                onToggle={() => setValue('previouslyDiscussed', '')}
+                onToggle={() => setValue('previouslyDiscussed')}
             >
                 <MultilineTextField
                     id="previouslyDiscussed"
