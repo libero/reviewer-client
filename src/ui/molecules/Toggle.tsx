@@ -6,7 +6,7 @@ interface Props {
     children?: ReactNode;
     toggleLabel: string;
     open?: boolean;
-    onToggle?: any;
+    onToggle?: Function;
 }
 
 const Toggle = ({ children, toggleLabel, id, onToggle, open = false }: Props): JSX.Element => {

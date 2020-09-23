@@ -93,7 +93,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
     const onSave = async (): Promise<void> => {
         const values = getValues();
-        const cosubmission = [values.firstCosubmissionTitle, values.secondCosubmissionTitle].filter(
+        const cosubmission = [values.firstCosubmissionTitle || '', values.secondCosubmissionTitle || ''].filter(
             item => item && item.length,
         );
         const subjectsWatch = unmappedSubjectsWatch
@@ -105,8 +105,8 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 details: {
                     title: titleWatch,
                     subjects: subjectsWatch,
-                    previouslyDiscussed: values.previouslyDiscussed,
-                    previouslySubmitted: values.previouslySubmitted,
+                    previouslyDiscussed: values.previouslyDiscussed || '',
+                    previouslySubmitted: values.previouslySubmitted || '',
                     cosubmission,
                 },
             },
@@ -174,7 +174,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="previouslyDiscussedContainer"
                 toggleLabel={t('details.previously-discussed-toggle')}
                 open={!!previouslyDiscussed}
-                onToggle={() => setValue('previouslyDiscussed')}
+                onToggle={(): void => setValue('previouslyDiscussed')}
             >
                 <MultilineTextField
                     id="previouslyDiscussed"
@@ -188,7 +188,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="previouslyConsideredContainer"
                 toggleLabel={t('details.previously-submitted-toggle')}
                 open={!!previouslySubmitted}
-                onToggle={() => setValue('previouslySubmitted', '')}
+                onToggle={(): void => setValue('previouslySubmitted', '')}
             >
                 <MultilineTextField
                     id="previouslySubmitted"
@@ -202,7 +202,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 id="cosubmission"
                 toggleLabel={t('details.cosubmission-toggle')}
                 open={!!firstCosubmissionTitle || !!secondCosubmissionTitle}
-                onToggle={() => {
+                onToggle={(): void => {
                     setValue('firstCosubmissionTitle', '');
                     setValue('secondCosubmissionTitle', '');
                 }}
