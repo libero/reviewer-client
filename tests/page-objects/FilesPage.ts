@@ -141,6 +141,12 @@ export class FilesPage {
         await t.expect(status).eql(FileStatus.Success);
     }
 
+    public async assertManuscriptUploadError(message): Promise<void> {
+        const { text, status } = await this.getManuscriptDropzoneStatus();
+        await t.expect(status).eql(FileStatus.Error);
+        await t.expect(text).contains(message);
+    }
+
     public async uploadSupportingFiles(filesPath: string[]): Promise<void> {
         await t.setFilesToUpload(this.supportingInput, filesPath);
         await this.waitForUploads();
