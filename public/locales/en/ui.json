@@ -20,12 +20,14 @@
         "error-message": {
             "multiple": "Only one manuscript file can be uploaded.",
             "validation": "That file is not supported.",
-            "server": "There was a problem uploading your file."
+            "server": "There was a problem uploading your file.",
+            "empty": "Please upload a manuscript."
         },
         "error-extra": {
             "multiple": "Files should be in .docx or .pdf format and no larger than 100MB.",
             "validation": "Files should be in .docx or .pdf format and no larger than 100MB.",
             "server": "If the problem continues please ",
+            "empty": "Files should be in .docx or .pdf format and no larger than 100MB.",
             "contact-us": "contact us"
         },
         "uploading-message": "Uploading manuscript ",
