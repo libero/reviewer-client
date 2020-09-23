@@ -88,7 +88,9 @@ export class EditorPage {
         const addButtonSelector = Selector('.people-picker__modal_list--item .pod__button');
         await t.expect(Selector('.people-picker__modal_list--item').count).gte(number);
 
+        console.log(`Using selector: ${pickerQuerySelector}`);
         for (let i = 0; i < number; i++) {
+            console.log(`Ticking person: ${i}`);
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
@@ -96,11 +98,13 @@ export class EditorPage {
                 `.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button .person-pod__selected_icon`,
             );
             await t.expect(clickedSelector.exists).ok({ timeout: 5000 });
+            console.log(`Finished Ticking person: ${i}`);
         }
+
+        await t.wait(5000);
 
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
-        await t.wait(3000);
         await t
             .expect(picker.find('.selected_people_list__item').count)
             .eql(number + (includeOpenPodInSelectedCount ? 1 : 0));
