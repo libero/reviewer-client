@@ -100,6 +100,7 @@ export class EditorPage {
 
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
+        await t.wait(3000);
         await t
             .expect(picker.find('.selected_people_list__item').count)
             .eql(number + (includeOpenPodInSelectedCount ? 1 : 0));
