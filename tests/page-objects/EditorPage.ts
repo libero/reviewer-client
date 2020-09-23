@@ -93,15 +93,15 @@ export class EditorPage {
             console.log(`Ticking person: ${i}`);
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
+            await t.wait(1000);
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
+            await t.wait(1000);
             const clickedSelector = Selector(
                 `.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button .person-pod__selected_icon`,
             );
             await t.expect(clickedSelector.exists).ok({ timeout: 5000 });
             console.log(`Finished Ticking person: ${i}`);
         }
-
-        await t.wait(5000);
 
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
