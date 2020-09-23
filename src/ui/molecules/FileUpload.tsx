@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDropzone, DropEvent } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import UploadProgress from './UploadProgress';
-import Close from '@material-ui/icons/Close';
 
-type UploadErrors = 'multiple' | 'validation' | 'server';
+type UploadErrors = 'multiple' | 'validation' | 'server' | 'empty';
 type UploadInProgress = {
     progress?: number;
     fileName?: string;
@@ -129,7 +128,7 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
     });
 
     const status = useMemo(() => {
-        if (state.error) {
+        if ((validationError || state.error) && !state.uploadInProgress) {
             return 'ERROR';
         }
         if (
@@ -145,7 +144,7 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
             return 'COMPLETE';
         }
         return 'IDLE';
-    }, [state]);
+    }, [state, validationError]);
 
     return (
         <div className="file-upload">
@@ -161,18 +160,12 @@ const FileUpload = ({ onUpload, state = {}, validationError }: Props): JSX.Eleme
                     <FileUploadContent
                         status={status}
                         open={open}
-                        error={state.error}
+                        error={validationError && !state.error ? 'empty' : state.error}
                         uploadInProgress={state.uploadInProgress}
                         fileStored={state.fileStored}
                     />
                 </div>
             </div>
-            {validationError && (
-                <span className="typography__label typography__label--helper-text typography__label--error">
-                    <Close fontSize="small" />
-                    {validationError}
-                </span>
-            )}
         </div>
     );
 };

@@ -33,9 +33,9 @@ test('files page', async () => {
     await filesPage.assertOnPage();
     await filesPage.next(true);
     const validationHelper = new ValidationHelper();
-    await validationHelper.assertNumberOfErrors(2);
+    await validationHelper.assertNumberOfErrors(1);
     await validationHelper.assertErrorMessage('.cover-letter', 'Please write or paste in your cover letter');
-    await validationHelper.assertErrorMessage('.file-upload', 'Please upload a manuscript');
+    await filesPage.assertManuscriptUploadError('Please upload a manuscript');
     await filesPage.populateMinimalFields();
     await validationHelper.assertNumberOfErrors(0);
 });
