@@ -6,9 +6,10 @@ interface Props {
     children?: ReactNode;
     toggleLabel: string;
     open?: boolean;
+    onToggle?: Function;
 }
 
-const Toggle = ({ children, toggleLabel, id, open = false }: Props): JSX.Element => {
+const Toggle = ({ children, toggleLabel, id, onToggle, open = false }: Props): JSX.Element => {
     const [opened, setOpened] = useState(open);
 
     return (
@@ -16,7 +17,12 @@ const Toggle = ({ children, toggleLabel, id, open = false }: Props): JSX.Element
             <Checkbox
                 id={`${id}-toggle`}
                 labelText={toggleLabel}
-                onChange={(event): void => setOpened(event.target.checked)}
+                onChange={(event): void => {
+                    if (!event.target.checked && onToggle) {
+                        onToggle();
+                    }
+                    setOpened(event.target.checked);
+                }}
                 initialValue={opened}
             />
             {opened && <div className="toggle__panel">{children}</div>}
