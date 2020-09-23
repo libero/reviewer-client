@@ -57,8 +57,13 @@
     .select-field__multi-value__remove {
       padding: 0 0.375rem 0 0;
       color: $white;
-      font-size: $fontSize;
+      font-size: 100px;
       background-color: $colourPrimary;
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
 
       &:hover {
         cursor: pointer;
