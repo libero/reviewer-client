@@ -23,11 +23,6 @@ describe('FileUpload', (): void => {
             expect(getByText('file-upload.idle-message')).toBeInTheDocument();
             expect(getByText('file-upload.idle-extra')).toBeInTheDocument();
         });
-
-        it('should display the validation text', () => {
-            const { getByText } = render(<FileUpload onUpload={jest.fn} validationError="test_error" />);
-            expect(getByText('test_error')).toBeInTheDocument();
-        });
     });
 
     describe('Uploading state', () => {
@@ -83,6 +78,15 @@ describe('FileUpload', (): void => {
                         wrapper: routerWrapper(),
                     }),
             ).not.toThrow();
+        });
+
+        it('should show validationErrors as an empty error state', () => {
+            const { container, getByText } = render(<FileUpload onUpload={jest.fn} validationError="required" />);
+            expect(container.querySelector('.file-upload__dropzone--error')).toBeInTheDocument();
+            expect(container.querySelector('.file-upload__description').textContent).toContain(
+                'file-upload.error-message.empty',
+            );
+            expect(getByText('file-upload.error-extra.empty')).toBeInTheDocument();
         });
 
         it('should have the error class for the border', () => {
