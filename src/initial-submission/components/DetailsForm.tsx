@@ -63,7 +63,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
         subjects = [],
     } = details;
 
-    const { register, setValue, watch, control, triggerValidation, errors } = useForm<
+    const { register, setValue, watch, control, triggerValidation, errors, getValues } = useForm<
         Omit<ManuscriptDetails, 'subjects'> & {
             subjects: { label: string; value: string }[];
             firstCosubmissionTitle: string;
@@ -92,6 +92,7 @@ const DetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     const firstCosubmissionWatch = watch('firstCosubmissionTitle');
     const secondCosubmissionWatch = watch('secondCosubmissionTitle');
     const onSave = async (): Promise<void> => {
+        console.log('getValues', getValues());
         const cosubmission = [firstCosubmissionWatch, secondCosubmissionWatch].filter(item => item && item.length);
         const subjectsWatch = unmappedSubjectsWatch
             ? (unmappedSubjectsWatch as []).map((subject: Value) => subject.value)

@@ -18,10 +18,10 @@ const Toggle = ({ children, toggleLabel, id, onToggle, open = false }: Props): J
                 id={`${id}-toggle`}
                 labelText={toggleLabel}
                 onChange={(event): void => {
-                    setOpened(event.target.checked) 
-                    if (!opened && onToggle) {
+                    if (!event.target.checked && onToggle) {
                         onToggle();
                     }
+                    setOpened(event.target.checked);
                 }}
                 initialValue={opened}
             />
