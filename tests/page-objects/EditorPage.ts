@@ -91,17 +91,14 @@ export class EditorPage {
         for (let i = 0; i < number; i++) {
             const button = addButtonSelector.nth(i);
             await t.expect(button.visible).ok();
+            await t.wait(1000);
             await clickSelector(`.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button`);
-            await t.wait(150);
+            const clickedSelector = Selector(
+                `.people-picker__modal_list--item:nth-child(${i + 1}) .pod__button .person-pod__selected_icon`,
+            );
+            await t.expect(clickedSelector.exists).ok({ timeout: 5000 });
         }
 
-        await t.wait(3000);
-
-        const selectedCount = await ClientFunction(
-            () => document.querySelectorAll('.people-picker__selected-tabs .people-picker__selected-tab').length,
-        )();
-
-        await t.expect(selectedCount).eql(number);
         await clickSelector('.modal__buttons_container .button--primary');
         await t.expect(Selector('.modal .modal__fullscreen').exists).eql(false);
         await t
