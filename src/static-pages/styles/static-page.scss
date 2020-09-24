@@ -1,10 +1,11 @@
 .static-page {
+    overflow: hidden;
     grid-row: 2;
     grid-column: 4 / span 6;
     @include forSize('desktopDown') {
       grid-column: 5 / span 6;
     }
-  @include forSize('tabletLandscapeDown') {
+    @include forSize('tabletLandscapeDown') {
       grid-column: 5 / span 7;
     }
     @include forSize('tabletPortraitDown') {
