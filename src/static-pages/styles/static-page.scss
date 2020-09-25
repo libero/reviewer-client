@@ -1,5 +1,4 @@
 .static-page {
-    overflow: hidden;
     grid-row: 2;
     grid-column: 4 / span 6;
     @include forSize('desktopDown') {

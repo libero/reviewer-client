@@ -1,5 +1,7 @@
 .table-guide {
-    overflow-x: scroll;
+    @include forSize('tabletLandscapeDown') {
+      overflow-x: scroll;
+    }
 
     @include forSize('tabletPortraitDown') {
       max-width: calc(100vw - 6rem);
@@ -12,6 +14,16 @@
     table {
       border-collapse: collapse;
       border-spacing: 0;
+      margin-left: -10%;
+
+      @include forSize('desktopDown') {
+        margin-left: -20%;
+      }
+
+      @include forSize('tabletLandscapeDown') {
+        margin-left: 0;
+      }
+
       th {
         background-color: rgb(247, 247, 247);
         font-size: 0.75rem;
@@ -36,7 +48,7 @@
         border-image: initial;
       }
     }
-  
+
     ul {
       list-style: none;
       padding: 0;
@@ -44,5 +56,4 @@
         font-size: 0.813rem;
       }
     }
-  
-  }
+}
