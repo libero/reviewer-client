@@ -30,7 +30,7 @@
     },
     "scientific-correspondence": {
         "label": "Scientific Correspondence",
-        "paragraph-1": "Scientific Correspondence allows authors to challenge the central findings of a published paper, and gives the original authors an opportunity to respond. Please read <a href=\"https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife\" target=\"_blank\" rel=\"noopener noreferrer\">“Introducing Scientific Correspondence at eLife”</a> before submitting.",
+        "paragraph-1": "Scientific Correspondence allows authors to challenge the central findings of a published paper, and gives the original authors an opportunity to respond. Please read <a href=\"https://elifesciences.org/inside-elife/08093bce/elife-latest-introducing-scientific-correspondence-at-elife\" class=\"typography__serif--link\" target=\"_blank\" rel=\"noopener noreferrer\">“Introducing Scientific Correspondence at eLife”</a> before submitting.",
         "paragraph-2": "For submission guidelines please read our "
     },
     "cancel-button": "cancel",
