@@ -62,6 +62,8 @@ const Dashboard = withRouter(
             if (alreadySubmitted) {
                 clearError();
             }
+            // remove all query parameters
+            history.replace(window.location.pathname);
         }, [alreadySubmitted]);
 
         if (isShowing) {
