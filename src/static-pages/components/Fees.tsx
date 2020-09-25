@@ -32,13 +32,19 @@ const Fees = (): JSX.Element => {
 
             <ul>
                 <li>
-                    <Interweave content={t('fees.bullet1')} />
+                    <Paragraph type="reading">
+                        <Interweave content={t('fees.bullet1')} />
+                    </Paragraph>
                 </li>
                 <li>
-                    <Interweave content={t('fees.bullet2')} />
+                    <Paragraph type="reading">
+                        <Interweave content={t('fees.bullet2')} />
+                    </Paragraph>
                 </li>
                 <li>
-                    <Interweave content={t('fees.bullet3')} />
+                    <Paragraph type="reading">
+                        <Interweave content={t('fees.bullet3')} />
+                    </Paragraph>
                 </li>
             </ul>
 

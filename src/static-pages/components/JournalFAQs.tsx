@@ -13,7 +13,9 @@ const JournalFAQs = (): JSX.Element => {
             <h2 id="scoop_protection">{t('journal-faqs.scope.heading')}</h2>
 
             <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question1')}</h3>
-            <Paragraph type="reading">{t('journal-faqs.scope.answer1')}</Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scope.answer1')} />
+            </Paragraph>
 
             <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question2')}</h3>
             <Paragraph type="reading">
