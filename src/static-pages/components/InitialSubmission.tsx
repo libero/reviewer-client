@@ -19,7 +19,9 @@ const InitialSubmission = (): JSX.Element => {
                 <h2 className="typography__heading typography__heading--h2">
                     {t('initial-submission.pre-print.heading')}
                 </h2>
-                <Paragraph type="reading">{t('initial-submission.pre-print.p1')}</Paragraph>
+                <Paragraph type="reading">
+                    <Interweave content={t('initial-submission.pre-print.p1')} />
+                </Paragraph>
                 <Paragraph type="reading">
                     <Interweave content={t('initial-submission.pre-print.p2')} />
                 </Paragraph>
@@ -59,7 +61,9 @@ const InitialSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <Interweave content={t('initial-submission.manuscript.components.four.p1')} />
+                    <Paragraph type="reading">
+                        <Interweave content={t('initial-submission.manuscript.components.four.p1')} />
+                    </Paragraph>
 
                     <Paragraph type="reading">
                         <Interweave content={t('initial-submission.manuscript.components.four.p2')} />
@@ -80,10 +84,6 @@ const InitialSubmission = (): JSX.Element => {
                     <Paragraph type="reading">
                         <Interweave content={t('initial-submission.manuscript.components.four.p6')} />
                     </Paragraph>
-
-                    <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.manuscript.components.four.p7')} />
-                    </Paragraph>
                 </li>
 
                 <li>
@@ -99,14 +99,12 @@ const InitialSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <Interweave content={t('initial-submission.manuscript.components.seven.p1')} />
-
                     <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.manuscript.components.seven.p2')} />
+                        <Interweave content={t('initial-submission.manuscript.components.seven.p1')} />
                     </Paragraph>
 
                     <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.manuscript.components.seven.p3')} />
+                        <Interweave content={t('initial-submission.manuscript.components.seven.p2')} />
                     </Paragraph>
                 </li>
             </ol>
@@ -153,28 +151,35 @@ const InitialSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <Interweave content={t('initial-submission.meta.data.two.p1')} />
                     <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.meta.data.two.p2')} />
+                        <Interweave content={t('initial-submission.meta.data.two.p1')} />
                     </Paragraph>
 
                     <ul>
                         <li>
-                            <Interweave content={t('initial-submission.meta.data.two.bullet1')} />
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.meta.data.two.bullet1')} />{' '}
+                            </Paragraph>
                         </li>
                         <li>
-                            <Interweave content={t('initial-submission.meta.data.two.bullet2')} />
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.meta.data.two.bullet2')} />
+                            </Paragraph>
                         </li>
                         <li>
-                            <Interweave content={t('initial-submission.meta.data.two.bullet3')} />
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.meta.data.two.bullet3')} />
+                            </Paragraph>
                         </li>
                         <li>
-                            <Interweave content={t('initial-submission.meta.data.two.bullet4')} />
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.meta.data.two.bullet4')} />
+                            </Paragraph>
                         </li>
                     </ul>
 
                     <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.meta.data.two.p3')} />
+                        <Interweave content={t('initial-submission.meta.data.two.p2')} />
                     </Paragraph>
                 </li>
 
@@ -190,9 +195,8 @@ const InitialSubmission = (): JSX.Element => {
                     </Paragraph>
                 </li>
                 <li>
-                    <Interweave content={t('initial-submission.meta.data.five.p1')} />
                     <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.meta.data.five.p2')} />
+                        <Interweave content={t('initial-submission.meta.data.five.p1')} />
                     </Paragraph>
                 </li>
 

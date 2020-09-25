@@ -21,7 +21,9 @@ const EditorialProcess = (): JSX.Element => {
                 <h2 className="typography__heading typography__heading--h2">
                     {t('editorial.editorial.pre-print.heading')}
                 </h2>
-                <Paragraph type="reading">{t('editorial.editorial.pre-print.p1')}</Paragraph>
+                <Paragraph type="reading">
+                    <Interweave content={t('editorial.editorial.pre-print.p1')} />
+                </Paragraph>
                 <Paragraph type="reading">
                     <Interweave content={t('editorial.editorial.pre-print.p2')} />
                 </Paragraph>
@@ -49,9 +51,21 @@ const EditorialProcess = (): JSX.Element => {
                 <Interweave content={t('editorial.initial-sub.p1')} />
             </Paragraph>
             <ul>
-                <li>{t('editorial.initial-sub.bullet1')}</li>
-                <li>{t('editorial.initial-sub.bullet2')}</li>
-                <li>{t('editorial.initial-sub.bullet3')}</li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('editorial.initial-sub.bullet1')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('editorial.initial-sub.bullet2')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('editorial.initial-sub.bullet3')} />
+                    </Paragraph>
+                </li>
             </ul>
 
             <h2 className="typography__heading typography__heading--h2">{t('editorial.full-sub.heading')}</h2>
