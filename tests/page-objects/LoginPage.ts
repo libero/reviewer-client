@@ -5,10 +5,10 @@ export class LoginPage {
     private readonly loginButton: Selector = Selector('.button--orcid');
     private readonly cookieBanner: Selector = Selector('.cookie-banner');
     private readonly cookieBannerButton: Selector = Selector('.cookie-banner__button');
-    private readonly orcidPage: Selector = Selector('.personal-account-login > .title');
-    private readonly orcidIDInput: Selector = Selector('#userId');
-    private readonly orcidPasswordInput: Selector = Selector('#password');
-    private readonly orcidLoginButton: Selector = Selector('#form-sign-in-button');
+    private readonly orcidPage: Selector = Selector('.orcid-wizard');
+    private readonly orcidIDInput: Selector = Selector('[formcontrolname=username]');
+    private readonly orcidPasswordInput: Selector = Selector('[formcontrolname=password]');
+    private readonly orcidLoginButton: Selector = Selector('.sign-in-button');
 
     public async assertOnPage(): Promise<void> {
         await t.expect(this.loginButton.exists).ok();
