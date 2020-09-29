@@ -44,11 +44,11 @@ export class DashboardPage {
             await this.assertOnPage(retries + 1);
         } else {
             if (dashboard) {
-                await t.expect(noSubmissions).notOk();
-                await t.expect(dashboard).ok();
+                await t.expect(this.noSubmissions.exists).notOk();
+                await t.expect(this.withSubmissions.exists).ok();
             } else {
-                await t.expect(dashboard).notOk();
-                await t.expect(noSubmissions).ok();
+                await t.expect(this.withSubmissions.exists).notOk();
+                await t.expect(this.noSubmissions.exists).ok();
             }
         }
     }
