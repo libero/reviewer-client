@@ -41,7 +41,7 @@ export class LoginPage {
     }
 
     public async assertOnOrcidPage(): Promise<void> {
-        await t.expect(this.orcidPage.textContent).eql('Sign in with your ORCID account');
+        await t.expect(this.orcidPage.exists).ok();
     }
 
     public async enterORCIDId(orcidId: string): Promise<void> {
