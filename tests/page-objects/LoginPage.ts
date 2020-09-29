@@ -37,11 +37,17 @@ export class LoginPage {
             await this.enterORCIDId(process.env.ORCID_LOGIN_NAME);
             await this.enterORCIDPassword(process.env.ORCID_LOGIN_PASSWORD);
             await this.orcidLogin();
+            await this.assertNotOnOrcidPage();
         }
     }
 
     public async assertOnOrcidPage(): Promise<void> {
         await t.expect(this.orcidPage.exists).ok();
+    }
+
+    public async assertNotOnOrcidPage(): Promise<void> {
+        // Long timeout here as we wait for ORCID to process request.
+        await t.expect(this.orcidPage.exists).notOk({ timeout: 15000 });
     }
 
     public async enterORCIDId(orcidId: string): Promise<void> {
