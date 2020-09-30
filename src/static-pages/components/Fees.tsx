@@ -26,28 +26,6 @@ const Fees = (): JSX.Element => {
                 <Interweave content={t('fees.p4')} />
             </Paragraph>
 
-            <Paragraph type="reading">
-                <Interweave content={t('fees.p5')} />
-            </Paragraph>
-
-            <ul>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('fees.bullet1')} />
-                    </Paragraph>
-                </li>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('fees.bullet2')} />
-                    </Paragraph>
-                </li>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('fees.bullet3')} />
-                    </Paragraph>
-                </li>
-            </ul>
-
             <h3 className="typography__heading typography__heading--h3">{t('fees.question1.heading')}</h3>
 
             <Paragraph type="reading">
