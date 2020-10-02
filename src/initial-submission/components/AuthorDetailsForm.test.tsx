@@ -131,6 +131,28 @@ describe('Author Details Form', (): void => {
         expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
         expect((getByLabelText('author.institution') as HTMLInputElement).value).toBe('somewhere');
     });
+
+    it('should display the correct values when an existing submission is passed in and trim email', async (): Promise<void> => {
+        const initialValues: Submission = {
+            author: {
+                firstName: 'Joe',
+                lastName: 'Blogs',
+                email: ' joe@blogs.com ',
+                institution: 'somewhere',
+            },
+            id: '',
+            articleType: '',
+            updated: nowISOString,
+        };
+        const { getByLabelText } = render(
+            <AuthorDetailsForm schemaFactory={(): yup.ObjectSchema => yup.object()} initialValues={initialValues} />,
+        );
+        expect((getByLabelText('author.author-first-name') as HTMLInputElement).value).toBe('Joe');
+        expect((getByLabelText('author.author-last-name') as HTMLInputElement).value).toBe('Blogs');
+        expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
+        expect((getByLabelText('author.institution') as HTMLInputElement).value).toBe('somewhere');
+    });
+    
     describe('autosave', () => {
         it('when a first name is entered it triggers the autosave', () => {
             const { getByLabelText } = render(
@@ -204,7 +226,33 @@ describe('Author Details Form', (): void => {
                 },
             });
         });
-        it('when a email is entered it triggers the autosave', () => {
+
+        it('when a email is entered it trims and triggers the autosave', () => {
+            const { getByLabelText } = render(
+                <AuthorDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
+
+            fireEvent.input(getByLabelText('author.author-email'), {
+                target: { value: ' test@example.com ' },
+            });
+
+            expect(mutationMock).toBeCalledWith({
+                variables: {
+                    id: 'foo',
+                    details: {
+                        email: 'test@example.com',
+                        firstName: '',
+                        institution: '',
+                        lastName: '',
+                    },
+                },
+            });
+        });
+
+        it('when a institution is entered it triggers the autosave', () => {
             const { getByLabelText } = render(
                 <AuthorDetailsForm
                     schemaFactory={(): yup.ObjectSchema => yup.object()}
@@ -228,6 +276,7 @@ describe('Author Details Form', (): void => {
                 },
             });
         });
+        
     });
     describe('validation', () => {
         it('shows error if first name is empty', async (): Promise<void> => {
