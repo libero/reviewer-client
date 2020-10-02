@@ -47,7 +47,9 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     });
 
     const removeBlankRows = (reviewers: ReviewerAlias[]): ReviewerAlias[] =>
-        reviewers.filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '');
+        reviewers
+            .filter((reviewer: ReviewerAlias) => reviewer.name + reviewer.email !== '')
+            .map(reviewer => ({ ...reviewer, email: reviewer.email.trim() }));
 
     const schema = schemaFactory(t);
     const validationResolver = useCallback((data: EditorsDetails) => {

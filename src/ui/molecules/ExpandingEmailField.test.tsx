@@ -44,6 +44,17 @@ describe('Expanding Email Field', () => {
         expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(2);
     });
 
+    it('should trim email field if passsed in', () => {
+        const inputRows = [{ name: 'bob', email: '   bob@email.com' }];
+        const { container } = render(
+            <ExpandingEmailField maxRows={6} name={'test'} initialRows={inputRows} onChange={jest.fn()} />,
+        );
+        expect(container.querySelector('[name="test[0].name"]')).toBeInTheDocument();
+        expect(container.querySelector('[name="test[0].email"]')).toBeInTheDocument();
+        expect((container.querySelector('[name="test[0].email"]') as HTMLInputElement).value).toBe('bob@email.com');
+        expect(container.querySelectorAll('.expanding-email-field__row')).toHaveLength(2);
+    });
+
     it('should add a new row if text is entered into the last row', () => {
         const { container } = render(
             <ExpandingEmailField maxRows={6} name={'test'} initialRows={[]} onChange={jest.fn()} />,
