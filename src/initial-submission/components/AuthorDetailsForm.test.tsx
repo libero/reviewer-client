@@ -132,7 +132,9 @@ describe('Author Details Form', (): void => {
         expect((getByLabelText('author.institution') as HTMLInputElement).value).toBe('somewhere');
     });
 
-    it('should display the correct values when an existing submission is passed in and trim email', async (): Promise<void> => {
+    it('should display the correct values when an existing submission is passed in and trim email', async (): Promise<
+        void
+    > => {
         const initialValues: Submission = {
             author: {
                 firstName: 'Joe',
@@ -152,7 +154,7 @@ describe('Author Details Form', (): void => {
         expect((getByLabelText('author.author-email') as HTMLInputElement).value).toBe('joe@blogs.com');
         expect((getByLabelText('author.institution') as HTMLInputElement).value).toBe('somewhere');
     });
-    
+
     describe('autosave', () => {
         it('when a first name is entered it triggers the autosave', () => {
             const { getByLabelText } = render(
@@ -276,7 +278,6 @@ describe('Author Details Form', (): void => {
                 },
             });
         });
-        
     });
     describe('validation', () => {
         it('shows error if first name is empty', async (): Promise<void> => {

@@ -313,6 +313,50 @@ describe('EditorsDetailsForm', (): void => {
             );
         });
 
+        it('should trim email', async (): Promise<void> => {
+            const { getByText } = render(
+                <EditorsForm
+                    schemaFactory={EditorsSchema}
+                    initialValues={{
+                        id: 'test',
+                        articleType: '',
+                        updated: nowISOString,
+                        editorDetails: {
+                            suggestedReviewers: [{ name: 'name', email: '   email@example.com' }],
+                        },
+                    }}
+                    ButtonComponent={ButtonComponent}
+                />,
+                {
+                    container: appContainer(),
+                    wrapper: routerWrapper(),
+                },
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(mutationMock).toBeCalledWith({
+                variables: {
+                    id: 'test',
+                    details: {
+                        opposedReviewers: [],
+                        opposedReviewersReason: '',
+                        opposedReviewingEditors: [],
+                        opposedReviewingEditorsReason: '',
+                        opposedSeniorEditors: [],
+                        opposedSeniorEditorsReason: '',
+                        suggestedReviewers: [
+                            {
+                                email: 'email@example.com',
+                                name: 'name',
+                            },
+                        ],
+                        suggestedReviewingEditors: [],
+                        suggestedSeniorEditors: [],
+                    },
+                },
+            });
+        });
+
         it('requires a valid email format if email is filled', async (): Promise<void> => {
             const { getByText, container } = render(
                 <EditorsForm
