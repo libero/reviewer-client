@@ -114,7 +114,7 @@ const ExpandingEmailField = ({
                         labelText={`${labelPrefix} ${index + 1} ${t('expanding-email-field.email')}`}
                         invalid={!!(errors[index] && errors[index].email)}
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
-                        defaultValue={person.email}
+                        defaultValue={person.email.trim()}
                         onChange={(e): void => {
                             updatePeople(index, 'email', e.target.value.trim());
                         }}
