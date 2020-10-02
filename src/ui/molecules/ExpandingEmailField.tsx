@@ -116,7 +116,7 @@ const ExpandingEmailField = ({
                         helperText={errors[index] && errors[index].email ? errors[index].email.message : null}
                         defaultValue={person.email}
                         onChange={(e): void => {
-                            updatePeople(index, 'email', e.target.value);
+                            updatePeople(index, 'email', e.target.value.trim());
                         }}
                     />
                 </div>
