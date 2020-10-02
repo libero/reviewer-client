@@ -28,7 +28,7 @@ const AuthorDetailsForm = ({
         defaultValues: {
             firstName: initialValues && initialValues.author ? initialValues.author.firstName : '',
             lastName: initialValues && initialValues.author ? initialValues.author.lastName : '',
-            email: initialValues && initialValues.author ? initialValues.author.email : '',
+            email: initialValues && initialValues.author ? initialValues.author.email.trim() : '',
             institution: initialValues && initialValues.author ? initialValues.author.institution : '',
         },
         mode: 'onBlur',
@@ -40,7 +40,7 @@ const AuthorDetailsForm = ({
         const vars = {
             variables: {
                 id: initialValues.id,
-                details: values,
+                details: { ...values, email: values.email.trim() },
             },
         };
         await saveCallback(vars);
@@ -63,7 +63,7 @@ const AuthorDetailsForm = ({
         const [firstName, lastName] = data.getCurrentUser.name.split(' ', 2);
         setValue('firstName', firstName);
         setValue('lastName', lastName);
-        setValue('email', data.getCurrentUser.email);
+        setValue('email', data.getCurrentUser.email.trim());
         setValue('institution', data.getCurrentUser.aff);
         await triggerValidation();
     };
