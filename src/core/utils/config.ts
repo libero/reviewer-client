@@ -31,10 +31,6 @@ const config = {
     googleAnalytics: {
         trackingId: '',
     },
-    hotJar: {
-        enabled: true,
-        snippetVersion: 6,
-    },
     titles: {
         '': 'Dashboard | eLife',
         'author-guide': 'Author guide | eLife',
@@ -61,11 +57,6 @@ export interface Config {
 
     googleAnalytics: {
         trackingId: string;
-    };
-
-    hotJar: {
-        enabled: boolean;
-        snippetVersion: number;
     };
 
     titles: { [key: string]: string };
