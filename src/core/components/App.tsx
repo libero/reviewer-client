@@ -58,7 +58,7 @@ const AppRoutes: React.FC = (): JSX.Element => {
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    <Route component={() => <Redirect to="/login" />} path="/redirect" />
+                    <Route component={(): JSX.Element => <Redirect to="/login" />} path="/redirect" />
                     <Route component={ErrorPage} /> {/* default not found route */}
                 </Switch>
             </div>
