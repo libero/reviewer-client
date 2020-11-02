@@ -13,6 +13,7 @@ import ErrorPage from './ErrorPage';
 import ErrorBoundary from './ErrorBoundary';
 import Spinner from '../../ui/atoms/Spinner';
 import { CLEAR_ERROR } from '../../initial-submission/graphql';
+import NotSupportedBrowser from './NotSupportedBrowser';
 
 const AuthRoute = lazy(() => import('./AuthRoute'));
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
