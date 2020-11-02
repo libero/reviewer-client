@@ -47,6 +47,10 @@ const AppRoutes: React.FC = (): JSX.Element => {
         setIsIE11(navigator.userAgent.includes('Trident/7.0'));
     }, []);
 
+    if (isIE11) {
+        <NotSupportedBrowser />
+    }
+
     return (
         <React.Suspense fallback={<Loader />}>
             <CookieBanner />
