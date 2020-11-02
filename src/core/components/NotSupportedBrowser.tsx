@@ -8,7 +8,7 @@ const NotSupportedBrowser = (): JSX.Element => {
 
     return (
         <div className="not-supported-browser">
-            <h1 className="typography__heading typography__heading--h1">Your borwser is not supported</h1>
+            <h1 className="typography__heading typography__heading--h1">Your browser is not supported</h1>
             <Paragraph type="reading">We recommed using one of the following browsers to submit your research</Paragraph>
             <div>images</div>
             <Link to="/" className="typography__body--link">
