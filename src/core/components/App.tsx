@@ -1,4 +1,4 @@
-import React, { useEffect, lazy } from 'react';
+import React, { useEffect, lazy, useState } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { ApolloProvider, useMutation } from '@apollo/react-hooks';
 import NavBar from './NavBar';
@@ -32,6 +32,7 @@ const Loader = (): JSX.Element => (
 
 const AppRoutes: React.FC = (): JSX.Element => {
     const query = new URLSearchParams(useLocation().search);
+    const [isIE11, setIsIE11] = useState(false);
     const [clearError] = useMutation(CLEAR_ERROR);
     useTrackingHook();
 
@@ -40,6 +41,11 @@ const AppRoutes: React.FC = (): JSX.Element => {
             clearError();
         }
     }, [window.location.href]);
+
+    useEffect(() => {
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent 
+        setIsIE11(navigator.userAgent.includes('Trident/7.0'));
+    }, []);
 
     return (
         <React.Suspense fallback={<Loader />}>
