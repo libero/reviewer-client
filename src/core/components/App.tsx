@@ -33,7 +33,7 @@ const Loader = (): JSX.Element => (
 
 const AppRoutes: React.FC = (): JSX.Element => {
     const query = new URLSearchParams(useLocation().search);
-    const [isIE11, setIsIE11] = useState(false);
+    const [isIE11, setIsIE11] = useState(true);
     const [clearError] = useMutation(CLEAR_ERROR);
     useTrackingHook();
 
@@ -43,13 +43,17 @@ const AppRoutes: React.FC = (): JSX.Element => {
         }
     }, [window.location.href]);
 
-    useEffect(() => {
-        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent 
-        setIsIE11(navigator.userAgent.includes('Trident/7.0'));
-    }, []);
+    // useEffect(() => {
+    //     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent
+    //     setIsIE11(navigator.userAgent.includes('Trident/7.0'));
+    // }, []);
 
     if (isIE11) {
-        <NotSupportedBrowser />
+        return (
+            <React.Suspense fallback={<Loader />}>
+                <NotSupportedBrowser />{' '}
+            </React.Suspense>
+        );
     }
 
     return (

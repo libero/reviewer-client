@@ -39,6 +39,32 @@
 
 }
 
+.not-supported-browser {
+  text-align: center;
+  .app-bar {
+    border: none;
+  }
+  .browser-container {
+    text-align: center;
+    margin: auto;
+    max-width: 800px;
+    .browser {
+      vertical-align: top;
+      display: inline-block;
+      padding: 25px;
+      p {
+        padding: 15px 0;
+        text-align: center;
+      }
+      img {
+        width: 100px;
+        height: auto;
+        display: block;
+      }
+    }
+  }
+}
+
 @mixin standardGrid {
   grid-column: 3 / span 8;
   grid-row: 2;
