@@ -13,7 +13,7 @@ import ErrorPage from './ErrorPage';
 import ErrorBoundary from './ErrorBoundary';
 import Spinner from '../../ui/atoms/Spinner';
 import { CLEAR_ERROR } from '../../initial-submission/graphql';
-import NotSupportedBrowser from './NotSupportedBrowser';
+import NotSupportedBrowser from '../../ui/organisms/NotSupportedBrowser';
 
 const AuthRoute = lazy(() => import('./AuthRoute'));
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
@@ -33,7 +33,7 @@ const Loader = (): JSX.Element => (
 
 const AppRoutes: React.FC = (): JSX.Element => {
     const query = new URLSearchParams(useLocation().search);
-    const [isIE11, setIsIE11] = useState(true);
+    const [isIE11, setIsIE11] = useState(false);
     const [clearError] = useMutation(CLEAR_ERROR);
     useTrackingHook();
 
@@ -43,10 +43,10 @@ const AppRoutes: React.FC = (): JSX.Element => {
         }
     }, [window.location.href]);
 
-    // useEffect(() => {
-    //     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent
-    //     setIsIE11(navigator.userAgent.includes('Trident/7.0'));
-    // }, []);
+    useEffect(() => {
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent
+        setIsIE11(navigator.userAgent.includes('Trident/7.0'));
+    }, []);
 
     if (isIE11) {
         return (
