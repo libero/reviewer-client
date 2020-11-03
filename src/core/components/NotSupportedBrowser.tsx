@@ -18,45 +18,49 @@ const NotSupportedBrowser = (): JSX.Element => {
                 <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
             </AppBar>
             <h1 className="typography__heading typography__heading--h1">Your browser is not supported</h1>
-            <Paragraph type="reading">
+            <Paragraph type="writing" secondary={true}>
                 We recommed using one of the following browsers to submit your research
             </Paragraph>
             <div className="browser-container">
                 <div className="browser">
                     <img src={Chrome} />
-                    <p>
+                    <Paragraph type="writing" secondary={true}>
                         Google
                         <br />
                         Chrome
-                    </p>
+                    </Paragraph>
                 </div>
 
                 <div className="browser">
                     <img src={Firefox} />
-                    <p>
+                    <Paragraph type="writing" secondary={true}>
                         Mozilla
                         <br />
                         Firefox
-                    </p>
+                    </Paragraph>
                 </div>
 
                 <div className="browser">
                     <img src={Edge} />
-                    <p>
+                    <Paragraph type="writing" secondary={true}>
                         Microsoft
                         <br />
                         Edge
-                    </p>
+                    </Paragraph>
                 </div>
 
                 <div className="browser">
                     <img src={Safari} />
-                    <p>Safari</p>
+                    <Paragraph type="writing" secondary={true}>
+                        Safari
+                    </Paragraph>
                 </div>
 
                 <div className="browser">
                     <img src={Opera} />
-                    <p>Opera</p>
+                    <Paragraph type="writing" secondary={true}>
+                        Opera
+                    </Paragraph>
                 </div>
             </div>
             <Link to="/" className="typography__body--link">
