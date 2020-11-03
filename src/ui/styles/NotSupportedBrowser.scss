@@ -1,0 +1,36 @@
+.not-supported-browser {
+    text-align: center;
+    margin: auto;
+    padding: 24px;
+    max-width: 1200px;
+    .app-bar {
+      margin: 0;
+      padding: 0;
+      border: none;
+      .app-bar__icon-link {
+        margin: 0;
+        padding: 0;
+        height: 2rem;
+      }
+    }
+    .browser-container {
+      text-align: center;
+      margin: auto;
+      max-width: 800px;
+      padding: 50px 0px;
+      .browser {
+        vertical-align: top;
+        display: inline-block;
+        padding: 24px;
+        p {
+          padding: 15px 0;
+          text-align: center;
+        }
+        img {
+          width: 80px;
+          height: auto;
+          display: block;
+        }
+      }
+    }
+  }
