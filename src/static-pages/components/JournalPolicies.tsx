@@ -328,6 +328,20 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.media-policy.accessible.p2')} />
             </Paragraph>
 
+            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.name-change.heading')}</h2>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.name-change.p1')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.name-change.p2')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.name-change.p3')} />
+            </Paragraph>
+
             <h2 className="typography__heading typography__heading--h2">
                 {t('journal-policies.nomenclature.heading')}
             </h2>
