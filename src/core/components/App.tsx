@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, useState } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import { ApolloProvider, useMutation } from '@apollo/react-hooks';
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
