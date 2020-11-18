@@ -52,7 +52,12 @@ const Dashboard = withRouter(
                 });
             } else {
                 startSubmission({ variables: { articleType } }).then(data => {
-                    history.push(data.data.startSubmission.lastStepVisited);
+                    const { id, lastStepVisited } = data.data.startSubmission;
+                    if (['short-report', 'research-article'].includes(articleType)) {
+                        history.push(`/submit/${id}/info`);
+                    } else {
+                        history.push(lastStepVisited);
+                    }
                 });
             }
         };
