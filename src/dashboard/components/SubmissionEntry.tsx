@@ -37,10 +37,7 @@ const SubmissionEntry: React.FC<Props> = ({
                 className={`submission-entry__link submission-entry__link--${status}`}
                 to={submission.lastStepVisited}
                 onClick={(e: React.MouseEvent): void => {
-                    if (
-                        status !== 'continue_submission' ||
-                        (!submission.articleType || submission.articleType === '')
-                    ) {
+                    if (status !== 'continue_submission' || !submission.articleType || submission.articleType === '') {
                         e.preventDefault();
                     }
 

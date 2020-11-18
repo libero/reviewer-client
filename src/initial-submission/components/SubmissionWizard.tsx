@@ -182,6 +182,39 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
         return <Redirect to="/?alreadySubmitted=true" />;
     }
 
+    if (
+        !loading &&
+        data.getSubmission &&
+        ['short-report', 'research-article'].includes(data.getSubmission.articleType)
+    ) {
+        return (
+            <div className="article-type">
+                <h1 className="typography__heading typography__heading--h1">{`Updates to eLife's peer review process`}</h1>
+                <div className="article-type__content">
+                    <Paragraph type="writing" secondary>
+                        {`To make the results of research freely and immediately available to the widest possible audience we ask authors submitting to eLife to also upload their manuscript to a preprint server, such as bioRxiv or medRxiv.`}
+                    </Paragraph>
+
+                    <Paragraph type="writing" secondary>
+                        {`If we move ahead with peer review, we will provide public reviews that are designed to be posted alongside the preprint, in addition to detailed feedback for the authors.`}
+                    </Paragraph>
+
+                    <Paragraph type="writing" secondary>
+                        {`If we decide not to publish your work, you will control whether the public reviews are posted and can choose to share them with other journals. To learn more, please read our Author guide.`}
+                    </Paragraph>
+                </div>
+                {ButtonComponent(
+                    id,
+                    history,
+                    getCurrentStepPathIndex,
+                    stepConfig,
+                    toggle,
+                    toggleErrorBar,
+                )({ triggerValidation: async () => true, saveFunction: () => {} })}
+            </div>
+        );
+    }
+
     return (
         <div className="submission-wizard">
             {getCurrentStepPathIndex() > -1 && (
