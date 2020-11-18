@@ -208,7 +208,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                                 </div>
                                 <div className="infoStep__buttons">
                                     <Button type="primary" onClick={(): void => history.push(`/submit/${id}/author`)}>
-                                        Next
+                                        {t('navigation.next')}
                                     </Button>
                                 </div>
                             </div>
