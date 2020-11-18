@@ -153,7 +153,7 @@ const stepConfig: StepConfig[] = [
 ];
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
-    const { id, step } = useParams();
+    const { id, step } = useParams<{ id: string; step: string }>();
     const { t } = useTranslation('wizard-form');
     const [clearError] = useMutation(CLEAR_ERROR);
     const [setError] = useMutation(SET_VALIDATION_ERROR);
@@ -203,14 +203,10 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteCompo
                         {`If we decide not to publish your work, you will control whether the public reviews are posted and can choose to share them with other journals. To learn more, please read our Author guide.`}
                     </Paragraph>
                 </div>
-                {ButtonComponent(
-                    id,
-                    history,
-                    getCurrentStepPathIndex,
-                    stepConfig,
-                    toggle,
-                    toggleErrorBar,
-                )({ triggerValidation: async () => true, saveFunction: () => {} })}
+                {ButtonComponent(id, history, getCurrentStepPathIndex, stepConfig, toggle, toggleErrorBar)({
+                    triggerValidation: async () => true,
+                    saveFunction: () => {},
+                })}
             </div>
         );
     }
