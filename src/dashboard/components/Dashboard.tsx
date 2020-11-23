@@ -54,7 +54,7 @@ const Dashboard = withRouter(
                 startSubmission({ variables: { articleType } }).then(data => {
                     const { id, lastStepVisited } = data.data.startSubmission;
                     if (['short-report', 'research-article'].includes(articleType)) {
-                        history.push(`/submit/${id}/info`);
+                        history.push(`/info/${id}`);
                     } else {
                         history.push(lastStepVisited);
                     }
