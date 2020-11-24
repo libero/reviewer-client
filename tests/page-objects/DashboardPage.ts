@@ -28,7 +28,7 @@ export class DashboardPage {
     private readonly noSubmissions = Selector('.no-submissions');
     private readonly newSubmissionButton = '#new-submission-button';
     private readonly continueButton = '.article-type__buttons > .button--primary';
-    private readonly infoContinueButton = 'infoStep__buttons > .button--primary';
+    private readonly infoContinueButton = Selector('.infoStep__buttons > .button--primary');
     private readonly submissionEntry = Selector('.submission-entry');
     private readonly newSubmissionContainer: Selector = Selector('.article-type');
     private readonly articleTypeSelect: Selector = Selector('.select-field__control');
@@ -109,8 +109,8 @@ export class DashboardPage {
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
         await clickSelector(this.continueButton);
-        if (['short-report', 'research-article'].includes(articleType)) {
-            await clickSelector(this.infoContinueButton);
+        if (['Short Report', 'Research Article'].includes(articleType)) {
+            await t.click(this.infoContinueButton);
         }
     }
 
