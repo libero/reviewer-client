@@ -109,7 +109,7 @@ export class DashboardPage {
         await t.click(this.articleTypeOptions.withText(articleType));
         await t.expect(this.articleTypeValue.textContent).eql(articleType);
         await clickSelector(this.continueButton);
-        if (['Short Report', 'Research Article'].includes(articleType)) {
+        if (['Short Report', 'Research Article', 'Tools and Resources'].includes(articleType)) {
             await t.click(this.infoContinueButton);
         }
     }
