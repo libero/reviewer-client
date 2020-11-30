@@ -9,33 +9,11 @@ const EditorialProcess = (): JSX.Element => {
     return (
         <div className="static-page__content">
             <h1 className="typography__heading typography__heading--h1">{t('editorial.editorial.heading')}</h1>
-
-            <Paragraph type="reading">
-                <Interweave content={t('editorial.editorial.p1')} />
-            </Paragraph>
-            <Paragraph type="reading">
-                <Interweave content={t('editorial.editorial.p2')} />
-            </Paragraph>
-
-            <div className="blue-box">
-                <h2 className="typography__heading typography__heading--h2">
-                    {t('editorial.editorial.pre-print.heading')}
-                </h2>
-                <Paragraph type="reading">
-                    <Interweave content={t('editorial.editorial.pre-print.p1')} />
-                </Paragraph>
-                <Paragraph type="reading">
-                    <Interweave content={t('editorial.editorial.pre-print.p2')} />
-                </Paragraph>
-            </div>
-
-            <Paragraph type="reading">
-                <Interweave content={t('editorial.editorial.p3')} />
-            </Paragraph>
-            <Paragraph type="reading">
-                <Interweave content={t('editorial.editorial.p4')} />
-            </Paragraph>
-
+            <Interweave content={t('editorial.editorial.content')} />
+            <h2 className="typography__heading typography__heading--h2">
+                {t('editorial.editorial.pre-print.heading')}
+            </h2>
+            <Interweave content={t('editorial.editorial.pre-print.content')} />
             <div className="blue-box">
                 <Paragraph type="reading">
                     <Interweave content={t('editorial.editorial.p5')} />
