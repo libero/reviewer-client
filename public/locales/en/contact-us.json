@@ -6,76 +6,10 @@
     },
     "contact-elife": {
         "heading": "Contact eLife",
-        "paragraph-1": "You can use the \"Check Status\" link under Manuscript Tasks to find information about your article and how long different parts of the editorial and review process can take. If you have any further questions about submitting, submitted, or accepted articles, please contact our editorial or production teams:",
+        "paragraph-1": "You can use the \"Check Status\" link under Manuscript Tasks to find information about your article and how long different parts of the editorial and review process can take. If you have any further questions about submitting or submitted articles, please contact our editorial team. For queries regarding accepted articles, please contact our production team:",
         "editor-email": "editorial [at] elifesciences [dot] org",
         "production-email": "production [at] elifesciences [dot] org",
         "press-email": "press [at] elifesciences [dot] org",
         "media-inquiries-paragraph": "Media inquiries may be addressed to our communications team at:"
-    },
-    "production": {
-        "heading": "Production Staff",
-        "paragraph-1": "Our Production Staff are happy to help.",
-        "person-1": {
-            "name": "James Gilbert",
-            "position": "Production Editor",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fjames.jpg/full/502,358/0/default.webp",
-            "number": "+44 [0]1223 855346"
-        },
-        "person-2": {
-            "name": "Fred Atherden",
-            "position": "Production Editor",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Ffred.jpg/full/502,358/0/default.webp",
-            "number": "+44 [0]1223 855370"
-        },
-        "person-3": {
-            "name": "Becky Collins",
-            "position": "Production Assistant",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fbecky_0.jpg/full/502,358/0/default.webp",
-            "number": "+44 [0]1223 755808"
-        }
-    },
-    "editor": {
-        "heading": "Editorial Staff",
-        "paragraph-1": "Our Editorial staff are happy to help with any enquiries arising before acceptance.",
-        "person-1": {
-            "name": "Wei Mun Chan",
-            "position": "Editorial Manager",
-            "number": "+44 [0]1223 855379",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fweimun.jpg/full/502,358/0/default.webp"
-        },
-
-        "person-2": {
-            "name": "Maria Guerreiro",
-            "position": "Journal Development Editor",
-            "number": "+44 (0)1223 750665",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fmaria.jpg/full/502,358/0/default.webp"
-        },
-
-        "person-3": {
-            "name": "Milly McConnell",
-            "position": "Senior Editorial Assistant",
-            "number": "+44 (0)1223 855348",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Fmilly.jpg/full/502,358/0/default.webp"
-        },
-
-        "person-4": {
-            "name": "Emma Smith",
-            "position": "Senior Editorial Assistant",
-            "number": "+44 (0)1223 855376",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-02%2Femma-smith.jpg/full/502,358/0/default.webp"
-        },
-
-        "person-5": {
-            "name": "Fiona Bryant",
-            "position": "Editorial Assistant",
-            "number": "+44 (0)1223 855372",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-06%2FFiona3.jpg/full/502,358/0/default.webp"
-        },
-
-        "person-6": {
-            "name": "Nicola Adamson",
-            "position": "Editorial Assistant",
-            "photo": "https://iiif.elifesciences.org/journal-cms/person%2F2019-11%2Fnicola1_0.jpg/full/502,358/0/default.webp"
-        }
     }
 }
