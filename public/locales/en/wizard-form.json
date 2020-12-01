@@ -54,7 +54,7 @@
     "files": {
         "supporting-files-max": "Maximum 10 supporting files",
         "coverletter-title": "Your cover letter",
-        "coverletter-guidance": "<span class=\"typography__small typography__small--secondary\">Enter your cover letter below. Please help us evaluate your work by answering the following questions:</span><ul class=\"cover-letter__list typography__small\"><li>How will your work make others in the field think differently and move the field forward?</li><li>How does your work relate to the current literature on the topic?</li><li>Who do you consider to be the most relevant audience for this work?</li><li>What do you think the work has achieved or not achieved?</li></ul>",
+        "coverletter-guidance": "<span class=\"typography__small typography__small--secondary\">Please enter your cover letter below. For more information read our <a class=\"typography__small typography__small--link files-step__link--nested\" href=\"/author-guide/initial\" target=\"_blank\">Author guide</a>.</span>",
         "manuscript-title": "Your manuscript file",
         "manuscript-guidance": "<span class=\"typography__small typography__small--secondary\">Please include figures in your manuscript file. You do not need to upload figures separately. <a class=\"typography__small typography__small--link files-step__link--nested\" href=\"/author-guide/initial#single-manuscript\" target=\"_blank\">Learn more</a></span>",
         "supporting-title": "Supporting files (optional)",
