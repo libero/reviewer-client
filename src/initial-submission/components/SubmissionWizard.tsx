@@ -153,7 +153,7 @@ const stepConfig: StepConfig[] = [
 ];
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ history }: RouteComponentProps<Props>): JSX.Element => {
-    const { id, step } = useParams();
+    const { id, step } = useParams<{ id: string; step: string }>();
     const { t } = useTranslation('wizard-form');
     const [clearError] = useMutation(CLEAR_ERROR);
     const [setError] = useMutation(SET_VALIDATION_ERROR);

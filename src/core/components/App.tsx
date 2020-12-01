@@ -25,6 +25,7 @@ const Dashboard = lazy(() => import('../../dashboard/components/Dashboard'));
 const Survey = lazy(() => import('../../survey/components/Survey'));
 const ThankYouPage = lazy(() => import('../../initial-submission/components/ThankYouPage'));
 const SubmissionWizard = lazy(() => import('../../initial-submission/components/SubmissionWizard'));
+const InfoPage = lazy(() => import('../../initial-submission/components/InfoPage'));
 
 const Loader = (): JSX.Element => (
     <div className="app-spinner">
@@ -67,6 +68,7 @@ const AppRoutes: React.FC = (): JSX.Element => {
                     <AuthRoute exact path="/" component={Dashboard} />
                     <AuthRoute path="/survey/:id" component={Survey} />
                     <AuthRoute path="/thankyou/:id" component={ThankYouPage} />
+                    <AuthRoute path="/info/:id" component={InfoPage} />
                     <AuthRoute path="/submit/:id/:step" component={SubmissionWizard} />
                     <Route component={Login} exact path="/login" />
                     <Route component={Logout} exact path="/logout" />

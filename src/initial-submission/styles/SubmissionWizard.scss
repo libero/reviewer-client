@@ -11,3 +11,10 @@
   justify-content: center;
   padding: 5rem 0;
 }
+
+.infoStep__buttons {
+    display: grid;
+    grid-template-columns: 7.5rem 7.5rem;
+    grid-column-gap: 1.5rem;
+    margin-top: 3rem;
+}
