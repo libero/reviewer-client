@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, useState } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import { ApolloProvider, useMutation } from '@apollo/react-hooks';
 import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
@@ -14,6 +14,7 @@ import ErrorBoundary from './ErrorBoundary';
 import Spinner from '../../ui/atoms/Spinner';
 import { CLEAR_ERROR } from '../../initial-submission/graphql';
 import NotSupportedBrowser from '../../ui/organisms/NotSupportedBrowser';
+import RedirectPage from '../../login/components/RedirectPage';
 
 const AuthRoute = lazy(() => import('./AuthRoute'));
 const JournalAuthRedirect = lazy(() => import('../../login/components/JournalAuthRedirect'));
@@ -75,7 +76,7 @@ const AppRoutes: React.FC = (): JSX.Element => {
                     <Route component={ContactUs} path="/contact-us" />
                     <Route component={AuthorGuide} path="/author-guide" />
                     <Route component={ReviewerGuide} path="/reviewer-guide" />
-                    <Route component={(): JSX.Element => <Redirect to="/login" />} path="/redirect" />
+                    <Route component={RedirectPage} path="/redirect" />
                     <Route component={ErrorPage} /> {/* default not found route */}
                 </Switch>
             </div>
