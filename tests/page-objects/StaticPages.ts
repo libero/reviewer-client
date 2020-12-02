@@ -75,19 +75,11 @@ export const ReviewerGuide: Record<reviewerGuideSubPages, SubPage> = {
     },
 };
 
-type contactUsSubPages = 'contactElife' | 'editorialStaff' | 'productionStaff';
+type contactUsSubPages = 'contactElife';
 
 export const ContactUs: Record<contactUsSubPages, SubPage> = {
     contactElife: {
         linkText: 'Contact eLife',
         title: 'Contact eLife',
-    },
-    editorialStaff: {
-        linkText: 'Editorial Staff',
-        title: 'Editorial Staff',
-    },
-    productionStaff: {
-        linkText: 'Production Staff',
-        title: 'Production Staff',
     },
 };

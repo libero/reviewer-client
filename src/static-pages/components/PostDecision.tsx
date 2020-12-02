@@ -15,6 +15,8 @@ const PostDecision = (): JSX.Element => {
             <Paragraph type="reading">
                 <Interweave content={t('post.acceptance.p1')} />
             </Paragraph>
+            <h3 className="typography__heading typography__heading--h3">{t('post.acceptance.executable.heading')}</h3>
+            <Interweave content={t('post.acceptance.executable.content')} />
 
             <h3 className="typography__heading typography__heading--h3">{t('post.acceptance.protocols.heading')}</h3>
 
