@@ -43,13 +43,13 @@ export class AuthorDetailsPage {
 
     public async populateMinimalFields(): Promise<void> {
         await this.prefill();
-        await this.setEmail('email@elifesciences.org');
+        await this.setEmail('success@simulator.amazonses.com');
         await this.setInstitution('institution');
         await t.wait(1000);
     }
 
     public async assertPopulatedValues(
-        values = { first: 'reviewer', last: 'libero', email: 'email@elifesciences.org', inst: 'institution' },
+        values = { first: 'reviewer', last: 'libero', email: 'success@simulator.amazonses.com', inst: 'institution' },
     ): Promise<void> {
         await t.expect(await this.getFirstName()).eql(values.first);
         await t.expect(await this.getLastName()).eql(values.last);
@@ -57,7 +57,7 @@ export class AuthorDetailsPage {
         await t.expect(await this.getInstitution()).eql(values.inst);
     }
 
-    public async setEmail(input = 'email@elifesciences.org'): Promise<void> {
+    public async setEmail(input = 'success@simulator.amazonses.com'): Promise<void> {
         await t.expect(this.emailInput.visible).ok();
         await t.typeText(this.emailInput, input);
         await t.expect(this.emailInput.value).eql(input);
