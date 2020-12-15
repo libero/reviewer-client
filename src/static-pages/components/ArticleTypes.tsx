@@ -90,6 +90,9 @@ const ArticleTypes = (): JSX.Element => {
                     </Paragraph>
                 </li>
             </ol>
+            <Paragraph type="reading">
+                <Interweave content={t('article-types.review-articles.p3')} />
+            </Paragraph>
 
             <h2 className="typography__heading typography__heading--h2">
                 {t('article-types.sci-correspondence.heading')}
