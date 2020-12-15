@@ -19,6 +19,34 @@ const WritingReview = (): JSX.Element => {
             <Interweave content={t('writing-review.recommendations.content')} />
             <h2 className="typography__heading typography__heading--h2">{t('writing-review.examples.heading')}</h2>
             <Interweave content={t('writing-review.examples.content')} />
+            <h2 className="typography__heading typography__heading--h2">
+                {t('writing-review.examples-public-review.heading')}
+            </h2>
+            <Interweave content={t('writing-review.examples-public-review.content')} />
+            <h3 className="typography__heading typography__heading--h3">
+                {t('writing-review.examples-public-review.summary1.heading')}
+            </h3>
+            <Interweave content={t('writing-review.examples-public-review.summary1.content')} />
+            <h3 className="typography__heading typography__heading--h3">
+                {t('writing-review.examples-public-review.public-review1.heading')}
+            </h3>
+            <Interweave content={t('writing-review.examples-public-review.public-review1.content')} />
+            <h3 className="typography__heading typography__heading--h3">
+                {t('writing-review.examples-public-review.recommendations1.heading')}
+            </h3>
+            <Interweave content={t('writing-review.examples-public-review.recommendations1.content')} />
+            <h3 className="typography__heading typography__heading--h3">
+                {t('writing-review.examples-public-review.summary2.heading')}
+            </h3>
+            <Interweave content={t('writing-review.examples-public-review.summary2.content')} />
+            <h3 className="typography__heading typography__heading--h3">
+                {t('writing-review.examples-public-review.public-review2.heading')}
+            </h3>
+            <Interweave content={t('writing-review.examples-public-review.public-review2.content')} />
+            <h3 className="typography__heading typography__heading--h3">
+                {t('writing-review.examples-public-review.recommendations2.heading')}
+            </h3>
+            <Interweave content={t('writing-review.examples-public-review.recommendations2.content')} />
         </div>
     );
 };

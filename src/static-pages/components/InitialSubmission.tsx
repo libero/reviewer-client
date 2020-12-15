@@ -44,8 +44,20 @@ const InitialSubmission = (): JSX.Element => {
             <ol>
                 <li>
                     <Paragraph type="reading">
-                        <Interweave content={t('initial-submission.manuscript.components.one')} />
+                        <Interweave content={t('initial-submission.manuscript.components.one.p1')} />
                     </Paragraph>
+                    <ul>
+                        <li>
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.manuscript.components.one.bullet1')} />
+                            </Paragraph>
+                        </li>
+                        <li>
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.manuscript.components.one.bullet2')} />
+                            </Paragraph>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
@@ -174,6 +186,16 @@ const InitialSubmission = (): JSX.Element => {
                         <li>
                             <Paragraph type="reading">
                                 <Interweave content={t('initial-submission.meta.data.two.bullet4')} />
+                            </Paragraph>
+                        </li>
+                        <li>
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.meta.data.two.bullet5')} />
+                            </Paragraph>
+                        </li>
+                        <li>
+                            <Paragraph type="reading">
+                                <Interweave content={t('initial-submission.meta.data.two.bullet6')} />
                             </Paragraph>
                         </li>
                     </ul>

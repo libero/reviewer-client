@@ -198,14 +198,7 @@ const JournalPolicies = (): JSX.Element => {
             <h3 className="typography__heading typography__heading--h3">
                 {t('journal-policies.open-data.software.heading')}
             </h3>
-
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.software.p1')} />
-            </Paragraph>
-
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.software.p2')} />
-            </Paragraph>
+            <Interweave content={t('journal-policies.open-data.software.content')} />
 
             <h3 className="typography__heading typography__heading--h3">
                 {t('journal-policies.open-data.research.heading')}
@@ -380,13 +373,40 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.reporting-standards.p3')} />
             </Paragraph>
 
+            <ul>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.reporting-standards.bullet1')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.reporting-standards.bullet2')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.reporting-standards.bullet3')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.reporting-standards.bullet4')} />
+                    </Paragraph>
+                </li>
+            </ul>
+
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.reporting-standards.p4')} />
             </Paragraph>
 
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.reporting-standards.p5')} />
+            </Paragraph>
+
             <div className="blue-box">
                 <Paragraph type="reading">
-                    <Interweave content={t('journal-policies.reporting-standards.p5')} />
+                    <Interweave content={t('journal-policies.reporting-standards.p6')} />
                 </Paragraph>
             </div>
         </div>
