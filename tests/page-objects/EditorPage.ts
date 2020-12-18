@@ -36,7 +36,8 @@ export class EditorPage {
     private readonly maxReviewingEditors = 6;
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.editorsStep.exists).ok();
+        // long timeout accounts for e2e people api call delays
+        await t.expect(this.editorsStep.exists).ok({ timeout: 30000 });
         await t.expect(this.seniorEditorsPicker.exists).ok();
         await t.expect(this.suggestedReviewingEditorsPicker.exists).ok();
         await t.expect(this.nextButton.exists).ok();
