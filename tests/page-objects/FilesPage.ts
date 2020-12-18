@@ -131,7 +131,8 @@ export class FilesPage {
 
     public async uploadManuscriptFile(filePath: string): Promise<void> {
         await t.setFilesToUpload(this.manuscriptInput, filePath);
-        await t.expect(this.manuscriptReplaceButton.withText('Replace').exists).ok();
+        // long timeout accounts for e2e s3/sciencebeam delay
+        await t.expect(this.manuscriptReplaceButton.withText('Replace').exists).ok({ timeout: 30000 });
         await t.expect(this.manuscriptReplaceButton.withText('Replace').visible).ok();
     }
 
