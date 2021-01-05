@@ -71,6 +71,9 @@
     },
     "editors": {
         "title": "Who should review your work?",
+        "subtitle_1": "All suggestions for editors and reviewers should not have any competing interests with respect to authors or the submission. See ",
+        "subtitle-link": "eLife’s competing interests policy",
+        "subtitle_2": " for more information.",
         "editors-people-picker-label": "Suggest Senior Editors",
         "reviewers-people-picker-label": "Suggest Reviewing Editors",
         "reviewers-title": "Suggest Reviewers (Optional)",
