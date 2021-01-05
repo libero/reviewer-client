@@ -195,6 +195,13 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
     return (
         <div className="editors-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">{t('editors.title')}</h2>
+            <div className="typography__body typography__body--secondary">
+                {t('editors.subtitle_1')}
+                <Link to="/author-guide/journal-policies#competing-interests" className="typography__body--link">
+                    {t('editors.subtitle-link')}
+                </Link>
+                {t('editors.subtitle_2')}
+            </div>
             <PeoplePicker
                 label={t('editors.editors-people-picker-label')}
                 people={
