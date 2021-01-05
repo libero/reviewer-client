@@ -574,7 +574,7 @@
             "components": {
                 "one": {
                     "p1": "<strong>Title: </strong>The title should ideally be fewer than 120 characters, with a clear indication of the biological system under investigation (if appropriate), and should avoid abbreviations and unfamiliar acronyms if possible. Please note that two-part titles – e.g. “What goes up must come down: Oscillations in transcriptional networks” – are not permitted for research papers. For submissions in medicine, eLife recommends that titles include some indication of the study design (e.g. randomized trial, cohort study). This can take the form of a subtitle stating the study design, after a colon, or as continuous text as in the following examples:",
-                    "bullet1": "<a href=\"https://elifesciences.org/articles/57191\" target=\"_blank\">Effects of water, sanitation, handwashing, and nutritional interventions on telomere length among children in a cluster-randomized controlled trial in rural Bangladesh</a>",
+                    "bullet1": "<a href=\"https://elifesciences.org/articles/29365\" target=\"_blank\">Effects of water, sanitation, handwashing, and nutritional interventions on telomere length among children in a cluster-randomized controlled trial in rural Bangladesh</a>",
                     "bullet2": "<a href=\"https://elifesciences.org/articles/57191\" target=\"_blank\">Predicting the effect of statins on cancer risk using genetic variants from a Mendelian randomization study in the UK Biobank</a>"
                 },
                 "two": "<strong>Author names and affiliations: </strong>A complete list of authors and affiliations should be provided in the paper itself.",
