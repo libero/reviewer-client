@@ -11,6 +11,10 @@
   margin: 0;
 };
 
+@mixin typography__body--no-margin-overlap {
+  display: inline-block;
+};
+
 @mixin typography__body--primary {
   color: $colourText;
 }
@@ -206,6 +210,10 @@
 
 .typography__body--no-margin {
   @include typography__body--no-margin;
+};
+
+.typography__body--no-margin-overlap {
+  @include typography__body--no-margin-overlap;
 };
 
 .typography__body--primary {
