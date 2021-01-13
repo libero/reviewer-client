@@ -52,7 +52,7 @@ const PeoplePicker = ({
     };
     return (
         <div className={`people-picker ${className ? className : ''}`}>
-            {!hideLabel && <h2 className="typography__heading typography__heading--h3">{label}</h2>}
+            {!hideLabel && <h3 className="typography__heading typography__heading--h3">{label}</h3>}
 
             <SelectedPeopleList
                 people={filteredSelected}
