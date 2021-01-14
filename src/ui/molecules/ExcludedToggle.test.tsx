@@ -73,7 +73,9 @@ describe('ExcludedToggle', (): void => {
         const { container } = render(
             <ExcludedToggle panelHeading="Some Heading" togglePrefixText="Do an " toggleActionText="action" open />,
         );
-        expect(container.querySelector('.excluded-toggle__panel-heading')).toHaveTextContent('Some Heading');
+        expect(container.querySelector('.excluded-toggle__panel-header > .typography__heading')).toHaveTextContent(
+            'Some Heading',
+        );
     });
 
     it('should display children within panel', (): void => {
