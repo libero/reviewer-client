@@ -25,7 +25,6 @@ const ReviewingPolicies = (): JSX.Element => {
                 {t('reviewing-policies.misconduct.heading')}
             </h2>
             <Interweave content={t('reviewing-policies.misconduct.content')} />
-            <Interweave content={t('reviewing-policies.competing-interests.content')} />
             <h2 className="typography__heading typography__heading--h2">{t('reviewing-policies.research.heading')}</h2>
             <Interweave content={t('reviewing-policies.research.content')} />
         </div>
