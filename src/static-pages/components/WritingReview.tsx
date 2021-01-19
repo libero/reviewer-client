@@ -9,14 +9,6 @@ const WritingReview = (): JSX.Element => {
         <div className="static-page__content">
             <h1 className="typography__heading typography__heading--h1">{t('writing-review.heading')}</h1>
             <Interweave content={t('writing-review.content')} />
-            <h2 className="typography__heading typography__heading--h2">{t('writing-review.evaluation.heading')}</h2>
-            <Interweave content={t('writing-review.evaluation.content')} />
-            <h2 className="typography__heading typography__heading--h2">{t('writing-review.public-review.heading')}</h2>
-            <Interweave content={t('writing-review.public-review.content')} />
-            <h2 className="typography__heading typography__heading--h2">
-                {t('writing-review.recommendations.heading')}
-            </h2>
-            <Interweave content={t('writing-review.recommendations.content')} />
             <h2 className="typography__heading typography__heading--h2">{t('writing-review.examples.heading')}</h2>
             <Interweave content={t('writing-review.examples.content')} />
             <h2 className="typography__heading typography__heading--h2">
@@ -32,10 +24,6 @@ const WritingReview = (): JSX.Element => {
             </h3>
             <Interweave content={t('writing-review.examples-public-review.public-review1.content')} />
             <h3 className="typography__heading typography__heading--h3">
-                {t('writing-review.examples-public-review.recommendations1.heading')}
-            </h3>
-            <Interweave content={t('writing-review.examples-public-review.recommendations1.content')} />
-            <h3 className="typography__heading typography__heading--h3">
                 {t('writing-review.examples-public-review.summary2.heading')}
             </h3>
             <Interweave content={t('writing-review.examples-public-review.summary2.content')} />
@@ -43,10 +31,6 @@ const WritingReview = (): JSX.Element => {
                 {t('writing-review.examples-public-review.public-review2.heading')}
             </h3>
             <Interweave content={t('writing-review.examples-public-review.public-review2.content')} />
-            <h3 className="typography__heading typography__heading--h3">
-                {t('writing-review.examples-public-review.recommendations2.heading')}
-            </h3>
-            <Interweave content={t('writing-review.examples-public-review.recommendations2.content')} />
         </div>
     );
 };
