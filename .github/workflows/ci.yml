@@ -81,7 +81,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: yarn testcafe --sf "saucelabs:Firefox@latest:Windows 10"        'tests/**/*.browser.ts'
-      - run: yarn testcafe --sf "saucelabs:MicrosoftEdge@latest:Windows 10"  'tests/**/*.browser.ts'
+      - run: yarn testcafe --sf --skip-js-errors "saucelabs:MicrosoftEdge@latest:Windows 10"  'tests/**/*.browser.ts'
       - run: yarn testcafe --sf "saucelabs:Safari@13:macOS 10.13"            'tests/**/*.browser.ts'
       - name: Dump logs on failure
         if: failure()
