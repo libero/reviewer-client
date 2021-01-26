@@ -108,7 +108,7 @@ const JournalPolicies = (): JSX.Element => {
             </Paragraph>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.competing-interests.p1')} />
+                <Interweave content={t('journal-policies.copywrite.p2')} />
             </Paragraph>
 
             <h2 className="typography__heading typography__heading--h2">{t('journal-policies.open-data.heading')}</h2>
