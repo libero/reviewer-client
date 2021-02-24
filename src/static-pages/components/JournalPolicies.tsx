@@ -164,6 +164,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.open-data.data.p3')} />
             </Paragraph>
 
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.open-data.data.p4')} />
+            </Paragraph>
+
             <ul>
                 <li>
                     <Paragraph type="reading">
@@ -188,11 +192,11 @@ const JournalPolicies = (): JSX.Element => {
             </ul>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p4')} />
+                <Interweave content={t('journal-policies.open-data.data.p5')} />
             </Paragraph>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p5')} />
+                <Interweave content={t('journal-policies.open-data.data.p6')} />
             </Paragraph>
 
             <h3 className="typography__heading typography__heading--h3">
