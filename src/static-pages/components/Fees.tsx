@@ -26,6 +26,14 @@ const Fees = (): JSX.Element => {
                 <Interweave content={t('fees.p4')} />
             </Paragraph>
 
+            <Paragraph type="reading">
+                <Interweave content={t('fees.p5')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('fees.p6')} />
+            </Paragraph>
+
             <h3 className="typography__heading typography__heading--h3">{t('fees.question1.heading')}</h3>
 
             <Paragraph type="reading">
@@ -78,36 +86,16 @@ const Fees = (): JSX.Element => {
                 </li>
             </ul>
 
-            <h3 className="typography__heading typography__heading--h3">{t('fees.question6.heading')}</h3>
-
             <Paragraph type="reading">
-                <Interweave content={t('fees.question6.p1')} />
+                <Interweave content={t('fees.question5.p2')} />
             </Paragraph>
 
             <Paragraph type="reading">
-                <Interweave content={t('fees.question6.p2')} />
-            </Paragraph>
-
-            <h3 className="typography__heading typography__heading--h3">{t('fees.question7.heading')}</h3>
-
-            <Paragraph type="reading">
-                <Interweave content={t('fees.question7.p1')} />
-            </Paragraph>
-
-            <h3 className="typography__heading typography__heading--h3">{t('fees.question8.heading')}</h3>
-
-            <Paragraph type="reading">
-                <Interweave content={t('fees.question8.p1')} />
-            </Paragraph>
-
-            <h3 className="typography__heading typography__heading--h3">{t('fees.question9.heading')}</h3>
-
-            <Paragraph type="reading">
-                <Interweave content={t('fees.question9.p1')} />
+                <Interweave content={t('fees.question5.p3')} />
             </Paragraph>
 
             <Paragraph type="reading">
-                <Interweave content={t('fees.question9.p2')} />
+                <Interweave content={t('fees.question5.p4')} />
             </Paragraph>
 
             <h2 className="typography__heading typography__heading--h2">{t('fees.waiver.heading')}</h2>
