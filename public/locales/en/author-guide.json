@@ -504,51 +504,38 @@
     },
     "fees": {
         "heading": "Publication Fees",
-        "p1": "A fee of $2,500* is collected for published research papers; however, authors with insufficient funding to pay the fee are eligible for a fee waiver.",
-        "p2": "* If the fee is invoiced to an individual, rather than a business, then VAT of 20% is added to the fee.",
-        "p3": "The publication fee (also referred to as an \"open-access\" or \"article-processing\" fee) is a charge collected by many open-access publishers to help recover the costs of publication while providing free and open access for readers to use and re-use results. eLife provides open access to all content.",
-        "p4": "Questions related to our introduction of publication fees are addressed below.",
+        "p1": "Revised: 10 March 2021",
+        "p2": "<strong>Please note: eLife's publication fee will increase to $3,000* for authors submitting on or after April 5, 2021.<\/strong>",
+        "p3": "Until April 4, 2021: a fee of $2,500* is collected for research papers published in eLife. Authors with insufficient funding for any reason are encouraged to request a fee <a href=\"https://reviewer.elifesciences.org/author-guide/fees#waiver\" target=\"_blank\" >waiver<\/a>.",
+        "p4": "* If the fee is invoiced to an individual, rather than a business, then VAT of 20% is added to the fee.",
+        "p5": "The publication fee (also referred to as an \"open-access\" or \"article-processing\" fee) is a charge collected by many open-access publishers to help recover the costs of publication while providing free and open access for readers to use and re-use results. eLife provides open access to all content.",
+        "p6": "Questions related to our publication fees are addressed below. Further information in relation to the 2021 increase is available on <a href=\"https://elifesciences.org/inside-elife/77a49d1b/elife-latest-changes-to-our-publication-fee\" target=\"_blank\" >our blog<\/a>.",
         "question1": {
-            "heading": "1. How did eLife decide on a fee of $2,500?",
-            "p1": "As a non-profit organisation, we believe the fee should be derived from our real costs. At $2,500, the publication fee covers the marginal costs that we incur for every new article we publish. It does not cover our fixed publishing costs or the costs of our technology and innovation efforts. By recovering our marginal costs, we can help to ensure the long-term sustainability of eLife. We also considered how the fee compares to those at other journals and believe we offer good value."
-        },
-        "question2": {
-            "heading": "2. I can’t afford a $2,500 fee. What can I do?",
+            "heading": "1. I can’t afford a $2,500 fee. What can I do?",
             "p1": "It is very important that a publication fee does not inhibit the submission of excellent work from labs with insufficient access to funds. We will grant <a href=\"#waiver\" >a waiver</a> for labs under financial pressure – whether because of local economy, career stage, or a lack of funding."
         },
-        "question3": {
-            "heading": "3. Will my ability to pay influence consideration of my paper?",
+        "question2": {
+            "heading": "2. Will my ability to pay influence consideration of my paper?",
             "p1": "No. Editors have no knowledge of waiver requests or financial arrangements. Ability to pay will have no bearing on editorial decisions at all."
         },
-        "question4": {
-            "heading": "4. What article types are affected?",
+        "question3": {
+            "heading": "3. What article types are affected?",
             "p1": "The publication fee applies to Research Articles, Short Reports, Tools and Resources, Research Communications, and Research Advances."
         },
-        "question5": {
-            "heading": "5. What do I get in return, as an author?",
-            "p1": "There is tremendous variation in the fees charged for open-access publishing, and we therefore encourage all authors, including eLife authors, to ask themselves this question when they are considering where to publish their work. eLife offers:",
-            "bullet1": "Clear, constructive input from experts in your field. eLife post-review decisions are the product of a consultation among reviewers – overseen by the working scientists who serve as eLife editors – who achieve a consensus on major points before sending consolidated feedback to authors. As a result of this constructive and efficient process most published articles go through only one round of review and revision.",
-            "bullet2": "Open access. All research papers published at eLife, along with associated datasets and media files, are made freely and immediately available online for all to read and use, provided the original author is given credit. Your work will also be delivered to PubMed Central immediately on publication. Publication in eLife thus complies with all international funder policies on public and open access.",
-            "bullet3": "The freedom to present your work in full. eLife imposes no limit to the length of most research papers or the number of figures, tables, datasets or videos that you wish to present in the main body of the article. Authors also have the option to publish their article within 1-2 days of acceptance.",
-            "bullet4": "Wide exposure. Your work will be published alongside other excellent science evaluated and selected by the editors of eLife. eLife is indexed by all the major databases including Medline and the Web of Science, and eLife papers routinely appear in the mainstream media. We also often work with early-stage investigators to help gain attention for their work through interviews, podcasts, and public appearances."
-        },
-        "question6": {
-            "heading": "6. eLife continues to receive funding, so why do you need to start charging fees?",
-            "p1": "Publication fees are a part of our long-term growth strategy, which also continues to involve a close relationship with research funders who have made it possible for us not to charge before now. The intent of the fee is to cover our marginal publication costs, or the cost of every new research article we publish, so that we can support the continued expansion of the journal.",
-            "p2": "We also feel that eLife has a role to play in the economics of the science publishing marketplace. We would like to try and have a positive influence on how publication charges fit into the future of funding open-access publishing by being open about our costs, value, and fees."
-        },
-        "question7": {
-            "heading": "7. I’m funded by the same funders as eLife. Will I have to pay?",
+        "question4": {
+            "heading": "4. I’m funded by the same funders as eLife. Will I have to pay?",
             "p1": "Yes. The fee will apply to all research papers including those with investigators associated with the Howard Hughes Medical Institute, the Max Planck Society, the Wellcome Trust and the Knut and Alice Wallenberg Foundation. The generous support of these organisations will help us cover the balance of our publishing costs (our fixed costs) and enable us to invest in technology and innovation."
         },
-        "question8": {
-            "heading": "8. Will the publication fee be increased in future?",
-            "p1": "The fee was introduced on January 1, 2017. We set the fee in a way that makes it possible to maintain it at the same level, and cover our marginal costs, for several years, despite fluctuations in foreign exchange rates, for example. We will continue to be open and transparent about our costs and publishing volumes and be prepared to revisit the relationship of the fee to our costs in the future, as well as other sources of revenue."
-        },
-        "question9": {
-            "heading": "9. How does the fee relate to eLife’s long-term financial plan?",
-            "p1": "The publication fee is an important part of our long-term plan, helping to ensure we can continue to grow the eLife journal. As a result, we can dedicate the support of our funders to the ongoing costs of publishing and the value we add (such as eLife Digests and Insights), and to experimenting and innovating in research communication. We’ll be creative in exploring other revenue streams in future, which may or may not include advertising, submission fees, additional grants, or fees for valuable services.",
-            "p2": "Any questions not addressed here may be sent to eLife via <a href=\"mailto:fees@elifesciences.org\" target=\"_blank\" >fees [at] elifesciences [dot] org</a>"
+        "question5": {
+            "heading": "5. Why should I choose to publish with eLife?",
+            "p1": "The most popular reasons authors choose eLife include:",
+            "bullet1": "Consultative peer review, which limits revisions",
+            "bullet2": "Working scientists make all editorial decisions",
+            "bullet3": "Research is published openly, without delay",
+            "bullet4": "You can publish in a format that fits",
+            "p2": "Your work will be published alongside other excellent science evaluated and selected by the editors of eLife. eLife is indexed by all the major databases including Medline and the Web of Science, and eLife papers routinely appear in the mainstream media. We also often work with early-stage investigators to help gain attention for their work through interviews, podcasts, and public appearances.",
+            "p3": "Read more on our <a href=\"https://elifesciences.org/inside-elife/49a4790f/for-authors-what-makes-elife-different\" target=\"_blank\">blog<\/a>.",
+            "p4": "Any questions not addressed here may be sent to eLife via fees [at] elifesciences [dot] org"
         },
         "waiver": {
             "heading": "eLife publication fee waiver policy",
