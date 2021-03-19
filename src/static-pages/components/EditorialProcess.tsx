@@ -14,12 +14,6 @@ const EditorialProcess = (): JSX.Element => {
                 {t('editorial.editorial.pre-print.heading')}
             </h2>
             <Interweave content={t('editorial.editorial.pre-print.content')} />
-            <div className="blue-box">
-                <Paragraph type="reading">
-                    <Interweave content={t('editorial.editorial.p5')} />
-                </Paragraph>
-            </div>
-
             <Paragraph type="reading">
                 <Interweave content={t('editorial.editorial.p6')} />
             </Paragraph>

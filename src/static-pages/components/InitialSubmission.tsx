@@ -15,18 +15,6 @@ const InitialSubmission = (): JSX.Element => {
                 <Interweave content={t('initial-submission.p1')} />
             </Paragraph>
 
-            <div className="blue-box">
-                <h2 className="typography__heading typography__heading--h2">
-                    {t('initial-submission.pre-print.heading')}
-                </h2>
-                <Paragraph type="reading">
-                    <Interweave content={t('initial-submission.pre-print.p1')} />
-                </Paragraph>
-                <Paragraph type="reading">
-                    <Interweave content={t('initial-submission.pre-print.p2')} />
-                </Paragraph>
-            </div>
-
             <h2 id="single-manuscript">{t('initial-submission.manuscript.heading')}</h2>
 
             <Paragraph type="reading">
