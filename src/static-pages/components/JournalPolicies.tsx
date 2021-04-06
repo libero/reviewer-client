@@ -279,6 +279,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.image-acquisition.p3')} />
             </Paragraph>
 
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.image-acquisition.p4')} />
+            </Paragraph>
+
             <h2 className="typography__heading typography__heading--h2">{t('journal-policies.licensing.heading')}</h2>
 
             <Paragraph type="reading">

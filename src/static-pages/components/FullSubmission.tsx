@@ -67,6 +67,9 @@ const FullSubmission = (): JSX.Element => {
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.data.p2')} />
                     </Paragraph>
+                    <Paragraph type="reading">
+                        <Interweave content={t('full-submission.files.data.p3')} />
+                    </Paragraph>
                 </li>
 
                 <li>
