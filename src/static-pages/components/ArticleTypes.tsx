@@ -9,6 +9,11 @@ const ArticleTypes = (): JSX.Element => {
     return (
         <div className="static-page__content">
             <h1 className="typography__heading typography__heading--h1">{t('article-types.heading')}</h1>
+            <div className="blue-box">
+                <Paragraph type="reading">
+                    <Interweave content={t('article-types.closing-bluebox')} />
+                </Paragraph>
+            </div>
 
             <Paragraph type="reading">
                 <Interweave content={t('article-types.p1')} />
