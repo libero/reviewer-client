@@ -84,9 +84,13 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+<<<<<<< HEAD
       - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
       - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
       - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
+=======
+      - run: yarn testcafe --sf --skip-js-errors -c 1 '${{ matrix.browser }}' 'tests/**/*.browser.ts' --browser-init-timeout 1800000
+>>>>>>> 76c1df9 (fix: add a limit to not run tests concurrently)
       - name: Dump logs on failure
         if: failure()
         run: |
