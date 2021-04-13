@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: ["saucelabs:Firefox@latest:Windows 10", "saucelabs:MicrosoftEdge@latest:Windows 10", "saucelabs:Safari@13:macOS 10.13"]
+        browser: ["saucelabs:Chrome@latest:Windows 10", "saucelabs:Firefox@latest:Windows 10", "saucelabs:MicrosoftEdge@latest:Windows 10", "saucelabs:Safari@13:macOS 10.13"]
     # Only run if on master or if '[run-saucelabs]' is part of PR message
     if: >
       contains(github.event.pull_request.body, '[run-saucelabs]')
