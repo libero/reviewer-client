@@ -4,7 +4,7 @@
 
 .radio-button__input[type=radio]{
   position: absolute;
-  visibility: hidden;
+  z-index: 1000;
 }
 
 .radio-button__label {
@@ -38,13 +38,6 @@
   z-index: 5;
   border: 1px solid #BDBDBD;
 
-  &:checked {
-    background: green;
-  }
-}
-
-.radio-button__group:hover .check {
-  border: 6px solid #087ACC;
 }
 
 .radio-button__button::before {
@@ -62,18 +55,10 @@
   padding: 5px;
 }
 
-.radio-button__item:focus-within {
-  border: 1px solid #087ACC;
-}
-
 .radio-button__input[type=radio]:checked ~ .radio-button__button {
-  border: 5px solid #0DFF92;
+  border: 6px solid #087ACC;
 }
 
-.radio-button__input[type=radio]:checked ~ .radio-button__button::before {
-  background: #0DFF92;
-}
-
-.radio-button__input[type=radio]:checked ~ .radio-button__label {
-  color: #0DFF92;
+.radio-button__input[type=radio]:checked ~ .radio-button__item {
+  border: 1px solid #087ACC;
 }
