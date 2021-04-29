@@ -23,7 +23,7 @@ const RadioButton = ({ register, options, name }: Props): JSX.Element => (
                         <div className="radio-button__button">
                             <div className="radio-button__button-inner"></div>
                         </div>
-                        <label id="radio-button__label" className="radio-button__label">
+                        <label className="radio-button__label">
                             {item.label}
                         </label>
                     </li>
