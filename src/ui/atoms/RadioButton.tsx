@@ -5,9 +5,10 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     register?: () => void;
     options: { value: string; label: string }[];
     name: string;
+    initialValue?: string;
 }
 
-const RadioButton = ({ register, options, name }: Props): JSX.Element => (
+const RadioButton = ({ register, options, name, initialValue }: Props): JSX.Element => (
     <div className="radio-button__group">
         <ul>
             {options.map(item => (
@@ -19,6 +20,7 @@ const RadioButton = ({ register, options, name }: Props): JSX.Element => (
                             className="radio-button__input"
                             name={name}
                             value={item.value}
+                            defaultChecked={item.value == initialValue}
                         />
                         <div className="radio-button__button">
                             <div className="radio-button__button-inner"></div>

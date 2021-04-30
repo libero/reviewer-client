@@ -9,9 +9,8 @@ import { Button, Paragraph } from '../../ui/atoms';
 import useModal from '../../ui/hooks/useModal';
 import ArticleType from './ArticleType';
 import Interweave from 'interweave';
-import { Spinner, RadioButton } from '../../ui/atoms';
+import { Spinner } from '../../ui/atoms';
 import { CLEAR_ERROR } from '../../initial-submission/graphql';
-import { useForm } from 'react-hook-form';
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
@@ -71,28 +70,6 @@ const Dashboard = withRouter(
             // remove all query parameters
             history.replace(window.location.pathname);
         }, [alreadySubmitted]);
-
-        const { register, getValues } = useForm();
-        return (
-            <div>
-                <RadioButton
-                    register={register}
-                    options={[
-                        { value: 'chicken wings', label: 'Chicken Wings' },
-                        { value: 'baconburger', label: 'Bacon Burger' },
-                    ]}
-                    name="radioButton"
-                />
-                <button
-                    type="button"
-                    onClick={() => {
-                        console.log(getValues());
-                    }}
-                >
-                    Click me{' '}
-                </button>
-            </div>
-        );
         if (isShowing) {
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
