@@ -5,6 +5,7 @@
 .radio-button__input[type=radio]{
   position: absolute;
   z-index: 1000;
+  opacity: 0;
 }
 
 .radio-button__label {
