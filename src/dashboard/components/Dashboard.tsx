@@ -70,7 +70,6 @@ const Dashboard = withRouter(
             // remove all query parameters
             history.replace(window.location.pathname);
         }, [alreadySubmitted]);
-
         if (isShowing) {
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
