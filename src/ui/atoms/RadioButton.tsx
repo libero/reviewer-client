@@ -1,5 +1,4 @@
-import { StoreReaderConfig } from 'apollo-cache-inmemory';
-import React, { ReactNode, MouseEvent, InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     register?: () => void;
