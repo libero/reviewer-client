@@ -118,13 +118,6 @@ const FullSubmission = (): JSX.Element => {
 
             <ol>
                 <li>
-                    <span className="bullet-heading">{t('full-submission.meta.impact.heading')}</span>
-                    <Paragraph type="reading">
-                        <Interweave content={t('full-submission.meta.impact.p1')} />
-                    </Paragraph>
-                </li>
-
-                <li>
                     <span className="bullet-heading">{t('full-submission.meta.author.heading')}</span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.meta.author.p1')} />
@@ -137,16 +130,6 @@ const FullSubmission = (): JSX.Element => {
                     </Paragraph>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.meta.author.p4')} />
-                    </Paragraph>
-                </li>
-
-                <li>
-                    <span className="bullet-heading">{t('full-submission.meta.funding.heading')}</span>
-                    <Paragraph type="reading">
-                        <Interweave content={t('full-submission.meta.funding.p1')} />
-                    </Paragraph>
-                    <Paragraph type="reading">
-                        <Interweave content={t('full-submission.meta.funding.p2')} />
                     </Paragraph>
                 </li>
 

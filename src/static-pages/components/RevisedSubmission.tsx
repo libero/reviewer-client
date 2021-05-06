@@ -61,6 +61,26 @@ const RevisedSubmission = (): JSX.Element => {
             </Paragraph>
 
             <h2 className="typography__heading typography__heading--h2">
+                {t('revised-submission.source-manuscript.impact-statement.heading')}
+            </h2>
+
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.impact-statement.p1')} />
+            </Paragraph>
+
+            <h2 className="typography__heading typography__heading--h2">
+                {t('revised-submission.source-manuscript.funding-information.heading')}
+            </h2>
+
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.funding-information.p1')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.funding-information.p2')} />
+            </Paragraph>
+
+            <h2 className="typography__heading typography__heading--h2">
                 {t('revised-submission.source-manuscript.digest.heading')}
             </h2>
             <Paragraph type="reading">
