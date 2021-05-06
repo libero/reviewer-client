@@ -110,8 +110,8 @@
             "bullet1": "<a href=\"https://elifesciences.org/inside-elife/bb34a238/special-issue-call-for-papers-in-evolutionary-medicine?_ga=2.149393206.1404521205.1594127326-1219919736.1594127326\" target=\"_blank\">Evolutionary Medicine</a>",
             "p5": "Other Special Issues (submissions welcome on a rolling basis):",
             "bullet2": "<a href=\"https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue\" target=\"_blank\">Mechanistic Microbiome Studies</a>",
-            "bullet3": "<a href=\"https://elifesciences.org/inside-elife/d81c2cd9/special-issue-call-for-papers-at-the-interface-of-cancer-biology-and-immunology\" target=\"_blank\">Discovery and Translation of Cancer Immunology</a>",
-            "bullet4": "<a href=\"https://elifesciences.org/inside-elife/4f706531/special-issue-call-for-papers-in-aging-geroscience-and-longevity\" target=\"_blank\">Aging, Geroscience and Longevity</a>"
+            "bullet3": "<a href=\"https://elifesciences.org/collections/bcfba6c6/discovery-and-translation-of-cancer-immunology-a-special-issue\" target=\"_blank\">Discovery and Translation of Cancer Immunology</a>",
+            "bullet4": "<a href=\"https://elifesciences.org/collections/6d673315/aging-geroscience-and-longevity-a-special-issue\" target=\"_blank\">Aging, Geroscience and Longevity</a>"
         }
     },
     "full-submission": {
@@ -314,7 +314,7 @@
         "p3": "eLife is a signatory of the <a href=\"https://centerforopenscience.org/top/\" target=\"_blank\">Transparency and Openness Promotion (TOP) Guidelines</a>, which is an initiative by the <a href=\"https://centerforopenscience.org\" target=\"_blank\">Center for Open Science</a> that promotes shared standards for increasing openness, transparency, and reproducibility.",
         "misconduct": {
             "heading": "Allegations of Misconduct",
-            "p1": "If we receive an allegation of potential research or publication misconduct, we will alert those affected and ask for their response. We reserve the right to suspend the review process where necessary; to publish an expression of concern for published papers where appropriate; and/or to ask the relevant employers, or institution, or an appropriate regulatory body to investigate. If someone has concerns about potential misconduct in a paper published by or under consideration by eLife, s/he should contact the journal office, <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\">editorial@elifesciences.org</a>, with their message addressed to the Editor-in-Chief, Michael Eisen."
+            "p1": "If we receive an allegation of potential research or publication misconduct, we will alert those affected and ask for their response. We reserve the right to suspend the review process where necessary; to publish an expression of concern for published papers where appropriate; and/or to ask the relevant employers, or institution, or an appropriate regulatory body to investigate. If someone has concerns about potential misconduct in a paper published by or under consideration by eLife, they should contact the journal office, <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\">editorial@elifesciences.org</a>, with their message addressed to the Editor-in-Chief, Michael Eisen."
         },
         "experiments": {
             "heading": "Ethics and Reporting of Animal and/or Human Experiments",
