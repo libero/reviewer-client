@@ -1,14 +1,14 @@
 import i18n, { InitOptions } from 'i18next';
 import merge from 'lodash/merge';
 import { initReactI18next } from 'react-i18next';
-import ArticleType from '../src/core/locales/en/article-type.json';
-import Login from '../src/core/locales/en/login.json';
-import UI from '../src/core/locales/en/ui.json';
-import Dashboard from '../src/core/locales/en/dashboard.json';
-import NoSubmission from '../src/core/locales/en/no-submission.json';
-import WizardForm from '../src/core/locales/en/wizard-form.json';
-import Common from '../src/core/locales/en/common.json';
-import Translation from '../src/core/locales/en/translation.json';
+import ArticleType from '../public/locales/en/article-type.json';
+import Login from '../public/locales/en/login.json';
+import UI from '../public/locales/en/ui.json';
+import Dashboard from '../public/locales/en/dashboard.json';
+import NoSubmission from '../public/locales/en/no-submission.json';
+import WizardForm from '../public/locales/en/wizard-form.json';
+import Common from '../public/locales/en/common.json';
+import Translation from '../public/locales/en/translation.json';
 
 export default function(options = {}): void {
     let i18nOptions: InitOptions = {
