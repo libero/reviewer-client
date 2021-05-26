@@ -23,7 +23,7 @@ storiesOf('ui | atoms/ContentToggle', module)
                 { label: 'Unicorn', value: 'unicorn' },
             ];
             return (
-                <ContentToggle id="someid" collapsedText={collapsedText} openText={openText}>
+                <ContentToggle id="contentToggle" collapsedText={collapsedText} openText={openText}>
                     <SelectField id="test" labelText="This is label text" values={values}></SelectField>
                 </ContentToggle>
             );

@@ -11,7 +11,7 @@ interface Props {
 const ContentToggle = ({ id, collapsedText, openText, children, open = false }: Props): JSX.Element => {
     const [opened, setOpen] = useState(open);
     return (
-        <div className="content-toggle" id="ContentToggle">
+        <div className="content-toggle" id={id}>
             {opened && children}
             <label id={`${id}-label`} className="typography__label typography__label--primary content-toggle__label">
                 <span
