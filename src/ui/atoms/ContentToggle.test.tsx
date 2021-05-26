@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentToggle from './ContentToggle';
-import { cleanup, render, RenderResult } from '@testing-library/react';
+import { cleanup, getByText, render, RenderResult } from '@testing-library/react';
 
 describe('ContentToggle', (): void => {
     afterEach(cleanup);
@@ -29,6 +29,22 @@ describe('ContentToggle', (): void => {
                     </ContentToggle>,
                 ),
         ).not.toThrow();
+    });
+
+    it('should render openText content correctly', (): void => {
+        const collapsedText = 'This is some open text';
+        const { getByText } = render(
+            <ContentToggle id="test" openText="Test" collapsedText="This is some open text"></ContentToggle>,
+        );
+        expect(getByText(collapsedText)).toBeInTheDocument();
+    });
+
+    it('should render collapsedText content correctly', (): void => {
+        const collapsedText = 'This is some collapsed text';
+        const { getByText } = render(
+            <ContentToggle id="test" openText="Test" collapsedText="This is some collapsed text"></ContentToggle>,
+        );
+        expect(getByText(collapsedText)).toBeInTheDocument();
     });
 
     it('should show if Content Toggle is closed with no content', (): void => {

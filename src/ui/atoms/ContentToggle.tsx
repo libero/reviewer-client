@@ -13,7 +13,7 @@ const ContentToggle = ({ id, collapsedText, openText, children, open = false }: 
     const [opened, setOpen] = useState(open);
     return (
         <div className="select-toggle">
-            {opened && <React.Fragment>{children}</React.Fragment>}
+            {opened && children}
             <label id={`${id}-label`} className="typography__label typography__label--primary select-toggle__label">
                 <span
                     className="typography typography__small--link select-toggle__toggle-btn"
