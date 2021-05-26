@@ -31,8 +31,17 @@ describe('ContentToggle', (): void => {
         ).not.toThrow();
     });
 
-    it('should show if Content Toggle is closed', (): void => {
+    it('should show if Content Toggle is closed with no content', (): void => {
         const { container } = render(<ContentToggle id="test" openText="Test" collapsedText="test"></ContentToggle>);
+        expect(container.querySelector('.select-toggle')).toBeInTheDocument();
+    });
+
+    it('should show if Content Toggle is closed with content', (): void => {
+        const { container } = render(
+            <ContentToggle id="test" openText="Test" collapsedText="test">
+                This is some text
+            </ContentToggle>,
+        );
         expect(container.querySelector('.select-toggle')).toBeInTheDocument();
     });
 
