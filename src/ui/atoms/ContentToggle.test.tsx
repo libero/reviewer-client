@@ -1,6 +1,6 @@
 import React from 'react';
+import { cleanup, render, RenderResult } from '@testing-library/react';
 import ContentToggle from './ContentToggle';
-import { cleanup, getByText, render, RenderResult } from '@testing-library/react';
 
 describe('ContentToggle', (): void => {
     afterEach(cleanup);
@@ -32,17 +32,17 @@ describe('ContentToggle', (): void => {
     });
 
     it('should render openText content correctly', (): void => {
-        const collapsedText = 'This is some open text';
+        const openText = 'Remove secondary country of residence/affiliation';
         const { getByText } = render(
-            <ContentToggle id="test" openText="Test" collapsedText="This is some open text"></ContentToggle>,
+            <ContentToggle id="test" openText={openText} collapsedText="This is some closed text" open></ContentToggle>,
         );
-        expect(getByText(collapsedText)).toBeInTheDocument();
+        expect(getByText(openText)).toBeInTheDocument();
     });
 
     it('should render collapsedText content correctly', (): void => {
-        const collapsedText = 'This is some collapsed text';
+        const collapsedText = 'Add secondary country of residence/affiliation';
         const { getByText } = render(
-            <ContentToggle id="test" openText="Test" collapsedText="This is some collapsed text"></ContentToggle>,
+            <ContentToggle id="test" openText="Test" collapsedText={collapsedText}></ContentToggle>,
         );
         expect(getByText(collapsedText)).toBeInTheDocument();
     });
