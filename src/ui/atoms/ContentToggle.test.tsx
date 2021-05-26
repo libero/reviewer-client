@@ -1,6 +1,7 @@
 import React from 'react';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import ContentToggle from './ContentToggle';
+import SelectField from './SelectField';
 
 describe('ContentToggle', (): void => {
     afterEach(cleanup);
@@ -47,26 +48,21 @@ describe('ContentToggle', (): void => {
         expect(getByText(collapsedText)).toBeInTheDocument();
     });
 
-    it('should show if Content Toggle is closed with no content', (): void => {
-        const { container } = render(<ContentToggle id="test" openText="Test" collapsedText="test"></ContentToggle>);
-        expect(container.querySelector('.select-toggle')).toBeInTheDocument();
-    });
-
     it('should show if Content Toggle is closed with content', (): void => {
         const { container } = render(
             <ContentToggle id="test" openText="Test" collapsedText="test">
-                This is some text
+                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
             </ContentToggle>,
         );
-        expect(container.querySelector('.select-toggle')).toBeInTheDocument();
+        expect(container.querySelector('.select-field')).toBeNull();
     });
 
     it('should show if Content Toggle is open with content', (): void => {
         const { container } = render(
             <ContentToggle id="test" openText="Test" collapsedText="test" open>
-                This is some text
+                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
             </ContentToggle>,
         );
-        expect(container.querySelector('.select-toggle')).toBeInTheDocument();
+        expect(container.querySelector('.select-field')).toBeInTheDocument();
     });
 });
