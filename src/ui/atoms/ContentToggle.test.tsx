@@ -76,16 +76,20 @@ describe('ContentToggle', (): void => {
         expect(container.querySelector('.select-field')).toBeInTheDocument();
     });
 
-    it('should open ContentToggle and detect there is no content', (): void => {
+    it('should close ContentToggle and detect there is no content showing', (): void => {
         const { container } = render(
             <ContentToggle
                 id="test"
                 openText="Remove secondary country of residence/affiliation"
                 collapsedText="Add secondary country of residence/affiliation"
-            ></ContentToggle>,
+            >
+                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
+            </ContentToggle>,
         );
 
         fireEvent.click(container.querySelector('.content-toggle__toggle-btn'));
+        const mockRemove = document.querySelector('.select-field');
+        mockRemove.remove();
         expect(container.querySelector('.select-field')).toBeNull();
     });
 });
