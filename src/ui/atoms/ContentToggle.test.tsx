@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import ContentToggle from './ContentToggle';
 import SelectField from './SelectField';
 
@@ -8,12 +8,7 @@ describe('ContentToggle', (): void => {
 
     it('should render correctly', (): void => {
         expect(
-            (): RenderResult =>
-                render(
-                    <ContentToggle id="" collapsedText="" openText="">
-                        This is some text
-                    </ContentToggle>,
-                ),
+            (): RenderResult => render(<ContentToggle id="" collapsedText="" openText=""></ContentToggle>),
         ).not.toThrow();
     });
 
@@ -64,5 +59,33 @@ describe('ContentToggle', (): void => {
             </ContentToggle>,
         );
         expect(container.querySelector('.select-field')).toBeInTheDocument();
+    });
+
+    it('should open ContentToggle and detect there is content', (): void => {
+        const { container } = render(
+            <ContentToggle
+                id="test"
+                openText="Remove secondary country of residence/affiliation"
+                collapsedText="Add secondary country of residence/affiliation"
+            >
+                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
+            </ContentToggle>,
+        );
+
+        fireEvent.click(container.querySelector('.content-toggle__toggle-btn'));
+        expect(container.querySelector('.select-field')).toBeInTheDocument();
+    });
+
+    it('should open ContentToggle and detect there is no content', (): void => {
+        const { container } = render(
+            <ContentToggle
+                id="test"
+                openText="Remove secondary country of residence/affiliation"
+                collapsedText="Add secondary country of residence/affiliation"
+            ></ContentToggle>,
+        );
+
+        fireEvent.click(container.querySelector('.content-toggle__toggle-btn'));
+        expect(container.querySelector('.select-field')).toBeNull();
     });
 });
