@@ -46,7 +46,7 @@ describe('ContentToggle', (): void => {
     it('should show if Content Toggle is closed with content', (): void => {
         const { container } = render(
             <ContentToggle id="test" openText="" collapsedText="">
-                <SelectField id="testTwo" labelText="This is label text" values={[]}></SelectField>
+                <span id="testTwo"></span>
             </ContentToggle>,
         );
         expect(container.querySelector('#testTwo')).toBeNull();
@@ -55,10 +55,10 @@ describe('ContentToggle', (): void => {
     it('should show if Content Toggle is open with content', (): void => {
         const { container } = render(
             <ContentToggle id="test" openText="" collapsedText="" open>
-                <SelectField id="testTwo" labelText="" values={[]}></SelectField>
+                <span id="testTwo"></span>
             </ContentToggle>,
         );
-        expect(container.querySelector('.select-field')).toBeInTheDocument();
+        expect(container.querySelector('#testTwo')).toBeInTheDocument();
     });
 
     it('should open ContentToggle and detect there is content', (): void => {
@@ -68,12 +68,12 @@ describe('ContentToggle', (): void => {
                 openText="Remove secondary country of residence/affiliation"
                 collapsedText="Add secondary country of residence/affiliation"
             >
-                <SelectField id="testTwo" labelText="" values={[]}></SelectField>
+                <span id="testTwo"></span>
             </ContentToggle>,
         );
 
         fireEvent.click(container.querySelector('.content-toggle__toggle-btn'));
-        expect(container.querySelector('.select-field')).toBeInTheDocument();
+        expect(container.querySelector('#testTwo')).toBeInTheDocument();
     });
 
     it('should close ContentToggle and detect there is no content showing', (): void => {
@@ -84,7 +84,7 @@ describe('ContentToggle', (): void => {
                 collapsedText="Add secondary country of residence/affiliation"
                 open
             >
-                <SelectField id="testTwo" labelText="" values={[]}></SelectField>
+                <span id="testTwo"></span>
             </ContentToggle>,
         );
 
