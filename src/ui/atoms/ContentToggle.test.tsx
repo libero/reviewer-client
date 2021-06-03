@@ -1,7 +1,6 @@
 import React from 'react';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import ContentToggle from './ContentToggle';
-import SelectField from './SelectField';
 
 describe('ContentToggle', (): void => {
     afterEach(cleanup);
@@ -43,7 +42,7 @@ describe('ContentToggle', (): void => {
         expect(getByText(collapsedText)).toBeInTheDocument();
     });
 
-    it('should show if Content Toggle is closed with content', (): void => {
+    it('should not show content if collapsed', (): void => {
         const { container } = render(
             <ContentToggle id="test" openText="" collapsedText="">
                 <span id="testTwo"></span>
@@ -52,7 +51,7 @@ describe('ContentToggle', (): void => {
         expect(container.querySelector('#testTwo')).toBeNull();
     });
 
-    it('should show if Content Toggle is open with content', (): void => {
+    it('should show content if expanded', (): void => {
         const { container } = render(
             <ContentToggle id="test" openText="" collapsedText="" open>
                 <span id="testTwo"></span>
@@ -61,7 +60,7 @@ describe('ContentToggle', (): void => {
         expect(container.querySelector('#testTwo')).toBeInTheDocument();
     });
 
-    it('should open ContentToggle and detect there is content', (): void => {
+    it('should expand when clicked', (): void => {
         const { container } = render(
             <ContentToggle
                 id="test"
@@ -76,7 +75,7 @@ describe('ContentToggle', (): void => {
         expect(container.querySelector('#testTwo')).toBeInTheDocument();
     });
 
-    it('should close ContentToggle and detect there is no content showing', (): void => {
+    it('should collapse when clicked', (): void => {
         const { container } = render(
             <ContentToggle
                 id="test"
