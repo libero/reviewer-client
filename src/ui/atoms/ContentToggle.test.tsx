@@ -30,7 +30,7 @@ describe('ContentToggle', (): void => {
     it('should render openText content correctly', (): void => {
         const openText = 'Remove secondary country of residence/affiliation';
         const { getByText } = render(
-            <ContentToggle id="test" openText={openText} collapsedText="This is some closed text" open></ContentToggle>,
+            <ContentToggle id="test" openText={openText} collapsedText="" open></ContentToggle>,
         );
         expect(getByText(openText)).toBeInTheDocument();
     });
@@ -38,24 +38,24 @@ describe('ContentToggle', (): void => {
     it('should render collapsedText content correctly', (): void => {
         const collapsedText = 'Add secondary country of residence/affiliation';
         const { getByText } = render(
-            <ContentToggle id="test" openText="Test" collapsedText={collapsedText}></ContentToggle>,
+            <ContentToggle id="test" openText="" collapsedText={collapsedText}></ContentToggle>,
         );
         expect(getByText(collapsedText)).toBeInTheDocument();
     });
 
     it('should show if Content Toggle is closed with content', (): void => {
         const { container } = render(
-            <ContentToggle id="test" openText="Test" collapsedText="test">
-                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
+            <ContentToggle id="test" openText="" collapsedText="">
+                <SelectField id="testTwo" labelText="This is label text" values={[]}></SelectField>
             </ContentToggle>,
         );
-        expect(container.querySelector('.select-field')).toBeNull();
+        expect(container.querySelector('#testTwo')).toBeNull();
     });
 
     it('should show if Content Toggle is open with content', (): void => {
         const { container } = render(
-            <ContentToggle id="test" openText="Test" collapsedText="test" open>
-                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
+            <ContentToggle id="test" openText="" collapsedText="" open>
+                <SelectField id="testTwo" labelText="" values={[]}></SelectField>
             </ContentToggle>,
         );
         expect(container.querySelector('.select-field')).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('ContentToggle', (): void => {
                 openText="Remove secondary country of residence/affiliation"
                 collapsedText="Add secondary country of residence/affiliation"
             >
-                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
+                <SelectField id="testTwo" labelText="" values={[]}></SelectField>
             </ContentToggle>,
         );
 
@@ -82,14 +82,13 @@ describe('ContentToggle', (): void => {
                 id="test"
                 openText="Remove secondary country of residence/affiliation"
                 collapsedText="Add secondary country of residence/affiliation"
+                open
             >
-                <SelectField id="test" labelText="This is label text" values={[]}></SelectField>
+                <SelectField id="testTwo" labelText="" values={[]}></SelectField>
             </ContentToggle>,
         );
 
         fireEvent.click(container.querySelector('.content-toggle__toggle-btn'));
-        const mockRemove = document.querySelector('.select-field');
-        mockRemove.remove();
-        expect(container.querySelector('.select-field')).toBeNull();
+        expect(container.querySelector('#testTwo')).toBeNull();
     });
 });
