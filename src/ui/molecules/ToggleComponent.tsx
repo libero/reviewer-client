@@ -9,7 +9,7 @@ interface Props {
     onToggle?: Function;
 }
 
-const ToggleComponent = ({ open = false }: Props): JSX.Element => {
+const ToggleComponent = (): JSX.Element => {
     return (
         <div className="toggle">
             <span className="burger">Test</span>
