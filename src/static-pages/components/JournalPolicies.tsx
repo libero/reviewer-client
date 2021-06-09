@@ -53,6 +53,20 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.authorship.p3')} />
             </Paragraph>
 
+            <h2 className="typography__heading typography__heading--h2">
+                {t('journal-policies.author-identification.heading')}
+            </h2>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.author-identification.p1')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.author-identification.p2')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.author-identification.p3')} />
+            </Paragraph>
+
             <h2 className="typography__heading typography__heading--h2">{t('journal-policies.cell-lines.heading')}</h2>
 
             <Paragraph type="reading">
@@ -341,6 +355,14 @@ const JournalPolicies = (): JSX.Element => {
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.name-change.p3')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.name-change.p4')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.name-change.p5')} />
             </Paragraph>
 
             <h2 className="typography__heading typography__heading--h2">
