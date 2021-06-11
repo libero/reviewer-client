@@ -14,6 +14,7 @@
         "content": "<p class=\"paragraph typography__body typography__body--secondary\">To make the results of research freely and immediately available to the widest possible audience we ask authors submitting to eLife to also upload their manuscript to a preprint server, such as <a class=\"typography__serif--link\" href=\"http://biorxiv.org/\" target=\"_blank\">bioRxiv</a> or <a class=\"typography__serif--link\" href=\"https://www.medrxiv.org/\" target=\"_blank\">medRxiv</a>.</p><p class=\"paragraph typography__body typography__body--secondary\">If we move ahead with peer review, we will provide public reviews that are designed to be posted alongside the preprint, in addition to detailed feedback for the authors.</p><p class=\"paragraph typography__body typography__body--secondary\">If we decide not to publish your work, you will control when the public reviews are posted and can choose to share them with other journals. To learn more, please <a target=\"_blank\" class=\"typography__serif--link\" href=\"/author-guide\">read our Author guide.</a></p>"
     },
     "author": {
+        "form-title": "Your details",
         "prefill--link": "Pre-fill my details ",
         "prefill--text": "using ORCID",
         "author-first-name": "First name",
