@@ -70,6 +70,7 @@ const AuthorDetailsForm = ({
 
     return (
         <form onSubmit={(e: React.BaseSyntheticEvent): void => e.preventDefault()}>
+            <h2 className="typography__heading typography__heading--h2 author-step__title">{t('author.form-title')}</h2>
             <div className="author-step">
                 <div className="author-step__link_text">
                     <span onClick={getDetails} className="typography__body typography__body--link author-step__prefill">
