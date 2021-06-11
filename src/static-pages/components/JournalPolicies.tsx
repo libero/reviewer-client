@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
+import scrollToAnchor from '../utils/scrollToAnchorEffect';
 
 const JournalPolicies = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
+
+    useEffect(scrollToAnchor);
 
     return (
         <div className="static-page__content">
