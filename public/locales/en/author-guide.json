@@ -361,8 +361,8 @@
             "bullet5": "Sent to the <a href=\"https://pubrouter.jisc.ac.uk/\" target=\"_blank\">JISC Publication Router</a>, which helps institutions comply with the open-access policies of research funding bodies and the <a href=\"https://www.ref.ac.uk/\" target=\"_blank\">Research Excellence Framework</a>."
         },
 
-        "copywrite": {
-            "anchor": "copywrite",
+        "copyright": {
+            "anchor": "copyright",
             "heading": "Copyrighted Material",
             "p1": "Copyrighted material (in full or in part) should not be included in a submission to eLife, unless you have explicit permission from the copyright holder that it can be reproduced under the terms of a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>",
             "p2": "Occasionally we have published figures or parts of figures which cannot be re-published under a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>. In those instances we ensure the correct attribution is provided within the human readable text (HTML and PDF versions of the article) and the underlying XML, for machine readability."

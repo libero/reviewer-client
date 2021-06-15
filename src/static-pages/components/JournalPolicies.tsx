@@ -134,16 +134,16 @@ const JournalPolicies = (): JSX.Element => {
                 </li>
             </ul>
 
-            <h2 id={t('journal-policies.copywrite.anchor')} className="typography__heading typography__heading--h2">
-                {t('journal-policies.copywrite.heading')}
+            <h2 id={t('journal-policies.copyright.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.copyright.heading')}
             </h2>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.copywrite.p1')} />
+                <Interweave content={t('journal-policies.copyright.p1')} />
             </Paragraph>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.copywrite.p2')} />
+                <Interweave content={t('journal-policies.copyright.p2')} />
             </Paragraph>
 
             <h2 id={t('journal-policies.open-data.anchor')} className="typography__heading typography__heading--h2">
