@@ -313,10 +313,12 @@
         "p2": "Authors are expected to comply with best practice in research and publishing ethics, and with our associated guidelines and policies, for example with regard to authorship, competing interests, and data availability and reporting standards.",
         "p3": "eLife is a signatory of the <a href=\"https://centerforopenscience.org/top/\" target=\"_blank\">Transparency and Openness Promotion (TOP) Guidelines</a>, which is an initiative by the <a href=\"https://centerforopenscience.org\" target=\"_blank\">Center for Open Science</a> that promotes shared standards for increasing openness, transparency, and reproducibility.",
         "misconduct": {
+            "anchor": "misconduct",
             "heading": "Allegations of Misconduct",
             "p1": "If we receive an allegation of potential research or publication misconduct, we will alert those affected and ask for their response. We reserve the right to suspend the review process where necessary; to publish an expression of concern for published papers where appropriate; and/or to ask the relevant employers, or institution, or an appropriate regulatory body to investigate. If someone has concerns about potential misconduct in a paper published by or under consideration by eLife, they should contact the journal office, <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\">editorial@elifesciences.org</a>, with their message addressed to the Editor-in-Chief, Michael Eisen."
         },
         "experiments": {
+            "anchor": "experiments",
             "heading": "Ethics and Reporting of Animal and/or Human Experiments",
             "p1": "Work involving human participants or animal experimentation is expected to be conducted to the highest ethical standards, for example in accordance with the <a href=\"https://www.wma.net/policies-post/wma-declaration-of-helsinki-ethical-principles-for-medical-research-involving-human-subjects/\" target=\"_blank\">World Medical Association Declaration of Helsinki</a> for medical research, and with the relevant legislation and guidance for animal research listed by <a href=\"http://www.nc3rs.org.uk/\" target=\"_blank\">NC3Rs</a>. For work involving humans, authors are expected to describe in the Methods section of their paper the ethical protections applied to their work, specifically stating the name of the institutional review board (ethics committee/ethics review board) which approved their study.",
             "p2": "For research involving animals, authors should follow the <a href=\"https://arriveguidelines.org\" target=\"_blank\">ARRIVE</a> guidelines (and state clearly in the Materials and Methods section whether animals were maintained singly or in groups). For work on animal behaviour and cognition, specifically (including observational and experimental studies, both in captivity and in the wild), authors should also consult the <a href=\"https://www.nature.com/articles/d41586-020-01751-5?proof=trueIn\" target=\"_blank\">STRANGE</a> framework and provide detailed information – as applicable – on the origin (including trapping method), sex, age/developmental stage, mass/body condition, social status, personality type, housing conditions (including social contacts and enrichment), past opportunities for individual and social learning, experimental history, and testing protocols (including social context), for: the final sample of subjects contributing data to the study; and the subjects that were part of the original sample, but did not contribute data (describe reasons for exclusion). Furthermore, with reference to the <a href=\"https://www.nature.com/articles/d41586-020-01751-5?proof=trueIn\" target=\"_blank\">STRANGE</a> framework, authors should evaluate scope for sampling biases, especially with regards to subjects’ origin, self-selection behaviour and prior experience, and describe what efforts (if any) were undertaken to mitigate potential sampling biases, for example in terms of sourcing representative subjects (such as using a variety of trapping methods) or adjusting experimental protocols to suit non- or slowly-engaging individuals. This information should be summarized in two brief statements in the main text of research articles: one in the Materials and Methods section evaluating the ‘STRANGEness’ of the test sample, and another in the Discussion section explaining how potential biases may limit the generalizability of the reported findings.",
@@ -324,27 +326,32 @@
             "p4": "For clinical trials, eLife follows the <a href=\"http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/\" target=\"_blank\">recommendations of the ICMJE</a> that all trials must have been prospectively registered to be considered for publication, and the clinical trial registration number will be requested during submission."
         },
         "authorship": {
+            "anchor": "authorship",
             "heading": "Authorship",
             "p1": "eLife follows the guidelines of the International Committee of Medical Journal Editors (ICMJE) for <a href=\"http://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html\" target=\"_blank\">authorship and contributorship</a> and the <a href=\"https://docs.google.com/document/d/1aJxrQXYHW5U6By3KEAHrx1Iho6ioeh3ohNsRMwsoGPM/edit\" target=\"_target\">Contributor Role Taxonomy</a> (CRediT) is used to indicate each author’s contributions.",
             "p2": "Please note that acquisition of funding or the provision of space, providing published data or materials, or general supervision of the research group alone does not justify authorship.",
             "p3": "Following the recommendations of the ICMJE regarding <a href=\"http://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html\" target=\"_blank\">authorship and contributorship</a>, individuals who have contributed materially to the work, but do not satisfy the authorship criteria should be listed in the acknowledgements section. Authors should seek permission to mention any individuals listed in the acknowledgements."
         },
         "author-identification": {
+            "anchor": "author-identification",
             "heading": "Author identification",
             "p1": "eLife verifies the identities of authors (and other individuals involved in the peer-review process) primarily through the use of email addresses and ORCID iDs. Authors contacting us about eLife papers – including, but not limited to, requests for corrections, retractions or name changes – should, wherever possible, use an email address that matches one used in their account in the eLife submission system.",
             "p2": "If an author cannot contact us via their previous email address, but has an ORCID record already linked to their eLife profile, we would encourage them to consider updating their ORCID record with their new information before contacting us.",
             "p3": "If neither of the above options is available, eLife staff will work with the author to enable them to verify their identity on their own terms and as simply and unobtrusively as possible. We do not require the provision of any “official” documents. Instead, potential options to achieve this would include, but are not limited to, providing our staff with a link to a new ORCID profile, an updated faculty page, a photograph of their university or institution’s ID card, a letter from their supervisor or line manager."
         },
         "cell-lines": {
+            "anchor": "cell-lines",
             "heading": "Cell Lines",
             "p1": "Regarding the use of cell lines, authors must report their source, confirm the identity has been authenticated, state the authentication method (such as STR profiling), and report the mycoplasma contamination testing status. Authors should authenticate the identity of their cell lines at least once per year, and when starting new work or new cell lines confirm that the cell lines are free from mycoplasma and other microorganisms. Authors should check the list of <a href=\"http://iclac.org/databases/cross-contaminations/\" target=\"_blank\">commonly misidentified cell lines</a> maintained by the <a href=\"http://iclac.org/\" target=\"_blank\">International Cell Line Authentication Committee</a> before submission and justify the use of any cell lines contained therein. Cell line authentication services are offered by <a href=\"http://www.lgcstandards-atcc.org/Services/Testing%20Services.aspx\" target=\"_blank\">ATCC</a>, <a href=\"https://www.scienceexchange.com/services/cell-line-authentication\" target=\"_blank\">Science Exchange</a>, and others."
         },
         "competing-interests": {
+            "anchor": "competing-interests",
             "heading": "Competing Interests",
             "p1": "<a href=\"http://www.icmje.org/recommendations/browse/roles-and-responsibilities/author-responsibilities--conflicts-of-interest.html\" target=\"_blank\">ICMJE states that</a> the “potential for conflict of interest and bias [competing interests] exists when professional judgment concerning a primary interest (such as patients' welfare or the validity of research) may be influenced by a secondary interest (such as financial gain)”. Authors, reviewers, and editors are all required to declare any competing interests that might be perceived to interfere with the objectivity of the presentation or handling of the work. Any relevant patents, patent applications, and products in development that relate to a submission must be disclosed in full, including patent numbers and titles. For further information on competing interests, see the <a href=\"http://www.icmje.org/recommendations/browse/roles-and-responsibilities/author-responsibilities--conflicts-of-interest.html\" target=\"_blank\">recommendations of the ICMJE</a> and the guidance provided by <a href=\"http://journals.plos.org/plosmedicine/s/competing-interests\" target=\"_blank\">PLOS</a>. Specifically, ICMJE requires disclosure of interactions with any entity that could be considered broadly relevant to the work, and that any such interactions over the 36 months prior to submission of the work, should be disclosed. Competing interests disclosures should be made by the submitting author on behalf of all authors, via the manuscript submission system."
         },
 
         "compliance": {
+            "anchor": "compliance",
             "heading": "Compliance with Funder Open-Access Policies",
             "p1": "eLife complies with all major funding agency requirements for open access to the published results of their research grants. eLife articles are:",
             "bullet1": "Made openly available immediately at the point of publication;",
@@ -355,12 +362,14 @@
         },
 
         "copywrite": {
+            "anchor": "copywrite",
             "heading": "Copyrighted Material",
             "p1": "Copyrighted material (in full or in part) should not be included in a submission to eLife, unless you have explicit permission from the copyright holder that it can be reproduced under the terms of a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>",
             "p2": "Occasionally we have published figures or parts of figures which cannot be re-published under a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>. In those instances we ensure the correct attribution is provided within the human readable text (HTML and PDF versions of the article) and the underlying XML, for machine readability."
         },
 
         "open-data": {
+            "anchor": "open-data",
             "heading": "Availability of Data, Software, and Research Materials",
             "p1": "Data, methods used in the analysis, and materials used to conduct the research must be clearly and precisely documented, and be maximally available to any researcher for purposes of reproducing the results or replicating the procedure.",
             "p2": "Regardless of whether authors use original data or are reusing data available from public repositories, they must provide program code, scripts for statistical packages, and other documentation sufficient to allow an informed researcher to precisely reproduce all published results.",
@@ -395,16 +404,19 @@
             }
         },
         "dual-use": {
+            "anchor": "dual-use",
             "heading": "Dual Use",
             "p1": "Regarding the oversight of dual use life-sciences research, we follow the recommendations formulated by the <a href=\"https://osp.od.nih.gov/biotechnology/dual-use-research-of-concern/\" target=\"_blank\">National Science Advisory Board for Biosecurity</a> (NSABB). If there are any concerns about dual use life-sciences research during submission or review, please bring them to the attention of the journal’s editors."
         },
         "integrity": {
+            "anchor": "integrity",
             "heading": "Editorial Independence and Integrity",
             "p1": "eLife follows the guidance of the <a href=\"http://www.wame.org/policy-statements#Relationship between Editors and Owners\" target=\"_blank\">World Association of Medical Editors</a> and the <a href=\"https://www.councilscienceeditors.org/\" target=\"_blank\">Council of Science Editors</a> regarding editorial independence. The editors of <em>eLife,</em> under the leadership of the <a href=\"http://elifesciences.org/about#leadership\" target=\"_blank\">Editor-in-Chief</a>, have sole responsibility, authority, and accountability for the editorial content of the journal. Submissions are judged on their own merits, regardless of funding, author affiliations, or author relationships with eLife.",
             "p2": "The funders and sponsors of eLife have no role in the selection, evaluation, or editing of the content. The content published in eLife does not represent the opinions of the Howard Hughes Medical Institute, the Max Planck Society, the Wellcome Trust or the Knut and Alice Wallenberg Foundation.",
             "p3": "Information provided during the submission and review process is strictly confidential."
         },
         "image-acquisition": {
+            "anchor": "image-acquisition",
             "heading": "Image Acquisition and Presentation",
             "p1": "Image files must not be manipulated or adjusted in any way that could lead to misinterpretation of the information present in the original image. See <a href=\"http://jcb.rupress.org/content/166/1/11.full\" target=\"_blank\">'What's in a picture? The temptation of image manipulation'</a> (Rossner and Yamada 2004, Journal of Cell Biology, 166:11) and also <a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4114110/\" target=\"_blank\" >'Avoiding Twisted Pixels: Ethical Guidelines for the Appropriate Use and Manipulation of Scientific Digital Images'</a> (Cromey 2010, Sci Eng Ethics, 16-639-667) for valuable guidance on acceptable practice and examples of inappropriate manipulation. Please take note of the following guidance in particular:",
             "p2": "Please note that authors should provide information within their submission about the tools and techniques used when acquiring and preparing images. For example, submissions including microscopy images or autoradiograms should include information about the exposure times, the acquisition parameters, and whether the image received any post-acquisition treatment (for example stating if the format or scales were modified).",
@@ -416,10 +428,12 @@
             "bullet4": "Combining images that should otherwise be presented separately may misrepresent the original data. If different images do need to be combined, then this should be clearly indicated in the image (for example, including dividing lines in gels) and described in the Figure legend."
         },
         "licensing": {
+            "anchor": "licensing",
             "heading": "Licensing",
             "p1": "Because articles published by eLife are licensed under a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" >Creative Commons Attribution license</a>, others are free to copy, distribute, and reuse them (in part or in full), without needing to seek permission, as long as the author and original source are properly cited."
         },
         "media-policy": {
+            "anchor": "media-policy",
             "heading": "Media Policy",
             "p1": "eLife’s media policy is designed to encourage high-quality, informed and widespread discussion of new research – before and after publication.",
             "prior-work": {
@@ -438,6 +452,7 @@
             }
         },
         "name-change": {
+            "anchor": "name-change",
             "heading": "Name-change policy",
             "p1": "eLife understands that people change their names for many reasons, including – but not limited to – marital status, religion and gender identity. If you are an author, editor or reviewer looking to change your name in an eLife article, we will first check that you are requesting the change on your own behalf. Our editorial staff are keen to work with all researchers to enable them to verify their identity on their own terms (see “<a href=\"#author-identification\" >Author identification</a>” above). We do not require legal or official proof of a name change.",
             "p2": "Once confirmed, we will then update the existing versions of the article to reflect the name change. A change of name will not require a new version or formal correction; the DOI will remain the same.",
@@ -446,16 +461,19 @@
             "p5": "Requests to update the name of another individual will only be considered with their explicit consent. If you wish to make use of this policy or have any questions, <a target=\"_blank\" href=\"mailto:editorial@elifesciences.org?subject=Name change request\">please contact</a> our journal staff. All name change requests will be kept confidential, as per our <a href=\"https://elifesciences.org/privacy\" target=\"_blank\" >privacy notice</a>."
         },
         "nomenclature": {
+            "anchor": "nomenclature",
             "heading": "Nomenclature",
             "p1": "Correct and established nomenclature should be used throughout the article, such as for gene names, species names and SI units. The appropriate nomenclature databases for correct gene names and symbols should be consulted. Helpful reference points for approved nomenclature include <a href=\"http://flybase.org/\" target=\"_blank\" >Genetic nomenclature for <em>Drosophila melanogaster</em></a>; <a href=\"http://www.wormbase.org/about/userguide/nomenclature\" target=\"_blank\" >Genetic Nomenclature for <em>Caenorhabditis elegans</em></a>; <a href=\"http://www.maizegdb.org/maize_nomenclature.php\" target=\"_blank\" >A Standard For Maize Genetics Nomenclature</a>; <a href=\"http://www.arabidopsis.org/portals/nomenclature/guidelines.jsp\" target=\"_blank\" >Arabidopsis Nomenclature</a>; <a href=\"http://www.genenames.org/about/guidelines\" target=\"_blank\" >Guidelines for Human Gene Nomenclature</a>; <a href=\"http://www.informatics.jax.org/mgihome/nomen/gene.shtml\" target=\"_blank\" >Rules for Nomenclature of Genes, Genetic Markers, Alleles, and Mutations in Mouse and Rat</a>; the <a href=\"http://www.xenbase.org/gene/static/geneNomenclature.jsp\" target=\"_blank\" >Xenopus Gene Nomenclature Guidelines</a>; and the <a href=\"https://wiki.zfin.org/display/general/ZFIN+Zebrafish+Nomenclature+Guidelines\" target=\"_blank\" >Zebrafish Nomenclature Guidelines</a>.",
             "p2": "Note that in the specific case of a study that reports a new taxon name, authors are required to follow the guidelines developed by PLOS for <a href=\"http://journals.plos.org/plosone/s/submission-guidelines\" target=\"_blank\" >zoological and botanical names</a>."
         },
         "replication": {
+            "anchor": "replication",
             "heading": "Preregistration, Registered Reports, and Replication Studies",
             "p1": "Preregistration of studies involves registering the study design, variables, and treatment conditions prior to conducting the research. For clinical trials, eLife follows the <a href=\"http://www.icmje.org/about-icmje/faqs/clinical-trials-registration/\" target=\"_blank\" >recommendations of the ICMJE</a> that all trials must be prospectively registered to be considered for publication, and the clinical trial registration number will be requested during submission. For other submissions, authors are encouraged to consider whether preregistration would be appropriate, noting if they have done so within their cover letter and submission. If the preregistration included a precise analysis plan, that should be included as well.",
             "p2": "We will consider Replication Studies that provide new insights into previously published research. We will apply the same editorial standards that we apply to other types of submission. We have also published Replication Studies (and Registered Reports) as part of the <a href=\"https://elifesciences.org/collections/reproducibility-project-cancer-biology\" target=\"_blank\" >Reproducibility Project: Cancer Biology</a>."
         },
         "reporting-standards": {
+            "anchor": "reporting-standards",
             "heading": "Reporting Standards",
             "p1": "To facilitate the interpretation and replication of experiments, authors are required to complete eLife's <a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf\" target=\"_blank\" >Transparent Reporting Form</a> before peer review. Authors are also required to adhere to well-established reporting standards, such as for microarray experiments, clinical trials, and so on; see below for the reporting standards and guidelines that we require authors to adhere to for specific study types.",
             "p2": "Authors are required to cite the specific guidelines that they have followed in the reporting of their work, and we encourage authors to upload any relevant reporting checklists or documents as a Reporting Standards Document to indicate the use of appropriate reporting guidelines for health-related research (see <a href=\"http://www.equator-network.org/\" target=\"_blank\" >EQUATOR Network</a>), life science research (see the <a href=\"https://biosharing.org/\" target=\"_blank\" >BioSharing Information Resource</a>), or animal research (see <a href=\"https://arriveguidelines.org\" target=\"_blank\" >ARRIVE guidelines</a> and <a href=\"https://www.nature.com/articles/d41586-020-01751-5?proof=trueIn\" target=\"_blank\" >STRANGE framework</a>).",
