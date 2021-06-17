@@ -8,7 +8,9 @@ const ArticleTypes = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('article-types.heading')}</h1>
+            <h1 id={t('article-types.anchor')} className="typography__heading typography__heading--h1">
+                {t('article-types.heading')}
+            </h1>
             <div className="blue-box">
                 <Paragraph type="reading">
                     <Interweave content={t('article-types.closing-bluebox')} />
@@ -19,7 +21,9 @@ const ArticleTypes = (): JSX.Element => {
                 <Interweave content={t('article-types.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('article-types.insights.heading')}</h2>
+            <h2 id={t('article-types.insights.anchor')} className="typography__heading typography__heading--h2">
+                {t('article-types.insights.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('article-types.insights.p1')} />
             </Paragraph>
@@ -30,19 +34,26 @@ const ArticleTypes = (): JSX.Element => {
                 <Interweave content={t('article-types.insights.p3')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2
+                id={t('article-types.research-articles.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
                 {t('article-types.research-articles.heading')}
             </h2>
             <Paragraph type="reading">
                 <Interweave content={t('article-types.research-articles.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('article-types.short-reports.heading')}</h2>
+            <h2 id={t('article-types.short-reports.anchor')} className="typography__heading typography__heading--h2">
+                {t('article-types.short-reports.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('article-types.short-reports.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('article-types.tools.heading')}</h2>
+            <h2 id={t('article-types.tools.anchor')} className="typography__heading typography__heading--h2">
+                {t('article-types.tools.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('article-types.tools.p1')} />
             </Paragraph>
@@ -50,7 +61,9 @@ const ArticleTypes = (): JSX.Element => {
                 <Interweave content={t('article-types.tools.p2')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('article-types.advances.heading')}</h2>
+            <h2 id={t('article-types.advances.anchor')} className="typography__heading typography__heading--h2">
+                {t('article-types.advances.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('article-types.advances.p1')} />
             </Paragraph>
@@ -59,7 +72,7 @@ const ArticleTypes = (): JSX.Element => {
             </Paragraph>
             <Paragraph type="reading">{t('article-types.advances.p3')}</Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2 id={t('article-types.review-articles.anchor')} className="typography__heading typography__heading--h2">
                 {t('article-types.review-articles.heading')}
             </h2>
             <Paragraph type="reading">
@@ -99,7 +112,10 @@ const ArticleTypes = (): JSX.Element => {
                 <Interweave content={t('article-types.review-articles.p3')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2
+                id={t('article-types.sci-correspondence.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
                 {t('article-types.sci-correspondence.heading')}
             </h2>
             <Paragraph type="reading">
@@ -132,7 +148,9 @@ const ArticleTypes = (): JSX.Element => {
                 </Paragraph>
             </div>
 
-            <h2 className="typography__heading typography__heading--h2">{t('article-types.special-issues.heading')}</h2>
+            <h2 id={t('article-types.special-issues.anchor')} className="typography__heading typography__heading--h2">
+                {t('article-types.special-issues.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('article-types.special-issues.p1')} />
             </Paragraph>

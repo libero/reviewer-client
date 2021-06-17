@@ -49,36 +49,43 @@
     },
 
     "article-types": {
+        "anchor": "article-types",
         "heading": "Article Types",
         "closing-bluebox": "Enrich your submission with live code and interactive figures with an Executable Research Article. <a href=\"https://elifesciences.org/labs/dc5acbde/welcome-to-a-new-era-of-reproducible-publishing\">Find out more</a>.",
         "p1": "eLife publishes the following article types.",
         "insights": {
+            "anchor": "insights",
             "heading": "Editorials, Insights, and Feature articles",
             "p1": "<a href=\"https://elifesciences.org/articles/editorial\" target=\"_blank\">Editorials</a> in eLife are written by eLife editors or staff.",
             "p2": "<a href=\"https://elifesciences.org/articles/insight\" target=\"_blank\">Insights</a> are commissioned by eLife staff and are always related to a Research Article published in the journal. Insights are written by experts in the field of the Research Article: they explain why the results reported are significant and outline some of the challenges that remain in the field.",
             "p3": "<a href=\"https://elifesciences.org/articles/feature\" target=\"_blank\" >Feature Articles</a> should offer fresh insights into topics of broad interest to readers working in the life and biomedical sciences. There are no strict limits on length, but authors are advised to stay below 2000 words, two display items (figures, tables etc) and 20 references if possible, and to write in an active/engaging style. Feature Articles are peer reviewed at the discretion of the eLife editors and staff. Feature Articles can also report original findings in <a href=\"https://elifesciences.org/collections/8d233d47/meta-research-a-collection-of-articles\" target=\"_blank\">meta-research</a>: such submissions should be formatted like Research Articles or Short Reports (see below), and should include the prefix Meta-Research in the title."
         },
         "research-articles": {
+            "anchor": "research-articles",
             "heading": "Research Articles",
             "p1": "There is no maximum length for Research Articles, but we suggest that authors try not to exceed 5,000 words in the main text, excluding the Materials and methods, References, and Figure legends. There are no limits on the number of display items. The main text of the article should usually be structured and ordered as follows: Introduction; Results; Discussion; Materials and Methods (or Methods); Acknowledgements; References; Figures with the corresponding legend below each one; and Tables. A Methods or Model section can appear after the Introduction where it makes sense to do so"
         },
         "short-reports": {
+            "anchor": "short-reports",
             "heading": "Short Reports",
             "p1": "We welcome the submission of Short Reports, for example reporting the results of a single set of experiments, provided the conclusion is clear and justified, and the findings are novel and judged to be of high importance. Short Reports should not usually exceed 1,500 words in the main text, excluding the Materials and Methods, References, and Figure legends, with no more than three or four main display items (figures, tables, videos). Authors have more flexibility in the format, for example with a combined Results and Discussion section."
         },
         "tools": {
+            "anchor": "tools",
             "heading": "Tools and Resources",
             "p1": "This category highlights tools or resources that have the potential to substantially accelerate discovery in any area of biology or medicine, and that are therefore likely to find rapid and widespread adoption. Submissions will be evaluated for their likely impact, not for their technical contribution alone, and should be of interest to a broad audience. The article should fully describe the tool or resource so that prospective users have all the information needed to deploy it within their own work. Therefore, major datasets must be publicly deposited (unless there are strong ethical or legal reasons to restrict access); relevant code must conform to the <a href=\"https://opensource.org/docs/osd\" target=\"_blank\">Open Source Definition</a> and be deposited in an appropriate public repository; and methodological advances need to be comprehensively described, along with details of the reagents and equipment, and their sources. Authors should follow the format for Research Articles or Short Reports, as appropriate.",
             "p2": "Tools and Resources articles do not have to report major new biological insights or mechanisms, but it must be clear that they will enable such advances to take place, for example, through exploratory or proof-of-concept experiments. Specifically, submissions will be assessed in terms of their potential to facilitate experiments that address problems that to date have been challenging or even intractable. Some Tools and Resources papers will be the first report of an entirely novel technology. In other cases, authors will report substantial improvements and extensions of existing technologies. In those cases, the new method must be thoroughly  compared and benchmarked against existing methods used in the field. Minor improvements on existing methodologies are unlikely to fare well in review."
         },
 
         "advances": {
+            "anchor": "advances",
             "heading": "Research Advances",
             "p1": "This format is for substantial developments that directly build upon a Research Article, Short Report or Tools and Resources article published previously by eLife. A Research Advance can be submitted by some or all of the authors of the original paper and/or researchers who were not involved in the original paper. A Research Advance might use a new technique or a different experimental design to generate results that build upon the conclusions of the original research by, for example, providing new mechanistic insights or extend the pathway under investigation. Research Advances can also report significant improvements to experimental tools and techniques.",
             "p2": "Research Advances can be of any length, and any number of main display items, but there may only need to be minimal introductory material. Authors have flexibility in the format, for example with a combined Results and Discussion section, and there is no need for a detailed Materials and Methods section when the methods are the same as the original paper. Authors should upload a completed version of the Transparent Reporting Form (<a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf\" target=\"_blank\">PDF</a>; <a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx\" target=\"_blank\">Word</a>) to accompany their submission.",
             "p3": "When published, Research Advances are linked to the original article, and they are indexed and citable in their own right. When the authors of the original article are not involved in the Research Advance, the corresponding author of the original study will be asked for comments during the review process. Where appropriate, the Research Advance will be considered by the same editors and reviewers who were involved in the assessment of the original paper."
         },
         "review-articles": {
+            "anchor": "review-articles",
             "heading": "Review Articles",
             "p1": "Review Articles are commissioned by eLife Senior Editors. We are primarily interested in Review Articles that synthesize the existing knowledge in a field in an original and/or thought-provoking way, and/or that present substantial ideas for moving this field forward. In general, we are not interested in Review Articles that mostly summarize what has happened in a field in the past few years, in Review Articles about fields that have been reviewed many times before, or Review Articles that would only be interesting for a specialized audience.",
             "p2": "If you would like to propose a Review Article, please email your outline to editorial [at] elifesciences [dot] org. In your email please also suggest a relevant <a href=\"https://elifesciences.org/about/people\" target=\"_blank\">Senior Editor</a> to assess the outline. The outline should include:",
@@ -91,6 +98,7 @@
         },
 
         "sci-correspondence": {
+            "anchor": "scientific-correspondence",
             "heading": "Scientific Correspondence",
             "p1": "This format should be used for a manuscript that challenges the central findings of a paper published in eLife, and for the formal response to such a manuscript. Both the challenge and the response can contain original data.",
             "p2": "In the first instance, the author must contact the corresponding author of the original eLife paper in an effort to resolve matters (and include evidence of these efforts in their initial submission). We also encourage authors to post their Scientific Correspondence to a preprint server such as bioRxiv, which has a section for contradictory results. Scientific Correspondence must also be submitted within a year of the original eLife paper being published. As of February 2021 we no longer consider Scientific Correspondence that challenges papers published in other journals.",
@@ -104,6 +112,7 @@
         },
 
         "special-issues": {
+            "anchor": "special-issues",
             "heading": "Special Issues",
             "p1": "eLife has Special Issues on timely and important topics, which are overseen by one or more eLife editors and external Guest Editors when appropriate.",
             "p2": "At the point of submission, authors should indicate in their Cover Letter that they want their work to be considered as part of a Special Issue, citing the relevant title as indicated below. Submissions are assessed using the same criteria as other eLife submissions. Authors can submit using the Research Articles, Short Reports, Tools and Resources and Research Advances article types. The eLife editors may wish to commission Review Articles as part of a Special Issue.",
