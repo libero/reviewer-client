@@ -8,9 +8,11 @@ const EditorialProcess = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('editorial.editorial.heading')}</h1>
+            <h1 id={t('editorial.editorial.anchor')} className="typography__heading typography__heading--h1">
+                {t('editorial.editorial.heading')}
+            </h1>
             <Interweave content={t('editorial.editorial.content')} />
-            <h2 className="typography__heading typography__heading--h2">
+            <h2 id={t('editorial.pre-print.anchor')} className="typography__heading typography__heading--h2">
                 {t('editorial.editorial.pre-print.heading')}
             </h2>
             <Interweave content={t('editorial.editorial.pre-print.content')} />
@@ -18,7 +20,9 @@ const EditorialProcess = (): JSX.Element => {
                 <Interweave content={t('editorial.editorial.p6')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('editorial.initial-sub.heading')}</h2>
+            <h2 id={t('editorial.initial-sub.anchor')} className="typography__heading typography__heading--h2">
+                {t('editorial.initial-sub.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('editorial.initial-sub.p1')} />
             </Paragraph>
@@ -40,12 +44,16 @@ const EditorialProcess = (): JSX.Element => {
                 </li>
             </ul>
 
-            <h2 className="typography__heading typography__heading--h2">{t('editorial.full-sub.heading')}</h2>
+            <h2 id={t('editorial.full-sub.anchor')} className="typography__heading typography__heading--h2">
+                {t('editorial.full-sub.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('editorial.full-sub.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('editorial.revised-sub.heading')}</h2>
+            <h2 id={t('editorial.revised-sub.anchor')} className="typography__heading typography__heading--h2">
+                {t('editorial.revised-sub.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('editorial.revised-sub.p1')} />
             </Paragraph>
