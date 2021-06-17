@@ -12,12 +12,13 @@ const EditorialProcess = (): JSX.Element => {
                 {t('editorial.editorial.heading')}
             </h1>
             <Interweave content={t('editorial.editorial.content')} />
+
             <h2 id={t('editorial.pre-print.anchor')} className="typography__heading typography__heading--h2">
                 {t('editorial.editorial.pre-print.heading')}
             </h2>
             <Interweave content={t('editorial.editorial.pre-print.content')} />
             <Paragraph type="reading">
-                <Interweave content={t('editorial.editorial.p6')} />
+                <Interweave content={t('editorial.editorial.p1')} />
             </Paragraph>
 
             <h2 id={t('editorial.initial-sub.anchor')} className="typography__heading typography__heading--h2">
