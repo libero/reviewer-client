@@ -276,7 +276,7 @@
             "code": {
                 "anchor": "code",
                 "heading": "Source Code:",
-                "p1": "Relevant software or source code should be deposited in an open software archive. Where appropriate, authors can upload source code files to the submission system (for example, MATLAB, R, Python, C, C++, Java). Any code provided should be properly documented, in line with <a href=\"https://journals.plos.org/ploscompbiol/s/materials-and-software-sharing#loc-sharing-software\" target=\"_blank\">these instructions</a> (courtesy of PLOS). Please also refer to our <a href=\"/author-guide/journal-policies#open-data\">Software sharing policy</a>."
+                "p1": "Relevant software or source code should be deposited in an open software archive. Where appropriate, authors can upload source code files to the submission system (for example, MATLAB, R, Python, C, C++, Java). Any code provided should be properly documented, in line with <a href=\"https://journals.plos.org/ploscompbiol/s/materials-and-software-sharing#loc-sharing-software\" target=\"_blank\">these instructions</a> (courtesy of PLOS). Please also refer to our <a href=\"/author-guide/journal-policies#software\">Software sharing policy</a>."
             },
             "standards": {
                 "anchor": "standards",
