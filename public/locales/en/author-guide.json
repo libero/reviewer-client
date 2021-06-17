@@ -94,7 +94,7 @@
             "bullet3": "a 300–600 word summary of your ideas for moving this field forward",
             "bullet4": "a paragraph (~60 words) to explain why you are a suitable author for such an article",
             "bullet5": "a list of recently published Review Articles in this field; for each of these articles please include a sentence explaining how your article would be different.",
-            "p3": "For commissioned articles, eLife will not proceed with a possible commission if any author on the proposed article has a competing interest (as defined in our <a href=\"/author-guide/journal-policies\" target=\"_blank\">Journal Policies</a>), or has had a competing interest in the previous three years."
+            "p3": "For commissioned articles, eLife will not proceed with a possible commission if any author on the proposed article has a competing interest (as defined in our <a href=\"/author-guide/journal-policies#competing-interests\" target=\"_blank\">Journal Policies</a>), or has had a competing interest in the previous three years."
         },
 
         "sci-correspondence": {
