@@ -702,6 +702,7 @@
     },
 
     "fees": {
+        "anchor": "fees",
         "heading": "Publication Fees",
         "p1": "Revised: 10 March 2021",
         "p2": "<strong>Please note: eLife's publication fee will increase to $3,000* for authors submitting on or after April 5, 2021.<\/strong>",
@@ -710,22 +711,27 @@
         "p5": "The publication fee (also referred to as an \"open-access\" or \"article-processing\" fee) is a charge collected by many open-access publishers to help recover the costs of publication while providing free and open access for readers to use and re-use results. eLife provides open access to all content.",
         "p6": "Questions related to our publication fees are addressed below. Further information in relation to the 2021 increase is available on <a href=\"https://elifesciences.org/inside-elife/77a49d1b/elife-latest-changes-to-our-publication-fee\" target=\"_blank\" >our blog<\/a>.",
         "question1": {
+            "anchor": "question1",
             "heading": "1. I can’t afford the fee. What can I do?",
             "p1": "It is very important that a publication fee does not inhibit the submission of excellent work from labs with insufficient access to funds. We will grant <a href=\"#waiver\" >a waiver</a> for labs under financial pressure – whether because of local economy, career stage, or a lack of funding."
         },
         "question2": {
+            "anchor": "question2",
             "heading": "2. Will my ability to pay influence consideration of my paper?",
             "p1": "No. Editors have no knowledge of waiver requests or financial arrangements. Ability to pay will have no bearing on editorial decisions at all."
         },
         "question3": {
+            "anchor": "question3",
             "heading": "3. What article types are affected?",
             "p1": "The publication fee applies to Research Articles, Short Reports, Tools and Resources, Research Communications, and Research Advances."
         },
         "question4": {
+            "anchor": "question4",
             "heading": "4. I’m funded by the same funders as eLife. Will I have to pay?",
             "p1": "Yes. The fee will apply to all research papers including those with investigators associated with the Howard Hughes Medical Institute, the Max Planck Society, the Wellcome Trust and the Knut and Alice Wallenberg Foundation. The generous support of these organisations will help us cover the balance of our publishing costs (our fixed costs) and enable us to invest in technology and innovation."
         },
         "question5": {
+            "anchor": "question5",
             "heading": "5. Why should I choose to publish with eLife?",
             "p1": "The most popular reasons authors choose eLife include:",
             "bullet1": "Consultative peer review, which limits revisions",
@@ -737,6 +743,7 @@
             "p4": "Any questions not addressed here may be sent to eLife via fees [at] elifesciences [dot] org"
         },
         "waiver": {
+            "anchor": "waiver",
             "heading": "eLife publication fee waiver policy",
             "p1": "eLife recognises that there are various circumstances in which the authors of an eLife article might not have access to sufficient funds to cover the publication fee. To ensure that eLife’s publication fee is not a barrier to publication we therefore offer a simple way for authors to apply for a fee waiver.",
             "p2": "Authors are expected to have explored all reasonable sources for paying the publication fee and may apply for a fee waiver once their submission has been invited for full peer review. Waiver requests are considered on a case-by-case basis and should be accompanied by a brief justification from the author.",
@@ -744,11 +751,13 @@
             "p4": "All waiver requests will be treated confidentially, but we will highlight trends in the information as it accumulates to help inform funder and institutional policy with respect to the support of open-access publishing.",
             "p5": "<strong>eLife academic editors and reviewers have no access to information about waiver requests, which can therefore never influence editorial decisions.</strong>",
             "refund": {
+                "anchor": "refund",
                 "heading": "Refund Policy",
                 "p1": "We place great importance on giving authors a prompt, fair and responsive service. However, if a manuscript is accepted for publication and our service falls far short of an acceptable standard, we may waive the publication fee. In addition, we may decide to refund a publication fee that has already been paid in exceptional circumstances, for example where an author withdraws a manuscript after acceptance."
             }
         }
     },
+
     "metrics": {
         "heading": "Journal Metrics",
         "p1": "We provide the charts below to offer greater transparency about our submission volumes and decision times.",
