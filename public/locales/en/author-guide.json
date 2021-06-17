@@ -465,6 +465,7 @@
     },
 
     "journal-policies": {
+        "anchor": "journal-policies",
         "heading": "Journal Policies",
         "p1": "eLife is a member of the <a href=\"http://publicationethics.org/\" target=\"_blank\">Committee on Publication Ethics</a> (COPE), supports their principles, and follows their <a href=\"https://publicationethics.org/resources/flowcharts\" target=\"_blank\">flowcharts</a> for dealing with potential breaches of publication ethics. eLife also follows, as far as possible, the recommendations outlined in the <a href=\"http://www.icmje.org/recommendations/\" target=\"_blank\">Uniform Requirements for Manuscripts Submitted to Biomedical Journals</a>, guidelines established by the ICMJE.",
         "p2": "Authors are expected to comply with best practice in research and publishing ethics, and with our associated guidelines and policies, for example with regard to authorship, competing interests, and data availability and reporting standards.",
@@ -536,6 +537,7 @@
             "bullet3": "provide software and other documentation that will precisely reproduce all published results;",
             "bullet4": "provide access to all data and materials for which the constraints do not apply.",
             "data": {
+                "anchor": "data",
                 "heading": "Data Availability",
                 "p1": "To maintain high standards of research reproducibility, and to promote the reuse of new findings, eLife requires all datasets associated with an article to be made freely and widely available (unless there are strong reasons to restrict access, for example in the case of human subjects data), in the most useful formats, and according to the relevant reporting standards.",
                 "p2": "Wherever possible, authors should make major datasets available using domain-specific public archives (for example, <a href=\"http://www.ncbi.nlm.nih.gov/genbank/\" target=\"_blank\">GenBank</a>, <a href=\"http://www.rcsb.org/pdb/home/home.do\" target=\"_blank\">Protein Data Bank</a>, and <a href=\"http://clinicaltrials.gov/\" target=\"_blank\">ClinicalTrials.gov</a>), or generic databases (for example, <a href=\"http://datadryad.org/\" target=\"_blank\">Dryad</a>, <a href=\"http://dataverse.org/\" target=\"_blank\">Dataverse</a> or <a href=\"http://osf.io/\" target=\"_blank\">the Open Science Framework</a>) where a domain specific archive does not exist. A comprehensive catalogue of recommended databases is available at the <a href=\"https://fairsharing.org/recommendation/eLifeRecommendedRepositoriesandStandards\" target=\"_blank\">FAIRsharing Resource</a>.",
@@ -549,10 +551,12 @@
                 "bullet4": "provide research materials and description of procedures necessary to conduct an independent replication of the research."
             },
             "software": {
+                "anchor": "software",
                 "heading": "Software",
                 "content": "<p class=\"paragraph typography__serif typography__serif--primary\">Authors are required to follow the guidelines developed by <a href=\"http://journals.plos.org/ploscompbiol/s/materials-and-software-sharing\" target=\"_blank\">PLOS</a> if new software or a new algorithm is central to the submission; for example, authors must confirm that software conforms to the <a href=\"http://opensource.org/docs/osd\" target=\"_blank\">Open Source Definition</a> and is deposited in an appropriate public repository. To ensure that software can be reproduced without restrictions and that authors are properly acknowledged for their work, authors should license their code using an <a href=\"https://opensource.org/licenses\" target=\"_blank\">open source license</a>.</p><p class=\"paragraph typography__serif typography__serif--primary\">Authors are encouraged to use version control services such as GitHub, GitLab, and SourceForge. eLife archives code accompanying eLife publications which has been deposited on GitHub or another version control service at <a href=\"https://www.softwareheritage.org/\" target=\"_blank\">Software Heritage</a>. Binary files (\"non-text files\", such as images, zip files, or program data) should be kept to a minimum and, if possible, they should not exceed 50MB. Please try to avoid files larger than 100MB as they will require special handling.</p><p class=\"paragraph typography__serif typography__serif--primary\">Software should be included as a reference and cited in the article.</p>"
             },
             "research": {
+                "anchor": "research",
                 "heading": "Research Materials and RRIDs",
                 "p1": "In accordance with the principles established in <a href=\"http://www.plantphysiol.org/content/132/1/19\" target=\"_blank\">‘Sharing Publication-Related Data and Materials’</a> (doi:10.1104/pp.900068), a condition of publication is that authors must make the materials and resources described in their article promptly available upon reasonable request from academic researchers.",
                 "p2": "All biological reagents must be made available to qualified investigators upon reasonable request. We strongly encourage authors to deposit copies of their plasmids as DNA or bacterial stocks with repositories such as <a href=\"http://www.addgene.org/\" target=\"_blank\">Addgene</a> or <a href=\"http://plasmid.med.harvard.edu/PLASMID/\" target=\"_blank\">PlasmID</a>. Other established repositories for biological materials include the <a href=\"http://www.atcc.org/\" target=\"_blank\">American Type Culture Collection</a>, <a href=\"https://abrc.osu.edu/\" target=\"_blank\">Arabidopsis Biological Resource Center</a>, <a href=\"http://flystocks.bio.indiana.edu/\" target=\"_blank\">Bloomington Drosophila Stock Center</a>, <a href=\"https://cgc.umn.edu/\" target=\"_blank\">Caenorhabditis Genetics Center</a>, the <a href=\"http://www.eucomm.org/\" target=\"_blank\">European Conditional Mouse Mutagenesis Program</a>, the <a href=\"https://www.infrafrontier.eu/\" target=\"_blank\">European Mouse Mutant Archive</a>, the <a href=\"http://www.komp.org/\" target=\"_blank\">Knockout Mouse Project</a>, the <a href=\"http://www.jax.org/\" target=\"_blank\">Jackson Laboratory</a>, the <a href=\"http://www.mmrrc.org/\" target=\"_blank\">Mutant Mouse Regional Resource Centers</a>, and <a href=\"http://www.brc.riken.go.jp/inf/en/DB/\" target=\"_blank\" >RIKEN Bioresource Centre</a>.",
@@ -594,15 +598,18 @@
             "heading": "Media Policy",
             "p1": "eLife’s media policy is designed to encourage high-quality, informed and widespread discussion of new research – before and after publication.",
             "prior-work": {
+                "anchor": "prior-work",
                 "heading": "Presenting and discussing work prior to publication",
                 "p1": "Prior to publication, authors are encouraged to present their findings to their peers, including at meetings and conferences; to deposit a copy of their manuscript with a preprint server (or other open repository or website); and to blog about their findings. None of these activities will affect consideration of a manuscript for publication in eLife. Where there is media interest in a paper that has been accepted by eLife, and likely media coverage in advance of publication, we encourage the authors to take advantage of the eLife option to publish their manuscript within a few days of acceptance (our “publish on accept” service), so that readers of any (potential) early coverage will be able to access the full paper as soon as possible.",
                 "p2": "Authors are welcome to speak to the media about their work at any time prior to publication and may share advance copies of their manuscript with journalists as they prefer. They may also wish to ask their institutional press officers to help with advance promotion, once the manuscript is accepted. However, eLife encourages press officers to pitch studies widely at the time of publication only, rather than in advance, so that as many journalists as possible receive the story, and access to the full, peer-reviewed paper, at the same time."
             },
             "embargo": {
+                "anchor": "embargo",
                 "heading": "Our policy not to embargo eLife papers",
                 "p1": "Because authors are completely free to release their content ahead of publication and to talk with the media at any stage, we do not release content under embargo, except under exceptional circumstances. This means that journalists can write and publish articles about a study in advance of publication without breaking an embargo. However, we strongly recommend that their stories are published at the time of or after publication, so that readers have access to the full, peer-reviewed paper."
             },
             "accessible": {
+                "anchor": "accessible",
                 "heading": "Making content widely accessible",
                 "p1": "Many eLife papers are published with a plain-language summary (called an eLife digest) to explain the background and central findings of the work to a broad readership. We also publish the most substantive parts of the decision letter that is sent to authors after peer review (and which is based on the referees' reports on the paper), along with the authors' response to this letter, to provide greater context for the work. Where eLife considers papers to be of potential interest to a broad audience, these will also be promoted widely to the media and to interested readers either on the day of publication or post publication.",
                 "p2": "More information for institutional press officers and journalists is available at <a href=\"https://elifesciences.org/for-the-press\" target=\"_blank\" >https://elifesciences.org/for-the-press</a>."
@@ -644,6 +651,7 @@
             "p6": "<strong>Research Conducted by eLife.</strong> As a way of improving our services, we periodically undertake research and surveys relating to eLife's submission and review process. Where appropriate we will share our findings so that others can benefit. Participation does not affect the decision on manuscripts under consideration, or our policies relating to the confidentiality of the review process. If you would like to opt out of eLife's research and/or surveys, please <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\" >contact the journal office</a>."
         }
     },
+
     "journal-faqs": {
         "heading": "Journal FAQs",
         "scope": {
