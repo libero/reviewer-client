@@ -233,10 +233,12 @@
     },
 
     "full-submission": {
+        "anchor": "full-submission",
         "heading": "Full Submissions",
         "p1": "If an author is invited to submit a Full Submission, they will receive a link to the article submission system, which will take them to a page incorporating existing information about their Initial Submission. The corresponding author is then required to build on the existing information to support the peer-review process. Once the full submission is complete, all co-authors will be contacted to verify their authorship, contribution, and competing interest statements. Please note that Research Advances bypass the Initial Submission step.",
         "p2": "If your Full Submission has been peer reviewed and you have been asked to make revisions, please review our guidelines for <a href=\"/author-guide/author-guide/revised\">Revised Submissions</a>.",
         "files": {
+            "anchor": "files",
             "heading": "Submission Files",
             "p1": "At this point, authors can either upload another single PDF of their manuscript (with the text and figures combined), or they can upload the source files separately if they prefer.",
             "p2": "Either way, authors are strongly encouraged to think creatively about the presentation of their work, to take advantage of the flexibility and file formats eLife offers, and to keep the article as concise as possible. To assist the review process, please organise and format the manuscript so that it is easily readable. Please include page and line numbers, double spacing, and a legible font size for the main text and figure legends.",
@@ -286,6 +288,7 @@
             }
         },
         "meta": {
+            "anchor": "metadata",
             "heading": "Submission Metadata",
             "p1": "The Full Submission requires additional information about the article and all authors. This allows eLife to propagate published content to a wide range of resources and indexes, so that accepted articles are widely discoverable and can be used by the broadest possible audience. During the full submission process, the corresponding author will also be asked to link their existing ORCID record to their eLife profile, or create an ORCID record, if they do not already have one. An ORCID iD is a unique and persistent digital identifier that distinguishes you from other researchers and reliably connects you with your research contributions and affiliations, to help ensure that your work is properly attributed and credited (<a href=\"https://elifesciences.org/inside-elife/e2bf15ca/publishers-to-require-orcid-identifiers-for-authors\" target=\"_blank\">learn more</a>).",
             "author": {
