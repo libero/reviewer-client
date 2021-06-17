@@ -395,27 +395,33 @@
     },
 
     "post": {
+        "anchor": "post",
         "heading": "Post Decision",
         "public-reviews": {
+            "anchor": "public-reviews",
             "heading": "Posting Public Reviews After Peer Review",
             "p1": "Unless we have agreed with you otherwise, the public reviews will be posted to a preprint server using a <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\" target=\"_blank\">Public Domain Dedication</a>, which allows them to be freely reused by anyone for any purpose. Authors can currently opt out of posting a preprint. Where a preprint exists, authors control when the public reviews are posted."
         },
         "acceptance": {
+            "anchor": "acceptance",
             "heading": "Acceptance",
             "p1": "eLife is an open-access journal: articles are distributed under the terms of the <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution License</a> (except where otherwise noted), which permits unrestricted use and redistribution provided that the original author and source are credited, in line with the <a href=\"http://www.budapestopenaccessinitiative.org/read\" target=\"_blank\">BOAI definition of open access</a>.",
             "protocols": {
+                "anchor": "protocols",
                 "heading": "Detailed Protocols",
                 "p1": "If your paper involves a method that would also benefit from the publication of a step-by-step protocol (e.g., <a href=\"http://bio-protocol.org/e1067\" target=\"_blank\">http://bio-protocol.org/e1067</a>), we would encourage you to consider <a href=\"http://www.bio-protocol.org/\" target=\"_blank\">Bio-protocol</a>, which curates high-quality life science protocols, or <a href=\"https://www.protocols.io/\" target=\"_blank\">protocols.io</a>, which is an open-access repository of science methods.",
                 "bullet1": "For a submission to Bio-protocol (these are subject to peer review), please refer to their <a href=\"http://www.bio-protocol.org/Protocol_Preparation_Guidelines.aspx\" target=\"_blank\">guidelines</a> and then submit the protocol using <a href=\"http://www.bio-protocol.org/login.aspx?in=2%20\" target=\"_blank\">this link</a>.",
                 "bullet2": "For a submission to <a href=\"https://www.protocols.io/\" target=\"_blank\">protocols.io</a>, after describing the step-by-step protocol, select “Get DOI” to obtain a persistent digital object identifier, which should be included within the Materials and Methods section of your manuscript, using this format: https://dx.doi.org/10.17504/protocols.io.[xxxxxx]. Initially the protocol is only visible to those with the link, but you can make the protocol public by selecting “Publish” from the protocols.io site."
             },
             "executable": {
+                "anchor": "executable",
                 "heading": "Enriching your submission with Executable Research Articles",
                 "content": "<p class=\"typography__serif typography__serif--primary\">Authors whose papers are accepted in eLife are encouraged to enrich their papers with an Executable Research Article version. </p><p class=\"typography__serif typography__serif--primary\">Executable Research Articles (ERAs) allow authors of any of the article types herein to enhance their submissions with live code, data and interactive figures that can be viewed, edited and executed directly in the browser. ERAs not only enhance the transparency, trust and reproducibility of the published article, but increase the level of reader engagement as they are able to explore the code behind the article figures and learn from it. You can interact with some examples of ERAs <a href=\"https://elifesciences.org/articles/61523/executable\">here</a>, <a href=\"https://elifesciences.org/articles/60287/executable\">here</a>, or <a href=\"https://elifesciences.org/articles/57067/executable\">here</a>.</p><p class=\"typography__serif typography__serif--primary\">The ERA authoring workflow has been designed to be compatible with the tools and practices already common in most researchers’ tool boxes: ERAs currently support R and Python, can easily be authored in Jupyter Notebooks or R Studio, and are backwards compatible for sharing and distribution at the authoring stage with standard tools such as Google Docs and Word.</p><p class=\"typography__serif typography__serif--primary\">More information about ERA can be found <a href=\"https://elifesciences.org/labs/dc5acbde/welcome-to-a-new-era-of-reproducible-publishing\">here</a>. To express an interest and to find out more about the process of creating an ERA, please complete <a href=\"https://crm.elifesciences.org/crm/ERA-InterestForm\">this form</a>.</p>"
             }
         },
 
         "publication-manuscript": {
+            "anchor": "publication",
             "heading": "Publication of the Accepted Manuscript",
             "p1": "To ensure that new research is made available as rapidly as possible, eLife offers an <a href=\"http://elifesciences.org/elife-news/picking-up-speed\" target=\"_blank\">optional service to authors</a> whereby a PDF of their accepted manuscript can be published within a few days of acceptance.",
             "p2": "Accepted manuscripts are citable, have a DOI, are listed in PubMed, and are available to download from eLife’s upcoming, browse, and archive pages.",
@@ -424,12 +430,14 @@
         },
 
         "final-version": {
+            "anchor": "final-version",
             "heading": "Publication of the Final Version",
             "p1": "The final version of the accepted article will be published, along with the decision letter incorporating the review comments and the authors’ response to those comments (as in <a href=\"http://elifesciences.org/content/1/e00109/#decision-letter\" target=\"_blank\">eLife 2012;1:e00109</a>). If authors have any questions or concerns about the content of the decision letter after peer review, or their response to this letter, it is important to notify the journal office as soon as possible.",
             "p2": "The corresponding author will have an opportunity to review a proof of the article in HTML format prior to publication. Authors will have 48 hours to answer queries generated during the production process. Changes should be limited to essential corrections."
         },
 
         "corrections": {
+            "anchor": "corrections",
             "heading": "Corrections to Published Articles",
             "p1": "Publishers have a responsibility to correct errors that have been discovered in published articles. Requests for corrections or retractions should be sent to the journal’s editorial staff for consideration and further advice.",
             "p2": "Corrections are limited to those that will affect the scientific integrity of the content. Requests to retroactively change names in published articles can, however, be made in accordance with our name-change policy without requiring a formal correction.",
@@ -438,13 +446,16 @@
         },
 
         "rejections": {
+            "anchor": "rejections",
             "heading": "Rejection",
             "peers": {
+                "anchor": "",
                 "heading": "Using eLife peer reviews when submitting to another journal",
                 "p1": "Because we are committed to improving the overall efficiency of the publishing process, we are willing to share referee reports and identities (where they agree) with another journal of the corresponding author’s choice. As an example of what others have done, we have facilitated the transfer of review material to a range of journals, including <a href=\"http://www.biologists.com/biology-open/transfer-to-biology-open-from-elife/\" target=\"_blank\">Biology Open</a> (which offers the option to upload the manuscript files on the corresponding author’s behalf), <a href=\"https://bmcbiol.biomedcentral.com/\" target=\"_blank\">BMC Biology</a>, <a href=\"http://embor.embopress.org/\" target=\"_blank\">EMBO Reports</a>, <a href=\"http://www.eneuro.org/\" target=\"_blank\">eNeuro</a>, <a href=\"https://www.life-science-alliance.org/\" target=\"_blank\">Life Science Alliance</a>, the <a href=\"https://www.plos.org/which-journal-is-right-for-me\" target=\"_blank\">PLOS journals</a>, the <a href=\"http://jcb.rupress.org/\" target=\"_blank\">Journal of Cell Biology</a>, and the <a href=\"http://jgp.rupress.org/\" target=\"_blank\">Journal of General Physiology</a>. We encourage authors of neuroscience submissions to consider re-using reviews with other members of the Neuroscience Peer Review Consortium.",
                 "p2": "In the event that an article is rejected after peer review, we ask permission from the reviewers to pass on their full review and identity to another journal, so that authors can request that the peer-review information is passed along confidentially. We will inform the reviewers if such a transfer is made. For reviews to be passed to another journal within the Neuroscience Peer Review Consortium please email us (editorial [at] elifesciences.org) and ask that the reviews be forwarded, stating the name and manuscript ID at the next journal. For other journals, authors should indicate that their work was previously reviewed by eLife in their cover letter and request that the editors contact eLife (editorial [at] elifesciences.org) to request the referee reports and identities. When authors have made revisions, they should upload a response to the previous reviews alongside their manuscript."
             },
             "appeals": {
+                "anchor": "appeals",
                 "heading": "Appeals",
                 "p1": "If you wish to appeal against a decision, you should contact the editorial office. Please provide a formal response stating the grounds for appeal and include “Appeal” in the subject line. Please also provide a point-by-point response if the decision was after peer review.",
                 "p2": "Appeals will be considered when there has been a significant factual error, when a competing interest may have compromised the objectivity of the review process, or when new data or analyses that address the central reason for rejection have already been acquired. Please clearly state your reasons for appeal when you contact us.",
@@ -452,6 +463,7 @@
             }
         }
     },
+
     "journal-policies": {
         "heading": "Journal Policies",
         "p1": "eLife is a member of the <a href=\"http://publicationethics.org/\" target=\"_blank\">Committee on Publication Ethics</a> (COPE), supports their principles, and follows their <a href=\"https://publicationethics.org/resources/flowcharts\" target=\"_blank\">flowcharts</a> for dealing with potential breaches of publication ethics. eLife also follows, as far as possible, the recommendations outlined in the <a href=\"http://www.icmje.org/recommendations/\" target=\"_blank\">Uniform Requirements for Manuscripts Submitted to Biomedical Journals</a>, guidelines established by the ICMJE.",
