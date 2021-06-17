@@ -759,32 +759,34 @@
     },
 
     "metrics": {
+        "anchor": "metrics",
         "heading": "Journal Metrics",
         "p1": "We provide the charts below to offer greater transparency about our submission volumes and decision times.",
         "no-of-submissions": {
+            "anchor": "no-of-submissions",
             "heading": "1. Number of eLife submissions",
             "p1": "This shows the number of initial submissions received each quarter."
         },
         "no-of-pubs": {
+            "anchor": "no-of-pubs",
             "heading": "2. Number of research publications",
             "p1": "This shows the number of research publications each quarter."
         },
-
         "time-before-peer": {
+            "anchor": "time-before-peer",
             "heading": "3. Decision times before peer review",
             "p1": "This shows the number of days between receiving the initial submission and making a decision on the initial submission (25th, 50th, and 75th percentiles)."
         },
-
         "time-after-peer": {
+            "anchor": "time-after-peer",
             "heading": "4. Decision times after peer review",
             "p1": "This shows the number of days between receiving the full submission and making a decision on the full submission, after peer review (25th, 50th, and 75th percentiles)."
         },
-
         "subs-to-publication": {
+            "anchor": "subs-to-publication",
             "heading": "5. Submission to publication",
             "p1": "This shows the number of days between receiving the initial submission and publication (25th, 50th, and 75th percentiles)."
         },
-
         "chart-title": "Number of eLife submissions"
     }
 }
