@@ -204,14 +204,14 @@
             "p1": "Figures and tables should be included within the PDF, with the figures and tables embedded within the text. Each figure and table should fit on one page, together with a title and concise legend (where appropriate), on the same page as the display item. Figures and tables should be numbered in the order in which they are cited in the text.",
             "p2": "We encourage the use of rich media files: for example, videos, audio clips, animations, slideshows, and interactive diagrams. Authors can upload such files during the Initial Submission process if they will assist in the initial assessment but otherwise they can be uploaded if a Full Submission is requested. Anything crucial for the initial evaluation should be uploaded at the Initial Submission stage as a supporting file.",
             "p3": "At this stage, supplementary figures and tables can be included if they exist, and if desired, within the single PDF.",
-            "p4": "When preparing figures, we recommend that authors follow the principles of <a href=\"http://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\" >Colour Universal Design</a> (Masataka Okabe and Kei Ito, J*FLY), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
+            "p4": "When preparing figures, we recommend that authors follow the principles of <a href=\"https://jfly.iam.u-tokyo.ac.jp/color/\" target=\"_blank\" >Colour Universal Design</a> (Masataka Okabe and Kei Ito, J*FLY), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
             "p5": "Coloured text and cells are discouraged in tables because they are less accessible and machine readable. Where possible, bold and/or italics can be used to highlight cells or data. If some colour is essential in a table, please only use the colour schemes outlined in this <a href=\"https://cdn.elifesciences.org/author-guide/tables-colour.pdf?_ga=2.122882312.2069272108.1540132848-2034406101.1537543708\" target=\"_blank\" >this guide</a>."
         },
         "meta": {
             "anchor": "metadata",
             "heading": "Limited Metadata",
             "p1": "You will be asked to enter the following information when completing the submission form:",
-            "p2": "If you receive an encouraging response to your Initial Submission, please review the guidelines relating to <a  href=\"/author-guide/full\">Full Submissions</a>.",
+            "p2": "If you receive an encouraging response to your Initial Submission, please review the guidelines relating to <a href=\"/author-guide/full\">Full Submissions</a>.",
             "data": {
                 "one": "<strong>Corresponding Author: </strong>At this stage, we only need the name, institution, and email address of the corresponding author.",
                 "two": {
@@ -222,7 +222,7 @@
 
                 },
                 "three": "<strong>Manuscript Title</strong>",
-                "four": "<strong>Article Type: </strong> Information on the articles we publish can be found <a  href=\"/author-guide/types\">here</a>.",
+                "four": "<strong>Article Type: </strong> Information on the articles we publish can be found <a href=\"/author-guide/types\">here</a>.",
                 "five": {
                     "p1": "<strong>Subject Area(s): </strong> A list of major subject areas is provided from which authors should select one or two."
                 },
