@@ -127,9 +127,11 @@
     },
 
     "initial-submission": {
+        "anchor": "initial-submission",
         "heading": "Initial Submissions",
         "p1": "We refer authors to <a href=\"https://elifesciences.org/articles/48175?_ga=2.87814296.1615571170.1583746607-392198663.1550050583\" target=\"_blank\" >“Ten common statistical mistakes to watch out for when writing or reviewing a manuscript”</a> as they prepare their submission. Please provide detailed information within the submission to facilitate the interpretation and replication of experiments, following the guidance in eLife's <a href=\"https://elife-cdn.s3.amazonaws.com/xpub/guides/transparent_reporting.pdf\" target=\"_blank\" >Transparent Reporting Form</a> (a completed version of this form will be requested if the work is invited for in-depth review).",
         "manuscript": {
+            "anchor": "single-manuscript",
             "heading": "Single Manuscript PDF",
             "p1": "Authors should start by uploading their manuscript text and figures as a single PDF (ideally smaller than 15MB), organised with easy readability in mind. Please include page and line numbers, and a legible font size for the main text and figure legends. We strongly encourage authors to embed figures and tables at appropriate places within the main text.",
             "p2": "To facilitate the evaluation of the submission, we highly recommend including all authors for each reference in the reference list, although discretion can be used to truncate very long lists of authors.",
@@ -197,6 +199,7 @@
             }
         },
         "figures": {
+            "anchor": "figures",
             "heading": "Figures, Tables, and Rich Media Files",
             "p1": "Figures and tables should be included within the PDF, with the figures and tables embedded within the text. Each figure and table should fit on one page, together with a title and concise legend (where appropriate), on the same page as the display item. Figures and tables should be numbered in the order in which they are cited in the text.",
             "p2": "We encourage the use of rich media files: for example, videos, audio clips, animations, slideshows, and interactive diagrams. Authors can upload such files during the Initial Submission process if they will assist in the initial assessment but otherwise they can be uploaded if a Full Submission is requested. Anything crucial for the initial evaluation should be uploaded at the Initial Submission stage as a supporting file.",
@@ -205,6 +208,7 @@
             "p5": "Coloured text and cells are discouraged in tables because they are less accessible and machine readable. Where possible, bold and/or italics can be used to highlight cells or data. If some colour is essential in a table, please only use the colour schemes outlined in this <a href=\"https://cdn.elifesciences.org/author-guide/tables-colour.pdf?_ga=2.122882312.2069272108.1540132848-2034406101.1537543708\" target=\"_blank\" >this guide</a>."
         },
         "meta": {
+            "anchor": "metadata",
             "heading": "Limited Metadata",
             "p1": "You will be asked to enter the following information when completing the submission form:",
             "p2": "If you receive an encouraging response to your Initial Submission, please review the guidelines relating to <a  href=\"/author-guide/full\">Full Submissions</a>.",

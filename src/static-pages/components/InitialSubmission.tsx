@@ -9,13 +9,17 @@ const InitialSubmission = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('initial-submission.heading')}</h1>
+            <h1 id={t('initial-submission.anchor')} className="typography__heading typography__heading--h1">
+                {t('initial-submission.heading')}
+            </h1>
 
             <Paragraph type="reading">
                 <Interweave content={t('initial-submission.p1')} />
             </Paragraph>
 
-            <h2 id="single-manuscript">{t('initial-submission.manuscript.heading')}</h2>
+            <h2 id={t('initial-submission.manuscript.anchor')} className="typography__heading typography__heading--h2">
+                {t('initial-submission.manuscript.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('initial-submission.manuscript.p1')} />
@@ -115,7 +119,9 @@ const InitialSubmission = (): JSX.Element => {
                 <Interweave content={t('initial-submission.manuscript.p4')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('initial-submission.figures.heading')}</h2>
+            <h2 id={t('initial-submission.figures.anchor')} className="typography__heading typography__heading--h2">
+                {t('initial-submission.figures.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('initial-submission.figures.p1')} />
@@ -137,7 +143,9 @@ const InitialSubmission = (): JSX.Element => {
                 <Interweave content={t('initial-submission.figures.p5')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('initial-submission.meta.heading')}</h2>
+            <h2 id={t('initial-submission.meta.anchor')} className="typography__heading typography__heading--h2">
+                {t('initial-submission.meta.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('initial-submission.meta.p1')} />
