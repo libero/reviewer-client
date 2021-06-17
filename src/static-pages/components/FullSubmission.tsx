@@ -2,9 +2,12 @@ import React from 'react';
 import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
+import useScrollToAnchor from '../../ui/hooks/useScrollToAnchor';
 
 const FullSubmission = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
+
+    useScrollToAnchor();
 
     return (
         <div className="static-page__content">
