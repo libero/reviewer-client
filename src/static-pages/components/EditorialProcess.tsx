@@ -2,9 +2,12 @@ import React from 'react';
 import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
+import useScrollToAnchor from '../../ui/hooks/useScrollToAnchor';
 
 const EditorialProcess = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
+
+    useScrollToAnchor();
 
     return (
         <div className="static-page__content">
@@ -13,7 +16,7 @@ const EditorialProcess = (): JSX.Element => {
             </h1>
             <Interweave content={t('editorial.editorial.content')} />
 
-            <h2 id={t('editorial.pre-print.anchor')} className="typography__heading typography__heading--h2">
+            <h2 id={t('editorial.editorial.pre-print.anchor')} className="typography__heading typography__heading--h2">
                 {t('editorial.editorial.pre-print.heading')}
             </h2>
             <Interweave content={t('editorial.editorial.pre-print.content')} />
