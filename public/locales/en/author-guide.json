@@ -245,11 +245,13 @@
             "p2": "Either way, authors are strongly encouraged to think creatively about the presentation of their work, to take advantage of the flexibility and file formats eLife offers, and to keep the article as concise as possible. To assist the review process, please organise and format the manuscript so that it is easily readable. Please include page and line numbers, double spacing, and a legible font size for the main text and figure legends.",
             "p3": "Regarding the use of supplementary data, our vision is presented in <a href=\"https://elifesciences.org/inside-elife/6f32c567/supplementary-data\" target=\"_blank\">this blog post</a>. In short, we strive to make supplementary data, if applicable, easily searchable, discoverable, and citable, and made available in the most useful format for reuse.",
             "reporting": {
+                "anchor": "reporting",
                 "heading": "eLife Transparent Reporting Form:",
                 "p1": "To facilitate the interpretation and replication of experiments, authors should, where appropriate, provide detailed information in areas relating to sample-size estimation, replicates, and statistical reporting. At the Full Submission step, authors should be ready to upload a completed version of this form (<a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.pdf\" target=\"_blank\">PDF</a>; <a href=\"https://cdn.elifesciences.org/xpub/guides/transparent_reporting.docx\" target=\"_blank\">Word</a>), which should describe the places within the submission where this information has been included.",
                 "p2": "Please note that we publish the completed Transparent Reporting Form for submissions accepted for publication. This will be available to download as a supplementary file in the format provided by the authors."
             },
             "figures": {
+                "anchor": "figures",
                 "heading": "Figures and Figure Supplements:",
                 "p1": "eLife does not have space or printing constraints, so any number of colour figures can be included within Research Articles, although we urge authors to present their results as concisely as possible. Short Reports should not contain more than three or four display items. We also recognise that some figures are more central to the narrative of the paper than others, and so we therefore support ‘child’ figures (examples of which can be found in <a href=\"https://elifesciences.org/content/1/e00181#F3\">eLife 2012;1:e00181</a>). These \"Figure Supplements\" must be linked to one of the primary figures: they can, for example, provide additional examples of analyses or data shown in a primary figure.",
                 "p2": "There is no limit on the number of Figure Supplements for any one primary figure. Each figure supplement should be clearly labelled, Figure 1–figure supplement 1, Figure 1–figure supplement 2, Figure 2–figure supplement 1 and so on, and have a short title (and optional legend). Figure Supplements should be referred to in the legend of the associated primary figure, and should also be listed at the end of the article text file.",
@@ -259,31 +261,37 @@
                 "p6": "Figures can be uploaded individually in the following formats: TIFF, GIF, JPG, EPS, AI, and PDF. If you would like to supply PDF images please ensure that they are saved in a Vector image format."
             },
             "data": {
+                "anchor": "data",
                 "heading": "Source Data Files, for Figures and Tables:",
                 "p1": "eLife encourages authors to provide Source Data files, for example, for figures such as histograms or tables showing summary data (as shown in <a href=\"https://elifesciences.org/content/1/e00109/#DC1\" target=\"_blank\">eLife 2012;1:e00109</a>). Each Source data file should relate directly to a single figure or table, whereas major datasets generated in the course of the work should be deposited externally, as explained below. Each source data file should be clearly labelled, 'Figure 1–Source Data 1', 'Table 1–Source Data 1' and so on, and have a short title (and optional legend). Source data files should be referred to in the relevant figure legend or table footnote, and they should also be listed at the end of the article text file.",
                 "p2": "In addition, authors should provide information about data processing and analysis, including any statistical tests applied, with exact sample number, p values of tests, criteria for data inclusion or exclusion, and details of replicates. In some cases, it might be unwieldy to have this information in the legend of a figure, in which case the information should be provided along with the source data file.",
                 "p3": "For submissions with Figures containing gels or blots, we require that both (1) the original files of the full raw unedited gels or blots and (2) figures with the uncropped gels or blots with the relevant bands clearly labelled be provided. These files should be provided as source data files in a zipped folder, although they can be uploaded to a suitable repository if the files are too large to be uploaded as source data. Note: there is a 100MB upper size limit for source data files, so you may need to upload these as several smaller files."
             },
             "file": {
+                "anchor": "file",
                 "heading": "Rich Media Files:",
                 "p1": "Rich media files encompass forms of presentation that go beyond static presentation: for example, videos, audio clips, animations, slideshows, and interactive diagrams. Rich media files should be supplied as AVI, WMV, MOV, MP4, or H264. Where an audio track is present, we recommend a sampling rate of 44100, 22050, or 11025 Hz to avoid encoding and quality issues. Each file should be accompanied by a concise title/legend at the end of the article file. If the article is published, videos are embedded within the main body of the article (they are not presented as supplementary files) with the same status as primary figures (as shown in <a href=\"https://elifesciences.org/content/1/e00007#media-1\" target=\"_blank\">eLife 2012;1:e00007</a>).",
                 "p2": "eLife supports JMOL, a Java viewer for three-dimensional chemical structures, and we encourage authors to provide <a href=\"https://wiki.jmol.org/index.php/File_formats/Coordinates\" target=\"_blank\">compatible files</a>."
             },
             "code": {
+                "anchor": "code",
                 "heading": "Source Code:",
                 "p1": "Relevant software or source code should be deposited in an open software archive. Where appropriate, authors can upload source code files to the submission system (for example, MATLAB, R, Python, C, C++, Java). Any code provided should be properly documented, in line with <a href=\"https://journals.plos.org/ploscompbiol/s/materials-and-software-sharing#loc-sharing-software\" target=\"_blank\">these instructions</a> (courtesy of PLOS). Please also refer to our <a href=\"/author-guide/journal-policies#open-data\">Software sharing policy</a>."
             },
             "standards": {
+                "anchor": "standards",
                 "heading": "Reporting Standards Documents:",
                 "p1": "eLife encourages authors to upload any relevant reporting standards documents."
             },
 
             "supplementary-files": {
+                "anchor": "supplementary-files",
                 "heading": "Supplementary Files:",
                 "p1": "Authors are discouraged from uploading large PDFs of data and/or text as supplementary files for the reasons explained above. However, information not central to the narrative, that falls outside of the other formats specified above, such as long lists of strains or plasmids, are welcome as supplementary files, provided they are uploaded in the most useful format. Supplementary files, if provided, should be labelled as Supplementary File 1, Supplementary File 2 and so on, and have a title (and optional legend). Supplementary files should be listed at the end of the article file."
             },
 
             "related": {
+                "anchor": "related",
                 "heading": "Related Manuscripts:",
                 "p1": "Any related manuscripts should be described in the cover letter and uploaded using the Related Manuscript file type."
             }
@@ -293,6 +301,7 @@
             "heading": "Submission Metadata",
             "p1": "The Full Submission requires additional information about the article and all authors. This allows eLife to propagate published content to a wide range of resources and indexes, so that accepted articles are widely discoverable and can be used by the broadest possible audience. During the full submission process, the corresponding author will also be asked to link their existing ORCID record to their eLife profile, or create an ORCID record, if they do not already have one. An ORCID iD is a unique and persistent digital identifier that distinguishes you from other researchers and reliably connects you with your research contributions and affiliations, to help ensure that your work is properly attributed and credited (<a href=\"https://elifesciences.org/inside-elife/e2bf15ca/publishers-to-require-orcid-identifiers-for-authors\" target=\"_blank\">learn more</a>).",
             "author": {
+                "anchor": "author",
                 "heading": "Complete Author Information:",
                 "p1": "Co-author details should be entered: in addition to the full author name and affiliation (institution, city, and country), a competing interests statement is required for each author. All financial and non-financial competing interests that could reasonably be perceived to be relevant to the work should be declared.",
                 "p2": "Information about individual author contributions should be provided using the Contributor Roles Taxonomy: Conceptualization; Methodology; Software; Validation; Formal analysis; Investigation; Resources; Data curation; Writing – original draft preparation; Writing – review &amp; editing; Visualization; Supervision; Project administration; Funding acquisition (<a href=\"https://elifesciences.org/inside-elife/f39cfcf5/enabling-the-contributor-roles-taxonomy-for-author-contributions?_ga=2.172472675.1994204094.1499675694-1424042520.1478607646\" target=\"_blank\">read more</a>).",
@@ -301,6 +310,7 @@
             },
 
             "datasets": {
+                "anchor": "datasets",
                 "heading": "Datasets:",
                 "p1": "All datasets used in a publication should be cited in the text and listed in the reference section and/or data availability statement. References for data sets and program code should include a persistent identifier, for example a Digital Object Identifier (DOI) or accession number.",
                 "p2": "In the submission form, authors should provide the following information about newly generated and previously published datasets in the following format: Author(s), Year, Dataset Title, Dataset ID and/or URL, Database, License and Accessibility Information. This information will be used to create a list of the relevant major datasets in the published article (such as <a href=\"http://elifesciences.org/content/1/e00070/article-data\" target=\"_blank\" >eLife 2012;1:e00070</a>), to indicate their location along with unique identifiers, and licensing information – or any other factors – affecting access to or reuse of the datasets. For newly generated datasets, we encourage the use of the Creative Commons <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\" target=\"_blank\">CC0 public domain dedication</a>.",
@@ -308,11 +318,13 @@
             },
 
             "ethics": {
+                "anchor": "ethics",
                 "heading": "Ethics Statement for Human Subjects Research or Animal Experimentation:",
                 "p1": "Authors are required to provide an ethics statement during submission to indicate the institutional review board or ethics committee that has approved the study and/or the guidelines that have been followed."
             },
 
             "editors": {
+                "anchor": "editors",
                 "heading": "Editor and Reviewer Suggestions/Exclusions:",
                 "p1": "Authors are required to provide suggestions for at least four potential reviewers of the work during the Full Submission. To support diversity, please consider suggesting reviewers at an early stage of their career, women, experts from groups that are underrepresented in science, or from places other than the United States and Europe. Please do not list colleagues who are close associates, collaborators, or family members. Authors may also provide the names of reviewers who they would prefer to exclude from the assessment of the article. We will make every effort to follow author requests for excluded individuals unless the editors judge that such exclusion would interfere with the rigorous assessment of the work."
             }
