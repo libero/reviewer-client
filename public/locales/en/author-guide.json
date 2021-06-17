@@ -655,7 +655,7 @@
     "journal-faqs": {
         "anchor": "journal-faqs",
         "heading": "Journal FAQs",
-        "scope": {
+        "scoop": {
             "anchor": "scoop-protection",
             "heading": "FAQ on preprints and scoop protection",
             "question1": "1. If I have uploaded my manuscript to a preprint server, can I also submit it to eLife?",
