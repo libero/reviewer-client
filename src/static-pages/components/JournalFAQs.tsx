@@ -8,9 +8,13 @@ const JournalFAQs = (): JSX.Element => {
 
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('journal-faqs.heading')}</h1>
+            <h1 id={t('journal-faqs.anchor')} className="typography__heading typography__heading--h1">
+                {t('journal-faqs.heading')}
+            </h1>
 
-            <h2 id="scoop_protection">{t('journal-faqs.scope.heading')}</h2>
+            <h2 id={t('journal-faqs.scope.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-faqs.scope.heading')}
+            </h2>
 
             <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question1')}</h3>
             <Paragraph type="reading">
@@ -52,7 +56,9 @@ const JournalFAQs = (): JSX.Element => {
                 <Interweave content={t('journal-faqs.scope.answer8')} />
             </Paragraph>
 
-            <h2 id="scoop_protection">{t('journal-faqs.general.heading')}</h2>
+            <h2 id={t('journal-faqs.general.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-faqs.general.heading')}
+            </h2>
 
             <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.general.question1')}</h3>
             <Paragraph type="reading">

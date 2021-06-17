@@ -653,8 +653,10 @@
     },
 
     "journal-faqs": {
+        "anchor": "journal-faqs",
         "heading": "Journal FAQs",
         "scope": {
+            "anchor": "scoop-protection",
             "heading": "FAQ on preprints and scoop protection",
             "question1": "1. If I have uploaded my manuscript to a preprint server, can I also submit it to eLife?",
             "answer1": "Yes, we ask authors submitting to eLife to also upload their manuscript to a preprint server such as bioRxiv or medRxiv, and this can be done before submission, at the time of submission, or later. It is also possible to submit a manuscript to eLife and then post it directly to bioRxiv or or medRxiv as a preprint, and vice versa. Read more in <a href=\"https://elifesciences.org/articles/64910\" target=\"_blank\">Implementing a \"publish, then review\" model of publishing</a>.",
@@ -674,6 +676,7 @@
             "answer8": "Yes, providing it has been posted on a recognised public preprint server and has a persistent ID. Preprints should be cited as follows: <br>- Author(s). Year. Title. Name of preprint server. doi or url <br>For example:<br> - Narasimhan VM et al. 2016. A direct multi-generational estimate of the human mutation rate from autozygous segments seen in thousands of parentally related individuals. bioRxiv. doi: https://doi.org/10.1101/059436 <br> - Chung J, Gulcehre C, Cho K, Bengio Y. 2014. Empirical evaluation of gated recurrent neural networks on sequence modeling. arXiv. http://arxiv.abs/1412.3555"
         },
         "general": {
+            "anchor": "general",
             "heading": "General FAQs",
             "question1": "1. Do you accept presubmission inquiries?",
             "answer1": "No, rather than advise on suitability based on an abstract, we ask that you prepare an <a href=\"/author-guide/initial\" target=\"_blank\">initial submission</a>, so that the complete paper can be considered in a timely manner by the appropriate editors. Please note that hurdles in terms of formatting requirements and metadata are low for initial submissions, to make them as painless as possible. In the case of Review Articles, please see our <a href=\"/author-guide/types\" target=\"_blank\">Author Guide</a>.",
@@ -697,6 +700,7 @@
             "answer10": "It is fine to include figures that have been published under a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> license; please cite the original author and source, and include a link to the corresponding licence. In other cases, please seek permission from the copyright holder to reuse the figure under the terms of a <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution</a> licence."
         }
     },
+
     "fees": {
         "heading": "Publication Fees",
         "p1": "Revised: 10 March 2021",
