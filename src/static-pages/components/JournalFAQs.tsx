@@ -2,57 +2,66 @@ import React from 'react';
 import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
+import useScrollToAnchor from '../../ui/hooks/useScrollToAnchor';
 
 const JournalFAQs = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
+    useScrollToAnchor();
+
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('journal-faqs.heading')}</h1>
+            <h1 id={t('journal-faqs.anchor')} className="typography__heading typography__heading--h1">
+                {t('journal-faqs.heading')}
+            </h1>
 
-            <h2 id="scoop_protection">{t('journal-faqs.scope.heading')}</h2>
+            <h2 id={t('journal-faqs.scoop.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-faqs.scoop.heading')}
+            </h2>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question1')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question1')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer1')} />
+                <Interweave content={t('journal-faqs.scoop.answer1')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question2')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question2')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer2')} />
+                <Interweave content={t('journal-faqs.scoop.answer2')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question3')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question3')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer3')} />
+                <Interweave content={t('journal-faqs.scoop.answer3')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question4')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question4')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer4')} />
+                <Interweave content={t('journal-faqs.scoop.answer4')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question5')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question5')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer5')} />
+                <Interweave content={t('journal-faqs.scoop.answer5')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question6')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question6')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer6')} />
+                <Interweave content={t('journal-faqs.scoop.answer6')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question7')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question7')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer7')} />
+                <Interweave content={t('journal-faqs.scoop.answer7')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scope.question8')}</h3>
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question8')}</h3>
             <Paragraph type="reading">
-                <Interweave content={t('journal-faqs.scope.answer8')} />
+                <Interweave content={t('journal-faqs.scoop.answer8')} />
             </Paragraph>
 
-            <h2 id="scoop_protection">{t('journal-faqs.general.heading')}</h2>
+            <h2 id={t('journal-faqs.general.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-faqs.general.heading')}
+            </h2>
 
             <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.general.question1')}</h3>
             <Paragraph type="reading">

@@ -2,19 +2,26 @@ import React from 'react';
 import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
+import useScrollToAnchor from '../../ui/hooks/useScrollToAnchor';
 
 const FullSubmission = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
+    useScrollToAnchor();
+
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('full-submission.heading')}</h1>
+            <h1 id={t('full-submission.anchor')} className="typography__heading typography__heading--h1">
+                {t('full-submission.heading')}
+            </h1>
 
             <Paragraph type="reading">
                 <Interweave content={t('full-submission.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('full-submission.files.heading')}</h2>
+            <h2 id={t('full-submission.files.anchor')} className="typography__heading typography__heading--h2">
+                {t('full-submission.files.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('full-submission.files.p1')} />
@@ -28,7 +35,9 @@ const FullSubmission = (): JSX.Element => {
 
             <ol>
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.reporting.heading')}</span>
+                    <span id={t('full-submission.files.reporting.anchor')} className="bullet-heading">
+                        {t('full-submission.files.reporting.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.reporting.p1')} />
                     </Paragraph>
@@ -38,7 +47,9 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.figures.heading')}</span>
+                    <span id={t('full-submission.files.figures.anchor')} className="bullet-heading">
+                        {t('full-submission.files.figures.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.figures.p1')} />
                     </Paragraph>
@@ -60,7 +71,9 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.data.heading')}</span>
+                    <span id={t('full-submission.files.data.anchor')} className="bullet-heading">
+                        {t('full-submission.files.data.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.data.p1')} />
                     </Paragraph>
@@ -73,7 +86,9 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.file.heading')}</span>
+                    <span id={t('full-submission.files.file.anchor')} className="bullet-heading">
+                        {t('full-submission.files.file.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.file.p1')} />
                     </Paragraph>
@@ -83,42 +98,54 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.code.heading')}</span>
+                    <span id={t('full-submission.files.code.anchor')} className="bullet-heading">
+                        {t('full-submission.files.code.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.code.p1')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.standards.heading')}</span>
+                    <span id={t('full-submission.files.standards.anchor')} className="bullet-heading">
+                        {t('full-submission.files.standards.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.standards.p1')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.supplementary-files.heading')}</span>
+                    <span id={t('full-submission.files.supplementary-files.anchor')} className="bullet-heading">
+                        {t('full-submission.files.supplementary-files.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.supplementary-files.p1')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.files.related.heading')}</span>
+                    <span id={t('full-submission.files.related.anchor')} className="bullet-heading">
+                        {t('full-submission.files.related.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.files.related.p1')} />
                     </Paragraph>
                 </li>
             </ol>
 
-            <h2 className="typography__heading typography__heading--h2">{t('full-submission.meta.heading')}</h2>
+            <h2 id={t('full-submission.meta.anchor')} className="typography__heading typography__heading--h2">
+                {t('full-submission.meta.heading')}
+            </h2>
             <Paragraph type="reading">
                 <Interweave content={t('full-submission.meta.p1')} />
             </Paragraph>
 
             <ol>
                 <li>
-                    <span className="bullet-heading">{t('full-submission.meta.author.heading')}</span>
+                    <span id={t('full-submission.meta.author.anchor')} className="bullet-heading">
+                        {t('full-submission.meta.author.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.meta.author.p1')} />
                     </Paragraph>
@@ -134,7 +161,9 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.meta.datasets.heading')}</span>
+                    <span id={t('full-submission.meta.datasets.anchor')} className="bullet-heading">
+                        {t('full-submission.meta.datasets.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.meta.datasets.p1')} />
                     </Paragraph>
@@ -147,14 +176,18 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.meta.ethics.heading')}</span>
+                    <span id={t('full-submission.meta.ethics.anchor')} className="bullet-heading">
+                        {t('full-submission.meta.ethics.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.meta.ethics.p1')} />
                     </Paragraph>
                 </li>
 
                 <li>
-                    <span className="bullet-heading">{t('full-submission.meta.editors.heading')}</span>
+                    <span id={t('full-submission.meta.editors.anchor')} className="bullet-heading">
+                        {t('full-submission.meta.editors.heading')}
+                    </span>
                     <Paragraph type="reading">
                         <Interweave content={t('full-submission.meta.editors.p1')} />
                     </Paragraph>

@@ -2,13 +2,18 @@ import React from 'react';
 import Interweave from 'interweave';
 import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
+import useScrollToAnchor from '../../ui/hooks/useScrollToAnchor';
 
 const JournalPolicies = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
+    useScrollToAnchor();
+
     return (
         <div className="static-page__content">
-            <h1 className="typography__heading typography__heading--h1">{t('journal-policies.heading')}</h1>
+            <h1 id={t('journal-policies.anchor')} className="typography__heading typography__heading--h1">
+                {t('journal-policies.heading')}
+            </h1>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.p1')} />
@@ -20,13 +25,17 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.p3')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.misconduct.heading')}</h2>
+            <h2 id={t('journal-policies.misconduct.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.misconduct.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.misconduct.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.experiments.heading')}</h2>
+            <h2 id={t('journal-policies.experiments.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.experiments.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.experiments.p1')} />
@@ -41,7 +50,9 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.experiments.p4')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.authorship.heading')}</h2>
+            <h2 id={t('journal-policies.authorship.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.authorship.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.authorship.p1')} />
@@ -53,7 +64,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.authorship.p3')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2
+                id={t('journal-policies.author-identification.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
                 {t('journal-policies.author-identification.heading')}
             </h2>
 
@@ -67,13 +81,18 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.author-identification.p3')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.cell-lines.heading')}</h2>
+            <h2 id={t('journal-policies.cell-lines.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.cell-lines.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.cell-lines.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2
+                id={t('journal-policies.competing-interests.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
                 {t('journal-policies.competing-interests.heading')}
             </h2>
 
@@ -81,7 +100,9 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.competing-interests.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.compliance.heading')}</h2>
+            <h2 id={t('journal-policies.compliance.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.compliance.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.compliance.p1')} />
@@ -115,17 +136,21 @@ const JournalPolicies = (): JSX.Element => {
                 </li>
             </ul>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.copywrite.heading')}</h2>
+            <h2 id={t('journal-policies.copyright.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.copyright.heading')}
+            </h2>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.copywrite.p1')} />
+                <Interweave content={t('journal-policies.copyright.p1')} />
             </Paragraph>
 
             <Paragraph type="reading">
-                <Interweave content={t('journal-policies.copywrite.p2')} />
+                <Interweave content={t('journal-policies.copyright.p2')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.open-data.heading')}</h2>
+            <h2 id={t('journal-policies.open-data.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.open-data.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.open-data.p1')} />
@@ -162,7 +187,10 @@ const JournalPolicies = (): JSX.Element => {
                 </li>
             </ul>
 
-            <h3 className="typography__heading typography__heading--h3">
+            <h3
+                id={t('journal-policies.open-data.data.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
                 {t('journal-policies.open-data.data.heading')}
             </h3>
 
@@ -213,12 +241,18 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.open-data.data.p6')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">
+            <h3
+                id={t('journal-policies.open-data.software.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
                 {t('journal-policies.open-data.software.heading')}
             </h3>
             <Interweave content={t('journal-policies.open-data.software.content')} />
 
-            <h3 className="typography__heading typography__heading--h3">
+            <h3
+                id={t('journal-policies.open-data.research.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
                 {t('journal-policies.open-data.research.heading')}
             </h3>
 
@@ -238,13 +272,17 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.open-data.research.p4')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.dual-use.heading')}</h2>
+            <h2 id={t('journal-policies.dual-use.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.dual-use.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.dual-use.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.integrity.heading')}</h2>
+            <h2 id={t('journal-policies.integrity.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.integrity.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.integrity.p1')} />
@@ -258,7 +296,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.integrity.p3')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2
+                id={t('journal-policies.image-acquisition.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
                 {t('journal-policies.image-acquisition.heading')}
             </h2>
 
@@ -297,13 +338,15 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.image-acquisition.p4')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.licensing.heading')}</h2>
+            <h2 id={t('journal-policies.licensing.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.licensing.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.licensing.p1')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2 id={t('journal-policies.media-policy.anchor')} className="typography__heading typography__heading--h2">
                 {t('journal-policies.media-policy.heading')}
             </h2>
 
@@ -311,7 +354,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.media-policy.p1')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">
+            <h3
+                id={t('journal-policies.media-policy.prior-work.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
                 {t('journal-policies.media-policy.prior-work.heading')}
             </h3>
 
@@ -323,7 +369,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.media-policy.prior-work.p2')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">
+            <h3
+                id={t('journal-policies.media-policy.embargo.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
                 {t('journal-policies.media-policy.embargo.heading')}
             </h3>
 
@@ -331,7 +380,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.media-policy.embargo.p1')} />
             </Paragraph>
 
-            <h3 className="typography__heading typography__heading--h3">
+            <h3
+                id={t('journal-policies.media-policy.accessible.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
                 {t('journal-policies.media-policy.accessible.heading')}
             </h3>
 
@@ -343,7 +395,9 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.media-policy.accessible.p2')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.name-change.heading')}</h2>
+            <h2 id={t('journal-policies.name-change.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.name-change.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.name-change.p1')} />
@@ -365,7 +419,7 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.name-change.p5')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2 id={t('journal-policies.nomenclature.anchor')} className="typography__heading typography__heading--h2">
                 {t('journal-policies.nomenclature.heading')}
             </h2>
 
@@ -377,7 +431,9 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.nomenclature.p2')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">{t('journal-policies.replication.heading')}</h2>
+            <h2 id={t('journal-policies.replication.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.replication.heading')}
+            </h2>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.replication.p1')} />
@@ -387,7 +443,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.replication.p2')} />
             </Paragraph>
 
-            <h2 className="typography__heading typography__heading--h2">
+            <h2
+                id={t('journal-policies.reporting-standards.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
                 {t('journal-policies.reporting-standards.heading')}
             </h2>
 
