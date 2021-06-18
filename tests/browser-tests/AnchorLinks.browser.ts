@@ -11,8 +11,8 @@ test('No anchor, defaults to top of page', async () => {
 });
 
 test('With anchor, scrolls element into view', async () => {
-  await t.navigateTo('/author-guide/journal-policies#name-change');
-  await t.wait(500);
-  const elementOffsetTop = await Selector('#name-change').offsetTop;
-  await t.expect(getWindowScollY()).eql(elementOffsetTop);
+    await t.navigateTo('/author-guide/journal-policies#name-change');
+    await t.wait(500);
+    const elementOffsetTop = await Selector('#name-change').offsetTop;
+    await t.expect(getWindowScollY()).eql(elementOffsetTop);
 });
