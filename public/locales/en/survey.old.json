@@ -1,0 +1,12 @@
+{
+    "title": "Help us to investigate implicit bias",
+    "survey-info": "Please help us to learn more about the demographic characteristics of submissions to eLife by providing information about the <strong>group leader</strong> who has <strong>principal responsibility for the work</strong> (e.g., the PI or project leader of the lab in which the majority of the work was conducted).",
+    "survey-info-2": "Your answers will <u>not</u> be disclosed to the editors (or reviewers) of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
+    "question1": "The group leader's country of residence:",
+    "question2": "The group leader's gender:",
+    "question3": "The year in which the group leader became an independent researcher (e.g., head of their own lab):",
+    "navigation": {
+        "done": "done",
+        "skip": "skip"
+    }
+}
