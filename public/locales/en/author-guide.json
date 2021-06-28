@@ -400,7 +400,7 @@
         "public-reviews": {
             "anchor": "posting-public-reviews-after-peer-review",
             "heading": "Posting Public Reviews After Peer Review",
-            "p1": "Unless we have agreed with you otherwise, the public reviews will be posted to a preprint server using a <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\" target=\"_blank\">Public Domain Dedication</a>, which allows them to be freely reused by anyone for any purpose. Authors can currently opt out of posting a preprint. Where a preprint exists, authors control when the public reviews are posted."
+            "p1": "Unless we have agreed with you otherwise, the public reviews will be posted to a preprint server using a <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\" target=\"_blank\">Public Domain Dedication</a>, which allows them to be freely reused by anyone for any purpose. Authors may choose to delay having the public reviews posted."
         },
         "acceptance": {
             "anchor": "acceptance",
