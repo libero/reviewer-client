@@ -656,8 +656,8 @@
         "anchor": "journal-faqs",
         "heading": "Journal FAQs",
         "scoop": {
-            "anchor": "faq-preprints-scoop-protection",
-            "heading": "FAQ on preprints and scoop protection",
+            "anchor": "faq-preprints-peer-review-scoop-protection",
+            "heading": "FAQ on preprints, peer review, and scoop protection",
             "question1": "1. If I have uploaded my manuscript to a preprint server, can I also submit it to eLife?",
             "answer1": "Yes, we ask authors submitting to eLife to also upload their manuscript to a preprint server such as bioRxiv or medRxiv, and this can be done before submission, at the time of submission, or later. It is also possible to submit a manuscript to eLife and then post it directly to bioRxiv or or medRxiv as a preprint, and vice versa. Read more in <a href=\"https://elifesciences.org/articles/64910\" target=\"_blank\">Implementing a \"publish, then review\" model of publishing</a>.",
             "question2": "2. If I make an initial submission to eLife and a paper on a similar topic has recently been published in a peer-reviewed journal, will the other paper influence the treatment of my submission to eLife?",
