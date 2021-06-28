@@ -59,6 +59,46 @@ const JournalFAQs = (): JSX.Element => {
                 <Interweave content={t('journal-faqs.scoop.answer8')} />
             </Paragraph>
 
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question9')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer9')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question10')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer10')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question11')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer11')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question12')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer12')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question13')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer13')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question14')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer14')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question15')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer15')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">{t('journal-faqs.scoop.question16')}</h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.scoop.answer16')} />
+            </Paragraph>
+
             <h2 id={t('journal-faqs.general.anchor')} className="typography__heading typography__heading--h2">
                 {t('journal-faqs.general.heading')}
             </h2>
