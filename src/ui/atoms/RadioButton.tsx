@@ -2,13 +2,15 @@ import React, { InputHTMLAttributes } from 'react';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     register?: () => void;
+    labelText?: string;
     options: { value: string; label: string }[];
     name: string;
     initialValue?: string;
 }
 
-const RadioButton = ({ register, options, name, initialValue }: Props): JSX.Element => (
+const RadioButton = ({ register, labelText, options, name, initialValue }: Props): JSX.Element => (
     <div className="radio-button__group">
+        {labelText && <label className="typography__label typography__label--primary">{labelText}</label>}
         <ul>
             {options.map(item => (
                 <React.Fragment key={item.value}>
