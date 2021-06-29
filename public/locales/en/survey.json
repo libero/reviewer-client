@@ -1,12 +1,65 @@
 {
     "title": "Help us to investigate implicit bias",
-    "survey-info": "Please help us to learn more about the demographic characteristics of submissions to eLife by providing information about the <strong>group leader</strong> who has <strong>principal responsibility for the work</strong> (e.g., the PI or project leader of the lab in which the majority of the work was conducted).",
-    "survey-info-2": "Your answers will <u>not</u> be disclosed to the editors (or reviewers) of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
-    "question1": "The group leader's country of residence:",
-    "question2": "The group leader's gender:",
-    "question3": "The year in which the group leader became an independent researcher (e.g., head of their own lab):",
+    "p1": "Please help us learn more about the demographic characteristics of authors submitting to eLife by providing anonymous information about yourself. Skipping this will not affect your submission.",
+    "p2": "Your answers will not be disclosed to the editors or reviewers of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
+    "p3": "Learn more about why we ask for this data.",
+    "q1": {
+        "title": "Are you submitting as...",
+        "options": [ 
+            "First Author (includes joint-first author)",
+            "Last author (includes joint-last author)",
+            "Neither of the above"
+        ]
+    },
+    "q2": {
+        "title": "Are you an \"independent researcher\"?",
+        "p1": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
+        "options": [ 
+            "Yes",
+            "No",
+            "Prefer not to say"
+        ]
+    },
+    "q3": {
+        "title": "In approximately which year did you become an independent researcher?",
+        "p1": "Please skip this if you prefer not to say"
+    },
+    "q4": {
+        "title": "With which gener do you most identify?",
+        "options": [ 
+            "Man",
+            "Non-binary or gender diverse",
+            "Women",
+            "Self describe (please describe below)",
+            "Prefer not to say"
+        ]
+    },
+    "q5": {
+        "title": "Your country of residence or professional affiliation",
+        "collapsedText": "+ Add a second country of residence/affiliation",
+        "expandedText": "- Remove second country of residence/affiliation",
+        "countries": [
+            {"key": "uk", "value": "United Kingdom"}
+        ]
+    },
+    "q6": {
+        "title": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
+        "p1": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
+        "expandedText": "- Remove second country of residence/affiliation",
+        "options": [ 
+            "Yes",
+            "No",
+            "Prefer not to say"
+        ]
+    },
+    "q7": {
+        "title": "How do youu describe youu race or ethnicity?",
+        "p1": "Please skip this if you prefer not to say"
+    },
     "navigation": {
         "done": "done",
-        "skip": "skip"
+        "next": "next",
+        "skip": "skip",
+        "back": "back"
     }
 }
