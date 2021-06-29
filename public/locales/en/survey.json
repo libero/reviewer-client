@@ -2,7 +2,7 @@
     "title": "Help us to investigate implicit bias",
     "p1": "Please help us learn more about the demographic characteristics of authors submitting to eLife by providing anonymous information about yourself. Skipping this will not affect your submission.",
     "p2": "Your answers will not be disclosed to the editors or reviewers of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
-    "p3": "Learn more about why we ask for this data.",
+    "p3": "Learn more about <a href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask for this data.</a>",
     "q1": {
         "title": "Are you submitting as...",
         "options": [ 
