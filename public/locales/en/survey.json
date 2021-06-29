@@ -4,28 +4,28 @@
     "p2": "Your answers will not be disclosed to the editors or reviewers of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
     "p3": "Learn more about <a href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask for this data.</a>",
     "q1": {
-        "title": "Are you submitting as...",
+        "label": "Are you submitting as...",
         "options": [ 
-            "First Author (includes joint-first author)",
-            "Last author (includes joint-last author)",
-            "Neither of the above"
+            { "label": "First Author (includes joint-first author)", "value": "first-author" },
+            { "label": "Last author (includes joint-last author)", "value": "last-author" },
+            { "label": "Neither of the above", "value": "neither" }
         ]
     },
     "q2": {
-        "title": "Are you an \"independent researcher\"?",
+        "label": "Are you an \"independent researcher\"?",
         "p1": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
         "options": [ 
-            "Yes",
-            "No",
-            "Prefer not to say"
+            { "label": "Yes", "value": "yes" },
+            { "label": "No", "value": "no" },
+            { "label": "Prefer not to say", "value": "neither" }
         ]
     },
     "q3": {
-        "title": "In approximately which year did you become an independent researcher?",
+        "label": "In approximately which year did you become an independent researcher?",
         "p1": "Please skip this if you prefer not to say"
     },
     "q4": {
-        "title": "With which gener do you most identify?",
+        "label": "With which gener do you most identify?",
         "options": [ 
             "Man",
             "Non-binary or gender diverse",
@@ -35,7 +35,7 @@
         ]
     },
     "q5": {
-        "title": "Your country of residence or professional affiliation",
+        "label": "Your country of residence or professional affiliation",
         "collapsedText": "+ Add a second country of residence/affiliation",
         "expandedText": "- Remove second country of residence/affiliation",
         "countries": [
@@ -43,7 +43,7 @@
         ]
     },
     "q6": {
-        "title": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
+        "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
         "p1": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
         "expandedText": "- Remove second country of residence/affiliation",
         "options": [ 
@@ -53,7 +53,7 @@
         ]
     },
     "q7": {
-        "title": "How do youu describe youu race or ethnicity?",
+        "label": "How do youu describe youu race or ethnicity?",
         "p1": "Please skip this if you prefer not to say"
     },
     "navigation": {
