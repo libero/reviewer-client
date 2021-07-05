@@ -3,7 +3,7 @@
     "p1": "Please help us learn more about the demographic characteristics of authors submitting to eLife by providing anonymous information about yourself. Skipping this will not affect your submission.",
     "p2": "Your answers will not be disclosed to the editors or reviewers of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
     "p3": "Learn more about <a href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask for this data.</a>",
-    "q1": {
+    "submittingAs": {
         "label": "Are you submitting as...",
         "options": [ 
             { "label": "First Author (includes joint-first author)", "value": "first-author" },
@@ -11,20 +11,20 @@
             { "label": "Neither of the above", "value": "neither" }
         ]
     },
-    "q2": {
+    "independentResearcher": {
         "label": "Are you an \"independent researcher\"?",
-        "helper": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
+        "helperText": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
         "options": [ 
             { "label": "Yes", "value": "yes" },
             { "label": "No", "value": "no" },
             { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
     },
-    "q3": {
+    "independentResearcherYear": {
         "label": "In approximately which year did you become an independent researcher?",
-        "helper": "Please skip this if you prefer not to say"
+        "helperText": "Please skip this if you prefer not to say"
     },
-    "q4": {
+    "gender": {
         "label": "With which gender do you most identify?",
         "options": [ 
             { "label": "Man", "value": "man" },
@@ -34,11 +34,11 @@
             { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
     },
-    "q5": {
+    "genderSelfDescribe": {
         "label": "Please self describe",
         "placeholder": "Enter text"
     },
-    "q6": {
+    "countryOfResidence": {
         "label": "Your country of residence or professional affiliation",
         "collapsedText": "+ Add a second country of residence/affiliation",
         "expandedText": "- Remove second country of residence/affiliation",
@@ -46,7 +46,7 @@
             { "key": "uk", "value": "United Kingdom" }
         ]
     },
-    "q7": {
+    "countryIndentifyAs": {
         "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
         "p1": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
         "expandedText": "- Remove second country of residence/affiliation",
@@ -56,8 +56,8 @@
             { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
     },
-    "q8": {
-        "label": "How do youu describe youu race or ethnicity?",
+    "raceOrEthnicity": {
+        "label": "How do you describe your race or ethnicity?",
         "p1": "Please skip this if you prefer not to say"
     },
     "navigation": {
