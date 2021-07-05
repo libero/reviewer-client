@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paragraph, TextField, RadioButton } from '../../ui/atoms';
@@ -24,17 +23,30 @@ const SurveyPart1 = ({ showIndependentResearcherYear = false, register }: Props)
                 <Interweave content={t('p3')} />
             </Paragraph>
             <h3 className="typography__heading typography__heading--h3">{t('submittingAs.label')}</h3>
-            <RadioButton id="submittingAs" name="submittingAs" options={t('submittingAs.options', { returnObjects: true })} register={register}></RadioButton>
-            <h3 className="typography__heading typography__heading--h3">{t('independentResearcher.label')}</h3>
-            <RadioButton id="independentResearcher" name="independentResearcher" helperText={t('independentResearcher.helperText')} options={t('independentResearcher.options', { returnObjects: true })} register={register}></RadioButton>
-            {showIndependentResearcherYear && <TextField
-                name="independentResearcherYear"
-                id="independentResearcherYear"
-                labelText={t('independentResearcherYear.label')}
-                placeholder="Enter text"
-                helperText={t('independentResearcherYear.helperText')}
+            <RadioButton
+                id="submittingAs"
+                name="submittingAs"
+                options={t('submittingAs.options', { returnObjects: true })}
                 register={register}
-            />}
+            ></RadioButton>
+            <h3 className="typography__heading typography__heading--h3">{t('independentResearcher.label')}</h3>
+            <RadioButton
+                id="independentResearcher"
+                name="independentResearcher"
+                helperText={t('independentResearcher.helperText')}
+                options={t('independentResearcher.options', { returnObjects: true })}
+                register={register}
+            ></RadioButton>
+            {showIndependentResearcherYear && (
+                <TextField
+                    name="independentResearcherYear"
+                    id="independentResearcherYear"
+                    labelText={t('independentResearcherYear.label')}
+                    placeholder="Enter text"
+                    helperText={t('independentResearcherYear.helperText')}
+                    register={register}
+                />
+            )}
         </div>
     );
 };
