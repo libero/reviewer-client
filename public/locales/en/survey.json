@@ -13,46 +13,50 @@
     },
     "q2": {
         "label": "Are you an \"independent researcher\"?",
-        "p1": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
+        "helper": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
         "options": [ 
             { "label": "Yes", "value": "yes" },
             { "label": "No", "value": "no" },
-            { "label": "Prefer not to say", "value": "neither" }
+            { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
     },
     "q3": {
         "label": "In approximately which year did you become an independent researcher?",
-        "p1": "Please skip this if you prefer not to say"
+        "helper": "Please skip this if you prefer not to say"
     },
     "q4": {
-        "label": "With which gener do you most identify?",
+        "label": "With which gender do you most identify?",
         "options": [ 
-            "Man",
-            "Non-binary or gender diverse",
-            "Women",
-            "Self describe (please describe below)",
-            "Prefer not to say"
+            { "label": "Man", "value": "man" },
+            { "label": "Non-binary or gender diverse", "value": "non-binary" },
+            { "label": "Women", "value": "women" },
+            { "label": "Self describe (please describe below)", "value": "self-describe" },
+            { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
     },
     "q5": {
+        "label": "Please self describe",
+        "placeholder": "Enter text"
+    },
+    "q6": {
         "label": "Your country of residence or professional affiliation",
         "collapsedText": "+ Add a second country of residence/affiliation",
         "expandedText": "- Remove second country of residence/affiliation",
         "countries": [
-            {"key": "uk", "value": "United Kingdom"}
+            { "key": "uk", "value": "United Kingdom" }
         ]
     },
-    "q6": {
+    "q7": {
         "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
         "p1": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
         "expandedText": "- Remove second country of residence/affiliation",
         "options": [ 
-            "Yes",
-            "No",
-            "Prefer not to say"
+            { "label": "Yes", "value": "yes" },
+            { "label": "No", "value": "no" },
+            { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
     },
-    "q7": {
+    "q8": {
         "label": "How do youu describe youu race or ethnicity?",
         "p1": "Please skip this if you prefer not to say"
     },
