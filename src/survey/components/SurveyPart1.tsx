@@ -5,24 +5,12 @@ import { Paragraph, TextField, RadioButton } from '../../ui/atoms';
 import Interweave from 'interweave';
 
 interface Props {
-    register: () => void;
+    register?: () => void;
     showIndependentResearcherYear?: boolean;
 }
 
 const SurveyPart1 = ({ showIndependentResearcherYear = false, register }: Props): JSX.Element => {
     const { t } = useTranslation('survey');
-
-    const submittingAsOptions = [
-        { label: 'First Author (includes joint-first author)', value: 'first-author' },
-        { label: 'Last author (includes joint-last author)', value: 'last-author' },
-        { label: 'Neither of the above', value: 'neither' },
-    ];
-
-    const independentResearcherOptions = [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' },
-        { label: 'Prefer not to say', value: 'neither' },
-    ];
 
     return (
         <div className="survey">
@@ -36,9 +24,9 @@ const SurveyPart1 = ({ showIndependentResearcherYear = false, register }: Props)
                 <Interweave content={t('p3')} />
             </Paragraph>
             <h3 className="typography__heading typography__heading--h3">{t('submittingAs.label')}</h3>
-            <RadioButton id="submittingAs" name="submittingAs" options={submittingAsOptions} register={register}></RadioButton>
+            <RadioButton id="submittingAs" name="submittingAs" options={t('submittingAs.options', { returnObjects: true })} register={register}></RadioButton>
             <h3 className="typography__heading typography__heading--h3">{t('independentResearcher.label')}</h3>
-            <RadioButton id="independentResearcher" name="independentResearcher" helperText={t('independentResearcher.helperText')} options={independentResearcherOptions} register={register}></RadioButton>
+            <RadioButton id="independentResearcher" name="independentResearcher" helperText={t('independentResearcher.helperText')} options={t('independentResearcher.options', { returnObjects: true })} register={register}></RadioButton>
             {showIndependentResearcherYear && <TextField
                 name="independentResearcherYear"
                 id="independentResearcherYear"
