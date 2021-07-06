@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ContentToggle, TextField, RadioButton, SelectField } from '../../ui/atoms';
+import { useForm } from 'react-hook-form';
+import { SurveyInput } from '../types';
+import { ContentToggle, TextField, RadioButton, SelectField, Button } from '../../ui/atoms';
 
 interface Props {
-    register: () => void;
-    showGenderSelfDescribe?: boolean;
-    selfDescribeInvalid?: boolean;
+    id?: string;
 }
 
-const SurveyPart2 = ({ showGenderSelfDescribe, selfDescribeInvalid = false, register }: Props): JSX.Element => {
+const SurveyPart2 = ({ id = 'survey-part-2' }: Props): JSX.Element => {
+    const { register, watch, formState } = useForm<SurveyInput>();
     const { t } = useTranslation('survey');
 
+    const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(false);
+    const [showGenderSelfDescribe, setShowGenderSelfDescribe] = useState(false);
+
+    const answers = watch();
+
+    useEffect(() => {
+        setShowGenderSelfDescribe(answers['genderIdentity'] === 'self-describe');
+    }, [answers]);
+
+    const onClick = (): void => {
+        console.log(answers);
+        if (formState.dirty) {
+            // Validate
+            setSelfDescribeInvalid(showGenderSelfDescribe && answers['genderSelfDescribe'] === '');
+
+            // Prepare Answers
+            // Store results via callback
+            // Next()
+        } else {
+            // Previous();
+        }
+    };
+
     return (
-        <div className="survey">
+        <div id={id} className="survey">
             <h3 className="typography__heading typography__heading--h3">{t('genderIdentity.label')}</h3>
             <RadioButton
                 id="genderIdentity"
@@ -22,10 +46,10 @@ const SurveyPart2 = ({ showGenderSelfDescribe, selfDescribeInvalid = false, regi
             ></RadioButton>
             {showGenderSelfDescribe && (
                 <TextField
-                    name="genderSelfDescribe"
                     id="genderSelfDescribe"
                     labelText={t('genderSelfDescribe.label')}
                     placeholder={t('genderSelfDescribe.placeholder')}
+                    helperText={t('genderSelfDescribe.helperText')}
                     invalid={selfDescribeInvalid}
                     register={register}
                 />
@@ -57,12 +81,14 @@ const SurveyPart2 = ({ showGenderSelfDescribe, selfDescribeInvalid = false, regi
             ></RadioButton>
             <h3 className="typography__heading typography__heading--h3">{t('raceOrEthnicity.label')}</h3>
             <TextField
-                name="genderSelfDescribe"
-                id="genderSelfDescribe"
+                id="raceOrEthnicity"
                 placeholder={t('raceOrEthnicity.placeholder')}
                 helperText={t('raceOrEthnicity.helperText')}
                 register={register}
             />
+            <Button type="primary" onClick={onClick}>
+                {formState.dirty ? t('navigation.next') : t('navigation.skip')}
+            </Button>
         </div>
     );
 };

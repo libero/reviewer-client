@@ -19,8 +19,28 @@ const Survey = (): JSX.Element => {
     const answers = watch();
     const history = useHistory();
 
-    const numberOfPages = 2;
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const onNext = (): void => {
+        let newPage: number = currentPage + 1;
+        if (newPage >= pages.length){
+            newPage = pages.length -1;
+        }
+        setCurrentPage(newPage);
+    }
+
+    const onPrevious = (): void => {
+        let newPage: number = currentPage - 1;
+        if (newPage < 0){
+            newPage = 0;
+        }
+        setCurrentPage(newPage);
+    }
+
+    const pages = [
+        <SurveyPart1 next={onNext} previous={onPrevious}/>,
+        <SurveyPart2/>
+    ]
 
     const onClick = (): void => {
         setCurrentPage(currentPage === 1 ? 2 : 1);
@@ -44,36 +64,12 @@ const Survey = (): JSX.Element => {
         */
     };
 
-    let independentResearcherValue = watch('independentResearcher');
-    const [showIndependentResearcherYear, setshowIndependentResearcherYear] = useState(false);
-
-    useEffect(() => {
-        setshowIndependentResearcherYear(independentResearcherValue === 'yes');
-    }, [independentResearcherValue]);
-
-    let genderIdentityValue = watch('genderIdentity');
-    const [showGenderSelfDescribe, setShowGenderSelfDescribe] = useState(false);
-
-    useEffect(() => {
-        setShowGenderSelfDescribe(genderIdentityValue === 'self-describe');
-    }, [genderIdentityValue]);
-
     return (
         <div className="survey">
             <h2 className="typography__heading typography__heading--h2">{`${t(
                 'title',
-            )} (${currentPage}/${numberOfPages})`}</h2>
-            {currentPage === 1 ? (
-                <SurveyPart1
-                    showIndependentResearcherYear={showIndependentResearcherYear}
-                    register={register}
-                ></SurveyPart1>
-            ) : (
-                <SurveyPart2 showGenderSelfDescribe={showGenderSelfDescribe} register={register}></SurveyPart2>
-            )}
-            <Button type="primary" onClick={onClick}>
-                {formState.dirty ? t('navigation.done') : t('navigation.skip')}
-            </Button>
+            )} (${currentPage + 1}/${pages.length})`}</h2>
+            { pages[currentPage]}
         </div>
     );
 };
