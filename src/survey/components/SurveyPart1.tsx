@@ -4,7 +4,7 @@ import { Paragraph, TextField, RadioButton } from '../../ui/atoms';
 import Interweave from 'interweave';
 
 interface Props {
-    register?: () => void;
+    register: () => void;
     showIndependentResearcherYear?: boolean;
 }
 
