@@ -64,7 +64,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next }: Props): JSX.Eleme
             <SelectField
                 id="countryOfResidence"
                 labelText=""
-                values={t('countryOfResidence.options', { returnObjects: true })}
+                values={t('countryOfResidence.countries', { returnObjects: true })}
             ></SelectField>
             <ContentToggle
                 id="secondCountryOfResidenceToggle"
@@ -74,7 +74,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next }: Props): JSX.Eleme
                 <SelectField
                     id="secondCountryOfResidence"
                     labelText={t('countryOfResidence.labelSecondary')}
-                    values={t('countryOfResidence.options', { returnObjects: true })}
+                    values={t('countryOfResidence.countries', { returnObjects: true })}
                 ></SelectField>
             </ContentToggle>
             <h3 className="typography__heading typography__heading--h3">{t('countryIndentifyAs.label')}</h3>
