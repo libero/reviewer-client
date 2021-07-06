@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { SurveyInput } from '../types';
+import { SurveyInput, SurveyAnswer } from '../types';
 import { Paragraph, TextField, RadioButton, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
 
 interface Props {
     id?: string;
-    next?: () => void;
+    next?: (answers: SurveyAnswer[]) => void;
     previous?: () => void;
 }
 
-const SurveyPart1 = ({ next, id = 'survey-part-1' }: Props): JSX.Element => {
+const SurveyPart1 = ({ id = 'survey-part-1', next }: Props): JSX.Element => {
     const { register, watch, formState } = useForm<SurveyInput>();
     const { t } = useTranslation('survey');
 
@@ -23,17 +23,21 @@ const SurveyPart1 = ({ next, id = 'survey-part-1' }: Props): JSX.Element => {
         setshowIndependentResearcherYear(answers['independentResearcher'] === 'yes');
     }, [answers]);
 
-    const onClick = (): void => {
-        console.log(answers);
+    const onSkipOrNext = (): void => {
+        const responses = [];
         if (formState.dirty) {
-            // Validate
+            // Validate, if required
+
             // Prepare Answers
-            // Store results via callback
-            // Next()
-            if (next) next();
-        } else {
-            // Skip;
+            for (const [key, value] of Object.entries(answers)) {
+                responses.push({
+                    questionId: key,
+                    answer: value,
+                });
+            }
         }
+        // If Valid, submit responses.
+        if (next) next(responses);
     };
 
     return (
@@ -72,7 +76,7 @@ const SurveyPart1 = ({ next, id = 'survey-part-1' }: Props): JSX.Element => {
                     register={register}
                 />
             )}
-            <Button type="primary" onClick={onClick}>
+            <Button type="primary" onClick={onSkipOrNext}>
                 {formState.dirty ? t('navigation.next') : t('navigation.skip')}
             </Button>
         </div>

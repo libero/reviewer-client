@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { SurveyInput } from '../types';
+import { SurveyInput, SurveyAnswer } from '../types';
 import { ContentToggle, TextField, RadioButton, SelectField, Button } from '../../ui/atoms';
 
 interface Props {
     id?: string;
+    next?: (answers: SurveyAnswer[]) => void;
+    previous?: () => void;
 }
 
-const SurveyPart2 = ({ id = 'survey-part-2' }: Props): JSX.Element => {
+const SurveyPart2 = ({ id = 'survey-part-2', previous, next }: Props): JSX.Element => {
     const { register, watch, formState } = useForm<SurveyInput>();
     const { t } = useTranslation('survey');
 
@@ -21,18 +23,22 @@ const SurveyPart2 = ({ id = 'survey-part-2' }: Props): JSX.Element => {
         setShowGenderSelfDescribe(answers['genderIdentity'] === 'self-describe');
     }, [answers]);
 
-    const onClick = (): void => {
-        console.log(answers);
+    const onSkipOrNext = (): void => {
+        const responses = [];
         if (formState.dirty) {
             // Validate
             setSelfDescribeInvalid(showGenderSelfDescribe && answers['genderSelfDescribe'] === '');
 
             // Prepare Answers
-            // Store results via callback
-            // Next()
-        } else {
-            // Previous();
+            for (const [key, value] of Object.entries(answers)) {
+                responses.push({
+                    questionId: key,
+                    answer: value,
+                });
+            }
         }
+        // If Valid, submit responses.
+        if (!selfDescribeInvalid && next) next(responses);
     };
 
     return (
@@ -86,8 +92,11 @@ const SurveyPart2 = ({ id = 'survey-part-2' }: Props): JSX.Element => {
                 helperText={t('raceOrEthnicity.helperText')}
                 register={register}
             />
-            <Button type="primary" onClick={onClick}>
-                {formState.dirty ? t('navigation.next') : t('navigation.skip')}
+            <Button type="secondary" onClick={previous}>
+                {t('navigation.back')}
+            </Button>
+            <Button type="primary" onClick={onSkipOrNext}>
+                {formState.dirty ? t('navigation.done') : t('navigation.skip')}
             </Button>
         </div>
     );
