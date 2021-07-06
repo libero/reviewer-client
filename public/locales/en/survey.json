@@ -24,7 +24,7 @@
         "label": "In approximately which year did you become an independent researcher?",
         "helperText": "Please skip this if you prefer not to say"
     },
-    "gender": {
+    "genderIdentity": {
         "label": "With which gender do you most identify?",
         "options": [ 
             { "label": "Man", "value": "man" },
@@ -36,19 +36,23 @@
     },
     "genderSelfDescribe": {
         "label": "Please self describe",
-        "placeholder": "Enter text"
+        "placeholder": "Enter text",
+        "helperText": "Please self describe or choose a different option"
     },
     "countryOfResidence": {
         "label": "Your country of residence or professional affiliation",
         "collapsedText": "+ Add a second country of residence/affiliation",
         "expandedText": "- Remove second country of residence/affiliation",
+        "labelSecondary": "Secondary country of residence/affiliation",
         "countries": [
-            { "key": "uk", "value": "United Kingdom" }
+            { "key": "United Kingdom", "value": "uk" },
+            { "key": "United States", "value": "usa" },
+            { "key": "Germany", "value": "de" }
         ]
     },
     "countryIndentifyAs": {
         "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
-        "p1": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
+        "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
         "expandedText": "- Remove second country of residence/affiliation",
         "options": [ 
             { "label": "Yes", "value": "yes" },
@@ -58,7 +62,8 @@
     },
     "raceOrEthnicity": {
         "label": "How do you describe your race or ethnicity?",
-        "p1": "Please skip this if you prefer not to say"
+        "placeholder": "Enter text",
+        "helperText": "Please skip this if you prefer not to say"
     },
     "navigation": {
         "done": "done",

@@ -1,3 +1,19 @@
 .survey {
   @include standardGrid;
+
+  h3 {
+    margin-top: 72px
+  }
+
+  .radio-button__group {
+    margin-bottom: 54px;
+
+    ul {
+      padding-left: 0px;
+    }
+  }
+
+  .text-field {
+    margin-bottom: 72px;
+  }
 }
