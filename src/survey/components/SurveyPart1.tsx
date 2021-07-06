@@ -1,40 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { SurveyInput, SurveyAnswer } from '../types';
 import { Paragraph, TextField, RadioButton, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
 
-interface Props {
-    id?: string;
-    next?: (answers: SurveyAnswer[]) => void;
-    previous?: () => void;
+export interface SurveyPageAnswers {
+    submittingAs?: string;
+    independentResearcher?: string;
+    independentResearcherYear?: string;
 }
 
-const SurveyPart1 = ({ id = 'survey-part-1', next }: Props): JSX.Element => {
-    const { register, watch, formState } = useForm<SurveyInput>();
+interface Props {
+    id?: string;
+    next?: (answers: SurveyPageAnswers) => void;
+    previous?: () => void;
+    defaultValues?: SurveyPageAnswers;
+}
+
+const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props): JSX.Element => {
+    const { register, watch, formState } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
 
     const [showIndependentResearcherYear, setshowIndependentResearcherYear] = useState(false);
 
     const answers = watch();
 
+    console.log(Object.keys(defaultValues).length);
+
     useEffect(() => {
         setshowIndependentResearcherYear(answers['independentResearcher'] === 'yes');
     }, [answers]);
 
     const onSkipOrNext = (): void => {
-        const responses = [];
+        let responses = {};
         if (formState.dirty) {
             // Validate, if required
-
-            // Prepare Answers
-            for (const [key, value] of Object.entries(answers)) {
-                responses.push({
-                    questionId: key,
-                    answer: value,
-                });
-            }
+            responses = answers;
         }
         // If Valid, submit responses.
         if (next) next(responses);
@@ -77,7 +78,7 @@ const SurveyPart1 = ({ id = 'survey-part-1', next }: Props): JSX.Element => {
                 />
             )}
             <Button type="primary" onClick={onSkipOrNext}>
-                {formState.dirty ? t('navigation.next') : t('navigation.skip')}
+                {formState.dirty || Object.keys(defaultValues).length > 0 ? t('navigation.next') : t('navigation.skip')}
             </Button>
         </div>
     );

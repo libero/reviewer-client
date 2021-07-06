@@ -29,7 +29,7 @@ interface SurveyQuestion {
     question: string;
 }
 
-export interface SurveyAnswer {
+interface SurveyAnswer {
     questionId: string;
     answer: string;
 }

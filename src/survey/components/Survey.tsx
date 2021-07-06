@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useHistory } from 'react-router-dom';
-import { SurveyAnswer, SurveyResponse } from '../types';
+import { SurveyResponse } from '../types';
 import { saveSurvey } from '../graphql';
 import { useMutation } from '@apollo/react-hooks';
-import SurveyPart1 from './SurveyPart1';
-import SurveyPart2 from './SurveyPart2';
+import SurveyPart1, { SurveyPageAnswers as SurveyPage1Answers } from './SurveyPart1';
+import SurveyPart2, { SurveyPageAnswers as SurveyPage2Answers } from './SurveyPart2';
 
 const Survey = (): JSX.Element => {
     const [saveCallback] = useMutation<SurveyResponse>(saveSurvey);
@@ -15,9 +15,13 @@ const Survey = (): JSX.Element => {
     const history = useHistory();
 
     const [currentPage, setCurrentPage] = useState(0);
+    const [currentAnswers, setCurrentAnswers] = useState({});
 
-    const onNext = (answers: SurveyAnswer[]): void => {
+    console.log(currentAnswers);
+
+    const onNext = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
         console.log(answers);
+        setCurrentAnswers({ ...currentAnswers, ...answers });
         let newPage: number = currentPage + 1;
         if (newPage >= pages.length) {
             newPage = pages.length - 1;
@@ -34,8 +38,8 @@ const Survey = (): JSX.Element => {
     };
 
     const pages = [
-        <SurveyPart1 next={onNext} previous={onPrevious} />,
-        <SurveyPart2 next={onNext} previous={onPrevious} />,
+        <SurveyPart1 next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
+        <SurveyPart2 next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
     ];
 
     const onSubmit = (): void => {

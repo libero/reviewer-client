@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { SurveyInput, SurveyAnswer } from '../types';
 import { ContentToggle, TextField, RadioButton, SelectField, Button } from '../../ui/atoms';
+
+export interface SurveyPageAnswers {
+    genderIdentity?: string;
+    genderSelfDescribe?: string;
+    countryOfResidence?: string;
+    secondCountryOfResidence?: string;
+    countryIndentifyAs?: string;
+    raceOrEthnicity?: string;
+}
 
 interface Props {
     id?: string;
-    next?: (answers: SurveyAnswer[]) => void;
+    next?: (answers: SurveyPageAnswers) => void;
     previous?: () => void;
+    defaultValues?: SurveyPageAnswers;
 }
 
-const SurveyPart2 = ({ id = 'survey-part-2', previous, next }: Props): JSX.Element => {
-    const { register, watch, formState } = useForm<SurveyInput>();
+const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} }: Props): JSX.Element => {
+    const { register, watch, formState } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
 
     const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(false);
@@ -24,18 +33,13 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next }: Props): JSX.Eleme
     }, [answers]);
 
     const onSkipOrNext = (): void => {
-        const responses = [];
+        let responses = {};
         if (formState.dirty) {
             // Validate
             setSelfDescribeInvalid(showGenderSelfDescribe && answers['genderSelfDescribe'] === '');
 
             // Prepare Answers
-            for (const [key, value] of Object.entries(answers)) {
-                responses.push({
-                    questionId: key,
-                    answer: value,
-                });
-            }
+            responses = answers;
         }
         // If Valid, submit responses.
         if (!selfDescribeInvalid && next) next(responses);

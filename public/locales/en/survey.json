@@ -45,9 +45,9 @@
         "expandedText": "- Remove second country of residence/affiliation",
         "labelSecondary": "Secondary country of residence/affiliation",
         "countries": [
-            { "key": "United Kingdom", "value": "uk" },
-            { "key": "United States", "value": "usa" },
-            { "key": "Germany", "value": "de" }
+            { "label": "United Kingdom", "value": "uk" },
+            { "label": "United States", "value": "usa" },
+            { "label": "Germany", "value": "de" }
         ]
     },
     "countryIndentifyAs": {
