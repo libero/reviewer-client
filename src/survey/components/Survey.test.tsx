@@ -17,7 +17,7 @@ jest.mock('@apollo/react-hooks', () => ({
     },
 }));
 
-describe('Survey', (): void => {
+describe.skip('Survey', (): void => {
     afterEach(() => {
         cleanup();
     });
