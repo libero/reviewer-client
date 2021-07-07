@@ -2,7 +2,7 @@
     "title": "Help us to investigate implicit bias",
     "p1": "Please help us learn more about the demographic characteristics of authors submitting to eLife by providing anonymous information about yourself. Skipping this will not affect your submission.",
     "p2": "Your answers will not be disclosed to the editors or reviewers of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
-    "p3": "Learn more about <a href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask for this data.</a>",
+    "p3": "Learn more about <a class=\"typography__serif--link\" href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask for this data.</a>",
     "submittingAs": {
         "label": "Are you submitting as...",
         "options": [ 
@@ -53,7 +53,7 @@
     },
     "countryIndentifyAs": {
         "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
-        "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about <a href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask about ethnicity</a>.",
+        "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about <a class=\"typography__serif--link\" href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask about ethnicity</a>.",
         "expandedText": "- Remove second country of residence/affiliation",
         "options": [ 
             { "label": "Yes", "value": "yes" },
