@@ -2,7 +2,19 @@
   @include standardGrid;
 
   h3 {
-    margin-top: 72px
+    margin-top: 72px;
+  }
+
+  h3:first-child {
+    margin-top: 42px;
+  }
+
+  .select-field__input .select-field__control {
+    width: 100%;
+  }
+  
+  .content-toggle {
+    margin-top: 24px;
   }
 
   button {

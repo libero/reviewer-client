@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { ContentToggle, TextField, RadioButton, SelectField, Button } from '../../ui/atoms';
+import { ContentToggle, TextField, RadioButton, SelectField, Button, Paragraph } from '../../ui/atoms';
+import Interweave from 'interweave';
 
 export interface SurveyPageAnswers {
     genderIdentity?: string;
@@ -68,6 +69,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
             <SelectField
                 id="countryOfResidence"
                 labelText=""
+                placeholder={t('countryOfResidence.placeholder')}
                 values={t('countryOfResidence.countries', { returnObjects: true })}
                 control={control}
                 formComponent={true}
@@ -80,16 +82,19 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                 <SelectField
                     id="secondCountryOfResidence"
                     labelText={t('countryOfResidence.labelSecondary')}
+                    placeholder={t('countryOfResidence.placeholder')}
                     values={t('countryOfResidence.countries', { returnObjects: true })}
                     control={control}
                     formComponent={true}
                 ></SelectField>
             </ContentToggle>
             <h3 className="typography__heading typography__heading--h3">{t('countryIndentifyAs.label')}</h3>
+            <Paragraph type="small" secondary>
+                <Interweave content={t('countryIndentifyAs.helperText')} />
+            </Paragraph>
             <RadioButton
                 id="countryIndentifyAs"
                 name="countryIndentifyAs"
-                helperText={t('countryIndentifyAs.helperText')}
                 options={t('countryIndentifyAs.options', { returnObjects: true })}
                 register={register}
             ></RadioButton>

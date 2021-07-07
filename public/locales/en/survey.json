@@ -41,6 +41,7 @@
     },
     "countryOfResidence": {
         "label": "Your country of residence or professional affiliation",
+        "placeholder": "Choose or search",
         "collapsedText": "+ Add a second country of residence/affiliation",
         "expandedText": "- Remove second country of residence/affiliation",
         "labelSecondary": "Secondary country of residence/affiliation",
@@ -52,7 +53,7 @@
     },
     "countryIndentifyAs": {
         "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
-        "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about why we ask about ethnicity.  ",
+        "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about <a href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask about ethnicity</a>.",
         "expandedText": "- Remove second country of residence/affiliation",
         "options": [ 
             { "label": "Yes", "value": "yes" },
