@@ -29,7 +29,7 @@
         "options": [ 
             { "label": "Man", "value": "man" },
             { "label": "Non-binary or gender diverse", "value": "non-binary" },
-            { "label": "Women", "value": "women" },
+            { "label": "Woman", "value": "woman" },
             { "label": "Self describe (please describe below)", "value": "self-describe" },
             { "label": "Prefer not to say", "value": "prefer-not-to-say" }
         ]
