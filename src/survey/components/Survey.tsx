@@ -18,7 +18,6 @@ const Survey = (): JSX.Element => {
     let pages = [];
 
     const onNext = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
-        console.log(answers);
         setCurrentAnswers({ ...currentAnswers, ...answers });
         let newPage: number = currentPage + 1;
         if (newPage >= pages.length) {

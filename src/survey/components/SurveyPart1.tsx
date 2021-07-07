@@ -30,10 +30,8 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
     const onSkipOrNext = (): void => {
         let responses = {};
         if (formState.dirty) {
-            // Validate, if required
             responses = answers;
         }
-        // If Valid, submit responses.
         if (next) next(responses);
     };
 

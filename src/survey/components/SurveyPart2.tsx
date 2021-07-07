@@ -22,10 +22,8 @@ interface Props {
 const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} }: Props): JSX.Element => {
     const { register, watch, formState, control } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
-
     const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(false);
     const [showGenderSelfDescribe, setShowGenderSelfDescribe] = useState(false);
-
     const answers = watch();
 
     useEffect(() => {
@@ -33,13 +31,15 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
     }, [answers]);
 
     const onSkipOrNext = (): void => {
-        let responses = {};
+        const responses = {};
         if (formState.dirty) {
-            // Validate
+            // Make sure if the selected self describe, that it has a value set.
             setSelfDescribeInvalid(showGenderSelfDescribe && answers['genderSelfDescribe'] === '');
 
-            // Prepare Answers
-            responses = answers;
+            // SelectFields return the value as an object, hence we need to extract the value from that object.
+            for (const [key, value] of Object.entries(answers)) {
+                responses[key] = typeof value === 'object' ? value.value : value;
+            }
         }
         // If Valid, submit responses.
         if (!selfDescribeInvalid && next) next(responses);
