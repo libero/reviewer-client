@@ -33,9 +33,11 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
 
     const onSkipOrNext = (): void => {
         const responses = {};
+        let invalid = selfDescribeInvalid;
         if (formState.dirty) {
-            // Make sure if the selected self describe, that it has a value set.
-            setSelfDescribeInvalid(showGenderSelfDescribe && answers['genderSelfDescribe'] === '');
+            // Make sure if the user selected self describe, that it has a value set.
+            invalid = showGenderSelfDescribe && answers['genderSelfDescribe'] === '';
+            setSelfDescribeInvalid(invalid);
 
             // SelectFields return the value as an object, hence we need to extract the value from that object.
             for (const [key, value] of Object.entries(answers)) {
@@ -43,7 +45,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
             }
         }
         // If Valid, submit responses.
-        if (!selfDescribeInvalid && next) next(responses);
+        if (!invalid && next) next(responses);
     };
 
     return (
