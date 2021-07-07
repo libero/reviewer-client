@@ -20,7 +20,7 @@ interface Props {
 }
 
 const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} }: Props): JSX.Element => {
-    const { register, watch, formState } = useForm<SurveyPageAnswers>({ defaultValues });
+    const { register, watch, formState, control } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
 
     const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(false);
@@ -69,6 +69,8 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                 id="countryOfResidence"
                 labelText=""
                 values={t('countryOfResidence.countries', { returnObjects: true })}
+                control={control}
+                formComponent={true}
             ></SelectField>
             <ContentToggle
                 id="secondCountryOfResidenceToggle"
@@ -79,6 +81,8 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                     id="secondCountryOfResidence"
                     labelText={t('countryOfResidence.labelSecondary')}
                     values={t('countryOfResidence.countries', { returnObjects: true })}
+                    control={control}
+                    formComponent={true}
                 ></SelectField>
             </ContentToggle>
             <h3 className="typography__heading typography__heading--h3">{t('countryIndentifyAs.label')}</h3>
@@ -100,7 +104,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                 {t('navigation.back')}
             </Button>
             <Button type="primary" onClick={onSkipOrNext}>
-                {formState.dirty ? t('navigation.done') : t('navigation.skip')}
+                {formState.dirty || Object.keys(defaultValues).length > 0 ? t('navigation.done') : t('navigation.skip')}
             </Button>
         </div>
     );

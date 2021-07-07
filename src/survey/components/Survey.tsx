@@ -1,8 +1,7 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useHistory } from 'react-router-dom';
-import { SurveyResponse } from '../types';
+import { SurveyInput, SurveyResponse } from '../types';
 import { saveSurvey } from '../graphql';
 import { useMutation } from '@apollo/react-hooks';
 import SurveyPart1, { SurveyPageAnswers as SurveyPage1Answers } from './SurveyPart1';
@@ -13,11 +12,10 @@ const Survey = (): JSX.Element => {
     const { t } = useTranslation('survey');
     const { id } = useParams();
     const history = useHistory();
-
     const [currentPage, setCurrentPage] = useState(0);
     const [currentAnswers, setCurrentAnswers] = useState({});
 
-    console.log(currentAnswers);
+    let pages = [];
 
     const onNext = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
         console.log(answers);
@@ -37,31 +35,36 @@ const Survey = (): JSX.Element => {
         setCurrentPage(newPage);
     };
 
-    const pages = [
-        <SurveyPart1 next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
-        <SurveyPart2 next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
-    ];
+    const onSubmit = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
+        const reponses = { ...currentAnswers, ...answers };
 
-    const onSubmit = (): void => {
-        /*if (formState.dirty) {
-            const response: SurveyInput = {
+        // If there are any answers, then post them to the backend.
+        if (Object.keys(reponses).length > 0) {
+            const surveyResponse: SurveyInput = {
                 surveyId: 'ediSurvey',
-                answers: answers.map((answer, index) => {
-                    if (answer.answer) {
-                        return {
-                            answer: answer.answer,
-                            text: t(`question${index + 1}`),
-                            questionId: `question${index + 1}`,
-                        };
-                    }
-                }),
+                answers: [],
                 submissionId: id,
             };
-            saveCallback({ variables: response });
+
+            for (const [key, value] of Object.entries(reponses)) {
+                surveyResponse.answers.push({
+                    answer: value as string,
+                    text: t(`${key}.label`),
+                    questionId: key,
+                });
+            }
+
+            saveCallback({ variables: surveyResponse });
         }
+
+        // Redirect them to the thank you page
         history.push(`/thankyou/${id}`);
-        */
     };
+
+    pages = [
+        <SurveyPart1 key="0" next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
+        <SurveyPart2 key="1" next={onSubmit} previous={onPrevious} defaultValues={currentAnswers} />,
+    ];
 
     return (
         <div className="survey">

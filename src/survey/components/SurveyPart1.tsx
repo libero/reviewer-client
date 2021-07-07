@@ -20,12 +20,8 @@ interface Props {
 const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props): JSX.Element => {
     const { register, watch, formState } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
-
     const [showIndependentResearcherYear, setshowIndependentResearcherYear] = useState(false);
-
     const answers = watch();
-
-    console.log(Object.keys(defaultValues).length);
 
     useEffect(() => {
         setshowIndependentResearcherYear(answers['independentResearcher'] === 'yes');
