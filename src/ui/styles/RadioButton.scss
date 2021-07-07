@@ -4,7 +4,7 @@
 
 .radio-button__input[type=radio]{
   position: absolute;
-  z-index: 1000;
+  z-index: 0;
   opacity: 0;
 }
 
@@ -16,7 +16,7 @@
   padding: 3px 0 0 12px;
   position: relative;
   white-space: nowrap;
-  z-index: 9;
+  z-index: -1;
   -webkit-transition: all 0.25s linear;
 }
 
@@ -36,7 +36,7 @@
   cursor: pointer;
   height: 24px;
   width: 24px;
-  z-index: 5;
+  z-index: -2;
   border: 1px solid #BDBDBD;
 
 }
