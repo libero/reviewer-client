@@ -54,10 +54,12 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
                 register={register}
             ></RadioButton>
             <h3 className="typography__heading typography__heading--h3">{t('independentResearcher.label')}</h3>
+            <Paragraph type="small" secondary>
+                <Interweave content={t('independentResearcher.helperText')} />
+            </Paragraph>
             <RadioButton
                 id="independentResearcher"
                 name="independentResearcher"
-                helperText={t('independentResearcher.helperText')}
                 options={t('independentResearcher.options', { returnObjects: true })}
                 register={register}
             ></RadioButton>
