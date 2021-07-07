@@ -2,15 +2,15 @@
   @include standardGrid;
 
   h2 {
-    margin-bottom: 27px;
+    margin-bottom: 1.8rem;
   }
 
   h3 {
-    margin-top: 72px;
+    margin-top: 4.5rem;
   }
 
   h3:first-child {
-    margin-top: 42px;
+    margin-top: 3.375rem;
   }
 
   .select-field__input .select-field__control {
@@ -18,11 +18,11 @@
   }
   
   .content-toggle {
-    margin-top: 24px;
+    margin-top: 1.5rem;
   }
 
   button {
-    margin-right: 24px;
+    margin-right: 1.5rem;
   }
 
   .typography__small {
@@ -30,7 +30,7 @@
   }
 
   .radio-button__group {
-    margin-bottom: 54px;
+    margin-bottom: 3.375rem;
 
     ul {
       padding-left: 0px;
@@ -38,6 +38,6 @@
   }
 
   .text-field {
-    margin-bottom: 72px;
+    margin-bottom: 4.5rem;
   }
 }
