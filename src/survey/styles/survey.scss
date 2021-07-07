@@ -1,6 +1,10 @@
 .survey {
   @include standardGrid;
 
+  h2 {
+    margin-bottom: 27px;
+  }
+
   h3 {
     margin-top: 72px;
   }
