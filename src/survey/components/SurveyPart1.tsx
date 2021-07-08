@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { Paragraph, TextField, RadioButton, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
+import { getOptions } from '../utils';
 
 export interface SurveyPageAnswers {
     submittingAs?: string;
@@ -20,16 +21,22 @@ interface Props {
 const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props): JSX.Element => {
     const { register, watch, formState } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
-    const [showIndependentResearcherYear, setshowIndependentResearcherYear] = useState(false);
+    const [showIndependentResearcherYear, setshowIndependentResearcherYear] = useState(
+        defaultValues['independentResearcher'] === 'yes',
+    );
     const answers = watch();
 
     useEffect(() => {
         setshowIndependentResearcherYear(answers['independentResearcher'] === 'yes');
     }, [answers]);
 
+    const isDirty = (): boolean => {
+        return formState.dirty || Object.keys(defaultValues).length > 0;
+    };
+
     const onSkipOrNext = (): void => {
         let responses = {};
-        if (formState.dirty) {
+        if (isDirty()) {
             responses = answers;
         }
         if (next) next(responses);
@@ -50,7 +57,11 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
             <RadioButton
                 id="submittingAs"
                 name="submittingAs"
-                options={t('submittingAs.options', { returnObjects: true })}
+                options={getOptions(t('submittingAs.options', { returnObjects: true }), [
+                    'first-author',
+                    'last-author',
+                    'neither',
+                ])}
                 register={register}
             ></RadioButton>
             <h3 className="typography__heading typography__heading--h3">{t('independentResearcher.label')}</h3>
@@ -60,7 +71,11 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
             <RadioButton
                 id="independentResearcher"
                 name="independentResearcher"
-                options={t('independentResearcher.options', { returnObjects: true })}
+                options={getOptions(t('independentResearcher.options', { returnObjects: true }), [
+                    'yes',
+                    'no',
+                    'prefer-not-to-say',
+                ])}
                 register={register}
             ></RadioButton>
             {showIndependentResearcherYear && (
@@ -74,7 +89,7 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
                 />
             )}
             <Button type="primary" onClick={onSkipOrNext}>
-                {formState.dirty || Object.keys(defaultValues).length > 0 ? t('navigation.next') : t('navigation.skip')}
+                {isDirty() ? t('navigation.next') : t('navigation.skip')}
             </Button>
         </div>
     );
