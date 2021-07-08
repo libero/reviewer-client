@@ -82,6 +82,17 @@ describe('SurveyPart2', (): void => {
         expect(onSkip).toBeCalledWith({});
     });
 
+    it('should not submit when form is invalid', async (): Promise<void> => {
+        const defaultValues = {
+            genderIdentity: 'self-describe',
+            genderSelfDescribe: '',
+        };
+        const onSubmit = jest.fn();
+        const { getByText } = render(<SurveyPart2 defaultValues={defaultValues} next={onSubmit} />);
+        fireEvent.click(getByText('navigation.done'));
+        expect(onSubmit).not.toBeCalled();
+    });
+
     it('should submit when form is dirty', async () => {
         const defaultValues = {
             genderIdentity: 'self-describe',
