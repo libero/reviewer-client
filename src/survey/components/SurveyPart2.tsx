@@ -24,7 +24,9 @@ interface Props {
 const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} }: Props): JSX.Element => {
     const { register, watch, formState, control } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
-    const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(false);
+    const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(
+        defaultValues['genderIdentity'] === 'self-describe' && defaultValues['genderSelfDescribe'] === '',
+    );
     const [showGenderSelfDescribe, setShowGenderSelfDescribe] = useState(
         defaultValues['genderIdentity'] === 'self-describe',
     );
@@ -39,18 +41,19 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
     };
 
     const onSkipOrNext = (): void => {
-        let responses = {};
+        const responses = {};
         let invalid = selfDescribeInvalid;
         if (isDirty()) {
             // Make sure if the user selected self describe, that it has a value set.
             invalid = showGenderSelfDescribe && answers['genderSelfDescribe'] === '';
             setSelfDescribeInvalid(invalid);
 
-            // SelectFields return the value as an object, hence we need to extract the value from that object.
-            //for (const [key, value] of Object.entries(answers)) {
-            //    responses[key] = typeof value === 'object' ? value.value : value;
-            //}
-            responses = answers;
+            // FIXME: This filters out undefined values that we get from the select controls.
+            for (const [key, value] of Object.entries(answers)) {
+                if (value) {
+                    responses[key] = value;
+                }
+            }
         }
         // If Valid, submit responses.
         if (!invalid && next) next(responses);
