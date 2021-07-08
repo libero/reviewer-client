@@ -1,6 +1,6 @@
 interface Option {
-  label: string;
-  value: string;
+    label: string;
+    value: string;
 }
 
 export const getOptions = (labels: string[], values: string[]): Option[] => {
