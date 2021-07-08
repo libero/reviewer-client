@@ -47,7 +47,8 @@ const Survey = (): JSX.Element => {
 
             for (const [key, value] of Object.entries(reponses)) {
                 surveyResponse.answers.push({
-                    answer: value as string,
+                    // Note: SelectFields return the value as an object, hence we need to extract the value from that object.
+                    answer: typeof value === 'object' ? value.value : value,
                     text: t(`${key}.label`),
                     questionId: key,
                 });
