@@ -49,7 +49,7 @@ describe('SurveyPart1', (): void => {
         expect(textIndependentResearcherYear.value).toBe('1990');
     });
 
-    it('should change the button label when the form has an entry', async () => {
+    it('should change the button label when the form is dirty', async () => {
         const { getByText, getByLabelText } = render(<SurveyPart1 />);
         expect(getByText('navigation.skip')).toBeInTheDocument();
         fireEvent.click(getByLabelText('independentResearcher.options-0'));
@@ -64,7 +64,7 @@ describe('SurveyPart1', (): void => {
         expect(onSkip).toBeCalledWith({});
     });
 
-    it('should submit when form is dirty', async () => {
+    it('should submit date when the form is dirty', async () => {
         const defaultValues = {
             submittingAs: 'first-author',
             independentResearcher: 'yes',
