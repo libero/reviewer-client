@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { ContentToggle, TextField, RadioButton, SelectField, Button, Paragraph } from '../../ui/atoms';
 import Interweave from 'interweave';
+import { getOptions } from '../utils';
 
 export interface SurveyPageAnswers {
     genderIdentity?: string;
     genderSelfDescribe?: string;
-    countryOfResidence?: string;
-    secondCountryOfResidence?: string;
+    countryOfResidence?: { label: string; value: string };
+    secondCountryOfResidence?: { label: string; value: string };
     countryIndentifyAs?: string;
     raceOrEthnicity?: string;
 }
@@ -24,25 +25,32 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
     const { register, watch, formState, control } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
     const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(false);
-    const [showGenderSelfDescribe, setShowGenderSelfDescribe] = useState(false);
+    const [showGenderSelfDescribe, setShowGenderSelfDescribe] = useState(
+        defaultValues['genderIdentity'] === 'self-describe',
+    );
     const answers = watch();
 
     useEffect(() => {
         setShowGenderSelfDescribe(answers['genderIdentity'] === 'self-describe');
     }, [answers]);
 
+    const isDirty = (): boolean => {
+        return formState.dirty || Object.keys(defaultValues).length > 0;
+    };
+
     const onSkipOrNext = (): void => {
-        const responses = {};
+        let responses = {};
         let invalid = selfDescribeInvalid;
-        if (formState.dirty) {
+        if (isDirty()) {
             // Make sure if the user selected self describe, that it has a value set.
             invalid = showGenderSelfDescribe && answers['genderSelfDescribe'] === '';
             setSelfDescribeInvalid(invalid);
 
             // SelectFields return the value as an object, hence we need to extract the value from that object.
-            for (const [key, value] of Object.entries(answers)) {
-                responses[key] = typeof value === 'object' ? value.value : value;
-            }
+            //for (const [key, value] of Object.entries(answers)) {
+            //    responses[key] = typeof value === 'object' ? value.value : value;
+            //}
+            responses = answers;
         }
         // If Valid, submit responses.
         if (!invalid && next) next(responses);
@@ -54,7 +62,13 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
             <RadioButton
                 id="genderIdentity"
                 name="genderIdentity"
-                options={t('genderIdentity.options', { returnObjects: true })}
+                options={getOptions(t('genderIdentity.options', { returnObjects: true }), [
+                    'man',
+                    'non-binary',
+                    'woman',
+                    'self-describe',
+                    'prefer-not-to-say',
+                ])}
                 register={register}
             ></RadioButton>
             {showGenderSelfDescribe && (
@@ -67,7 +81,9 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                     register={register}
                 />
             )}
-            <h3 className="typography__heading typography__heading--h3">{t('countryOfResidence.label')}</h3>
+            <h3 id="countryOfResidence-label" className="typography__heading typography__heading--h3">
+                {t('countryOfResidence.label')}
+            </h3>
             <SelectField
                 id="countryOfResidence"
                 labelText=""
@@ -80,6 +96,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                 id="secondCountryOfResidenceToggle"
                 collapsedText={t('countryOfResidence.collapsedText')}
                 openText={t('countryOfResidence.expandedText')}
+                open={defaultValues['secondCountryOfResidence'] ? true : false}
             >
                 <SelectField
                     id="secondCountryOfResidence"
@@ -97,7 +114,11 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
             <RadioButton
                 id="countryIndentifyAs"
                 name="countryIndentifyAs"
-                options={t('countryIndentifyAs.options', { returnObjects: true })}
+                options={getOptions(t('countryIndentifyAs.options', { returnObjects: true }), [
+                    'yes',
+                    'no',
+                    'prefer-not-to-say',
+                ])}
                 register={register}
             ></RadioButton>
             <h3 className="typography__heading typography__heading--h3">{t('raceOrEthnicity.label')}</h3>
@@ -111,7 +132,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                 {t('navigation.back')}
             </Button>
             <Button type="primary" onClick={onSkipOrNext}>
-                {formState.dirty || Object.keys(defaultValues).length > 0 ? t('navigation.done') : t('navigation.skip')}
+                {isDirty() ? t('navigation.done') : t('navigation.skip')}
             </Button>
         </div>
     );
