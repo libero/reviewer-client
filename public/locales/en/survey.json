@@ -26,12 +26,11 @@
     },
     "genderIdentity": {
         "label": "With which gender do you most identify?",
-        "options": [ 
-            { "label": "Man", "value": "man" },
-            { "label": "Non-binary or gender diverse", "value": "non-binary" },
-            { "label": "Woman", "value": "woman" },
-            { "label": "Self describe (please describe below)", "value": "self-describe" },
-            { "label": "Prefer not to say", "value": "prefer-not-to-say" }
+        "options": [
+            "Man",
+            "Non-binary or gender diverse",
+            "Woman", "Self describe (please describe below)",
+            "Prefer not to say"
         ]
     },
     "genderSelfDescribe": {
@@ -301,11 +300,7 @@
         "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
         "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about <a class=\"typography__serif--link\" href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask about ethnicity</a>.",
         "expandedText": "- Remove second country of residence/affiliation",
-        "options": [ 
-            { "label": "Yes", "value": "yes" },
-            { "label": "No", "value": "no" },
-            { "label": "Prefer not to say", "value": "prefer-not-to-say" }
-        ]
+        "options": ["Yes", "No", "Prefer not to say"]
     },
     "raceOrEthnicity": {
         "label": "How do you describe your race or ethnicity?",
