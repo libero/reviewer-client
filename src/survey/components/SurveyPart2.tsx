@@ -37,7 +37,26 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
     }, [answers]);
 
     const isDirty = (): boolean => {
-        return formState.dirty || Object.keys(defaultValues).length > 0;
+        let retVal = false;
+        if (formState.dirty) {
+            retVal = true;
+        } else {
+            const opts = [
+                'genderIdentity',
+                'genderSelfDescribe',
+                'countryOfResidence',
+                'secondCountryOfResidence',
+                'countryIndentifyAs',
+                'raceOrEthnicity',
+            ];
+            for (const key of Object.keys(defaultValues)) {
+                if (opts.includes(key)) {
+                    retVal = true;
+                    break;
+                }
+            }
+        }
+        return retVal;
     };
 
     const onSkipOrNext = (): void => {

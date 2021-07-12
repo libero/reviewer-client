@@ -21,17 +21,29 @@ interface Props {
 const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props): JSX.Element => {
     const { register, watch, formState } = useForm<SurveyPageAnswers>({ defaultValues });
     const { t } = useTranslation('survey');
-    const [showIndependentResearcherYear, setshowIndependentResearcherYear] = useState(
+    const [showIndependentResearcherYear, setShowIndependentResearcherYear] = useState(
         defaultValues['independentResearcher'] === 'yes',
     );
     const answers = watch();
 
     useEffect(() => {
-        setshowIndependentResearcherYear(answers['independentResearcher'] === 'yes');
+        setShowIndependentResearcherYear(answers['independentResearcher'] === 'yes');
     }, [answers]);
 
     const isDirty = (): boolean => {
-        return formState.dirty || Object.keys(defaultValues).length > 0;
+        let retVal = false;
+        if (formState.dirty) {
+            retVal = true;
+        } else {
+            const opts = ['submittingAs', 'independentResearcher', 'independentResearcherYear'];
+            for (const key of Object.keys(defaultValues)) {
+                if (opts.includes(key)) {
+                    retVal = true;
+                    break;
+                }
+            }
+        }
+        return retVal;
     };
 
     const onSkipOrNext = (): void => {
