@@ -77,8 +77,9 @@ describe('SurveyPart2', (): void => {
 
     it('should skip when form is empty', async () => {
         const onSkip = jest.fn();
-        const { getByText } = render(<SurveyPart2 next={onSkip} />);
-        fireEvent.click(getByText('navigation.skip'));
+        const { container } = render(<SurveyPart2 next={onSkip} />);
+        await fireEvent.click(container.querySelector("button[type='submit']"));
+        await waitFor(() => {});
         expect(onSkip).toBeCalledWith({});
     });
 
@@ -88,8 +89,9 @@ describe('SurveyPart2', (): void => {
             genderSelfDescribe: '',
         };
         const onSubmit = jest.fn();
-        const { getByText } = render(<SurveyPart2 defaultValues={defaultValues} next={onSubmit} />);
-        fireEvent.click(getByText('navigation.done'));
+        const { container } = render(<SurveyPart2 defaultValues={defaultValues} next={onSubmit} />);
+        await fireEvent.click(container.querySelector("button[type='submit']"));
+        await waitFor(() => {});
         expect(onSubmit).not.toBeCalled();
     });
 
@@ -103,8 +105,9 @@ describe('SurveyPart2', (): void => {
             raceOrEthnicity: 'jedi',
         };
         const onSubmit = jest.fn();
-        const { getByText } = render(<SurveyPart2 defaultValues={defaultValues} next={onSubmit} />);
-        fireEvent.click(getByText('navigation.done'));
+        const { container } = render(<SurveyPart2 defaultValues={defaultValues} next={onSubmit} />);
+        await fireEvent.click(container.querySelector("button[type='submit']"));
+        await waitFor(() => {});
         expect(onSubmit).toBeCalledWith(defaultValues);
     });
 });

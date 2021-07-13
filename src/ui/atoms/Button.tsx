@@ -4,6 +4,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
     children?: string;
     disabled?: boolean;
     loading?: boolean;
+    isSubmit?: boolean;
 }
 
 const Button: React.FC<Props> = ({
@@ -12,9 +13,11 @@ const Button: React.FC<Props> = ({
     className,
     disabled = false,
     loading = false,
+    isSubmit = false,
     ...rest
 }: Props): JSX.Element => (
     <button
+        type={isSubmit ? 'submit' : undefined}
         className={`button${type ? ' button--' + type : ''}${className ? ' ' + className : ''}`}
         disabled={disabled}
         {...rest}

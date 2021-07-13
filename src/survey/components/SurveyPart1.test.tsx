@@ -59,8 +59,9 @@ describe('SurveyPart1', (): void => {
 
     it('should skip when form is empty', async () => {
         const onSkip = jest.fn();
-        const { getByText } = render(<SurveyPart1 next={onSkip} />);
-        fireEvent.click(getByText('navigation.skip'));
+        const { container } = render(<SurveyPart1 next={onSkip} />);
+        await fireEvent.click(container.querySelector("button[type='submit']"));
+        await waitFor(() => {});
         expect(onSkip).toBeCalledWith({});
     });
 
@@ -71,8 +72,9 @@ describe('SurveyPart1', (): void => {
             independentResearcherYear: '1990',
         };
         const onSubmit = jest.fn();
-        const { getByText } = render(<SurveyPart1 defaultValues={defaultValues} next={onSubmit} />);
-        fireEvent.click(getByText('navigation.next'));
+        const { container } = render(<SurveyPart1 defaultValues={defaultValues} next={onSubmit} />);
+        await fireEvent.click(container.querySelector("button[type='submit']"));
+        await waitFor(() => {});
         expect(onSubmit).toBeCalledWith(defaultValues);
     });
 });
