@@ -12,7 +12,7 @@ test('Happy path', async () => {
     const dashboardPage = new DashboardPage();
     const submissionId = await navigationHelper.navigateToSurveyPage();
     await surveyPage.populateForm();
-    await surveyPage.skipOrFinish();
+    await surveyPage.completeSurvey();
     await thankYouPage.assertOnPage();
     await thankYouPage.finish();
     await dashboardPage.assertOnPage();

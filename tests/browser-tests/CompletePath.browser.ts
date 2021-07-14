@@ -10,7 +10,7 @@ test('Complete Path', async () => {
     const dashboardPage = new DashboardPage();
     const submissionId = await navigationHelper.navigateToSurveyPage(true);
     await surveyPage.populateForm();
-    await surveyPage.skipOrFinish();
+    await surveyPage.completeSurvey();
     await thankYouPage.assertOnPage();
     await thankYouPage.finish();
     await dashboardPage.assertOnPage();

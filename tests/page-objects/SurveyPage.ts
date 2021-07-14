@@ -73,6 +73,13 @@ export class SurveyPage {
 
     private async answerSelectField(question: Selector, answer: string): Promise<void> {
         await t.expect(question.exists).ok();
+        const input = question.prevSibling('.select-field__control').find('input');
+        await t.typeText(input, answer).pressKey('enter');
+    }
+
+    private async getAnswerFromSelectField(question: Selector): Promise<string> {
+        await t.expect(question.exists).ok();
+        return question.value;
     }
 
     private async populatePage1(): Promise<void> {
@@ -89,10 +96,12 @@ export class SurveyPage {
         await this.answerRadioField(this.genderIdentity, 'self-describe');
         await t.expect(this.genderSelfDescribe.exists).ok();  
         await this.answerTextField(this.genderSelfDescribe, 'popsicle');
-        await this.answerSelectField(this.countryOfResidence, 'AZ');
+        await this.answerSelectField(this.countryOfResidence, 'United Kingdom');
+        await t.expect(await this.getAnswerFromSelectField(this.countryOfResidence)).eql('GB');
         await clickSelector('#secondCountryOfResidenceToggle * .content-toggle__toggle-btn');
         await t.expect(this.secondCountryOfResidence.exists).ok(); 
-        await this.answerSelectField(this.secondCountryOfResidence, 'AZ');
+        await this.answerSelectField(this.secondCountryOfResidence, 'Albania');
+        await t.expect(await this.getAnswerFromSelectField(this.secondCountryOfResidence)).eql('AL');
         await this.answerRadioField(this.countryIndentifyAs, 'yes');
         await this.raceOrEthnicity(this.independentResearcherYear, 'jedi');
     }
@@ -107,7 +116,7 @@ export class SurveyPage {
         await this.populatePage2();
     }
 
-    public async skipOrFinish(): Promise<void> {
+    public async completeSurvey(): Promise<void> {
         await t.expect(Selector(this.doneSkipButton).exists).ok();
         await t.expect(Selector(this.doneSkipButton).visible).ok();
         await clickSelector(this.doneSkipButton);
