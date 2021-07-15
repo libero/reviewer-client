@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Paragraph, TextField, RadioButton, Button } from '../../ui/atoms';
 import Interweave from 'interweave';
 import { getOptions } from '../utils';
+import { independentResearcherValues, submittingAsValues } from '../values';
 
 export interface SurveyPageAnswers {
     submittingAs?: string;
@@ -63,11 +64,7 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
                 <RadioButton
                     id="submittingAs"
                     name="submittingAs"
-                    options={getOptions(t('submittingAs.options', { returnObjects: true }), [
-                        'first-author',
-                        'last-author',
-                        'neither',
-                    ])}
+                    options={getOptions(t('submittingAs.options', { returnObjects: true }), submittingAsValues)}
                     register={register}
                 ></RadioButton>
                 <h3 className="typography__heading typography__heading--h3">{t('independentResearcher.label')}</h3>
@@ -77,11 +74,10 @@ const SurveyPart1 = ({ id = 'survey-part-1', next, defaultValues = {} }: Props):
                 <RadioButton
                     id="independentResearcher"
                     name="independentResearcher"
-                    options={getOptions(t('independentResearcher.options', { returnObjects: true }), [
-                        'yes',
-                        'no',
-                        'prefer-not-to-say',
-                    ])}
+                    options={getOptions(
+                        t('independentResearcher.options', { returnObjects: true }),
+                        independentResearcherValues,
+                    )}
                     register={register}
                 ></RadioButton>
                 {showIndependentResearcherYear === 'yes' && (
