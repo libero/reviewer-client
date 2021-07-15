@@ -1,12 +1,66 @@
 {
     "title": "Help us to investigate implicit bias",
-    "survey-info": "Please help us to learn more about the demographic characteristics of submissions to eLife by providing information about the <strong>group leader</strong> who has <strong>principal responsibility for the work</strong> (e.g., the PI or project leader of the lab in which the majority of the work was conducted).",
-    "survey-info-2": "Your answers will <u>not</u> be disclosed to the editors (or reviewers) of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
-    "question1": "The group leader's country of residence:",
-    "question2": "The group leader's gender:",
-    "question3": "The year in which the group leader became an independent researcher (e.g., head of their own lab):",
+    "p1": "Please help us learn more about the demographic characteristics of authors submitting to eLife by providing anonymous information about yourself. Skipping this will not affect your submission.",
+    "p2": "Your answers will not be disclosed to the editors or reviewers of your submission, but aggregate data will inform the research we undertake into the submission and review process.",
+    "p3": "Learn more about <a class=\"typography__serif--link\" href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask for this data.</a>",
+    "submittingAs": {
+        "label": "Are you submitting as...",
+        "options": [
+            "First Author (includes joint-first author)",
+            "Last author (includes joint-last author)",
+            "Neither of the above"
+        ]
+    },
+    "independentResearcher": {
+        "label": "Are you an \"independent researcher\"?",
+        "helperText": "We define this as scientists who have secured funding to support a research group, for example in a Group Leader, Prinicpal Inviestigator or Assistant Professor position.",
+        "options": [ 
+            "Yes",
+            "No",
+            "Prefer not to say"
+        ]
+    },
+    "independentResearcherYear": {
+        "label": "In approximately which year did you become an independent researcher?",
+        "helperText": "Please skip this if you prefer not to say"
+    },
+    "genderIdentity": {
+        "label": "With which gender do you most identify?",
+        "options": [
+            "Man",
+            "Non-binary or gender diverse",
+            "Woman", "Self describe (please describe below)",
+            "Prefer not to say"
+        ]
+    },
+    "genderSelfDescribe": {
+        "label": "Please self describe",
+        "placeholder": "Enter text",
+        "helperText": "Please self describe or choose a different option"
+    },
+    "countryOfResidence": {
+        "label": "Your country of residence or professional affiliation",
+        "placeholder": "Choose or search",
+        "collapsedText": "+ Add a second country of residence/affiliation",
+        "expandedText": "- Remove second country of residence/affiliation",
+        "labelSecondary": "Secondary country of residence/affiliation",
+        "countries": ["Afghanistan", "Åland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia, Plurinational State of", "Bonaire, Sint Eustatius and Saba", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Côte d'Ivoire", "Croatia", "Cuba", "Curaçao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard Island and McDonald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran, Islamic Republic of", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Macedonia, the Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine, State of", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Réunion", "Romania", "Russian Federation", "Rwanda", "Saint Barthélemy", "Saint Helena, Ascension and Tristan da Cunha", "Saint Kitts and Nevis", "Saint Lucia", "Saint Martin (French part)", "Saint Pierre and Miquelon", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Sint Maarten (Dutch part)", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Timor-Leste", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela, Bolivarian Republic of", "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"]
+    },
+    "countryIndentifyAs": {
+        "label": "In your country of residence or affiliation, do you identify as a member of an underrepresented or minority group based on your race or ethnicity?",
+        "helperText": "Minority groups can vary across the globe. Please answer based on whether you identify as a member of a minority group in your country of residence/affiliation. Read more about <a class=\"typography__serif--link\" href=\"https://elifesciences.org/privacy\" target=\"_blank\">why we ask about ethnicity</a>.",
+        "expandedText": "- Remove second country of residence/affiliation",
+        "options": ["Yes", "No", "Prefer not to say"]
+    },
+    "raceOrEthnicity": {
+        "label": "How do you describe your race or ethnicity?",
+        "placeholder": "Enter text",
+        "helperText": "Please skip this if you prefer not to say"
+    },
     "navigation": {
         "done": "done",
-        "skip": "skip"
+        "next": "next",
+        "skip": "skip",
+        "back": "back"
     }
 }

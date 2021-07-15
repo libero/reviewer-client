@@ -46,4 +46,9 @@ describe('Button', (): void => {
         const { container } = render(<Button loading={true}>test</Button>);
         expect(container.querySelector('.button__text')).toHaveClass('button--loading');
     });
+
+    it('should have a submit attribute if isSubmit is set', (): void => {
+        const { container } = render(<Button isSubmit>test</Button>);
+        expect(container.querySelector('[type="submit"]')).toBeInTheDocument();
+    });
 });

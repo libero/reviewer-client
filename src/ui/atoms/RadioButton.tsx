@@ -10,10 +10,11 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 const RadioButton = ({ register, options, name, initialValue }: Props): JSX.Element => (
     <div className="radio-button__group">
         <ul>
-            {options.map(item => (
+            {options.map((item, index) => (
                 <React.Fragment key={item.value}>
                     <li className="radio-button__item">
                         <input
+                            id={`${name}-option-${index}`}
                             ref={register}
                             type="radio"
                             className="radio-button__input"
@@ -24,7 +25,9 @@ const RadioButton = ({ register, options, name, initialValue }: Props): JSX.Elem
                         <div className="radio-button__button">
                             <div className="radio-button__button-inner"></div>
                         </div>
-                        <label className="radio-button__label">{item.label}</label>
+                        <label htmlFor={`${name}-option-${index}`} className="radio-button__label">
+                            {item.label}
+                        </label>
                     </li>
                 </React.Fragment>
             ))}

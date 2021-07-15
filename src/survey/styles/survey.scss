@@ -1,3 +1,43 @@
 .survey {
   @include standardGrid;
+
+  h2 {
+    margin-bottom: 1.8rem;
+  }
+
+  h3 {
+    margin-top: 4.5rem;
+  }
+
+  h3:first-child {
+    margin-top: 3.375rem;
+  }
+
+  .select-field__input .select-field__control {
+    width: 100%;
+  }
+  
+  .content-toggle {
+    margin-top: 1.5rem;
+  }
+
+  button {
+    margin-right: 1.5rem;
+  }
+
+  .typography__small {
+    margin-bottom: 0;
+  }
+
+  .radio-button__group {
+    margin-bottom: 3.375rem;
+
+    ul {
+      padding-left: 0px;
+    }
+  }
+
+  .text-field {
+    margin-bottom: 4.5rem;
+  }
 }

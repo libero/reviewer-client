@@ -1,55 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useHistory } from 'react-router-dom';
-import { Paragraph, TextField, Button } from '../../ui/atoms';
-import Interweave from 'interweave';
-import { useForm } from 'react-hook-form';
 import { SurveyInput, SurveyResponse } from '../types';
 import { saveSurvey } from '../graphql';
 import { useMutation } from '@apollo/react-hooks';
+import SurveyPart1, { SurveyPageAnswers as SurveyPage1Answers } from './SurveyPart1';
+import SurveyPart2, { SurveyPageAnswers as SurveyPage2Answers } from './SurveyPart2';
 
 const Survey = (): JSX.Element => {
-    const { register, watch, formState } = useForm<SurveyInput>();
     const [saveCallback] = useMutation<SurveyResponse>(saveSurvey);
     const { t } = useTranslation('survey');
     const { id } = useParams();
-    const answers = watch('answers');
     const history = useHistory();
-    const onClick = (): void => {
-        if (formState.dirty) {
-            const response: SurveyInput = {
-                surveyId: 'demographicSurvey',
-                answers: answers.map((answer, index) => {
-                    if (answer.answer) {
-                        return {
-                            answer: answer.answer,
-                            text: t(`question${index + 1}`),
-                            questionId: `question${index + 1}`,
-                        };
-                    }
-                }),
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentAnswers, setCurrentAnswers] = useState({});
+
+    let pages = [];
+
+    const onNext = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
+        setCurrentAnswers({ ...currentAnswers, ...answers });
+        let newPage: number = currentPage + 1;
+        if (newPage >= pages.length) {
+            newPage = pages.length - 1;
+        }
+        setCurrentPage(newPage);
+    };
+
+    const onPrevious = (): void => {
+        let newPage: number = currentPage - 1;
+        if (newPage < 0) {
+            newPage = 0;
+        }
+        setCurrentPage(newPage);
+    };
+
+    const onSubmit = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
+        const reponses = { ...currentAnswers, ...answers };
+
+        // If there are any answers, then post them to the backend.
+        if (Object.keys(reponses).length > 0) {
+            const surveyResponse: SurveyInput = {
+                surveyId: 'ediSurvey',
+                answers: [],
                 submissionId: id,
             };
-            saveCallback({ variables: response });
+
+            for (const [key, value] of Object.entries(reponses)) {
+                surveyResponse.answers.push({
+                    // Note: SelectFields return the value as an object, hence we need to extract the value from that object.
+                    answer: typeof value === 'object' ? value.value : value,
+                    text: t(`${key}.label`),
+                    questionId: key,
+                });
+            }
+
+            saveCallback({ variables: surveyResponse });
         }
+
+        // Redirect them to the thank you page
         history.push(`/thankyou/${id}`);
     };
 
+    pages = [
+        <SurveyPart1 key="0" next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
+        <SurveyPart2 key="1" next={onSubmit} previous={onPrevious} defaultValues={currentAnswers} />,
+    ];
+
     return (
         <div className="survey">
-            <h2 className="typography__heading typography__heading--h2">{t('title')}</h2>
-            <Paragraph type="writing">
-                <Interweave content={t('survey-info')} />
-            </Paragraph>
-            <Paragraph type="writing">
-                <Interweave content={t('survey-info-2')} />
-            </Paragraph>
-            <TextField id="answers[0].answer" labelText={t('question1')} placeholder="enter here" register={register} />
-            <TextField id="answers[1].answer" labelText={t('question2')} placeholder="enter here" register={register} />
-            <TextField id="answers[2].answer" labelText={t('question3')} placeholder="enter here" register={register} />
-            <Button type="primary" onClick={onClick}>
-                {formState.dirty ? t('navigation.done') : t('navigation.skip')}
-            </Button>
+            <h2 className="typography__heading typography__heading--h2">{`${t('title')} (${currentPage + 1}/${
+                pages.length
+            })`}</h2>
+            {pages[currentPage]}
         </div>
     );
 };
