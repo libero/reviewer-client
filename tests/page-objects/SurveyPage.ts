@@ -21,36 +21,22 @@ export class SurveyPage {
     private readonly doneSkipButton = 'button[type="submit"]';
 
     public async assertOnPage(): Promise<void> {
-        // Container is present
         await t.expect(this.pageWrapper.exists).ok();
     }
 
     private async assertOnPage1(): Promise<void> {
-        // Container is present
         await t.expect(this.page1.exists).ok();
-
-        // Visible fields are present
         await t.expect(this.submittingAs.exists).ok();
-        await t.expect(this.independentResearcher.exists).ok();
-
-        // Hidden fields are not visible
-        await t.expect(this.independentResearcherYear.exists).notOk();        
+        await t.expect(this.independentResearcher.exists).ok();       
     }
 
     private async assertOnPage2(): Promise<void> {
-        // Container is present
         await t.expect(this.page2.exists).ok();
-
-        // Visible fields are present
         await t.expect(this.genderIdentity.exists).ok();
         await t.expect(this.countryOfResidence.exists).ok();
         await t.expect(this.secondCountryOfResidenceToggle.exists).ok();
         await t.expect(this.countryIndentifyAs.exists).ok();  
         await t.expect(this.raceOrEthnicity.exists).ok();
-
-        // Hidden fields are not visible
-        await t.expect(this.genderSelfDescribe.exists).notOk();
-        await t.expect(this.secondCountryOfResidence.exists).notOk();
     }
 
     private async answerTextField(question: Selector, answer: string): Promise<void> {
@@ -106,21 +92,22 @@ export class SurveyPage {
         await this.raceOrEthnicity(this.independentResearcherYear, 'jedi');
     }
 
-    public async populateForm(): Promise<void> {
-        await this.assertOnPage();
-        await this.populatePage1();
+    private async goToNextPage(): Promise<void> {
         await t.expect(Selector(this.doneSkipButton).exists).ok();
         await t.expect(Selector(this.doneSkipButton).visible).ok();
         await clickSelector(this.doneSkipButton);
         await t.wait(500);
+    }
+
+    public async populateForm(): Promise<void> {
+        await this.assertOnPage();
+        await this.populatePage1();
+        await this.goToNextPage();
         await this.populatePage2();
     }
 
     public async completeSurvey(): Promise<void> {
-        await t.expect(Selector(this.doneSkipButton).exists).ok();
-        await t.expect(Selector(this.doneSkipButton).visible).ok();
-        await clickSelector(this.doneSkipButton);
-        await t.wait(500);
+        await this.goToNextPage();
         await t.expect(Selector(this.doneSkipButton).exists).notOk();
     }
 }
