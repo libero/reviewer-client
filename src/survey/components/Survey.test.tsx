@@ -36,7 +36,7 @@ describe('Survey', (): void => {
     });
 
     it('should navigate to the next page', async (): Promise<void> => {
-        const { getByText, container } = render(<Survey />, { wrapper: routerWrapper(['/survey/someid']) });
+        const { container } = render(<Survey />, { wrapper: routerWrapper(['/survey/someid']) });
         await fireEvent.click(container.querySelector("button[type='submit']"));
         await waitFor(() => {});
         expect(container.querySelector('#survey-part-2')).not.toBeNull();
