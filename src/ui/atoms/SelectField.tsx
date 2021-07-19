@@ -28,6 +28,7 @@ interface Props {
     setValue?: (name: string, value: unknown, trigger?: boolean) => void;
     className?: string;
     limitReached?: boolean;
+    clearable?: boolean;
 }
 const DropdownIndicator = (props: IndicatorProps<Value>): JSX.Element => (
     <components.DropdownIndicator {...props}>
@@ -50,6 +51,7 @@ const SelectField = ({
     setValue,
     className,
     limitReached = false,
+    clearable = false,
 }: Props): JSX.Element => {
     const select = (
         <Select
@@ -63,6 +65,8 @@ const SelectField = ({
             isMulti={multi}
             defaultValue={defaultValue}
             isSearchable={limitReached ? false : searchable}
+            isClearable={clearable}
+            escapeClearsValue={clearable}
             {...{ menuIsOpen: limitReached ? false : undefined }}
         />
     );

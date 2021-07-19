@@ -93,4 +93,20 @@ describe('TextField', (): void => {
 
         expect(container.querySelector('.someTestClass')).toBeInTheDocument();
     });
+
+    it('should clear content if clearable', async (): Promise<void> => {
+        const { container, getByText } = render(
+            <SelectField
+                id="test"
+                labelText="some label"
+                placeholder="placeholder"
+                values={[{ label: 'test-option', value: 'test' }]}
+                defaultValue={{ label: 'test-option', value: 'test' }}
+                clearable={true}
+            />,
+        );
+
+        await fireEvent.keyDown(container.querySelector('.select-field__input'), { key: 'Backspace', keyCode: 8 });
+        await waitFor((): Element => getByText('placeholder'));
+    });
 });

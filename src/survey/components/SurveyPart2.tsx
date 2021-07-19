@@ -105,6 +105,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                     )}
                     control={control}
                     formComponent={true}
+                    clearable={true}
                 ></SelectField>
                 <ContentToggle
                     id="secondCountryOfResidenceToggle"
@@ -122,6 +123,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                         )}
                         control={control}
                         formComponent={true}
+                        clearable={true}
                     ></SelectField>
                 </ContentToggle>
                 <h3 className="typography__heading typography__heading--h3">{t('countryIndentifyAs.label')}</h3>
