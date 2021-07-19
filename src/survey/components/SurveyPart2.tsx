@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { ContentToggle, TextField, RadioButton, SelectField, Button, Paragraph } from '../../ui/atoms';
@@ -28,6 +28,7 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
     const [selfDescribeInvalid, setSelfDescribeInvalid] = useState(
         defaultValues['genderIdentity'] === 'self-describe' && defaultValues['genderSelfDescribe'] === '',
     );
+    const selfDescribeElement = useRef<HTMLInputElement>(null);
     const showGenderSelfDescribe = watch('genderIdentity');
 
     const isDirty = (): boolean => {
@@ -69,12 +70,17 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
             }
         }
         // If Valid, submit responses.
-        if (invalid) {
-            document.getElementById('genderSelfDescribe').scrollIntoView();
-        } else if (next) {
+        if (!invalid && next) {
             next(responses);
         }
     };
+
+    // Scrolls the invalid form component into view on submission error
+    useEffect(() => {
+        if (selfDescribeInvalid && selfDescribeElement.current) {
+            selfDescribeElement.current.scrollIntoView();
+        }
+    }, [selfDescribeInvalid]);
 
     return (
         <div id={id} className="survey">
@@ -87,14 +93,16 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
                     register={register}
                 ></RadioButton>
                 {showGenderSelfDescribe === 'self-describe' && (
-                    <TextField
-                        id="genderSelfDescribe"
-                        labelText={t('genderSelfDescribe.label')}
-                        placeholder={t('genderSelfDescribe.placeholder')}
-                        helperText={t('genderSelfDescribe.helperText')}
-                        invalid={selfDescribeInvalid}
-                        register={register}
-                    />
+                    <div ref={selfDescribeElement}>
+                        <TextField
+                            id="genderSelfDescribe"
+                            labelText={t('genderSelfDescribe.label')}
+                            placeholder={t('genderSelfDescribe.placeholder')}
+                            helperText={t('genderSelfDescribe.helperText')}
+                            invalid={selfDescribeInvalid}
+                            register={register}
+                        />
+                    </div>
                 )}
                 <h3 id="countryOfResidence-label" className="typography__heading typography__heading--h3">
                     {t('countryOfResidence.label')}
