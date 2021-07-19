@@ -69,7 +69,11 @@ const SurveyPart2 = ({ id = 'survey-part-2', previous, next, defaultValues = {} 
             }
         }
         // If Valid, submit responses.
-        if (!invalid && next) next(responses);
+        if (invalid) {
+            document.getElementById('genderSelfDescribe').scrollIntoView();
+        } else if (next) {
+            next(responses);
+        }
     };
 
     return (
