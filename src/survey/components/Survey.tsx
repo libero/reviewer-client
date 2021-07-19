@@ -24,6 +24,7 @@ const Survey = (): JSX.Element => {
             newPage = pages.length - 1;
         }
         setCurrentPage(newPage);
+        window.scrollTo(0, 0);
     };
 
     const onPrevious = (): void => {
@@ -32,6 +33,7 @@ const Survey = (): JSX.Element => {
             newPage = 0;
         }
         setCurrentPage(newPage);
+        window.scrollTo(0, 0);
     };
 
     const onSubmit = (answers: SurveyPage1Answers | SurveyPage2Answers): void => {
