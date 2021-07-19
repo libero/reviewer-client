@@ -4,6 +4,12 @@ import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import SurveyPart2 from './SurveyPart2';
 
 describe('SurveyPart2', (): void => {
+
+    beforeAll(() => {
+        // NOTE: no support in jsdom for scrollIntoView, see https://github.com/jsdom/jsdom/issues/1695
+        HTMLElement.prototype.scrollIntoView = jest.fn();
+    });
+
     afterEach(() => {
         cleanup();
     });
