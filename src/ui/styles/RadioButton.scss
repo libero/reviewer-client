@@ -6,6 +6,9 @@
   position: absolute;
   z-index: 0;
   opacity: 0;
+  width: 24px;
+  height: 24px;
+  margin: 0;
 }
 
 .radio-button__label {
@@ -38,7 +41,6 @@
   width: 24px;
   z-index: -2;
   border: 1px solid #BDBDBD;
-
 }
 
 .radio-button__button::before {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useHistory } from 'react-router-dom';
 import { SurveyInput, SurveyResponse } from '../types';
@@ -60,6 +60,11 @@ const Survey = (): JSX.Element => {
         // Redirect them to the thank you page
         history.push(`/thankyou/${id}`);
     };
+
+    // Resets the view to the top of the page on page change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [currentPage]);
 
     pages = [
         <SurveyPart1 key="0" next={onNext} previous={onPrevious} defaultValues={currentAnswers} />,
