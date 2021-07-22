@@ -25,19 +25,19 @@ describe('SurveyPart2', (): void => {
     });
 
     it('should show the gender self describe input', async (): Promise<void> => {
-        const { getByLabelText, queryByText } = render(<SurveyPart2 />);
-        fireEvent.click(getByLabelText('genderIdentity.options-3'));
+        const { container, queryByText } = render(<SurveyPart2 />);
+        fireEvent.click(container.querySelector('#genderIdentity-option-3'));
         await waitFor(() => {});
         expect(queryByText('genderSelfDescribe.label')).not.toBeNull();
     });
 
     it('should by default have no initial values', async (): Promise<void> => {
-        const { getByLabelText, getByPlaceholderText } = render(<SurveyPart2 />);
-        const radioGenderIdentity = getByLabelText('genderIdentity.options-0') as HTMLInputElement;
+        const { container, getByLabelText, getByPlaceholderText } = render(<SurveyPart2 />);
+        const radioGenderIdentity = container.querySelector('#genderIdentity-option-0') as HTMLInputElement;
         expect(radioGenderIdentity.checked).toBe(false);
         const selectCountryOfResidence = getByLabelText('countryOfResidence.label') as HTMLInputElement;
         expect(selectCountryOfResidence.value).toBe('');
-        const radioCountryIndentifyAs = getByLabelText('countryIndentifyAs.options-0') as HTMLInputElement;
+        const radioCountryIndentifyAs = container.querySelector('#countryIndentifyAs-option-0') as HTMLInputElement;
         expect(radioCountryIndentifyAs.checked).toBe(false);
         const textRaceOrEthnicity = getByPlaceholderText('raceOrEthnicity.placeholder') as HTMLInputElement;
         expect(textRaceOrEthnicity.value).toBe('');
@@ -55,7 +55,7 @@ describe('SurveyPart2', (): void => {
         const { getByLabelText, getByPlaceholderText, container } = render(
             <SurveyPart2 defaultValues={defaultValues} />,
         );
-        const radioGenderIdentity = getByLabelText('genderIdentity.options-3') as HTMLInputElement;
+        const radioGenderIdentity = container.querySelector('#genderIdentity-option-3') as HTMLInputElement;
         expect(radioGenderIdentity.checked).toBe(true);
         const textGenderSelfDescribe = getByLabelText('genderSelfDescribe.label') as HTMLInputElement;
         expect(textGenderSelfDescribe.value).toBe('popsicle');
@@ -67,7 +67,7 @@ describe('SurveyPart2', (): void => {
             "input[name='secondCountryOfResidence']",
         ) as HTMLInputElement;
         expect(selectSecondaryCountryOfResidence.value).toBe('GB');
-        const radioCountryIndentifyAs = getByLabelText('countryIndentifyAs.options-0') as HTMLInputElement;
+        const radioCountryIndentifyAs = container.querySelector('#countryIndentifyAs-option-0') as HTMLInputElement;
         expect(radioCountryIndentifyAs.checked).toBe(true);
         const textRaceOrEthnicity = getByPlaceholderText('raceOrEthnicity.placeholder') as HTMLInputElement;
         expect(textRaceOrEthnicity.value).toBe('jedi');

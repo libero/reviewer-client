@@ -20,17 +20,19 @@ describe('SurveyPart1', (): void => {
     });
 
     it('should show independent researcher year question when required', async (): Promise<void> => {
-        const { getByLabelText, queryByText } = render(<SurveyPart1 />);
-        fireEvent.click(getByLabelText('independentResearcher.options-0'));
+        const { container, queryByText } = render(<SurveyPart1 />);
+        fireEvent.click(container.querySelector('#independentResearcher-option-0'));
         await waitFor(() => {});
         expect(queryByText('independentResearcherYear.label')).not.toBeNull();
     });
 
     it('should by default have no initial values', async (): Promise<void> => {
-        const { getByLabelText } = render(<SurveyPart1 />);
-        const radioSubmittingAs = getByLabelText('submittingAs.options-0') as HTMLInputElement;
+        const { container } = render(<SurveyPart1 />);
+        const radioSubmittingAs = container.querySelector('#submittingAs-option-0') as HTMLInputElement;
         expect(radioSubmittingAs.checked).toBe(false);
-        const radioIndependentResearcher = getByLabelText('independentResearcher.options-0') as HTMLInputElement;
+        const radioIndependentResearcher = container.querySelector(
+            '#independentResearcher-option-0',
+        ) as HTMLInputElement;
         expect(radioIndependentResearcher.checked).toBe(false);
     });
 
@@ -40,19 +42,21 @@ describe('SurveyPart1', (): void => {
             independentResearcher: 'yes',
             independentResearcherYear: '1990',
         };
-        const { getByLabelText } = render(<SurveyPart1 defaultValues={defaultValues} />);
-        const radioSubmittingAs = getByLabelText('submittingAs.options-0') as HTMLInputElement;
+        const { container, getByLabelText } = render(<SurveyPart1 defaultValues={defaultValues} />);
+        const radioSubmittingAs = container.querySelector('#submittingAs-option-0') as HTMLInputElement;
         expect(radioSubmittingAs.checked).toBe(true);
-        const radioIndependentResearcher = getByLabelText('independentResearcher.options-0') as HTMLInputElement;
+        const radioIndependentResearcher = container.querySelector(
+            '#independentResearcher-option-0',
+        ) as HTMLInputElement;
         expect(radioIndependentResearcher.checked).toBe(true);
         const textIndependentResearcherYear = getByLabelText('independentResearcherYear.label') as HTMLInputElement;
         expect(textIndependentResearcherYear.value).toBe('1990');
     });
 
     it('should change the button label when the form is dirty', async () => {
-        const { getByText, getByLabelText } = render(<SurveyPart1 />);
+        const { container, getByText } = render(<SurveyPart1 />);
         expect(getByText('navigation.skip')).toBeInTheDocument();
-        fireEvent.click(getByLabelText('independentResearcher.options-0'));
+        fireEvent.click(container.querySelector('#independentResearcher-option-0'));
         await waitFor(() => {});
         expect(getByText('navigation.next')).toBeInTheDocument();
     });

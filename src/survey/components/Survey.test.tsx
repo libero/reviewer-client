@@ -19,6 +19,10 @@ jest.mock('@apollo/react-hooks', () => ({
 }));
 
 describe('Survey', (): void => {
+    beforeAll(() => {
+        window.scrollTo = jest.fn();
+    });
+
     afterEach(() => {
         cleanup();
         mutationMock.mockReset();
@@ -99,7 +103,7 @@ describe('Survey', (): void => {
                         questionId: 'genderSelfDescribe',
                     },
                     {
-                        answer: 'AX',
+                        answer: 'AL',
                         text: 'secondCountryOfResidence.label',
                         questionId: 'secondCountryOfResidence',
                     },
@@ -112,8 +116,8 @@ describe('Survey', (): void => {
             wrapper: routerWrapper(['/survey/someid']),
         });
 
-        await fireEvent.click(getByLabelText('submittingAs.options-0'));
-        await fireEvent.click(getByLabelText('independentResearcher.options-0'));
+        await fireEvent.click(container.querySelector('#submittingAs-option-0'));
+        await fireEvent.click(container.querySelector('#independentResearcher-option-0'));
         const inputIndependentResearcherYear = container.querySelector(
             '#independentResearcherYear',
         ) as HTMLInputElement;
@@ -122,22 +126,22 @@ describe('Survey', (): void => {
         await fireEvent.click(container.querySelector("button[type='submit']"));
         await waitFor(() => {});
 
-        await fireEvent.click(getByLabelText('genderIdentity.options-3'));
+        await fireEvent.click(container.querySelector('#genderIdentity-option-3'));
         await fireEvent.change(getByLabelText('genderSelfDescribe.label'), { target: { value: 'popsicle' } });
         await fireEvent.keyDown(container.querySelector("input[name='countryOfResidence']"), {
             key: 'ArrowDown',
             keyCode: 40,
         });
-        await waitFor((): Element => getByText('countryOfResidence.countries-0'));
-        await fireEvent.click(getByText('countryOfResidence.countries-0'));
+        await waitFor((): Element => getByText('Afghanistan'));
+        await fireEvent.click(getByText('Afghanistan'));
         await fireEvent.click(getByText('countryOfResidence.collapsedText'));
         await fireEvent.keyDown(container.querySelector("input[name='secondCountryOfResidence']"), {
             key: 'ArrowDown',
             keyCode: 40,
         });
-        await waitFor((): Element => getByText('countryOfResidence.countries-1'));
-        await fireEvent.click(getByText('countryOfResidence.countries-1'));
-        await fireEvent.click(getByLabelText('countryIndentifyAs.options-0'));
+        await waitFor((): Element => getByText('Albania'));
+        await fireEvent.click(getByText('Albania'));
+        await fireEvent.click(container.querySelector('#countryIndentifyAs-option-0'));
         await fireEvent.change(container.querySelector("input[name='raceOrEthnicity']"), { target: { value: 'jedi' } });
 
         await fireEvent.click(container.querySelector("button[type='submit']"));
