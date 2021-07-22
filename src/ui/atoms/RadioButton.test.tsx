@@ -2,12 +2,13 @@ import React from 'react';
 import RadioButton from './RadioButton';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 
-describe('Pod', (): void => {
+describe('RadioButton', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
         expect((): RenderResult => render(<RadioButton options={[]} name="radioButton" />)).not.toThrow();
     });
+
     it('should render correctly with all props', (): void => {
         expect(
             (): RenderResult =>
@@ -38,6 +39,7 @@ describe('Pod', (): void => {
         expect(getByText('Chicken Wings')).toBeInTheDocument();
         expect(getByText('Bacon Burger')).toBeInTheDocument();
     });
+
     it('checks radio button if selected', (): void => {
         const { container } = render(
             <RadioButton
@@ -54,6 +56,7 @@ describe('Pod', (): void => {
         fireEvent.click(radioInput);
         expect(radioInput.checked).toBe(true);
     });
+
     it('renders radio with correct value', (): void => {
         const { container } = render(
             <RadioButton
@@ -68,6 +71,7 @@ describe('Pod', (): void => {
         expect(container.querySelector('.radio-button__input[value="chicken wings"]')).toBeInTheDocument();
         expect(container.querySelector('.radio-button__input[value="baconburger"]')).toBeInTheDocument();
     });
+
     it('renders radio with correct name', (): void => {
         const { container } = render(
             <RadioButton
@@ -81,6 +85,7 @@ describe('Pod', (): void => {
         );
         expect(container.querySelectorAll('.radio-button__input[name="radioButton"]')).toHaveLength(2);
     });
+
     it('registers each input', (): void => {
         const mockRegister = jest.fn();
         expect(mockRegister).toBeCalledTimes(0);
@@ -108,6 +113,7 @@ describe('Pod', (): void => {
         );
         expect(mockRegister).toBeCalledTimes(3);
     });
+
     it('sets inital value to checked', (): void => {
         const { container } = render(
             <RadioButton
