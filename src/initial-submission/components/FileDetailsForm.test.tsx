@@ -4,7 +4,6 @@ import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import * as yup from 'yup';
-import { FileDetailsSchema } from '../utils/validationSchemas';
 
 const nowISOString = new Date().toISOString();
 //TODO: put this in config
@@ -115,17 +114,6 @@ describe('File Details Form', (): void => {
             expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('');
         });
 
-        it('shows validation message if left empty', async (): Promise<void> => {
-            const { getByText } = render(
-                <FileDetailsForm
-                    schemaFactory={FileDetailsSchema}
-                    initialValues={testInitialValues}
-                    ButtonComponent={testButton}
-                />,
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => expect(getByText('files.validation.coverletter-required')).toBeInTheDocument());
-        });
         it('shows no errors if coverletter has a value', async (): Promise<void> => {
             const { getByText } = render(
                 <FileDetailsForm
