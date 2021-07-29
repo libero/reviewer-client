@@ -5,7 +5,7 @@ import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import '../styles/index.scss';
 import Logout from '../../login/components/Logout';
-import { CookieBanner, Footer, Feedback } from '../../ui/atoms';
+import { Footer, Feedback } from '../../ui/atoms';
 import * as Auth from '../utils/auth';
 import Login from '../../login/components/Login';
 import useTrackingHook from './useTrackingHook';
@@ -60,7 +60,6 @@ const AppRoutes: React.FC = (): JSX.Element => {
 
     return (
         <React.Suspense fallback={<Loader />}>
-            <CookieBanner />
             <NavBar />
             <Feedback />
             <div className="grid">
