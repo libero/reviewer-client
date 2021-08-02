@@ -1,7 +1,6 @@
-FROM testcafe/testcafe
+FROM testcafe/testcafe:1.14.2
 
 WORKDIR /app
-
 
 USER root
 RUN npm install testcafe-react-selectors testcafe
