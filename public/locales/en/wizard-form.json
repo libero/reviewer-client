@@ -58,8 +58,8 @@
     },
     "files": {
         "supporting-files-max": "Maximum 10 supporting files",
-        "coverletter-title": "Your cover letter (optional)",
-        "coverletter-guidance": "<span class=\"typography__small typography__small--secondary\">Please enter your cover letter if you have one (this is optional). <a class=\"typography__small typography__small--link files-step__link--nested\" href=\"/author-guide/initial\" target=\"_blank\">Read more about cover letters in the author guide</a>.</span>",
+        "coverletter-title": "Your cover letter",
+        "coverletter-guidance": "<span class=\"typography__small typography__small--secondary\">Please enter your cover letter below. For more information read our <a class=\"typography__small typography__small--link files-step__link--nested\" href=\"/author-guide/initial\" target=\"_blank\">Author guide</a>.</span>",
         "manuscript-title": "Your manuscript file",
         "manuscript-guidance": "<span class=\"typography__small typography__small--secondary\">Please include figures in your manuscript file. You do not need to upload figures separately. <a class=\"typography__small typography__small--link files-step__link--nested\" href=\"/author-guide/initial#single-manuscript\" target=\"_blank\">Learn more</a></span>",
         "supporting-title": "Supporting files (optional)",
