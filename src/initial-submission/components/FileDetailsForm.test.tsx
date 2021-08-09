@@ -4,7 +4,6 @@ import React, { useEffect, useRef, DependencyList } from 'react';
 import FileDetailsForm from './FileDetailsForm';
 import routerWrapper from '../../../test-utils/routerWrapper';
 import * as yup from 'yup';
-import { FileDetailsSchema } from '../utils/validationSchemas';
 
 const nowISOString = new Date().toISOString();
 //TODO: put this in config
@@ -86,63 +85,6 @@ describe('File Details Form', (): void => {
                 />,
             );
         }).not.toThrow();
-    });
-    describe('coverLetter', () => {
-        it('sets coverletter initial value to initialValues.coverLetter on load', async (): Promise<void> => {
-            const { container } = render(
-                <FileDetailsForm
-                    schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={{
-                        id: 'test',
-                        files: { coverLetter: 'some default value' },
-                        updated: nowISOString,
-                        articleType: '',
-                    }}
-                />,
-            );
-            expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('some default value');
-        });
-
-        it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
-            void
-        > => {
-            const { container } = render(
-                <FileDetailsForm
-                    schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={testInitialValues}
-                />,
-            );
-            expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('');
-        });
-
-        it('shows validation message if left empty', async (): Promise<void> => {
-            const { getByText } = render(
-                <FileDetailsForm
-                    schemaFactory={FileDetailsSchema}
-                    initialValues={testInitialValues}
-                    ButtonComponent={testButton}
-                />,
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => expect(getByText('files.validation.coverletter-required')).toBeInTheDocument());
-        });
-        it('shows no errors if coverletter has a value', async (): Promise<void> => {
-            const { getByText } = render(
-                <FileDetailsForm
-                    schemaFactory={(): yup.ObjectSchema => yup.object()}
-                    initialValues={{
-                        id: 'test',
-                        files: { coverLetter: 'some default value' },
-                        updated: nowISOString,
-                        articleType: '',
-                    }}
-                    ButtonComponent={testButton}
-                />,
-            );
-            fireEvent.click(getByText('TEST BUTTON'));
-            await waitFor(() => {});
-            expect(() => getByText('files.validation.coverletter-required')).toThrow();
-        });
     });
 
     describe('Manuscript Upload', () => {
@@ -405,6 +347,53 @@ describe('File Details Form', (): void => {
                 },
             });
             await waitFor(() => {});
+        });
+    });
+
+    describe('coverLetter', () => {
+        it('sets coverletter initial value to initialValues.coverLetter on load', async (): Promise<void> => {
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={{
+                        id: 'test',
+                        files: { coverLetter: 'some default value' },
+                        updated: nowISOString,
+                        articleType: '',
+                    }}
+                />,
+            );
+            expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('some default value');
+        });
+
+        it('sets coverletter initial value to empty string if no initialValues.coverLetter on load', async (): Promise<
+            void
+        > => {
+            const { container } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={testInitialValues}
+                />,
+            );
+            expect(container.querySelector('#coverLetter .ProseMirror').textContent).toBe('');
+        });
+
+        it('shows no errors if coverletter has a value', async (): Promise<void> => {
+            const { getByText } = render(
+                <FileDetailsForm
+                    schemaFactory={(): yup.ObjectSchema => yup.object()}
+                    initialValues={{
+                        id: 'test',
+                        files: { coverLetter: 'some default value' },
+                        updated: nowISOString,
+                        articleType: '',
+                    }}
+                    ButtonComponent={testButton}
+                />,
+            );
+            fireEvent.click(getByText('TEST BUTTON'));
+            await waitFor(() => {});
+            expect(() => getByText('files.validation.coverletter-required')).toThrow();
         });
     });
 
