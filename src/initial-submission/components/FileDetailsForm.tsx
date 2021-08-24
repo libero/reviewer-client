@@ -175,19 +175,6 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
     return (
         <div className="files-step">
             <h2 className="typography__heading typography__heading--h2 files-step__title">
-                {t('files.coverletter-title')}
-            </h2>
-            <Interweave content={t('files.coverletter-guidance')} />
-            <CoverLetter
-                id="coverLetter"
-                coverLetter={
-                    initialValues.files && initialValues.files.coverLetter ? initialValues.files.coverLetter : ''
-                }
-                onChange={(val: string): void => setValue('coverLetter', val, true)}
-                invalid={errors && errors.coverLetter !== undefined}
-                helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
-            />
-            <h2 className="typography__heading typography__heading--h2 files-step__title">
                 {t('files.manuscript-title')}
             </h2>
             <Interweave content={t('files.manuscript-guidance')} />
@@ -199,6 +186,19 @@ const FileDetailsForm = ({ initialValues, schemaFactory, ButtonComponent, toggle
                 }
                 onUpload={onManuscriptUpload}
                 state={manuscriptStatus}
+            />
+            <h2 className="typography__heading typography__heading--h2 files-step__title">
+                {t('files.coverletter-title')}
+            </h2>
+            <Interweave content={t('files.coverletter-guidance')} />
+            <CoverLetter
+                id="coverLetter"
+                coverLetter={
+                    initialValues.files && initialValues.files.coverLetter ? initialValues.files.coverLetter : ''
+                }
+                onChange={(val: string): void => setValue('coverLetter', val, true)}
+                invalid={errors && errors.coverLetter !== undefined}
+                helperText={errors && errors.coverLetter ? errors.coverLetter.message : null}
             />
             <h2 className="typography__heading typography__heading--h2 files-step__title">
                 {t('files.supporting-title')}
