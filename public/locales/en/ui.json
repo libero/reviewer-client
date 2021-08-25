@@ -1,9 +1,4 @@
 {
-    "cookie-banner": {
-        "button-text": "Got It",
-        "copy": "This site uses cookies to deliver its services and analyse traffic. By using this site, you agree to its use of cookies.",
-        "link-text": "Learn More"
-    },
     "image-attribution": "Illustration by ",
     "feedback": {
         "auth-timeout": "You were logged out but your progress was saved. Please log in again to continue.",
