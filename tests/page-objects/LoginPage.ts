@@ -1,4 +1,3 @@
-import { wait } from '@testing-library/react';
 import { Selector, t } from 'testcafe';
 import { clickSelector } from './formHelper';
 
@@ -16,8 +15,6 @@ export class LoginPage {
 
     public async login(orcidLoginOptional = false): Promise<void> {
         await clickSelector('.button--orcid');
-        await t.wait(2000);
-        await t.expect(this.loginButton.exists).notOk();
         if (process.env.ORCID_LOGIN_REQUIRED && process.env.ORCID_LOGIN_NAME && process.env.ORCID_LOGIN_PASSWORD) {
             const orcidPageVisible = await this.orcidPage.exists;
             if (orcidLoginOptional && !orcidPageVisible) return;
@@ -26,6 +23,9 @@ export class LoginPage {
             await this.enterORCIDPassword(process.env.ORCID_LOGIN_PASSWORD);
             await this.orcidLogin();
             await this.assertNotOnOrcidPage();
+        } else {
+            await t.wait(2000);
+            await t.expect(this.loginButton.exists).notOk();
         }
     }
 
