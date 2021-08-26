@@ -29,7 +29,7 @@ export class LoginPage {
     }
 
     private async dismissCookieBanner(): Promise<void> {
-        await clickSelector('.cookie-banner__button');
+        await clickSelector('#CybotCookiebotDialogBodyLevelButtonAccept');
         await t.expect(this.cookieBannerButton.visible).notOk();
     }
 
