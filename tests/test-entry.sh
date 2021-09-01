@@ -1,7 +1,7 @@
 #!/bin/sh
 set -xe
 
-TEST="testcafe --sf chromium:headless  --no-sandbox --disable-dev-shm-usage "
+TEST="testcafe --sf --config-file testcafe.json chromium:headless --no-sandbox --disable-dev-shm-usage"
 TEST_ARGS=${TEST_ARGS:-all}
 
 echo "Starting Test Suite: ${TEST_ARGS}"

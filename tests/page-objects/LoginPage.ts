@@ -16,16 +16,16 @@ export class LoginPage {
     }
 
     private async assertNotOnPage(): Promise<void> {
-        await t.expect(this.loginButton.exists).notOk({ timeout: 15000 });
-        await t.expect(this.loginButton.visible).notOk({ timeout: 15000 });
+        await t.expect(this.loginButton.exists).notOk();
+        await t.expect(this.loginButton.visible).notOk();
     }
 
     private async assertCookieBannerVisible(): Promise<void> {
         // CookieBot banner can take a while to load and display
-        await t.expect(this.cookieBanner.exists).ok({ timeout: 15000 });
-        await t.expect(this.loginButton.visible).ok({ timeout: 15000 });
-        await t.expect(this.cookieBannerButton.exists).ok({ timeout: 15000 });
-        await t.expect(this.cookieBannerButton.visible).ok({ timeout: 15000 });
+        await t.expect(this.cookieBanner.exists).ok();
+        await t.expect(this.loginButton.visible).ok();
+        await t.expect(this.cookieBannerButton.exists).ok();
+        await t.expect(this.cookieBannerButton.visible).ok();
     }
 
     private async dismissCookieBanner(): Promise<void> {
@@ -34,8 +34,11 @@ export class LoginPage {
     }
 
     public async login(orcidLoginOptional = false): Promise<void> {
-        await this.assertCookieBannerVisible();
-        await this.dismissCookieBanner();
+        // FIXME: Should be a better way to cope with the banner having been shown and hence not displayed.
+        if (!orcidLoginOptional) {
+            await this.assertCookieBannerVisible();
+            await this.dismissCookieBanner();
+        }
         await clickSelector('.button--orcid');
         if (process.env.ORCID_LOGIN_REQUIRED && process.env.ORCID_LOGIN_NAME && process.env.ORCID_LOGIN_PASSWORD) {
             const orcidPageVisible = await this.orcidPage.exists;
