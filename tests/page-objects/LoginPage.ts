@@ -11,7 +11,8 @@ export class LoginPage {
     private readonly orcidLoginButton: Selector = Selector('.sign-in-button');
 
     public async assertOnPage(): Promise<void> {
-        await t.expect(this.loginButton.exists).ok();
+        // Login page can take quite a while to load and display, hence the long timeout.
+        await t.expect(this.loginButton.exists).ok({ timeout: 15000 });
         await t.expect(this.loginButton.visible).ok();
     }
 
@@ -21,7 +22,6 @@ export class LoginPage {
     }
 
     private async assertCookieBannerVisible(): Promise<void> {
-        // CookieBot banner can take a while to load and display
         await t.expect(this.cookieBanner.exists).ok();
         await t.expect(this.loginButton.visible).ok();
         await t.expect(this.cookieBannerButton.exists).ok();
