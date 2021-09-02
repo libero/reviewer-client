@@ -86,22 +86,23 @@ test_firefox:
 		-e BASE_URL="reviewer-client_nginx:9000" \
 		--entrypoint testcafe \
 		libero/reviewer-browsertests:${IMAGE_TAG} \
-		"--config-file testcafe.json firefox:headless  --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
+		--assertion-timeout 15000 --skip-js-errors \
+		"firefox:headless --no-sandbox --disable-dev-shm-usage" 'tests/**/*.browser.ts'
 
 test_browser_containerized: build_browsertest test_chromium 
 
 test_browser_saucelabs: yarn  # browsers run during ci are set in .github/workflows/ci.yml
-	yarn testcafe --config-file testcafe.json 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:Chrome@latest:Windows 10','saucelabs:Firefox@latest:Windows 10','saucelabs:MicrosoftEdge@latest:Windows 10','saucelabs:Safari@latest:macOS Catalina','saucelabs:Safari@latest:macOS 10.14','saucelabs:Safari@latest:macOS 10.13' 'tests/**/*.browser.ts'
 
 test_browser_saucelabs_serial: yarn  # browsers run during ci are set in .github/workflows/ci.yml
-	yarn testcafe --config-file testcafe.json 'saucelabs:Chrome@latest:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe --config-file testcafe.json 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe --config-file testcafe.json 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:Chrome@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:Firefox@latest:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:MicrosoftEdge@latest:Windows 10' 'tests/**/*.browser.ts'
 	# old edge doesn't work, see https://github.com/libero/reviewer/issues/982
-	#yarn testcafe --config-file testcafe.json 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
-	yarn testcafe --config-file testcafe.json 'saucelabs:Safari@13:macOS 10.13' 'tests/**/*.browser.ts'
-	yarn testcafe --config-file testcafe.json 'saucelabs:Safari@12.0:macOS 10.14' 'tests/**/*.browser.ts'
-	yarn testcafe --config-file testcafe.json 'saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
+	#yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:MicrosoftEdge@18.17763:Windows 10' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:Safari@13:macOS 10.13' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:Safari@12.0:macOS 10.14' 'tests/**/*.browser.ts'
+	yarn testcafe --assertion-timeout 15000 --skip-js-errors 'saucelabs:Safari@11.0:macOS 10.12' 'tests/**/*.browser.ts'
 
 run_ci: ## run as if in ci
 	make lint

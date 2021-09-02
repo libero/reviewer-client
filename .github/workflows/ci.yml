@@ -80,9 +80,9 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: yarn testcafe --config-file testcafe.json  --sf "saucelabs:Firefox@latest:Windows 10" 'tests/**/*.browser.ts'
-      - run: yarn testcafe --config-file testcafe.json  --sf --skip-js-errors "saucelabs:MicrosoftEdge@latest:Windows 10" 'tests/**/*.browser.ts'
-      - run: yarn testcafe --config-file testcafe.json  --sf "saucelabs:Safari@13:macOS 10.13" 'tests/**/*.browser.ts'
+      - run: yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors "saucelabs:Firefox@latest:Windows 10" 'tests/**/*.browser.ts'
+      - run: yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors "saucelabs:MicrosoftEdge@latest:Windows 10" 'tests/**/*.browser.ts'
+      - run: yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors "saucelabs:Safari@13:macOS 10.13" 'tests/**/*.browser.ts'
       - name: Dump logs on failure
         if: failure()
         run: |
