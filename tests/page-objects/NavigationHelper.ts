@@ -1,5 +1,6 @@
 import {
     AuthorDetailsPage,
+    CookieBanner,
     DashboardPage,
     DetailsPage,
     DisclosurePage,
@@ -18,6 +19,9 @@ export class NavigationHelper {
         return location.href.split('/')[4];
     }
     public async navigateToDashboard(): Promise<void> {
+        const cookieBanner = new CookieBanner();
+        await cookieBanner.assertOnPage();
+        await cookieBanner.acceptCookies();
         const loginPage = new LoginPage();
         await loginPage.assertOnPage();
         await loginPage.login();

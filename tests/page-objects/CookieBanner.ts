@@ -6,8 +6,7 @@ export class CookieBanner {
     private readonly cookieBannerButton: Selector = Selector('#CybotCookiebotDialogBodyLevelButtonAccept');
 
     public async assertOnPage(): Promise<void> {
-        // Banner loads into page asynchronously, hence the long timeout.
-        await t.expect(this.cookieBanner.exists).ok({ timeout: 15000 });
+        await t.expect(this.cookieBanner.exists).ok();
         await t.expect(this.cookieBanner.visible).ok();
         await t.expect(this.cookieBannerButton.exists).ok();
         await t.expect(this.cookieBannerButton.visible).ok();

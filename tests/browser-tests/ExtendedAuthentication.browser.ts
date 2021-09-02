@@ -1,10 +1,13 @@
-import { DashboardPage, LoginPage, NavigationPane } from '../page-objects';
+import { CookieBanner, DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { t, Selector } from 'testcafe';
 
 fixture`ExtendedAuthentication`.page`${BASE_URL}`.meta('fixtureID', 'staging');
 
 test('User can login', async () => {
+    const cookieBanner = new CookieBanner();
+    await cookieBanner.assertOnPage();
+    await cookieBanner.acceptCookies();
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
@@ -15,6 +18,9 @@ test('User can login', async () => {
 });
 
 test('User can logout then login again', async () => {
+    const cookieBanner = new CookieBanner();
+    await cookieBanner.assertOnPage();
+    await cookieBanner.acceptCookies();
     const loginPage = new LoginPage();
     const navigationPane = new NavigationPane();
     await loginPage.assertOnPage();

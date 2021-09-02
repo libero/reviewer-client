@@ -9,8 +9,7 @@ export class LoginPage {
     private readonly orcidLoginButton: Selector = Selector('.sign-in-button');
 
     public async assertOnPage(): Promise<void> {
-        // Login page can take quite a while to load and display, hence the long timeout.
-        await t.expect(this.loginButton.exists).ok({ timeout: 15000 });
+        await t.expect(this.loginButton.exists).ok();
         await t.expect(this.loginButton.visible).ok();
     }
 

@@ -1,4 +1,4 @@
-import { LoginPage, NavigationPane, StaticPage } from '../page-objects';
+import { CookieBanner, LoginPage, NavigationPane, StaticPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 // import { waitForReact } from 'testcafe-react-selectors';
 
@@ -11,6 +11,9 @@ fixture`Static Pages`.page`${BASE_URL}`;
 test('static pages', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
+    const cookieBanner = new CookieBanner();
+    await cookieBanner.assertOnPage();
+    await cookieBanner.acceptCookies();
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
