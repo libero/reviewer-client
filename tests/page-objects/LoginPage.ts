@@ -13,9 +13,13 @@ export class LoginPage {
         await t.expect(this.loginButton.visible).ok();
     }
 
+    private async assertNotOnPage(): Promise<void> {
+        await t.expect(this.loginButton.exists).notOk();
+        await t.expect(this.loginButton.visible).notOk();
+    }
+
     public async login(orcidLoginOptional = false): Promise<void> {
         await clickSelector('.button--orcid');
-        await t.expect(this.loginButton.exists).notOk();
         if (process.env.ORCID_LOGIN_REQUIRED && process.env.ORCID_LOGIN_NAME && process.env.ORCID_LOGIN_PASSWORD) {
             const orcidPageVisible = await this.orcidPage.exists;
             if (orcidLoginOptional && !orcidPageVisible) return;
@@ -25,6 +29,7 @@ export class LoginPage {
             await this.orcidLogin();
             await this.assertNotOnOrcidPage();
         }
+        await this.assertNotOnPage();
     }
 
     public async assertOnOrcidPage(): Promise<void> {

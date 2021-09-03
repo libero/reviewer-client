@@ -13,8 +13,8 @@
         "prettier": "prettier --write 'src/**/*ts?'",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "test:browser": "yarn testcafe chrome --sf 'tests/**/*.browser.ts'",
-        "test:browser-headless": "yarn testcafe chrome:headless --sf 'tests/**/*.browser.ts'"
+        "test:browser": "yarn testcafe --assertion-timeout 15000 --skip-js-errors chrome --sf 'tests/**/*.browser.ts'",
+        "test:browser-headless": "yarn testcafe --assertion-timeout 15000 --skip-js-errors chrome:headless --sf 'tests/**/*.browser.ts'"
     },
     "eslintConfig": {
         "parser": "@typescript-eslint/parser",
