@@ -35,10 +35,6 @@ const Fees = (): JSX.Element => {
                 <Interweave content={t('fees.p5')} />
             </Paragraph>
 
-            <Paragraph type="reading">
-                <Interweave content={t('fees.p6')} />
-            </Paragraph>
-
             <h3 id={t('fees.question1.anchor')} className="typography__heading typography__heading--h3">
                 {t('fees.question1.heading')}
             </h3>
