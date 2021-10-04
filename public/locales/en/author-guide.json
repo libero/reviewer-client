@@ -371,6 +371,14 @@
                 "p8": "There may be cases where authors would like to re-use or adapt images from previously published work. It is fine to include figures that have been published under a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>; please cite the original author and source, and include a link to the corresponding license. In other cases, please seek permission from the copyright holder to reuse the figure under the terms of a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>."
             },
 
+            "appendix-files": {
+                "anchor": "appendix-files",
+                "heading": "Appendix files",
+                "p1": "eLife encourages authors to incorporate as much information as possible within the main text of the article file; however, we appreciate that there are some circumstances where it is not possible to incorporate the additional text e.g. in mathematical derivations or lengthy explanations of a computational model. In such cases, we would recommend presenting the additional text as an Appendix, as in <a href=\"https://elifesciences.org/articles/44591\" target=\"_blank\">eLife 2019;8:e44591</a>.",
+                "p2": "Authors can include the Appendix text at the end of the main article file or upload it separately to the submission system as a second Article File. If uploading the file separately, the Appendix file should meet the same requirements as the main article file (see “<a href=\"#article-text-file\">Article Text File</a>” section above). Please note that Appendices do not have a separate reference list, so any references cited in the Appendix should be included in the reference list of the main article file.",
+                "p3": "Any tables to be presented in line with the Appendix should be formatted in the same way as main tables within the Appendix file, and they should be labelled Appendix 1—table 1, Appendix 1—table 2, Appendix 2—table 1, etc. Authors can also include figures with their Appendix. In this case, please follow the guidance for Appendix figures outlined in the “<a href=\"#figures-figure-supplements\">Figures and Figure Supplements</a>” section above."
+            },
+
             "key-resources": {
                 "anchor": "key-resources-table",
                 "heading": "Key Resources Table",
