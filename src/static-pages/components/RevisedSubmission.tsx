@@ -99,6 +99,22 @@ const RevisedSubmission = (): JSX.Element => {
             </Paragraph>
 
             <h3
+                id={t('revised-submission.source-manuscript.appendix-files.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
+                {t('revised-submission.source-manuscript.appendix-files.heading')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.appendix-files.p1')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.appendix-files.p2')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.appendix-files.p3')} />
+            </Paragraph>
+
+            <h3
                 id={t('revised-submission.source-manuscript.key-resources.anchor')}
                 className="typography__heading typography__heading--h3"
             >
