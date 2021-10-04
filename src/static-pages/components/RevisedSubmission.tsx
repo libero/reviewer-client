@@ -188,6 +188,9 @@ const RevisedSubmission = (): JSX.Element => {
             <Paragraph type="reading">
                 <Interweave content={t('revised-submission.source-manuscript.digest.p1')} />
             </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.digest.p2')} />
+            </Paragraph>
 
             <h2
                 id={t('revised-submission.source-manuscript.striking.anchor')}

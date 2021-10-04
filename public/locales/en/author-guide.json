@@ -417,7 +417,8 @@
             "digest": {
                 "anchor": "elife-digest",
                 "heading": "eLife Digest",
-                "p1": "Most eLife papers include a plain-language summary (called an eLife digest) that explains the background and central findings of the work to a broad readership. When an author has been asked to revise a full submission, a member of the Features Team will make contact to ask if the author would like to include a digest in their paper. Digests are typically between 200 and 400 words long."
+                "p1": "Most eLife papers include a plain-language summary (called an eLife digest) that explains the background and central findings of the work to a broad readership. When an author has been asked to revise a full submission, a member of the Features Team will make contact to ask if the author would like to include a digest in their paper. Digests are typically between 200 and 400 words long.",
+                "p2": "If authors would like their manuscript to be considered for an eLife Digest, please answer “Yes” to the eLife Digest query in the submission system. <a href=\"https://elifesciences.org/inside-elife/85518309/plain-language-summaries-how-to-write-an-elife-digest\" target=\"_blank\">Answers for the eLife Digest</a> should be uploaded along with the rest of the submission files, using the “Answers for the eLife Digest” file type."
             },
 
             "striking": {
