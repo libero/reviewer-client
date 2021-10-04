@@ -137,6 +137,25 @@ const RevisedSubmission = (): JSX.Element => {
                 <Interweave content={t('revised-submission.source-manuscript.rich-media-files.p2')} />
             </Paragraph>
 
+            <h3
+                id={t('revised-submission.source-manuscript.source-data-files.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
+                {t('revised-submission.source-manuscript.source-data-files.heading')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.source-data-files.p1')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.source-data-files.p2')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.source-data-files.p3')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.source-data-files.p4')} />
+            </Paragraph>
+
             <h2
                 id={t('revised-submission.source-manuscript.impact-statement.anchor')}
                 className="typography__heading typography__heading--h2"
