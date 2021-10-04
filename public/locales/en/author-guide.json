@@ -377,15 +377,6 @@
                 "p1": "Where appropriate, and especially for studies including bench research, authors should incorporate a Key Resources Table within their resubmission. This is designed to highlight genetically modified organisms and strains, cell lines, reagents, and software that are essential to reproduce the results presented. Please download and complete <a href=\"https://elife-cdn.s3.amazonaws.com/author-guide/elifeKRTtemplatev2.docx\" target=\"_blank\">this template</a> for the Key Resources Table to ensure consistency. The template is a resource developed by FlyBase with input from other model organism databases, and it includes notes on completion and an example table. The completed Key Resources Table should be incorporated within your article file at the very beginning of the Materials and Methods section (<a href=\"https://elifesciences.org/articles/32586#s4\" target=\"_blank\">example in published article available here</a>)."
             },
 
-            "figures": {
-                "anchor": "figures-figure-supplements",
-                "heading": "Figures and Figure Supplements",
-                "p1": "Each figure and each figure supplement should be uploaded as an individual file: each image should be labelled Figure 1, Figure 2, and so on. Figures and figure supplements can be uploaded in the following formats: TIFF, GIF, JPG, EPS, AI, and PDF.",
-                "p2": "All figures must be uploaded at a minimum dpi of 300 and a minimum physical width size of 10cm. If you anticipate any figures being the equivalent width of a full typeset page, they must be uploaded at a minimum physical width of 20cm and remain at 300 dpi.",
-                "p3": "At the revised submission stage, please ensure that whitespace around figures is minimised, especially in PDF images.",
-                "p4": "Figures in revised manuscripts may be screened to ensure that they have not been adjusted in any way that could lead to misinterpretation of the information present in the original image."
-            },
-
             "impact-statement": {
                 "anchor": "impact-statement",
                 "heading": "Impact Statement",
