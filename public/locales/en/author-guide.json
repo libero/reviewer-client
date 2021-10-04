@@ -350,6 +350,14 @@
                 "p3": "Please also make sure to include information in your manuscript related to the use of cell lines, animal or human experimentation and data and software availability, as indicated in our <a href=\"/author-guide/journal-policies\">Journal Policies</a>."
             },
 
+            "tables": {
+                "anchor": "tables",
+                "heading": "Tables",
+                "p1": "Tables should be editable and included within the article file so that they can be typeset during the production process.",
+                "p2": "To ensure that tables are provided in an accessible format, we are unable to accommodate tables as figures or figure supplements.",
+                "p3": "Coloured text and cells are discouraged in tables because they are less accessible and machine readable and coloured text cannot be presented by other content providers (such as Pubmed Central). Where possible, bold and/or italics should instead be used to highlight cells or data."
+            },
+
             "key-resources": {
                 "anchor": "key-resources-table",
                 "heading": "Key Resources Table",
