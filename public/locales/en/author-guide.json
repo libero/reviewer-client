@@ -385,6 +385,13 @@
                 "p1": "Where appropriate, and especially for studies including bench research, authors should incorporate a Key Resources Table within their resubmission. This is designed to highlight genetically modified organisms and strains, cell lines, reagents, and software that are essential to reproduce the results presented. Please download and complete <a href=\"https://elife-cdn.s3.amazonaws.com/author-guide/elifeKRTtemplatev2.docx\" target=\"_blank\">this template</a> for the Key Resources Table to ensure consistency. The template is a resource developed by FlyBase with input from other model organism databases, and it includes notes on completion and an example table. The completed Key Resources Table should be incorporated within your article file at the very beginning of the Materials and Methods section (<a href=\"https://elifesciences.org/articles/32586#s4\" target=\"_blank\">example in published article available here</a>)."
             },
 
+            "rich-media-files": {
+                "anchor": "rich-media-files",
+                "heading": "Rich Media Files",
+                "p1": "Rich media files encompass forms of presentation that go beyond static presentation: for example, videos, audio clips, animations, slideshows, and interactive diagrams. Rich media files should be supplied as AVI, WMV, MOV, MP4, or H264. Where an audio track is present, we recommend a sampling rate of 44100, 22050, or 11025 Hz to avoid encoding and quality issues. Please see <a href=\"https://elifesciences.org/articles/52067\" target=\"_blank\">eLife 2020;9:e52067</a> for an example of how videos are published. ",
+                "p2": "Authors should upload their videos using the “Rich Media” file type, and these should be called “Video 1”, “Video 2” etc. Videos can also be presented as supplements to main Figures, in which case the label for the file should read “Figure 1—video 1”, “Figure 1—video 2”, “Figure 3—video 1” etc. Each rich media file should be accompanied by a concise title/legend at the end of the article file."
+            },
+
             "impact-statement": {
                 "anchor": "impact-statement",
                 "heading": "Impact Statement",
