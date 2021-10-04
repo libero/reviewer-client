@@ -152,6 +152,62 @@ const JournalFAQs = (): JSX.Element => {
             <Paragraph type="reading">
                 <Interweave content={t('journal-faqs.general.answer10')} />
             </Paragraph>
+
+            <h2
+                id={t('journal-faqs.revised-submissions.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
+                {t('journal-faqs.revised-submissions.heading')}
+            </h2>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question1')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer1')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question2')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer2')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question3')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer3')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question4')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer4')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question5')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer5')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question6')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer6')} />
+            </Paragraph>
+
+            <h3 className="typography__heading typography__heading--h3">
+                {t('journal-faqs.revised-submissions.question7')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('journal-faqs.revised-submissions.answer7')} />
+            </Paragraph>
         </div>
     );
 };
