@@ -358,6 +358,19 @@
                 "p3": "Coloured text and cells are discouraged in tables because they are less accessible and machine readable and coloured text cannot be presented by other content providers (such as Pubmed Central). Where possible, bold and/or italics should instead be used to highlight cells or data."
             },
 
+            "figures-figure-supplements": {
+                "anchor": "figures-figure-supplements",
+                "heading": "Figures and Figure Supplements",
+                "p1": "Authors should ensure that each figure, figure supplement and appendix figure is uploaded individually i.e. Figure 1, Figure 1—figure supplement 1, Figure 2, Appendix 1—figure 1 etc. should each be uploaded as separate files. Legends for each figure and figure supplement should be provided in an editable form within the article or appendix file.",
+                "p2": "When naming figure supplements, please ensure that these are linked to one main figure, and that the numbering of the figure supplements begins at “1” for each main figure e.g. Figure 1—figure supplement 1, Figure 1—figure supplement 2, Figure 3—figure supplement 1. Similarly, when naming appendix figures, please ensure they are linked to the appropriate appendix and that the numbering of the appendix figures begins at “1” for each appendix e.g. Appendix 1—figure 1, Appendix 1—figure 2, Appendix 2—figure 1.",
+                "p3": "Figures and figure supplements can be uploaded in the following formats: TIFF, JPG, EPS, AI and PDF. If providing figures in TIFF format, please provide this in 8-bit format. ",
+                "p4": "We are unable to support or display multi-page figures or figure supplements. All figures must be uploaded at a minimum dpi of 300 and a minimum physical width size of 10cm. If you anticipate any figures being the equivalent width of a full typeset page, they must be uploaded at a minimum physical width of 20cm and remain at 300 dpi. At the revised submission stage, please provide images in an RGB color space and ensure that whitespace around figures is minimised, especially in PDF images. Before uploading the figure files, please ensure that any hidden layers are turned off to prevent processing issues. ",
+                "p5": "Figures in revised manuscripts may be screened to ensure that they have not been adjusted in any way that could lead to misinterpretation of the information present in the original image.",
+                "p6": "When preparing figures, we recommend that authors follow the principles of Colour Universal Design (Masataka, Okabe and Kei Ito, J*Fly), whereby colour schemes are chosen to ensure maximum accessibility for all types of colour vision.",
+                "p7": "Animated figures (i.e. GIFs) can be accommodated: these should be uploaded using the “Rich Media” file type and labelled Animation 1, Animation 2 etc. Animations can also be linked to main figures e.g. Figure 1—animation 1, Figure 1—animation 2, Figure 2—animation 1.",
+                "p8": "There may be cases where authors would like to re-use or adapt images from previously published work. It is fine to include figures that have been published under a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>; please cite the original author and source, and include a link to the corresponding license. In other cases, please seek permission from the copyright holder to reuse the figure under the terms of a <a href=\"http://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Creative Commons Attribution license</a>."
+            },
+
             "key-resources": {
                 "anchor": "key-resources-table",
                 "heading": "Key Resources Table",
