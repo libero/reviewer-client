@@ -68,6 +68,37 @@ const RevisedSubmission = (): JSX.Element => {
             </Paragraph>
 
             <h3
+                id={t('revised-submission.source-manuscript.figures-figure-supplements.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
+                {t('revised-submission.source-manuscript.figures-figure-supplements.heading')}
+            </h3>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p1')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p2')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p3')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p4')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p5')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p6')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p7')} />
+            </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p8')} />
+            </Paragraph>
+
+            <h3
                 id={t('revised-submission.source-manuscript.key-resources.anchor')}
                 className="typography__heading typography__heading--h3"
             >
