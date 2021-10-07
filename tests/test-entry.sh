@@ -8,7 +8,7 @@ echo "Starting Test Suite: ${TEST_ARGS}"
 
 if [ ${TEST_ARGS} == "all" ]
 then
-  ${TEST} 'tests/**/*.browser.ts'
+  find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "${TEST} % || exit 255"
 else
   ${TEST} tests ${TEST_ARGS}
 fi
