@@ -2,7 +2,7 @@ import { ClientFunction, Selector, t } from 'testcafe';
 import { clickSelector } from './formHelper';
 
 const hasConsentedToCookies = ClientFunction(() => {
-    return document.cookie.split(';').find(cookie => cookie.trimStart().startsWith('CookieConsent=')) ? true : false;
+    return document.cookie.split(';').find(cookie => cookie.trim().startsWith('CookieConsent=')) ? true : false;
 });
 
 export class CookieBanner {
