@@ -1,6 +1,7 @@
 import {
     AuthorDetailsPage,
-    DetailsPage, DisclosurePage,
+    DetailsPage,
+    DisclosurePage,
     EditorPage,
     FilesPage,
     NavigationHelper,
@@ -42,8 +43,8 @@ test('details page', async () => {
     const detailsPage = new DetailsPage();
     await detailsPage.assertOnPage();
     await detailsPage.clearTitle();
-    await detailsPage.togglePreviouslyConsidered();
     await detailsPage.togglePreviouslyDiscussed();
+    await detailsPage.togglePreviouslyConsidered();
     await detailsPage.toggleCosubmission();
     await detailsPage.next(true);
     const validationHelper = new ValidationHelper();
