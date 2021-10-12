@@ -14,6 +14,7 @@ export class LoginPage {
     }
 
     private async assertNotOnPage(): Promise<void> {
+        // Long timeout here as we wait to be redirected to the next page.
         await t.expect(this.loginButton.exists).notOk({ timeout: 15000 });
         await t.expect(this.loginButton.visible).notOk();
     }
