@@ -10,7 +10,7 @@ export class CookieBanner {
     private readonly cookieBannerButton: Selector = Selector('#CybotCookiebotDialogBodyLevelButtonAccept');
 
     public async assertOnPage(): Promise<void> {
-        if (!hasConsentedToCookies()) {
+        if (await !hasConsentedToCookies()) {
             await t.expect(this.cookieBanner.exists).ok();
             await t.expect(this.cookieBanner.visible).ok();
             await t.expect(this.cookieBannerButton.exists).ok();
@@ -19,7 +19,7 @@ export class CookieBanner {
     }
 
     public async acceptCookies(): Promise<void> {
-        if (!hasConsentedToCookies()) {
+        if (await !hasConsentedToCookies()) {
             await clickSelector('#CybotCookiebotDialogBodyLevelButtonAccept');
             await t.expect(this.cookieBannerButton.visible).notOk();
         }
