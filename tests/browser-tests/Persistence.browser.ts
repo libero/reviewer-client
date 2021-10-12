@@ -9,13 +9,7 @@ import {
     DisclosurePage,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
-import { ClientFunction, t } from 'testcafe';
-
-async function refreshCurrentPage(): Promise<void> {
-    await ClientFunction(() => {
-        document.location.reload();
-    })();
-}
+import { t } from 'testcafe';
 
 fixture`Persistence`.page`${BASE_URL}`;
 
@@ -102,7 +96,7 @@ test('Author Step persists values on refresh', async () => {
     await authorDetailsPage.populateMinimalFields();
     // allow autosave to catch up
     await t.wait(2000);
-    await refreshCurrentPage();
+    await t.eval(() => location.reload(true));
     await authorDetailsPage.assertOnPage();
     await authorDetailsPage.assertPopulatedValues();
 });
@@ -112,7 +106,7 @@ test('Files Step persists values on refresh', async () => {
     const filesPage = new FilesPage();
     await navigationHelper.navigateToFilesPage();
     await filesPage.populateMinimalFields();
-    await refreshCurrentPage();
+    await t.eval(() => location.reload(true));
     await filesPage.assertOnPage();
     await filesPage.assertPopulatedValues();
 });
@@ -124,7 +118,7 @@ test('Details Step persists values on refresh', async () => {
     await detailsPage.populateMinimalFields();
     // allow autosave to catch up
     await t.wait(2000);
-    await refreshCurrentPage();
+    await t.eval(() => location.reload(true));
     await detailsPage.assertOnPage();
     await detailsPage.assertPopulatedValues();
 });
@@ -134,7 +128,7 @@ test('Editors Step persists values on refresh', async () => {
     const editorsPage = new EditorPage();
     await navigationHelper.navigateToEditorsPage();
     await editorsPage.populateMinimalFields();
-    await refreshCurrentPage();
+    await t.eval(() => location.reload(true));
     await editorsPage.assertOnPage();
     await editorsPage.assertPopulatedValues();
 });
@@ -146,7 +140,7 @@ test('Disclosure Step persists values on refresh', async () => {
     await disclosurePage.populateMinimalFields();
     // allow autosave to catch up
     await t.wait(2000);
-    await refreshCurrentPage();
+    await t.eval(() => location.reload(true));
     await disclosurePage.assertOnPage();
     await disclosurePage.assertPopulatedValues();
 });
