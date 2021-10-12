@@ -1,4 +1,4 @@
-FROM testcafe/testcafe:1.15.3
+FROM testcafe/testcafe:1.16.1
 
 WORKDIR /app
 
