@@ -1,9 +1,18 @@
 import { ClientFunction, Selector, t } from 'testcafe';
 import { clickSelector } from './formHelper';
 
-const hasConsentedToCookies = ClientFunction(() => {
-    return document.cookie.split(';').find(cookie => cookie.trim().startsWith('CookieConsent=')) ? true : false;
+const getCookies = ClientFunction(() => {
+    return document.cookie;
 });
+
+async function hasConsentedToCookies(): Promise<boolean> {
+    let retVal = false;
+    const cookies = await getCookies();
+    if (cookies.length > 0) {
+        retVal = cookies.split(';').find(cookie => cookie.trim().startsWith('CookieConsent=')) ? true : false;
+    }
+    return retVal;
+}
 
 export class CookieBanner {
     private readonly cookieBanner: Selector = Selector('#CybotCookiebotDialog');
