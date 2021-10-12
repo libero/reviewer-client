@@ -1,4 +1,4 @@
-import { ClientFunction, Selector, t } from 'testcafe';
+import { Selector, t } from 'testcafe';
 import { clickNext, clickSelector, clickBack, clickWithSelectorAndText } from './formHelper';
 
 interface NameEmail {
