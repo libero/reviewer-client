@@ -68,6 +68,8 @@ export class DetailsPage {
 
     public async clearTitle(): Promise<void> {
         await t.selectText(this.titleInput).pressKey('delete');
+        // Need to blur the input for the following click event to work as expected
+        await t.pressKey('tab');
     }
 
     public async getTitle(): Promise<string> {
