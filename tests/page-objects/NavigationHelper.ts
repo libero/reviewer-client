@@ -12,9 +12,10 @@ import {
 import { ClientFunction } from 'testcafe';
 import { ArticleType } from './DashboardPage';
 
+const getWindowLocation = ClientFunction(() => window.location);
+
 export class NavigationHelper {
     private async getIdFromUrl(): Promise<string> {
-        const getWindowLocation = ClientFunction(() => window.location);
         const location = await getWindowLocation();
         return location.href.split('/')[4];
     }
