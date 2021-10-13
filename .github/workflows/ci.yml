@@ -80,9 +80,9 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors \"saucelabs:Firefox@latest:Windows 10\" % || exit 255"
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors \"saucelabs:MicrosoftEdge@latest:Windows 10\" % || exit 255"
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors \"saucelabs:Safari@13:macOS 10.13\" % || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 -e -u --disable-http2 \"saucelabs:Firefox@latest:Windows 10\" % || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 -e -u --disable-http2 \"saucelabs:MicrosoftEdge@latest:Windows 10\" % || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 -e -u --disable-http2 \"saucelabs:Safari@13:macOS 10.13\" % || exit 255"
       - name: Dump logs on failure
         if: failure()
         run: |
