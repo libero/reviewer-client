@@ -1,4 +1,4 @@
-import { CookieBanner, LoginPage, NavigationPane } from '../page-objects';
+import { LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { beforeEach } from '../../test-utils/beforeEach';
 
@@ -7,9 +7,6 @@ fixture`Navigation`.page(BASE_URL).beforeEach(beforeEach);
 test('assert nav bar', async () => {
     const navigationPane = new NavigationPane();
     await navigationPane.assertOnPage();
-    const cookieBanner = new CookieBanner();
-    await cookieBanner.assertOnPage();
-    await cookieBanner.acceptCookies();
     const loginPage = new LoginPage();
     await loginPage.assertOnPage();
     await loginPage.login();
