@@ -10,11 +10,9 @@ import {
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { t } from 'testcafe';
-import { sleep } from '../../test-utils/sleep';
+import { beforeEach } from '../../test-utils/beforeEach';
 
-fixture`Persistence`.page(BASE_URL).beforeEach(async () => {
-    await sleep(10000);
-});
+fixture`Persistence`.page(BASE_URL).beforeEach(beforeEach);
 
 test('Return to Author Step from Dashboard', async () => {
     const navigationHelper = new NavigationHelper();

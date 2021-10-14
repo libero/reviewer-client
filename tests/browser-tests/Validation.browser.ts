@@ -8,11 +8,9 @@ import {
     ValidationHelper,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
-import { sleep } from '../../test-utils/sleep';
+import { beforeEach } from '../../test-utils/beforeEach';
 
-fixture`Validation`.page(BASE_URL).beforeEach(async () => {
-    await sleep(10000);
-});
+fixture`Validation`.page(BASE_URL).beforeEach(beforeEach);
 
 test('author page', async () => {
     const navigationHelper = new NavigationHelper();

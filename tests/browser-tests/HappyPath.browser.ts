@@ -1,14 +1,12 @@
 import { NavigationHelper, SurveyPage, ThankYouPage, DashboardPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
-import { sleep } from '../../test-utils/sleep';
+import { beforeEach } from '../../test-utils/beforeEach';
 
 fixture`Happy Path`
     .page(BASE_URL)
     .meta('fixtureID', 'staging')
     .meta('umbrella', 'true')
-    .beforeEach(async () => {
-        await sleep(10000);
-    });
+    .beforeEach(beforeEach);
 
 test('Happy path', async () => {
     const navigationHelper = new NavigationHelper();

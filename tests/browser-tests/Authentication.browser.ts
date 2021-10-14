@@ -1,10 +1,8 @@
 import { CookieBanner, DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
-import { sleep } from '../../test-utils/sleep';
+import { beforeEach } from '../../test-utils/beforeEach';
 
-fixture`Authentication`.page(`${BASE_URL}`).beforeEach(async () => {
-    await sleep(10000);
-});
+fixture`Authentication`.page(`${BASE_URL}`).beforeEach(beforeEach);
 
 test('User can login', async () => {
     const cookieBanner = new CookieBanner();
