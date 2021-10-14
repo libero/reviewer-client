@@ -1,7 +1,13 @@
 import { NavigationHelper, FilesPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`Replace and remove files`.page`${BASE_URL}`.meta('fixtureID', 'staging');
+fixture`Replace and remove files`
+    .page(BASE_URL)
+    .meta('fixtureID', 'staging')
+    .beforeEach(async () => {
+        await sleep(10000);
+    });
 
 test('Replace manuscript', async () => {
     const navigationHelper = new NavigationHelper();

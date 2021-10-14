@@ -1,9 +1,14 @@
-// import { waitForReact } from 'testcafe-react-selectors';
-
 import { NavigationHelper, SurveyPage, ThankYouPage, DashboardPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`Happy Path`.page`${BASE_URL}`.meta('fixtureID', 'staging').meta('umbrella', 'true');
+fixture`Happy Path`
+    .page(BASE_URL)
+    .meta('fixtureID', 'staging')
+    .meta('umbrella', 'true')
+    .beforeEach(async () => {
+        await sleep(10000);
+    });
 
 test('Happy path', async () => {
     const navigationHelper = new NavigationHelper();

@@ -1,8 +1,14 @@
 import { CookieBanner, DashboardPage, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
 import { t, Selector } from 'testcafe';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`ExtendedAuthentication`.page`${BASE_URL}`.meta('fixtureID', 'staging');
+fixture`ExtendedAuthentication`
+    .page(BASE_URL)
+    .meta('fixtureID', 'staging')
+    .beforeEach(async () => {
+        await sleep(10000);
+    });
 
 test('User can login', async () => {
     const cookieBanner = new CookieBanner();

@@ -1,12 +1,10 @@
 import { CookieBanner, LoginPage, NavigationPane, StaticPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
-// import { waitForReact } from 'testcafe-react-selectors';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`Static Pages`.page`${BASE_URL}`;
-
-// .beforeEach(async () => {
-//     await waitForReact();
-// });
+fixture`Static Pages`.page(BASE_URL).beforeEach(async () => {
+    await sleep(10000);
+});
 
 test('static pages', async () => {
     const navigationPane = new NavigationPane();

@@ -1,8 +1,14 @@
 import { t } from 'testcafe';
 import { DashboardPage, NavigationHelper, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`Dashboard`.page`${BASE_URL}`.meta('fixtureID', 'staging');
+fixture`Dashboard`
+    .page(BASE_URL)
+    .meta('fixtureID', 'staging')
+    .beforeEach(async () => {
+        await sleep(10000);
+    });
 
 test('User can delete a submission', async () => {
     const navigationHelper = new NavigationHelper();

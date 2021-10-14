@@ -1,7 +1,10 @@
 import { NavigationHelper, SurveyPage, ThankYouPage, DashboardPage } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`Complete Path`.page`${BASE_URL}`;
+fixture`Complete Path`.page(BASE_URL).beforeEach(async () => {
+    await sleep(10000);
+});
 
 test('Complete Path', async () => {
     const navigationHelper = new NavigationHelper();

@@ -1,7 +1,10 @@
 import { CookieBanner, LoginPage, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { sleep } from '../../test-utils/sleep';
 
-fixture`Navigation`.page`${BASE_URL}`;
+fixture`Navigation`.page(BASE_URL).beforeEach(async () => {
+    await sleep(10000);
+});
 
 test('assert nav bar', async () => {
     const navigationPane = new NavigationPane();
