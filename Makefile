@@ -79,6 +79,7 @@ test_browser: ## run browser tests with local chrome
 test_chromium:
 	docker run --network reviewer \
 		-e BASE_URL="reviewer-client_nginx:9000" \
+		-e TEST_ARGS \
 		libero/reviewer-browsertests:${IMAGE_TAG}
 
 test_firefox:
