@@ -48,9 +48,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     # Only run if on master or if '[run-saucelabs]' is part of PR message
+    #if: >
+    #  contains(github.event.pull_request.body, '[run-saucelabs]')
+    #  || github.ref == 'refs/heads/master'
     if: >
       contains(github.event.pull_request.body, '[run-saucelabs]')
-      || github.ref == 'refs/heads/master'
     env:
       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
