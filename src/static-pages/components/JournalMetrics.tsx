@@ -29,7 +29,7 @@ const JournalMetrics = (): JSX.Element => {
             </Paragraph>
             <ChartEmbed
                 height={358}
-                src="https://datastudio.google.com/embed/reporting/1SrhoP4-CMFcXOCrtb2SGaYiGXg77e3o4/page/d5wu?hl=en"
+                src="https://datastudio.google.com/embed/reporting/51421a1e-0e93-4c07-894e-ae9f964e99a3/page/d5wu?hl=en"
                 width={668}
             />
 
@@ -43,7 +43,7 @@ const JournalMetrics = (): JSX.Element => {
 
             <ChartEmbed
                 height={358}
-                src="https://datastudio.google.com/embed/reporting/1SrhoP4-CMFcXOCrtb2SGaYiGXg77e3o4/page/VAxu?hl=en"
+                src="https://datastudio.google.com/embed/reporting/51421a1e-0e93-4c07-894e-ae9f964e99a3/page/VAxu?hl=en"
                 width={668}
             />
 
@@ -57,7 +57,7 @@ const JournalMetrics = (): JSX.Element => {
 
             <ChartEmbed
                 height={358}
-                src="https://datastudio.google.com/embed/reporting/1SrhoP4-CMFcXOCrtb2SGaYiGXg77e3o4/page/zRau?hl=en"
+                src="https://datastudio.google.com/embed/reporting/51421a1e-0e93-4c07-894e-ae9f964e99a3/page/zRau?hl=en"
                 width={668}
             />
 
@@ -71,7 +71,7 @@ const JournalMetrics = (): JSX.Element => {
 
             <ChartEmbed
                 height={358}
-                src="https://datastudio.google.com/embed/reporting/1SrhoP4-CMFcXOCrtb2SGaYiGXg77e3o4/page/Bewu?hl=en"
+                src="https://datastudio.google.com/embed/reporting/51421a1e-0e93-4c07-894e-ae9f964e99a3/page/Bewu?hl=en"
                 width={668}
             />
 
@@ -85,7 +85,7 @@ const JournalMetrics = (): JSX.Element => {
 
             <ChartEmbed
                 height={358}
-                src="https://datastudio.google.com/embed/reporting/1SrhoP4-CMFcXOCrtb2SGaYiGXg77e3o4/page/7ewu?hl=en"
+                src="https://datastudio.google.com/embed/reporting/51421a1e-0e93-4c07-894e-ae9f964e99a3/page/7ewu?hl=en"
                 width={668}
             />
         </div>
