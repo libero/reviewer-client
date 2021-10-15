@@ -101,7 +101,7 @@ jobs:
 
   browsertest-container:
     needs: [test, build]
-    if: github.ref != 'refs/heads/master'
+    #if: github.ref != 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -120,7 +120,7 @@ jobs:
       - run: make test_browser_containerized
 
   browsertest-and-push-images:
-    needs: [test, build, saucelabs-tests]
+    needs: [test, build, browsertest-container]
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
