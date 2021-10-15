@@ -103,7 +103,8 @@
         "prosemirror-example-setup": "^1.1.2",
         "source-map-loader": "0.2.4",
         "storybook-dark-mode": "^0.1.7",
-        "testcafe": "1.9.1",
+        "testcafe": "1.16.1",
+        "testcafe-browser-provider-saucelabs": "1.9.0",
         "ts-jest": "^24.0.2",
         "typescript": "~3.6.0",
         "whatwg-fetch": "^3.0.0"
@@ -148,7 +149,6 @@
         "react-select": "^3.0.4",
         "react-tabs": "^3.0.0",
         "subscriptions-transport-ws": "^0.9.16",
-        "testcafe-browser-provider-saucelabs": "^1.8.0",
         "uuid": "^7.0.2",
         "wait-port": "^0.2.9",
         "yup": "^0.28.1"

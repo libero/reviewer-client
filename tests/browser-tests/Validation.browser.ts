@@ -1,14 +1,16 @@
 import {
     AuthorDetailsPage,
-    DetailsPage, DisclosurePage,
+    DetailsPage,
+    DisclosurePage,
     EditorPage,
     FilesPage,
     NavigationHelper,
     ValidationHelper,
 } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { beforeEach } from '../../test-utils/beforeEach';
 
-fixture`Validation`.page`${BASE_URL}`;
+fixture`Validation`.page(BASE_URL).beforeEach(beforeEach);
 
 test('author page', async () => {
     const navigationHelper = new NavigationHelper();
@@ -42,8 +44,8 @@ test('details page', async () => {
     const detailsPage = new DetailsPage();
     await detailsPage.assertOnPage();
     await detailsPage.clearTitle();
-    await detailsPage.togglePreviouslyConsidered();
     await detailsPage.togglePreviouslyDiscussed();
+    await detailsPage.togglePreviouslyConsidered();
     await detailsPage.toggleCosubmission();
     await detailsPage.next(true);
     const validationHelper = new ValidationHelper();

@@ -2,6 +2,7 @@ import { Selector, t, ClientFunction } from 'testcafe';
 import { clickSelector } from './formHelper';
 
 const getPageUrl = ClientFunction(() => window.location.href);
+const getWindowLocation = ClientFunction(() => window.location);
 
 export class NavigationPane {
     private readonly iconLink = Selector('.app-bar__icon-link');
@@ -45,7 +46,7 @@ export class NavigationPane {
     public async navigateToDashboard(): Promise<void> {
         await this.assertNavItems();
         await clickSelector('.menu__list .menu__item:nth-child(1) a');
-        const windowLocation = await ClientFunction(() => window.location)();
+        const windowLocation = await getWindowLocation();
         await t.expect(windowLocation.pathname).eql('/');
     }
 

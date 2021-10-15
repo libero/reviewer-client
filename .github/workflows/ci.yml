@@ -48,9 +48,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     # Only run if on master or if '[run-saucelabs]' is part of PR message
+    #if: >
+    #  contains(github.event.pull_request.body, '[run-saucelabs]')
+    #  || github.ref == 'refs/heads/master'
     if: >
       contains(github.event.pull_request.body, '[run-saucelabs]')
-      || github.ref == 'refs/heads/master'
     env:
       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
@@ -80,9 +82,9 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: find ./tests -name *.browser.ts -type f | xargs -I % yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors "saucelabs:Firefox@latest:Windows 10" %
-      - run: find ./tests -name *.browser.ts -type f | xargs -I % yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors "saucelabs:MicrosoftEdge@latest:Windows 10" %
-      - run: find ./tests -name *.browser.ts -type f | xargs -I % yarn testcafe --sf --assertion-timeout 15000 --skip-js-errors "saucelabs:Safari@13:macOS 10.13" %
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 -e -u --disable-http2 \"saucelabs:Firefox@latest:Windows 10\" % || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 -e -u --disable-http2 \"saucelabs:MicrosoftEdge@latest:Windows 10\" % || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf --assertion-timeout 15000 -e -u --disable-http2 \"saucelabs:Safari@13:macOS 10.13\" % || exit 255"
       - name: Dump logs on failure
         if: failure()
         run: |

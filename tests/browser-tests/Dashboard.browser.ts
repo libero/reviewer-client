@@ -1,8 +1,12 @@
 import { t } from 'testcafe';
 import { DashboardPage, NavigationHelper, NavigationPane } from '../page-objects';
 import { BASE_URL } from '../../test-utils/baseUrl';
+import { beforeEach } from '../../test-utils/beforeEach';
 
-fixture`Dashboard`.page`${BASE_URL}`.meta('fixtureID', 'staging');
+fixture`Dashboard`
+    .page(BASE_URL)
+    .meta('fixtureID', 'staging')
+    .beforeEach(beforeEach);
 
 test('User can delete a submission', async () => {
     const navigationHelper = new NavigationHelper();

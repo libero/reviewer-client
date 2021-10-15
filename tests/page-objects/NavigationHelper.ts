@@ -1,6 +1,5 @@
 import {
     AuthorDetailsPage,
-    CookieBanner,
     DashboardPage,
     DetailsPage,
     DisclosurePage,
@@ -12,16 +11,14 @@ import {
 import { ClientFunction } from 'testcafe';
 import { ArticleType } from './DashboardPage';
 
+const getWindowLocation = ClientFunction(() => window.location);
+
 export class NavigationHelper {
     private async getIdFromUrl(): Promise<string> {
-        const getWindowLocation = ClientFunction(() => window.location);
         const location = await getWindowLocation();
         return location.href.split('/')[4];
     }
     public async navigateToDashboard(): Promise<void> {
-        const cookieBanner = new CookieBanner();
-        await cookieBanner.assertOnPage();
-        await cookieBanner.acceptCookies();
         const loginPage = new LoginPage();
         await loginPage.assertOnPage();
         await loginPage.login();
