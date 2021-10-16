@@ -16,7 +16,7 @@ async function clickNext(): Promise<void> {
 
 async function clickBack(): Promise<void> {
     await ClientFunction(() => {
-        (document.querySelector('.submission-wizard-back-buttonn') as HTMLElement).click();
+        (document.querySelector('.submission-wizard-back-button') as HTMLElement).click();
     })();
 }
 
