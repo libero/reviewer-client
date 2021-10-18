@@ -84,7 +84,7 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.browser }} % -q || exit 255"
       - name: Dump logs on failure
         if: failure()
         run: |
