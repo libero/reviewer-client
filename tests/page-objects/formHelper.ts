@@ -1,4 +1,4 @@
-import { Selector, t } from 'testcafe';
+import { ClientFunction } from 'testcafe';
 
 async function hasError(selector: Selector): Promise<string> {
     const errorElement = selector.find('.typography__label--error');
@@ -8,26 +8,40 @@ async function hasError(selector: Selector): Promise<string> {
     return '';
 }
 
-async function clickSelector(selector: string): Promise<void> {
-    const element = Selector(selector);
-    await t.expect(element.exists).ok();
-    await t.expect(element.visible).ok();
-    await t.hover(element).click(element);
-}
-
 async function clickNext(): Promise<void> {
-    await clickSelector('.submission-wizard-next-button');
+    await ClientFunction(() => {
+        (document.querySelector('.submission-wizard-next-button') as HTMLElement).click();
+    })();
 }
 
 async function clickBack(): Promise<void> {
-    await clickSelector('.submission-wizard-back-button');
+    await ClientFunction(() => {
+        (document.querySelector('.submission-wizard-back-button') as HTMLElement).click();
+    })();
+}
+
+async function clickSelector(selector: string): Promise<void> {
+    await ClientFunction((s: string) => {
+        const element = document.querySelector(s) as HTMLElement;
+        if (element) {
+            element.click();
+        } else {
+            throw new Error('Element not present');
+        }
+    })(selector); // this needs to be here since Client function needs the selector passed in.
 }
 
 async function clickWithSelectorAndText(selector: string, text: string): Promise<void> {
-    const element = Selector(selector).withText(text);
-    await t.expect(element.exists).ok();
-    await t.expect(element.visible).ok();
-    await t.hover(element).click(element);
+    await ClientFunction((s: string, t: string) => {
+        const element = Array.prototype.slice.call(document.querySelectorAll(s)).filter(function(el) {
+            return el.textContent.includes(t);
+        })[0];
+        if (element) {
+            element.click();
+        } else {
+            throw new Error('Element not present');
+        }
+    })(selector, text); // this needs to be here since Client function needs the selector passed in.
 }
 
 export { hasError, clickNext, clickSelector, clickWithSelectorAndText, clickBack };
