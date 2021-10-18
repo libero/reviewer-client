@@ -50,6 +50,7 @@ jobs:
     strategy:
       matrix:
         browser: ["saucelabs:Chrome@latest:Windows 10", "saucelabs:Firefox@latest:Windows 10", "saucelabs:MicrosoftEdge@latest:Windows 10", "saucelabs:Safari@13:macOS 10.13"]
+        max-parallel: 2
     # Only run if on master or if '[run-saucelabs]' is part of PR message
     if: >
       contains(github.event.pull_request.body, '[run-saucelabs]')
@@ -83,13 +84,9 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-<<<<<<< HEAD
       - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
       - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
       - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 ${{ matrix.node }} % -q || exit 255"
-=======
-      - run: yarn testcafe --sf --skip-js-errors -c 1 '${{ matrix.browser }}' 'tests/**/*.browser.ts' --browser-init-timeout 1800000
->>>>>>> 76c1df9 (fix: add a limit to not run tests concurrently)
       - name: Dump logs on failure
         if: failure()
         run: |
