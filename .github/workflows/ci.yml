@@ -47,6 +47,9 @@ jobs:
   saucelabs-tests:
     needs: build
     runs-on: ubuntu-latest
+    concurrency:
+      group: saucelabs
+      cancel-in-progress: false
     strategy:
       max-parallel: 2
       matrix:
