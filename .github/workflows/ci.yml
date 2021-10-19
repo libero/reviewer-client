@@ -48,7 +48,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     concurrency:
-      group: saucelabs
+      group: "saucelabs-${{ matrix.browser }}"
       cancel-in-progress: false
     strategy:
       max-parallel: 2
