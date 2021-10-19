@@ -6,7 +6,7 @@ The client for "libero reviewer".
 
 <summary>Requirements</summary>
 
-- [Docker](https://www.docker.com/)
+- [Docker]
 - [GNU Make]
 - [Node.js]
 - [timeout] (on MacOSX this can be obtained with `brew install coreutils`)
