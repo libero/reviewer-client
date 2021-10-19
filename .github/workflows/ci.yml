@@ -7,6 +7,9 @@ on:
       - master
 env:
   IMAGE_TAG: ${{ github.sha }}
+concurrency: 
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 jobs:
 
   test:
@@ -51,9 +54,6 @@ jobs:
       max-parallel: 2
       matrix:
         browser: ["saucelabs:Chrome@latest:Windows 10", "saucelabs:Firefox@latest:Windows 10", "saucelabs:MicrosoftEdge@latest:Windows 10", "saucelabs:Safari@13:macOS 10.13"]
-    concurrency:
-      group: "saucelabs-${{ matrix.browser }}"
-      cancel-in-progress: false
     # Only run if on master or if '[run-saucelabs]' is part of PR message
     if: >
       contains(github.event.pull_request.body, '[run-saucelabs]')
