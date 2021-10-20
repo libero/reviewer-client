@@ -7,6 +7,9 @@ on:
       - master
 env:
   IMAGE_TAG: ${{ github.sha }}
+concurrency: 
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 jobs:
 
   test:
@@ -47,6 +50,10 @@ jobs:
   saucelabs-tests:
     needs: build
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 2
+      matrix:
+        browser: ["saucelabs:Chrome@latest:Windows 10", "saucelabs:Firefox@latest:Windows 10", "saucelabs:MicrosoftEdge@latest:Windows 10", "saucelabs:Safari@13:macOS 10.13"]
     # Only run if on master or if '[run-saucelabs]' is part of PR message
     if: >
       contains(github.event.pull_request.body, '[run-saucelabs]')
@@ -80,9 +87,7 @@ jobs:
           make start_ci_localhost
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 \"saucelabs:Firefox@latest:Windows 10\" % -q || exit 255"
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 \"saucelabs:MicrosoftEdge@latest:Windows 10\" % -q || exit 255"
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 \"saucelabs:Safari@13:macOS 10.13\" % -q || exit 255"
+      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 '${{ matrix.browser }}' % -q || exit 255"
       - name: Dump logs on failure
         if: failure()
         run: |
