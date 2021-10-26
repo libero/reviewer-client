@@ -163,6 +163,14 @@ const ArticleTypes = (): JSX.Element => {
             <Paragraph type="reading">
                 <Interweave content={t('article-types.special-issues.p3')} />
             </Paragraph>
+            <Paragraph type="reading">{t('article-types.special-issues.p5')}</Paragraph>
+            <ul>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('article-types.special-issues.bullet5')} />
+                    </Paragraph>
+                </li>
+            </ul>
             <Paragraph type="reading">{t('article-types.special-issues.p4')}</Paragraph>
             <ul>
                 <li>
@@ -183,14 +191,6 @@ const ArticleTypes = (): JSX.Element => {
                 <li>
                     <Paragraph type="reading">
                         <Interweave content={t('article-types.special-issues.bullet4')} />
-                    </Paragraph>
-                </li>
-            </ul>
-            <Paragraph type="reading">{t('article-types.special-issues.p5')}</Paragraph>
-            <ul>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('article-types.special-issues.bullet5')} />
                     </Paragraph>
                 </li>
             </ul>
