@@ -186,6 +186,14 @@ const ArticleTypes = (): JSX.Element => {
                     </Paragraph>
                 </li>
             </ul>
+            <Paragraph type="reading">{t('article-types.special-issues.p5')}</Paragraph>
+            <ul>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('article-types.special-issues.bullet5')} />
+                    </Paragraph>
+                </li>
+            </ul>
         </div>
     );
 };
