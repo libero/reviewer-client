@@ -17,7 +17,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <th>{t('initial-submission.manuscript.table.cols.software')}</th>
                         <th>{t('initial-submission.manuscript.table.cols.pre-print')}</th>
                         <th>{t('initial-submission.manuscript.table.cols.conference-proceedings')}</th>
-                        <th>{t('initial-submission.manuscript.table.cols.periodical')}</th>
                         <th>{t('initial-submission.manuscript.table.cols.technical-report')}</th>
                         <th>{t('initial-submission.manuscript.table.cols.thesis')}</th>
                         <th>{t('initial-submission.manuscript.table.cols.patent')}</th>
@@ -29,7 +28,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓</td>
                         <td>✓</td>
                         <td>✓°</td>
-                        <td>✓</td>
                         <td>✓</td>
                         <td>✓</td>
                         <td>✓</td>
@@ -48,7 +46,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td />
                         <td />
                         <td />
-                        <td />
                     </tr>
                     <tr>
                         <th>{t('initial-submission.manuscript.table.rows.year')}</th>
@@ -59,7 +56,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓</td>
                         <td>✓</td>
                         <td>✓</td>
-                        <td>✓§</td>
                         <td>✓</td>
                         <td>✓</td>
                         <td>✓</td>
@@ -73,7 +69,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td />
                         <td />
                         <td />
-                        <td>✓</td>
                         <td />
                         <td />
                         <td />
@@ -85,7 +80,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓</td>
                         <td>✓</td>
                         <td>✓*</td>
-                        <td>✓</td>
                         <td>✓</td>
                         <td>✓</td>
                         <td />
@@ -103,7 +97,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓</td>
                         <td>✓</td>
                         <td>✓</td>
-                        <td>✓</td>
                         <td />
                     </tr>
                     <tr>
@@ -115,7 +108,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td />
                         <td />
                         <td />
-                        <td>✓*</td>
                         <td />
                         <td />
                         <td />
@@ -129,7 +121,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td />
                         <td />
                         <td>✓*</td>
-                        <td>✓</td>
                         <td />
                         <td />
                         <td />
@@ -143,7 +134,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓*</td>
                         <td>✓*</td>
                         <td>✓*</td>
-                        <td />
                         <td>✓*</td>
                         <td>✓*</td>
                         <td />
@@ -157,7 +147,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓*</td>
                         <td />
                         <td>✓*</td>
-                        <td />
                         <td>✓*</td>
                         <td>✓</td>
                         <td>✓</td>
@@ -172,7 +161,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td />
                         <td />
                         <td />
-                        <td />
                         <td>✓*</td>
                         <td />
                     </tr>
@@ -185,7 +173,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td />
                         <td />
                         <td>✓*</td>
-                        <td />
                         <td>✓*</td>
                         <td />
                         <td />
@@ -199,7 +186,6 @@ const RequiredInfoTable = (): JSX.Element => {
                         <td>✓*</td>
                         <td>✓*</td>
                         <td>✓</td>
-                        <td />
                         <td>✓*</td>
                         <td>✓*</td>
                         <td>✓</td>

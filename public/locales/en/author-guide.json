@@ -151,11 +151,12 @@
                 "three": "<strong>Abstract: </strong>The abstract would normally be 150–200 words. Subheadings are discouraged, except for medical submissions, which should contain the following subheadings (and can be around 250 words): Background; Methods; Results; Conclusions; Funding; Clinical trial number (for submissions reporting results of a trial only). Abstracts should provide a clear, measured, and concise summary of the work. If the biological system (species names or broader taxonomic groups if appropriate) is not mentioned in the title, it must be included in the abstract.",
                 "four": {
                     "p1": "<strong>Sections: </strong>The manuscript should contain the following sections: Introduction; Results, Discussion; Materials and Methods. For submissions in medicine the manuscript should contain the following sections in the following order: Introduction; Methods; Results, Discussion. Authors can also include additional information on their methods in an appendix. We encourage a clear and concise style of writing.",
-                    "p2": "Any \"personal communications\" relating to unpublished data should be incorporated within the main text, in the following format: (Author Initial(s) and Surname, personal communication, Month and Year). Authors should have permission from anyone named in this way and should be aware that a supporting letter will sometimes be requested.",
-                    "p3": "Within the Materials and Methods and/or figure legends, we encourage authors to provide complete information about their experiments, analyses, or data collection to ensure that readers can easily understand what was measured and analysed, and can accurately perform the relevant protocols.",
-                    "p4": "In cases where a new method within the submission would benefit from step-by-step protocols in addition to the methods described in the article, we would encourage authors to also consider submitting a detailed protocol to <a href=\"https://bio-protocol.org/login.aspx?in=2\" target=\"_blank\" >Bio-protocol</a>.",
-                    "p5": "On first mention, please provide details of any manufacturers in the following format: company name, city, country (or state, if based in the United States).",
-                    "p6": "Any footnotes (including commentary or footnotes embedded within the reference list) should be placed inside parentheses at the appropriate place in the main text."
+                    "p2": "Within their Discussion, authors have the opportunity to include an “Ideas and Speculation” subsection (<a href=\"\" target=\"_blank\">read more</a>).",
+                    "p3": "Any \"personal communications\" relating to unpublished data should be incorporated within the main text, in the following format: (Author Initial(s) and Surname, personal communication, Month and Year). Authors should have permission from anyone named in this way and should be aware that a supporting letter will sometimes be requested.",
+                    "p4": "Within the Materials and Methods and/or figure legends, we encourage authors to provide complete information about their experiments, analyses, or data collection to ensure that readers can easily understand what was measured and analysed, and can accurately perform the relevant protocols.",
+                    "p5": "In cases where a new method within the submission would benefit from step-by-step protocols in addition to the methods described in the article, we would encourage authors to also consider submitting a detailed protocol to <a href=\"https://bio-protocol.org/login.aspx?in=2\" target=\"_blank\" >Bio-protocol</a>.",
+                    "p6": "On first mention, please provide details of any manufacturers in the following format: company name, city, country (or state, if based in the United States).",
+                    "p7": "Any footnotes (including commentary or footnotes embedded within the reference list) should be placed inside parentheses at the appropriate place in the main text."
                 },
                 "five": "<strong>Acknowledgements: </strong>Individuals who have contributed materially to the work, but do not satisfy the authorship criteria should be listed in the acknowledgements section. Authors should seek permission to include any individuals mentioned in the acknowledgements.",
                 "six": "<strong>Competing interests: </strong>At this stage we request that the corresponding author provides a statement of financial and non-financial competing interests on behalf of all authors. Examples include paid employment or consultancy, stock ownership, patent applications, personal relationships with relevant individuals, and membership of an advisory board.",
@@ -188,7 +189,6 @@
                     "software": "Software ‡",
                     "pre-print": "Pre-print",
                     "conference-proceedings": "Conference proceedings",
-                    "periodical": "Periodical",
                     "technical-report": "Technical report",
                     "thesis": "Thesis",
                     "patent": "Patent"
@@ -245,8 +245,9 @@
             "anchor": "submission-files",
             "heading": "Submission Files",
             "p1": "At this point, authors can either upload another single PDF of their manuscript (with the text and figures combined), or they can upload the source files separately if they prefer.",
-            "p2": "Either way, authors are strongly encouraged to think creatively about the presentation of their work, to take advantage of the flexibility and file formats eLife offers, and to keep the article as concise as possible. To assist the review process, please organise and format the manuscript so that it is easily readable. Please include page and line numbers, double spacing, and a legible font size for the main text and figure legends.",
-            "p3": "Regarding the use of supplementary data, our vision is presented in <a href=\"https://elifesciences.org/inside-elife/6f32c567/supplementary-data\" target=\"_blank\">this blog post</a>. In short, we strive to make supplementary data, if applicable, easily searchable, discoverable, and citable, and made available in the most useful format for reuse.",
+            "p2": "Either way, authors are strongly encouraged to think creatively about the presentation of their work, to take advantage of the flexibility and file formats eLife offers, and to keep the article as concise as possible. Within their Discussion, authors have the opportunity to include an “Ideas and Speculation” subsection (<a href=\"https://elifesciences.org/inside-elife/6f32c567/supplementary-data\" target=\"_blank\">read more</a>).",
+            "p3": "To assist the review process, please organise and format the manuscript so that it is easily readable. Please include page and line numbers, double spacing, and a legible font size for the main text and figure legends.",
+            "p4": "Regarding the use of supplementary data, our vision is presented in <a href=\"https://elifesciences.org/inside-elife/6f32c567/supplementary-data\" target=\"_blank\">this blog post</a>. In short, we strive to make supplementary data, if applicable, easily searchable, discoverable, and citable, and made available in the most useful format for reuse.",
             "reporting": {
                 "anchor": "elife-transparent-reporting-form",
                 "heading": "eLife Transparent Reporting Form:",
@@ -804,15 +805,18 @@
         },
         "question5": {
             "anchor": "question-5",
-            "heading": "5. Why should I choose to publish with eLife?",
-            "p1": "The most popular reasons authors choose eLife include:",
-            "bullet1": "Consultative peer review, which limits revisions",
-            "bullet2": "Working scientists make all editorial decisions",
-            "bullet3": "Research is published openly, without delay",
-            "bullet4": "You can publish in a format that fits",
-            "p2": "Your work will be published alongside other excellent science evaluated and selected by the editors of eLife. eLife is indexed by all the major databases including Medline and the Web of Science, and eLife papers routinely appear in the mainstream media. We also often work with early-stage investigators to help gain attention for their work through interviews, podcasts, and public appearances.",
-            "p3": "Read more on our <a href=\"https://elifesciences.org/inside-elife/49a4790f/for-authors-what-makes-elife-different\" target=\"_blank\">blog<\/a>.",
-            "p4": "Any questions not addressed here may be sent to eLife via fees [at] elifesciences [dot] org"
+            "heading": "5. What do I get in return for my fee?",
+            "p1": "eLife delivers high-quality, comprehensive service to authors, which features:",
+            "bullet1": "Preprint deposition for rapid communication – Authors being reviewed by eLife first post their preprints to <a href=\"https://www.biorxiv.org\" target=\"_blank\">bioRxiv<\/a> or <a href=\"https://www.medrxiv.org\" target=\"_blank\">medRxiv<\/a>. Our team will facilitate deposit of preprints if the authors have not already done so.",
+            "bullet2": "Editorial decisions made by active researchers – Scientists and clinicians on our editorial board handle all editorial decisions efficiently (Journal Metrics).",
+            "bullet3": "Clear, fair, constructive feedback for authors – eLife editors and reviewers discuss their reviews with each other before reaching a decision and send clear feedback to authors. As a result, the majority of eLife authors invited for revision complete just one round of review.",
+            "bullet4": "Reviews for readers – Our editorial process also produces public comments from the peer reviewers on the strengths and weaknesses of the work that can be posted alongside the preprint. Authors may delay posting the public comments until their article has been published in another journal. Learn more.",
+            "bullet5": "Support for transparent reporting – Our editorial team works with authors to facilitate transparent reporting of protocols, resources, materials, data and code.",
+            "bullet6": "Fast publication – Authors opting in to publication of their accepted manuscript can have their results available on the eLife website within one or two days. After further processing, copyediting and author proofing, published papers are usually available within four weeks.",
+            "bullet7": "High-quality, machine-readable online presentation of articles – eLife maintains the highest standards for online presentation of new research in XML, supporting a frictionless user experience and facilitating the wide distribution of findings across the world. Content from eLife is accessible through all significant abstracting and indexing services in the fields of biology and medicine (including PubMed).",
+            "bullet8": "Enhanced online reading experience – eLife invests in new ways of displaying content, for example with a side-by-side view and Executable Research Articles, which integrate data, interactive figures and executable code directly into the text of their articles.",
+            "p2": "Wide, global readership – We help eLife authors reach the widest possible audiences with their work, via expert commentaries (“Insights”), plain-language summaries (eLife \"Digests\"), interviews, podcasts, press releases, and social media.",
+            "p3": "Any questions not addressed here may be sent to eLife via fees [at] elifesciences [dot] org"
         },
         "waiver": {
             "anchor": "elife-publication-fee-waiver-policy",
