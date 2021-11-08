@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 export default (isoStringDate: string): string => {
-    const date = moment();
-    const passedDate = moment(isoStringDate);
+    const date = moment().utc();
+    const passedDate = moment(isoStringDate).utc();
     const diffDays = date.diff(passedDate, 'days');
 
     if (date.diff(passedDate, 'milliseconds') < 0 || Number.isNaN(diffDays)) {

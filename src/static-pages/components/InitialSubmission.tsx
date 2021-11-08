@@ -91,6 +91,10 @@ const InitialSubmission = (): JSX.Element => {
                     <Paragraph type="reading">
                         <Interweave content={t('initial-submission.manuscript.components.four.p6')} />
                     </Paragraph>
+
+                    <Paragraph type="reading">
+                        <Interweave content={t('initial-submission.manuscript.components.four.p7')} />
+                    </Paragraph>
                 </li>
 
                 <li>
