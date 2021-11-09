@@ -115,14 +115,15 @@ const Fees = (): JSX.Element => {
                         <Interweave content={t('fees.question5.bullet8')} />
                     </Paragraph>
                 </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('fees.question5.bullet9')} />
+                    </Paragraph>
+                </li>
             </ul>
 
             <Paragraph type="reading">
                 <Interweave content={t('fees.question5.p2')} />
-            </Paragraph>
-
-            <Paragraph type="reading">
-                <Interweave content={t('fees.question5.p3')} />
             </Paragraph>
 
             <h2 id={t('fees.waiver.anchor')} className="typography__heading typography__heading--h2">
