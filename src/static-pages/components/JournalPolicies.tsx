@@ -237,10 +237,6 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.open-data.data.p5')} />
             </Paragraph>
 
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p6')} />
-            </Paragraph>
-
             <h3
                 id={t('journal-policies.open-data.software.anchor')}
                 className="typography__heading typography__heading--h3"
