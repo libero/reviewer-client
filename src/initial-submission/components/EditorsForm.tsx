@@ -11,6 +11,7 @@ import { ExpandingEmailField, ExcludedToggle } from '../../ui/molecules';
 import { MultilineTextField, Spinner } from '../../ui/atoms';
 import { set, sortBy } from 'lodash';
 import { Link } from 'react-router-dom';
+import Interweave from 'interweave';
 
 const MIN_SUGGESTED_SENIOR_EDITORS = 2;
 const MAX_SUGGESTED_SENIOR_EDITORS = 6;
@@ -335,6 +336,9 @@ const EditorsForm = ({ initialValues, schemaFactory, ButtonComponent, toggleErro
                 />
             </ExcludedToggle>
             <h2 className="typography__heading typography__heading--h3">{t('editors.reviewers-title')}</h2>
+            <p>
+                <Interweave content={t('editors.reviewers-text-content')} />
+            </p>
             <ExpandingEmailField
                 maxRows={MAX_SUGGESTED_REVIEWERS}
                 className="suggestedReviewers__inputs"
