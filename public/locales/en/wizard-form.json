@@ -79,7 +79,7 @@
         "editors-people-picker-label": "Suggest Senior Editors",
         "reviewers-people-picker-label": "Suggest Reviewing Editors",
         "reviewers-title": "Suggest Reviewers (Optional)",
-        "reviewers-text-content": "Please consider suggesting early-career researchers to review your work. You can look for suitable reviewers nominated by eLife's editors using our <a class=\"typography__serif--link\" href=\"https://elifesci.org/find-ecr-reviewer\">early-career reviewer search tool</a>.",
+        "reviewers-text-content": "Please consider suggesting early-career researchers to review your work. You can look for suitable reviewers nominated by eLife's editors using our <a class=\"typography__serif--link\" target=\"_blank\" href=\"https://elifesci.org/find-ecr-reviewer\">early-career reviewer search tool</a>.",
         "reviewers-label-prefix": "Reviewer",
         "opposed-reviewing-editors-people-picker-label": "Exclude a Reviewing Editor",
         "opposed-reviewing-editors-reason-label": "Reason for exclusion",
