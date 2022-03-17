@@ -1,7 +1,7 @@
 import { ClientFunction, Selector, t } from 'testcafe';
 
 const cookieBanner: Selector = Selector('#CybotCookiebotDialog');
-const cookieBannerButton: Selector = Selector('#CybotCookiebotDialogBodyLevelButtonAccept');
+const cookieBannerButton: Selector = Selector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll');
 
 const getCookies = ClientFunction(() => {
     return document.cookie;
