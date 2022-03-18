@@ -10,6 +10,6 @@ if [ ${TEST_ARGS} == "all" ]
 then
   find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "${TEST} % -q || exit 255"
 else
-  ${TEST} 'tests/**/*.browser.ts' -f ${TEST_ARGS} -q
+  ${TEST} 'tests/**/*.browser.ts' -f "${TEST_ARGS}" -q
 fi
 
