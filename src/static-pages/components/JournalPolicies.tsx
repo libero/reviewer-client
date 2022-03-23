@@ -489,9 +489,13 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.reporting-standards.p5')} />
             </Paragraph>
 
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.reporting-standards.p6')} />
+            </Paragraph>
+
             <div className="blue-box">
                 <Paragraph type="reading">
-                    <Interweave content={t('journal-policies.reporting-standards.p6')} />
+                    <Interweave content={t('journal-policies.reporting-standards.p7')} />
                 </Paragraph>
             </div>
         </div>
