@@ -1,7 +1,7 @@
 import { Selector, t } from 'testcafe';
 
 const cookieBanner: Selector = Selector('#CybotCookiebotDialog');
-const cookieBannerButton: Selector = Selector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll');
+const cookieBannerButton: Selector = Selector('#CybotCookiebotDialogBodyLevelButtonAccept');
 
 export async function dismissCookieBanner(): Promise<void> {
     if (await cookieBanner.exists) {
