@@ -98,15 +98,6 @@ const FullSubmission = (): JSX.Element => {
                 </li>
 
                 <li>
-                    <span id={t('full-submission.files.code.anchor')} className="bullet-heading">
-                        {t('full-submission.files.code.heading')}
-                    </span>
-                    <Paragraph type="reading">
-                        <Interweave content={t('full-submission.files.code.p1')} />
-                    </Paragraph>
-                </li>
-
-                <li>
                     <span id={t('full-submission.files.standards.anchor')} className="bullet-heading">
                         {t('full-submission.files.standards.heading')}
                     </span>

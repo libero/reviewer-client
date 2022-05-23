@@ -97,6 +97,9 @@ const RevisedSubmission = (): JSX.Element => {
             <Paragraph type="reading">
                 <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p8')} />
             </Paragraph>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.figures-figure-supplements.p9')} />
+            </Paragraph>
 
             <h3
                 id={t('revised-submission.source-manuscript.appendix-files.anchor')}
@@ -154,6 +157,16 @@ const RevisedSubmission = (): JSX.Element => {
             </Paragraph>
             <Paragraph type="reading">
                 <Interweave content={t('revised-submission.source-manuscript.source-data-files.p4')} />
+            </Paragraph>
+
+            <h2
+                id={t('revised-submission.source-manuscript.code.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
+                {t('revised-submission.source-manuscript.code.heading')}
+            </h2>
+            <Paragraph type="reading">
+                <Interweave content={t('revised-submission.source-manuscript.code.p1')} />
             </Paragraph>
 
             <h2
