@@ -116,7 +116,7 @@
             "anchor": "special-issues",
             "heading": "Special Issues",
             "p1": "eLife has Special Issues on timely and important topics, which are overseen by one or more eLife editors and external Guest Editors when appropriate.",
-            "p2": "At the point of submission, authors should indicate in their Cover Letter that they want their work to be considered as part of a Special Issue, citing the relevant title as indicated below. Submissions are assessed using the same criteria as other eLife submissions. Authors can submit using the Research Articles, Short Reports, Tools and Resources and Research Advances article types. The eLife editors may wish to commission Review Articles as part of a Special Issue.",
+            "p2": "At the point of submission, authors should include a Cover Letter with their submission, indicating that they want their work to be considered as part of a Special Issue, citing the relevant title as indicated below. Submissions are assessed using the same criteria as other eLife submissions. Authors can submit using the Research Articles, Short Reports, Tools and Resources and Research Advances article types. The eLife editors may wish to commission Review Articles as part of a Special Issue.",
             "p3": "We welcome submissions on a rolling basis, although submissions received after the closing date of a call for papers may not be considered for the Special Issue launch.",
             "p4": "Special Issues open for submissions:",
             "bullet1": "<a href=\"https://elifesciences.org/inside-elife/25e6a5ae/special-issue-call-for-papers-on-the-impact-of-the-covid-19-pandemic-on-cancer-prevention-control-care-and-survivorship\" target=\"_blank\">Impact of the COVID-19 pandemic on cancer prevention, control, care and survivorship</a>",
@@ -221,6 +221,7 @@
                 "two": {
                     "p1": "<strong>Cover Letter (optional): </strong> If you would like to provide a cover letter, please consider addressing the following questions:",
                     "p2": "In addition, please upload any related studies that you have published recently or have under consideration elsewhere as supporting files and describe them in a cover letter.",
+                    "p3": "When submitting to a Special Issue, you must provide a cover letter, citing the title of the relevant Special Issue you would like to submit to. A list of our current and our previous Special Issues can be found <a href=\"https://reviewer.elifesciences.org/author-guide/types#special-issues\" target=\"_blank\" >here</a>.",
                     "bullet1": "How will your work make others in the field think differently and move the field forward? How does your work relate to the current literature on the topic? Who do you consider to be the most relevant audience for this work? Have you made clear in the letter what the work has and has not achieved?",
                     "bullet2": "For clinical papers, please consider summarising how the work could further clinical practice, medical care, or disease prevention."
 
