@@ -458,6 +458,10 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.reporting-standards.p3')} />
             </Paragraph>
 
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.reporting-standards.p4')} />
+            </Paragraph>
+
             <ul>
                 <li>
                     <Paragraph type="reading">
@@ -480,10 +484,6 @@ const JournalPolicies = (): JSX.Element => {
                     </Paragraph>
                 </li>
             </ul>
-
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.reporting-standards.p4')} />
-            </Paragraph>
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.reporting-standards.p5')} />
