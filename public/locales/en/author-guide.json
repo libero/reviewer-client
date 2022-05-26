@@ -7,6 +7,7 @@
         "revised-subs": "Revised Submissions",
         "post-decisions": "Post Decision",
         "journal-policies": "Journal Policies",
+        "data-availibility": "Data Availibility",
         "journal-faqs": "Journal FAQs",
         "fees": "Publication Fees",
         "journal-metrics": "Journal Metrics"
@@ -692,7 +693,16 @@
             "p7": "<strong>Research Conducted by eLife.</strong> As a way of improving our services, we periodically undertake research and surveys relating to eLife's submission and review process. Where appropriate we will share our findings so that others can benefit. Participation does not affect the decision on manuscripts under consideration, or our policies relating to the confidentiality of the review process. If you would like to opt out of eLife's research and/or surveys, please <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\" >contact the journal office</a>."
         }
     },
-
+    "data-availibility": {
+        "anchor": "data-availibility",
+        "heading": "Data Availibility",
+        "scoop": {
+            "anchor": "anchor to go here",
+            "heading": "Heading to go here",
+            "question1": "Content to go here",
+            "answer1": "Content to go here"
+        }
+    },
     "journal-faqs": {
         "anchor": "journal-faqs",
         "heading": "Journal FAQs",

@@ -44,6 +44,10 @@ export const AuthorGuide: Record<authorGuideSubPages, SubPage> = {
         linkText: 'Journal Policies',
         title: 'Journal Policies',
     },
+    dataAvailibility: {
+        linkText: 'Data Availibility',
+        title: 'Data Availibility',
+    },
     journalFaqs: {
         linkText: 'Journal FAQs',
         title: 'Journal FAQs',
