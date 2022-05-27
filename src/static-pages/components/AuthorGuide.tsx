@@ -9,7 +9,7 @@ import InitialSubmission from './InitialSubmission';
 import RevisedSubmission from './RevisedSubmission';
 import PostDecision from './PostDecision';
 import JournalPolicies from './JournalPolicies';
-import DataAvailibility from './DataAvailibility';
+import DataAvailability from './DataAvailability';
 import JournalFAQs from './JournalFAQs';
 import JournalMetrics from './JournalMetrics';
 import Fees from './Fees';
@@ -63,7 +63,7 @@ const AuthorGuide = (): JSX.Element => {
                         <JournalPolicies />
                     </Route>
                     <Route path={`${path}/data-availability`}>
-                        <DataAvailibility />
+                        <DataAvailability />
                     </Route>
                     <Route path={`${path}/journal-faqs`}>
                         <JournalFAQs />

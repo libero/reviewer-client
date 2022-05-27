@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Paragraph } from '../../ui/atoms';
 import useScrollToAnchor from '../../ui/hooks/useScrollToAnchor';
 
-const DataAvailibility = (): JSX.Element => {
+const DataAvailability = (): JSX.Element => {
     const { t } = useTranslation('author-guide');
 
     useScrollToAnchor();
@@ -203,4 +203,4 @@ const DataAvailibility = (): JSX.Element => {
     );
 };
 
-export default DataAvailibility;
+export default DataAvailability;

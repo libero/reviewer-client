@@ -198,45 +198,6 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.open-data.data.p1')} />
             </Paragraph>
 
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p2')} />
-            </Paragraph>
-
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p3')} />
-            </Paragraph>
-
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p4')} />
-            </Paragraph>
-
-            <ul>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('journal-policies.open-data.data.bullet1')} />
-                    </Paragraph>
-                </li>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('journal-policies.open-data.data.bullet2')} />
-                    </Paragraph>
-                </li>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('journal-policies.open-data.data.bullet3')} />
-                    </Paragraph>
-                </li>
-                <li>
-                    <Paragraph type="reading">
-                        <Interweave content={t('journal-policies.open-data.data.bullet4')} />
-                    </Paragraph>
-                </li>
-            </ul>
-
-            <Paragraph type="reading">
-                <Interweave content={t('journal-policies.open-data.data.p5')} />
-            </Paragraph>
-
             <h3
                 id={t('journal-policies.open-data.software.anchor')}
                 className="typography__heading typography__heading--h3"

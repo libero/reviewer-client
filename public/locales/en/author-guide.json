@@ -7,7 +7,7 @@
         "revised-subs": "Revised Submissions",
         "post-decisions": "Post Decision",
         "journal-policies": "Journal Policies",
-        "data-availability": "Data Availibility",
+        "data-availability": "Data Availability",
         "journal-faqs": "Journal FAQs",
         "fees": "Publication Fees",
         "journal-metrics": "Journal Metrics"
@@ -581,7 +581,7 @@
             "data": {
                 "anchor": "data-availability",
                 "heading": "Data Availability",
-                "p1": "eLife's data availability policy is designed to maintain high standards of research reproducibility, and to promote the reuse of new findings. (<a href=\"#data-availability\">read more</a>)"
+                "p1": "eLife's data availability policy is designed to maintain high standards of research reproducibility, and to promote the reuse of new findings. (<a href=\"/author-guide/data-availability\">read more</a>)"
             },
             "software": {
                 "anchor": "software",
@@ -698,7 +698,7 @@
     },
     "data-availability": {
         "anchor": "data-availability",
-        "heading": "Data Availibility",
+        "heading": "Data Availability",
         "general-principles": {
             "anchor": "general-principles",
             "heading": "Purpose and General Principles",
