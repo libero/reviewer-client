@@ -7,7 +7,7 @@
         "revised-subs": "Revised Submissions",
         "post-decisions": "Post Decision",
         "journal-policies": "Journal Policies",
-        "data-availibility": "Data Availibility",
+        "data-availability": "Data Availibility",
         "journal-faqs": "Journal FAQs",
         "fees": "Publication Fees",
         "journal-metrics": "Journal Metrics"
@@ -693,14 +693,89 @@
             "p7": "<strong>Research Conducted by eLife.</strong> As a way of improving our services, we periodically undertake research and surveys relating to eLife's submission and review process. Where appropriate we will share our findings so that others can benefit. Participation does not affect the decision on manuscripts under consideration, or our policies relating to the confidentiality of the review process. If you would like to opt out of eLife's research and/or surveys, please <a href=\"mailto:editorial@elifesciences.org\" target=\"_blank\" >contact the journal office</a>."
         }
     },
-    "data-availibility": {
-        "anchor": "data-availibility",
+    "data-availability": {
+        "anchor": "data-availability",
         "heading": "Data Availibility",
-        "scoop": {
-            "anchor": "anchor to go here",
-            "heading": "Heading to go here",
-            "question1": "Content to go here",
-            "answer1": "Content to go here"
+        "general-principles": {
+            "anchor": "general-principles",
+            "heading": "Purpose and General Principles",
+            "p1": "To maintain high standards of research reproducibility, and to promote the reuse of new findings, eLife requires all data associated with an article to be made freely and widely available. These must be in the most useful formats and according to the relevant reporting standards, unless there are compelling legal or ethical reasons to restrict access.  The provision of data should comply with <a href=\"https://www.go-fair.org/fair-principles\">FAIR principles</a> (Findable, Accessible, Interoperable, Reusable).",
+            "p2": "Specifically, authors must make all original data used to support the claims of the paper, or that is required to reproduce them, available in the manuscript text, tables, figures or supplementary materials, or at a trusted digital repository (the latter is recommended). This must include all variables, treatment conditions, and observations described in the manuscript. The authors must also provide a full account of the materials and procedures used to collect, pre–process, clean, generate and analyze the data that would enable it to be independently reproduced by other researchers. The authors must ensure the provenance of the data for at least a 10 year period.",
+            "p3": "This document details and illuminates this policy, and addresses several common issues we have encountered with data availability in the past, so that authors can avoid them in the future."
+        },
+
+        "timing-data-release": {
+            "anchor": "timing-data-release",
+            "heading": "Timing of Data Release",
+            "p1": "eLife considers works to be published when they are posted as preprints, and expects preprints we review to meet the standards outlined here. We recognise, however, that while preprints and the infrastructure to publish them are still evolving this may not always be practical."
+        },
+
+        "data-availability-statement": {
+            "anchor": "data-availability-statement",
+            "heading": "Data Availability Statement",
+            "p1": "All eLife papers must contain a Data Availability Statement that details how all relevant data are being made available, including accession codes and/or other identifiers."
+        },
+
+        "laws-ethical": {
+            "anchor": "laws-ethical",
+            "heading": "Compliance with Laws and Ethical Standards",
+            "p1": "Data sharing must comply with all relevant legal requirements for data sharing as well as applicable institutional standards. Under no circumstances should requirements of the eLife Data Availability Policy supersede legal or ethical standards for data sharing."
+        },
+
+         "restrictions-data-access": {
+            "anchor": "restrictions-data-access",
+            "heading": "Restrictions on Data Access",
+            "p1": "If data availability must be limited to ensure participant or patient privacy or to comply with legal or ethical requirements, the authors must clearly articulate those reasons in the Data Availability Statement and a specific exemption must be granted by the handling eLife editors.",
+            "p2": "If, in exceptional cases, data access must be requested from the authors for legal or ethical reasons, a specific exemption must be granted by the handling eLife editor, and the precise mechanism, including contacts and timeline, must be stated. Simply saying, “Data will be made available upon request” is not acceptable.",
+            "p3": "If authors use proprietary data, it is their responsibility to make prior agreements with the data owners so that the data will be made available and a precise mechanism, including contacts and timeline, must be provided in the Data Availability Statement. In addition, the owners of the data must be clearly stated, and the editors should be made aware of any ethical and/or legal constraints in advance.",
+            "p4": "If the authors use data that is publicly available but with restrictions, these restrictions should be clearly described in the Data Availability Statement. ",
+            "p5": "In all cases where data access must be restricted, the authors should ensure that the data are available to editors and reviewers, unless there are legal or ethical limitations that prevent this. Any such limitations must be made known to the editors at the time of submission."
+
+        },
+
+        "external-unpublished-data": {
+            "anchor": "external-unpublished-data",
+            "heading": "Use of External and Unpublished Data",
+            "p1": "In addition to ensuring that readers have access to all data used in the paper, as described above, authors should comply with any and all agreements they themselves entered into to obtain access to these data. They should also adhere to community standards with regards to embargoes and data citation, unless they believe there are legal, ethical or scientific reasons not to do so, in which case a specific exemption must be granted by eLife editors.",
+            "p2": "Authors using unpublished datasets must abide by the relevant guidelines followed by the respective research communities for the use and acknowledgment of those data resources (including the <a href=\"https://www.genome.gov/Pages/Research/WellcomeReport0303.pdf\">Fort Lauderdale</a> and <a href=\"https://www.nature.com/nature/journal/v461/n7261/full/461168a.html\">Toronto</a> agreements in the case of genomic datasets), obtaining permission where required (which should be stated in the cover letter), and citing the appropriate laboratory, website, and accession numbers."
+
+        },
+
+        "mechanisms-data-sharing": {
+            "anchor": "mechanisms-data-sharing",
+            "heading": "Mechanisms of Data Sharing",
+            "p1": "Whenever possible, authors should make data available via trusted institutional or third-party repositories that adhere to policies that make data discoverable, accessible, and usable. Authors must ensure that the data are preserved over the long term and that datasets are assigned unique and persistent identifiers. Author–maintained websites are generally not compliant with this requirement, but we will grant exceptions when they are the only viable option. Please see our <a href=\"https://doi.org/10.25504/FAIRsharing.F0QmCP\">list of recommended repositories</a> on the FAIRsharing Resource for specific types of data.",
+            "p2": "For guidance on data sharing, authors are also encouraged to upload their article to DataSeer, which provides a free report that outlines datasets in the article that should be shared, the appropriate raw file formats (see DataSeer <a href=\"https://wiki.dataseer.ai/doku.php\">wiki</a>), and recommends suitable data repositories."
+
+        },
+
+        "requests-for-exceptions": {
+            "anchor": "requests-for-exceptions",
+            "heading": "Handling of Requests for Exceptions",
+            "p1": "Any exceptions to the aforementioned policies regarding Data Availability and Sharing should be requested initially in the cover letter at the time of submission.  In rare cases, despite authors’ best efforts, certain data or materials cannot be shared for legal or ethical reasons.  Every effort will be made to consider these (rare) requests expeditiously so as not to delay review. In such cases, and their variations, authors may be asked to share data with journal editors with an assurance of confidentiality, in order to verify findings."
+
+        },
+
+        "commitment-data-sharing": {
+            "anchor": "commitment-data-sharing",
+            "heading": "Ongoing Commitment to Data Sharing",
+            "p1": "Once a paper is published, eLife expects the authors to comply with its policies on Data Availability and Sharing. If readers experience difficulty in procuring data after publication, they should contact the eLife editorial office at editorial@elifesciences.org.  If the editorial staff and editors cannot amicably address the issue, which we expect not to be the case, eLife may publish a statement to reflect that readers were not able to access the data required to replicate or reproduce the findings."
+
+        },
+
+        "data-repositories": {
+            "anchor": "data-repositories",
+            "heading": "Specific Data Repositories",
+            "p1": "The following types of specialized datasets should be deposited in publically–accessible repositories:",
+            "bullet1": "Solved crystal structures of small molecules should include a .cif file, a figure with probability ellipsoids, and structure factors with an output from IUCR CheckCIF routine, and should be deposited into Cambridge Structural Database.",
+            "bullet2": "For macromolecules, authors must submit validation reports, together with coordinates and structure factor amplitudes or intensities, and deposited into wwPDB or Biological Magnetic Resonance Databank (BMRB).  Density maps and coordinate data from structures derived from electron microscopy should be deposited in Electron Microscopy Data Bank (EMDB), and should be annotated for immediate release.",
+            "bullet3": "Sequence reads and assembly must be included for reference genomes, while novel short sequences, including epitopes, functional domains, genetic markers and haplotypes should be deposited, together with surrounding sequences, into Genbank, DNA Data Bank of Japan (DDBJ), or EMBL Nucleotide Sequence Database (ENA).  DNA and RNA sequencing  data should be deposited in NCBI Trace Archive or NCBI Sequence Read Archive (SRA).",
+            "bullet4": "Genetic variant data should be deposited in dbSNP, dbVar or European Variation Archive (EVA).",
+            "bullet5": "Protein sequences and proteomic data should be deposited in Uniprot and PRIDE, respectively.",
+            "bullet6": "Gene expression data should be deposited in Gene Expression Omnibus (GEO) or ArrayExpress.",
+            "bullet7": "Data on human genotypes and phenotypes must be deposited into dbGAP or European Genome-phenome Archive (EGA), unless the data is deemed to be private or sensitive, such as data from electronic medical records, forensics, and vulnerable populations. In these cases authors should notify eLife editors in advance and fully explain the underpinnings of the restriction(s).",
+            "bullet8": "In instances where a domain–specific archive does not exist, authors can deposit data on Dryad, Dataverse, or Open Science Framework.  A comprehensive catalogue of recommended databases is available at the <a href=\"https://doi.org/10.25504/FAIRsharing.F0QmCP\">FAIRsharing Resource.</a>"
+
         }
     },
     "journal-faqs": {
