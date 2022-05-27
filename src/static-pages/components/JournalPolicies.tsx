@@ -229,6 +229,21 @@ const JournalPolicies = (): JSX.Element => {
                 <Interweave content={t('journal-policies.open-data.research.p4')} />
             </Paragraph>
 
+            <h3
+                id={t('journal-policies.open-data.accession-numbers.anchor')}
+                className="typography__heading typography__heading--h3"
+            >
+                {t('journal-policies.open-data.accession-numbers.heading')}
+            </h3>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.open-data.accession-numbers.p1')} />
+            </Paragraph>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.open-data.accession-numbers.p2')} />
+            </Paragraph>
+
             <h2 id={t('journal-policies.dual-use.anchor')} className="typography__heading typography__heading--h2">
                 {t('journal-policies.dual-use.heading')}
             </h2>
@@ -398,6 +413,17 @@ const JournalPolicies = (): JSX.Element => {
 
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.replication.p2')} />
+            </Paragraph>
+
+            <h2
+                id={t('journal-policies.trial-registration.anchor')}
+                className="typography__heading typography__heading--h2"
+            >
+                {t('journal-policies.trial-registration.heading')}
+            </h2>
+
+            <Paragraph type="reading">
+                <Interweave content={t('journal-policies.trial-registration.p1')} />
             </Paragraph>
 
             <h2
