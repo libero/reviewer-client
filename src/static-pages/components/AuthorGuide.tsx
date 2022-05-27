@@ -9,6 +9,7 @@ import InitialSubmission from './InitialSubmission';
 import RevisedSubmission from './RevisedSubmission';
 import PostDecision from './PostDecision';
 import JournalPolicies from './JournalPolicies';
+import DataAvailability from './DataAvailability';
 import JournalFAQs from './JournalFAQs';
 import JournalMetrics from './JournalMetrics';
 import Fees from './Fees';
@@ -31,6 +32,7 @@ const AuthorGuide = (): JSX.Element => {
                     { link: `${path}/revised`, label: t('links.revised-subs') },
                     { link: `${path}/post`, label: t('links.post-decisions') },
                     { link: `${path}/journal-policies`, label: t('links.journal-policies') },
+                    { link: `${path}/data-availability`, label: t('links.data-availability') },
                     { link: `${path}/journal-faqs`, label: t('links.journal-faqs') },
                     { link: `${path}/fees`, label: t('links.fees') },
                     { link: `${path}/journal-metrics`, label: t('links.journal-metrics') },
@@ -59,6 +61,9 @@ const AuthorGuide = (): JSX.Element => {
                     </Route>
                     <Route path={`${path}/journal-policies`}>
                         <JournalPolicies />
+                    </Route>
+                    <Route path={`${path}/data-availability`}>
+                        <DataAvailability />
                     </Route>
                     <Route path={`${path}/journal-faqs`}>
                         <JournalFAQs />

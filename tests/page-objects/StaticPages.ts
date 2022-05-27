@@ -11,6 +11,7 @@ type authorGuideSubPages =
     | 'revisedSubmissions'
     | 'postDecision'
     | 'journalDecision'
+    | 'dataAvailability'
     | 'journalFaqs'
     | 'publicationFees'
     | 'journalMetrics';
@@ -43,6 +44,10 @@ export const AuthorGuide: Record<authorGuideSubPages, SubPage> = {
     journalDecision: {
         linkText: 'Journal Policies',
         title: 'Journal Policies',
+    },
+    dataAvailability: {
+        linkText: 'Data Availability',
+        title: 'Data Availability',
     },
     journalFaqs: {
         linkText: 'Journal FAQs',
