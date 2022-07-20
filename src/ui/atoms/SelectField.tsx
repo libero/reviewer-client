@@ -71,7 +71,7 @@ const SelectField = ({
         />
     );
     return (
-        <div className={`select-field${className ? ' ' + className : ''}`}>
+        <div id={id} className={`select-field${className ? ' ' + className : ''}`}>
             <label id={`${id}-label`} className="typography__label typography__label--primary">
                 {labelText}
             </label>

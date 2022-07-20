@@ -15,4 +15,5 @@ export { default as SearchField } from './SearchField';
 export { default as SelectedPeopleList } from './SelectedPeopleList';
 export { default as SelectedOption } from './SelectedOption';
 export { default as Toggle } from './Toggle';
+export { default as ToggleComponent } from './ToggleComponent';
 export { default as UploadProgress } from './UploadProgress';
