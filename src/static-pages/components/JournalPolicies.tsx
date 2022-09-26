@@ -485,6 +485,34 @@ const JournalPolicies = (): JSX.Element => {
                     <Interweave content={t('journal-policies.reporting-standards.p7')} />
                 </Paragraph>
             </div>
+
+            <h2 id={t('journal-policies.myanmar.anchor')} className="typography__heading typography__heading--h2">
+                {t('journal-policies.myanmar.heading')}
+            </h2>
+
+            <div className="reading">
+                <Paragraph type="reading">
+                    <Interweave content={t('journal-policies.myanmar.p1')} />
+                </Paragraph>
+            </div>
+
+            <ul>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.myanmar.bullet1')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.myanmar.bullet2')} />
+                    </Paragraph>
+                </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('journal-policies.myanmar.bullet3')} />
+                    </Paragraph>
+                </li>
+            </ul>
         </div>
     );
 };
