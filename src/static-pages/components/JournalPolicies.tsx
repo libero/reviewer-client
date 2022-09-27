@@ -479,13 +479,6 @@ const JournalPolicies = (): JSX.Element => {
             <Paragraph type="reading">
                 <Interweave content={t('journal-policies.reporting-standards.p6')} />
             </Paragraph>
-
-            <div className="blue-box">
-                <Paragraph type="reading">
-                    <Interweave content={t('journal-policies.reporting-standards.p7')} />
-                </Paragraph>
-            </div>
-
             <h2 id={t('journal-policies.myanmar.anchor')} className="typography__heading typography__heading--h2">
                 {t('journal-policies.myanmar.heading')}
             </h2>
@@ -513,6 +506,12 @@ const JournalPolicies = (): JSX.Element => {
                     </Paragraph>
                 </li>
             </ul>
+
+            <div className="blue-box">
+                <Paragraph type="reading">
+                    <Interweave content={t('journal-policies.reporting-standards.p7')} />
+                </Paragraph>
+            </div>
         </div>
     );
 };
