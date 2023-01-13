@@ -117,17 +117,18 @@
             "anchor": "special-issues",
             "heading": "Special Issues",
             "p1": "eLife has Special Issues on timely and important topics, which are overseen by one or more eLife editors and external Guest Editors when appropriate.",
-            "p2": "At the point of submission, authors should include a Cover Letter with their submission, indicating that they want their work to be considered as part of a Special Issue, citing the relevant title as indicated below. Submissions are assessed using the same criteria as other eLife submissions. Authors can submit using the Research Articles, Short Reports, Tools and Resources and Research Advances article types. The eLife editors may wish to commission Review Articles as part of a Special Issue.",
+            "p2": "At the point of submission, authors should include a Cover Letter with their submission, indicating that they want their work to be considered as part of a Special Issue, citing the relevant title as indicated below. Submissions are assessed using the same criteria as other eLife submissions. Special Issues can include Reviewed Preprints or Versions of Record; inclusion in the Special Issue is ultimately at the discretion of the editors. Authors can submit using the Research Articles, Short Reports, Tools and Resources and Research Advances article types. The eLife editors may wish to commission Review Articles as part of a Special Issue.",
             "p3": "We welcome submissions on a rolling basis, although submissions received after the closing date of a call for papers may not be considered for the Special Issue launch.",
             "p4": "Special Issues open for submissions:",
             "bullet1": "<a href=\"https://elifesciences.org/inside-elife/d276bfa1/special-issue-call-for-papers-on-the-allosteric-regulation-of-kinase-activity\" target=\"_blank\">Allosteric Regulation of Kinase Activity</a>",
-            "bullet2": "<a href=\"https://elifesciences.org/inside-elife/25e6a5ae/special-issue-call-for-papers-on-the-impact-of-the-covid-19-pandemic-on-cancer-prevention-control-care-and-survivorship\" target=\"_blank\">Impact of the COVID-19 pandemic on cancer prevention, control, care and survivorship</a>",
-            "bullet3": "<a href=\"https://elifesciences.org/inside-elife/08396b6a\" target=\"_blank\">Systems Genetics</a>",
+            "bullet2": "<a href=\"https://elifesciences.org/inside-elife/08396b6a\" target=\"_blank\">Systems Genetics</a>",
+            "bullet3": "<a href=\"https://elifesciences.org/inside-elife/ddab483b/special-issue-call-for-papers-in-reproductive-health\" target=\"_blank\">Reproductive Health</a>",
             "p5": "Other Special Issues (submissions welcome on a rolling basis):",
             "bullet4": "<a href=\"https://elifesciences.org/collections/8d9426aa/evolutionary-medicine-a-special-issue\" target=\"_blank\">Evolutionary Medicine</a>",
             "bullet5": "<a href=\"https://elifesciences.org/collections/6d673315/aging-geroscience-and-longevity-a-special-issue\" target=\"_blank\">Aging, Geroscience and Longevity</a>",
             "bullet6": "<a href=\"https://elifesciences.org/collections/bcfba6c6/discovery-and-translation-of-cancer-immunology-a-special-issue\" target=\"_blank\">Discovery and Translation of Cancer Immunology</a>",
-            "bullet7": "<a href=\"https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue\" target=\"_blank\">Mechanistic Microbiome Studies</a>"
+            "bullet7": "<a href=\"https://elifesciences.org/collections/e8dda407/mechanistic-microbiome-studies-a-special-issue\" target=\"_blank\">Mechanistic Microbiome Studies</a>",
+            "bullet8": "<a href=\"https://elifesciences.org/inside-elife/25e6a5ae/special-issue-call-for-papers-on-the-impact-of-the-covid-19-pandemic-on-cancer-prevention-control-care-and-survivorship\" target=\"_blank\">Impact of the COVID-19 pandemic on cancer prevention, control, care and survivorship</a>"
 
         }
     },
