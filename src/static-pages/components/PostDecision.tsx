@@ -54,6 +54,11 @@ const PostDecision = (): JSX.Element => {
                         <Interweave content={t('post.acceptance.protocols.bullet2')} />
                     </Paragraph>
                 </li>
+                <li>
+                    <Paragraph type="reading">
+                        <Interweave content={t('post.acceptance.protocols.bullet3')} />
+                    </Paragraph>
+                </li>
             </ul>
 
             <h3 id={t('post.publication-manuscript.anchor')} className="typography__heading typography__heading--h3">
