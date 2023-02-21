@@ -6,7 +6,6 @@ import { getCurrentUserQuery } from '../graphql';
 import Logo from '../assets/elife-logo.svg';
 import { User } from '../types';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
-import { useTranslation } from 'react-i18next';
 
 interface GetCurrentUser {
     getCurrentUser: User;
@@ -36,8 +35,6 @@ const menuItems = [
 ];
 
 const NavBar = (): JSX.Element => {
-    const { t } = useTranslation('common');
-
     const { data: authQuery = { isAuthenticated: false } } = useQuery(isUserAuthenticatedQuery);
     const { loading, data } = useQuery<GetCurrentUser>(getCurrentUserQuery, { skip: !authQuery.isAuthenticated });
 
@@ -47,11 +44,6 @@ const NavBar = (): JSX.Element => {
             <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
             <Menu items={authQuery.isAuthenticated ? menuItems : staticMenuItems} />
             {authQuery.isAuthenticated && <ProfileDropdown user={loading ? null : data.getCurrentUser} />}
-            {!authQuery.isAuthenticated && (
-                <a className="typography typography__body--link" href="/auth-login">
-                    {t('navbar.login')}
-                </a>
-            )}
         </AppBar>
     );
 };

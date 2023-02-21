@@ -3,11 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/before-you-start.jpg';
 
-interface Props {
-    onStartClick: () => void;
-}
-
-const NoSubmissions = ({ onStartClick }: Props): JSX.Element => {
+const NoSubmissions = (): JSX.Element => {
     const { t } = useTranslation('no-submission');
 
     return (
@@ -41,7 +37,7 @@ const NoSubmissions = ({ onStartClick }: Props): JSX.Element => {
                     </Paragraph>
                 </div>
                 <div className="no-submissions__buttons two-column-layout__right">
-                    <Button id="new-submission-button" type="primary" onClick={(): void => onStartClick()}>
+                    <Button disabled={true} id="new-submission-button" type="primary">
                         {t('new-submission')}
                     </Button>
                 </div>

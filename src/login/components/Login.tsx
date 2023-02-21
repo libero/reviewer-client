@@ -6,6 +6,7 @@ import Image from '../../core/assets/welcome.jpg';
 import { isUserAuthenticatedQuery } from '../../core/graphql';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { SET_LOGOUT_ERROR } from '../../initial-submission/graphql';
+import Interweave from 'interweave';
 
 const Login = (): JSX.Element => {
     const { t } = useTranslation('login');
@@ -32,27 +33,15 @@ const Login = (): JSX.Element => {
 
                 <div className="login-page__text two-column-layout__left">
                     <Paragraph type="writing">{t('mission-1')}</Paragraph>
-                    <Paragraph type="writing">{t('mission-2')}</Paragraph>
                     <Paragraph type="writing">
-                        {t('author-guide-message')}
-                        <a className="typography typography__body--link" href="/author-guide">
-                            {t('author-guide-link')}
-                        </a>
-                        .
+                        <Interweave content={t('mission-2')} />
                     </Paragraph>
                 </div>
 
                 <div className="login-page__buttons two-column-layout__left">
-                    <a className="login-page__buttons--orcid" href="/auth-login">
-                        <Button type="orcid">{t('login-orcid')}</Button>
+                    <a className="login-page__buttons--orcid" href="https://elifesciences.org/submit-your-research">
+                        <Button type="primary">{t('new-submit')}</Button>
                     </a>
-                    <Paragraph type="writing">
-                        {t('sign-up-message-1')}
-                        <a className="typography typography__body--link" href="https://orcid.org/register">
-                            {t('sign-up-link')}
-                        </a>
-                        {t('sign-up-message-2')}
-                    </Paragraph>
                 </div>
                 <ImageWithAttribution
                     className="two-column-layout__right two-column-layout__full_column"

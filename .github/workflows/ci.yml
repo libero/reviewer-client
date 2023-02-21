@@ -7,7 +7,7 @@ on:
       - master
 env:
   IMAGE_TAG: ${{ github.sha }}
-concurrency: 
+concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 jobs:
@@ -47,83 +47,8 @@ jobs:
           registry: docker.pkg.github.com
           build_extra_args: "--build-arg=image_tag=${IMAGE_TAG}"
 
-  saucelabs-tests:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 2
-      matrix:
-        browser: ["saucelabs:Chrome@latest:Windows 10", "saucelabs:Firefox@latest:Windows 10", "saucelabs:MicrosoftEdge@latest:Windows 10", "saucelabs:Safari@13:macOS 10.13"]
-    # Only run if on master or if '[run-saucelabs]' is part of PR message
-    if: >
-      contains(github.event.pull_request.body, '[run-saucelabs]')
-      || github.ref == 'refs/heads/master'
-    env:
-      SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-      SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-      SAUCE_JOB: "reviewer-client"
-      SAUCE_BUILD: "libero-reviewer--${{ github.ref }}-${{ github.event.pull_request.head.sha }}"
-      SAUCE_API_HOST: "eu-central-1.saucelabs.com"
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.15'
-      - uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-client-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-client-
-      - name: Setup client with mocks
-        run: |
-          echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
-          docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
-          docker tag docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
-          yarn
-          make setup
-          make start_ci_localhost
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: find ./tests -name *.browser.ts -type f | sort | xargs -I % sh -c "yarn testcafe --sf -e -u --disable-http2 '${{ matrix.browser }}' % -q || exit 255"
-      - name: Dump logs on failure
-        if: failure()
-        run: |
-          docker-compose -f docker-compose.ci.yml -f docker-compose.ci.localhost.yml logs
-      - name: Notify slack on failure
-        if: failure() && github.ref == 'refs/heads/master'
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: libero-reviewer-tech
-          status: FAILED
-          color: danger
-
-  browsertest-container:
-    needs: [test, build]
-    if: github.ref != 'refs/heads/master'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Setup client with mocks
-        run: |
-          echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
-          docker pull docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG}
-          docker tag docker.pkg.github.com/libero/reviewer-client/reviewer-client:${IMAGE_TAG} libero/reviewer-client:${IMAGE_TAG}
-          make setup
-          make start_ci
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: make build_browsertest
-      - run: make test_browser_containerized
-
   browsertest-and-push-images:
-    needs: [test, build, saucelabs-tests]
+    needs: [test, build ]
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -140,7 +65,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: make build_browsertest
-      - run: make test_browser_containerized
       - name: Push images to docker hub
         run: |
           .scripts/github/retag-and-push.sh reviewer-client $IMAGE_TAG
