@@ -67,17 +67,18 @@ describe('Dashboard', (): void => {
             expect(container.querySelector('.no-submissions')).toBeInTheDocument();
         });
 
-        it('should show the article type page when new submission button clicked', async (): Promise<void> => {
+        it('should not show the article type page when new submission button clicked', async (): Promise<void> => {
             const { container } = render(<Dashboard />, {
                 wrapper: routerWrapper(['/link-1']),
             });
             await waitFor(() => {});
             const startSubmissionButton = container.querySelector('.no-submissions__buttons button');
             fireEvent.click(startSubmissionButton);
-            expect(container.querySelector('.article-type')).toBeInTheDocument();
+            expect(container.querySelector('.article-type')).not.toBeInTheDocument();
         });
 
-        it('should return the user to the NoSubmissions page when the cancel button is clicked', async (): Promise<
+        it.skip('should return the user to the NoSubmissions page when the cancel button is clicked', async (): Promise<
+            // this should now be unreachable
             void
         > => {
             const { container, getByText } = render(<Dashboard />, {
@@ -124,7 +125,9 @@ describe('Dashboard', (): void => {
             expect(container.querySelector('.dashboard')).toBeInTheDocument();
         });
 
-        it('should show the ArticleType page when the new submission button is clicked', async (): Promise<void> => {
+        it('should not show the ArticleType page when the new submission button is clicked', async (): Promise<
+            void
+        > => {
             const { container } = render(<Dashboard />, {
                 container: appContainer(),
                 wrapper: routerWrapper(['/link-1']),
@@ -133,10 +136,11 @@ describe('Dashboard', (): void => {
             expect(container.querySelectorAll('.submission-entry')).toHaveLength(2);
             const startSubmissionButton = container.querySelector('.dashboard__button_container button');
             fireEvent.click(startSubmissionButton);
-            expect(container.querySelector('.article-type')).toBeInTheDocument();
+            expect(container.querySelector('.article-type')).not.toBeInTheDocument();
         });
 
-        it('should not add a submission when cancel button clicked', async (): Promise<void> => {
+        it.skip('should not add a submission when cancel button clicked', async (): Promise<void> => {
+            // article type page should be unreachable
             const { container, getByText } = render(<Dashboard />, {
                 container: appContainer(),
                 wrapper: routerWrapper(['/link-1']),

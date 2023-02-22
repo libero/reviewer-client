@@ -74,12 +74,12 @@ const Dashboard = withRouter(
             return <ArticleType onCancel={toggle} onConfirm={onArticleTypeConfirm} loading={loadingStartSubmission} />;
         }
         if (!loading && (typeof data === 'undefined' || (data && data.getSubmissions.length === 0))) {
-            return <NoSubmissions onStartClick={toggle} />;
+            return <NoSubmissions />;
         } else {
             return (
                 <div className="dashboard">
                     <div className="dashboard__button_container">
-                        <Button id="new-submission-button" onClick={(): void => toggle()} type="primary">
+                        <Button disabled={true} id="new-submission-button" type="primary">
                             {t('new-submission')}
                         </Button>
                     </div>
